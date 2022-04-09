@@ -10,6 +10,7 @@
         "_vite": "",
         "dev": "vite",
         "build": "tsc && vite build",
+        "build-pages": "tsc && vite build --base=/app",
         "preview": "vite preview",
         "_mdbook": "",
         "mdbook": "docker run -v $(git rev-parse --show-toplevel)/docs:/mdbook gfxlabs/mdbook:latest $npm_config_arg /mdbook",
