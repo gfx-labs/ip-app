@@ -5,7 +5,6 @@ import { Suspense } from 'react'
 import {
     BrowserRouter as Router,
     useRoutes,
-    Switch,
 } from 'react-router-dom'
 
 import routes from '~react-pages'

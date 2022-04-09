@@ -10,6 +10,7 @@ export default defineConfig({
         Pages({
             dirs: [
                 { dir: 'src/splash', baseRoute: '' },
+                { dir: 'src/book', baseRoute: 'book' },
             ]
         }),
     ],
