@@ -10,11 +10,5 @@ export default defineConfig({
         Pages(),
     ],
     publicDir: "./public",
-    build: {
-        rollupOptions: {
-            input: {
-                main: resolve(__dirname, "index.html"),
-            }
-        }
-    }
+    build: {}
 })
