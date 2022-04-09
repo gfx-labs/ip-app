@@ -15,7 +15,7 @@ const index: React.FC = () => {
                     </button>
                 </p>
                 <p>
-                    Edit <code>splash/index.tsx</code> and save to test HMR updates.
+                    Edit <code>pages/index.tsx</code> and save to test HMR updates.
                 </p>
                 <p>
                     <a
