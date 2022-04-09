@@ -1,0 +1,35 @@
+{
+    "name": "ip-app",
+    "private": true,
+    "version": "0.0.0",
+    "config": {},
+    "scripts": {
+        "_full": "",
+        "prebuild-all": "npm run mdbook-build",
+        "build-all": "tsc && vite build",
+        "_vite": "",
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "_mdbook": "",
+        "mdbook": "docker run -v $(git rev-parse --show-toplevel)/docs:/mdbook gfxlabs/mdbook:latest $npm_config_arg /mdbook",
+        "mdbook-watch": "npm run mdbook --arg=watch",
+        "mdbook-serve": "npm run mdbook --arg=serve",
+        "mdbook-build": "npm run mdbook --arg=build && rm -rf ./public/book && cp -r ./docs/book ./public/book"
+    },
+    "dependencies": {
+        "@types/node": "^17.0.23",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "react-router": "^6.3.0",
+        "react-router-dom": "^6.3.0"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.33",
+        "@types/react-dom": "^17.0.10",
+        "@vitejs/plugin-react": "^1.0.7",
+        "typescript": "^4.5.4",
+        "vite": "^2.9.0",
+        "vite-plugin-pages": "^0.22.0"
+    }
+}
