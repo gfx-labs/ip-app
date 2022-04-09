@@ -7,12 +7,7 @@ import Pages from 'vite-plugin-pages'
 export default defineConfig({
     plugins: [
         react(),
-        Pages({
-            dirs: [
-                { dir: 'src/splash', baseRoute: '' },
-                { dir: 'src/book', baseRoute: 'book' },
-            ]
-        }),
+        Pages(),
     ],
     publicDir: "./public",
     build: {
