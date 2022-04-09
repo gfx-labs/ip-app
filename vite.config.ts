@@ -18,7 +18,6 @@ export default defineConfig({
     build: {
         rollupOptions: {
             input: {
-                book: resolve(__dirname, "book/index.html"),
                 main: resolve(__dirname, "index.html"),
             }
         }

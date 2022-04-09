@@ -15,7 +15,7 @@
         "mdbook": "docker run -v $(git rev-parse --show-toplevel)/docs:/mdbook gfxlabs/mdbook:latest $npm_config_arg /mdbook",
         "mdbook-watch": "npm run mdbook --arg=watch",
         "mdbook-serve": "npm run mdbook --arg=serve",
-        "mdbook-build": "npm run mdbook --arg=build && rm -rf ./public/book && cp -r ./docs/book ./public/book"
+        "mdbook-build": "npm run mdbook --arg=build && rm -rf ./book/* && cp -r ./docs/book/* ./book/*"
     },
     "dependencies": {
         "@types/node": "^17.0.23",
