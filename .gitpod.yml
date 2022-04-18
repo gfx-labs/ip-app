@@ -1,5 +1,6 @@
 image: cr.gfx.cafe/gitpod/image/base:latest
 
 tasks:
-  - init: asdf instll && asdf reshim
-    command: npm i
+  - before: asdf plugin add mdbook
+    init: asdf install && asdf reshim
+    command: npx yarn install
