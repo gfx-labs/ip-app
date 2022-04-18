@@ -21,6 +21,6 @@ export default defineConfig({
         }),
         Pages(),
     ],
-    publicDir: "./public",
+    publicDir: "./res",
     build: {}
 })
