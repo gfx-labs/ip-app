@@ -3,15 +3,15 @@ import React, { FC, ReactNode } from "react";
 import { Fade } from "react-awesome-reveal";
 
 export interface FadeContainer {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 export const FadeContainer: FC<FadeContainer> = (props) => {
-  const { children } = props;
+    const { children } = props;
 
-  return (
-    <Fade direction="up" triggerOnce>
-      <Box>{children}</Box>
-    </Fade>
-  );
+    return (
+        <Fade direction="up" triggerOnce>
+            <Box>{children}</Box>
+        </Fade>
+    );
 };
