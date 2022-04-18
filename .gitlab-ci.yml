@@ -4,8 +4,8 @@ pages:
   cache:
     - key:
         files:
-          - package-lock.json
-        prefix: npm
+          - yarn.lock
+        prefix: yarn
       paths:
         - node_modules/
     - key: mdbook417
@@ -13,7 +13,7 @@ pages:
         - mdbook
   script:
     - ./install-mdbook.sh
-    - npm install
+    - npx yarn install
     - npm run mdbook --arg=build && rm -rf ./public/book/* && cp -r ./docs/book/* ./public/book/*
     - npm run build-pages
     - rm -rf public/
