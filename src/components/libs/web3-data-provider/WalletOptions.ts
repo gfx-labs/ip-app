@@ -20,7 +20,7 @@ export enum WalletType {
 const appName = 'IP'
 const rpc_url = 'https://mainnet.infura.io/v3/c21cd0dd200645f39a51d41368b956d9'
 
-export const getWallet = (wallet: WalletType, chainId: number | undefined): AbstractConnector => {
+export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): AbstractConnector => {
   switch (wallet) {
     case WalletType.INJECTED:
       return new InjectedConnector({});
@@ -29,25 +29,23 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined): Abst
       // Need to test on non gitpod
       const CoinbaseWallet = new WalletLinkConnector({
         url: rpc_url,
-        appName: "IP",
+        appName: "app",
         supportedChainIds: [1],
       });
-
-      console.log(CoinbaseWallet)
       return CoinbaseWallet
 
     case WalletType.WALLET_CONNECT:
 
       return new WalletConnectConnector({
         rpc: rpc_url,
-        bridge: "https://ip.bridge.walletconnect.org",
+        bridge: "https://app.bridge.walletconnect.org",
         qrcode: true
       });
     case WalletType.FRAME:
       return new FrameConnector({ supportedChainIds: [1] });
 
-    case WalletType.LEDGER:
-      return new LedgerConnector({ chainId: 1, url: rpc_url, pollingInterval: 12000 });
+    // case WalletType.LEDGER:
+    //   return new LedgerConnector({ chainId: 1, url: rpc_url, pollingInterval: 12000 });
 
     case WalletType.TORUS:
       return new TorusConnector({

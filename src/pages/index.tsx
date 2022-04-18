@@ -13,7 +13,7 @@ import { Listings, PositionListing, ProjectListing } from "../listings";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 const CompanyPage = () => {
     const theme = useTheme();
-    const { currentAccount } = useWeb3Context()
+    const {currentAccount} = useWeb3Context()
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const projectCategories = Listings.Projects.map((project: ProjectListing) => {
