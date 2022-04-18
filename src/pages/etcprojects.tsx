@@ -10,7 +10,6 @@ import {
     useTheme,
 } from "@mui/material";
 import { ReactElement } from "react";
-import { useSelector } from "react-redux";
 
 import { BackwardGreyIcon } from "../components/icons/misc/backwardGrey";
 import { ForwardGreyIcon } from "../components/icons/misc/forwardGrey";

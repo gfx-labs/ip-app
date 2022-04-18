@@ -6,7 +6,6 @@ import {
     useMediaQuery,
     useTheme,
 } from "@mui/material";
-import { useSelector } from "react-redux";
 import { Link } from "../../util/link";
 
 const nav = [

@@ -8,7 +8,6 @@ import {
     useTheme,
 } from "@mui/material";
 import { ReactElement } from "react";
-import { useSelector } from "react-redux";
 
 import { AppLayout } from "../components/partials/app-layout";
 import { Banner } from "../components/util/banner";

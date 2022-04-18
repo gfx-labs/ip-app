@@ -1,6 +1,5 @@
 import { Box, IconButton } from "@mui/material";
 import { ReactElement, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { BackwardGreyIcon } from "../../components/icons/misc/backwardGrey";
