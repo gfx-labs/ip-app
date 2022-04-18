@@ -34,12 +34,12 @@ const App = () => {
           <Web3ContextProvider>
             <StyledEngineProvider injectFirst>
               <ThemeProvider {...{ theme }}>
-                <WalletModalProvider>
                   <>
                     <CssBaseline />
+                <WalletModalProvider>
                     <AppLayout>{useRoutes(routes)}</AppLayout>
-                  </>
                 </WalletModalProvider>
+                  </>
               </ThemeProvider>
             </StyledEngineProvider>
           </Web3ContextProvider>

@@ -6,7 +6,6 @@ import {
     Toolbar,
 } from "@mui/material";
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 
 import { MenuIcon } from "../../icons/misc/menuIcon";
 import { Link } from "../../util/link";
@@ -25,8 +24,6 @@ export const MobileToolBar = () => {
     // mobile menu config
     const [navMenuOpen, setNavMenuOpen] = useState(false);
     const navMenuButtonRef = useRef<HTMLButtonElement>(null);
-
-    const dispatch = useDispatch();
 
     return (
         <Toolbar

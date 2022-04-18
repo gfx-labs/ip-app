@@ -7,8 +7,10 @@ import { BigNumber, providers } from "ethers";
 
 import { SignatureLike } from "@ethersproject/bytes";
 import { AbstractConnector } from "@web3-react/abstract-connector";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { useWalletModalContext } from "../wallet-modal-provider/WalletModalProvider";
+import { WalletLinkConnector } from '@web3-react/walletlink-connector';
+import { TorusConnector } from '@web3-react/torus-connector';
 
 type transactionType = {
   value?: string | undefined;
@@ -50,17 +52,7 @@ export type Web3ContextData = {
 
 export const Web3Context = React.createContext({} as Web3ContextData);
 
-export const useWeb3Context = () => {
-  const { web3ProviderData } = useContext(Web3Context);
-  if (Object.keys(web3ProviderData).length === 0) {
-    throw new Error(
-      "useWeb3Context() can only be used inside of <Web3ContextProvider />, " +
-        "please declare it at a higher level."
-    );
-  }
 
-  return web3ProviderData;
-};
 
 export const Web3ContextProvider = ({
   children,
@@ -84,7 +76,29 @@ export const Web3ContextProvider = ({
   const [deactivated, setDeactivated] = useState<boolean>(false);
   const [tried, setTried] = useState<boolean>(false);
 
+    // Wallet connection and disconnection
+  // clean local storage
+  const cleanConnectorStorage = useCallback((): void => {
+    if (connector instanceof WalletConnectConnector) {
+      localStorage.removeItem('walletconnect');
+    } else if (connector instanceof WalletLinkConnector) {
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:version');
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:session:id');
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:session:secret');
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:session:linked');
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:AppVersion');
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:Addresses');
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:walletUsername');
+    } else if (connector instanceof TorusConnector) {
+      localStorage.removeItem('loglevel:torus.js');
+      localStorage.removeItem('loglevel:torus-embed');
+      localStorage.removeItem('loglevel:http-helpers');
+    }
+  }, [connector]);
+
   const disconnectWallet = useCallback(async () => {
+    cleanConnectorStorage();
+
     localStorage.removeItem("walletProvider");
     deactivate();
 
@@ -97,6 +111,7 @@ export const Web3ContextProvider = ({
     setDeactivated(true);
 
     setLoading(false);
+    
   }, [provider, connector]);
 
   const connectWallet = useCallback(
@@ -106,7 +121,15 @@ export const Web3ContextProvider = ({
       try {
         const connector: AbstractConnector = getWallet(wallet, chainId);
         console.log(connector, 'this is connector')
-        await activate(connector);
+
+        if (connector instanceof WalletConnectConnector) {
+          connector.walletConnectProvider = undefined;
+        }
+
+        // setTimeout(async () => await activate(connector, undefined, true), 500)
+
+        console.log('activating...')
+        await activate(connector, undefined, true)
 
         console.log('after connectiorw', connector)
 
@@ -125,31 +148,38 @@ export const Web3ContextProvider = ({
 
   // handle logic to eagerly connect to the injected ethereum provider,
   // if it exists and has granted access already
-  // useEffect(() => {
-  //   const lastWalletProvider = localStorage.getItem('walletProvider');
-  //   if (!active && !deactivated) {
-  //     if (!!lastWalletProvider) {
-  //       connectWallet(lastWalletProvider as WalletType).catch(() => {
-  //         setTried(true);
-  //       });
-  //     } else {
-  //       setTried(true);
-  //       // For now we will not eagerly connect to injected provider
-  //       // const injected = getWallet(WalletType.INJECTED);
-  //       // // @ts-expect-error isAuthorized not in AbstractConnector type. But method is there for
-  //       // // injected provider
-  //       // injected.isAuthorized().then((isAuthorized: boolean) => {
-  //       //   if (isAuthorized) {
-  //       //     connectWallet(WalletType.INJECTED).catch(() => {
-  //       //       setTried(true);
-  //       //     });
-  //       //   } else {
-  //       //     setTried(true);
-  //       //   }
-  //       // });
-  //     }
-  //   }
-  // }, [activate, setTried, active, connectWallet, deactivated]);
+  useEffect(() => {
+    const lastWalletProvider = localStorage.getItem('walletProvider');
+    if (!active && !deactivated) {
+      if (!!lastWalletProvider) {
+        connectWallet(lastWalletProvider as WalletType).catch(() => {
+          setTried(true);
+        });
+      } else {
+        setTried(true);
+        // For now we will not eagerly connect to injected provider
+        // const injected = getWallet(WalletType.INJECTED);
+        // // @ts-expect-error isAuthorized not in AbstractConnector type. But method is there for
+        // // injected provider
+        // injected.isAuthorized().then((isAuthorized: boolean) => {
+        //   if (isAuthorized) {
+        //     connectWallet(WalletType.INJECTED).catch(() => {
+        //       setTried(true);
+        //     });
+        //   } else {
+        //     setTried(true);
+        //   }
+        // });
+      }
+    }
+  }, [activate, setTried, active, connectWallet, deactivated]);
+
+    // if the connection worked, wait until we get confirmation of that to flip the flag
+    useEffect(() => {
+      if (!tried && active) {
+        setTried(true);
+      }
+    }, [tried, active]);
 
   const hexToAscii = (_hex: string): string => {
     const hex = _hex.toString();
@@ -233,4 +263,16 @@ export const Web3ContextProvider = ({
       {children}
     </Web3Context.Provider>
   );
+};
+
+export const useWeb3Context = () => {
+  const { web3ProviderData } = useContext(Web3Context);
+  if (Object.keys(web3ProviderData).length === 0) {
+    throw new Error(
+      "useWeb3Context() can only be used inside of <Web3ContextProvider />, " +
+        "please declare it at a higher level."
+    );
+  }
+
+  return web3ProviderData;
 };
