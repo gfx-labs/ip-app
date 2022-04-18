@@ -16,7 +16,6 @@ pages:
     - npx yarn install
     - npm run mdbook --arg=build && rm -rf ./public/book/* && cp -r ./docs/book/* ./public/book/*
     - npm run build-pages
-    - rm -rf public/
     - cp -a dist/. public/
   artifacts:
     paths:
