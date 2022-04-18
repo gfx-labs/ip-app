@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>What is USDI</title>
+        <title>VaultController</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../overview/whatis.html" class="active"><strong aria-hidden="true">1.</strong> What is USDI</a></li><li class="chapter-item expanded "><a href="../overview/benefits.html"><strong aria-hidden="true">2.</strong> Benefits of USDI</a></li><li class="chapter-item expanded "><a href="../overview/USDI.html"><strong aria-hidden="true">3.</strong> USDI</a></li><li class="chapter-item expanded "><a href="../overview/Vault.html"><strong aria-hidden="true">4.</strong> Vault</a></li><li class="chapter-item expanded "><a href="../overview/VaultController.html"><strong aria-hidden="true">5.</strong> VaultController</a></li><li class="chapter-item expanded "><a href="../overview/contractBrief.html"><strong aria-hidden="true">6.</strong> Contract</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../overview/whatis.html"><strong aria-hidden="true">1.</strong> What is USDI</a></li><li class="chapter-item expanded "><a href="../overview/benefits.html"><strong aria-hidden="true">2.</strong> Benefits of USDI</a></li><li class="chapter-item expanded "><a href="../overview/USDI.html"><strong aria-hidden="true">3.</strong> USDI</a></li><li class="chapter-item expanded "><a href="../overview/Vault.html"><strong aria-hidden="true">4.</strong> Vault</a></li><li class="chapter-item expanded "><a href="../overview/VaultController.html" class="active"><strong aria-hidden="true">5.</strong> VaultController</a></li><li class="chapter-item expanded "><a href="../overview/contractBrief.html"><strong aria-hidden="true">6.</strong> Contract</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,23 +134,161 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="what-is-usdi"><a class="header" href="#what-is-usdi">What is USDI?</a></h1>
-<p>USDi is a stablecoin issued by Interest Protocol and stands for USD with interest. As the name suggests, USDi automatically earns compounding interest without requiring you to stake it anywhere.</p>
-<h2 id="deposit-usdc-to-mint-usdi"><a class="header" href="#deposit-usdc-to-mint-usdi">Deposit USDC to mint USDI</a></h2>
-<p>You can deposit USDC into the protocol to mint USDi at a 1:1 ratio. USDC deposits are kept in the protocol's <a href="./accounting.html">reserve</a> until they are redeemed.</p>
-<p>You can think of depositing USDC as depositing cash into a bank. USDC is like cash, and USDi is like the balance on your checking or savings account that you receive for depositing cash. You can deposit USDC to the protocol to receive USDi, which earns interest. USDi can be used to buy other assets, just as you would use a debit card to pay from your account balance.</p>
-<h2 id="redeem-usdi-for-usdc"><a class="header" href="#redeem-usdi-for-usdc">Redeem USDI for USDC</a></h2>
-<p>You can burn your USDi to receive USDC at a 1:1 ratio. This USDC comes from the <a href="./accounting.html">reserve</a></p>
-<p>The protocol aims to guarantee liquidity for swapping USDi against a diverse range of assets. With enough liquidity, users will rarely need to actually redeem USDi for USDC, just as we do not always need to withdraw cash from the bank to make purchases. However, the fact that USDi can be redeemed for USDC keeps USDi pegged to USDC.</p>
-<h2 id="compounding-yield"><a class="header" href="#compounding-yield">Compounding Yield</a></h2>
-<p>The interest accrued to <a href="./lending.html">usdi loans</a> net of a protocol fee, is distributed pro rata to all USDi holders in the form of additional USDi. The protocol implements the distribution by <a href="./smart_contracts.html">scaling up</a> the balance of USDi tokens in all addresses so that the value of each USDi remains pegged to $1. This means that USDi is a liquidity provider (LP) token that is liquid. USDi earns yield generated from protocol operations, but remains liquid because it is pegged to $1. </p>
-<p>As a result, USDi holders are able to earn compounding yield without staking. This improves gas efficiency because there is no need to switch back and forth between the LP token and the stablecoin. It is especially beneficial to retail investors who spend a higher percentage of their trades on gas fees. Investors no longer have to choose between liquidity and yield; USDi provides both.</p>
+                        <h1 id="vaultcontroller"><a class="header" href="#vaultcontroller">VaultController</a></h1>
+<h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
+<p>The VaultController is the brain of the protocol. It is responsible for adding and mananging collateral assets, handling liquidations of Vaults and of course, lending  USDi.</p>
+<p>Each Vault is minted from the VaultController and references the controller for access to the protocol. </p>
+<p>The VaultController is purposely simple and adaptable. Governance can upgrade the contract to make complex changes or stick to regular changes on onlyOwner functions such as:</p>
+<ol>
+<li>register_oracle_master</li>
+<li>register_curve_master</li>
+<li>change_protocol_fee</li>
+<li>register_erc20</li>
+<li>update_registered_erc20</li>
+</ol>
+<h2 id="initialize"><a class="header" href="#initialize">Initialize</a></h2>
+<pre><code>function initialize() external override initializer {
+__Ownable_init();
+_vaultsMinted = 0;
+_tokensRegistered = 0;
+_interestFactor = 1e18; // initialize at 1e18;
+_totalBaseLiability = 0;
+_protocolFee = 1e14;
+_lastInterestTime = block.timestamp;
+}
+</code></pre>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<ul>
+<li>function InterestFactor() external view override returns (uint256)
+<ul>
+<li>Returns the interest factor</li>
+</ul>
+</li>
+<li>function ProtocolFee() external view override returns (uint256)
+<ul>
+<li>Returns the protocol fee.</li>
+</ul>
+</li>
+<li>function VaultAddress(uint256 id) external view override returns (address)
+<ul>
+<li>Returns a Vault address with input of a Vault ID.</li>
+</ul>
+</li>
+<li>function mint_vault() public override returns (address)
+<ul>
+<li>Mints a Vault to the msg.sender</li>
+</ul>
+</li>
+<li>function register_usdi(address usdi_address) external override onlyOwner
+<ul>
+<li>Registers USDi with the controller.</li>
+</ul>
+</li>
+<li>function register_oracle_master(address master_oracle_address) external override onlyOwner
+<ul>
+<li>Registers the OracleMaster with the controller.</li>
+</ul>
+</li>
+<li>function register_curve_master(address master_curve_address) external onlyOwner
+<ul>
+<li>Registers the CurveMaster with the controller.</li>
+</ul>
+</li>
+<li>function change_protocol_fee(uint256 new_protocol_fee) external onlyOwner
+<ul>
+<li>Updates the protocol fee. </li>
+</ul>
+</li>
+<li>function register_erc20(address token_address, uint256 LTV, address oracle_address, uint256 liquidationIncentive) external onlyOwner
+<ul>
+<li>Adds a collateral asset to the protocol. Governance must set a liquidation token value, setup an oracle configuration, and choose a liquidation incentive.</li>
+</ul>
+</li>
+<li>function update_registered_erc20(address token_address, uint256 LTV, address oracle_address, uint256 liquidationIncentive) external onlyOwner
+<ul>
+<li>Same as registeration but for updating an existing market.</li>
+</ul>
+</li>
+<li>function check_account(uint256 id) external view override returns (bool)
+<ul>
+<li>Checks if an account is ready for liquidation. </li>
+</ul>
+</li>
+<li>function borrow_usdi(uint256 id, uint256 amount) external override
+<ul>
+<li>For a vault to borrow USDi.</li>
+</ul>
+</li>
+<li>function repay_usdi(uint256 id, uint256 amount) external override
+<ul>
+<li>For a vault to repay some number of USDi.</li>
+</ul>
+</li>
+<li>function repay_all_usdi(uint256 id) external override
+<ul>
+<li>For a vault to repay their entire liability.</li>
+</ul>
+</li>
+<li>function liquidate_account(uint256 id, address asset_address, uint256 tokens_to_liquidate) external override returns (uint256)
+<ul>
+<li>Liquidates a vault to get it back to minimum solvency (and allows for partial fill).</li>
+</ul>
+</li>
+<li>function TokensToLiquidate(uint256 id, address asset_address, uint256 tokens_to_liquidate) public view returns (uint256)
+<ul>
+<li>An external call that liquidators can use to find the maximum amount of tokens of collateral that can be purchased from a vault. Calls _liquidationMath()</li>
+</ul>
+</li>
+<li>function _liquidationMath( uint256 id, address asset_address, uint256 tokens_to_liquidate) internal view returns (uint256, uint256)
+<ul>
+<li>Calculates the maximum amount of tokens that can be purchased from a vault. Note: liquidation will only liquiate to the point of minimum solvency. </li>
+</ul>
+</li>
+<li>function getVault(uint256 id) internal view returns (IVault vault)
+<ul>
+<li>Returns vault address with ID input. </li>
+</ul>
+</li>
+<li>function AccountLiability(uint256 id) external view override
+<ul>
+<li>An external function that returns a Vault's debt with ID input. Calls _AccountLiability</li>
+</ul>
+</li>
+<li>function _AccountLiability(uint256 id) internal view returns (uint256)
+<ul>
+<li>Returns a Vault's debt to the protocol via Vault ID.</li>
+</ul>
+</li>
+<li>function AccountBorrowingPower(uint256 id) external view returns (uint256)
+<ul>
+<li>An externall callabel that calls get_vault_borrowing_power</li>
+</ul>
+</li>
+<li>function get_vault_borrowing_power(IVault vault) private view returns (uint256)
+<ul>
+<li>Returns a vault's borrowing power by looping through all collateral asset, querying prices, checking for balances, and adjusting based off LTV. </li>
+</ul>
+</li>
+<li>function calculate_interest() external override returns (uint256)
+<ul>
+<li>Calls pay_interest()</li>
+</ul>
+</li>
+<li>function pay_interest() private returns (uint256)
+<ul>
+<li>Updates the interest rate for borrowers (and thus lenders). Acccures interest for lenders and collects the protocol fee. </li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="../overview/benefits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="prev" href="../overview/Vault.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../overview/contractBrief.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -159,7 +297,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="../overview/benefits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="prev" href="../overview/Vault.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../overview/contractBrief.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

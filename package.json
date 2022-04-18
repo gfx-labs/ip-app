@@ -13,10 +13,10 @@
         "build-pages": "tsc && vite build --base=/app/",
         "preview": "vite preview",
         "_mdbook": "",
-        "mdbook": "docker run -v $(git rev-parse --show-toplevel)/docs:/mdbook gfxlabs/mdbook:latest $npm_config_arg /mdbook",
+        "mdbook": "./mdbook $npm_config_arg $(git rev-parse --show-toplevel)/docs",
         "mdbook-watch": "npm run mdbook --arg=watch",
         "mdbook-serve": "npm run mdbook --arg=serve",
-        "mdbook-build": "npm run mdbook --arg=build && rm -rf ./public/book/* && cp -r ./docs/book/* ./public/book/*"
+        "mdbook-build": "npm run mdbook --arg=build && rm -rf ./public/book/* && cp -r ./docs/book/* ./public/book"
     },
     "dependencies": {
         "@types/node": "^17.0.23",

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>What is USDI</title>
+        <title>Contract</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../overview/whatis.html" class="active"><strong aria-hidden="true">1.</strong> What is USDI</a></li><li class="chapter-item expanded "><a href="../overview/benefits.html"><strong aria-hidden="true">2.</strong> Benefits of USDI</a></li><li class="chapter-item expanded "><a href="../overview/USDI.html"><strong aria-hidden="true">3.</strong> USDI</a></li><li class="chapter-item expanded "><a href="../overview/Vault.html"><strong aria-hidden="true">4.</strong> Vault</a></li><li class="chapter-item expanded "><a href="../overview/VaultController.html"><strong aria-hidden="true">5.</strong> VaultController</a></li><li class="chapter-item expanded "><a href="../overview/contractBrief.html"><strong aria-hidden="true">6.</strong> Contract</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../overview/whatis.html"><strong aria-hidden="true">1.</strong> What is USDI</a></li><li class="chapter-item expanded "><a href="../overview/benefits.html"><strong aria-hidden="true">2.</strong> Benefits of USDI</a></li><li class="chapter-item expanded "><a href="../overview/USDI.html"><strong aria-hidden="true">3.</strong> USDI</a></li><li class="chapter-item expanded "><a href="../overview/Vault.html"><strong aria-hidden="true">4.</strong> Vault</a></li><li class="chapter-item expanded "><a href="../overview/VaultController.html"><strong aria-hidden="true">5.</strong> VaultController</a></li><li class="chapter-item expanded "><a href="../overview/contractBrief.html" class="active"><strong aria-hidden="true">6.</strong> Contract</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,24 +134,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="what-is-usdi"><a class="header" href="#what-is-usdi">What is USDI?</a></h1>
-<p>USDi is a stablecoin issued by Interest Protocol and stands for USD with interest. As the name suggests, USDi automatically earns compounding interest without requiring you to stake it anywhere.</p>
-<h2 id="deposit-usdc-to-mint-usdi"><a class="header" href="#deposit-usdc-to-mint-usdi">Deposit USDC to mint USDI</a></h2>
-<p>You can deposit USDC into the protocol to mint USDi at a 1:1 ratio. USDC deposits are kept in the protocol's <a href="./accounting.html">reserve</a> until they are redeemed.</p>
-<p>You can think of depositing USDC as depositing cash into a bank. USDC is like cash, and USDi is like the balance on your checking or savings account that you receive for depositing cash. You can deposit USDC to the protocol to receive USDi, which earns interest. USDi can be used to buy other assets, just as you would use a debit card to pay from your account balance.</p>
-<h2 id="redeem-usdi-for-usdc"><a class="header" href="#redeem-usdi-for-usdc">Redeem USDI for USDC</a></h2>
-<p>You can burn your USDi to receive USDC at a 1:1 ratio. This USDC comes from the <a href="./accounting.html">reserve</a></p>
-<p>The protocol aims to guarantee liquidity for swapping USDi against a diverse range of assets. With enough liquidity, users will rarely need to actually redeem USDi for USDC, just as we do not always need to withdraw cash from the bank to make purchases. However, the fact that USDi can be redeemed for USDC keeps USDi pegged to USDC.</p>
-<h2 id="compounding-yield"><a class="header" href="#compounding-yield">Compounding Yield</a></h2>
-<p>The interest accrued to <a href="./lending.html">usdi loans</a> net of a protocol fee, is distributed pro rata to all USDi holders in the form of additional USDi. The protocol implements the distribution by <a href="./smart_contracts.html">scaling up</a> the balance of USDi tokens in all addresses so that the value of each USDi remains pegged to $1. This means that USDi is a liquidity provider (LP) token that is liquid. USDi earns yield generated from protocol operations, but remains liquid because it is pegged to $1. </p>
-<p>As a result, USDi holders are able to earn compounding yield without staking. This improves gas efficiency because there is no need to switch back and forth between the LP token and the stablecoin. It is especially beneficial to retail investors who spend a higher percentage of their trades on gas fees. Investors no longer have to choose between liquidity and yield; USDi provides both.</p>
+                        <h1 id="interest-protocol-contracts-brief"><a class="header" href="#interest-protocol-contracts-brief">Interest Protocol Contracts Brief</a></h1>
+<h2 id="core-contracts"><a class="header" href="#core-contracts">Core Contracts</a></h2>
+<ul>
+<li>USDi: a USDC synth. 1:1 to USDC. Interest baring via (Ampleforth) rebasing. The contract is upgradable via governance.</li>
+<li>Vault: where a borrower holds their collateral assets.</li>
+<li>VaultController: the core math and functionality of the protocol. Each vault references the VaultController. The contract is upgradable via governance</li>
+</ul>
+<h2 id="auxiliary-contracts"><a class="header" href="#auxiliary-contracts">Auxiliary Contracts</a></h2>
+<ul>
+<li>CurveMaster: is what the VaultController calls to calculate the borrow rate. Set at the VaultController via address. 
+<ul>
+<li>ThreeLines0_100: is called by the CurveMaster to calculate the borrow rate.</li>
+</ul>
+</li>
+<li>OracleMaster is what the VaultController calls for prices. Set at the VaultController via address. 
+<ul>
+<li>AnchoredViewRelay: called by the OracleMaster. It santity checks the anchor against the main price.</li>
+<li>ChainlinkOracleRelay: called by the AnchoredViewRelay. Gets the lastestAnswer from a Chainlink oracle. </li>
+<li>UniswapV3OracleRelay: called by the AnchoredViewRelay. Calculates the price of x ticks for a UniV3 market.</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="../overview/benefits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="../overview/VaultController.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -159,8 +170,8 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="../overview/benefits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a rel="prev" href="../overview/VaultController.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
             </nav>
 
