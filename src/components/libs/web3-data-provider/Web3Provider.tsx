@@ -126,8 +126,6 @@ export const Web3ContextProvider = ({
           connector.walletConnectProvider = undefined;
         }
 
-        // setTimeout(async () => await activate(connector, undefined, true), 500)
-
         console.log('activating...')
         await activate(connector, undefined, true)
 
@@ -141,6 +139,7 @@ export const Web3ContextProvider = ({
         const err = e as Error;
         setError(err);
         setLoading(false);
+        console.error(err)
       }
     },
     [disconnectWallet]

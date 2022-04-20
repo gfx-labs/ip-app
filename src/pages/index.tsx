@@ -29,7 +29,6 @@ const CompanyPage = () => {
                 marginX: "auto",
                 backgroundColor: formatColor(neutral.white2),
                 position: "relative",
-                overflowY: "hidden",
             }}
         >
             <Box
