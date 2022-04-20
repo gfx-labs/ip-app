@@ -14,7 +14,7 @@ const nav = [
 ];
 
 export const DesktopToolBar = () => {
-  const { connectWallet, connected, disconnectWallet } = useWeb3Context();
+  const { connectWallet, connected, disconnectWallet, error } = useWeb3Context();
   //desktop menu config
   return (
     <Toolbar>
@@ -29,6 +29,8 @@ export const DesktopToolBar = () => {
 
       <Box display="flex" mr={-1} ml="auto">
         <ConnectWalletButton />
+
+        <span>Status: {connected ? '🟢' : error ? '🔴' : '🟠'}</span>
         {connected ? (
           <Button
             variant="outlined"

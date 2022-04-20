@@ -42,7 +42,6 @@ export const BaseModal = ({
         sx={{
           position: "relative",
           margin: "10px",
-          overflowY: "auto",
           width: "100%",
           maxWidth: { xs: "359px", xsm: `${contentMaxWidth}px` },
           maxHeight: "calc(100vh - 20px)",

@@ -27,17 +27,18 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): 
     case WalletType.WALLET_LINK:
 
       // Need to test on non gitpod
-      const CoinbaseWallet = new WalletLinkConnector({
+      return new WalletLinkConnector({
         url: rpc_url,
         appName: "app",
-        supportedChainIds: [1],
+        appLogoUrl: 'https://aave.com/favicon.ico'
       });
-      return CoinbaseWallet
 
     case WalletType.WALLET_CONNECT:
 
       return new WalletConnectConnector({
-        rpc: rpc_url,
+        rpc: {
+          1: rpc_url
+        },
         bridge: "https://app.bridge.walletconnect.org",
         qrcode: true
       });
@@ -49,7 +50,15 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): 
 
     case WalletType.TORUS:
       return new TorusConnector({
-        chainId: chainId || 1
+        chainId: chainId || 1,
+        initOptions: {
+          network: {
+            host: chainId,
+          },
+          showTorusButton: false,
+          enableLogging: false,
+          enabledVerifiers: false,
+        },
       });
 
 
