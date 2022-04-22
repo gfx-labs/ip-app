@@ -7,13 +7,13 @@ Interest Protocol is the first fractional reserve banking protocol on the Ethere
 
 ## Who participates?
 The protocol has two primary participants:
-* Lenders: who hold USDi and earn interest. 
-* Borrowers: who borrow USDi from the protocol and post collateral. 
+* Lenders who hold USDi and earn interest
+* Borrowers who borrow USDi from the protocol after posting collateral
 
 ## What are the main pieces? 
 Every borrow/lend protocol has four key pieces: 
-1. Lending of capital & posting of collateral
-2. Borrowing of capital
+1. Lending capital 
+2. Posting collateral & borrowing capital
 3. An interest rate system to ensure liquidity
 4. A liquidation system to keep the system inline
 
