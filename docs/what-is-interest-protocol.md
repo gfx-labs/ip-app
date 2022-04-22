@@ -12,14 +12,14 @@ The protocol has two primary participants:
 
 ## What are the main pieces? 
 Every borrow/lend protocol has four key pieces: 
-1. Lending capital 
+1. Depositing capital 
 2. Posting collateral & borrowing capital
 3. Interest rate system to ensure liquidity
 4. Liquidation system to prevent defaults
 
 We have improved upon each piece to offer the most efficent credit market in DeFi.
 
-* **Lenders** can deposit capital (USDC) and receive an LP token (USDi) representing their loan to the protocol. The USDi token is a stablecoin that is redeemable one-to-one for the reserve asset (USDC). While holding USDi, interest is automatically accrued to the holder through a continuously increasing rebasing system. This innovation eliminates the depositor's need to stake capital and sacrifice liquidity. 
+* **Depositors** can deposit capital (USDC) and receive an LP token (USDi) representing their loan to the protocol. The USDi token is a stablecoin that is redeemable one-to-one for the reserve asset (USDC). While holding USDi, interest is automatically accrued to the holder through a continuously increasing rebasing system. This innovation eliminates the depositor's need to stake capital and sacrifice liquidity. 
 * **Borrowers** can post collateral assets by opening a vault. Each borrower has their own vault to deposit their collateral in. The collateral is used to cross-margin the user and increase their borrowing power. When a vault holds governance tokens as collateral, the vault owner can delegate the votes to another wallet so they can continue participating in protocol governance while borrowing against the governance tokens.
 * Interest Protocol's **interest rate system** ensures USDi holders can redeem for USDC and thus is critical to maintaining the peg. The protocol uses a piecewise linear function to determine the interest rate, where the x-axis is the protocol's reserve ratio and the y-axis is the interest rate. Governance influences USDi liquidity by choosing the reserve ratio and interest rate at s1 & s2.![](https://i.imgur.com/sHufcmn.png)
  Regular protocol operations should occur between these two points. The interest rate will kink after s1 to strongly incentivize new depositors or for borrowers to close their position. The interest rate is updated whenever the protocol's reserve ratio is calculated, and interest is distributed to lenders & the protocol at that time.  
