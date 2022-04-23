@@ -8,9 +8,6 @@ pages:
         prefix: yarn
       paths:
         - node_modules/
-    - key: mdbook417
-      paths:
-        - mdbook
   script:
     - ./install-mdbook.sh
     - npx yarn install
