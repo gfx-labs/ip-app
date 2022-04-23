@@ -32,3 +32,4 @@ Each vault is assigned an ID, minter, master_address, and usdi_address.
     * increase the account liability upon borrow.
 * function delegateCompLikeTo(address compLikeDelegatee, address CompLikeToken)
     * delegate votes of a collateral asset with voting capability an address for voting.
+
