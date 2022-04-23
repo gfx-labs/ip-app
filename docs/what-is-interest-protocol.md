@@ -30,7 +30,7 @@ We have improved upon each piece to offer the most efficent credit market in DeF
 
 To protect against large liquidation, liquidators are able to partial fill necessary liquidations. Additionally, liquidators can be partially filled if they attempt to liquidate more than available. -> do we need these details here?
 
-The culmination of a strong interest system to maintain liquidity in USDi, a simple but exact liquidation system, capital-efficient lending, and borrowing solution makes for a strong foundation for governance to operate to become the largest borrow/lend platform in DeFi. 
+The combination of a robust interest rate system, a simple yet efficient liquidation system, and capital-efficient lending makes for a strong foundation to become the largest lending platform in DeFi. 
 
 
 
