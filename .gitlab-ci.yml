@@ -1,4 +1,4 @@
-image: node:16.14.2
+image: cr.gfx.cafe/build/img/nodejs:latest
 pages:
   stage: deploy
   cache:
