@@ -20,3 +20,4 @@ The variables: r for rate and s for reserve ratio
 * function linearInterpolation(int256 rise,int256 run,int256 distance,int256 b)
     * helper math function to valueAt
 
+
