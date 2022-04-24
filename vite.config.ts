@@ -38,8 +38,8 @@ export default defineConfig({
     build: {
         rollupOptions: {
             plugins: [nodePolyfills()],
-          },
-      
+        },
+
     },
     optimizeDeps: {
         esbuildOptions: {
@@ -53,7 +53,7 @@ export default defineConfig({
                     buffer: true,
                     process: true,
                 }),
-                
+
             ]
         }
     }
