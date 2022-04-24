@@ -26,9 +26,11 @@ We have improved upon each piece to offer the most efficent credit market in DeF
 ![](https://i.imgur.com/sHufcmn.png)
 
  Regular protocol operations are expected to occur in the middle segment between these two kinks. Once the reserve ratio drops below s1, the interest rate increases steeply in order to incentivize new depositors or for borrowers to close their position. Whenever the protocol's reserve ratio changes, the interest rate is updated and the accrued interest is distributed to depositors and the protocol.  
-* The protocol's **liquidation system** is the protocol's main safety feature for making good loans to borrowers while protecting depositors. Liquidations can occur whenever a vault's borrowing power drops below their debt. Each collateral asset has a liquidation incentive that is paid to liquidators. Governance can configure the incentive for specific to each asset. Unlike most protocols, Interest Protocol's liquidation system favors the borrower. Liquidators can only liquidate a vault such that their borrowing power is equal to their debt. To protect against large liquidation, liquidators are able to partial fill necessary liquidations. Additionally, liquidators can be partially filled if they attempt to liquidate more than available. 
+* The **liquidation system** is the main safety feature that allows Interest Protocol to extend loans to borrowers while protecting depositors. Liquidations occur whenever a vault's borrowing power drops below their debt. Liquidators are incentivized through a discount on the price of collateral assets. Governance can configure the discount for each asset. Unlike most protocols, Interest Protocol's liquidation system protects the borrower from unnecessary liquidations. Liquidators can only liquidate a vault until its borrowing power is equal to their debt. 
 
-The culmination of a strong interest system to maintain liquidity in USDi, a simple but exact liquidation system, capital-efficient lending, and borrowing solution makes for a strong foundation for governance to operate to become the largest borrow/lend platform in DeFi. 
+To protect against large liquidation, liquidators are able to partial fill necessary liquidations. Additionally, liquidators can be partially filled if they attempt to liquidate more than available. -> do we need these details here?
+
+The combination of a robust interest rate system, a simple yet efficient liquidation system, and capital-efficient lending makes for a strong foundation to become the largest lending platform in DeFi. 
 
 
 
