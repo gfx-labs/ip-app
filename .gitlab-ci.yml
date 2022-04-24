@@ -10,9 +10,7 @@ site:
       paths:
         - node_modules/
         - docs/node_modules/
-    - key:
-        prefix: docs
-      paths:
+    - paths:
         - docs/.docusaurus/
   script:
     - npx yarn install
