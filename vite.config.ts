@@ -15,7 +15,7 @@ import path from "path";
 // https://github.com/vitejs/vite/issues/1973
 // on going issues with vite's global and process
 export default defineConfig({
-    base: "",
+    base: "./",
     server: {
         hmr: (process.env.GITPOD_WORKSPACE_URL && (process.env.GITPOD_REMOTE_CLI_IPC)) ? {
             host: process.env.GITPOD_WORKSPACE_URL.replace("https://", "3000-"),
