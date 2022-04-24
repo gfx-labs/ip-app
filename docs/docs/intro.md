@@ -25,7 +25,7 @@ We have improved upon each piece to offer the most efficent credit market in DeF
 
 ![](https://i.imgur.com/sHufcmn.png)
 
- Regular protocol operations are expected to occur in the middle segment between these two kinks. Once the reserve ratio drops below s1, the interest rate increases steeply in order to incentivize new depositors or for borrowers to close their position. Whenever the protocol's reserve ratio changes, the interest rate is updated and the accrued interest is distributed to depositors and the protocol.  
+* Regular protocol operations are expected to occur in the middle segment between these two kinks. Once the reserve ratio drops below s1, the interest rate increases steeply in order to incentivize new depositors or for borrowers to close their position. Whenever the protocol's reserve ratio changes, the interest rate is updated and the accrued interest is distributed to depositors and the protocol.  
 * The **liquidation system** is the main safety feature that allows Interest Protocol to extend loans to borrowers while protecting depositors. Liquidations occur whenever a vault's borrowing power drops below their debt. Liquidators are incentivized through a discount on the price of collateral assets. Governance can configure the discount for each asset. Unlike most protocols, Interest Protocol's liquidation system protects the borrower from unnecessary liquidations. Liquidators can only liquidate a vault until its borrowing power is equal to their debt. 
 
 To protect against large liquidation, liquidators are able to partial fill necessary liquidations. Additionally, liquidators can be partially filled if they attempt to liquidate more than available. -> do we need these details here?
