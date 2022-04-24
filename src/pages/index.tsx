@@ -17,7 +17,7 @@ const CompanyPage = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const projectCategories = Listings.Projects.map((project: ProjectListing) => {
-        return { name: project.categoryLabel, link: `/project/${project.category}` };
+        return { name: project.categoryLabel, link: `project/${project.category}` };
     });
     const openPositions = Listings.Positions.map((position: PositionListing) => {
         return { name: position.role, link: position.link };
