@@ -28,7 +28,7 @@ const nav = [
     },
     {
         label: "Contact",
-        pathname: "/contact",
+        pathname: "contact",
     },
     {
         label: "Twitter",
@@ -111,7 +111,7 @@ const mobileFooter = () => {
             >
                 <Button
                     // component={Link}
-                    href="/"
+                    href="./"
                     sx={{
                         px: 0,
                         display: "block",

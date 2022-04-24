@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
-import Pages from 'vite-plugin-pages'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import NodeModulesPolyfills from '@esbuild-plugins/node-modules-polyfill'
 
@@ -30,7 +29,6 @@ export default defineConfig({
                 plugins: ['@emotion/babel-plugin']
             }
         }),
-        Pages({}),
     ],
     define: {
         global: 'globalThis'
