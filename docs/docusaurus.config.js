@@ -25,7 +25,7 @@ const config = {
                 blog: false,
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
-                    editUrl: 'https://gfx.cafe/ip/app/-/tree/master/book',
+                    editUrl: 'https://gfx.cafe/ip/app/-/tree/master/docs',
                     async sidebarItemsGenerator({ defaultSidebarItemsGenerator, ...args }) {
                         const sidebarItems = await defaultSidebarItemsGenerator(args);
                         return clearIndex(sidebarItems);
