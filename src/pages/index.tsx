@@ -13,7 +13,7 @@ import { Listings, PositionListing, ProjectListing } from "../listings";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 const CompanyPage = () => {
     const theme = useTheme();
-    const {currentAccount} = useWeb3Context()
+    const { currentAccount } = useWeb3Context()
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const projectCategories = Listings.Projects.map((project: ProjectListing) => {
@@ -104,19 +104,19 @@ const CompanyPage = () => {
                     >
                         <CategoryCard
                             mediaType="video"
-                            src="/images/card-rotation.mp4"
+                            src="images/card-rotation.mp4"
                             hoverTitle="Poppie"
                             hoverDescription="A DeFi debit card"
                         />
                         <CategoryCard
                             mediaType="img"
-                            src="/images/governance-chain.png"
+                            src="images/governance-chain.png"
                             hoverTitle="Governance"
                             hoverDescription="Our contribution to various DAOs and protocols"
                         />
                         <CategoryCard
                             mediaType="img"
-                            src="/images/minecraft-ship.png"
+                            src="images/minecraft-ship.png"
                             hoverTitle="Etherlands"
                             hoverDescription="Minecraft server on the blockchain"
                         />
