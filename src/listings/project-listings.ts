@@ -10,8 +10,8 @@ export const projects: Array<ProjectListing> = [
         longDescription: `Land ownership on blockchain has never been easier. With the Etherlands Minecraft server, you can buy or trade land, create districts and display NFTs while playing with friends.`,
         link: "/etherlands",
         siteLink: "https://etherlands.com",
-        logo: "/images/etherlands-logo.png",
-        graphic: "/images/etherlands.png",
+        logo: "images/etherlands-logo.png",
+        graphic: "images/etherlands.png",
     },
     {
         name: `poppie`,
@@ -22,8 +22,8 @@ export const projects: Array<ProjectListing> = [
         longDescription: `Use your coins without having to sell. With Poppie you can place crypto as collateral in exchange for stablecoins and earn interest while you spend. Launching in 2022.`,
         link: "/poppie",
         siteLink: "https://poppie.io",
-        logo: "/images/poppie-logo.png",
-        graphic: "/images/Poppiegraphic.png",
+        logo: "images/poppie-logo.png",
+        graphic: "images/Poppiegraphic.png",
     },
     {
         name: `governance`,
@@ -34,7 +34,7 @@ export const projects: Array<ProjectListing> = [
         longDescription: `GFX Labs has been busy working with MakerDao to build the next generation of liquidity protocols, token issuers and voter delegating rights. Keep up with what we’re up to on Twitter.`,
         link: "/governance",
         siteLink: "https://twitter.com/labsGFX",
-        logo: "/images/governance-logo.png",
-        graphic: "/images/blockchain.png",
+        logo: "images/governance-logo.png",
+        graphic: "images/blockchain.png",
     },
 ];

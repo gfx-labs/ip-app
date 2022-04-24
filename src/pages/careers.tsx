@@ -46,7 +46,7 @@ const IndexPage = () => {
 
                     <Box
                         component="img"
-                        src="/images/gfxlabs_chain.gif"
+                        src="images/gfxlabs_chain.gif"
                         sx={{
                             position: "relative",
                             bottom: 0,

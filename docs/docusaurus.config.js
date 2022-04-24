@@ -10,9 +10,11 @@ const config = {
     tagline: 'interest protocol',
     url: 'https://usdi.io',
     baseUrl: '/',
+    baseUrlIssueBanner: false,
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
+    trailingSlash: true,
     organizationName: 'ip',
     projectName: 'book',
     presets: [
