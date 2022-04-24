@@ -173,7 +173,7 @@ const CompanyPage = () => {
                         <ListWithForwardIcon
                             list={projectCategories}
                             listTitle="Projects:"
-                            seeAllLink="/projects"
+                            seeAllLink="projects"
                             sx={{
                                 backgroundColor: formatColor([...neutral.gray4, 0.9]),
                             }}
@@ -181,7 +181,7 @@ const CompanyPage = () => {
                         <ListWithForwardIcon
                             list={openPositions}
                             listTitle="We're hiring."
-                            seeAllLink="/careers"
+                            seeAllLink="careers"
                             sx={{ backgroundColor: formatColor([...neutral.gray4, 0.9]) }}
                         />
                     </PageContainer>
