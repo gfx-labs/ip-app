@@ -8,9 +8,9 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { ConnectWalletButton } from '../../util/button'
 
 const nav = [
-    { label: "Projects", pathname: "/projects" },
-    { label: "Careers", pathname: "/careers" },
-    { label: "Contact", pathname: "/contact" },
+    { label: "Projects", pathname: "projects" },
+    { label: "Careers", pathname: "careers" },
+    { label: "Contact", pathname: "contact" },
 ];
 
 export const DesktopToolBar = () => {
