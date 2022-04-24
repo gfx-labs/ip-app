@@ -10,6 +10,10 @@ site:
       paths:
         - node_modules/
         - book/node_modules/
+    - key:
+        prefix: docs
+      paths:
+        - book/.docusaurus/
   script:
     - npx yarn install
     - npm run build
