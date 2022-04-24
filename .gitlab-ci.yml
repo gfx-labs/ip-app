@@ -5,15 +5,15 @@ site:
     - key:
         files:
           - yarn.lock
-          - book/yarn.lock
+          - docs/yarn.lock
         prefix: yarn
       paths:
         - node_modules/
-        - book/node_modules/
+        - docs/node_modules/
     - key:
         prefix: docs
       paths:
-        - book/.docusaurus/
+        - docs/.docusaurus/
   script:
     - npx yarn install
     - npm run build

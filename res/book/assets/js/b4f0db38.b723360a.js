@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbook=self.webpackChunkbook||[]).push([[946],{5824:function(e){e.exports=JSON.parse('{"title":"Core","description":"core contracts","slug":"/category/core","permalink":"/docs/category/core","navigation":{"previous":{"title":"Contracts Brief","permalink":"/docs/reference/"},"next":{"title":"USDi","permalink":"/docs/reference/Core/USDi"}}}')}}]);
