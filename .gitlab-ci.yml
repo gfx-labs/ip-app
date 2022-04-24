@@ -1,19 +1,28 @@
 image: cr.gfx.cafe/build/img/nodejs:latest
-pages:
-  stage: deploy
+site:
+  stage: build
   cache:
     - key:
         files:
           - yarn.lock
+          - book/yarn.lock
         prefix: yarn
       paths:
         - node_modules/
+        - book/node_modules/
   script:
-    - sh install-mdbook.sh
     - npx yarn install
-    - npm run mdbook --arg=build && rm -rf ./public/book/* && cp -r ./docs/book/* ./public/book/*
     - npm run build
-    - cp -a dist/. public/
+  artifacts:
+    paths:
+      - dist
+
+pages:
+  stage: deploy
+  dependencies:
+    - site
+  script:
+    - mv dist public
   artifacts:
     paths:
       - public
