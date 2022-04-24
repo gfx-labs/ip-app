@@ -15,8 +15,10 @@ import { providers } from "ethers";
 import { AppLayout } from "./components/partials/app-layout";
 import { Web3ContextProvider } from "./components/libs/web3-data-provider/Web3Provider";
 import { WalletModalProvider } from "./components/libs/wallet-modal-provider/WalletModalProvider";
-import CompanyPage from "./pages";
+import LandingPage from "./pages";
 import RedirectBook from "./pages/book";
+import Dashboard from "./pages/dashboard";
+import NotFound404Page from "./pages/404";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,18 +37,18 @@ const App = () => {
                     <Web3ContextProvider>
                         <StyledEngineProvider injectFirst>
                             <ThemeProvider {...{ theme }}>
-                                <>
-                                    <CssBaseline />
-                                    <WalletModalProvider>
-                                        <AppLayout>
-                                            <Routes>
-                                                <Route path={`/`} element={<CompanyPage />} />
-                                                <Route path={`/docs`} element={<RedirectBook />} />
-                                                <Route path={`/book`} element={<RedirectBook />} />
-                                            </Routes>
-                                        </AppLayout>
-                                    </WalletModalProvider>
-                                </>
+                                <CssBaseline />
+                                <WalletModalProvider>
+                                    <AppLayout>
+                                        <Routes>
+                                            <Route path={`/`} element={<LandingPage />} />
+                                            <Route path={`/dashboard`} element={< Dashboard />} />
+                                            <Route path={`/docs`} element={<RedirectBook />} />
+                                            <Route path={`/book*`} element={<RedirectBook />} />
+                                            <Route path={`*`} element={<NotFound404Page />} />
+                                        </Routes>
+                                    </AppLayout>
+                                </WalletModalProvider>
                             </ThemeProvider>
                         </StyledEngineProvider>
                     </Web3ContextProvider>

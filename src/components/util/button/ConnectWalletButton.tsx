@@ -3,14 +3,24 @@ import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletMo
 import { WalletModal } from "../modal";
 
 export const ConnectWalletButton = () => {
-  const { setIsWalletModalOpen } = useWalletModalContext();
-
-  return (
-    <>
-      <Button onClick={() => setIsWalletModalOpen(true)}>
-        <Typography>Connect wallet</Typography>
-      </Button>
-      <WalletModal />
-    </>
-  );
+    const { setIsWalletModalOpen } = useWalletModalContext();
+    return (
+        <>
+            <Button
+                variant="outlined"
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    mb: "8px",
+                }}
+                size="medium"
+                onClick={() => setIsWalletModalOpen(true)
+                }>
+                <Typography>Connect wallet</Typography>
+            </Button>
+            <WalletModal />
+        </>
+    );
 };

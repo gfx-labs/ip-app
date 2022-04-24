@@ -1,5 +1,5 @@
 import { formatColor, neutral } from "../../../theme";
-import { Box, Link as MuiLink, Toolbar, Button } from "@mui/material";
+import { Box, Link as MuiLink, Toolbar, Button, Typography } from "@mui/material";
 import React, { MouseEvent, useRef, useState } from "react";
 
 import { Link } from "../../util/link";
@@ -8,9 +8,8 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { ConnectWalletButton } from '../../util/button'
 
 const nav = [
-    { label: "Projects", pathname: "projects" },
-    { label: "Careers", pathname: "careers" },
-    { label: "Contact", pathname: "contact" },
+    { label: "Dashboard", pathname: "dashboard" },
+    { label: "Docs", pathname: "docs" },
 ];
 
 export const DesktopToolBar = () => {
@@ -18,51 +17,36 @@ export const DesktopToolBar = () => {
     //desktop menu config
     return (
         <Toolbar>
-            <Link to="/" role="heading" aria-level={1}>
+            <Link to="./" role="heading" aria-level={1}>
                 <Box
                     component="img"
-                    src="images/GFX_Logo.svg"
+                    src="images/usdi.svg"
                     width={85}
                     height={99}
                 ></Box>
             </Link>
-
+            <Box display="flex" ml={6}>
+                <Box display="flex" alignItems="center">
+                    <Box mb="8px" mr="4px"> {connected ? '🟢' : error ? '🔴' : '🟠'}</Box>
+                    {connected ? (
+                        <Button
+                            variant="outlined"
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                width: "100%",
+                                mb: "8px",
+                            }}
+                            size="medium"
+                            onClick={disconnectWallet}
+                        >
+                            <Typography>Disconnect wallet</Typography>
+                        </Button>
+                    ) : <ConnectWalletButton />}
+                </Box>
+            </Box>
             <Box display="flex" mr={-1} ml="auto">
-                <ConnectWalletButton />
-
-                <span>Status: {connected ? '🟢' : error ? '🔴' : '🟠'}</span>
-                {connected ? (
-                    <Button
-                        variant="outlined"
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            width: "100%",
-                            mb: "8px",
-                        }}
-                        size="large"
-                        onClick={disconnectWallet}
-                    >
-                        Disconnect Wallet
-                    </Button>
-                ) : (
-                    <Button
-                        variant="outlined"
-                        sx={{
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            width: "100%",
-                            mb: "8px",
-                        }}
-                        size="large"
-                        onClick={() => connectWallet(WalletType.INJECTED)}
-                    >
-                        Connect browser wallet
-                    </Button>
-                )}
-
                 <Box
                     mx={3}
                     display={{ xs: "none", sm: "flex", alignItems: "center" }}
