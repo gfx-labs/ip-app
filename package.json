@@ -6,13 +6,12 @@
     "scripts": {
         "prebuild": "yarn install && npm run docs",
         "build": "tsc && vite build",
+        "postbuild": "mkdir -p ./dist/book && cp -r ./docs/build/* ./dist/book",
         "_vite": "",
         "dev": "vite",
         "preview": "vite preview",
         "_docs": "",
-        "predocs": "rm -rf ./res/book/*",
-        "docs": "cd docs && npx yarn install && npm run build",
-        "postdocs": "cp -r ./docs/build/* ./res/book"
+        "docs": "cd docs && npx yarn install && npm run build"
     },
     "dependencies": {
         "react-awesome-reveal": "npm:@gfxlabs/react-awesome-reveal@^3.8.4",
