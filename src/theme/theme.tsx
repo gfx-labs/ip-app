@@ -170,8 +170,8 @@ theme.typography.body1 = {
 // body (career)
 theme.typography.body2 = {
     fontWeight: 500,
-    fontSize: pxToRem(20),
-    lineHeight: pxToRem(34),
+    fontSize: pxToRem(16),
+    lineHeight: pxToRem(24),
 
     [theme.breakpoints.down("md")]: {
         fontSize: pxToRem(18),
