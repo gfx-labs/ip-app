@@ -29,7 +29,6 @@ function getWeb3Library(provider: any): providers.Web3Provider {
 }
 
 const App = () => {
-<<<<<<< Updated upstream
     const theme = createTheme(getDesignTokens());
     return (
         <StrictMode>
@@ -57,27 +56,6 @@ const App = () => {
             </Suspense>
         </StrictMode>
     );
-=======
-  const theme = createTheme(getDesignTokens());
-  return (
-    <StrictMode>
-      <Suspense fallback={<p>Loading...</p>}>
-        <Web3ReactProvider getLibrary={getWeb3Library}>
-          <Web3ContextProvider>
-            <StyledEngineProvider injectFirst>
-              <ThemeProvider {...{ theme }}>
-                <CssBaseline />
-                <WalletModalProvider>
-                  <AppLayout>{useRoutes(routes)}</AppLayout>
-                </WalletModalProvider>
-              </ThemeProvider>
-            </StyledEngineProvider>
-          </Web3ContextProvider>
-        </Web3ReactProvider>
-      </Suspense>
-    </StrictMode>
-  );
->>>>>>> Stashed changes
 };
 
 export default App;
