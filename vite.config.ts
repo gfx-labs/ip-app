@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
-import Pages from 'vite-plugin-pages'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import NodeModulesPolyfills from '@esbuild-plugins/node-modules-polyfill'
 
@@ -15,8 +14,9 @@ import path from "path";
 // https://github.com/vitejs/vite/issues/1973
 // on going issues with vite's global and process
 export default defineConfig({
+    base: "./",
     server: {
-        hmr: (process.env.GITPOD_WORKSPACE_URL && (process.env.GITPOD_REMOTE_CLI_IPC != undefined)) ? {
+        hmr: (process.env.GITPOD_WORKSPACE_URL && (process.env.GITPOD_REMOTE_CLI_IPC)) ? {
             host: process.env.GITPOD_WORKSPACE_URL.replace("https://", "3000-"),
             protocol: "wss",
             clientPort: 443
@@ -29,7 +29,6 @@ export default defineConfig({
                 plugins: ['@emotion/babel-plugin']
             }
         }),
-        Pages(),
     ],
     define: {
         global: 'globalThis'
@@ -38,8 +37,8 @@ export default defineConfig({
     build: {
         rollupOptions: {
             plugins: [nodePolyfills()],
-          },
-      
+        },
+
     },
     optimizeDeps: {
         esbuildOptions: {
@@ -53,7 +52,7 @@ export default defineConfig({
                     buffer: true,
                     process: true,
                 }),
-                
+
             ]
         }
     }

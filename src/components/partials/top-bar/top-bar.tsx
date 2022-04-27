@@ -7,9 +7,7 @@ export interface TopBarProps extends AppBarProps { }
 
 export const TopBar = (props: TopBarProps) => {
     const theme = useTheme();
-
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
     return (
         <AppBar
             position="absolute"
@@ -24,8 +22,7 @@ export const TopBar = (props: TopBarProps) => {
                 left: 0,
                 right: 0,
             }}
-        >
-            {isMobile ? <DesktopToolBar /> : <DesktopToolBar />}
+        > <DesktopToolBar />
         </AppBar>
     );
 };
