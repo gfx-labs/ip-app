@@ -23,6 +23,7 @@ export const getDesignTokens = () => ({
             card: formatColor(neutral.gray4),
             apply: formatColor(blue.blue3),
             dialog: formatColor(neutral.white),
+            switch: formatColor(neutral.gray1)
         },
         divider: formatColor(neutral.gray6),
     },

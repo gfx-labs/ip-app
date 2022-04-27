@@ -9,7 +9,7 @@ export const neutral = {
   white: [255, 255, 255],
   white1: [91, 91, 91], // #5B5B5B
   white2: [239, 239, 239], // #EFEFEF
-  gray1: [162, 162, 162], // #A2A2A2
+  gray1: [244, 244, 244], // #F2F2F2
   gray2: [231, 231, 231], // #E7E7E7
   gray3: [175, 175, 175], //#AFAFAF
   gray4: [20, 20, 20], //#141414
