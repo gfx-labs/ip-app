@@ -1,18 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
-import {
-  Switch,
-  SwitchProps,
-  styled,
-  Theme,
-  Box,
-  Typography,
-  ThemeProvider,
-  useTheme,
-} from "@mui/material";
-import { MUIStyledCommonProps } from "@mui/system";
+import React, { useState } from "react";
+import { SwitchProps, Box, Typography, useTheme } from "@mui/material";
 
 import { formatColor, neutral, blue } from "../../../theme";
-
 interface BaseSwitchProps extends SwitchProps {
   option1: string | React.ReactElement;
   option2: string | React.ReactElement;
@@ -52,8 +41,8 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         variant="body1"
         sx={{
           color: isLight ? formatColor(neutral.gray2) : formatColor(blue.blue1),
-          display: 'flex',
-          alignItems: 'center'
+          display: "flex",
+          alignItems: "center",
         }}
       >
         {option}
@@ -117,11 +106,15 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
             transform: "translateX(100%)",
           },
           "& path": {
-            stroke: 'black'
-          }
+            stroke: "black",
+          },
         }}
       >
-        <Typography variant="body1" color={formatColor(neutral.black)} sx={{display: 'flex', alignItems: 'center'}}>
+        <Typography
+          variant="body1"
+          color={formatColor(neutral.black)}
+          sx={{ display: "flex", alignItems: "center" }}
+        >
           {option}
         </Typography>
       </Box>
