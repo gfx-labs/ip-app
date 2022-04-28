@@ -6,6 +6,7 @@ import { Link } from "../../util/link";
 import { WalletType } from "../../libs/web3-data-provider/WalletOptions";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { ConnectWalletButton } from '../../util/button'
+import { BaseSwitch } from "../../util/switch";
 
 const nav = [
     { label: "Dashboard", pathname: "dashboard" },
@@ -26,8 +27,8 @@ export const DesktopToolBar = () => {
                 ></Box>
             </Link>
             <Box display="flex" ml={6}>
+                    <BaseSwitch option1="App" option2="Governance" onOptionChange={console.log}/>
                 <Box display="flex" alignItems="center">
-                    <Box mb="8px" mr="4px"> {connected ? '🟢' : error ? '🔴' : '🟠'}</Box>
                     {connected ? (
                         <Button
                             variant="outlined"
@@ -75,6 +76,9 @@ export const DesktopToolBar = () => {
                         );
                     })}
                 </Box>
+
+                <BaseSwitch option1="light" option2="dark" onOptionChange={console.log}/>
+
             </Box>
         </Toolbar>
     );
