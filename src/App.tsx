@@ -1,4 +1,4 @@
-import { StrictMode, Suspense } from "react";
+import { StrictMode, Suspense, useState } from "react";
 import { Routes, useRoutes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { getDesignTokens } from "./theme";
@@ -8,13 +8,13 @@ import {
     CssBaseline,
     StyledEngineProvider,
     ThemeProvider,
-    useMediaQuery,
 } from "@mui/material";
 import { Web3ReactProvider } from "@web3-react/core";
 import { providers } from "ethers";
 import { AppLayout } from "./components/partials/app-layout";
 import { Web3ContextProvider } from "./components/libs/web3-data-provider/Web3Provider";
 import { WalletModalProvider } from "./components/libs/wallet-modal-provider/WalletModalProvider";
+import { PaleteModeContextProvider, usePaletteMode } from "./components/libs/palette-mode-provider/palette-mode-provider";
 import LandingPage from "./pages";
 import RedirectBook from "./pages/book";
 import Dashboard from "./pages/dashboard";
@@ -29,14 +29,18 @@ function getWeb3Library(provider: any): providers.Web3Provider {
 }
 
 const App = () => {
-    const theme = createTheme(getDesignTokens());
+
+    const {mode} = usePaletteMode()
+  
+    const theme = createTheme(getDesignTokens(mode));
+
     return (
         <StrictMode>
             <Suspense fallback={<p>Loading...</p>}>
                 <Web3ReactProvider getLibrary={getWeb3Library}>
                     <Web3ContextProvider>
                         <StyledEngineProvider injectFirst>
-                            <ThemeProvider {...{ theme }}>
+                            <ThemeProvider {...{ theme, mode }}>
                                 <CssBaseline />
                                 <WalletModalProvider>
                                     <AppLayout>
