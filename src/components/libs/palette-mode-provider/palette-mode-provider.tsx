@@ -1,4 +1,4 @@
-import { PaletteMode, createTheme, Theme, ThemeProvider } from "@mui/material";
+import { PaletteMode, createTheme, ThemeProvider } from "@mui/material";
 import { createContext, useState } from "react";
 import { getDesignTokens } from "../../../theme";
 

@@ -80,6 +80,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         position: "relative",
         height: 48,
         paddingX: "6px",
+        cursor: 'pointer'
       }}
       onClick={toggleHandler}
     >
