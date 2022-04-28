@@ -50,7 +50,7 @@ const LandingPage = () => {
         >
           interest protocol <br />
           {currentAccount && <Typography>{currentAccount}</Typography>}
-          <BaseSwitch option1="he" option2="hi" onOptionChange={console.log}/>
+          <BaseSwitch option1='hello' option2="hi" onOptionChange={console.log}/>
         </Typography>
         <Typography
           variant="h4"

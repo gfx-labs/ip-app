@@ -362,4 +362,13 @@ theme.components = {
             },
         },
     },
+    MuiSvgIcon: {
+        styleOverrides: {
+            root: {
+                fill: 'transparent',
+                height: '100%',
+                width: '100%'
+            }
+        }
+    }
 };

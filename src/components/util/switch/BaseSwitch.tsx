@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Switch,
   SwitchProps,
@@ -10,12 +10,12 @@ import {
   useTheme,
 } from "@mui/material";
 import { MUIStyledCommonProps } from "@mui/system";
-import { usePaletteMode } from "../../libs/palette-mode-provider/palette-mode-provider";
+
 import { formatColor, neutral, blue } from "../../../theme";
 
 interface BaseSwitchProps extends SwitchProps {
-  option1: string;
-  option2: string;
+  option1: string | React.ReactElement;
+  option2: string | React.ReactElement;
   onOptionChange: (arg0: boolean) => void;
 }
 
@@ -28,13 +28,18 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
 
   const theme = useTheme();
 
-  const longerLength = option1.length > option2.length ? option1.length : option2.length;
+  const longerLength =
+    typeof option1 === "string" && typeof option2 === "string"
+      ? option1.length > option2.length
+        ? option1.length
+        : option2.length
+      : 2;
 
   const calculateWidth = () => `${longerLength * 20}px`;
 
-  const calculateContainerWidth = () => `${longerLength * 40 + 12}px`
+  const calculateContainerWidth = () => `${longerLength * 40 + 12}px`;
 
-  const OptionBox = ({ option }: { option: string }) => (
+  const OptionBox = ({ option }: { option: string | React.ReactElement }) => (
     <Box
       sx={{
         width: calculateWidth(),
@@ -47,6 +52,8 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         variant="body1"
         sx={{
           color: isLight ? formatColor(neutral.gray2) : formatColor(blue.blue1),
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
         {option}
@@ -63,10 +70,10 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
 
     setIsOption1(!isOption1);
 
-    onOptionChange(!isOption1)
+    onOptionChange(!isOption1);
   };
 
-  const isLight = theme.palette.mode === "light";
+  let isLight = theme.palette.mode === "light";
 
   return (
     <Box
@@ -83,7 +90,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         textAlign: "center",
         position: "relative",
         height: 48,
-        paddingX: '6px'
+        paddingX: "6px",
       }}
       onClick={toggleHandler}
     >
@@ -95,6 +102,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         sx={{
           width: calculateWidth(),
           backgroundColor: formatColor(neutral.white),
+          color: formatColor(neutral.black),
           borderRadius: 2,
           height: 36,
           marginY: "6px",
@@ -108,9 +116,14 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
           "&.option2": {
             transform: "translateX(100%)",
           },
+          "& path": {
+            stroke: 'black'
+          }
         }}
       >
-        <Typography variant="body1">{option}</Typography>
+        <Typography variant="body1" color={formatColor(neutral.black)} sx={{display: 'flex', alignItems: 'center'}}>
+          {option}
+        </Typography>
       </Box>
     </Box>
   );
