@@ -1,21 +1,31 @@
-import { PaletteMode } from "@mui/material";
+import { PaletteMode, createTheme, Theme, ThemeProvider } from "@mui/material";
 import { createContext, useState } from "react";
+import { getDesignTokens } from "../../../theme";
 
-export type PaleteModeContextType = {
-  mode: PaletteMode;
+export type PaletteModeContextType = {
   toggleMode: () => void;
 };
 
-export const PaleteModeContextProvider = createContext<PaleteModeContextType>(
-  {} as PaleteModeContextType
+export const PaletteModeContext = createContext<PaletteModeContextType>(
+  {} as PaletteModeContextType
 );
 
-export const usePaletteMode = (): PaleteModeContextType => {
-  const [mode, setMode] = useState<PaleteModeContextType["mode"]>("dark");
+export const PaletteModeContextProvider = ({
+  children,
+}: {
+  children: React.ReactElement;
+}) => {
+  const [mode, setMode] = useState<PaletteMode>("light");
+
+  const theme = createTheme(getDesignTokens(mode));
 
   const toggleMode = () => {
     setMode(mode === "light" ? "dark" : "light");
   };
 
-  return { mode, toggleMode };
+  return (
+    <PaletteModeContext.Provider value={{ toggleMode }}>
+      <ThemeProvider {...{ theme }}>{children}</ThemeProvider>
+    </PaletteModeContext.Provider>
+  );
 };
