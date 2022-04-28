@@ -1,30 +1,40 @@
 import { blue, formatColor, green, neutral } from "./colors";
+import { PaletteMode, Theme, ThemeOptions } from "@mui/material";
 import { theme } from "../theme";
-import { Theme } from "@mui/material";
-export const getDesignTokens = () => ({
-    ...theme,
-    palette: {
-        // palette values for light mode
-        primary: { main: formatColor(blue.blue1) },
-        secondary: { main: formatColor(blue.blue2) },
-        success: { main: formatColor(green.green1) },
-        text: {
+
+
+export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
+  ...theme,
+  palette: {
+    mode,
+    ...(mode === "light"
+      ? {
+          // palette values for light mode
+          primary: { main: formatColor(blue.blue1) },
+          secondary: { main: formatColor(blue.blue2) },
+          success: { main: formatColor(green.green1) },
+          text: {
             primary: formatColor(neutral.black),
             secondary: formatColor(neutral.white),
-            tertiary: formatColor(neutral.gray1),
-            footer: formatColor(neutral.white),
-            textCardCaption: formatColor(neutral.black3),
-        },
-        background: {
+          },
+          background: {
             default: formatColor(neutral.black4),
-            secondary: formatColor(neutral.gray2),
-            tertiary: formatColor(neutral.gray2),
-            quad: formatColor(neutral.black1),
-            card: formatColor(neutral.gray4),
-            apply: formatColor(blue.blue3),
-            dialog: formatColor(neutral.white),
-            switch: formatColor(neutral.gray1)
-        },
-        divider: formatColor(neutral.gray6),
-    },
+          },
+          divider: formatColor(neutral.gray6),
+        }
+      : {
+          // palette values for dark mode
+          primary: { main: formatColor(blue.blue1) },
+          secondary: { main: formatColor(blue.blue2) },
+          success: { main: formatColor(green.green1) },
+          text: {
+            primary: formatColor(neutral.black),
+            secondary: formatColor(neutral.white),
+          },
+          background: {
+            default: formatColor(neutral.black4),
+          },
+          divider: formatColor(neutral.gray6),
+        }),
+  },
 });

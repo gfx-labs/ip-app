@@ -7,13 +7,11 @@ export interface Gradient {
 
 export const neutral = {
   white: [255, 255, 255],
-  white1: [91, 91, 91], // #5B5B5B
-  white2: [239, 239, 239], // #EFEFEF
-  gray1: [244, 244, 244], // #F2F2F2
-  gray2: [231, 231, 231], // #E7E7E7
-  gray3: [175, 175, 175], //#AFAFAF
-  gray4: [20, 20, 20], //#141414
-  gray5: [57, 57, 57], // #393939
+  gray1: [55, 66, 82], // #374252 grey-300
+  gray2: [117, 126, 140], // #757E8C grey-200
+  gray3: [163, 169, 186], //#AFAFAF grey-400
+  gray4: [32, 32, 32], //#202020
+  gray5: [243, 243, 243], // #F3F3F3
   gray6: [240, 240, 240],
   gray7: [151, 151, 151],
   gray8: [40, 40, 43, 0.24],
@@ -26,7 +24,7 @@ export const neutral = {
 };
 
 export const blue = {
-  blue1: [32, 77, 217],
+  blue1: [116, 143, 241], // #748FF1
   blue2: [117, 106, 254],
   blue3: [86, 127, 255],
   blue4: [0, 14, 57, 0.24],
