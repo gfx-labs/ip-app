@@ -2,6 +2,7 @@ import { formatColor, neutral } from "../theme";
 import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { BaseSwitch } from "../components/util/switch";
+import { ProtocolStatsCard } from "../components/util/cards";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -48,9 +49,9 @@ const LandingPage = () => {
             },
           }}
         >
-          interest protocol <br />
+          
           {currentAccount && <Typography>{currentAccount}</Typography>}
-          <BaseSwitch option1='hello' option2="hi" onOptionChange={console.log}/>
+          <ProtocolStatsCard />
         </Typography>
         <Typography
           variant="h4"

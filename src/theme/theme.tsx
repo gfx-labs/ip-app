@@ -122,9 +122,9 @@ theme.typography.h6 = {
 };
 
 theme.typography.subtitle1 = {
-    fontWeight: 400,
+    fontWeight: 800,
     fontSize: pxToRem(28),
-    lineHeight: pxToRem(40),
+    lineHeight: fzTolineHeight(28),
 
     [theme.breakpoints.down("md")]: {
         fontSize: pxToRem(24),

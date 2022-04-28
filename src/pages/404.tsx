@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 import { AppLayout } from "../components/partials/app-layout";
 import { PageContainer } from "../components/util/pageContainer";
-import { TitleTextCard } from "../components/util/titleTextCard";
+import { TitleTextCard } from "../components/util/cards";
 
 const NotFound404Page = () => {
     return (
