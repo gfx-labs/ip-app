@@ -16,6 +16,10 @@ const pxToRem = (px: number) => {
     return `${px * PX_TO_REM}rem`;
 };
 
+const fzTolineHeight = (px: number) => {
+    return pxToRem(px / 0.8262024196)
+}
+
 declare module "@mui/material/Button" {
     interface ButtonPropsVariantOverrides {
         cta: true;
@@ -30,18 +34,8 @@ export const theme = createTheme({
     typography: {
         htmlFontSize: HTML_FONT_SIZE,
         fontFamily: [
-            "Poppins",
+            "Inter",
             "sans-serif",
-            "-apple-system",
-            "BlinkMacSystemFont",
-            "Segoe UI",
-            "Roboto",
-            "Helvetica",
-            "Arial",
-            "sans-serif",
-            "Apple Color Emoji",
-            "Segoe UI Emoji",
-            "Segoe UI Symbol",
         ].join(),
         fontWeightLight: 400,
         fontWeightRegular: 400,
@@ -74,33 +68,26 @@ export const theme = createTheme({
 // Responsive typography
 theme.typography.h1 = {
     fontWeight: 700,
-    fontSize: pxToRem(144),
-    lineHeight: pxToRem(216),
+    fontSize: pxToRem(28),
+    lineHeight: fzTolineHeight(28),
     [theme.breakpoints.down("md")]: {
-        fontSize: pxToRem(64),
-        lineHeight: pxToRem(96),
     },
 };
 
 theme.typography.h2 = {
     fontWeight: 700,
-    fontSize: pxToRem(72),
-    lineHeight: pxToRem(108),
-    fontFamily: "Righteous",
+    fontSize: pxToRem(24),
+    lineHeight: fzTolineHeight(24),
     [theme.breakpoints.down("md")]: {
-        fontSize: pxToRem(48),
-        lineHeight: pxToRem(72),
     },
 };
 
 theme.typography.h3 = {
     fontWeight: 700,
-    fontSize: pxToRem(48),
-    lineHeight: pxToRem(72),
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(20),
 
     [theme.breakpoints.down("md")]: {
-        fontSize: pxToRem(24),
-        lineHeight: pxToRem(36),
     },
 };
 
@@ -156,30 +143,24 @@ theme.typography.subtitle2 = {
     },
 };
 
-// body (projects)
 theme.typography.body1 = {
     fontWeight: 400,
-    fontSize: pxToRem(24),
-    lineHeight: pxToRem(36),
+    fontSize: pxToRem(16),
+    lineHeight: fzTolineHeight(16),
     [theme.breakpoints.down("md")]: {
-        fontSize: pxToRem(18),
-        lineHeight: pxToRem(27),
     },
 };
 
-// body (career)
+// tertiary in design
 theme.typography.body2 = {
     fontWeight: 500,
-    fontSize: pxToRem(16),
-    lineHeight: pxToRem(24),
+    fontSize: pxToRem(14),
+    lineHeight: fzTolineHeight(14),
 
     [theme.breakpoints.down("md")]: {
-        fontSize: pxToRem(18),
-        lineHeight: pxToRem(27),
     },
 };
 
-// tertiary / footer
 theme.typography.caption = {
     fontWeight: 400,
     fontSize: pxToRem(16),
