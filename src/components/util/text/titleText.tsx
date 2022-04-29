@@ -13,7 +13,7 @@ export const TitleText = (props: TitleTextProps) => {
     <Box>
       <Typography variant="body1" color={formatColor(neutral.gray3)} mb={1}>{title}</Typography>
       
-      <Typography variant="subtitle1">{text}</Typography>
+      <Typography variant="subtitle1" color="text.primary">{text}</Typography>
     </Box>
   );
 };
