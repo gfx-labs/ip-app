@@ -15,7 +15,7 @@ export const PaletteModeContextProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const [mode, setMode] = useState<PaletteMode>("light");
+  const [mode, setMode] = useState<PaletteMode>("dark");
 
   const theme = createTheme(getDesignTokens(mode));
 

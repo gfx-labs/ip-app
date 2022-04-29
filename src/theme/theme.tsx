@@ -125,7 +125,7 @@ theme.typography.subtitle1 = {
     fontWeight: 800,
     fontSize: pxToRem(28),
     lineHeight: fzTolineHeight(28),
-
+    color: theme.palette.text.primary,
     [theme.breakpoints.down("md")]: {
         fontSize: pxToRem(24),
         lineHeight: pxToRem(39.48),
@@ -162,13 +162,11 @@ theme.typography.body2 = {
 };
 
 theme.typography.caption = {
-    fontWeight: 400,
+    fontWeight: 600,
     fontSize: pxToRem(16),
-    lineHeight: pxToRem(24),
-
+    lineHeight: fzTolineHeight(16),
+    color: formatColor(blue.blue1),
     [theme.breakpoints.down("md")]: {
-        fontSize: pxToRem(16),
-        lineHeight: pxToRem(24),
     },
 };
 
@@ -270,9 +268,9 @@ theme.components = {
             {
                 props: { variant: "contained" },
                 style: {
-                    backgroundColor: formatColor(neutral.white),
-                    color: "black",
-
+                    backgroundColor: formatColor(blue.blue1),
+                    color: formatColor(neutral.white),
+                    width: '100%',
                     "&:hover": {
                         backgroundColor: formatColor(neutral.gray1),
                     },

@@ -12,9 +12,9 @@ export const neutral = {
   gray3: [163, 169, 186], //#AFAFAF grey-400
   gray4: [32, 32, 32], //#202020
   gray5: [243, 243, 243], // #F3F3F3
-  gray6: [240, 240, 240],
-  gray7: [151, 151, 151],
-  gray8: [40, 40, 43, 0.24],
+  gray6: [237, 237, 237], // #EDEDED
+  gray7: [32, 38, 47], // #20262F
+  gray8: [47, 56, 72], // #2F3848
   gray9: [127, 127, 127], // #7F7F7F
   black: [0, 0, 0],
   black1: [44, 44, 44], // #2C2C2C
@@ -43,15 +43,15 @@ export const gradient = {
   gradient1: {
     angle: 180,
     stops: [
-      [[32, 196, 110], 0],
-      [[32, 77, 217], 1],
+      [[255, 255, 255], 0],
+      [[229, 229, 229, 0.31], 1],
     ],
   } as Gradient,
   gradient2: {
     angle: 180,
     stops: [
-      [[86, 127, 255], 0],
-      [[0, 255, 148], 1],
+      [[9, 9, 9], 0],
+      [[8, 11, 15, 0.31], 1],
     ],
   } as Gradient,
   gradient3: {
@@ -83,7 +83,7 @@ export const formatColor = (color: number[]) => {
     case 4:
       return `rgba(${formatRgbChannel(color[0])},${formatRgbChannel(
         color[1]
-      )},${formatHexChannel(color[2])},${Math.max(
+      )},${formatRgbChannel(color[2])},${Math.max(
         0,
         Math.min(1, color[3])
       ).toPrecision(3)})`;

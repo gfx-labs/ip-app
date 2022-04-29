@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { ReactNode } from "react";
 
-import { ForwardGreyIcon } from "../../icons/misc/forwardGrey";
+import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 
 import { Link } from "../link"
 
@@ -117,7 +117,7 @@ export const ListWithForwardIcon = (props: ListWithForwardIconProps) => {
                                     padding: 0,
                                 }}
                             >
-                                <ForwardGreyIcon />
+                                <ForwardIcon strokecolor="black"/>
                             </IconButton>
                         </MuiLink>
                     </Grid>

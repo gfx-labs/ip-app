@@ -28,7 +28,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           secondary: { main: formatColor(blue.blue2) },
           success: { main: formatColor(green.green1) },
           text: {
-            primary: formatColor(neutral.black),
+            primary: formatColor(neutral.white),
             secondary: formatColor(neutral.white),
           },
           background: {
