@@ -3,6 +3,7 @@ import {
     formatColor,
     formatGradient,
     gradient,
+    green,
     neutral,
 } from "./colors";
 import { ComponentsVariants } from "@mui/material";
@@ -366,6 +367,19 @@ theme.components = {
                 fill: 'transparent',
                 height: '100%',
                 width: '100%'
+            }
+        }
+    },
+    MuiLinearProgress: {
+        styleOverrides: {
+            determinate: {
+                backgroundColor: formatColor(neutral.white),
+                height: 16,
+                borderRadius: 8,
+                '.MuiLinearProgress-bar': {
+                    backgroundColor: formatColor(green.green1),
+
+                }
             }
         }
     }

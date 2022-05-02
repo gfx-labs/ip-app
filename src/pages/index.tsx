@@ -5,6 +5,7 @@ import { BaseSwitch } from "../components/util/switch";
 import { ProtocolStatsCard } from "../components/util/cards";
 import { useLight } from "../hooks/useLight";
 import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
+import { StatsMeter } from "../components/util/statsMeter";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -54,11 +55,16 @@ const LandingPage = () => {
           }}
         >
           {currentAccount && <Typography>{currentAccount}</Typography>}
-          <Box display="grid" gridTemplateColumns="1fr 1fr" columnGap={2}>
+
+        </Typography>
+
+        <Box display="grid" gridTemplateColumns="1fr 1fr" columnGap={2}>
             <ProtocolStatsCard />
             <UsdiGraphCard />
           </Box>
-        </Typography>
+
+          <StatsMeter />
+
         <Typography
           variant="h4"
           zIndex={1}
