@@ -1,18 +1,22 @@
-import { formatColor, neutral } from "../theme";
+import { formatColor, formatGradient, gradient, neutral } from "../theme";
 import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { BaseSwitch } from "../components/util/switch";
 import { ProtocolStatsCard } from "../components/util/cards";
+import { useLight } from "../hooks/useLight";
+import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 
 const LandingPage = () => {
   const theme = useTheme();
   const { currentAccount } = useWeb3Context();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const isLight = useLight();
+
   return (
     <Box
       sx={{
         marginX: "auto",
-        backgroundColor: formatColor(neutral.white),
         position: "relative",
         overflowY: "hidden",
       }}
@@ -49,9 +53,11 @@ const LandingPage = () => {
             },
           }}
         >
-          
           {currentAccount && <Typography>{currentAccount}</Typography>}
-          <ProtocolStatsCard />
+          <Box display="grid" gridTemplateColumns="1fr 1fr" columnGap={2}>
+            <ProtocolStatsCard />
+            <UsdiGraphCard />
+          </Box>
         </Typography>
         <Typography
           variant="h4"
