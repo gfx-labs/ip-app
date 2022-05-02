@@ -2,22 +2,22 @@
 
 ## Overview
 
-The interest rate curve math for USDi is a piecewise linear function which returns the borrow rate from the input of the reserve ratio.
+The interest rate curve math for USDi is a piecewise linear function which returns the borrow rate from the input of the reserve ratio. To learn more about the interest rate curve and the math involved please see the whitepaper. 
 
+## Constructor
 The variables: r for rate and s for reserve ratio
 * _r0: the rate at full utilization.
 * _r1: the rate at the second kink
 * _r2: the rate at the first kink
-* _r3:
-* _s0: the second kink
-* _s1: the the first kink 
+* _s1: the second kink
+* _s2: the the first kink 
 
 ![](https://i.imgur.com/0gKHGQ5.png)
 
-
+## Functions
 * function valueAt(int256 x_value) external view override returns (int256)
-    * Returns the rate from an entered reserve ratio.
-* function linearInterpolation(int256 rise,int256 run,int256 distance,int256 b)
+    * Returns an interest rate based upon the entered reserve ratio.
+* function linearInterpolation(int256 rise, int256 run, int256 distance, int256 b) private pure returns (int256)
     * helper math function to valueAt
 
 
