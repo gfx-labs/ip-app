@@ -19,4 +19,12 @@ import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
     * ChainlinkOracleRelay: called by the AnchoredViewRelay. Gets the lastestAnswer from a Chainlink oracle. 
     * UniswapV3OracleRelay: called by the AnchoredViewRelay. Calculates the price of x ticks for a UniV3 market.
 
+## Governance Contracts
+* GovernorDelegate: is the implementation governance contract. 
+* GovernorDelegator: is the base governance contract that references the implementation for the core logic.
+
+## Token Contracts
+* TokenDelegate: is the implementation token contract.
+* TokenDelegator: is the base token contract that references the implementation for the core logic.
+
 <DocCardList items={useCurrentSidebarCategory().items}/>

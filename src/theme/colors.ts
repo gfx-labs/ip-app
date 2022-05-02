@@ -7,16 +7,14 @@ export interface Gradient {
 
 export const neutral = {
   white: [255, 255, 255],
-  white1: [91, 91, 91], // #5B5B5B
-  white2: [239, 239, 239], // #EFEFEF
-  gray1: [162, 162, 162], // #A2A2A2
-  gray2: [231, 231, 231], // #E7E7E7
-  gray3: [175, 175, 175], //#AFAFAF
-  gray4: [20, 20, 20], //#141414
-  gray5: [57, 57, 57], // #393939
-  gray6: [240, 240, 240],
-  gray7: [151, 151, 151],
-  gray8: [40, 40, 43, 0.24],
+  gray1: [55, 66, 82], // #374252 grey-300
+  gray2: [117, 126, 140], // #757E8C grey-200
+  gray3: [163, 169, 186], //#AFAFAF grey-400
+  gray4: [32, 32, 32], //#202020
+  gray5: [243, 243, 243], // #F3F3F3
+  gray6: [237, 237, 237], // #EDEDED
+  gray7: [32, 38, 47], // #20262F
+  gray8: [47, 56, 72], // #2F3848
   gray9: [127, 127, 127], // #7F7F7F
   black: [0, 0, 0],
   black1: [44, 44, 44], // #2C2C2C
@@ -26,14 +24,14 @@ export const neutral = {
 };
 
 export const blue = {
-  blue1: [32, 77, 217],
+  blue1: [116, 143, 241], // #748FF1
   blue2: [117, 106, 254],
   blue3: [86, 127, 255],
   blue4: [0, 14, 57, 0.24],
 };
 
 export const green = {
-  green1: [32, 196, 110],
+  green1: [80, 214, 109], // #50D66D
 };
 
 export const disabled = {
@@ -45,23 +43,43 @@ export const gradient = {
   gradient1: {
     angle: 180,
     stops: [
-      [[32, 196, 110], 0],
-      [[32, 77, 217], 1],
+      [[255, 255, 255], 0],
+      [[229, 229, 229, 0.31], 1],
     ],
   } as Gradient,
   gradient2: {
     angle: 180,
     stops: [
-      [[86, 127, 255], 0],
-      [[0, 255, 148], 1],
+      [[9, 9, 9], 0],
+      [[8, 11, 15, 0.31], 1],
     ],
   } as Gradient,
-  gradient3: {
-    angle: 89.49,
+  bgDefaultLight: {
+    angle: 180,
     stops: [
-      [[116, 16, 195], 0],
-      [[195, 16, 166], 0.33],
-      [[223, 111, 111], 1],
+      [[255, 255, 255], 0],
+      [[238, 236, 242], 1],
+    ],
+  } as Gradient,
+  bgDefaultDark: {
+    angle: 180,
+    stops: [
+      [[47, 55, 68], 0],
+      [[20, 25, 31], 0.33],
+    ],
+  } as Gradient,
+  cardDefaultLight: {
+    angle: 180,
+    stops: [
+      [[255, 255, 255], 0],
+      [[229, 229, 229, 0], 1],
+    ],
+  } as Gradient,
+  cardDefaultDark: {
+    angle: 180,
+    stops: [
+      [[9, 9, 9], 0],
+      [[8, 11, 15, 0], 1],
     ],
   } as Gradient,
 };
@@ -85,7 +103,7 @@ export const formatColor = (color: number[]) => {
     case 4:
       return `rgba(${formatRgbChannel(color[0])},${formatRgbChannel(
         color[1]
-      )},${formatHexChannel(color[2])},${Math.max(
+      )},${formatRgbChannel(color[2])},${Math.max(
         0,
         Math.min(1, color[3])
       ).toPrecision(3)})`;

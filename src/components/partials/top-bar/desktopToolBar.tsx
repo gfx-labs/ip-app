@@ -1,11 +1,15 @@
 import { formatColor, neutral } from "../../../theme";
 import { Box, Link as MuiLink, Toolbar, Button, Typography } from "@mui/material";
-import React, { MouseEvent, useRef, useState } from "react";
+import React, { MouseEvent, useContext, useRef, useState } from "react";
 
 import { Link } from "../../util/link";
 import { WalletType } from "../../libs/web3-data-provider/WalletOptions";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { ConnectWalletButton } from '../../util/button'
+import { BaseSwitch } from "../../util/switch";
+import { LightIcon } from "../../icons/misc/LightIcon";
+import { DarkIcon } from "../../icons/misc/DarkIcon";
+import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
 
 const nav = [
     { label: "Dashboard", pathname: "dashboard" },
@@ -15,6 +19,8 @@ const nav = [
 export const DesktopToolBar = () => {
     const { connectWallet, connected, disconnectWallet, error } = useWeb3Context();
     //desktop menu config
+
+    const {toggleMode} = useContext(PaletteModeContext)
     return (
         <Toolbar>
             <Link to="./" role="heading" aria-level={1}>
@@ -26,8 +32,8 @@ export const DesktopToolBar = () => {
                 ></Box>
             </Link>
             <Box display="flex" ml={6}>
+                    <BaseSwitch option1="App" option2="Governance" onOptionChange={console.log}/>
                 <Box display="flex" alignItems="center">
-                    <Box mb="8px" mr="4px"> {connected ? '🟢' : error ? '🔴' : '🟠'}</Box>
                     {connected ? (
                         <Button
                             variant="outlined"
@@ -75,6 +81,11 @@ export const DesktopToolBar = () => {
                         );
                     })}
                 </Box>
+
+                <BaseSwitch option1={<LightIcon />} option2={<DarkIcon />} onOptionChange={toggleMode}/>
+                    
+                    
+       
             </Box>
         </Toolbar>
     );
