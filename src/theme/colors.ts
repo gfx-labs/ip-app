@@ -54,12 +54,18 @@ export const gradient = {
       [[8, 11, 15, 0.31], 1],
     ],
   } as Gradient,
-  gradient3: {
-    angle: 89.49,
+  bgDefaultLight: {
+    angle: 180,
     stops: [
-      [[116, 16, 195], 0],
-      [[195, 16, 166], 0.33],
-      [[223, 111, 111], 1],
+      [[255, 255, 255], 0],
+      [[238, 236, 242], 1],
+    ],
+  } as Gradient,
+  bgDefaultDark: {
+    angle: 180,
+    stops: [
+      [[47, 55, 68], 0],
+      [[20, 25, 31], 0.33],
     ],
   } as Gradient,
 };

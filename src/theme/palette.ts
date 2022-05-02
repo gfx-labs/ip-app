@@ -1,4 +1,4 @@
-import { blue, formatColor, green, neutral } from "./colors";
+import { blue, formatColor, formatGradient, gradient, green, neutral } from "./colors";
 import { PaletteMode, Theme, ThemeOptions } from "@mui/material";
 import { theme } from "../theme";
 
@@ -18,7 +18,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
             secondary: formatColor(neutral.white),
           },
           background: {
-            default: formatColor(neutral.black4),
+            default: `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
           },
           divider: formatColor(neutral.gray6),
         }
@@ -32,7 +32,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
             secondary: formatColor(neutral.white),
           },
           background: {
-            default: formatColor(neutral.black4),
+            default: `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`,
           },
           divider: formatColor(neutral.gray6),
         }),
