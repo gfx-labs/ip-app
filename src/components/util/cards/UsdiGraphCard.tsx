@@ -1,15 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
 import { useLight } from "../../../hooks/useLight";
 import { formatGradient, formatColor, neutral, gradient } from "../../../theme";
 import {
   LineChart,
   Line,
   XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 

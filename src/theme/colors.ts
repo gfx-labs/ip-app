@@ -31,7 +31,7 @@ export const blue = {
 };
 
 export const green = {
-  green1: [32, 196, 110],
+  green1: [80, 214, 109], // #50D66D
 };
 
 export const disabled = {
