@@ -68,6 +68,20 @@ export const gradient = {
       [[20, 25, 31], 0.33],
     ],
   } as Gradient,
+  cardDefaultLight: {
+    angle: 180,
+    stops: [
+      [[255, 255, 255], 0],
+      [[229, 229, 229, 0], 1],
+    ],
+  } as Gradient,
+  cardDefaultDark: {
+    angle: 180,
+    stops: [
+      [[9, 9, 9], 0],
+      [[8, 11, 15, 0], 1],
+    ],
+  } as Gradient,
 };
 
 const formatHexChannel = (channel: number) => {
