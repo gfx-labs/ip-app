@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { Link } from "../link";
-import { ForwardGreyIcon } from "../../icons/misc/forwardGrey";
+import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 
 export interface ProjectProps {
     label: string;
@@ -75,7 +75,7 @@ export const ProjectCardWithLogo = ({ project }: { project: ProjectProps }) => {
                         position: "relative",
                     }}
                 >
-                    <ForwardGreyIcon sx={{ width: 40, height: 40 }} />
+                    <ForwardIcon sx={{ width: 40, height: 40 }} />
                 </IconButton>
             </Box>
         </MuiLink>
