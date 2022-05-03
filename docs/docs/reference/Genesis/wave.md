@@ -3,10 +3,24 @@
 ## Overview
 Contract for IDO
 
-The Wave contract is for the initial IDO of Interest Protocol Tokens (IPT). Addresses can claim up to a maximum allotted number of points for their address by sending USDC. At the end of the IDO, the contract allows for the address to claim its IPT tokens. The IDO distributes a fixed number of IDO tokens to the point holders pro-rata their balance. 
+The Wave contract is used for the initial IDO of Interest Protocol Tokens (IPT). During the IDO, each address can commit USDC to the Wave contract, up to the address's individual cap. There is also a global cap on the total amount of USDC that can be committed. After the end of the IDO period, each address can claim their pro-rata share of the IPT tokens, based on the amount of USDC that they sent. The IDO distributes up to X IPT tokens.
 
-In an effort to decentralize the protocol, a whitelist of addresses has been created to encourage a wide dispersion of IPT and thus control of the protocol from the outset. In addition to a max number of tokens each address is able to purchase, the protocol gives an opportunity to historical governance participants to get points, then DeFi users, and finally everyone. The protocol prefers IPT holders to have a track record in protocol participation, so giving them the first opportunity is ideal for the longevity of the protocol. Each wave gets ~2 days to get points. Any remaining points are rolled into the next wave for claim. Additional waves will occur until all points are claimed or each wave is completed. 
+## Whitelist
 
+A whitelist of addresses has been created to encourage a wide dispersion of IPT and thus decentralize the protocol from the outset. In addition to a max number of tokens each address is able to purchase, the protocol gives an opportunity to historical governance participants to get points, then DeFi users, and finally everyone. The protocol prefers IPT holders to have a track record in protocol participation, so giving them the first opportunity is ideal for the longevity of the protocol. Each wave gets ~2 days to get points. Any remaining points are rolled into the next wave for claim. Additional waves will occur until all points are claimed or all waves are completed.
+
+## Sale Rules
+
+- Up to X IPT tokens will be sold at a price between $0.50 and $2.00 per token.
+
+- During the IDO period, each address can commit USDC to the contract, subject to the following constraints:
+    1. Each address can commit up to its individual allocation cap, determined by the whitelist.
+    2. The total amount of USDC committed to the contract cannot exceed the global cap, which is ______ USDC. Once this global cap is reached, the contract will no longer accept USDC commitments.
+
+- After the IDO period ends, each address can claim its share of IPT tokens. The amount of IPT tokens claimable by each address is determined as follows:
+    1. 
+
+Each address can send USDC to the Wave contract to claim points, up to the address's maximum allocation amount. After the end of the IDO period, each address can claim IPT tokens based on its points balance. The IDO distributes a fixed total amount of IPT tokens, and each point holder receives a pro-rata
 
 ## Constructor
 ```
