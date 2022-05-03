@@ -15,15 +15,19 @@ export const AppLayout = (props: AppLayoutProps) => {
   const isLight = useLight();
 
   return (
-    <Box
-      sx={{
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
-        )})`,
-      }}
-    >
+    <Box>
       <TopBar />
-      <Box>{children}</Box>
+      <Box
+        sx={{
+          backgroundImage: `linear-gradient(${formatGradient(
+            isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
+          )})`,
+          pt: { xs: 10, md: 20 },
+          pb: { xs: 10, md: 15 }
+        }}
+      >
+        {children}
+      </Box>
       <Footer />
     </Box>
   );

@@ -6,6 +6,7 @@ import { ProtocolStatsCard } from "../components/util/cards";
 import { useLight } from "../hooks/useLight";
 import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 import { StatsMeter } from "../components/util/statsMeter";
+import { UserStats } from "../components/util/UserStats";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -29,12 +30,11 @@ const LandingPage = () => {
         py={{ xs: 7, sm: 0 }}
         px={{ xs: 3, md: 15 }}
         margin="auto"
-        mt={{ xs: 20, md: 31 }}
+        
         height={isMobile ? "auto" : "80vh"}
         position="relative"
-        marginBottom={25}
         sx={{
-          mb: 25,
+          mb: 18,
           [theme.breakpoints.down("md")]: {
             mb: 16,
             pl: 3,
@@ -57,37 +57,16 @@ const LandingPage = () => {
           {currentAccount && <Typography>{currentAccount}</Typography>}
 
         </Typography>
-
+          <Typography variant="body1" color={formatColor(neutral.gray3)}>Protocol Stats</Typography>
         <Box display="grid" gridTemplateColumns="1fr 1fr" columnGap={2}>
             <ProtocolStatsCard />
             <UsdiGraphCard />
           </Box>
-
+          <Box sx={{marginY: 4}}>
           <StatsMeter />
+          </Box>
 
-        <Typography
-          variant="h4"
-          zIndex={1}
-          textAlign="right"
-          position="relative"
-          fontWeight={600}
-          sx={{
-            color: formatColor(neutral.gray1),
-            [theme.breakpoints.down("md")]: {
-              fontSize: 24,
-            },
-          }}
-        >
-          usdi <br />
-          usdi <br />
-          usdi <br />
-          usdi <br />
-          usdi <br />
-          usdi <br />
-          usdi <br />
-          usdi <br />
-          usdi <br />
-        </Typography>
+          <UserStats />
       </Box>
     </Box>
   );

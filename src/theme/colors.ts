@@ -16,6 +16,7 @@ export const neutral = {
   gray7: [32, 38, 47], // #20262F
   gray8: [47, 56, 72], // #2F3848
   gray9: [127, 127, 127], // #7F7F7F
+  gray10: [107, 118, 135], // #6B7687
   black: [0, 0, 0],
   black1: [44, 44, 44], // #2C2C2C
   black2: [22, 22, 22], // #161616,
@@ -25,9 +26,13 @@ export const neutral = {
 
 export const blue = {
   blue1: [116, 143, 241], // #748FF1
-  blue2: [117, 106, 254],
-  blue3: [86, 127, 255],
-  blue4: [0, 14, 57, 0.24],
+  blue2: [5, 45, 255], // #052DFF
+  blue3: [205, 225, 255], // #CDE1FF
+  blue4: [146, 189, 255], // #92BDFF
+  blue5: [173, 176, 255], // #ADB0FF
+  blue6: [46, 54, 249], // #2E36F9
+  blue7: [94, 100, 244], // #5E64F4
+  blue8: [193,195, 254], // #C1C3FE
 };
 
 export const green = {
@@ -65,7 +70,9 @@ export const gradient = {
     angle: 180,
     stops: [
       [[47, 55, 68], 0],
-      [[20, 25, 31], 0.33],
+      [[19, 22, 26], 0.33],
+      [[27, 32, 39], 0.66],
+      [[20, 25, 31], 1]
     ],
   } as Gradient,
   cardDefaultLight: {
@@ -76,6 +83,20 @@ export const gradient = {
     ],
   } as Gradient,
   cardDefaultDark: {
+    angle: 180,
+    stops: [
+      [[9, 9, 9], 0],
+      [[8, 11, 15, 0], 1],
+    ],
+  } as Gradient,
+  statDefaultLight: {
+    angle: 180,
+    stops: [
+      [[255, 255, 255], 0],
+      [[229, 229, 229, 0], 1],
+    ],
+  } as Gradient,
+  statDefaultDark: {
     angle: 180,
     stops: [
       [[9, 9, 9], 0],

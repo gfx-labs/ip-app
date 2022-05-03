@@ -17,11 +17,12 @@ export const Footer = () => {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <Box
-            py={{ xs: 2, sm: 5 }}
+            paddingTop={{ xs: 2, sm: 5 }}
+            paddingBottom={{ xs: 2, sm: 5 }}
             px={{ xs: 2.5, md: 15 }}
             sx={{
-                backgroundColor: formatColor(neutral.black),
-                color: formatColor(neutral.white),
+                backgroundColor: 'footer.background',
+                color: 'footer.color',
             }}
         >
             {isMobile ? mobileFooter() : desktopFooter()}
@@ -47,8 +48,10 @@ const desktopFooter = () => {
                 justifyContent: "space-between",
                 maxWidth: 1300,
                 margin: "auto",
+                backgroundColor: 'footer.background'
             }}
         >
+            awiuehfoawuefuawhfou
         </Box>
     )
 }
