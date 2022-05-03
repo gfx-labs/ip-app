@@ -2,7 +2,7 @@
 
 
 ## Overview
-Interest Protocol is the first fractional reserve banking protocol on the Ethereum blockchain that pays interest to all depositors. Interest Protocol issues a stablecoin, named USDi, that is both over-collateralized and highly scalable. USDi holders automatically earn yield without having to stake, which means Interest Protocol provides yield opportunities to gas-conscious users.  Given market interest rates of 5% to 10%, Interest Protocol's lending operations are 2 to 2.5 times as capital efficient as those of lending protocols without fractional reserves. 
+Interest Protocol is the first fractional reserve banking protocol on the Ethereum blockchain that pays interest to all depositors. Interest Protocol issues a stablecoin, named USDi, that is both over-collateralized and highly scalable. USDi holders automatically earn yield without having to stake, meaning Interest Protocol provides yield opportunities to gas-conscious users.  Given market interest rates of 5% to 10%, Interest Protocol's lending operations are 2 to 2.5 times as capital efficient as those of lending protocols without fractional reserves. 
 
 
 ## Who participates?
