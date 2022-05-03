@@ -9,9 +9,7 @@ Interest Protocol IDO distributes up to Y Interest Protocol Tokens (IPT) at a pr
 
 ## Whitelist
 
-Interest Protocol IDO is designed to encourage a wide dispersion of IPT and decentralize the protocol from the outset. It also aims to distribute voting power to historical governance participants and DeFi users. To achieve these goals, each Wave has a whitelist that specifies the maximum amount of USDC that each address can commit during the Wave. In the Wave 1 whitelist, 
- 
-In addition to a max number of tokens each address is able to purchase, the protocol gives an opportunity to historical governance participants to get points, then DeFi users, and finally everyone. The protocol prefers IPT holders to have a track record in protocol participation, so giving them the first opportunity is ideal for the longevity of the Any remaining points are rolled into the next wave for claim. Additional waves will occur until all points are claimed or all waves are completed.
+Interest Protocol IDO is designed to encourage a wide dispersion of IPT and decentralize the protocol from the outset. It also aims to distribute voting power to historical governance participants and DeFi users. To achieve these goals, each Wave has a whitelist that specifies the maximum amount of USDC that each address can commit during the Wave. In Wave 1, ___. In Wave 2, ____. Wave 3 has no individual caps and is open to everyone. 
 
 ## Sale Rules
 
