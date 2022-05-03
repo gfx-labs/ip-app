@@ -1,4 +1,4 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, BoxProps } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
 
 type TitleTextProps = {
@@ -6,11 +6,11 @@ type TitleTextProps = {
   text: string;
 };
 
-export const TitleText = (props: TitleTextProps) => {
+export const TitleText = (props: TitleTextProps & BoxProps) => {
   const { title, text } = props;
 
   return (
-    <Box>
+    <Box {...props}>
       <Typography variant="body1" color={formatColor(neutral.gray3)} mb={1}>{title}</Typography>
       
       <Typography variant="subtitle1" color="text.primary">{text}</Typography>
