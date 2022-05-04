@@ -16,7 +16,11 @@ declare module "@mui/material/styles/createPalette" {
     smallCard: {
       background: string;
       color: string;
-    }
+    };
+
+    mobileToolBar: {
+      background: string
+    };
   }
 }
 
@@ -38,6 +42,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           background: {
             default: `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
           },
+          mobileToolBar: {background: formatColor(neutral.white)},
           divider: formatColor(neutral.gray6),
           footer: {
             background: formatColor(neutral.white),
@@ -61,6 +66,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           background: {
             default: `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`,
           },
+          mobileToolBar: {background: formatColor(neutral.black5)},
           divider: formatColor(neutral.gray6),
           footer: {
             background: formatColor(neutral.gray7),

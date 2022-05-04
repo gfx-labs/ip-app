@@ -1,10 +1,16 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useLight } from "../../../hooks/useLight";
-import { formatColor, formatGradient, gradient, neutral, blue } from "../../../theme";
-import { CopyButton } from "../button/CopyButton";
+import {
+  formatColor,
+  formatGradient,
+  gradient,
+  neutral,
+  blue,
+} from "../../../theme";
+import { CopyButton } from "../button";
 import { TitleText } from "../text";
-import { AddressShortener } from "../text/AddressShortener";
+import { addressShortener } from "../text/";
 import { SingleStatCard } from "./SingleStatCard";
 import { UserTokenCard } from "./UserTokenCard";
 
@@ -28,6 +34,8 @@ export const UserStats = () => {
   const [borrowAPR, setBorrowAPR] = useState(4.24);
   const [USDIBorrowed, setUSDIBorrowed] = useState(14329);
 
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
@@ -36,11 +44,22 @@ export const UserStats = () => {
         )})`,
         paddingX: 6,
         paddingY: 7,
-        borderRadius: 16
+        borderRadius: 16,
+
+        [theme.breakpoints.down('md')]: {
+          paddingX: 2
+        }
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: 'center', marginBottom: 3 }}>
-        <Box display="flex">
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: { xs: "flex-end", md: "space-between" },
+          alignItems: "center",
+          marginBottom: 3,
+        }}
+      >
+        <Box display={{ xs: "none", md: "flex" }}>
           <StatsBodyTypography text={`Rewards:${rewards.toLocaleString()}`} />
           <Box
             sx={{
@@ -57,9 +76,10 @@ export const UserStats = () => {
         </Box>
 
         <Box display="flex" alignItems="center">
-          <StatsBodyTypography text="Vault Address" /> <Box marginRight={2}></Box>
+          <StatsBodyTypography text="Vault Address" />{" "}
+          <Box marginRight={2}></Box>
           <CopyButton
-            text={AddressShortener(
+            text={addressShortener(
               "0x00992D294752D54492b3893415f63B3F82Eb3778"
             )}
             copy={"0x00992D294752D54492b3893415f63B3F82Eb3778"}
@@ -73,7 +93,13 @@ export const UserStats = () => {
           justifyContent: "space-between",
           gridTemplateColumns: "2fr 1fr 4fr",
           columnGap: 4,
-          marginBottom: 5
+          marginBottom: 5,
+          [theme.breakpoints.down("lg")]: {
+            gridAutoFlow: "column",
+            gridTemplateColumns: "2fr 1fr",
+            columnGap: 2,
+            rowGap: 2,
+          },
         }}
       >
         <SingleStatCard>
@@ -87,19 +113,60 @@ export const UserStats = () => {
           <TitleText title="Borrow APR" text={`${borrowAPR}%`} />
         </SingleStatCard>
 
-        <SingleStatCard sx={{ paddingRight: 3 }}>
-          <Box display="flex" justifyContent="space-between">
+        <SingleStatCard
+          sx={{
+            paddingRight: 3,
+            [theme.breakpoints.down("lg")]: {
+              gridColumn: "1 / -1",
+              gridRow: 2,
+            },
+          }}
+        >
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              [theme.breakpoints.down("lg")]: {
+                flexWrap: "wrap",
+              },
+            }}
+          >
             <TitleText
               title="USDi Borrowed"
               text={`$${USDIBorrowed.toLocaleString()}`}
             />
 
-            <Box display="grid" alignItems="center" columnGap={2} gridTemplateColumns="1fr 1fr">
-              <Button variant="contained" sx={{ minWidth: 150 , backgroundColor: formatColor(blue.blue8), color: formatColor(blue.blue7)}}>
+            <Box
+              display="grid"
+              alignItems="center"
+              columnGap={2}
+              gridTemplateColumns="1fr 1fr"
+              sx={{
+                [theme.breakpoints.down("lg")]: {
+                  width: "100%",
+                  marginTop: 3,
+                },
+              }}
+            >
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: formatColor(blue.blue8),
+                  color: formatColor(blue.blue7),
+                }}
+              >
                 Borrow
               </Button>
 
-              <Button variant="contained" sx={{ minWidth: 150 , backgroundColor: formatColor(blue.blue8), color: formatColor(blue.blue7)}}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: formatColor(blue.blue8),
+                  color: formatColor(blue.blue7),
+                }}
+              >
                 Repay
               </Button>
             </Box>
@@ -107,7 +174,18 @@ export const UserStats = () => {
         </SingleStatCard>
       </Box>
 
-      <Box sx={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", columnGap: 3 }}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "1fr 1fr",
+            md: "repeat(3, 1fr)",
+          },
+          columnGap: 3,
+          rowGap: 3
+        }}
+      >
         <UserTokenCard
           tokenName="WBTC"
           tokenValue="39590"

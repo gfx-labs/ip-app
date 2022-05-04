@@ -8,14 +8,19 @@ import { TokenSelect } from "./TokenSelect";
 export const SwapContainer = () => {
   const isLight = useLight()
 
+  const theme = useTheme()
+
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "space-between",
         columnGap: 2,
-        rowGap: 2,
+        rowGap: 1,
         position: "relative",
+        [theme.breakpoints.down('md')]: {
+          flexDirection: 'column'
+        }
       }}
     >
       <TokenSelect />
@@ -49,6 +54,9 @@ export const SwapContainer = () => {
           sx={{
             width: 14,
             height: 13,
+            [theme.breakpoints.down('md')]: {
+              transform: 'rotate(90deg)'
+            }
           }}
         />
       </Box>

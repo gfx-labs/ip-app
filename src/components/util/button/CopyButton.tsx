@@ -40,7 +40,7 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
           width: "19px",
           marginLeft: 1,
         }}
-        isLight={isLight}
+        islight={isLight.toString()}
       />
     </Button>
   );

@@ -224,7 +224,7 @@ export const UsdiGraphCard = () => {
 
       <ResponsiveContainer width="100%" height={150}>
         <LineChart
-          width={100}
+          width={300}
           height={200}
           data={data}
           margin={{
@@ -239,7 +239,7 @@ export const UsdiGraphCard = () => {
             interval="preserveStartEnd"
             tick={{ fontSize: 12 }}
             tickLine={false}
-            minTickGap={50}
+            minTickGap={60}
             offset={-5}
           />
 

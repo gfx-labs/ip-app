@@ -70,7 +70,10 @@ theme.typography.h1 = {
   fontWeight: 700,
   fontSize: pxToRem(28),
   lineHeight: fzTolineHeight(28),
-  [theme.breakpoints.down("md")]: {},
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(20),
+  },
 };
 
 theme.typography.h2 = {
@@ -124,8 +127,8 @@ theme.typography.subtitle1 = {
   lineHeight: fzTolineHeight(28),
   color: theme.palette.text.primary,
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(24),
-    lineHeight: pxToRem(39.48),
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(20),
   },
 };
 
@@ -158,10 +161,13 @@ theme.typography.body2 = {
 
 theme.typography.caption = {
   fontWeight: 600,
-  fontSize: pxToRem(16),
-  lineHeight: fzTolineHeight(16),
+  fontSize: pxToRem(14),
+  lineHeight: fzTolineHeight(14),
   color: formatColor(blue.blue1),
-  [theme.breakpoints.down("md")]: {},
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(12),
+  },
 };
 
 theme.typography.button = {
@@ -268,10 +274,12 @@ theme.components = {
           backgroundColor: formatColor(blue.blue1),
           color: formatColor(blue.blue7),
           width: "100%",
+          minWidth: 150,
           fontSize: 14,
           "&:hover": {
             backgroundColor: formatColor(blue.blue5),
-            color: formatColor(blue.blue6)
+            color: formatColor(blue.blue6),
+            minWidth: 120 
           },
         },
       },
@@ -284,10 +292,11 @@ theme.components = {
           boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
           padding: "16px 20px",
           borderRadius: 10,
-          borderColor: "transparent",
-          "&:hover": {
-            backgroundColor: formatColor(neutral.gray1),
-          },
+          border: "none",
+          '&:hover': {
+            backgroundColor: formatColor(neutral.gray5),
+            border: "none",
+        }
         },
       },
     ],
