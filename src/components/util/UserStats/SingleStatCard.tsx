@@ -12,6 +12,7 @@ export const SingleStatCard = ({
   return (
     <Box
       sx={{
+        width: '100%',
         backgroundColor: 'smallCard.background',
         borderRadius: 5,
         paddingY: 2,

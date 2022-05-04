@@ -22,8 +22,7 @@ export const AppLayout = (props: AppLayoutProps) => {
           backgroundImage: `linear-gradient(${formatGradient(
             isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
           )})`,
-          pt: { xs: 10, md: 20 },
-          pb: { xs: 10, md: 15 }
+          pt: { xs: 10, sm: 18 },
         }}
       >
         {children}

@@ -1,8 +1,7 @@
-import { useTheme } from '@mui/material';
+import { useTheme } from "@mui/material";
 
 export const useLight = () => {
-  const {palette} = useTheme()
+  const { palette } = useTheme();
 
-
-  return palette.mode === 'light'
-}
+  return palette.mode === "light";
+};

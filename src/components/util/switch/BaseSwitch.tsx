@@ -22,11 +22,11 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
       ? option1.length > option2.length
         ? option1.length
         : option2.length
-      : 2;
+      : 3.5;
 
-  const calculateWidth = () => `${longerLength * 20}px`;
+  const calculateWidth = () => `${longerLength * 12}px`;
 
-  const calculateContainerWidth = () => `${longerLength * 40 + 12}px`;
+  const calculateContainerWidth = () => `${longerLength * 24 + 12}px`;
 
   const OptionBox = ({ option }: { option: string | React.ReactElement }) => (
     <Box

@@ -1,4 +1,4 @@
-import { Box, BoxProps, Button, SxProps, Typography } from "@mui/material";
+import { Box, BoxProps, Button, SxProps, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { formatColor, neutral } from "../../../theme";
 
@@ -16,6 +16,8 @@ interface UserTokenCardProps extends BoxProps {
 }
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
+  const theme = useTheme()
+
   const {
     tokenName,
     tokenValue,
@@ -31,6 +33,10 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         backgroundColor: "smallCard.background",
         borderRadius: 5,
         padding: 5,
+        [theme.breakpoints.down('lg')]: {
+          paddingX: 2,
+          paddingY: 4
+        },
         ...props.sx,
       }}
     >

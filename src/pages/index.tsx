@@ -28,13 +28,10 @@ const LandingPage = () => {
         textAlign="left"
         maxWidth="xl"
         py={{ xs: 7, sm: 0 }}
-        px={{ xs: 3, md: 15 }}
+        px={{ xs: 3, md: 10 }}
         margin="auto"
-        
-        height={isMobile ? "auto" : "80vh"}
         position="relative"
         sx={{
-          mb: 18,
           [theme.breakpoints.down("md")]: {
             mb: 16,
             pl: 3,
@@ -43,30 +40,28 @@ const LandingPage = () => {
           },
         }}
       >
-        <Typography
-          variant="h2"
-          position="relative"
-          fontWeight={400}
-          mb={3}
+        <Typography variant="body1" paddingLeft={{xs: 2, md: 6}} color={formatColor(neutral.gray10)}>
+          Protocol Stats
+        </Typography>
+        <Box
           sx={{
-            [theme.breakpoints.down("md")]: {
-              fontSize: 72,
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            columnGap: 2,
+            [theme.breakpoints.down("lg")]: {
+              gridTemplateColumns: "1fr",
+              rowGap: 5,
             },
           }}
         >
-          {currentAccount && <Typography>{currentAccount}</Typography>}
-
-        </Typography>
-          <Typography variant="body1" color={formatColor(neutral.gray3)}>Protocol Stats</Typography>
-        <Box display="grid" gridTemplateColumns="1fr 1fr" columnGap={2}>
-            <ProtocolStatsCard />
-            <UsdiGraphCard />
-          </Box>
-          <Box sx={{marginY: 4}}>
+          <ProtocolStatsCard />
+          <UsdiGraphCard />
+        </Box>
+        <Box sx={{ marginY: 4 }}>
           <StatsMeter />
-          </Box>
+        </Box>
 
-          <UserStats />
+        <UserStats />
       </Box>
     </Box>
   );

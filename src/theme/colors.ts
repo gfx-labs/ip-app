@@ -22,6 +22,7 @@ export const neutral = {
   black2: [22, 22, 22], // #161616,
   black3: [101, 101, 101], // #656565
   black4: [26, 26, 26], // #1B1A1A
+  black5: [10, 11, 12], // #0A0B0C
 };
 
 export const blue = {
@@ -33,6 +34,8 @@ export const blue = {
   blue6: [46, 54, 249], // #2E36F9
   blue7: [94, 100, 244], // #5E64F4
   blue8: [193,195, 254], // #C1C3FE
+  blue9: [226,229,252], // blue1 0.17
+  blue10: [188, 197, 233] // #BCC5E9
 };
 
 export const green = {
