@@ -6,15 +6,20 @@ interface BaseSwitchProps extends SwitchProps {
   option1: string | React.ReactElement;
   option2: string | React.ReactElement;
   onOptionChange: (arg0: boolean) => void;
+  defaultIsOption1?: boolean;
 }
 
 export const BaseSwitch = (props: BaseSwitchProps) => {
-  const { option1, option2, onOptionChange } = props;
+  const { option1, option2, onOptionChange, defaultIsOption1 = true } = props;
 
-  const [option, setOption] = useState(option1);
+  const [option, setOption] = useState(() => {
+    if (defaultIsOption1) {
+      return option1
+    }
+    return option2
+  });
 
-  const [isOption1, setIsOption1] = useState(true);
-
+  const [isOption1, setIsOption1] = useState(defaultIsOption1);
   const theme = useTheme();
 
   const longerLength =

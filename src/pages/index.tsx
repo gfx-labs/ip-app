@@ -28,19 +28,19 @@ const LandingPage = () => {
         textAlign="left"
         maxWidth="xl"
         py={{ xs: 7, sm: 0 }}
-        px={{ xs: 3, md: 10 }}
+        px={{ xs: 2, md: 10 }}
         margin="auto"
         position="relative"
         sx={{
           [theme.breakpoints.down("md")]: {
             mb: 16,
-            pl: 3,
+            
             pb: 0,
             marginLeft: "auto",
           },
         }}
       >
-        <Typography variant="body1" paddingLeft={{xs: 2, md: 6}} color={formatColor(neutral.gray10)}>
+        <Typography variant="body1" paddingLeft={{xs: 2, md: 6}} marginBottom={2} color={formatColor(neutral.gray10)}>
           Protocol Stats
         </Typography>
         <Box

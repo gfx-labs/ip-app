@@ -104,10 +104,10 @@ theme.typography.h4 = {
 theme.typography.h5 = {
   fontWeight: 600,
   fontSize: pxToRem(18),
-  lineHeight: pxToRem(32),
+  lineHeight: fzTolineHeight(18),
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(16),
-    lineHeight: pxToRem(25.51),
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(12),
   },
 };
 
@@ -127,8 +127,8 @@ theme.typography.subtitle1 = {
   lineHeight: fzTolineHeight(28),
   color: theme.palette.text.primary,
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(20),
-    lineHeight: fzTolineHeight(20),
+    fontSize: pxToRem(18),
+    lineHeight: fzTolineHeight(18),
   },
 };
 
@@ -156,7 +156,10 @@ theme.typography.body2 = {
   fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(14),
 
-  [theme.breakpoints.down("md")]: {},
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(12),
+  },
 };
 
 theme.typography.caption = {
@@ -242,21 +245,21 @@ theme.components = {
           },
         },
       },
-      {
-        props: { variant: "text" },
-        style: {
-          minWidth: 25,
-          paddingLeft: 0,
-          "&:hover": {
-            transform: "scale(1.01)",
-            background: `linear-gradient(${formatGradient(
-              gradient.gradient1
-            )})`,
-            backgroundClip: "text",
-            textFillColor: "transparent",
-          },
-        },
-      },
+      // {
+      //   props: { variant: "text" },
+      //   style: {
+      //     minWidth: 25,
+      //     paddingLeft: 0,
+      //     "&:hover": {
+      //       transform: "scale(1.01)",
+      //       background: `linear-gradient(${formatGradient(
+      //         gradient.gradient1
+      //       )})`,
+      //       backgroundClip: "text",
+      //       textFillColor: "transparent",
+      //     },
+      //   },
+      // },
       {
         props: { variant: "cta" },
         style: {
@@ -276,10 +279,13 @@ theme.components = {
           width: "100%",
           minWidth: 150,
           fontSize: 14,
+          [theme.breakpoints.down('md')]: {
+            minWidth: 120,
+          },
           "&:hover": {
             backgroundColor: formatColor(blue.blue5),
             color: formatColor(blue.blue6),
-            minWidth: 120 
+            
           },
         },
       },

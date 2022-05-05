@@ -20,6 +20,7 @@ export const SelectedChainButton = () => {
 
   return (
     <Button
+      variant="outlined"
       sx={{
         color: formatColor(blue.blue1),
         paddingX: 2,
@@ -29,9 +30,12 @@ export const SelectedChainButton = () => {
           ? formatColor(neutral.white)
           : formatColor(neutral.gray7),
         "&:hover": {
-          backgroundColor: formatColor(neutral.gray5),
           border: "none",
         },
+        [theme.breakpoints.down('md')]:{
+          paddingX: 1,
+          minWidth: 'auto'
+        }
       }}
     >
       {name}
