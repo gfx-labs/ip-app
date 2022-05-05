@@ -1,16 +1,7 @@
-import { formatColor, neutral } from "../../../theme";
-import {
-  Box,
-  Link as MuiLink,
-  Toolbar,
-  Button,
-  Typography,
-} from "@mui/material";
-import React, { MouseEvent, useContext, useRef, useState } from "react";
+import { Box, Toolbar } from "@mui/material";
+import { useContext } from "react";
 
 import { Link } from "../../util/link";
-import { WalletType } from "../../libs/web3-data-provider/WalletOptions";
-import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import {
   ClaimsButton,
   ConnectWalletButton,
@@ -20,11 +11,12 @@ import { BaseSwitch } from "../../util/switch";
 import { LightIcon } from "../../icons/misc/LightIcon";
 import { DarkIcon } from "../../icons/misc/DarkIcon";
 import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
+import { useLight } from "../../../hooks/useLight";
 
 export const DesktopToolBar = () => {
-  const { connectWallet, connected, disconnectWallet, error, currentAccount } =
-    useWeb3Context();
   //desktop menu config
+
+  const isLight = useLight();
 
   const { toggleMode } = useContext(PaletteModeContext);
   return (
@@ -50,6 +42,7 @@ export const DesktopToolBar = () => {
           option1={<LightIcon />}
           option2={<DarkIcon />}
           onOptionChange={toggleMode}
+          defaultIsOption1={isLight}
         />
       </Box>
     </Toolbar>

@@ -1,6 +1,6 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
-import { formatGradient, gradient } from "../../../theme";
+import { formatGradient, gradient, formatColor, neutral } from "../../../theme";
 import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
 
@@ -10,11 +10,11 @@ export const ProtocolStatsCard = () => {
   return (
     <Box
       sx={{
-        padding: 6,
+        padding: {xs: 3, md: 6},
         backgroundImage: `linear-gradient(${formatGradient(
           isLight ? gradient.gradient1 : gradient.gradient2
         )})`,
-        borderRadius: 17,
+        borderRadius: {xs: 5, md: 17},
       }}
     >
       <Box
@@ -45,7 +45,7 @@ export const ProtocolStatsCard = () => {
         <SwapContainer />
       </Box>
 
-      <Button variant="contained">Swap</Button>
+      <Button variant="contained" sx={{color: formatColor(neutral.white)}}>Swap</Button>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
 import { formatGradient, formatColor, neutral, gradient } from "../../../theme";
 import {
@@ -155,7 +155,7 @@ const data = [
 
 const GraphTypography = ({ text }: { text: string }) => (
   <Typography
-    variant="body1"
+    variant="body2"
     fontWeight={600}
     color={formatColor(neutral.gray3)}
   >
@@ -166,21 +166,31 @@ const GraphTypography = ({ text }: { text: string }) => (
 export const UsdiGraphCard = () => {
   const isLight = useLight();
 
+  const theme = useTheme()
+  
   return (
     <Box
       sx={{
-        padding: 6,
+        paddingX: {xs: 3, md: 6},
+        paddingY: {xs: 6, md: 6},
         backgroundImage: `linear-gradient(${formatGradient(
           isLight ? gradient.gradient1 : gradient.gradient2
         )})`,
-        borderRadius: 17,
+        borderRadius: {xs: 5, md: 17},
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box display="flex">
+        <Box display="flex" sx={{
+          display: 'flex',
+          [theme.breakpoints.down('md')]:{
+            flexDirection: 'column',
+            rowGap: 1,
+            marginTop: -1
+          }
+        }}>
           <GraphTypography text="Hold API: 1.83%" />
           <Box
             sx={{
@@ -189,6 +199,9 @@ export const UsdiGraphCard = () => {
               border: "1px solid #A3A9BA",
               transform: "rotate(90deg) translateX(10px)",
               marginX: 3,
+              [theme.breakpoints.down('md')]: {
+                display: 'none'
+              }
             }}
           ></Box>
           <GraphTypography text="Borrow APR: 4.24%" />

@@ -5,7 +5,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  Link as MuiLink
+  Link as MuiLink,
 } from "@mui/material";
 import { Link } from "../../util/link";
 
@@ -76,21 +76,24 @@ const DesktopFooter = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: {xs: 'space-between', md:"space-evenly"},
+          justifyContent: { xs: "space-between", md: "space-evenly" },
           maxWidth: 900,
           margin: "auto",
-          [theme.breakpoints.down('md')]: {
-              marginBottom: 12
-          }
+          [theme.breakpoints.down("md")]: {
+            marginBottom: 12,
+          },
         }}
       >
         {nav.map((navItem, index) => {
           return (
-            <Box key={index} sx={{
+            <Box
+              key={index}
+              sx={{
                 [theme.breakpoints.down("md")]: {
-                    display: navItem.title === 'Community' ? 'none' : 'block'
-                  },
-            }}>
+                  display: navItem.title === "Community" ? "none" : "block",
+                },
+              }}
+            >
               <Typography
                 variant="body1"
                 fontWeight={700}
@@ -109,22 +112,20 @@ const DesktopFooter = () => {
                 {navItem.links.map((link, index) => {
                   return (
                     <MuiLink
-                    component={Link}
-                    key={link.label}
-                    to={link.href}
-                    variant="h5"
-                    color={formatColor(neutral.gray2)}
-                    paddingBottom={1}
-                    
-                    sx={{
+                      component={Link}
+                      key={link.label}
+                      to={link.href}
+                      variant="h5"
+                      color={formatColor(neutral.gray2)}
+                      paddingBottom={2}
+                      sx={{
                         "&:hover": {
-                            color: "text.tertiary",
+                          color: "text.tertiary",
                         },
-                    }}
-                >
-                    {link.label}
-                </MuiLink>
-
+                      }}
+                    >
+                      {link.label}
+                    </MuiLink>
                   );
                 })}
               </Box>
@@ -132,12 +133,20 @@ const DesktopFooter = () => {
           );
         })}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", [theme.breakpoints.down('md')]: {
-          flexDirection: 'column-reverse',
-          rowGap: 2,
-          alignItems: 'center'
-      } }}>
-        <Typography variant="body2" color={formatColor(neutral.gray3)}>Interest Protocol 2022</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          [theme.breakpoints.down("md")]: {
+            flexDirection: "column-reverse",
+            rowGap: 2,
+            alignItems: "center",
+          },
+        }}
+      >
+        <Typography variant="body2" color={formatColor(neutral.gray3)}>
+          Interest Protocol 2022
+        </Typography>
         <Box>
           <Box
             component="img"

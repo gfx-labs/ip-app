@@ -1,38 +1,39 @@
 import {
   Box,
   Button,
+  Divider,
   Link as MuiLink,
   SwipeableDrawer,
   Toolbar,
   Typography,
-  
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
 import React, { useRef, useState, useContext } from "react";
+
+import { CaratUpIcon } from "../../icons/misc/CaratUpIcon";
 
 import { LightIcon } from "../../icons/misc/LightIcon";
 import { DarkIcon } from "../../icons/misc/DarkIcon";
 import { MenuIcon } from "../../icons/misc/menuIcon";
 import { Link } from "../../util/link";
-import { ConnectWalletButton, SelectedChainButton } from "../../util/button";
+import {
+  ClaimsButton,
+  ConnectWalletButton,
+  SelectedChainButton,
+} from "../../util/button";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
+import { ForwardArrowCircleIcon } from "../../icons/misc/ForwardArrowCircleIcon";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 
 import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
 import { BaseSwitch } from "../../util/switch";
 
-
 const iOS =
   typeof navigator !== "undefined" &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-const mobileNav = [
-  { label: "faq", pathname: "/faq" },
-  {
-    label: "careers",
-    pathname: "https://cryptocurrencyjobs.co/startups/gfx-labs",
-  },
-];
 
 export const MobileToolBar = () => {
   // mobile menu config
@@ -40,7 +41,6 @@ export const MobileToolBar = () => {
   const navMenuButtonRef = useRef<HTMLButtonElement>(null);
 
   const { toggleMode } = useContext(PaletteModeContext);
-
 
   const isLight = useLight();
 
@@ -65,6 +65,7 @@ export const MobileToolBar = () => {
 
       <Box display="flex">
         <SelectedChainButton />
+
         <Box marginX={2}>
           <ConnectWalletButton />
         </Box>
@@ -72,9 +73,10 @@ export const MobileToolBar = () => {
         <Button
           ref={navMenuButtonRef}
           sx={{
-            p: 1,
-            py: 0,
+            p: 0,
+
             display: "flex",
+            minWidth: "auto",
           }}
           variant="text"
           color="secondary"
@@ -103,7 +105,7 @@ export const MobileToolBar = () => {
             backgroundColor: "mobileToolBar.background",
             backgroundImage: "none",
             display: "flex",
-            
+
             justifyContent: "start",
           },
         }}
@@ -116,7 +118,13 @@ export const MobileToolBar = () => {
           onClick={() => {
             setNavMenuOpen(false);
           }}
-          sx={{alignSelf: 'start', height: 23, marginBottom: 5}}
+          sx={{
+            alignSelf: "start",
+            height: 23,
+            marginBottom: 5,
+            minWidth: 14,
+            padding: 0,
+          }}
         >
           <ForwardIcon
             strokecolor={
@@ -125,20 +133,52 @@ export const MobileToolBar = () => {
           />
         </Button>
 
-        <BaseSwitch
-          option1={<LightIcon />}
-          option2={<DarkIcon />}
-          onOptionChange={toggleMode}
-        />
+        <ClaimsButton />
+        <br />
+        <br />
+        <Divider variant="middle" />
+        <br />
 
-        <Box marginTop={12}>
+        <Accordion sx={{ boxShadow: "none" }} disableGutters={true}>
+          <AccordionSummary
+            expandIcon={<CaratUpIcon sx={{ transform: "rotate(180deg)" }} />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            sx={{ paddingX: 0 }}
+          >
+            <ForwardArrowCircleIcon sx={{ width: 18, height: 18 }} />{" "}
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 600, color: "text.secondary", marginLeft: 1 }}
+            >
+              Your Vault
+            </Typography>
+          </AccordionSummary>
+          {/* loop through user's assets */}
+          <AccordionDetails>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 600, color: "text.secondary", marginLeft: 1 }}
+            >
+              Manage WBTC
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+
+        <Box marginBottom={12} marginTop={5}>
+          <BaseSwitch
+            option1={<LightIcon />}
+            option2={<DarkIcon />}
+            onOptionChange={toggleMode}
+            defaultIsOption1={isLight}
+          />
+        </Box>
 
         <BaseSwitch
           option1="App"
           option2="Governance"
           onOptionChange={console.log}
-          />
-          </Box>
+        />
       </SwipeableDrawer>
     </Toolbar>
   );

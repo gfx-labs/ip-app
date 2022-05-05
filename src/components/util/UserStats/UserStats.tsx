@@ -47,7 +47,9 @@ export const UserStats = () => {
         borderRadius: 16,
 
         [theme.breakpoints.down('md')]: {
-          paddingX: 2
+          paddingX: 2,
+          paddingY: 6,
+          borderRadius: 5,
         }
       }}
     >
@@ -96,9 +98,10 @@ export const UserStats = () => {
           marginBottom: 5,
           [theme.breakpoints.down("lg")]: {
             gridAutoFlow: "column",
-            gridTemplateColumns: "2fr 1fr",
-            columnGap: 2,
-            rowGap: 2,
+            gridTemplateColumns: "3fr 2fr",
+            columnGap: 1,
+            rowGap: 3,
+            marginBottom: 4,
           },
         }}
       >

@@ -14,6 +14,7 @@ export const ClaimsButton = () => {
       onClick={claimRewardsHandler}
       variant="cta"
       sx={{
+        width: '100%',
         backgroundColor: formatColor(blue.blue9),
         color: formatColor(blue.blue1),
         padding: 2,
