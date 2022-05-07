@@ -5,7 +5,7 @@
     "config": {},
     "homepage": ".",
     "scripts": {
-        "prebuild": "yarn install && npm run docs",
+        "prebuild": "npx yarn install && npm run docs",
         "build": "tsc && vite build",
         "postbuild": "mkdir -p ./dist/book && cp -r ./docs/build/* ./dist/book",
         "_vite": "",
