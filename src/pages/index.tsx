@@ -34,7 +34,7 @@ const LandingPage = () => {
         sx={{
           [theme.breakpoints.down("md")]: {
             mb: 16,
-            
+
             pb: 0,
             marginLeft: "auto",
           },

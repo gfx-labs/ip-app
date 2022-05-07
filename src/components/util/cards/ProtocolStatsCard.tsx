@@ -1,12 +1,16 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
+import {Chains} from "../../../chain/chains";
 import { useLight } from "../../../hooks/useLight";
 import { formatGradient, gradient, formatColor, neutral } from "../../../theme";
+import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
 
+  const ctx = useWeb3Context()
+  const token = Chains.getInfo(ctx.chainId)
   return (
     <Box
       sx={{
@@ -42,6 +46,7 @@ export const ProtocolStatsCard = () => {
       </Box>
 
       <Box sx={{ marginBottom: 2 }}>
+        <Typography variant="caption">{token.usdiAddress}</Typography>
         <SwapContainer />
       </Box>
 

@@ -1,14 +1,14 @@
 import React from "react";
 
+import {Chains} from "../../../chain/chains";
 import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { blue, formatColor, neutral } from "../../../theme";
 import { useLight } from "../../../hooks/useLight";
+import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 
 export const SelectedChainButton = () => {
-  const token = {
-    name: "Ethereum",
-    ticker: "ETH",
-  };
+  const ctx = useWeb3Context()
+  const token = Chains.getInfo(ctx.chainId)
 
   const theme = useTheme();
 
