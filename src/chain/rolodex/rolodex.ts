@@ -1,6 +1,7 @@
 import {Provider} from "@ethersproject/providers";
 import {getWallet} from "../../components/libs/web3-data-provider/WalletOptions";
 import {useWeb3Context} from "../../components/libs/web3-data-provider/Web3Provider";
+import { Chains } from "../chains";
 import {IUSDI, IVaultController, USDI__factory} from "../contracts"
 
 
@@ -20,6 +21,8 @@ export class Rolodex {
 
 export const NewRolodex = async () => {
   const ctx = useWeb3Context()
-  ctx.provider
+  const token = Chains.getInfo(ctx.chainId)
+
+  return new Rolodex(ctx.provider!, token.usdiAddress!)
 }
 

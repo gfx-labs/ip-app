@@ -22,7 +22,7 @@ export const TokenSelect = () => {
     >
       <DecimalInput />
       <Box sx={{display: 'flex', alignItems: 'center'}}>
-        <Box component="img" width={24} height={24} src="/images/usdi.svg">
+        <Box component="img" width={24} height={24} src="images/usdi.svg">
           </Box>
 
           <Typography sx={{
