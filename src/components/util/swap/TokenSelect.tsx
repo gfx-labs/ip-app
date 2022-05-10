@@ -2,9 +2,12 @@ import { Box, Typography } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 import { DecimalInput } from "../textFields";
+import { useState} from 'react'
 
 export const TokenSelect = () => {
   const isLight = useLight()
+
+  const [tokenAmount, setTokenAmount] = useState('')
   
   return (
     <Box
@@ -20,7 +23,7 @@ export const TokenSelect = () => {
         boxShadow: '0px 4px 4px 0px rgba(0,0,0, 0.05)'
       }}
     >
-      <DecimalInput />
+      <DecimalInput onChange={setTokenAmount}/>
       <Box sx={{display: 'flex', alignItems: 'center'}}>
         <Box component="img" width={24} height={24} src="images/usdi.svg">
           </Box>

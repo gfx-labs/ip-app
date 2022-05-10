@@ -8,7 +8,8 @@ import {
   neutral,
   blue,
 } from "../../../theme";
-import { CopyButton } from "../button";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import { ConnectWalletButton, CopyButton } from "../button";
 import { TitleText } from "../text";
 import { addressShortener } from "../text/";
 import { SingleStatCard } from "./SingleStatCard";
@@ -36,6 +37,9 @@ export const UserStats = () => {
 
   const theme = useTheme();
 
+  const { connected, disconnectWallet, error, currentAccount } =
+    useWeb3Context();
+
   return (
     <Box
       sx={{
@@ -46,11 +50,11 @@ export const UserStats = () => {
         paddingY: 7,
         borderRadius: 16,
 
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down("md")]: {
           paddingX: 2,
           paddingY: 6,
           borderRadius: 5,
-        }
+        },
       }}
     >
       <Box
@@ -80,12 +84,14 @@ export const UserStats = () => {
         <Box display="flex" alignItems="center">
           <StatsBodyTypography text="Vault Address" />{" "}
           <Box marginRight={2}></Box>
-          <CopyButton
-            text={addressShortener(
-              "0x00992D294752D54492b3893415f63B3F82Eb3778"
-            )}
-            copy={"0x00992D294752D54492b3893415f63B3F82Eb3778"}
-          />
+          {connected ? (
+            <CopyButton
+              text={addressShortener(currentAccount)}
+              copy={currentAccount}
+            />
+          ) : (
+            <ConnectWalletButton />
+          )}
         </Box>
       </Box>
 
@@ -186,7 +192,7 @@ export const UserStats = () => {
             md: "repeat(3, 1fr)",
           },
           columnGap: 3,
-          rowGap: 3
+          rowGap: 3,
         }}
       >
         <UserTokenCard
