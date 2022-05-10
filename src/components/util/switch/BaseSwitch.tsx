@@ -11,7 +11,6 @@ interface BaseSwitchProps extends SwitchProps {
 
 export const BaseSwitch = (props: BaseSwitchProps) => {
   const { option1, option2, onOptionChange, defaultIsOption1 = true } = props;
-
   const [option, setOption] = useState(() => {
     if (defaultIsOption1) {
       return option1

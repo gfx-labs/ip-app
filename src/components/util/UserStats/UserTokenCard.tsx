@@ -1,6 +1,7 @@
 import { Box, BoxProps, Button, SxProps, Typography, useTheme } from "@mui/material";
 import React from "react";
 import { formatColor, neutral } from "../../../theme";
+import { ModalType, useModalContext } from "../../libs/modal-content-provider/ModalContentProvider";
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string;
@@ -17,6 +18,16 @@ interface UserTokenCardProps extends BoxProps {
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme()
+
+  const {type, setType} = useModalContext()
+  
+  const openDeposit = () => {
+    setType(ModalType.Deposit)
+  }
+
+  const openWithdraw = () => {
+    setType(ModalType.Withdraw)
+  }
 
   const {
     tokenName,
@@ -60,8 +71,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       </Box>
 
       <Box sx={{display: 'grid', justifyContent: 'space-between', gridTemplateColumns:"1fr 1fr", columnGap: 2.5}}>
-        <Button variant="cta">Deposit</Button>
-        <Button variant="cta">Withdraw</Button>
+        <Button variant="cta" onClick={openDeposit}>Deposit</Button>
+        <Button variant="cta" onClick={openWithdraw}>Withdraw</Button>
       </Box>
     </Box>
   );
