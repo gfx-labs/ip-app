@@ -8,6 +8,7 @@ import {
   neutral,
   blue,
 } from "../../../theme";
+import { ModalType, useModalContext } from "../../libs/modal-content-provider/ModalContentProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { ConnectWalletButton, CopyButton } from "../button";
 import { TitleText } from "../text";
@@ -39,6 +40,8 @@ export const UserStats = () => {
 
   const { connected, disconnectWallet, error, currentAccount } =
     useWeb3Context();
+
+    const {setType} = useModalContext()
 
   return (
     <Box
@@ -165,6 +168,7 @@ export const UserStats = () => {
                   backgroundColor: formatColor(blue.blue8),
                   color: formatColor(blue.blue7),
                 }}
+                onClick={() => setType(ModalType.Borrow)}
               >
                 Borrow
               </Button>
@@ -175,7 +179,10 @@ export const UserStats = () => {
                   backgroundColor: formatColor(blue.blue8),
                   color: formatColor(blue.blue7),
                 }}
+                                onClick={() => setType(ModalType.Repay)}
+
               >
+                
                 Repay
               </Button>
             </Box>

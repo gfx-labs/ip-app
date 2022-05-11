@@ -11,9 +11,11 @@ import { UserStats } from "../components/util/UserStats";
 const LandingPage = () => {
   const theme = useTheme();
   const { currentAccount } = useWeb3Context();
+
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const isLight = useLight();
+
 
   return (
     <Box

@@ -15,6 +15,9 @@ import RedirectBook from "./pages/book";
 import Dashboard from "./pages/dashboard";
 import NotFound404Page from "./pages/404";
 import { DepositWithdrawModal } from "./components/util/modal";
+import { BorrowRepayModal } from "./components/util/modal/BorrowRepayModal";
+import { ClaimModal } from "./components/util/modal/ClaimModal";
+import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/rolodexDataProvider";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,22 +37,35 @@ const App = () => {
               <PaletteModeContextProvider>
                 <>
                   <CssBaseline />
-                  <ModalContentProvider>
-                    <>
-                    <WalletModalProvider>
-                      <AppLayout>
-                        <Routes>
-                          <Route path={`/`} element={<LandingPage />} />
-                          <Route path={`/dashboard`} element={<Dashboard />} />
-                          <Route path={`/docs`} element={<RedirectBook />} />
-                          <Route path={`/book*`} element={<RedirectBook />} />
-                          <Route path={`*`} element={<NotFound404Page />} />
-                        </Routes>
-                      </AppLayout>
-                    </WalletModalProvider>
-                    <DepositWithdrawModal />
-                    </>
-                  </ModalContentProvider>
+                  <RolodexContentProvider>
+                    <ModalContentProvider>
+                      <>
+                        <WalletModalProvider>
+                          <AppLayout>
+                            <Routes>
+                              <Route path={`/`} element={<LandingPage />} />
+                              <Route
+                                path={`/dashboard`}
+                                element={<Dashboard />}
+                              />
+                              <Route
+                                path={`/docs`}
+                                element={<RedirectBook />}
+                              />
+                              <Route
+                                path={`/book*`}
+                                element={<RedirectBook />}
+                              />
+                              <Route path={`*`} element={<NotFound404Page />} />
+                            </Routes>
+                          </AppLayout>
+                        </WalletModalProvider>
+                        <DepositWithdrawModal />
+                        <BorrowRepayModal />
+                        <ClaimModal />
+                      </>
+                    </ModalContentProvider>
+                  </RolodexContentProvider>
                 </>
               </PaletteModeContextProvider>
             </StyledEngineProvider>
