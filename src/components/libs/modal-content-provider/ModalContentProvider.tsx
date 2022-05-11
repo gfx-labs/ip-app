@@ -9,6 +9,7 @@ export enum ModalType {
   Withdraw = "WITHDRAW",
   Borrow = "BORROW",
   Repay = "REPAY",
+  Claim = 'CLAIM'
 }
 
 export type ModalContextType = {

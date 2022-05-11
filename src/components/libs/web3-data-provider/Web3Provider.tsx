@@ -10,6 +10,7 @@ import { AbstractConnector } from "@web3-react/abstract-connector";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { useWalletModalContext } from "../wallet-modal-provider/WalletModalProvider";
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
+
 //import { TorusConnector } from '@web3-react/torus-connector';
 
 type transactionType = {

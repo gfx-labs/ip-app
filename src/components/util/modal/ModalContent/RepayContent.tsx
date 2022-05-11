@@ -5,28 +5,28 @@ import { formatColor, neutral } from "../../../../theme";
 import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
 
-interface WithdrawContentProps {
+interface RepayContent {
   tokenName: string;
   tokenValue: string;
-  tokenVaultBalance: string;
-  withdrawAmount: string;
-  setWithdrawAmount: (e: string) => void;
+  tokenWalletBalance: string;
+  repayAmount: string;
+  setRepayAmount: (e: string) => void;
 }
 
-export const WithdrawContent = (props: WithdrawContentProps) => {
+export const RepayContent = (props: RepayContent) => {
   const {
     tokenName,
-    tokenVaultBalance,
+    tokenWalletBalance,
     tokenValue,
-    withdrawAmount,
-    setWithdrawAmount
+    setRepayAmount,
+    repayAmount,
   } = props;
 
   const isLight = useLight();
 
-  const setMax = () => setWithdrawAmount(tokenVaultBalance);
+  const setMax = () => setRepayAmount(tokenWalletBalance);
 
-  const handleWithdrawRequest = () => {};
+  const handleRepayRequest = () => {};
 
   return (
     <Box>
@@ -37,7 +37,7 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
         textAlign="right"
       >
         {" "}
-        Vault Balance: {tokenVaultBalance} {tokenName}
+        Wallet Balance: {tokenWalletBalance} {tokenName}
       </Typography>
 
       <Box
@@ -58,9 +58,9 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
         }}
       >
         <DecimalInput
-          onChange={(e) => setWithdrawAmount(e)}
+          onChange={(e) => setRepayAmount(e)}
           placeholder={`0 ${tokenName}`}
-          value={withdrawAmount}
+          value={repayAmount}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
@@ -71,7 +71,7 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
               marginLeft: 1,
             }}
           >
-            {`$${Number(withdrawAmount) * Number(tokenValue)}`}
+            {`$${Number(repayAmount) * Number(tokenValue)}`}
           </Typography>
 
           <Button onClick={setMax}>
@@ -92,9 +92,9 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
       <Button
         variant="contained"
         sx={{ color: formatColor(neutral.white), marginY: 2 }}
-        onClick={handleWithdrawRequest}
+        onClick={handleRepayRequest}
       >
-        Withdraw
+        Repay
       </Button>
     </Box>
   );

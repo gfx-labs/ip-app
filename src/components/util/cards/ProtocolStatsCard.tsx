@@ -5,12 +5,17 @@ import { formatGradient, gradient, formatColor, neutral } from "../../../theme";
 import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
+import { useRolodexContext } from "../../../components/libs/rolodex-data-provider/rolodexDataProvider";
+
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
 
   const ctx = useWeb3Context()
   const token = Chains.getInfo(ctx.chainId)
+
+  const rolo = useRolodexContext()
+
   return (
     <Box
       sx={{
