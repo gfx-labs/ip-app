@@ -167,6 +167,9 @@ export const UserStats = () => {
                 sx={{
                   backgroundColor: formatColor(blue.blue8),
                   color: formatColor(blue.blue7),
+                  '&:hover': {
+                    backgroundColor: formatColor(blue.blue5),
+                  }
                 }}
                 onClick={() => setType(ModalType.Borrow)}
               >
@@ -178,6 +181,9 @@ export const UserStats = () => {
                 sx={{
                   backgroundColor: formatColor(blue.blue8),
                   color: formatColor(blue.blue7),
+                  '&:hover': {
+                    backgroundColor: formatColor(blue.blue5),
+                  }
                 }}
                                 onClick={() => setType(ModalType.Repay)}
 

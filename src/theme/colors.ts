@@ -36,7 +36,10 @@ export const blue = {
   blue8: [193,195, 254], // #C1C3FE
   blue9: [226,229,252], // blue1 0.17
   blue10: [188, 197, 233], // #BCC5E9
-  blue11: [217, 227, 255] // #D9E3FF
+  blue11: [217, 227, 255], // #D9E3FF
+  blue12: [73, 111,246], // #496FF7
+  blue13: [59, 66, 95], // #3B425F
+  blue14: [84, 102, 165], // #5466A5
 };
 
 export const green = {
