@@ -276,8 +276,8 @@ theme.components = {
             minWidth: 120,
           },
           "&:hover": {
-            backgroundColor: formatColor(blue.blue5),
-            color: formatColor(blue.blue6),
+            backgroundColor: formatColor(blue.blue12),
+            
           },
         },
       },
