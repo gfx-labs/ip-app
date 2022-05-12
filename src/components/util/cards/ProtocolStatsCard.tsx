@@ -1,20 +1,26 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
-import {Chains} from "../../../chain/chains";
 import { useLight } from "../../../hooks/useLight";
 import { formatGradient, gradient, formatColor, neutral } from "../../../theme";
-import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
 import { useRolodexContext } from "../../../components/libs/rolodex-data-provider/rolodexDataProvider";
-
+import { useTotalSupply } from "../../../hooks/useTotalSupply";
+import {useEffect, useState} from 'react'
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
+  const [totalSupply, setTotalSupply] = useState<string | null>(null)
+  
+  const rolodex = useRolodexContext()
+  
+  useEffect(() => {
+    if(!rolodex) {
+      setTotalSupply(null)
+    } else {
+      useTotalSupply(rolodex).then(res => setTotalSupply(res))
+    }
+  }, [rolodex])
 
-  const ctx = useWeb3Context()
-  const token = Chains.getInfo(ctx.chainId)
-
-  const rolo = useRolodexContext()
 
   return (
     <Box
@@ -36,7 +42,7 @@ export const ProtocolStatsCard = () => {
         }}
       >
         <TitleText title="USDi Minted" text="672,233,324" />
-        <TitleText title="USDC Deposited" text="350,375,764" />
+        <TitleText title="USDC Deposited" text={totalSupply} />
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
@@ -51,7 +57,6 @@ export const ProtocolStatsCard = () => {
       </Box>
 
       <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="caption">{token.usdiAddress}</Typography>
         <SwapContainer />
       </Box>
 

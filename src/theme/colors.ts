@@ -18,7 +18,7 @@ export const neutral = {
   gray9: [127, 127, 127], // #7F7F7F
   gray10: [107, 118, 135], // #6B7687
   black: [0, 0, 0],
-  black1: [44, 44, 44], // #2C2C2C
+  black1: [47, 45, 45], // #2F2D2D
   black2: [22, 22, 22], // #161616,
   black3: [101, 101, 101], // #656565
   black4: [26, 26, 26], // #1B1A1A
@@ -35,7 +35,8 @@ export const blue = {
   blue7: [94, 100, 244], // #5E64F4
   blue8: [193,195, 254], // #C1C3FE
   blue9: [226,229,252], // blue1 0.17
-  blue10: [188, 197, 233] // #BCC5E9
+  blue10: [188, 197, 233], // #BCC5E9
+  blue11: [217, 227, 255] // #D9E3FF
 };
 
 export const green = {
@@ -43,7 +44,7 @@ export const green = {
 };
 
 export const disabled = {
-  disabled1: [209, 209, 233],
+  disabled1: [176, 180, 194], // #B0B4C2
   disabled2: [140, 140, 200],
 };
 

@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Box, Typography, Button } from "@mui/material";
-import { formatColor, neutral } from "../../../../theme";
+import { blue, formatColor, neutral } from "../../../../theme";
 import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
-
+import { useDeposit } from "../../../../hooks/useDeposit";
+import { useRolodexContext } from "../../../libs/rolodex-data-provider/rolodexDataProvider";
+import {
+  useWeb3Context,
+  Web3Data,
+} from "../../../libs/web3-data-provider/Web3Provider";
+import { DisableableModalButton } from "../../button/DisableableModalButton";
+import { ModalInputContainer } from "./ModalInputContainer";
 interface DepositContent {
   tokenName: string;
   tokenValue: string;
@@ -23,10 +30,32 @@ export const DepositContent = (props: DepositContent) => {
   } = props;
 
   const isLight = useLight();
+  const [disabled, setDisabled] = useState(true);
+  const [focus, setFocus] = useState(false);
+  const toggle = () => setFocus(!focus);
 
+  const ctx = useWeb3Context();
+  const provider = ctx.provider;
+  const rolodex = useRolodexContext();
   const setMax = () => setDepositAmount(tokenWalletBalance);
 
-  const handleDepositRequest = () => {};
+  useEffect(() => {
+    setDisabled(Number(depositAmount) < 1);
+  }, [depositAmount]);
+
+  const handleDepositRequest = async () => {
+    try {
+      const deposit = await useDeposit(
+        rolodex!,
+        provider!,
+        Number(depositAmount)
+      );
+
+      console.log(deposit, "DEPOSIT SUCCEDED?");
+    } catch (err) {
+      console.error("ERROR", err);
+    }
+  };
 
   return (
     <Box>
@@ -40,23 +69,10 @@ export const DepositContent = (props: DepositContent) => {
         Wallet Balance: {tokenWalletBalance} {tokenName}
       </Typography>
 
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
-          paddingTop: 1,
-          paddingBottom: 0,
-          paddingX: 2,
-          borderRadius: 2,
-          boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
-        }}
-      >
+      <ModalInputContainer focus={focus}>
         <DecimalInput
+          onFocus={toggle}
+          onBlur={toggle}
           onChange={(e) => setDepositAmount(e)}
           placeholder={`0 ${tokenName}`}
           value={depositAmount}
@@ -86,15 +102,13 @@ export const DepositContent = (props: DepositContent) => {
             </Typography>
           </Button>
         </Box>
-      </Box>
+      </ModalInputContainer>
 
-      <Button
-        variant="contained"
-        sx={{ color: formatColor(neutral.white), marginY: 2 }}
+      <DisableableModalButton
+        text="Deposit"
+        disabled={disabled}
         onClick={handleDepositRequest}
-      >
-        Deposit
-      </Button>
+      />
     </Box>
   );
 };

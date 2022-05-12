@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Box, Typography, Button } from "@mui/material";
 import { formatColor, neutral } from "../../../../theme";
 import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
+import { DisableableModalButton } from "../../button/DisableableModalButton";
+import { ModalInputContainer } from "./ModalInputContainer";
 
 interface WithdrawContentProps {
   tokenName: string;
@@ -19,12 +21,21 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
     tokenVaultBalance,
     tokenValue,
     withdrawAmount,
-    setWithdrawAmount
+    setWithdrawAmount,
   } = props;
 
   const isLight = useLight();
 
   const setMax = () => setWithdrawAmount(tokenVaultBalance);
+
+  const [focus, setFocus] = useState(false);
+  const toggle = () => setFocus(!focus);
+
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    setDisabled(Number(withdrawAmount) < 1);
+  }, [withdrawAmount]);
 
   const handleWithdrawRequest = () => {};
 
@@ -40,24 +51,10 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
         Vault Balance: {tokenVaultBalance} {tokenName}
       </Typography>
 
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
-          paddingTop: 1,
-          paddingBottom: 0,
-          paddingX: 2,
-          borderRadius: 2,
-          boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
-          marginTop: 1
-        }}
-      >
+      <ModalInputContainer focus={focus}>
         <DecimalInput
+          onBlur={toggle}
+          onFocus={toggle}
           onChange={(e) => setWithdrawAmount(e)}
           placeholder={`0 ${tokenName}`}
           value={withdrawAmount}
@@ -87,15 +84,12 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
             </Typography>
           </Button>
         </Box>
-      </Box>
-
-      <Button
-        variant="contained"
-        sx={{ color: formatColor(neutral.white), marginY: 2 }}
+      </ModalInputContainer>
+      <DisableableModalButton
+        text="Withdraw"
         onClick={handleWithdrawRequest}
-      >
-        Withdraw
-      </Button>
+        disabled={disabled}
+      />
     </Box>
   );
 };

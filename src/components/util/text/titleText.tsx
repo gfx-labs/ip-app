@@ -1,9 +1,9 @@
-import { Typography, Box, BoxProps } from "@mui/material";
+import { Typography, Box, BoxProps, Skeleton } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
 
 type TitleTextProps = {
   title: string;
-  text: string;
+  text: string | null;
 };
 
 export const TitleText = (props: TitleTextProps & BoxProps) => {
@@ -11,9 +11,17 @@ export const TitleText = (props: TitleTextProps & BoxProps) => {
 
   return (
     <Box {...props}>
-      <Typography variant="body1" color={formatColor(neutral.gray3)} mb={1}>{title}</Typography>
-      
-      <Typography variant="subtitle1" color="text.primary">{text}</Typography>
+      <Typography variant="body1" color={formatColor(neutral.gray3)} mb={1}>
+        {title}
+      </Typography>
+
+      {text !== null ? (
+        <Typography variant="subtitle1" color="text.primary">
+          {text}
+        </Typography>
+      ) : (
+        <Skeleton variant="rectangular" height="28px" animation="wave" />
+      )}
     </Box>
   );
 };
