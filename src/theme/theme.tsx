@@ -245,21 +245,14 @@ theme.components = {
           },
         },
       },
-      // {
-      //   props: { variant: "text" },
-      //   style: {
-      //     minWidth: 25,
-      //     paddingLeft: 0,
-      //     "&:hover": {
-      //       transform: "scale(1.01)",
-      //       background: `linear-gradient(${formatGradient(
-      //         gradient.gradient1
-      //       )})`,
-      //       backgroundClip: "text",
-      //       textFillColor: "transparent",
-      //     },
-      //   },
-      // },
+      {
+        props: { variant: "text" },
+        style: {
+          paddingLeft: 0,
+          width: "100%",
+          fontSize: 14,
+        },
+      },
       {
         props: { variant: "cta" },
         style: {
@@ -285,7 +278,6 @@ theme.components = {
           "&:hover": {
             backgroundColor: formatColor(blue.blue5),
             color: formatColor(blue.blue6),
-            
           },
         },
       },
@@ -311,7 +303,7 @@ theme.components = {
     styleOverrides: {
       root: {
         borderRadius: 8,
-        backgroundColor: formatColor(neutral.white),
+        
 
         "&:hover": {
           borderColor: formatColor(neutral.white),
@@ -358,6 +350,7 @@ theme.components = {
       },
       InputProps: {
         disableUnderline: true,
+
       },
     },
     styleOverrides: {

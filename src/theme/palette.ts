@@ -1,9 +1,5 @@
-import { blue, formatColor, formatGradient, gradient, green, neutral } from "./colors";
+import { blue, disabled, formatColor, formatGradient, gradient, green, neutral } from "./colors";
 import { PaletteMode, Theme, ThemeOptions, TypeBackground } from "@mui/material";
-import {
-  Palette as MuiPallete,
-  PaletteOptions as MuiPaletteOptions,
-} from '@mui/material/styles/createPalette';
 import { theme } from "../theme";
 
 declare module "@mui/material/styles/createPalette" {
@@ -52,7 +48,11 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
             background: formatColor(neutral.gray5),
             title: formatColor(neutral.gray3),
             text: formatColor(neutral.gray1)
-          }
+          },
+          action: {
+            disabledBackground: formatColor(disabled.disabled1),
+            disabled: formatColor(neutral.white),
+          },
         }
       : {
           // palette values for dark mode
@@ -76,6 +76,10 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
             background: formatColor(neutral.gray7),
             title: formatColor(neutral.gray3),
             text: formatColor(neutral.white)
+          },
+          action: {
+            disabledBackground: formatColor(disabled.disabled1),
+            disabled: formatColor(neutral.black),
           }
         }),
   },

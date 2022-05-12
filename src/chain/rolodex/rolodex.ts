@@ -1,4 +1,4 @@
-import { Provider } from "@ethersproject/providers";
+import { JsonRpcSigner } from "@ethersproject/providers";
 import { getWallet } from "../../components/libs/web3-data-provider/WalletOptions";
 import {
   useWeb3Context,
@@ -14,9 +14,9 @@ export class Rolodex {
   addressVC?: string;
   VC?: IVaultController;
 
-  constructor(provider: Provider, usdi: string) {
+  constructor(signer: JsonRpcSigner, usdi: string) {
     this.addressUSDI = usdi;
-    this.USDI = USDI__factory.connect(this.addressUSDI, provider);
+    this.USDI = USDI__factory.connect(this.addressUSDI, signer);
   }
 }
 
@@ -28,6 +28,6 @@ export const NewRolodex = async (ctx: Web3Data) => {
   }
 
   const token = Chains.getInfo(ctx.chainId);
-
-  return new Rolodex(ctx.provider!, token.usdiAddress!);
+  const signer = ctx.provider?.getSigner(ctx.currentAccount)
+  return new Rolodex(signer!, token.usdiAddress!);
 };

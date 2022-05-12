@@ -57,9 +57,9 @@ export const BorrowRepayModal = () => {
         ></Box>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
-            1 {tokenName}
+            Borrow Balance
           </Typography>
-          <Typography variant="h3" color="text.secondary" mb={1}>
+          <Typography variant="h3" color="text.secondary" my={1}>
             ${tokenValue}
           </Typography>
         </Box>

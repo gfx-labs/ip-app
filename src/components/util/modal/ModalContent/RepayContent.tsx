@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Box, Typography, Button } from "@mui/material";
 import { formatColor, neutral } from "../../../../theme";
 import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
+import { DisableableModalButton } from "../../button/DisableableModalButton";
+import { ModalInputContainer } from "./ModalInputContainer";
 
 interface RepayContent {
   tokenName: string;
@@ -26,6 +28,15 @@ export const RepayContent = (props: RepayContent) => {
 
   const setMax = () => setRepayAmount(tokenWalletBalance);
 
+  const [disabled, setDisabled] = useState(true);
+
+  const [focus, setFocus] = useState(false);
+  const toggle = () => setFocus(!focus);
+
+  useEffect(() => {
+    setDisabled(Number(repayAmount) < 1);
+  }, [repayAmount]);
+
   const handleRepayRequest = () => {};
 
   return (
@@ -40,24 +51,10 @@ export const RepayContent = (props: RepayContent) => {
         Wallet Balance: {tokenWalletBalance} {tokenName}
       </Typography>
 
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
-          paddingTop: 1,
-          paddingBottom: 0,
-          paddingX: 2,
-          borderRadius: 2,
-          boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
-          marginTop: 1
-        }}
-      >
+      <ModalInputContainer focus={focus}>
         <DecimalInput
+          onFocus={toggle}
+          onBlur={toggle}
           onChange={(e) => setRepayAmount(e)}
           placeholder={`0 ${tokenName}`}
           value={repayAmount}
@@ -87,15 +84,13 @@ export const RepayContent = (props: RepayContent) => {
             </Typography>
           </Button>
         </Box>
-      </Box>
+        </ModalInputContainer>
 
-      <Button
-        variant="contained"
-        sx={{ color: formatColor(neutral.white), marginY: 2 }}
+      <DisableableModalButton
+        text="Repay"
         onClick={handleRepayRequest}
-      >
-        Repay
-      </Button>
+        disabled={disabled}
+      />
     </Box>
   );
 };
