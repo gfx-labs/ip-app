@@ -6,6 +6,7 @@ import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
+import { SwapIcon } from "../../../icons/misc/SwapIcon";
 
 interface WithdrawContentProps {
   tokenName: string;
@@ -71,17 +72,45 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
             {`$${Number(withdrawAmount) * Number(tokenValue)}`}
           </Typography>
 
-          <Button onClick={setMax}>
+          <Button
+            onClick={setMax}
+            sx={{
+              minWidth: "auto",
+              
+              height: 30,
+              paddingY: 2,
+              paddingX: 1,
+              '&:hover': {
+                backgroundColor: 'transparent',
+                '.MuiTypography-root.MuiTypography-body1': {
+
+                  color: formatColor(neutral.gray1)
+                }
+              }
+            }}
+          >
             <Typography
               sx={{
                 color: formatColor(neutral.gray3),
                 fontSize: 14,
                 fontWeight: 600,
-                marginLeft: 1,
               }}
             >
               Max
             </Typography>
+          </Button>
+
+          <Button
+            sx={{
+              minWidth: "auto",
+              borderRadius: "50%",
+              width: 30,
+              height: 30,
+              paddingY: 0,
+              paddingX: 2,
+            }}
+          >
+            <SwapIcon sx={{ width: 30, height: 30 }} />
           </Button>
         </Box>
       </ModalInputContainer>
