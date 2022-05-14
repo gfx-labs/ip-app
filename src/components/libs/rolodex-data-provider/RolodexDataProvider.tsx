@@ -13,11 +13,7 @@ export const RolodexContentProvider = ({
   const [rolodex, setRolo] = useState<Rolodex | null>(null);
   
   useEffect(() => {
-    if (ctx.connected && ctx.currentAccount) {
       NewRolodex(ctx).then((rol) => setRolo(rol));
-    } else {
-      setRolo(null);
-    }
   }, [ctx.connected, ctx.currentAccount]);
 
   return (

@@ -14,10 +14,20 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { WalletModal } from "../modal";
 import { addressShortener } from "../text/";
 
-export const ConnectWalletButton = () => {
+interface ConnectWalletButtonProps {
+  invertLight?: boolean
+}
+
+export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
+  const {invertLight = false} = props;
+
   const { setIsWalletModalOpen } = useWalletModalContext();
 
-  const isLight = useLight();
+  let isLight = useLight();
+
+  if (invertLight) {
+    isLight = !isLight;
+  }
 
   const { connected, disconnectWallet, error, currentAccount } =
     useWeb3Context();
@@ -58,7 +68,7 @@ export const ConnectWalletButton = () => {
     <>
       {connected ? (
         <Accordion
-          sx={{ borderRadius: "10px !important", boxShadow: 'none' }}
+          sx={{ borderRadius: "10px !important", boxShadow: "none" }}
           disableGutters
           TransitionProps={{ unmountOnExit: true }}
         >

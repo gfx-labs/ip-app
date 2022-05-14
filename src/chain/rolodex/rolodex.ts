@@ -1,4 +1,4 @@
-import { JsonRpcSigner } from "@ethersproject/providers";
+import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { getWallet } from "../../components/libs/web3-data-provider/WalletOptions";
 import {
   useWeb3Context,
@@ -14,9 +14,9 @@ export class Rolodex {
   addressVC?: string;
   VC?: IVaultController;
 
-  constructor(signer: JsonRpcSigner, usdi: string) {
+  constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
     this.addressUSDI = usdi;
-    this.USDI = USDI__factory.connect(this.addressUSDI, signer);
+    this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
   }
 }
 
@@ -26,8 +26,17 @@ export const NewRolodex = async (ctx: Web3Data) => {
       "Must connect to a chain first"
     );
   }
-
-  const token = Chains.getInfo(ctx.chainId);
+  // *remove or use mainnet 1
+  const token = Chains.getInfo(ctx.chainId || 4);
+  
+  if(!ctx.connected) {
+  
+    const provider = new JsonRpcProvider('https://ropsten.infura.io/v3/c21cd0dd200645f39a51d41368b956d9')
+  
+    return new Rolodex(provider!, token.usdiAddress!);
+  }
+  
   const signer = ctx.provider?.getSigner(ctx.currentAccount)
+
   return new Rolodex(signer!, token.usdiAddress!);
 };

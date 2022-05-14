@@ -1,7 +1,8 @@
 const configs:Array<ChainInfo> = [{
     id:'1',
     name: "Ethereum",
-    ticker:"ETH"
+    ticker:"ETH",
+    usdiAddress: "0xb27E2484Eead6Cbdf7DFb18a22ae2F358e41F1BE" // *remove. Using ropsten address for testing
 },
 {
     id: '3',
