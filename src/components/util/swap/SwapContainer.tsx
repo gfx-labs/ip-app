@@ -1,14 +1,32 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, useTheme, Button } from "@mui/material";
 import React from "react";
 import { useLight } from "../../../hooks/useLight";
+import { useSwapTokens } from "../../../hooks/useSwapTokens";
 import { formatColor, neutral } from "../../../theme";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
+import { useSwapTokenContext } from "../../libs/swap-token-provider/SwapTokenProvider";
 import { TokenSelect } from "./TokenSelect";
+import { useTokenAmountInput } from "./useTokenAmountInput";
 
 export const SwapContainer = () => {
-  const isLight = useLight()
+  const isLight = useLight();
 
-  const theme = useTheme()
+  const theme = useTheme();
+
+  const [token1, token2, swapTokenPositions, switchToken1, switchToken2] = useSwapTokenContext()
+
+  const [
+    token1Amount,
+    setToken1Amount,
+    token2Amount,
+    setToken2Amount,
+    swapTokenAmount,
+  ] = useTokenAmountInput();
+
+  const swapTokens = () => {
+    swapTokenAmount();
+    swapTokenPositions();
+  };
 
   return (
     <Box
@@ -18,15 +36,22 @@ export const SwapContainer = () => {
         columnGap: 2,
         rowGap: 1,
         position: "relative",
-        [theme.breakpoints.down('md')]: {
-          flexDirection: 'column'
-        }
+        [theme.breakpoints.down("md")]: {
+          flexDirection: "column",
+        },
       }}
     >
-      <TokenSelect />
+      <TokenSelect
+        token={token1}
+        changeToken={switchToken1}
+        tokenAmount={token1Amount}
+        setTokenAmount={setToken1Amount}
+      />
 
-      <Box
+      <Button
         sx={{
+          padding: 0,
+          minWidth: "auto",
           backgroundColor: isLight
             ? formatColor(neutral.gray6)
             : formatColor(neutral.gray7),
@@ -46,6 +71,7 @@ export const SwapContainer = () => {
             ? formatColor(neutral.gray6)
             : formatColor(neutral.gray8),
         }}
+        onClick={swapTokens}
       >
         <ForwardIcon
           strokecolor={
@@ -54,14 +80,19 @@ export const SwapContainer = () => {
           sx={{
             width: 14,
             height: 13,
-            [theme.breakpoints.down('md')]: {
-              transform: 'rotate(90deg)'
-            }
+            [theme.breakpoints.down("md")]: {
+              transform: "rotate(90deg)",
+            },
           }}
         />
-      </Box>
+      </Button>
 
-      <TokenSelect />
+      <TokenSelect
+        token={token2}
+        changeToken={switchToken2}
+        tokenAmount={token2Amount}
+        setTokenAmount={setToken2Amount}
+      />
     </Box>
   );
 };

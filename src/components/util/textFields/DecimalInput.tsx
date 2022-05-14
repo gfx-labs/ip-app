@@ -28,9 +28,6 @@ export const DecimalInput = (props: DecimalInputProps) => {
 
   const isLight = useLight()
 
-  useEffect(() => {
-    onChange(value)
-  }, [value]);
 
   return (
     <TextField

@@ -5,31 +5,34 @@ import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
 import { useRolodexContext } from "../../../components/libs/rolodex-data-provider/rolodexDataProvider";
 import { useTotalSupply } from "../../../hooks/useTotalSupply";
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from "react";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
-  const [totalSupply, setTotalSupply] = useState<string | null>(null)
-  
-  const rolodex = useRolodexContext()
-  
-  useEffect(() => {
-    if(!rolodex) {
-      setTotalSupply(null)
-    } else {
-      useTotalSupply(rolodex).then(res => setTotalSupply(res))
-    }
-  }, [rolodex])
+  const [totalSupply, setTotalSupply] = useState<string | null>(null);
+  const { connected } = useWeb3Context();
+  const { setIsWalletModalOpen } = useWalletModalContext();
 
+  const rolodex = useRolodexContext();
+
+  useEffect(() => {
+    if (!rolodex) {
+      setTotalSupply(null);
+    } else {
+      useTotalSupply(rolodex).then((res) => setTotalSupply(res));
+    }
+  }, [rolodex]);
 
   return (
     <Box
       sx={{
-        padding: {xs: 3, md: 6},
+        padding: { xs: 3, md: 6 },
         backgroundImage: `linear-gradient(${formatGradient(
           isLight ? gradient.gradient1 : gradient.gradient2
         )})`,
-        borderRadius: {xs: 5, md: 17},
+        borderRadius: { xs: 5, md: 17 },
       }}
     >
       <Box
@@ -60,7 +63,19 @@ export const ProtocolStatsCard = () => {
         <SwapContainer />
       </Box>
 
-      <Button variant="contained" sx={{color: formatColor(neutral.white)}}>Swap</Button>
+      {connected ? (
+        <Button variant="contained" sx={{ color: formatColor(neutral.white) }}>
+          Swap
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          onClick={() => setIsWalletModalOpen(true)}
+          sx={{ color: formatColor(neutral.white) }}
+        >
+          Connect Wallet
+        </Button>
+      )}
     </Box>
   );
 };
