@@ -18,6 +18,7 @@ import { DepositWithdrawModal } from "./components/util/modal";
 import { BorrowRepayModal } from "./components/util/modal/BorrowRepayModal";
 import { ClaimModal } from "./components/util/modal/ClaimModal";
 import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/rolodexDataProvider";
+import { SwapTokenProvider } from "./components/libs/swap-token-provider/SwapTokenProvider";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,6 +42,7 @@ const App = () => {
                     <ModalContentProvider>
                       <>
                         <WalletModalProvider>
+                          <SwapTokenProvider>
                           <AppLayout>
                             <Routes>
                               <Route path={`/`} element={<LandingPage />} />
@@ -59,6 +61,7 @@ const App = () => {
                               <Route path={`*`} element={<NotFound404Page />} />
                             </Routes>
                           </AppLayout>
+                          </SwapTokenProvider>
                         </WalletModalProvider>
                         <DepositWithdrawModal />
                         <BorrowRepayModal />

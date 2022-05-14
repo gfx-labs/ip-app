@@ -2,13 +2,20 @@ import { Box, Typography } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 import { DecimalInput } from "../textFields";
-import { useState} from 'react'
+import { Dispatch, SetStateAction } from "react";
+import { Token } from "../../../chain/tokens";
 
-export const TokenSelect = () => {
-  const isLight = useLight()
+interface TokenSelectProps {
+  token: Token;
+  changeToken: (name: string) => void;
+  tokenAmount: string;
+  setTokenAmount: (amount: string) => void; 
+}
 
-  const [tokenAmount, setTokenAmount] = useState('')
-  
+export const TokenSelect = (props: TokenSelectProps) => {
+  const { token, tokenAmount, setTokenAmount } = props;
+  const isLight = useLight();
+
   return (
     <Box
       sx={{
@@ -20,20 +27,43 @@ export const TokenSelect = () => {
           : formatColor(neutral.gray4),
         padding: 4,
         borderRadius: 5,
-        boxShadow: '0px 4px 4px 0px rgba(0,0,0, 0.05)'
+        boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
       }}
     >
-      <DecimalInput onChange={setTokenAmount}/>
-      <Box sx={{display: 'flex', alignItems: 'center'}}>
-        <Box component="img" width={24} height={24} src="images/usdi.svg">
-          </Box>
+      <DecimalInput onChange={setTokenAmount} value={tokenAmount} />
+      <Box >
+        <Box sx={{display: 'flex', alignItems:' center'}}>
+        <Box
+          component="img"
+          width={24}
+          height={24}
+          src={`images/${token.ticker.toLowerCase()}.svg`}
+        ></Box>
 
-          <Typography sx={{
+        <Typography
+          sx={{
             color: formatColor(neutral.gray3),
             fontSize: 18,
             fontWeight: 600,
-            marginLeft: 1
-          }}>USDI</Typography>
+            marginLeft: 1,
+          }}
+        >
+          {token.ticker}
+        </Typography>
+        </Box>
+        <Box>
+        <Typography
+        variant="body2"
+          sx={{
+            color: formatColor(neutral.gray3),
+            textAlign: 'right',
+            fontWeight: 500,
+            mt: 1
+          }}
+        >
+          Balance: {token.balance}
+        </Typography>
+        </Box>
       </Box>
     </Box>
   );
