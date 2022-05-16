@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-
 import { Box, Typography, Button } from "@mui/material";
+
 import { formatColor, neutral } from "../../../../theme";
-import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
@@ -25,8 +24,6 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
     setWithdrawAmount,
   } = props;
 
-  const isLight = useLight();
-
   const setMax = () => setWithdrawAmount(tokenVaultBalance);
 
   const [focus, setFocus] = useState(false);
@@ -35,7 +32,7 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
   const [disabled, setDisabled] = useState(true);
 
   useEffect(() => {
-    setDisabled(Number(withdrawAmount) < 1);
+    setDisabled(Number(withdrawAmount) <= 0);
   }, [withdrawAmount]);
 
   const handleWithdrawRequest = () => {};
@@ -76,17 +73,16 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
             onClick={setMax}
             sx={{
               minWidth: "auto",
-              
+
               height: 30,
               paddingY: 2,
               paddingX: 1,
-              '&:hover': {
-                backgroundColor: 'transparent',
-                '.MuiTypography-root.MuiTypography-body1': {
-
-                  color: formatColor(neutral.gray1)
-                }
-              }
+              "&:hover": {
+                backgroundColor: "transparent",
+                ".MuiTypography-root.MuiTypography-body1": {
+                  color: formatColor(neutral.gray1),
+                },
+              },
             }}
           >
             <Typography

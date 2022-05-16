@@ -80,6 +80,7 @@ export const BorrowContent = (props: BorrowContent) => {
         text="Borrow"
         disabled={disabled}
         onClick={handleBorrowRequest}
+        loading={true}
       />
     </Box>
   );

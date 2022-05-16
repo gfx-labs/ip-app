@@ -33,7 +33,11 @@ export const NewRolodex = async (ctx: Web3Data) => {
   
     const provider = new JsonRpcProvider('https://ropsten.infura.io/v3/c21cd0dd200645f39a51d41368b956d9')
   
-    return new Rolodex(provider!, token.usdiAddress!);
+    const rolo = new Rolodex(provider!, token.usdiAddress!);
+
+    rolo.addressVC = await rolo.USDI?._vaultControllerAddress()
+
+    return rolo
   }
   
   const signer = ctx.provider?.getSigner(ctx.currentAccount)
