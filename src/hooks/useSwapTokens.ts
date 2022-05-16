@@ -16,7 +16,6 @@ export const useSwapTokens = (): [
 
     setToken1({ ...token2 });
     setToken2({ ...newToken2 });
-
   };
 
   const switchToken1 = (name: string) => setToken1({ ...getToken(name) });
