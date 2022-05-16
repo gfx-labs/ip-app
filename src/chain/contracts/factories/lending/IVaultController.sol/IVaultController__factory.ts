@@ -364,6 +364,32 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "getCurveMaster",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getOracleMaster",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "initialize",
     outputs: [],
     stateMutability: "nonpayable",
@@ -654,6 +680,25 @@ const _abi = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "wallet",
+        type: "address",
+      },
+    ],
+    name: "vaultIDs",
+    outputs: [
+      {
+        internalType: "uint96[]",
+        name: "",
+        type: "uint96[]",
       },
     ],
     stateMutability: "view",

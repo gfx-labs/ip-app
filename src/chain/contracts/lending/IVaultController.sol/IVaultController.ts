@@ -35,6 +35,8 @@ export interface IVaultControllerInterface extends utils.Interface {
     "calculateInterest()": FunctionFragment;
     "changeProtocolFee(uint192)": FunctionFragment;
     "checkAccount(uint96)": FunctionFragment;
+    "getCurveMaster()": FunctionFragment;
+    "getOracleMaster()": FunctionFragment;
     "initialize()": FunctionFragment;
     "interestFactor()": FunctionFragment;
     "lastInterestTime()": FunctionFragment;
@@ -54,6 +56,7 @@ export interface IVaultControllerInterface extends utils.Interface {
     "unpause()": FunctionFragment;
     "updateRegisteredErc20(address,uint256,address,uint256)": FunctionFragment;
     "vaultAddress(uint96)": FunctionFragment;
+    "vaultIDs(address)": FunctionFragment;
     "vaultsMinted()": FunctionFragment;
   };
 
@@ -66,6 +69,8 @@ export interface IVaultControllerInterface extends utils.Interface {
       | "calculateInterest"
       | "changeProtocolFee"
       | "checkAccount"
+      | "getCurveMaster"
+      | "getOracleMaster"
       | "initialize"
       | "interestFactor"
       | "lastInterestTime"
@@ -85,6 +90,7 @@ export interface IVaultControllerInterface extends utils.Interface {
       | "unpause"
       | "updateRegisteredErc20"
       | "vaultAddress"
+      | "vaultIDs"
       | "vaultsMinted"
   ): FunctionFragment;
 
@@ -115,6 +121,14 @@ export interface IVaultControllerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "checkAccount",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCurveMaster",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getOracleMaster",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -183,6 +197,7 @@ export interface IVaultControllerInterface extends utils.Interface {
     functionFragment: "vaultAddress",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "vaultIDs", values: [string]): string;
   encodeFunctionData(
     functionFragment: "vaultsMinted",
     values?: undefined
@@ -211,6 +226,14 @@ export interface IVaultControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "checkAccount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCurveMaster",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getOracleMaster",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -274,6 +297,7 @@ export interface IVaultControllerInterface extends utils.Interface {
     functionFragment: "vaultAddress",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "vaultIDs", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "vaultsMinted",
     data: BytesLike
@@ -486,6 +510,10 @@ export interface IVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    getCurveMaster(overrides?: CallOverrides): Promise<[string]>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<[string]>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -572,6 +600,8 @@ export interface IVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
     vaultsMinted(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
@@ -606,6 +636,10 @@ export interface IVaultController extends BaseContract {
   ): Promise<ContractTransaction>;
 
   checkAccount(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+  getCurveMaster(overrides?: CallOverrides): Promise<string>;
+
+  getOracleMaster(overrides?: CallOverrides): Promise<string>;
 
   initialize(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -690,6 +724,8 @@ export interface IVaultController extends BaseContract {
 
   vaultAddress(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+
   vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
@@ -722,6 +758,10 @@ export interface IVaultController extends BaseContract {
     ): Promise<void>;
 
     checkAccount(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    getCurveMaster(overrides?: CallOverrides): Promise<string>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<string>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
 
@@ -794,6 +834,8 @@ export interface IVaultController extends BaseContract {
     ): Promise<void>;
 
     vaultAddress(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber[]>;
 
     vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -936,6 +978,10 @@ export interface IVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getCurveMaster(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1022,6 +1068,8 @@ export interface IVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
@@ -1060,6 +1108,10 @@ export interface IVaultController extends BaseContract {
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    getCurveMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1146,6 +1198,11 @@ export interface IVaultController extends BaseContract {
 
     vaultAddress(
       id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    vaultIDs(
+      wallet: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

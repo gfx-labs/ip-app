@@ -32,16 +32,14 @@ export interface VaultControllerInterface extends utils.Interface {
     "_enabledTokens(uint256)": FunctionFragment;
     "_interest()": FunctionFragment;
     "_oracleMaster()": FunctionFragment;
-    "_protocolFee()": FunctionFragment;
     "_tokenAddress_liquidationIncentive(address)": FunctionFragment;
     "_tokenAddress_tokenId(address)": FunctionFragment;
     "_tokenId_oracleAddress(uint256)": FunctionFragment;
     "_tokenId_tokenLTV(uint256)": FunctionFragment;
-    "_tokensRegistered()": FunctionFragment;
-    "_totalBaseLiability()": FunctionFragment;
     "_usdi()": FunctionFragment;
     "_vaultId_vaultAddress(uint96)": FunctionFragment;
     "_vaultsMinted()": FunctionFragment;
+    "_wallet_vaultIDs(address,uint256)": FunctionFragment;
     "accountBorrowingPower(uint96)": FunctionFragment;
     "accountLiability(uint96)": FunctionFragment;
     "amountToSolvency(uint96)": FunctionFragment;
@@ -49,6 +47,8 @@ export interface VaultControllerInterface extends utils.Interface {
     "calculateInterest()": FunctionFragment;
     "changeProtocolFee(uint192)": FunctionFragment;
     "checkAccount(uint96)": FunctionFragment;
+    "getCurveMaster()": FunctionFragment;
+    "getOracleMaster()": FunctionFragment;
     "initialize()": FunctionFragment;
     "interestFactor()": FunctionFragment;
     "lastInterestTime()": FunctionFragment;
@@ -72,6 +72,7 @@ export interface VaultControllerInterface extends utils.Interface {
     "unpause()": FunctionFragment;
     "updateRegisteredErc20(address,uint256,address,uint256)": FunctionFragment;
     "vaultAddress(uint96)": FunctionFragment;
+    "vaultIDs(address)": FunctionFragment;
     "vaultsMinted()": FunctionFragment;
   };
 
@@ -81,16 +82,14 @@ export interface VaultControllerInterface extends utils.Interface {
       | "_enabledTokens"
       | "_interest"
       | "_oracleMaster"
-      | "_protocolFee"
       | "_tokenAddress_liquidationIncentive"
       | "_tokenAddress_tokenId"
       | "_tokenId_oracleAddress"
       | "_tokenId_tokenLTV"
-      | "_tokensRegistered"
-      | "_totalBaseLiability"
       | "_usdi"
       | "_vaultId_vaultAddress"
       | "_vaultsMinted"
+      | "_wallet_vaultIDs"
       | "accountBorrowingPower"
       | "accountLiability"
       | "amountToSolvency"
@@ -98,6 +97,8 @@ export interface VaultControllerInterface extends utils.Interface {
       | "calculateInterest"
       | "changeProtocolFee"
       | "checkAccount"
+      | "getCurveMaster"
+      | "getOracleMaster"
       | "initialize"
       | "interestFactor"
       | "lastInterestTime"
@@ -121,6 +122,7 @@ export interface VaultControllerInterface extends utils.Interface {
       | "unpause"
       | "updateRegisteredErc20"
       | "vaultAddress"
+      | "vaultIDs"
       | "vaultsMinted"
   ): FunctionFragment;
 
@@ -135,10 +137,6 @@ export interface VaultControllerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "_interest", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "_oracleMaster",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_protocolFee",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -157,14 +155,6 @@ export interface VaultControllerInterface extends utils.Interface {
     functionFragment: "_tokenId_tokenLTV",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "_tokensRegistered",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_totalBaseLiability",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "_usdi", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "_vaultId_vaultAddress",
@@ -173,6 +163,10 @@ export interface VaultControllerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "_vaultsMinted",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_wallet_vaultIDs",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "accountBorrowingPower",
@@ -201,6 +195,14 @@ export interface VaultControllerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "checkAccount",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCurveMaster",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getOracleMaster",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
@@ -279,6 +281,7 @@ export interface VaultControllerInterface extends utils.Interface {
     functionFragment: "vaultAddress",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "vaultIDs", values: [string]): string;
   encodeFunctionData(
     functionFragment: "vaultsMinted",
     values?: undefined
@@ -298,10 +301,6 @@ export interface VaultControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "_protocolFee",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "_tokenAddress_liquidationIncentive",
     data: BytesLike
   ): Result;
@@ -317,14 +316,6 @@ export interface VaultControllerInterface extends utils.Interface {
     functionFragment: "_tokenId_tokenLTV",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "_tokensRegistered",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_totalBaseLiability",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "_usdi", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "_vaultId_vaultAddress",
@@ -332,6 +323,10 @@ export interface VaultControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "_vaultsMinted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_wallet_vaultIDs",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -357,6 +352,14 @@ export interface VaultControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "checkAccount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCurveMaster",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getOracleMaster",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
@@ -430,6 +433,7 @@ export interface VaultControllerInterface extends utils.Interface {
     functionFragment: "vaultAddress",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "vaultIDs", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "vaultsMinted",
     data: BytesLike
@@ -654,8 +658,6 @@ export interface VaultController extends BaseContract {
 
     _oracleMaster(overrides?: CallOverrides): Promise<[string]>;
 
-    _protocolFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     _tokenAddress_liquidationIncentive(
       arg0: string,
       overrides?: CallOverrides
@@ -676,10 +678,6 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    _tokensRegistered(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _totalBaseLiability(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     _usdi(overrides?: CallOverrides): Promise<[string]>;
 
     _vaultId_vaultAddress(
@@ -688,6 +686,12 @@ export interface VaultController extends BaseContract {
     ): Promise<[string]>;
 
     _vaultsMinted(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    _wallet_vaultIDs(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     accountBorrowingPower(
       id: BigNumberish,
@@ -723,6 +727,10 @@ export interface VaultController extends BaseContract {
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    getCurveMaster(overrides?: CallOverrides): Promise<[string]>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -823,6 +831,8 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
+    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
     vaultsMinted(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
@@ -840,8 +850,6 @@ export interface VaultController extends BaseContract {
   >;
 
   _oracleMaster(overrides?: CallOverrides): Promise<string>;
-
-  _protocolFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   _tokenAddress_liquidationIncentive(
     arg0: string,
@@ -863,10 +871,6 @@ export interface VaultController extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  _tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>;
-
-  _totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>;
-
   _usdi(overrides?: CallOverrides): Promise<string>;
 
   _vaultId_vaultAddress(
@@ -875,6 +879,12 @@ export interface VaultController extends BaseContract {
   ): Promise<string>;
 
   _vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
+
+  _wallet_vaultIDs(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   accountBorrowingPower(
     id: BigNumberish,
@@ -907,6 +917,10 @@ export interface VaultController extends BaseContract {
   ): Promise<ContractTransaction>;
 
   checkAccount(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+  getCurveMaster(overrides?: CallOverrides): Promise<string>;
+
+  getOracleMaster(overrides?: CallOverrides): Promise<string>;
 
   initialize(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -1004,6 +1018,8 @@ export interface VaultController extends BaseContract {
 
   vaultAddress(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
+  vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+
   vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
@@ -1021,8 +1037,6 @@ export interface VaultController extends BaseContract {
     >;
 
     _oracleMaster(overrides?: CallOverrides): Promise<string>;
-
-    _protocolFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     _tokenAddress_liquidationIncentive(
       arg0: string,
@@ -1044,10 +1058,6 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    _tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>;
-
     _usdi(overrides?: CallOverrides): Promise<string>;
 
     _vaultId_vaultAddress(
@@ -1056,6 +1066,12 @@ export interface VaultController extends BaseContract {
     ): Promise<string>;
 
     _vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _wallet_vaultIDs(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     accountBorrowingPower(
       id: BigNumberish,
@@ -1086,6 +1102,10 @@ export interface VaultController extends BaseContract {
     ): Promise<void>;
 
     checkAccount(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    getCurveMaster(overrides?: CallOverrides): Promise<string>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<string>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
 
@@ -1169,6 +1189,8 @@ export interface VaultController extends BaseContract {
     ): Promise<void>;
 
     vaultAddress(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber[]>;
 
     vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1302,8 +1324,6 @@ export interface VaultController extends BaseContract {
 
     _oracleMaster(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _protocolFee(overrides?: CallOverrides): Promise<BigNumber>;
-
     _tokenAddress_liquidationIncentive(
       arg0: string,
       overrides?: CallOverrides
@@ -1324,10 +1344,6 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    _tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>;
-
     _usdi(overrides?: CallOverrides): Promise<BigNumber>;
 
     _vaultId_vaultAddress(
@@ -1336,6 +1352,12 @@ export interface VaultController extends BaseContract {
     ): Promise<BigNumber>;
 
     _vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _wallet_vaultIDs(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     accountBorrowingPower(
       id: BigNumberish,
@@ -1371,6 +1393,10 @@ export interface VaultController extends BaseContract {
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getCurveMaster(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1471,6 +1497,8 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
@@ -1485,8 +1513,6 @@ export interface VaultController extends BaseContract {
     _interest(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _oracleMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _protocolFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _tokenAddress_liquidationIncentive(
       arg0: string,
@@ -1508,12 +1534,6 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    _tokensRegistered(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _totalBaseLiability(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     _usdi(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _vaultId_vaultAddress(
@@ -1522,6 +1542,12 @@ export interface VaultController extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     _vaultsMinted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    _wallet_vaultIDs(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     accountBorrowingPower(
       id: BigNumberish,
@@ -1557,6 +1583,10 @@ export interface VaultController extends BaseContract {
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    getCurveMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getOracleMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1656,6 +1686,11 @@ export interface VaultController extends BaseContract {
 
     vaultAddress(
       id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    vaultIDs(
+      wallet: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
