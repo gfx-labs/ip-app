@@ -313,6 +313,13 @@ theme.components = {
         "&.Mui-focused": {
           backgroundColor: formatColor(neutral.white),
         },
+        '&:before': {
+          borderBottom: 'none !important',
+
+          '&:hover' :{
+            borderBottom: 'none'
+          }
+        }
       },
       input: {
         ":hover": {

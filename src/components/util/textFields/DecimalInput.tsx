@@ -1,4 +1,4 @@
-import { TextField, TextFieldProps } from "@mui/material";
+import { TextField, TextFieldProps, InputAdornment } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
@@ -21,13 +21,20 @@ interface DecimalInputProps {
   value: string;
   onFocus?: () => void;
   onBlur?: () => void;
+  isMoneyValue?: boolean;
 }
 
 export const DecimalInput = (props: DecimalInputProps) => {
-  const { onChange, placeholder, value, onFocus, onBlur } = props;
+  const {
+    onChange,
+    placeholder,
+    value,
+    onFocus,
+    onBlur,
+    isMoneyValue = false,
+  } = props;
 
-  const isLight = useLight()
-
+  const isLight = useLight();
 
   return (
     <TextField
@@ -35,15 +42,30 @@ export const DecimalInput = (props: DecimalInputProps) => {
       onBlur={onBlur}
       variant="standard"
       value={value}
-      placeholder={placeholder || '0.0'}
+      placeholder={placeholder || "0.0"}
       onChange={(e) => {
         onChange(decimalEnforcer(e.target.value));
       }}
+      InputProps={{
+        startAdornment: isMoneyValue ? (
+          <InputAdornment position="start">$</InputAdornment>
+        ) : (
+          false
+        ),
+        sx: {
+          "&:before, &:after": {
+            borderBottom: "none !important",
+          },
+        },
+      }}
       sx={{
-        '.MuiInputBase-input': {
+        paddingBottom: "4px",
+        ".MuiInputBase-input": {
           fontWeight: 700,
-          color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
+          color: isLight
+            ? formatColor(neutral.gray1)
+            : formatColor(neutral.white),
+        },
       }}
     />
   );

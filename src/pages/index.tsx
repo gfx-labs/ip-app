@@ -1,5 +1,12 @@
 import { formatColor, formatGradient, gradient, neutral } from "../theme";
-import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Button,
+} from "@mui/material";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { ProtocolStatsCard } from "../components/util/cards";
 import { useLight } from "../hooks/useLight";
@@ -7,10 +14,14 @@ import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 import { StatsMeter } from "../components/util/statsMeter";
 import { UserStats } from "../components/util/UserStats";
 import { ConnectWalletButton } from "../components/util/button";
+import { ForwardIcon } from "../components/icons/misc/ForwardIcon";
+import { OpenVaultButton } from "../components/util/button/OpenVaultButton";
 
 const LandingPage = () => {
   const theme = useTheme();
   const { currentAccount, connected } = useWeb3Context();
+
+  const haveVault = false;
 
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -64,12 +75,12 @@ const LandingPage = () => {
         </Box>
 
         <Box sx={{ position: "relative" }}>
-          {!connected && (
+          {/* {!connected ? (
             <Box
               sx={{
                 position: "absolute",
                 zIndex: 9,
-                top: '-2%',
+                top: "-2%",
                 bottom: -16,
                 left: "-100%",
                 right: "-100%",
@@ -85,7 +96,31 @@ const LandingPage = () => {
             >
               <ConnectWalletButton invertLight />
             </Box>
-          )}
+          ) : (
+            connected &&
+            !haveVault && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  zIndex: 9,
+                  top: "-2%",
+                  bottom: -16,
+                  left: "-100%",
+                  right: "-100%",
+                  width: "auto",
+                  height: "102%",
+                  background: isLight
+                    ? "rgba(55, 66, 82, 0.42)"
+                    : "rgba(35, 40, 48, 0.82)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <OpenVaultButton />
+              </Box>
+            )
+          )} */}
 
           <Box sx={{ marginY: 4 }}>
             <StatsMeter />

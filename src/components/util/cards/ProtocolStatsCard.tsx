@@ -22,6 +22,7 @@ export const ProtocolStatsCard = () => {
       setTotalSupply(null);
     } else {
       useTotalSupply(rolodex).then((res) => setTotalSupply(res));
+      console.log(rolodex, 'this is rolo')
     }
   }, [rolodex]);
 

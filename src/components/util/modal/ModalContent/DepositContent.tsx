@@ -33,6 +33,7 @@ export const DepositContent = (props: DepositContent) => {
   const isLight = useLight();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
+  const [isMoneyValue, setIsMoneyValue] = useState(false)
   const toggle = () => setFocus(!focus);
 
   const ctx = useWeb3Context();
@@ -41,7 +42,7 @@ export const DepositContent = (props: DepositContent) => {
   const setMax = () => setDepositAmount(tokenWalletBalance);
 
   useEffect(() => {
-    setDisabled(Number(depositAmount) < 1);
+    setDisabled(Number(depositAmount) <= 0);
   }, [depositAmount]);
 
   const handleDepositRequest = async () => {
@@ -58,6 +59,16 @@ export const DepositContent = (props: DepositContent) => {
     }
   };
 
+  const swapHandler = () => {
+    if(!isMoneyValue) {
+      setDepositAmount((Number(depositAmount) * Number(tokenValue)).toString())
+    } else {
+      setDepositAmount((Number(depositAmount) / Number(tokenValue)).toString())
+    } 
+
+    setIsMoneyValue(!isMoneyValue)
+  }
+
   return (
     <Box>
       <Typography
@@ -69,15 +80,17 @@ export const DepositContent = (props: DepositContent) => {
         {" "}
         Wallet Balance: {tokenWalletBalance} {tokenName}
       </Typography>
-
+      
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
           onChange={(e) => setDepositAmount(e)}
-          placeholder={`0 ${tokenName}`}
+          placeholder={`0 ${isMoneyValue ? 'USD' : tokenName}`}
           value={depositAmount}
+          isMoneyValue={isMoneyValue}
         />
+        
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
             sx={{
@@ -85,9 +98,11 @@ export const DepositContent = (props: DepositContent) => {
               fontSize: 14,
               fontWeight: 600,
               marginLeft: 1,
+              whiteSpace: 'nowrap'
             }}
           >
-            {`$${Number(depositAmount) * Number(tokenValue)}`}
+
+            {isMoneyValue ? `${(Number(depositAmount) === 0 ? '0' : (Number(depositAmount) / Number(tokenValue)))} ${tokenName}` : `$${Number(depositAmount) * Number(tokenValue)}`}
           </Typography>
 
           <Button
@@ -127,6 +142,7 @@ export const DepositContent = (props: DepositContent) => {
               paddingY: 0,
               paddingX: 2,
             }}
+            onClick={swapHandler}
           >
             <SwapIcon sx={{ width: 30, height: 30 }} />
           </Button>
