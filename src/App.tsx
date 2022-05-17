@@ -19,6 +19,8 @@ import { BorrowRepayModal } from "./components/util/modal/BorrowRepayModal";
 import { ClaimModal } from "./components/util/modal/ClaimModal";
 import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/rolodexDataProvider";
 import { SwapTokenProvider } from "./components/libs/swap-token-provider/SwapTokenProvider";
+import { DepositConfirmationModal } from "./components/util/modal/DepositConfirmationModal";
+import { WithdrawConfirmationModal } from "./components/util/modal/WithdrawConfirmationModal";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -65,6 +67,8 @@ const App = () => {
                         </WalletModalProvider>
                         <DepositWithdrawModal />
                         <BorrowRepayModal />
+                        <DepositConfirmationModal />
+                        <WithdrawConfirmationModal />
                         <ClaimModal />
                       </>
                     </ModalContentProvider>

@@ -1,6 +1,5 @@
 import {
   Button,
-  Typography,
   ButtonProps,
   CircularProgress,
 } from "@mui/material";
@@ -23,7 +22,6 @@ export const DisableableModalButton = (props: DisableableModalButtonProps) => {
       onClick={onClick}
       variant="contained"
       sx={{
-        marginY: 2,
         width: "100%",
         backgroundColor: isLight
           ? formatColor(neutral.black1)

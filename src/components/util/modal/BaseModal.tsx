@@ -50,7 +50,7 @@ export const BaseModal = ({
           width: "100%",
           maxWidth: { xs: "359px", sm: `${contentMaxWidth}px` },
           maxHeight: "calc(100vh - 20px)",
-          p: 5,
+          p: 4,
           borderRadius: "10px",
         }}
       >

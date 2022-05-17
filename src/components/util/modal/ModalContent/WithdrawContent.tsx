@@ -6,36 +6,45 @@ import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
 import { SwapIcon } from "../../../icons/misc/SwapIcon";
+import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 
-interface WithdrawContentProps {
-  tokenName: string;
-  tokenValue: string;
-  tokenVaultBalance: string;
-  withdrawAmount: string;
-  setWithdrawAmount: (e: string) => void;
-}
+export const WithdrawContent = () => {
+  const { setType, withdraw, updateWithdraw } = useModalContext();
 
-export const WithdrawContent = (props: WithdrawContentProps) => {
-  const {
-    tokenName,
-    tokenVaultBalance,
-    tokenValue,
-    withdrawAmount,
-    setWithdrawAmount,
-  } = props;
-
-  const setMax = () => setWithdrawAmount(tokenVaultBalance);
+  const setMax = () =>
+    updateWithdraw("amountFrom", withdraw.token.balance.toString());
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
+  const [isMoneyValue, setIsMoneyValue] = useState(false);
 
   const [disabled, setDisabled] = useState(true);
 
-  useEffect(() => {
-    setDisabled(Number(withdrawAmount) <= 0);
-  }, [withdrawAmount]);
+  const numAmountFrom = Number(withdraw.amountFrom);
 
-  const handleWithdrawRequest = () => {};
+  useEffect(() => {
+    setDisabled(numAmountFrom <= 0);
+  }, [withdraw.amountFrom]);
+
+  const handleWithdrawRequest = () => {
+    setType(ModalType.WithdrawConfirmation)
+  };
+
+  const swapHandler = () => {
+    if (!isMoneyValue) {
+      updateWithdraw(
+        "amountFrom",
+        (numAmountFrom * withdraw.token.value).toString()
+      );
+    } else {
+      updateWithdraw(
+        "amountFrom",
+        (numAmountFrom / withdraw.token.value).toString()
+      );
+    }
+
+    setIsMoneyValue(!isMoneyValue);
+  };
 
   return (
     <Box>
@@ -46,16 +55,17 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
         textAlign="right"
       >
         {" "}
-        Vault Balance: {tokenVaultBalance} {tokenName}
+        Vault Balance: {withdraw.token.balance} {withdraw.token.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onBlur={toggle}
           onFocus={toggle}
-          onChange={(e) => setWithdrawAmount(e)}
-          placeholder={`0 ${tokenName}`}
-          value={withdrawAmount}
+          onChange={(amount) => updateWithdraw("amountFrom", amount)}
+          placeholder={`0 ${isMoneyValue ? "USD" : withdraw.token.ticker}`}
+          value={withdraw.amountFrom}
+          isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
@@ -64,9 +74,16 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
               fontSize: 14,
               fontWeight: 600,
               marginLeft: 1,
+              whiteSpace: "nowrap",
             }}
           >
-            {`$${Number(withdrawAmount) * Number(tokenValue)}`}
+            {isMoneyValue
+              ? `${
+                  withdraw.amountFrom === "0"
+                    ? "0"
+                    : numAmountFrom / withdraw.token.value
+                } ${withdraw.token.ticker}`
+              : `$${numAmountFrom * withdraw.token.value}`}
           </Typography>
 
           <Button
@@ -105,16 +122,39 @@ export const WithdrawContent = (props: WithdrawContentProps) => {
               paddingY: 0,
               paddingX: 2,
             }}
+            onClick={swapHandler}
           >
             <SwapIcon sx={{ width: 30, height: 30 }} />
           </Button>
         </Box>
       </ModalInputContainer>
-      <DisableableModalButton
-        text="Withdraw"
-        onClick={handleWithdrawRequest}
-        disabled={disabled}
-      />
+
+      <Box marginTop={2}>
+        <DisableableModalButton
+          text="Withdraw"
+          onClick={handleWithdrawRequest}
+          disabled={disabled}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginTop: 2,
+        }}
+      >
+        <Typography variant="caption">Borrowing Power</Typography>
+        <Box
+          component="img"
+          src="images/up_arrow_blue.png"
+          width={10}
+          height={12}
+          marginX={1}
+        />
+        <Typography variant="caption">$0</Typography>
+      </Box>
     </Box>
   );
 };

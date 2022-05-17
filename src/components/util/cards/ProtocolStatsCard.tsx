@@ -52,7 +52,7 @@ export const ProtocolStatsCard = () => {
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Box
           component="img"
-          src="images/ReserveRatio.png"
+          src="images/reserve_ratio.png"
           width={17}
           height={18}
           marginRight={1}
