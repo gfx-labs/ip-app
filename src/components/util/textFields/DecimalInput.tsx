@@ -5,7 +5,7 @@ import { formatColor, neutral } from "../../../theme";
 
 const decimalRegexp = /^\d*(?:[.])?\d*$/;
 const decimalEnforcer = (nextUserInput: string) => {
-  if (nextUserInput === "") {
+  if (nextUserInput === "" || nextUserInput === "0") {
     return "";
   } else if (nextUserInput === ".") {
     return "0.";

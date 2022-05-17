@@ -28,4 +28,18 @@ export const Tokens: Token[] = [
     ticker: "ETH",
     balance: 5
   },
+  {
+    name: "UNI token",
+    address: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+    value: 5.21,
+    ticker: "UNI",
+    balance: 500
+  },
+  {
+    name: "Wrapped Bitcoin",
+    address: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
+    value: 30000,
+    ticker: "WBTC",
+    balance: 1.2
+  },
 ];

@@ -6,68 +6,63 @@ import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
 import { useDeposit } from "../../../../hooks/useDeposit";
 import { useRolodexContext } from "../../../libs/rolodex-data-provider/rolodexDataProvider";
-import {
-  useWeb3Context,
-  Web3Data,
-} from "../../../libs/web3-data-provider/Web3Provider";
+import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
 import { SwapIcon } from "../../../icons/misc/SwapIcon";
-interface DepositContent {
-  tokenName: string;
-  tokenValue: string;
-  tokenWalletBalance: string;
-  depositAmount: string;
-  setDepositAmount: (e: string) => void;
-}
+import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 
-export const DepositContent = (props: DepositContent) => {
-  const {
-    tokenName,
-    tokenWalletBalance,
-    tokenValue,
-    setDepositAmount,
-    depositAmount,
-  } = props;
+export const DepositContent = () => {
+  const { setType, deposit, updateDeposit } = useModalContext();
 
-  const isLight = useLight();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
-  const [isMoneyValue, setIsMoneyValue] = useState(false)
+  const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
 
   const ctx = useWeb3Context();
   const provider = ctx.provider;
   const rolodex = useRolodexContext();
-  const setMax = () => setDepositAmount(tokenWalletBalance);
+  const setMax = () =>
+    updateDeposit("amountFrom", deposit.token.balance.toString());
+
+  const numAmountFrom = Number(deposit.amountFrom);
 
   useEffect(() => {
-    setDisabled(Number(depositAmount) <= 0);
-  }, [depositAmount]);
+    setDisabled(numAmountFrom <= 0);
+  }, [deposit.amountFrom]);
 
   const handleDepositRequest = async () => {
-    try {
-      const deposit = await useDeposit(
-        rolodex!,
-        provider!,
-        Number(depositAmount)
-      );
+    setType(ModalType.DepositConfirmation)
+    // go to confirmation
+    // try {
+    //   const depositRequest = await useDeposit(
+    //     rolodex!,
+    //     provider!,
+    //     numAmountFrom
+    //   );
 
-      console.log(deposit, "DEPOSIT SUCCEDED?");
-    } catch (err) {
-      console.error("ERROR", err);
-    }
+    //   console.log(depositRequest, "DEPOSIT SUCCEDED?");
+    // } catch (err) {
+    //   console.error("ERROR", err);
+    // }
   };
 
   const swapHandler = () => {
-    if(!isMoneyValue) {
-      setDepositAmount((Number(depositAmount) * Number(tokenValue)).toString())
+    if (!isMoneyValue) {
+      updateDeposit(
+        "amountFrom",
+        (numAmountFrom * deposit.token.value).toString()
+      );
     } else {
-      setDepositAmount((Number(depositAmount) / Number(tokenValue)).toString())
-    } 
+      updateDeposit(
+        "amountFrom",
+        (numAmountFrom / deposit.token.value).toString()
+      );
+    }
 
-    setIsMoneyValue(!isMoneyValue)
-  }
+    setIsMoneyValue(!isMoneyValue);
+  };
 
   return (
     <Box>
@@ -78,19 +73,19 @@ export const DepositContent = (props: DepositContent) => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {tokenWalletBalance} {tokenName}
+        Wallet Balance: {deposit.token.balance} {deposit.token.ticker}
       </Typography>
-      
+
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(e) => setDepositAmount(e)}
-          placeholder={`0 ${isMoneyValue ? 'USD' : tokenName}`}
-          value={depositAmount}
+          onChange={(amount) => updateDeposit("amountFrom", amount)}
+          placeholder={`0 ${isMoneyValue ? "USD" : deposit.token.ticker}`}
+          value={deposit.amountFrom}
           isMoneyValue={isMoneyValue}
         />
-        
+
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
             sx={{
@@ -98,28 +93,32 @@ export const DepositContent = (props: DepositContent) => {
               fontSize: 14,
               fontWeight: 600,
               marginLeft: 1,
-              whiteSpace: 'nowrap'
+              whiteSpace: "nowrap",
             }}
           >
-
-            {isMoneyValue ? `${(Number(depositAmount) === 0 ? '0' : (Number(depositAmount) / Number(tokenValue)))} ${tokenName}` : `$${Number(depositAmount) * Number(tokenValue)}`}
+            {isMoneyValue
+              ? `${
+                  deposit.amountFrom === "0"
+                    ? "0"
+                    : numAmountFrom / deposit.token.value
+                } ${deposit.token.ticker}`
+              : `$${numAmountFrom * deposit.token.value}`}
           </Typography>
 
           <Button
             onClick={setMax}
             sx={{
               minWidth: "auto",
-              
+
               height: 30,
               paddingY: 2,
               paddingX: 1,
-              '&:hover': {
-                backgroundColor: 'transparent',
-                '.MuiTypography-root.MuiTypography-body1': {
-
-                  color: formatColor(neutral.gray1)
-                }
-              }
+              "&:hover": {
+                backgroundColor: "transparent",
+                ".MuiTypography-root.MuiTypography-body1": {
+                  color: formatColor(neutral.gray1),
+                },
+              },
             }}
           >
             <Typography
@@ -149,11 +148,32 @@ export const DepositContent = (props: DepositContent) => {
         </Box>
       </ModalInputContainer>
 
-      <DisableableModalButton
-        text="Deposit"
-        disabled={disabled}
-        onClick={handleDepositRequest}
-      />
+      <Box marginTop={2}>
+        <DisableableModalButton
+          text="Deposit"
+          disabled={disabled}
+          onClick={handleDepositRequest}
+        />
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginTop: 2,
+        }}
+      >
+        <Typography variant="caption">Borrowing Power</Typography>
+        <Box
+          component="img"
+          src="images/up_arrow_blue.png"
+          width={10}
+          height={12}
+          marginX={1}
+        />
+        <Typography variant="caption">$0</Typography>
+      </Box>
     </Box>
   );
 };
