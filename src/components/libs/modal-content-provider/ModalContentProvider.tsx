@@ -1,5 +1,9 @@
 import { createContext, useState, useContext } from "react";
-import { Token, Tokens } from "../../../chain/tokens";
+import {
+  getTokensListOnCurrentChain,
+  Token,
+} from "../../../chain/tokens";
+import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 export enum ModalType {
   Deposit = "DEPOSIT",
@@ -27,10 +31,12 @@ export type ModalContextType = {
 };
 
 const createDepositWithdrawToken = () => {
+  const { chainId } = useWeb3Context();
+
   return {
-    token: Tokens[1],
-    amountFrom: '',
-    amountTo: '',
+    token: getTokensListOnCurrentChain(chainId)[0],
+    amountFrom: "",
+    amountTo: "",
   };
 };
 export const ModalContentContext = createContext({} as ModalContextType);
@@ -51,20 +57,27 @@ export const ModalContentProvider = ({
   const updateDeposit = (prop: string, val: string) => {
     setDeposit({
       ...deposit,
-      [prop]: val
-    })
-  }
+      [prop]: val,
+    });
+  };
 
-    const updateWithdraw = (prop: string, val: string) => {
+  const updateWithdraw = (prop: string, val: string) => {
     setWithdraw({
       ...withdraw,
-      [prop]: val
-    })
-  }
+      [prop]: val,
+    });
+  };
 
   return (
     <ModalContentContext.Provider
-      value={{ type, setType, deposit, withdraw, updateDeposit, updateWithdraw }}
+      value={{
+        type,
+        setType,
+        deposit,
+        withdraw,
+        updateDeposit,
+        updateWithdraw,
+      }}
     >
       {children}
     </ModalContentContext.Provider>

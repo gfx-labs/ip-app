@@ -60,7 +60,7 @@ export const WithdrawConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/USDI.png`}
+            src={`images/USDI.svg`}
             alt="USDI"
             marginLeft={3}
           ></Box>
@@ -73,7 +73,7 @@ export const WithdrawConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/${withdraw.token.ticker}.png`}
+            src={`images/${withdraw.token.ticker}.svg`}
             alt={withdraw.token.ticker}
             marginRight={3}
           ></Box>

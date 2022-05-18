@@ -86,7 +86,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           component="img"
           width={80}
           height={80}
-          src={`images/${image.src}.png`}
+          src={`images/${image.src}.svg`}
           alt={image.alt}
         ></Box>
       </Box>

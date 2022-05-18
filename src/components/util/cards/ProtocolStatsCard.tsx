@@ -8,24 +8,28 @@ import { useTotalSupply } from "../../../hooks/useTotalSupply";
 import { useEffect, useState } from "react";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
-import { useUSDCBalanceOf } from "../../../hooks/useUSDCBalance";
-import { Chains } from "../../../chain/chains";
+import { useERC20BalanceOf } from "../../../hooks/useERC20BalanceOf";
+import { getTokenFromTicker } from "../../../chain/tokens";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
   const [totalSupply, setTotalSupply] = useState<string | null>(null);
-  const [totalDeposited, setTotalDeposited] = useState<string | null>(null)
-  const { connected, provider,chainId } = useWeb3Context();
+  const [totalUSDCDeposited, setTotalUSDCDeposited] =
+    useState<string | null>(null);
+  const { connected, chainId } = useWeb3Context();
   const { setIsWalletModalOpen } = useWalletModalContext();
-  const token = Chains.getInfo(chainId)
+  
+  const usdc = getTokenFromTicker(chainId, 'USDC')
 
   const rolodex = useRolodexContext();
 
   useEffect(() => {
     if (rolodex) {
       useTotalSupply(rolodex).then((res) => setTotalSupply(res));
-      useUSDCBalanceOf(rolodex, token.usdcAddress).then((res) => setTotalDeposited(res))
-    } 
+      useERC20BalanceOf(rolodex, usdc?.address).then((res) =>
+        setTotalUSDCDeposited(res)
+      );
+    }
   }, [rolodex]);
 
   return (
@@ -48,7 +52,7 @@ export const ProtocolStatsCard = () => {
         }}
       >
         <TitleText title="USDi Minted" text={totalSupply} />
-        <TitleText title="USDC Deposited" text={totalDeposited} />
+        <TitleText title="USDC Deposited" text={totalUSDCDeposited} />
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
@@ -68,7 +72,7 @@ export const ProtocolStatsCard = () => {
 
       {connected ? (
         <Button variant="contained" sx={{ color: formatColor(neutral.white) }}>
-          Swap
+          Deposit
         </Button>
       ) : (
         <Button
