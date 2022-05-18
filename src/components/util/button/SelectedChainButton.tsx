@@ -1,14 +1,12 @@
-import React from "react";
-
-import {Chains} from "../../../chain/chains";
+import { Chains } from "../../../chain/chains";
 import { Button, useMediaQuery, useTheme } from "@mui/material";
 import { blue, formatColor, neutral } from "../../../theme";
 import { useLight } from "../../../hooks/useLight";
-import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
 export const SelectedChainButton = () => {
-  const ctx = useWeb3Context()
-  const token = Chains.getInfo(ctx.chainId)
+  const ctx = useWeb3Context();
+  const token = Chains.getInfo(ctx.chainId);
 
   const theme = useTheme();
 
@@ -32,10 +30,10 @@ export const SelectedChainButton = () => {
         "&:hover": {
           border: "none",
         },
-        [theme.breakpoints.down('md')]:{
+        [theme.breakpoints.down("md")]: {
           paddingX: 1,
-          minWidth: 'auto'
-        }
+          minWidth: "auto",
+        },
       }}
     >
       {name}

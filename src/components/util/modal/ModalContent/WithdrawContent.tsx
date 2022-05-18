@@ -6,7 +6,10 @@ import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
 import { SwapIcon } from "../../../icons/misc/SwapIcon";
-import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
+import {
+  ModalType,
+  useModalContext,
+} from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const WithdrawContent = () => {
   const { setType, withdraw, updateWithdraw } = useModalContext();
@@ -25,10 +28,6 @@ export const WithdrawContent = () => {
   useEffect(() => {
     setDisabled(numAmountFrom <= 0);
   }, [withdraw.amountFrom]);
-
-  const handleWithdrawRequest = () => {
-    setType(ModalType.WithdrawConfirmation)
-  };
 
   const swapHandler = () => {
     if (!isMoneyValue) {
@@ -132,7 +131,7 @@ export const WithdrawContent = () => {
       <Box marginTop={2}>
         <DisableableModalButton
           text="Withdraw"
-          onClick={handleWithdrawRequest}
+          onClick={() => setType(ModalType.WithdrawConfirmation)}
           disabled={disabled}
         />
       </Box>
@@ -152,6 +151,9 @@ export const WithdrawContent = () => {
           width={10}
           height={12}
           marginX={1}
+          sx={{
+            transform: "rotate(180deg)",
+          }}
         />
         <Typography variant="caption">$0</Typography>
       </Box>
