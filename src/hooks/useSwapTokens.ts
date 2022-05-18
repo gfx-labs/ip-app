@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Token, Tokens } from "../chain/tokens";
+import { Token, getTokensListOnCurrentChain } from "../chain/tokens";
+import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 
 export const useSwapTokens = (): [
   Token,
@@ -25,7 +26,10 @@ export const useSwapTokens = (): [
 };
 
 const getToken = (name: string): Token => {
-  const token = Tokens.find((token) => token.name === name);
+  const {chainId} = useWeb3Context()
+
+  const tokens = getTokensListOnCurrentChain(chainId)
+  const token = tokens.find((token) => token.name === name);
 
   if (token === undefined) {
     throw new TypeError("Cannot find token");

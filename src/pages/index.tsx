@@ -14,18 +14,46 @@ import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 import { StatsMeter } from "../components/util/statsMeter";
 import { UserStats } from "../components/util/UserStats";
 import { ConnectWalletButton } from "../components/util/button";
-import { ForwardIcon } from "../components/icons/misc/ForwardIcon";
 import { OpenVaultButton } from "../components/util/button/OpenVaultButton";
+import { useRolodexContext } from "../components/libs/rolodex-data-provider/rolodexDataProvider";
+import { useState, useEffect } from "react";
+import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
+import { BigNumber } from "ethers";
 
 const LandingPage = () => {
   const theme = useTheme();
+  const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext();
   const { currentAccount, connected } = useWeb3Context();
-
-  const haveVault = false;
-
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const rolodex = useRolodexContext();
   const isLight = useLight();
+
+  useEffect(() => {
+    if (currentAccount) {
+      const fetchVault = async (): Promise<void> => {
+        try {
+          console.log(rolodex?.VC, currentAccount);
+          const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount);
+
+          if (vaultIDs && vaultIDs?.length > 0) {
+            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString()
+            
+            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID)
+            setVaultID(vaultID);
+            setVaultAddress(vaultAddress)
+
+          } else {
+            setVaultID(null)
+          }
+        } catch (err) {
+          setVaultID(null)
+          console.log(err, "ERROR");
+          throw new Error("cannot get vault");
+        }
+      };
+
+      fetchVault();
+    }
+  }, [currentAccount]);
 
   return (
     <Box
@@ -75,7 +103,7 @@ const LandingPage = () => {
         </Box>
 
         <Box sx={{ position: "relative" }}>
-          {/* {!connected ? (
+          {!connected ? (
             <Box
               sx={{
                 position: "absolute",
@@ -98,7 +126,7 @@ const LandingPage = () => {
             </Box>
           ) : (
             connected &&
-            !haveVault && (
+            !hasVault && (
               <Box
                 sx={{
                   position: "absolute",
@@ -120,8 +148,9 @@ const LandingPage = () => {
                 <OpenVaultButton />
               </Box>
             )
-          )} */}
+          )}
 
+          {hasVault.toString()}
           <Box sx={{ marginY: 4 }}>
             <StatsMeter />
           </Box>

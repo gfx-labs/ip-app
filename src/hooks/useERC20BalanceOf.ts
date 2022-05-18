@@ -12,9 +12,9 @@ const minABI = [
   },
 ];
 
-export const useUSDCBalanceOf = (rolodex: Rolodex, usdc_address: string) => {
+export const useERC20BalanceOf = (rolodex: Rolodex, address: string) => {
   const usdcContract = new ethers.Contract(
-    usdc_address,
+    address,
     minABI,
     provider
   );

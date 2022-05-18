@@ -52,7 +52,7 @@ export const DepositConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/${deposit.token.ticker}.png`}
+            src={`images/${deposit.token.ticker}.svg`}
             alt={deposit.token.ticker}
             marginRight={3}
           ></Box>
@@ -76,7 +76,7 @@ export const DepositConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/USDI.png`}
+            src={`images/USDI.svg`}
             alt="USDI"
             marginLeft={3}
           ></Box>

@@ -21,6 +21,7 @@ import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/
 import { SwapTokenProvider } from "./components/libs/swap-token-provider/SwapTokenProvider";
 import { DepositConfirmationModal } from "./components/util/modal/DepositConfirmationModal";
 import { WithdrawConfirmationModal } from "./components/util/modal/WithdrawConfirmationModal";
+import { VaultDataProvider } from "./components/libs/vault-data-provider/VaultDataProvider";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,37 +42,42 @@ const App = () => {
                 <>
                   <CssBaseline />
                   <RolodexContentProvider>
-                    <ModalContentProvider>
-                      <>
-                        <WalletModalProvider>
-                          <SwapTokenProvider>
-                          <AppLayout>
-                            <Routes>
-                              <Route path={`/`} element={<LandingPage />} />
-                              <Route
-                                path={`/dashboard`}
-                                element={<Dashboard />}
-                              />
-                              <Route
-                                path={`/docs`}
-                                element={<RedirectBook />}
-                              />
-                              <Route
-                                path={`/book*`}
-                                element={<RedirectBook />}
-                              />
-                              <Route path={`*`} element={<NotFound404Page />} />
-                            </Routes>
-                          </AppLayout>
-                          </SwapTokenProvider>
-                        </WalletModalProvider>
-                        <DepositWithdrawModal />
-                        <BorrowRepayModal />
-                        <DepositConfirmationModal />
-                        <WithdrawConfirmationModal />
-                        <ClaimModal />
-                      </>
-                    </ModalContentProvider>
+                    <VaultDataProvider>
+                      <ModalContentProvider>
+                        <>
+                          <WalletModalProvider>
+                            <SwapTokenProvider>
+                              <AppLayout>
+                                <Routes>
+                                  <Route path={`/`} element={<LandingPage />} />
+                                  <Route
+                                    path={`/dashboard`}
+                                    element={<Dashboard />}
+                                  />
+                                  <Route
+                                    path={`/docs`}
+                                    element={<RedirectBook />}
+                                  />
+                                  <Route
+                                    path={`/book*`}
+                                    element={<RedirectBook />}
+                                  />
+                                  <Route
+                                    path={`*`}
+                                    element={<NotFound404Page />}
+                                  />
+                                </Routes>
+                              </AppLayout>
+                            </SwapTokenProvider>
+                          </WalletModalProvider>
+                          <DepositWithdrawModal />
+                          <BorrowRepayModal />
+                          <DepositConfirmationModal />
+                          <WithdrawConfirmationModal />
+                          <ClaimModal />
+                        </>
+                      </ModalContentProvider>
+                    </VaultDataProvider>
                   </RolodexContentProvider>
                 </>
               </PaletteModeContextProvider>

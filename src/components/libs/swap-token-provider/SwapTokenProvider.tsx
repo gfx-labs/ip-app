@@ -1,15 +1,6 @@
 import { createContext, useState, useContext } from "react";
-import { Tokens, Token } from "../../../chain/tokens";
-
-const getToken = (name: string): Token => {
-  const token = Tokens.find((token) => token.name === name);
-
-  if (token === undefined) {
-    throw new TypeError("Cannot find token");
-  }
-
-  return token;
-};
+import { Token,getTokenFromTicker } from "../../../chain/tokens";
+import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 type SwapTokenContextType = [
   Token,
@@ -28,8 +19,10 @@ export const SwapTokenProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const [token1, setToken1] = useState<Token>(() => getToken("USDC"));
-  const [token2, setToken2] = useState<Token>(() => getToken("ETH"));
+  const {chainId} = useWeb3Context()
+
+  const [token1, setToken1] = useState<Token>(() => getTokenFromTicker(chainId, "USDC"));
+  const [token2, setToken2] = useState<Token>(() => getTokenFromTicker(chainId, "USDI"));
 
   const swapTokenPositions = () => {
     const newToken2 = { ...token1 };
@@ -38,8 +31,8 @@ export const SwapTokenProvider = ({
     setToken2({ ...newToken2 });
   };
 
-  const switchToken1 = (name: string) => setToken1({ ...getToken(name) });
-  const switchToken2 = (name: string) => setToken2({ ...getToken(name) });
+  const switchToken1 = (name: string) => setToken1({ ...getTokenFromTicker(chainId, name) });
+  const switchToken2 = (name: string) => setToken2({ ...getTokenFromTicker(chainId, name) });
 
   return (
     <SwapTokenContext.Provider

@@ -10,6 +10,8 @@ import {
   IVaultController,
   USDI__factory,
   VaultController__factory,
+  OracleMaster__factory,
+  IOracleMaster,
 } from "../contracts";
 
 export const provider = new JsonRpcProvider(
@@ -23,10 +25,14 @@ export class Rolodex {
   addressVC?: string;
   VC?: IVaultController;
 
+  addressOracle?: string;
+  Oracle?: IOracleMaster;
+
   constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
     this.addressUSDI = usdi;
     this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
 
+    // *remove once deploy script works
     this.addressVC = "0xF549E922e39Cdbdf9fFef9bA17bD9354532AE4B5";
   }
 }
@@ -36,15 +42,15 @@ export const NewRolodex = async (ctx: Web3Data) => {
     throw new Error("Must connect to a chain first");
   }
   // *remove or use mainnet 1
-  const token = Chains.getInfo(ctx.chainId || 4);
+  const token = Chains.getInfo(ctx.chainId || 3);
   let rolo: Rolodex;
+
+  // use provider if not connected
   if (!ctx.connected) {
     rolo = new Rolodex(provider!, token.usdiAddress!);
 
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
-
-    return rolo;
   } else {
     const signer = ctx.provider?.getSigner(ctx.currentAccount);
 
@@ -53,7 +59,10 @@ export const NewRolodex = async (ctx: Web3Data) => {
     rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
   }
 
-  // rolo.addressVC = await rolo.USDI?.getVaultController()
+  if (!rolo.addressOracle) {
+    rolo.addressOracle = await rolo.VC?.getOracleMaster();
+    rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);
+  }
 
   return rolo;
 };
