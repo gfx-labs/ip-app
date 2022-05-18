@@ -33,15 +33,14 @@ export interface USDIInterface extends utils.Interface {
     "EIP712_REVISION()": FunctionFragment;
     "MAX_SUPPLY()": FunctionFragment;
     "PERMIT_TYPEHASH()": FunctionFragment;
+    "_VaultController()": FunctionFragment;
     "__ERC20Detailed_init(string,string,uint8)": FunctionFragment;
     "__UFragments_init(string,string)": FunctionFragment;
     "_gonBalances(address)": FunctionFragment;
     "_gonsPerFragment()": FunctionFragment;
-    "_lenderAddress()": FunctionFragment;
     "_reserve()": FunctionFragment;
     "_totalGons()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
-    "_vaultControllerAddress()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
@@ -50,6 +49,8 @@ export interface USDIInterface extends utils.Interface {
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "deposit(uint256)": FunctionFragment;
     "donate(uint256)": FunctionFragment;
+    "donateReserve()": FunctionFragment;
+    "getVaultController()": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "initialize(address)": FunctionFragment;
     "mint(uint256)": FunctionFragment;
@@ -90,15 +91,14 @@ export interface USDIInterface extends utils.Interface {
       | "EIP712_REVISION"
       | "MAX_SUPPLY"
       | "PERMIT_TYPEHASH"
+      | "_VaultController"
       | "__ERC20Detailed_init"
       | "__UFragments_init"
       | "_gonBalances"
       | "_gonsPerFragment"
-      | "_lenderAddress"
       | "_reserve"
       | "_totalGons"
       | "_totalSupply"
-      | "_vaultControllerAddress"
       | "allowance"
       | "approve"
       | "balanceOf"
@@ -107,6 +107,8 @@ export interface USDIInterface extends utils.Interface {
       | "decreaseAllowance"
       | "deposit"
       | "donate"
+      | "donateReserve"
+      | "getVaultController"
       | "increaseAllowance"
       | "initialize"
       | "mint"
@@ -161,6 +163,10 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "_VaultController",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "__ERC20Detailed_init",
     values: [string, string, BigNumberish]
   ): string;
@@ -176,10 +182,6 @@ export interface USDIInterface extends utils.Interface {
     functionFragment: "_gonsPerFragment",
     values?: undefined
   ): string;
-  encodeFunctionData(
-    functionFragment: "_lenderAddress",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "_reserve", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "_totalGons",
@@ -187,10 +189,6 @@ export interface USDIInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "_totalSupply",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_vaultControllerAddress",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -215,6 +213,14 @@ export interface USDIInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "donate",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "donateReserve",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getVaultController",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "increaseAllowance",
@@ -337,6 +343,10 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_VaultController",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "__ERC20Detailed_init",
     data: BytesLike
   ): Result;
@@ -352,18 +362,10 @@ export interface USDIInterface extends utils.Interface {
     functionFragment: "_gonsPerFragment",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "_lenderAddress",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "_reserve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_totalGons", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "_totalSupply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_vaultControllerAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
@@ -377,6 +379,14 @@ export interface USDIInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "donate", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "donateReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getVaultController",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
@@ -648,6 +658,8 @@ export interface USDI extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    _VaultController(overrides?: CallOverrides): Promise<[string]>;
+
     __ERC20Detailed_init(
       name_: string,
       symbol_: string,
@@ -665,15 +677,11 @@ export interface USDI extends BaseContract {
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    _lenderAddress(overrides?: CallOverrides): Promise<[string]>;
-
     _reserve(overrides?: CallOverrides): Promise<[string]>;
 
     _totalGons(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    _vaultControllerAddress(overrides?: CallOverrides): Promise<[string]>;
 
     allowance(
       owner_: string,
@@ -711,6 +719,12 @@ export interface USDI extends BaseContract {
       usdc_amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    donateReserve(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    getVaultController(overrides?: CallOverrides): Promise<[string]>;
 
     increaseAllowance(
       spender: string,
@@ -861,6 +875,8 @@ export interface USDI extends BaseContract {
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  _VaultController(overrides?: CallOverrides): Promise<string>;
+
   __ERC20Detailed_init(
     name_: string,
     symbol_: string,
@@ -878,15 +894,11 @@ export interface USDI extends BaseContract {
 
   _gonsPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-  _lenderAddress(overrides?: CallOverrides): Promise<string>;
-
   _reserve(overrides?: CallOverrides): Promise<string>;
 
   _totalGons(overrides?: CallOverrides): Promise<BigNumber>;
 
   _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  _vaultControllerAddress(overrides?: CallOverrides): Promise<string>;
 
   allowance(
     owner_: string,
@@ -924,6 +936,12 @@ export interface USDI extends BaseContract {
     usdc_amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  donateReserve(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  getVaultController(overrides?: CallOverrides): Promise<string>;
 
   increaseAllowance(
     spender: string,
@@ -1069,6 +1087,8 @@ export interface USDI extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    _VaultController(overrides?: CallOverrides): Promise<string>;
+
     __ERC20Detailed_init(
       name_: string,
       symbol_: string,
@@ -1086,15 +1106,11 @@ export interface USDI extends BaseContract {
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _lenderAddress(overrides?: CallOverrides): Promise<string>;
-
     _reserve(overrides?: CallOverrides): Promise<string>;
 
     _totalGons(overrides?: CallOverrides): Promise<BigNumber>;
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _vaultControllerAddress(overrides?: CallOverrides): Promise<string>;
 
     allowance(
       owner_: string,
@@ -1126,6 +1142,10 @@ export interface USDI extends BaseContract {
     ): Promise<void>;
 
     donate(usdc_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    donateReserve(overrides?: CallOverrides): Promise<void>;
+
+    getVaultController(overrides?: CallOverrides): Promise<string>;
 
     increaseAllowance(
       spender: string,
@@ -1339,6 +1359,8 @@ export interface USDI extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    _VaultController(overrides?: CallOverrides): Promise<BigNumber>;
+
     __ERC20Detailed_init(
       name_: string,
       symbol_: string,
@@ -1356,15 +1378,11 @@ export interface USDI extends BaseContract {
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _lenderAddress(overrides?: CallOverrides): Promise<BigNumber>;
-
     _reserve(overrides?: CallOverrides): Promise<BigNumber>;
 
     _totalGons(overrides?: CallOverrides): Promise<BigNumber>;
 
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    _vaultControllerAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowance(
       owner_: string,
@@ -1402,6 +1420,12 @@ export interface USDI extends BaseContract {
       usdc_amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    donateReserve(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    getVaultController(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
@@ -1548,6 +1572,8 @@ export interface USDI extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    _VaultController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     __ERC20Detailed_init(
       name_: string,
       symbol_: string,
@@ -1568,17 +1594,11 @@ export interface USDI extends BaseContract {
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _lenderAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     _reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _totalGons(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    _vaultControllerAddress(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     allowance(
       owner_: string,
@@ -1618,6 +1638,14 @@ export interface USDI extends BaseContract {
     donate(
       usdc_amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    donateReserve(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getVaultController(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(

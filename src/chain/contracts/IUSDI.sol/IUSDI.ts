@@ -35,6 +35,8 @@ export interface IUSDIInterface extends utils.Interface {
     "decimals()": FunctionFragment;
     "deposit(uint256)": FunctionFragment;
     "donate(uint256)": FunctionFragment;
+    "donateReserve()": FunctionFragment;
+    "getVaultController()": FunctionFragment;
     "initialize(address)": FunctionFragment;
     "mint(uint256)": FunctionFragment;
     "name()": FunctionFragment;
@@ -64,6 +66,8 @@ export interface IUSDIInterface extends utils.Interface {
       | "decimals"
       | "deposit"
       | "donate"
+      | "donateReserve"
+      | "getVaultController"
       | "initialize"
       | "mint"
       | "name"
@@ -102,6 +106,14 @@ export interface IUSDIInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "donate",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "donateReserve",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getVaultController",
+    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "initialize", values: [string]): string;
   encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
@@ -162,6 +174,14 @@ export interface IUSDIInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "donate", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "donateReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getVaultController",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
@@ -356,6 +376,12 @@ export interface IUSDI extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    donateReserve(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    getVaultController(overrides?: CallOverrides): Promise<[string]>;
+
     initialize(
       reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -462,6 +488,12 @@ export interface IUSDI extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  donateReserve(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  getVaultController(overrides?: CallOverrides): Promise<string>;
+
   initialize(
     reserveAddress: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -561,6 +593,10 @@ export interface IUSDI extends BaseContract {
     ): Promise<void>;
 
     donate(usdc_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    donateReserve(overrides?: CallOverrides): Promise<void>;
+
+    getVaultController(overrides?: CallOverrides): Promise<string>;
 
     initialize(
       reserveAddress: string,
@@ -713,6 +749,12 @@ export interface IUSDI extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    donateReserve(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    getVaultController(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       reserveAddress: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -821,6 +863,14 @@ export interface IUSDI extends BaseContract {
     donate(
       usdc_amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    donateReserve(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getVaultController(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     initialize(

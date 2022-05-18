@@ -152,7 +152,7 @@ export const DepositContent = () => {
         <DisableableModalButton
           text="Deposit"
           disabled={disabled}
-          onClick={handleDepositRequest}
+          onClick={() => setType(ModalType.DepositConfirmation)}
         />
       </Box>
 

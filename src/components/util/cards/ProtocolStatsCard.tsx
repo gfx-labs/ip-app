@@ -8,22 +8,24 @@ import { useTotalSupply } from "../../../hooks/useTotalSupply";
 import { useEffect, useState } from "react";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
+import { useUSDCBalanceOf } from "../../../hooks/useUSDCBalance";
+import { Chains } from "../../../chain/chains";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
   const [totalSupply, setTotalSupply] = useState<string | null>(null);
-  const { connected } = useWeb3Context();
+  const [totalDeposited, setTotalDeposited] = useState<string | null>(null)
+  const { connected, provider,chainId } = useWeb3Context();
   const { setIsWalletModalOpen } = useWalletModalContext();
+  const token = Chains.getInfo(chainId)
 
   const rolodex = useRolodexContext();
 
   useEffect(() => {
-    if (!rolodex) {
-      setTotalSupply(null);
-    } else {
+    if (rolodex) {
       useTotalSupply(rolodex).then((res) => setTotalSupply(res));
-      console.log(rolodex, 'this is rolo')
-    }
+      useUSDCBalanceOf(rolodex, token.usdcAddress).then((res) => setTotalDeposited(res))
+    } 
   }, [rolodex]);
 
   return (
@@ -45,8 +47,8 @@ export const ProtocolStatsCard = () => {
           marginBottom: 4,
         }}
       >
-        <TitleText title="USDi Minted" text="672,233,324" />
-        <TitleText title="USDC Deposited" text={totalSupply} />
+        <TitleText title="USDi Minted" text={totalSupply} />
+        <TitleText title="USDC Deposited" text={totalDeposited} />
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>

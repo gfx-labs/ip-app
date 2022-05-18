@@ -1,7 +1,6 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { BigNumber, utils } from "ethers";
 import { Rolodex } from "../chain/rolodex/rolodex";
-import { useRolodexContext } from "../components/libs/rolodex-data-provider/rolodexDataProvider";
 
 export const useDeposit = async (
   rolodex: Rolodex,

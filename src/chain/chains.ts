@@ -4,12 +4,14 @@ const configs: Array<ChainInfo> = [
     name: "Ethereum",
     ticker: "ETH",
     usdiAddress: "0x4129f68ca5b72e1D6E73ACe10715B6905589f837", // *remove. Using ropsten address for testing
+    usdcAddress: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F', // *remove. Using ropsten address for testing
   },
   {
     id: "3",
     name: "Ropsten TESTNET",
     ticker: "ETH",
     usdiAddress: "0x4129f68ca5b72e1D6E73ACe10715B6905589f837",
+    usdcAddress: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F'
   },
   {
     id: "5",
@@ -28,6 +30,7 @@ export interface ChainInfo {
   name: string;
   ticker: string;
   usdiAddress?: string;
+  usdcAddress?: string;
 }
 
 class chainHolder {
