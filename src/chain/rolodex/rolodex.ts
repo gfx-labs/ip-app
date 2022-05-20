@@ -1,7 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { getWallet } from "../../components/libs/web3-data-provider/WalletOptions";
 import {
-  useWeb3Context,
   Web3Data,
 } from "../../components/libs/web3-data-provider/Web3Provider";
 import { Chains } from "../chains";
@@ -15,7 +13,7 @@ import {
 } from "../contracts";
 
 export const provider = new JsonRpcProvider(
-  "https://ropsten.infura.io/v3/c21cd0dd200645f39a51d41368b956d9"
+  "https://ropsten.infura.io/v3/105c9b31d23a48aa85b4b2deb78b42ce"
 );
 
 export class Rolodex {
@@ -28,12 +26,11 @@ export class Rolodex {
   addressOracle?: string;
   Oracle?: IOracleMaster;
 
+  addressUSDC?: string;
+
   constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
     this.addressUSDI = usdi;
     this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
-
-    // *remove once deploy script works
-    this.addressVC = "0xF549E922e39Cdbdf9fFef9bA17bD9354532AE4B5";
   }
 }
 
@@ -48,21 +45,25 @@ export const NewRolodex = async (ctx: Web3Data) => {
   // use provider if not connected
   if (!ctx.connected) {
     rolo = new Rolodex(provider!, token.usdiAddress!);
-
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
   } else {
     const signer = ctx.provider?.getSigner(ctx.currentAccount);
-
     rolo = new Rolodex(signer!, token.usdiAddress!);
 
+    rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
   }
-
+  // connect 
+  if(!rolo.addressUSDC) {
+    rolo.addressUSDC = await rolo.USDI._reserve();
+  }
+  
   if (!rolo.addressOracle) {
     rolo.addressOracle = await rolo.VC?.getOracleMaster();
     rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);
   }
 
+  console.log(rolo)
   return rolo;
 };
