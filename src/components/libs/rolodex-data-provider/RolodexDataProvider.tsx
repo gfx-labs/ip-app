@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { NewRolodex, Rolodex } from "../../../chain/rolodex/rolodex";
+import { BNtoHex } from "../../util/helpers/BNtoHex";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 export const RolodexContentContext = createContext({} as Rolodex | null);
@@ -10,10 +11,15 @@ export const RolodexContentProvider = ({
   children: React.ReactElement;
 }) => {
   const ctx = useWeb3Context();
-  const [rolodex, setRolo] = useState<Rolodex | null>(null);
+  const [rolodex, setRolodex] = useState<Rolodex | null>(null);
   
   useEffect(() => {
-      NewRolodex(ctx).then((rol) => setRolo(rol));
+      const newRolodex = async () => {
+        const rolo = await NewRolodex(ctx) 
+        setRolodex(rolo)
+      }
+
+      newRolodex()
   }, [ctx.connected, ctx.currentAccount]);
 
   return (
