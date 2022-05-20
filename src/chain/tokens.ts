@@ -1,3 +1,5 @@
+import { Rolodex } from "../chain/rolodex/rolodex";
+import { ChainIDs } from "./chains";
 export interface Token {
   name: string;
   address: string;
@@ -7,80 +9,103 @@ export interface Token {
   amount: number;
 }
 
+export enum SupportedTokens {
+  USDC = "USDC",
+  USDI = "USDI",
+  WETH = "WETH",
+  WBTC = "WBTC",
+  UNI = "UNI",
+}
+
 export const chainsToTokens = {
   //mainnet
-  1: {
-    usdiAddress: "0x4129f68ca5b72e1D6E73ACe10715B6905589f837",
-    usdcAddress: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F", // *remove. Using ropsten address for testing
-    wbtcAddress: "0x442Be68395613bDCD19778e761f03261ec46C06D",
-    uniAddress: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-    wethAddress: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+  [SupportedTokens.WBTC]: {
+    // *remove. Using ropsten address for testing
+    [ChainIDs.MAINNET]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
+    // [ChainIDs.ROPSTEN]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
+    [ChainIDs.ROPSTEN]: '0x65058d7081FCdC3cd8727dbb7F8F9D52CefDd291',
+    [ChainIDs.GOERLI]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
+    [ChainIDs.MUMBAI]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
   },
-  //ropsten
-  3: {
-    usdiAddress: "0x4129f68ca5b72e1D6E73ACe10715B6905589f837",
-    usdcAddress: "0x07865c6E87B9F70255377e024ace6630C1Eaa37F", // *remove. Using ropsten address for testing
-    wbtcAddress: "0x442Be68395613bDCD19778e761f03261ec46C06D",
-    uniAddress: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
-    wethAddress: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+  [SupportedTokens.WETH]: {
+    [ChainIDs.MAINNET]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+    [ChainIDs.ROPSTEN]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+    [ChainIDs.GOERLI]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+    [ChainIDs.MUMBAI]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
+  },
+  [SupportedTokens.UNI]: {
+    [ChainIDs.MAINNET]: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+    // [ChainIDs.ROPSTEN]: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+    [ChainIDs.ROPSTEN]: '0xC8F88977E21630Cf93c02D02d9E8812ff0DFC37a',
+    [ChainIDs.GOERLI]: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+    [ChainIDs.MUMBAI]: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
   },
 };
 
-export const getTokensListOnCurrentChain = (chain_id: number): Token[] => {
-  // get correct chain
+export const getStablecoins = (rolodex: Rolodex): {[key in SupportedTokens]: Token} => {
+  return {
+    [SupportedTokens.USDI]: {
+      name: SupportedTokens.USDI,
+      address: rolodex?.addressUSDI,
+      ticker: SupportedTokens.USDI,
+      value: 1,
+      balance: 0,
+      amount: 0,
+    },
+    [SupportedTokens.USDC]: {
+      name: SupportedTokens.USDC,
+      address: rolodex?.addressUSDC,
+      ticker: SupportedTokens.USDC,
+      value: 1,
+      balance: 0,
+      amount: 0,
+    },
+  };
+};
 
-  return [
-    {
-      name: "USDI",
-      address: chainsToTokens[chain_id].usdiAddress,
-      ticker: "USDI",
-      value: 0,
-      balance: 0,
-      amount: 0,
-    },
-    {
-      name: "USDC",
-      address: chainsToTokens[chain_id].usdcAddress,
-      ticker: "USDC",
-      value: 0,
-      balance: 0,
-      amount: 0,
-    },
-    {
+export const getTokensListOnCurrentChain = (
+  chain_id: ChainIDs
+): {
+  [tokenName in SupportedTokens &
+    Omit<SupportedTokens.USDC, SupportedTokens.USDI>]: Token;
+} => {
+  return {
+    [SupportedTokens.WETH]: {
       name: "Wrapped ETH",
-      address: chainsToTokens[chain_id].wethAddress,
-      ticker: "ETH",
+      address: chainsToTokens[SupportedTokens.WETH][chain_id],
+      ticker: SupportedTokens.WETH,
       value: 0,
       balance: 0,
       amount: 0,
     },
-    {
+    [SupportedTokens.UNI]: {
       name: "Uniswap",
-      address: chainsToTokens[chain_id].uniAddress,
-      ticker: "UNI",
+      address: chainsToTokens[SupportedTokens.UNI][chain_id],
+      ticker: SupportedTokens.UNI,
       value: 0,
       balance: 0,
       amount: 0,
     },
-    {
+    [SupportedTokens.WBTC]: {
       name: "Wrapped BTC",
-      address: chainsToTokens[chain_id].wbtcAddress,
-      ticker: "WBTC",
+      address: chainsToTokens[SupportedTokens.WBTC][chain_id],
+      ticker: SupportedTokens.WBTC,
       value: 0,
       balance: 0,
       amount: 0,
     },
-  ];
+  };
 };
 
-export const getTokenFromTicker = (chainId: number, ticker: string): Token => {
+export const getTokenFromTicker = (chainId: ChainIDs, ticker: string): Token => {
   const tokens = getTokensListOnCurrentChain(chainId);
 
-  const token = tokens.find((token) => token.ticker === ticker);
-
-  if (token === undefined) {
-    throw new TypeError("Could not find Token");
+  for(const key in tokens) {
+    const token: Token = tokens[key in SupportedTokens]
+    if(token.ticker === ticker) {
+      return token
+    }
   }
 
-  return token;
+  throw new TypeError("Could not find Token");
 };

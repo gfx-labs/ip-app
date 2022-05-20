@@ -1,37 +1,44 @@
+export enum ChainIDs {
+    MAINNET = 1,
+    ROPSTEN = 3,
+    GOERLI = 5,
+    MUMBAI = 137
+}
+
 const configs: Array<ChainInfo> = [
   {
-    id: "1",
+    id: ChainIDs.MAINNET,
     name: "Ethereum",
     ticker: "ETH",
-    usdiAddress: "0x4129f68ca5b72e1D6E73ACe10715B6905589f837", // *remove. Using ropsten address for testing
+    usdiAddress: "0x1a4ba38075275C33315D10976A95242C7531d080", // *remove. Using ropsten address for testing
   },
   {
-    id: "3",
+    id: ChainIDs.ROPSTEN,
     name: "Ropsten TESTNET",
-    ticker: "ETH",
-    usdiAddress: "0x4129f68ca5b72e1D6E73ACe10715B6905589f837",
+    ticker: "ROP ETH",
+    usdiAddress: "0x1a4ba38075275C33315D10976A95242C7531d080",
   },
   {
-    id: "5",
+    id: ChainIDs.GOERLI,
     name: "Goerli TESTNET",
     ticker: "ETH",
   },
   {
-    id: "137",
+    id: ChainIDs.MUMBAI,
     name: "Mumbai TESTNET",
     ticker: "MATIC",
   },
 ];
 
 export interface ChainInfo {
-  id: string;
+  id: number;
   name: string;
   ticker: string;
   usdiAddress?: string;
 }
 
 class chainHolder {
-  m: Map<string, ChainInfo>;
+  m: Map<number, ChainInfo>;
   constructor() {
     this.m = new Map();
   }
@@ -39,10 +46,10 @@ class chainHolder {
     this.m.set(v.id, v);
   }
   getInfo(id: number | string): ChainInfo {
-    if (this.m.has(id.toString())) {
-      return this.m.get(id.toString())!;
+    if (this.m.has(Number(id))) {
+      return this.m.get(Number(id))!;
     }
-    return { id: "0", name: "NOT SUPPORTED", ticker: "N/A" };
+    return { id: 0, name: "NOT SUPPORTED", ticker: "N/A" };
   }
 }
 const chains = new chainHolder();
