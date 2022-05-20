@@ -1,23 +1,46 @@
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { BigNumber, utils } from "ethers";
+import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
+import { BigNumber, Contract, utils } from "ethers";
+import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
 import { Rolodex } from "../chain/rolodex/rolodex";
+import { BNtoHex } from "../components/util/helpers/BNtoHex";
 
 export const useDeposit = async (
+  usdc_amount: string,
   rolodex: Rolodex,
-  provider: JsonRpcProvider,
-  usdc_amount: number
+  signer: JsonRpcSigner
 ) => {
-  const signer = provider.getSigner();
+  const formattedUSDCAmount = utils.parseUnits(usdc_amount, 6);
+  const fee = await signer.getFeeData()
+  console.log(formattedUSDCAmount, fee, "forms");
+
+
+  const maxFeePerGas = BNtoHex(fee.maxFeePerGas)
+  const maxPriorityFeePerGas = BNtoHex(fee.maxPriorityFeePerGas)
+
+  console.log(maxFeePerGas, maxPriorityFeePerGas)
 
   try {
-    const depositAttempt = await rolodex.USDI?.deposit(
-      usdc_amount, { gasLimit: 250000}
-    )
+    await IERC20__factory.connect(rolodex.addressUSDC!, signer).approve(
+      rolodex.addressUSDI,
+      Number(formattedUSDCAmount)
+    );
 
-    const receipt = await depositAttempt?.wait()
+    const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
+      Number(formattedUSDCAmount),
+      {
+        gasLimit: 70000000,
+        
+        maxPriorityFeePerGas: maxPriorityFeePerGas || '0',
+        maxFeePerGas: maxFeePerGas || '0',
+        type: 2,
+        
+      }
+    );
 
-    return receipt
-    
+    console.log(depositAttempt);
+    const receipt = await depositAttempt?.wait();
+    console.log(receipt);
+    return receipt;
   } catch (err) {
     console.log(err);
     throw new Error("Could not deposit");
