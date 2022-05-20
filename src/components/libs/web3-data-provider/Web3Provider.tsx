@@ -8,7 +8,6 @@ import { BigNumber, providers } from "ethers";
 import { SignatureLike } from "@ethersproject/bytes";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
-import { useWalletModalContext } from "../wallet-modal-provider/WalletModalProvider";
 import { WalletLinkConnector } from '@web3-react/walletlink-connector';
 
 //import { TorusConnector } from '@web3-react/torus-connector';
@@ -123,7 +122,6 @@ export const Web3ContextProvider = ({
 
             try {
                 const connector: AbstractConnector = getWallet(wallet, chainId);
-                console.log(connector, 'this is connector')
 
                 if (connector instanceof WalletConnectConnector) {
                     connector.walletConnectProvider = undefined;
@@ -132,7 +130,7 @@ export const Web3ContextProvider = ({
                 console.log('activating...')
                 await activate(connector, undefined, true)
 
-                console.log('after connectiorw', connector)
+                console.log('activated')
 
                 setConnector(connector);
                 localStorage.setItem("walletProvider", wallet.toString());

@@ -1,14 +1,8 @@
-import { createContext, useState, useContext } from "react";
-import { Token,getTokenFromTicker } from "../../../chain/tokens";
-import { useWeb3Context } from "../web3-data-provider/Web3Provider";
+import { createContext, useState, useContext, useEffect } from "react";
+import { Token } from "../../../chain/tokens";
+import { useStableCoinsContext } from "../stable-coins-provider/StableCoinsProvider";
 
-type SwapTokenContextType = [
-  Token,
-  Token,
-  () => void,
-  (name: string) => void,
-  (name: string) => void
-];
+type SwapTokenContextType = [Token, Token, () => void];
 
 export const SwapTokenContext = createContext(
   [] as unknown as SwapTokenContextType
@@ -19,10 +13,20 @@ export const SwapTokenProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const {chainId} = useWeb3Context()
+  const { USDI, USDC } = useStableCoinsContext();
+  const [token1, setToken1] = useState<Token>(USDC);
+  const [token2, setToken2] = useState<Token>(USDI);
 
-  const [token1, setToken1] = useState<Token>(() => getTokenFromTicker(chainId, "USDC"));
-  const [token2, setToken2] = useState<Token>(() => getTokenFromTicker(chainId, "USDI"));
+  useEffect(() => {
+    if(token1.ticker === USDC.ticker) {
+      setToken1(USDC)
+      setToken2(USDI)
+    } else {
+      setToken1(USDI)
+      setToken2(USDC)
+    }
+  }, [USDI, USDC])
+  
 
   const swapTokenPositions = () => {
     const newToken2 = { ...token1 };
@@ -31,13 +35,8 @@ export const SwapTokenProvider = ({
     setToken2({ ...newToken2 });
   };
 
-  const switchToken1 = (name: string) => setToken1({ ...getTokenFromTicker(chainId, name) });
-  const switchToken2 = (name: string) => setToken2({ ...getTokenFromTicker(chainId, name) });
-
   return (
-    <SwapTokenContext.Provider
-      value={[token1, token2, swapTokenPositions, switchToken1, switchToken2]}
-    >
+    <SwapTokenContext.Provider value={[token1, token2, swapTokenPositions]}>
       {children}
     </SwapTokenContext.Provider>
   );

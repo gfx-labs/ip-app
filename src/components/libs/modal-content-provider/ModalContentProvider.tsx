@@ -1,9 +1,10 @@
 import { createContext, useState, useContext } from "react";
 import {
-  getTokensListOnCurrentChain,
+  getStablecoins,
+  SupportedTokens,
   Token,
 } from "../../../chain/tokens";
-import { useWeb3Context } from "../web3-data-provider/Web3Provider";
+import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 
 export enum ModalType {
   Deposit = "DEPOSIT",
@@ -31,10 +32,10 @@ export type ModalContextType = {
 };
 
 const createDepositWithdrawToken = () => {
-  const { chainId } = useWeb3Context();
+  const rolodex = useRolodexContext()
 
   return {
-    token: getTokensListOnCurrentChain(chainId)[0],
+    token: getStablecoins(rolodex!)[SupportedTokens.USDC],
     amountFrom: "",
     amountTo: "",
   };
@@ -57,14 +58,16 @@ export const ModalContentProvider = ({
   const updateDeposit = (prop: string, val: string) => {
     setDeposit({
       ...deposit,
-      [prop]: val,
+      amountFrom: val,
+      amountTo: val
     });
   };
 
   const updateWithdraw = (prop: string, val: string) => {
     setWithdraw({
       ...withdraw,
-      [prop]: val,
+      amountFrom: val,
+      amountTo: val
     });
   };
 
