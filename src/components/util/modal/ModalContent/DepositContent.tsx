@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 
 import { Box, Typography, Button } from "@mui/material";
-import { blue, formatColor, neutral } from "../../../../theme";
-import { useLight } from "../../../../hooks/useLight";
+import { formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
-import { useDeposit } from "../../../../hooks/useDeposit";
-import { useRolodexContext } from "../../../libs/rolodex-data-provider/rolodexDataProvider";
+import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
@@ -21,8 +19,7 @@ export const DepositContent = () => {
   const toggle = () => setFocus(!focus);
 
   const ctx = useWeb3Context();
-  const provider = ctx.provider;
-  const rolodex = useRolodexContext();
+
   const setMax = () =>
     updateDeposit("amountFrom", deposit.token.balance.toString());
 
@@ -31,22 +28,6 @@ export const DepositContent = () => {
   useEffect(() => {
     setDisabled(numAmountFrom <= 0);
   }, [deposit.amountFrom]);
-
-  const handleDepositRequest = async () => {
-    setType(ModalType.DepositConfirmation)
-    // go to confirmation
-    // try {
-    //   const depositRequest = await useDeposit(
-    //     rolodex!,
-    //     provider!,
-    //     numAmountFrom
-    //   );
-
-    //   console.log(depositRequest, "DEPOSIT SUCCEDED?");
-    // } catch (err) {
-    //   console.error("ERROR", err);
-    // }
-  };
 
   const swapHandler = () => {
     if (!isMoneyValue) {
