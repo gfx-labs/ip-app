@@ -14,8 +14,8 @@ export const useDeposit = async (
   console.log(formattedUSDCAmount, fee, "forms");
 
 
-  const maxFeePerGas = BNtoHex(fee.maxFeePerGas)
-  const maxPriorityFeePerGas = BNtoHex(fee.maxPriorityFeePerGas)
+  const maxFeePerGas = BNtoHex(fee.maxFeePerGas!)
+  const maxPriorityFeePerGas = BNtoHex(fee.maxPriorityFeePerGas!)
 
   console.log(maxFeePerGas, maxPriorityFeePerGas)
 
@@ -28,12 +28,12 @@ export const useDeposit = async (
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
       Number(formattedUSDCAmount),
       {
-        gasLimit: 70000000,
-        
+        gasLimit: 200000,
+
         maxPriorityFeePerGas: maxPriorityFeePerGas || '0',
         maxFeePerGas: maxFeePerGas || '0',
         type: 2,
-        
+
       }
     );
 

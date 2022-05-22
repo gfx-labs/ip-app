@@ -10,13 +10,13 @@ const configs: Array<ChainInfo> = [
     id: ChainIDs.MAINNET,
     name: "Ethereum",
     ticker: "ETH",
-    usdiAddress: "0x1a4ba38075275C33315D10976A95242C7531d080", // *remove. Using ropsten address for testing
+    usdiAddress: '0x12F4E7C4E7993d724eaC73eF99f2Fca36F1FA921',
   },
   {
     id: ChainIDs.ROPSTEN,
     name: "Ropsten TESTNET",
     ticker: "ROP ETH",
-    usdiAddress: "0x1a4ba38075275C33315D10976A95242C7531d080",
+    usdiAddress: '0x12F4E7C4E7993d724eaC73eF99f2Fca36F1FA921',
   },
   {
     id: ChainIDs.GOERLI,

@@ -16,7 +16,7 @@ import { CaratUpIcon } from "../../icons/misc/CaratUpIcon";
 
 import { LightIcon } from "../../icons/misc/LightIcon";
 import { DarkIcon } from "../../icons/misc/DarkIcon";
-import { MenuIcon } from "../../icons/misc/MenuIcon";
+import { MenuIcon } from "../../icons/misc/menuIcon";
 import { Link } from "../../util/link";
 import {
   ClaimsButton,

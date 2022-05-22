@@ -27,10 +27,10 @@ export const StableCoinsProvider = ({
   const rolodex = useRolodexContext();
 
   const [USDC, setUSDC] = useState<Token>(
-    () => getStablecoins(rolodex!)[SupportedTokens.USDC]
+    () => getStablecoins(rolodex!)[SupportedTokens.USDC]!
   );
   const [USDI, setUSDI] = useState<Token>(
-    () => getStablecoins(rolodex!)[SupportedTokens.USDI]
+    () => getStablecoins(rolodex!)[SupportedTokens.USDI]!
   );
 
   useEffect(() => {
