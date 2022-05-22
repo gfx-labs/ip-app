@@ -18,7 +18,7 @@ export const DepositConfirmationModal = () => {
   const rolodex = useRolodexContext()
 
   const handleDepositConfirmationRequest = async () => {
-    await useDeposit(deposit.amountFrom!,rolodex!, provider?.getSigner(currentAccount))
+    await useDeposit(deposit.amountFrom!,rolodex!, provider?.getSigner(currentAccount)!)
 
     console.log('FINISHED')
   };

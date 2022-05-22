@@ -19,7 +19,7 @@ export const getVaultTokenData = async (
     vault_address,
     token_address,
   );
-  
+
   console.log("getting live price of: 0xc778417E063141139Fce010982780140Aa0cD5Ab");
 
   const price = await rolodex?.Oracle?.getLivePrice(
@@ -28,5 +28,6 @@ export const getVaultTokenData = async (
 
   const livePrice = BNtoHex(price!);
   console.log(price, "0xc778417E063141139Fce010982780140Aa0cD5Ab");
-  return { balance, livePrice };
+  let bout = balance.toString()
+  return { balance: bout, livePrice: livePrice };
 };

@@ -54,11 +54,11 @@ export const NewRolodex = async (ctx: Web3Data) => {
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
   }
-  // connect 
+  // connect
   if(!rolo.addressUSDC) {
-    rolo.addressUSDC = await rolo.USDI._reserve();
+    rolo.addressUSDC = await rolo.USDI.reserveAddress();
   }
-  
+
   if (!rolo.addressOracle) {
     rolo.addressOracle = await rolo.VC?.getOracleMaster();
     rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);

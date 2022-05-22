@@ -42,7 +42,7 @@ export const chainsToTokens = {
   },
 };
 
-export const getStablecoins = (rolodex: Rolodex): {[key in SupportedTokens]: Token} => {
+export const getStablecoins = (rolodex: Rolodex): {[SupportedTokens.USDI]: Token, [SupportedTokens.USDC]: Token} => {
   return {
     [SupportedTokens.USDI]: {
       name: SupportedTokens.USDI,
@@ -54,7 +54,7 @@ export const getStablecoins = (rolodex: Rolodex): {[key in SupportedTokens]: Tok
     },
     [SupportedTokens.USDC]: {
       name: SupportedTokens.USDC,
-      address: rolodex?.addressUSDC,
+      address: rolodex?.addressUSDC!,
       ticker: SupportedTokens.USDC,
       value: 1,
       balance: 0,
@@ -100,11 +100,9 @@ export const getTokensListOnCurrentChain = (
 export const getTokenFromTicker = (chainId: ChainIDs, ticker: string): Token => {
   const tokens = getTokensListOnCurrentChain(chainId);
 
-  for(const key in tokens) {
-    const token: Token = tokens[key in SupportedTokens]
-    if(token.ticker === ticker) {
-      return token
-    }
+  const tok = (tokens as any)[ticker]
+  if(tok != undefined) {
+    return tok
   }
 
   throw new TypeError("Could not find Token");
