@@ -145,7 +145,7 @@ const LandingPage = () => {
             )
           )}
 
-          {hasVault.toString()}
+          
           <Box sx={{ marginY: 4 }}>
             <StatsMeter />
           </Box>

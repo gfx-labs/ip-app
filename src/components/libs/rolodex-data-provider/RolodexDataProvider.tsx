@@ -1,6 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { NewRolodex, Rolodex } from "../../../chain/rolodex/rolodex";
-import { BNtoHex } from "../../util/helpers/BNtoHex";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 export const RolodexContentContext = createContext({} as Rolodex | null);
@@ -15,6 +14,7 @@ export const RolodexContentProvider = ({
   
   useEffect(() => {
       const newRolodex = async () => {
+        console.log('fetching new rolo')
         const rolo = await NewRolodex(ctx) 
         setRolodex(rolo)
       }

@@ -7,12 +7,12 @@ import React, {
 } from "react";
 import {
   getTokensListOnCurrentChain,
-  SupportedTokens,
   Token,
 } from "../../../chain/tokens";
 import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
-import { connectVaultContract, getVaultTokenData } from "./connectVaultContract";
+import { getVaultTokenBalanceAndPrice } from "./getVaultTokenBalanceAndPrice";
+import { getVaultBorrowingPower } from "./getBorrowingPower";
 
 export type VaultDataContextType = {
   hasVault: boolean;
@@ -20,6 +20,7 @@ export type VaultDataContextType = {
   vaultID: string | null;
   vaultAddress?: string;
   setVaultAddress: Dispatch<SetStateAction<string | undefined>>;
+  borrowingPower: string;
   // tokens: Token[]
 };
 
@@ -37,29 +38,41 @@ export const VaultDataProvider = ({
   const [vaultID, setVaultID] = useState<string | null>(null);
   const [vaultAddress, setVaultAddress] =
     useState<VaultDataContextType["vaultAddress"]>(undefined);
+    const [borrowingPower, setBorrowingPower] = useState('0')
 
   const [tokens, setTokens] = useState({});
 
   useEffect(() => {
     setHasVault(!!vaultID);
+
+    if(!!vaultID && rolodex) {
+      getVaultBorrowingPower(vaultID, rolodex).then(res => setBorrowingPower(res))
+    } else {
+      setBorrowingPower('0')
+    }
   }, [vaultID]);
 
   useEffect(() => {
     if (vaultAddress) {
-      console.log(rolodex, 'rolo')
       const tokenList = getTokensListOnCurrentChain(chainId);
 
-      // for (const key in tokenList) {
-      //   const token: Token = tokenList[key];
-      //   console.log(token.ticker, 'token')
-      //   getVaultTokenData(vaultAddress, token.address, provider?.getSigner(currentAccount)!, rolodex!).then(res => {
-      //     console.log(res)
+      for (const key in tokenList) {
+        const token: Token = tokenList[key];
+        console.log(token.ticker, "token");
+        getVaultTokenBalanceAndPrice(
+          vaultAddress,
+          token.address,
+          rolodex!
+        ).then((res) => {
+          console.log(res);
 
-      //     token.amount = Number(res.balance)
-      //     token.value = Number(res.livePrice)
-      //     token.balance = Number((token.amount * token.value).toFixed(2))
-      //   })
-      // }
+          token.vault_amount = Number(res.balance);
+          token.value = Number(res.livePrice);
+          token.vault_balance = Number(
+            (token.vault_amount * token.value).toFixed(2)
+          );
+        });
+      }
 
       setTokens(tokenList);
     }
@@ -67,7 +80,7 @@ export const VaultDataProvider = ({
 
   return (
     <VaultDataContext.Provider
-      value={{ hasVault, setVaultID, vaultID, vaultAddress, setVaultAddress }}
+      value={{ hasVault, setVaultID, vaultID, vaultAddress, setVaultAddress, borrowingPower }}
     >
       {children}
     </VaultDataContext.Provider>
