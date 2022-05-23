@@ -66,7 +66,7 @@ const config = {
                             },
                             {
                                 label: 'Twitter',
-                                href: 'https://twitter.com/gfxlabs',
+                                href: 'https://twitter.com/labsgfx',
                             },
                         ],
                     },
@@ -74,8 +74,16 @@ const config = {
                         title: 'More',
                         items: [
                             {
-                                label: 'GitHub',
+                                label: 'Site Source',
                                 href: 'https://gfx.cafe/ip/app',
+                            },
+                            {
+                                label: 'Contract Source',
+                                href: 'https://gfx.cafe/ip/contracts',
+                            },
+                            {
+                                label: 'Contract Source (github mirror)',
+                                href: 'https://github.com/gfx-labs/ip',
                             },
                         ],
                     },
