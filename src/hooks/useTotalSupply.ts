@@ -1,14 +1,14 @@
-import { BigNumber, utils } from "ethers";
+import { utils } from "ethers";
 import { Rolodex } from "../chain/rolodex/rolodex";
-import { useRolodexContext } from "../components/libs/rolodex-data-provider/rolodexDataProvider";
+import { BNtoHex } from "../components/util/helpers/BNtoHex";
 
-export const useTotalSupply = async (rolodex: Rolodex) => {
+export const useTotalSupply = async (rolodex: Rolodex): Promise<string> => {
   try {
     const totalSupply = await rolodex?.USDI?.totalSupply();
+    
+    const formattedTotalsupply = BNtoHex(totalSupply)
 
-    const totalsupply = BigNumber.from(totalSupply?._hex).toString();
-
-    return utils.formatEther(totalsupply);
+    return utils.formatEther(formattedTotalsupply);
   } catch (err) {
     throw new Error("Could not retrieve total supply");
   }

@@ -1,31 +1,46 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
-import { formatGradient, gradient, formatColor, neutral } from "../../../theme";
+import { formatGradient, gradient } from "../../../theme";
 import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
-import { useRolodexContext } from "../../../components/libs/rolodex-data-provider/rolodexDataProvider";
+import { useRolodexContext } from "../../../components/libs/rolodex-data-provider/RolodexDataProvider";
 import { useTotalSupply } from "../../../hooks/useTotalSupply";
 import { useEffect, useState } from "react";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
-import { useUSDCBalanceOf } from "../../../hooks/useUSDCBalance";
-import { Chains } from "../../../chain/chains";
+import { useBalanceOf } from "../../../hooks/useBalanceOf";
+import { useReserveRatio } from "../../../hooks/useReserveRatio";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
-  const [totalSupply, setTotalSupply] = useState<string | null>(null);
-  const [totalDeposited, setTotalDeposited] = useState<string | null>(null)
-  const { connected, provider,chainId } = useWeb3Context();
-  const { setIsWalletModalOpen } = useWalletModalContext();
-  const token = Chains.getInfo(chainId)
-
   const rolodex = useRolodexContext();
+  const [totalSupply, setTotalSupply] = useState<string>('');
+  const [totalUSDCDeposited, setTotalUSDCDeposited] =
+    useState<string>('');
+  const [reserveRatio, setReserveRatio] = useState('0')
+
+  const { connected } = useWeb3Context();
+  const { setIsWalletModalOpen } = useWalletModalContext();
 
   useEffect(() => {
-    if (rolodex) {
-      useTotalSupply(rolodex).then((res) => setTotalSupply(res));
-      useUSDCBalanceOf(rolodex, token.usdcAddress).then((res) => setTotalDeposited(res))
-    } 
+    if (rolodex && rolodex.addressUSDC) {
+      const promises = [
+        useTotalSupply(rolodex),
+        useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC),
+        useReserveRatio(rolodex)
+      ];
+
+      const allPromisesWithErrorHandler = promises.map(promise =>
+        promise.catch(error => error),
+      );
+
+      Promise.all(allPromisesWithErrorHandler).then((results) => {
+      
+        setTotalSupply(results[0]);
+        setTotalUSDCDeposited(results[1] instanceof Error ? 0 : results[1]);
+        setReserveRatio(results[2] instanceof Error ? 0 : results[2])
+      }).catch(err => console.log(err))
+    }
   }, [rolodex]);
 
   return (
@@ -48,7 +63,7 @@ export const ProtocolStatsCard = () => {
         }}
       >
         <TitleText title="USDi Minted" text={totalSupply} />
-        <TitleText title="USDC Deposited" text={totalDeposited} />
+        <TitleText title="USDC Deposited" text={totalUSDCDeposited} />
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
@@ -59,26 +74,11 @@ export const ProtocolStatsCard = () => {
           height={18}
           marginRight={1}
         />
-        <Typography variant="caption">Reserve Ratio: 52.12%</Typography>
+        <Typography variant="caption">Reserve Ratio: {reserveRatio}%</Typography>
       </Box>
 
-      <Box sx={{ marginBottom: 2 }}>
         <SwapContainer />
-      </Box>
-
-      {connected ? (
-        <Button variant="contained" sx={{ color: formatColor(neutral.white) }}>
-          Swap
-        </Button>
-      ) : (
-        <Button
-          variant="contained"
-          onClick={() => setIsWalletModalOpen(true)}
-          sx={{ color: formatColor(neutral.white) }}
-        >
-          Connect Wallet
-        </Button>
-      )}
+      
     </Box>
   );
 };

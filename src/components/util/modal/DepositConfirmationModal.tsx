@@ -8,11 +8,20 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
+import { useDeposit } from "../../../hooks/useDeposit";
+import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
 export const DepositConfirmationModal = () => {
   const { type, setType, deposit } = useModalContext();
+  const {provider, currentAccount} = useWeb3Context()
+  const rolodex = useRolodexContext()
 
-  const handleDepositConfirmationRequest = () => {};
+  const handleDepositConfirmationRequest = async () => {
+    await useDeposit(deposit.amountFrom!,rolodex!, provider?.getSigner(currentAccount)!)
+
+    console.log('FINISHED')
+  };
 
   const isLight = useLight();
 
@@ -52,7 +61,7 @@ export const DepositConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/${deposit.token.ticker}.png`}
+            src={`images/${deposit.token.ticker}.svg`}
             alt={deposit.token.ticker}
             marginRight={3}
           ></Box>
@@ -76,7 +85,7 @@ export const DepositConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/USDI.png`}
+            src={`images/USDI.svg`}
             alt="USDI"
             marginLeft={3}
           ></Box>

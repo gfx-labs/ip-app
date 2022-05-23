@@ -1,6 +1,5 @@
 import { SvgIcon, SvgIconProps } from "@mui/material";
 import { forwardRef } from "react";
-import React from "react";
 
 export const MenuIcon = forwardRef<SVGSVGElement, SvgIconProps>(
   (props, ref) => {

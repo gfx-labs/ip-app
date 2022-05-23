@@ -45,7 +45,7 @@ export const ClaimModal = () => {
           component="img"
           width={80}
           height={80}
-          src={`images/${tokenName}.png`}
+          src={`images/${tokenName}.svg`}
           alt={tokenName}
         ></Box>
         <Box>

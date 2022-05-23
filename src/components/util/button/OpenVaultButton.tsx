@@ -1,15 +1,21 @@
 import { ButtonProps, Button, Typography } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
-import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 
 export const OpenVaultButton = () => {
+  const rolodex = useRolodexContext()
   let isLight = useLight();
 
-  const { currentAccount } = useWeb3Context();
-
-  const openVault = () => {
-    console.log("open account with currentAccount", currentAccount);
+  const openVault = async () => {
+    try{
+      const mintVaultRes = await rolodex?.VC?.mintVault()
+      
+      return mintVaultRes
+    } catch(err) {
+      console.log(err)
+      throw new Error("Error creating vault");
+    }
   };
 
   const StyledOpenVaultButton = (props: ButtonProps) => {

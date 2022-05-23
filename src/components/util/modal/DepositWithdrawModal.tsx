@@ -52,7 +52,7 @@ export const DepositWithdrawModal = () => {
           component="img"
           width={80}
           height={80}
-          src={`images/${tokenName}.png`}
+          src={`images/${tokenName}.svg`}
           alt={tokenName}
         ></Box>
         <Box>
@@ -67,19 +67,19 @@ export const DepositWithdrawModal = () => {
 
       {currType ? (
         <DepositContent
-          tokenName={tokenName}
-          tokenValue={tokenValue}
-          tokenWalletBalance={tokenWalletBalance}
-          depositAmount={depositAmount}
-          setDepositAmount={setDepositAmount}
+ //       tokenName={tokenName}
+ //       tokenValue={tokenValue}
+ //       tokenWalletBalance={tokenWalletBalance}
+ //       depositAmount={depositAmount}
+ //       setDepositAmount={setDepositAmount}
         />
       ) : (
         <WithdrawContent
-          tokenName={tokenName}
-          tokenValue={tokenValue}
-          tokenVaultBalance={tokenVaultBalance}
-          withdrawAmount={withdrawAmount}
-          setWithdrawAmount={setWithdrawAmount}
+ //       tokenName={tokenName}
+ //       tokenValue={tokenValue}
+ //       tokenVaultBalance={tokenVaultBalance}
+ //       withdrawAmount={withdrawAmount}
+ //       setWithdrawAmount={setWithdrawAmount}
         />
       )}
     </BaseModal>
