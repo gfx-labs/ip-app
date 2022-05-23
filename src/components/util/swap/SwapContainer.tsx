@@ -38,9 +38,9 @@ export const SwapContainer = () => {
 
   useEffect(() => {
     updateDeposit('amountFrom', token1Amount)
+    updateWithdraw('amountFrom', token1Amount)
   }, [token1Amount])
   
-
   return (
     <Box>
       <Box

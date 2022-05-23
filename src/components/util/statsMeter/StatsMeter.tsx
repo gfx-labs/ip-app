@@ -1,11 +1,13 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { useState } from "react";
 import { formatColor, neutral } from "../../../theme";
+import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const StatsMeter = () => {
   const [percentBorrowed, setPercentBorrowed] = useState(30);
 
-  const [borrowingPower, setBorrowingPower] = useState(46254.065);
+  const {borrowingPower} = useVaultDataContext()
 
   return (
     <Box>
