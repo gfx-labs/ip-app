@@ -2,7 +2,6 @@ import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, utils } from "ethers";
 import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
 import { Rolodex } from "../chain/rolodex/rolodex";
-import { BNtoHex } from "../components/util/helpers/BNtoHex";
 
 export const useDeposit = async (
   usdc_amount: string,
@@ -14,11 +13,8 @@ export const useDeposit = async (
   console.log(formattedUSDCAmount, fee, "forms");
 
 
-  const maxFeePerGas = BNtoHex(fee.maxFeePerGas!)
-  const maxPriorityFeePerGas = BNtoHex(fee.maxPriorityFeePerGas!)
-
-  console.log(maxFeePerGas, maxPriorityFeePerGas)
-
+  // const maxFeePerGas = BNtoHex(fee.maxFeePerGas)
+  // const maxPriorityFeePerGas = BNtoHex(fee.maxPriorityFeePerGas)
   try {
     await IERC20__factory.connect(rolodex.addressUSDC!, signer).approve(
       rolodex.addressUSDI,
@@ -26,15 +22,7 @@ export const useDeposit = async (
     );
 
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
-      Number(formattedUSDCAmount),
-      {
-        gasLimit: 200000,
-
-        maxPriorityFeePerGas: maxPriorityFeePerGas || '0',
-        maxFeePerGas: maxFeePerGas || '0',
-        type: 2,
-
-      }
+      Number(formattedUSDCAmount)
     );
 
     console.log(depositAttempt);

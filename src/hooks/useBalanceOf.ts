@@ -1,6 +1,6 @@
-import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
 import { provider } from "../chain/rolodex/rolodex";
+import { useDecimals, useFormatWithDecimals } from "./useTokenInfo";
 
 const minABI = [
   // balanceOf
@@ -35,30 +35,10 @@ export const useBalanceOf = (
 
   return (async function getBalance() {
     const balance = await contract.balanceOf(wallet_address);
-    const decimals = await contract.decimals();
-    
-    const formattedBalance = Number(ethers.utils.formatUnits(balance._hex, decimals))
-    
-    return formattedBalance;
-  })();
-};
+    const decimals = await useDecimals(contract);
 
-export const useERC20BalanceOf = (
-  wallet_address: string,
-  contract_address: string,
-  signerOrProvider: JsonRpcProvider | JsonRpcSigner
-) => {
-  const erc20Contract = new ethers.Contract(
-    contract_address,
-    minABI,
-    signerOrProvider
-  );
+    const formattedBalance = useFormatWithDecimals(balance, decimals);
 
-  return (async function getBalance() {
-    const balance = await erc20Contract.balanceOf(wallet_address);
-
-    const formattedBalance = BigNumber.from(balance?._hex).toString();
-    console.log(wallet_address, contract_address, formattedBalance);
     return formattedBalance;
   })();
 };
