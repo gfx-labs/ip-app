@@ -1,6 +1,6 @@
 # Governance Overview
 
-## The Role of IPT Holders & Protocol Governance 
+## The Role IPT Holders & Protocol Governance 
 Interest Protocol's business is risk management. If the protocol can manage market risks better than the competing protocols then it can offer better oppurtunties for lenders and borrowers. To be the most effiecent protocol requires strong functional foundation, but to succed for the longterm requires thoughtful and progressive governance. 
 
 IPT is the governance token for Interest Protocol. Token holders can influence the protocol and lead it after launch by creating and voting on proposals. Governance should be thought as the mechism to institue change in the protocol and token holders as the management of the protocol.  
