@@ -1,5 +1,10 @@
 import { createContext, useState, useContext } from "react";
-import { Token, Tokens } from "../../../chain/tokens";
+import {
+  getStablecoins,
+  SupportedTokens,
+  Token,
+} from "../../../chain/tokens";
+import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 
 export enum ModalType {
   Deposit = "DEPOSIT",
@@ -27,10 +32,12 @@ export type ModalContextType = {
 };
 
 const createDepositWithdrawToken = () => {
+  const rolodex = useRolodexContext()
+
   return {
-    token: Tokens[1],
-    amountFrom: '',
-    amountTo: '',
+    token: getStablecoins(rolodex!)[SupportedTokens.USDC],
+    amountFrom: "",
+    amountTo: "",
   };
 };
 export const ModalContentContext = createContext({} as ModalContextType);
@@ -51,20 +58,29 @@ export const ModalContentProvider = ({
   const updateDeposit = (prop: string, val: string) => {
     setDeposit({
       ...deposit,
-      [prop]: val
-    })
-  }
+      amountFrom: val,
+      amountTo: val
+    });
+  };
 
-    const updateWithdraw = (prop: string, val: string) => {
+  const updateWithdraw = (prop: string, val: string) => {
     setWithdraw({
       ...withdraw,
-      [prop]: val
-    })
-  }
+      amountFrom: val,
+      amountTo: val
+    });
+  };
 
   return (
     <ModalContentContext.Provider
-      value={{ type, setType, deposit, withdraw, updateDeposit, updateWithdraw }}
+      value={{
+        type,
+        setType,
+        deposit,
+        withdraw,
+        updateDeposit,
+        updateWithdraw,
+      }}
     >
       {children}
     </ModalContentContext.Provider>

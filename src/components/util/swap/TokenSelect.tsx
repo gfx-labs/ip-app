@@ -6,7 +6,6 @@ import { Token } from "../../../chain/tokens";
 
 interface TokenSelectProps {
   token: Token;
-  changeToken: (name: string) => void;
   tokenAmount: string;
   setTokenAmount: (amount: string) => void;
 }
@@ -14,7 +13,7 @@ interface TokenSelectProps {
 export const TokenSelect = (props: TokenSelectProps) => {
   const { token, tokenAmount, setTokenAmount } = props;
   const isLight = useLight();
-
+  
   return (
     <Box
       sx={{

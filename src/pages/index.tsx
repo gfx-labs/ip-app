@@ -1,11 +1,8 @@
-import { formatColor, formatGradient, gradient, neutral } from "../theme";
+import { formatColor, neutral } from "../theme";
 import {
   Box,
-  Grid,
   Typography,
-  useMediaQuery,
   useTheme,
-  Button,
 } from "@mui/material";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { ProtocolStatsCard } from "../components/util/cards";
@@ -14,18 +11,44 @@ import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 import { StatsMeter } from "../components/util/statsMeter";
 import { UserStats } from "../components/util/UserStats";
 import { ConnectWalletButton } from "../components/util/button";
-import { ForwardIcon } from "../components/icons/misc/ForwardIcon";
 import { OpenVaultButton } from "../components/util/button/OpenVaultButton";
+import { useRolodexContext } from "../components/libs/rolodex-data-provider/RolodexDataProvider";
+import { useEffect } from "react";
+import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
+import { BigNumber } from "ethers";
 
 const LandingPage = () => {
   const theme = useTheme();
   const { currentAccount, connected } = useWeb3Context();
-
-  const haveVault = false;
-
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const rolodex = useRolodexContext();
+  const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext();
   const isLight = useLight();
+
+  useEffect(() => {
+    if (currentAccount && rolodex) {
+      const fetchVault = async (): Promise<void> => {
+        try {
+          const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount);
+          if (vaultIDs && vaultIDs?.length > 0) {
+            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString()
+            
+            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID)
+            setVaultID(vaultID);
+            setVaultAddress(vaultAddress)
+
+          } else {
+            setVaultID(null)
+          }
+        } catch (err) {
+          setVaultID(null)
+          
+          throw new Error("cannot get vault");
+        }
+      };
+
+      fetchVault();
+    }
+  }, [currentAccount, rolodex]);
 
   return (
     <Box
@@ -75,7 +98,7 @@ const LandingPage = () => {
         </Box>
 
         <Box sx={{ position: "relative" }}>
-          {/* {!connected ? (
+          {!connected ? (
             <Box
               sx={{
                 position: "absolute",
@@ -98,7 +121,7 @@ const LandingPage = () => {
             </Box>
           ) : (
             connected &&
-            !haveVault && (
+            !hasVault && (
               <Box
                 sx={{
                   position: "absolute",
@@ -120,8 +143,9 @@ const LandingPage = () => {
                 <OpenVaultButton />
               </Box>
             )
-          )} */}
+          )}
 
+          {hasVault.toString()}
           <Box sx={{ marginY: 4 }}>
             <StatsMeter />
           </Box>
