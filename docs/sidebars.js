@@ -49,6 +49,21 @@ const sidebars = {
             link: { type: 'doc', id: "reference/index" },
             items: [
                 {
+                    type: 'doc',
+                    label: 'IPT Sale',
+                    id: 'IPT Sale',
+                },
+                {
+                    type: 'doc',
+                    label: 'Deployed Contracts',
+                    id: 'DeployedContracts',
+                },
+                {
+                    type: 'doc',
+                    label: 'Protocol Parameters',
+                    id: 'ProtocolParameters',
+                },
+                {
                     type: 'category',
                     label: "Core",
                     collapsed: true,
