@@ -1,10 +1,10 @@
 # USDi
 
 ## Overview
-USDi is the dollar synth of Interest Protocol. Lenders deposit their stablecoins to earn interest. Borrowers deposit collateral and borrow USDi. Lenders earn their interest paid by borrowers (minus the protocol fee). Lenders earn interest by holding USDi. Interest is streamed to holders by an upward rebasing asset. Lenders are also able to maintain stability and purchasing power because USDi and the reserve asset are convertable 1:1.
+USDi is the stablecoin issued by Interest Protocol. Borrowers can post collateral into their vault and borrow USDi. Anyone who holds USDi is a depositor and earns interest through positive rebasing.
 
 ## Secondary contracts
-* UFragements by Ampleforth. USDi uses the uFragments concept from the Ideal Money project to pay interest. uFragments is a normal ERC20 token, but its supply can be adjusted by splitting and combining tokens proportionally across all wallets. uFragment balances are internally represented with a hidden denomination, 'gons'. We support splitting the currency in expansion and combining the currency on contraction by changing the exchange rate between the hidden 'gons' and the public 'fragments'.
+* UFragments by Ampleforth. USDi uses the uFragments concept from the Ideal Money project to pay interest. uFragments is a normal ERC20 token, but its supply can be adjusted by splitting and combining tokens proportionally across all wallets. uFragment balances are internally represented with a hidden denomination, 'gons'. We support splitting the currency in expansion and combining the currency on contraction by changing the exchange rate between the hidden 'gons' and the public 'fragments'.
     * UFragments has Open Zeppelin's OwnableUpgradeable which configures an owner and makes it upgradable.
 * Open Zeppelin's PausableUpgradeable and OwnableUpgradeable so the owner can pause certain functionality if needed and upgrade the contract. 
 * Vault
