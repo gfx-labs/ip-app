@@ -21,7 +21,7 @@ export const DepositContent = () => {
   const ctx = useWeb3Context();
 
   const setMax = () =>
-    updateDeposit("amountFrom", deposit.token.balance.toString());
+    updateDeposit("amountFrom", deposit.token.wallet_balance.toString());
 
   const numAmountFrom = Number(deposit.amountFrom);
 
@@ -54,7 +54,7 @@ export const DepositContent = () => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {deposit.token.balance} {deposit.token.ticker}
+        Wallet Balance: {deposit.token.wallet_balance} {deposit.token.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>

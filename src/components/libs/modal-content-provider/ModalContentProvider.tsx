@@ -35,7 +35,7 @@ const createDepositWithdrawToken = () => {
   const rolodex = useRolodexContext()
 
   return {
-    token: getStablecoins(rolodex!)[SupportedTokens.USDC],
+    token: (getStablecoins(rolodex!) as any)[SupportedTokens.USDC],
     amountFrom: "",
     amountTo: "",
   };

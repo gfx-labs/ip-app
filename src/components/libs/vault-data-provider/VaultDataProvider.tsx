@@ -46,7 +46,7 @@ export const VaultDataProvider = ({
     setHasVault(!!vaultID);
 
     if(!!vaultID && rolodex) {
-      getVaultBorrowingPower(vaultID, rolodex).then(res => setBorrowingPower(res))
+      getVaultBorrowingPower(vaultID, rolodex).then(res => setBorrowingPower(res as any))
     } else {
       setBorrowingPower('0')
     }
@@ -57,7 +57,7 @@ export const VaultDataProvider = ({
       const tokenList = getTokensListOnCurrentChain(chainId);
 
       for (const key in tokenList) {
-        const token: Token = tokenList[key];
+        const token: Token = (tokenList as any)[key];
         console.log(token.ticker, "token");
         getVaultTokenBalanceAndPrice(
           vaultAddress,

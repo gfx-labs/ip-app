@@ -13,7 +13,7 @@ interface TokenSelectProps {
 export const TokenSelect = (props: TokenSelectProps) => {
   const { token, tokenAmount, setTokenAmount } = props;
   const isLight = useLight();
-  
+
   return (
     <Box
       sx={{
@@ -59,7 +59,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
               mt: 1,
             }}
           >
-            Balance: {token.balance}
+            Balance: {token.wallet_balance}
           </Typography>
         </Box>
       </Box>
