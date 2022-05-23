@@ -13,9 +13,9 @@ const nav = [
   {
     title: "Protocol",
     links: [
-      { label: "Whitepaper", href: "/" },
-      { label: "Docs", href: "/" },
-      { label: "Guides", href: "/" },
+      { label: "Whitepaper", href: "/static/whitepaper.pdf" },
+      { label: "Docs", href: "/book/index.html" },
+      { label: "Guides", href: "/book/docs/category/guides/index.html" },
     ],
   },
   {
@@ -28,16 +28,9 @@ const nav = [
   {
     title: "Community",
     links: [
-      { label: "Twitter", href: "/" },
-      { label: "Discord", href: "/" },
-      { label: "Github", href: "/" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "Developers", href: "/" },
-      { label: "Contact", href: "/" },
+      { label: "Twitter", href: "https://twitter.com/labsgfx" },
+      { label: "Discord", href: "https://discord.gg/W9mjQNTYca" },
+      { label: "Github", href: "https://github.com/gfx-labs/ip" },
     ],
   },
 ];
