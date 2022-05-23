@@ -15,7 +15,7 @@ export const WithdrawContent = () => {
   const { setType, withdraw, updateWithdraw } = useModalContext();
 
   const setMax = () =>
-    updateWithdraw("amountFrom", withdraw.token.balance.toString());
+    updateWithdraw("amountFrom", withdraw.token.wallet_balance.toString());
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -54,7 +54,7 @@ export const WithdrawContent = () => {
         textAlign="right"
       >
         {" "}
-        Vault Balance: {withdraw.token.balance} {withdraw.token.ticker}
+        Vault Balance: {withdraw.token.wallet_balance} {withdraw.token.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>

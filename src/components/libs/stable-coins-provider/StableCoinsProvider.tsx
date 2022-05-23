@@ -39,7 +39,7 @@ export const StableCoinsProvider = ({
         currentAccount,
         rolodex.addressUSDC,
       ).then((res) => {
-        setUSDC({ ...USDC, balance: res, amount: res })});
+        setUSDC({ ...USDC, wallet_balance: res, wallet_amount: res })});
     }
   }, [rolodex?.addressUSDC, currentAccount]);
 
@@ -48,7 +48,7 @@ export const StableCoinsProvider = ({
        useBalanceOf(
         currentAccount,
         rolodex.addressUSDI,
-      ).then((res) => setUSDI({ ...USDI, balance: res, amount: res }));
+      ).then((res) => setUSDI({ ...USDI, wallet_balance: res, wallet_amount: res }));
     }
   }, [rolodex?.addressUSDI, currentAccount]);
 
