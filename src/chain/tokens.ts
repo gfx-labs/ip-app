@@ -5,10 +5,12 @@ export interface Token {
   address: string;
   ticker: string;
   value: number;
-  vault_balance: number;
-  vault_amount: number;
+
   wallet_balance: number;
   wallet_amount: number;
+
+  vault_balance?: number;
+  vault_amount?: number;
 }
 
 export enum SupportedTokens {
@@ -47,8 +49,8 @@ export const chainsToTokens = {
 export const getStablecoins = (
   rolodex: Rolodex
 ): {
-  [key in SupportedTokens &
-    Omit<Token["vault_amount"], Token["vault_balance"]>]: Token;
+  [SupportedTokens.USDI]: Token;
+  [SupportedTokens.USDC]: Token;
 } => {
   return {
     [SupportedTokens.USDI]: {
@@ -73,8 +75,9 @@ export const getStablecoins = (
 export const getTokensListOnCurrentChain = (
   chain_id: ChainIDs
 ): {
-  [tokenName in SupportedTokens &
-    Omit<SupportedTokens.USDC, SupportedTokens.USDI>]: Token;
+  [SupportedTokens.WETH]: Token;
+  [SupportedTokens.UNI]: Token;
+  [SupportedTokens.WBTC]: Token;
 } => {
   return {
     [SupportedTokens.WETH]: {
