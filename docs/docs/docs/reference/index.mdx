@@ -1,0 +1,30 @@
+---
+id: index
+---
+import DocCardList from '@theme/DocCardList';
+import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
+
+# Contracts Brief 
+
+## Core Contracts
+* USDi: a USDC synth. 1:1 to USDC. Interest bearing via (Ampleforth) rebasing. The contract is upgradable via governance.
+* Vault: where a borrower holds their collateral assets.
+* VaultController: the core math and functionality of the protocol. Each vault references the VaultController. The contract is upgradable via governance
+
+## Periphery Contracts
+* CurveMaster: is what the VaultController calls to calculate the borrow rate. Set at the VaultController via address. 
+    * ThreeLines0_100: is called by the CurveMaster to calculate the borrow rate.
+* OracleMaster is what the VaultController calls for prices. Set at the VaultController via address. 
+    * AnchoredViewRelay: called by the OracleMaster. It santity checks the anchor against the main price.
+    * ChainlinkOracleRelay: called by the AnchoredViewRelay. Gets the lastestAnswer from a Chainlink oracle. 
+    * UniswapV3OracleRelay: called by the AnchoredViewRelay. Calculates the price of x ticks for a UniV3 market.
+
+## Governance Contracts
+* GovernorDelegate: is the implementation governance contract. 
+* GovernorDelegator: is the base governance contract that references the implementation for the core logic.
+
+## Token Contracts
+* TokenDelegate: is the implementation token contract.
+* TokenDelegator: is the base token contract that references the implementation for the core logic.
+
+<DocCardList items={useCurrentSidebarCategory().items}/>
