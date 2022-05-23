@@ -20,7 +20,7 @@ export const SwapContainer = () => {
   const [token1, token2, swapTokenPositions] = useSwapTokenContext();
   const { setIsWalletModalOpen } = useWalletModalContext();
   const { setType, updateDeposit, updateWithdraw } = useModalContext();
-  
+
   const { connected } = useWeb3Context();
 
   const [
@@ -40,7 +40,7 @@ export const SwapContainer = () => {
     updateDeposit('amountFrom', token1Amount)
     updateWithdraw('amountFrom', token1Amount)
   }, [token1Amount])
-  
+
   return (
     <Box>
       <Box
@@ -121,7 +121,7 @@ export const SwapContainer = () => {
           <Button
             variant="contained"
             sx={{ color: formatColor(neutral.white) }}
-            disabled={!token1.balance}
+            disabled={!token1.wallet_balance}
             onClick={() => setType(ModalType.WithdrawConfirmation)}
           >
             Withdraw
