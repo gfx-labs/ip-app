@@ -8,11 +8,16 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
+import { useWithdrawUSDC } from "../../../hooks/useWithdraw";
+import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 
 export const WithdrawConfirmationModal = () => {
   const { type, setType, withdraw } = useModalContext();
+  const rolodex = useRolodexContext()
 
-  const handleWithdrawConfirmationRequest = () => {};
+  const handleWithdrawConfirmationRequest = () => {
+    useWithdrawUSDC(withdraw.amountFrom, rolodex!)
+  };
 
   const isLight = useLight();
 

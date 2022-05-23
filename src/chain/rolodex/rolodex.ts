@@ -41,16 +41,17 @@ export const NewRolodex = async (ctx: Web3Data) => {
   // *remove or use mainnet 1
   const token = Chains.getInfo(ctx.chainId || 3);
   let rolo: Rolodex;
-
+  console.log(ctx, 'this is ctx')
   // use provider if not connected
   if (!ctx.connected) {
     rolo = new Rolodex(provider!, token.usdiAddress!);
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
   } else {
+    console.log('getting signer')
     const signer = ctx.provider?.getSigner(ctx.currentAccount);
     rolo = new Rolodex(signer!, token.usdiAddress!);
-
+    
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
   }
