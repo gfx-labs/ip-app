@@ -51,17 +51,17 @@ const sidebars = {
                 {
                     type: 'doc',
                     label: 'IPT Sale',
-                    id: 'IPT Sale',
+                    id: 'reference/IPT sale',
                 },
                 {
                     type: 'doc',
                     label: 'Deployed Contracts',
-                    id: 'DeployedContracts',
+                    id: 'reference/DeployedContracts',
                 },
                 {
                     type: 'doc',
                     label: 'Protocol Parameters',
-                    id: 'ProtocolParameters',
+                    id: 'reference/ProtocolParameters',
                 },
                 {
                     type: 'category',
