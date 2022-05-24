@@ -123,9 +123,9 @@ export const getTokenFromTicker = (
 ): Token => {
   const tokens = getTokensListOnCurrentChain(chainId);
 
-  const tok = (tokens as any)[ticker]
-  if(tok != undefined) {
-    return tok
+  const tok = (tokens as any)[ticker];
+  if (tok != undefined) {
+    return tok;
   }
 
   throw new TypeError("Could not find Token");

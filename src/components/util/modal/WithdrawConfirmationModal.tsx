@@ -15,10 +15,6 @@ export const WithdrawConfirmationModal = () => {
   const { type, setType, withdraw } = useModalContext();
   const rolodex = useRolodexContext()
 
-  const handleWithdrawConfirmationRequest = () => {
-    useWithdrawUSDC(withdraw.amountFrom, rolodex!)
-  };
-
   const isLight = useLight();
 
   return (
@@ -120,7 +116,7 @@ export const WithdrawConfirmationModal = () => {
       <DisableableModalButton
         text="Confirm Withdraw"
         disabled={false}
-        onClick={handleWithdrawConfirmationRequest}
+        onClick={() => useWithdrawUSDC(withdraw.amountFrom, rolodex!)}
       />
     </BaseModal>
   );
