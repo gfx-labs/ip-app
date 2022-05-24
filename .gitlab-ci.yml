@@ -24,7 +24,26 @@ pages:
   dependencies:
     - site
   script:
-    - mv dist public
+    - cp -r dist public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+pages-github:
+  stage: deploy
+  dependencies:
+    - site  
+  script:
+    - git config credential.helper '!f() { sleep 1; echo "username=gfxlabs"; echo "password=${GITHUB_TOKEN}"; }; f'
+    - git pull https://github.com/gfx-labs/ip-app-pages
+    - cp -r dist ip-app-pages/$CI_COMMIT_SHORT_SHA
+    - rm -rf ip-app-pages/latest
+    - cp -r dist ip-app-pages/latest
+    - cd ip-app-pages
+    - git add -A && git commit -m "added commit $CI_COMMIT_SHORT_SHA"
+    - git push
   artifacts:
     paths:
       - public
