@@ -18,7 +18,7 @@ export const SwapContainer = () => {
 
   const [token1, token2, swapTokenPositions] = useSwapTokenContext();
   const { setIsWalletModalOpen } = useWalletModalContext();
-  const { setType, updateDeposit, updateWithdraw } = useModalContext();
+  const { setType, USDC, updateUSDC } = useModalContext();
 
   const { connected } = useWeb3Context();
 
@@ -36,8 +36,11 @@ export const SwapContainer = () => {
   };
 
   useEffect(() => {
-    updateDeposit('amountFrom', token1Amount)
-    updateWithdraw('amountFrom', token1Amount)
+    if(token1.ticker === "USDC"){
+      updateUSDC('amountToDeposit', token1Amount)
+    } else {
+      updateUSDC('amountToWithdraw', token1Amount)
+    }
   }, [token1Amount])
 
   return (

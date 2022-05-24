@@ -30,7 +30,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme();
 
   const {tokens} = useVaultDataContext();
-  const {type, setType, setToken } = useModalContext();
+  const {type, setType, setCollateralToken } = useModalContext();
 
   const {
     tokenName,
@@ -43,12 +43,12 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   } = props;
 
   const openDeposit = () => {
-    setToken((tokens as any)[tokenName])
+    setCollateralToken((tokens as any)[tokenName])
     setType(ModalType.DepositCollateral);
   };
 
   const openWithdraw = () => {
-    setToken((tokens as any)[tokenName])
+    setCollateralToken((tokens as any)[tokenName])
     setType(ModalType.WithdrawCollateral);
   };
 

@@ -9,31 +9,27 @@ import { SwapIcon } from "../../../icons/misc/SwapIcon";
 import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const DepositCollateralContent = () => {
-  const { setType, deposit, updateDeposit, token } = useModalContext();
+  const { setType, setCollateralDepositAmount, collateralToken, collateralDepositAmount } = useModalContext();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
 
   const setMax = () =>
-    updateDeposit("amountFrom", token.wallet_amount.toString());
-
-  const numAmountFrom = Number(deposit.amountFrom);
+  setCollateralDepositAmount(collateralToken.wallet_amount);
 
   useEffect(() => {
-    setDisabled(numAmountFrom <= 0);
-  }, [deposit.amountFrom]);
+    setDisabled(collateralDepositAmount <= 0);
+  }, [collateralDepositAmount]);
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      updateDeposit(
-        "amountFrom",
-        (numAmountFrom * deposit.token.value).toString()
-      );
+      setCollateralDepositAmount(collateralDepositAmount * collateralToken.value)
+      
     } else {
-      updateDeposit(
-        "amountFrom",
-        (numAmountFrom / deposit.token.value).toString()
+      setCollateralDepositAmount(
+        
+        collateralDepositAmount / collateralToken.value
       );
     }
 
@@ -49,16 +45,16 @@ export const DepositCollateralContent = () => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {token?.wallet_amount} {deposit.token.ticker}
+        Wallet Balance: {collateralToken?.wallet_amount} {collateralToken?.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(amount) => updateDeposit("amountFrom", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : deposit.token.ticker}`}
-          value={deposit.amountFrom}
+          onChange={(amount) => setCollateralDepositAmount(Number(amount))}
+          placeholder={`0 ${isMoneyValue ? "USD" : collateralToken?.ticker}`}
+          value={collateralDepositAmount.toString()}
           isMoneyValue={isMoneyValue}
         />
 
@@ -74,11 +70,11 @@ export const DepositCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  deposit.amountFrom === "0"
+                  collateralDepositAmount === 0
                     ? "0"
-                    : numAmountFrom / deposit.token.value
-                } ${deposit.token.ticker}`
-              : `$${numAmountFrom * deposit.token.value}`}
+                    : collateralDepositAmount / collateralToken?.value
+                } ${collateralToken?.ticker}`
+              : `$${collateralDepositAmount * collateralToken?.value}`}
           </Typography>
 
           <Button

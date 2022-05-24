@@ -9,10 +9,11 @@ import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { useWithdrawCollateral } from "../../../hooks/useWithdraw";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
 export const WithdrawCollateralConfirmationModal = () => {
-  const { type, setType, withdraw } = useModalContext();
-  const rolodex = useRolodexContext();
+  const { type, setType, collateralToken, collateralWithdrawAmount } = useModalContext();
+  const { provider, currentAccount } = useWeb3Context();
 
   const isLight = useLight();
 
@@ -52,13 +53,13 @@ export const WithdrawCollateralConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/${withdraw.token.ticker}.svg`}
-            alt={withdraw.token.ticker}
+            src={`images/${collateralToken.ticker}.svg`}
+            alt={collateralToken.ticker}
             marginRight={3}
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${withdraw.token.value * Number(withdraw.amountFrom)}
+              ${collateralToken.value * Number(collateralWithdrawAmount)}
             </Typography>
           </Box>
         </Box>
@@ -70,14 +71,20 @@ export const WithdrawCollateralConfirmationModal = () => {
         }
       >
         <Typography variant="body1" fontWeight={500} mb={1}>
-          {withdraw.token.name} withdraw: {withdraw.amountFrom}
+          {collateralToken.name} withdraw: {collateralWithdrawAmount}
         </Typography>
       </Box>
 
       <DisableableModalButton
         text="Confirm Withdraw"
         disabled={false}
-        onClick={() => useWithdrawCollateral(withdraw.amountFrom, rolodex!)}
+        onClick={() =>
+          useWithdrawCollateral(
+            collateralWithdrawAmount.toLocaleString(),
+            collateralToken.address,
+            provider?.getSigner(currentAccount!)
+          )
+        }
       />
     </BaseModal>
   );

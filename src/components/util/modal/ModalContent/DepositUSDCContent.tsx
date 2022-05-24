@@ -5,41 +5,29 @@ import { formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
-import { SwapIcon } from "../../../icons/misc/SwapIcon";
-import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
+import {
+  ModalType,
+  useModalContext,
+} from "../../../libs/modal-content-provider/ModalContentProvider";
+import { useStableCoinsContext } from "../../../libs/stable-coins-provider/StableCoinsProvider";
 
 export const DepositUSDCContent = () => {
-  const { setType, deposit, updateDeposit, token } = useModalContext();
+  const { USDC: USDCToken } = useStableCoinsContext();
+  const { setType, updateUSDC, USDC } = useModalContext();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
 
   const setMax = () =>
-    updateDeposit("amountFrom", token.wallet_amount.toString());
+    updateUSDC("amountToDeposit", USDCToken.wallet_amount.toString());
 
-  const numAmountFrom = Number(deposit.amountFrom);
+  const numAmountToDeposit = Number(USDC.amountToDeposit);
 
   useEffect(() => {
-    setDisabled(numAmountFrom <= 0);
-  }, [deposit.amountFrom]);
-
-  const swapHandler = () => {
-    if (!isMoneyValue) {
-      updateDeposit(
-        "amountFrom",
-        (numAmountFrom * deposit.token.value).toString()
-      );
-    } else {
-      updateDeposit(
-        "amountFrom",
-        (numAmountFrom / deposit.token.value).toString()
-      );
-    }
-
-    setIsMoneyValue(!isMoneyValue);
-  };
-
+    setDisabled(numAmountToDeposit <= 0);
+  }, [USDC.amountToDeposit]);
+  console.log(USDC);
   return (
     <Box>
       <Typography
@@ -49,43 +37,24 @@ export const DepositUSDCContent = () => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {token?.wallet_amount} {deposit.token.ticker}
+        Wallet Balance: {USDCToken.wallet_balance} USDC
       </Typography>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(amount) => updateDeposit("amountFrom", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : deposit.token.ticker}`}
-          value={deposit.amountFrom}
+          onChange={(amount) => updateUSDC("amountToDeposit", amount)}
+          placeholder={`0 ${isMoneyValue ? "USD" : USDCToken.ticker}`}
+          value={USDC.amountToDeposit}
           isMoneyValue={isMoneyValue}
         />
 
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
-          <Typography
-            sx={{
-              color: formatColor(neutral.gray3),
-              fontSize: 14,
-              fontWeight: 600,
-              marginLeft: 1,
-              whiteSpace: "nowrap",
-            }}
-          >
-            {isMoneyValue
-              ? `${
-                  deposit.amountFrom === "0"
-                    ? "0"
-                    : numAmountFrom / deposit.token.value
-                } ${deposit.token.ticker}`
-              : `$${numAmountFrom * deposit.token.value}`}
-          </Typography>
-
           <Button
             onClick={setMax}
             sx={{
               minWidth: "auto",
-
               height: 30,
               paddingY: 2,
               paddingX: 1,
@@ -106,20 +75,6 @@ export const DepositUSDCContent = () => {
             >
               Max
             </Typography>
-          </Button>
-
-          <Button
-            sx={{
-              minWidth: "auto",
-              borderRadius: "50%",
-              width: 30,
-              height: 30,
-              paddingY: 0,
-              paddingX: 2,
-            }}
-            onClick={swapHandler}
-          >
-            <SwapIcon sx={{ width: 30, height: 30 }} />
           </Button>
         </Box>
       </ModalInputContainer>

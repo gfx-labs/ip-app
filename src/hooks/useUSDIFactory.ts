@@ -9,15 +9,17 @@ export const useBorrow = async (
   rolodex: Rolodex,
   signer: JsonRpcSigner
 ) => {
-
   const formattedUSDIAmount = utils.parseUnits(amount, 18);
-
+  console.log(rolodex, signer);
   try {
-   await rolodex.VC?.connect(signer).borrowUsdi(
+    const borrowTransaction = await rolodex.VC?.connect(signer).borrowUsdi(
       Number(vaultID),
       formattedUSDIAmount
-    )
+    );
 
+    const borrowRecipt = borrowTransaction?.wait();
+
+    return borrowRecipt;
   } catch (err) {
     console.log(err);
     throw new Error("Could not borrow");
@@ -36,19 +38,17 @@ export const useRepay = async (
     const repayTransaction = await rolodex.VC?.connect(signer).repayUSDi(
       Number(vaultID),
       formattedUSDIAmount
-    )
+    );
 
-    console.log(repayTransaction, 'transation')
+    console.log(repayTransaction, "transation");
 
-    const repayRecipt = await repayTransaction?.wait()
+    const repayRecipt = await repayTransaction?.wait();
 
-    console.log(repayRecipt, 'recipt')
+    console.log(repayRecipt, "recipt");
 
-    return repayRecipt
-
+    return repayRecipt;
   } catch (err) {
     console.log(err);
     throw new Error("Could not repay");
   }
 };
-

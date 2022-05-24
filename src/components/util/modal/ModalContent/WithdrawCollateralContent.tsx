@@ -12,10 +12,10 @@ import {
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const WithdrawCollateralContent = () => {
-  const { setType, withdraw, updateWithdraw } = useModalContext();
+  const { setType, collateralToken, setCollateralWithdrawAmount, collateralWithdrawAmount } = useModalContext();
 
   const setMax = () =>
-    updateWithdraw("amountFrom", withdraw.token.vault_amount.toString());
+    setCollateralWithdrawAmount(collateralToken.vault_amount || 0);
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -23,23 +23,17 @@ export const WithdrawCollateralContent = () => {
 
   const [disabled, setDisabled] = useState(true);
 
-  const numAmountFrom = Number(withdraw.amountFrom);
+  const numAmountToWithdraw = Number(collateralWithdrawAmount);
 
   useEffect(() => {
-    setDisabled(numAmountFrom <= 0);
-  }, [withdraw.amountFrom]);
+    setDisabled(numAmountToWithdraw <= 0);
+  }, [collateralWithdrawAmount]);
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      updateWithdraw(
-        "amountFrom",
-        (numAmountFrom * withdraw.token.value).toString()
-      );
+      setCollateralWithdrawAmount(numAmountToWithdraw * collateralToken.value)
     } else {
-      updateWithdraw(
-        "amountFrom",
-        (numAmountFrom / withdraw.token.value).toString()
-      );
+      setCollateralWithdrawAmount(numAmountToWithdraw / collateralToken.value)
     }
 
     setIsMoneyValue(!isMoneyValue);
@@ -54,16 +48,16 @@ export const WithdrawCollateralContent = () => {
         textAlign="right"
       >
         {" "}
-        Vault Balance: {withdraw.token.vault_amount} {withdraw.token.ticker}
+        Vault Balance: {collateralToken.vault_amount} {collateralToken.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onBlur={toggle}
           onFocus={toggle}
-          onChange={(amount) => updateWithdraw("amountFrom", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : withdraw.token.ticker}`}
-          value={withdraw.amountFrom}
+          onChange={(amount) => setCollateralWithdrawAmount(Number(amount))}
+          placeholder={`0 ${isMoneyValue ? "USD" : collateralToken.ticker}`}
+          value={collateralWithdrawAmount.toLocaleString()}
           isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
@@ -78,11 +72,11 @@ export const WithdrawCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  withdraw.amountFrom === "0"
+                  collateralWithdrawAmount === 0
                     ? "0"
-                    : numAmountFrom / withdraw.token.value
-                } ${withdraw.token.ticker}`
-              : `$${numAmountFrom * withdraw.token.value}`}
+                    : numAmountToWithdraw / collateralToken.value
+                } ${collateralToken.ticker}`
+              : `$${numAmountToWithdraw * collateralToken.value}`}
           </Typography>
 
           <Button

@@ -1,5 +1,4 @@
-import { Box, Typography, Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { Box, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
 import {
   ModalType,
@@ -9,29 +8,17 @@ import { BaseSwitch } from "../switch";
 import { BaseModal } from "./BaseModal";
 import { DepositCollateralContent } from "./ModalContent/DepositCollateralContent";
 import { WithdrawCollateralContent } from "./ModalContent/WithdrawCollateralContent";
-import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const DepositWithdrawCollateralModal = () => {
-  const { token, deposit, withdraw, type, setType } = useModalContext();
+  const {
+    type,
+    setType,
+    collateralToken,
+    setCollateralDepositAmount,
+    setCollateralWithdrawAmount,
+  } = useModalContext();
 
   const isDepositType = type === ModalType.DepositCollateral;
-
-  const [tokenName, setTokenName] = useState("");
-  const [tokenValue, setTokenValue] = useState("0");
-  const [tokenWalletBalance, setTokenWalletBalance] = useState("0");
-  const [depositAmount, setDepositAmount] = useState("");
-
-  const [tokenVaultBalance, setTokenVaultBalance] = useState("0");
-  const [withdrawAmount, setWithdrawAmount] = useState("");
-
-  useEffect(() => {
-    if (token) {
-      setTokenName(token?.ticker);
-      setTokenValue(token.value.toLocaleString());
-      setTokenWalletBalance(token.wallet_balance.toLocaleString());
-      setTokenVaultBalance(token.vault_balance!.toLocaleString());
-    }
-  }, [token]);
 
   const onSwitch = (val: boolean) =>
     setType(val ? ModalType.DepositCollateral : ModalType.WithdrawCollateral);
@@ -44,6 +31,8 @@ export const DepositWithdrawCollateralModal = () => {
       }
       setOpen={() => {
         setType(null);
+        setCollateralDepositAmount(0);
+        setCollateralWithdrawAmount(0);
       }}
     >
       <BaseSwitch
@@ -65,15 +54,15 @@ export const DepositWithdrawCollateralModal = () => {
           component="img"
           width={80}
           height={80}
-          src={`images/${tokenName}.svg`}
-          alt={tokenName}
+          src={`images/${collateralToken.ticker}.svg`}
+          alt={collateralToken.name}
         ></Box>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
-            1 {tokenName}
+            1 {collateralToken.ticker}
           </Typography>
           <Typography variant="h3" color="text.secondary" mb={1}>
-            ${tokenValue}
+            ${collateralToken.value}
           </Typography>
         </Box>
       </Box>
