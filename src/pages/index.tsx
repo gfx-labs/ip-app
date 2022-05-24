@@ -31,7 +31,7 @@ const LandingPage = () => {
           const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount);
           if (vaultIDs && vaultIDs?.length > 0) {
             const vaultID = BigNumber.from(vaultIDs[0]._hex).toString()
-            
+
             const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID)
             setVaultID(vaultID);
             setVaultAddress(vaultAddress)
@@ -41,7 +41,7 @@ const LandingPage = () => {
           }
         } catch (err) {
           setVaultID(null)
-          
+
           throw new Error("cannot get vault");
         }
       };
@@ -144,12 +144,9 @@ const LandingPage = () => {
               </Box>
             )
           )}
-
-          
           <Box sx={{ marginY: 4 }}>
             <StatsMeter />
           </Box>
-
           <UserStats />
         </Box>
       </Box>

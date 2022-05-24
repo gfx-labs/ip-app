@@ -1,7 +1,8 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, Contract, ethers, utils } from "ethers";
 import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
 import { Rolodex } from "../chain/rolodex/rolodex";
+import {useDecimals} from "./useTokenInfo";
 
 export const useDeposit = async (
   usdc_amount: string,
@@ -34,3 +35,4 @@ export const useDeposit = async (
     throw new Error("Could not deposit");
   }
 };
+

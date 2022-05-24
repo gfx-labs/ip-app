@@ -10,6 +10,9 @@ import {
   VaultController__factory,
   OracleMaster__factory,
   IOracleMaster,
+  VaultController,
+  ICurveMaster,
+  CurveMaster__factory,
 } from "../contracts";
 
 export const provider = new JsonRpcProvider(
@@ -21,10 +24,13 @@ export class Rolodex {
   USDI: IUSDI;
 
   addressVC?: string;
-  VC?: IVaultController;
+  VC?: VaultController;
 
   addressOracle?: string;
   Oracle?: IOracleMaster;
+
+  addressCurve?: string;
+  Curve?: ICurveMaster;
 
   addressUSDC?: string;
 
@@ -41,7 +47,6 @@ export const NewRolodex = async (ctx: Web3Data) => {
   // *remove or use mainnet 1
   const token = Chains.getInfo(ctx.chainId || 3);
   let rolo: Rolodex;
-  console.log(ctx, 'this is ctx')
   // use provider if not connected
   if (!ctx.connected) {
     rolo = new Rolodex(provider!, token.usdiAddress!);
@@ -51,7 +56,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
     console.log('getting signer')
     const signer = ctx.provider?.getSigner(ctx.currentAccount);
     rolo = new Rolodex(signer!, token.usdiAddress!);
-    
+
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
   }
@@ -63,6 +68,11 @@ export const NewRolodex = async (ctx: Web3Data) => {
   if (!rolo.addressOracle) {
     rolo.addressOracle = await rolo.VC?.getOracleMaster();
     rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);
+  }
+
+  if (!rolo.addressCurve) {
+    rolo.addressCurve = await rolo.VC?.getCurveMaster();
+    rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!);
   }
 
   console.log(rolo)

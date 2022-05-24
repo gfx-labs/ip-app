@@ -13,6 +13,7 @@ import {
   ModalType,
   useModalContext,
 } from "../../libs/modal-content-provider/ModalContentProvider";
+import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string;
@@ -30,15 +31,8 @@ interface UserTokenCardProps extends BoxProps {
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme();
 
-  const { type, setType } = useModalContext();
-
-  const openDeposit = () => {
-    setType(ModalType.Deposit);
-  };
-
-  const openWithdraw = () => {
-    setType(ModalType.Withdraw);
-  };
+  const {tokens} = useVaultDataContext();
+  const {type, setType, setToken } = useModalContext();
 
   const {
     tokenName,
@@ -49,6 +43,17 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     LTVPercent,
     penaltyPercent,
   } = props;
+
+  const openDeposit = () => {
+    setToken((tokens as any)[tokenName])
+    setType(ModalType.Deposit);
+  };
+
+  const openWithdraw = () => {
+    setToken((tokens as any)[tokenName])
+    setType(ModalType.Withdraw);
+  };
+
   return (
     <Box
       sx={{

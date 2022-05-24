@@ -1,12 +1,12 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import {
   getStablecoins,
-  SupportedTokens,
   Token,
 } from "../../../chain/tokens";
 import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 
 export enum ModalType {
+  None = "",
   Deposit = "DEPOSIT",
   Withdraw = "WITHDRAW",
   Borrow = "BORROW",
@@ -25,6 +25,8 @@ interface DepositWithdrawToken {
 export type ModalContextType = {
   type: ModalType | null;
   setType: (val: ModalType | null) => void;
+  token: Token | undefined
+  setToken: (val: Token | undefined) => void;
   deposit: DepositWithdrawToken;
   withdraw: DepositWithdrawToken;
   updateDeposit: (prop: string, val: string) => void;
@@ -33,9 +35,8 @@ export type ModalContextType = {
 
 const createDepositWithdrawToken = () => {
   const rolodex = useRolodexContext()
-
   return {
-    token: (getStablecoins(rolodex!) as any)[SupportedTokens.USDC],
+    token: getStablecoins(rolodex!).USDC,
     amountFrom: "",
     amountTo: "",
   };
@@ -48,6 +49,7 @@ export const ModalContentProvider = ({
   children: React.ReactElement;
 }) => {
   const [type, setType] = useState<ModalType | null>(null);
+  const [token, setToken] = useState<Token | undefined>(undefined);
   const [deposit, setDeposit] = useState<DepositWithdrawToken>(
     createDepositWithdrawToken()
   );
@@ -55,19 +57,29 @@ export const ModalContentProvider = ({
     createDepositWithdrawToken()
   );
 
+  useEffect(() => {
+    if(token){
+      setDeposit({
+        ...deposit,
+        token: token,
+      })
+      setWithdraw({
+        ...deposit,
+        token: token,
+      })
+    }
+  }, [token]);
+
   const updateDeposit = (prop: string, val: string) => {
     setDeposit({
       ...deposit,
-      amountFrom: val,
-      amountTo: val
+      [prop]: val
     });
   };
-
   const updateWithdraw = (prop: string, val: string) => {
     setWithdraw({
       ...withdraw,
-      amountFrom: val,
-      amountTo: val
+      [prop]: val
     });
   };
 
@@ -75,7 +87,9 @@ export const ModalContentProvider = ({
     <ModalContentContext.Provider
       value={{
         type,
+        token,
         setType,
+        setToken,
         deposit,
         withdraw,
         updateDeposit,

@@ -9,7 +9,6 @@ import { TokenSelect } from "./TokenSelect";
 import { useTokenAmountInput } from "./useTokenAmountInput";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import { SupportedTokens } from "../../../chain/tokens";
 import { useModalContext,ModalType } from "../../libs/modal-content-provider/ModalContentProvider";
 
 export const SwapContainer = () => {
@@ -109,7 +108,7 @@ export const SwapContainer = () => {
       </Box>
 
       {connected ? (
-        token1.ticker === SupportedTokens.USDC ? (
+        token1.ticker === "USDC" ? (
           <Button
             variant="contained"
             sx={{ color: formatColor(neutral.white) }}

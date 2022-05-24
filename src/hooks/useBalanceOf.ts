@@ -31,14 +31,15 @@ export const useBalanceOf = (
   wallet_address: string,
   contract_address: string
 ) => {
-  const contract = new ethers.Contract(contract_address, minABI, provider);
-
-  return (async function getBalance() {
-    const balance = await contract.balanceOf(wallet_address);
-    const decimals = await useDecimals(contract);
-
-    const formattedBalance = useFormatWithDecimals(balance, decimals);
-
-    return formattedBalance;
-  })();
+  return getBalance(contract_address, wallet_address)
 };
+
+export const getBalance  = async (contract_address: string, target: string)=>{
+  const contract = new ethers.Contract(contract_address, minABI, provider);
+  const balance = await contract.balanceOf(target);
+  const decimals = await useDecimals(contract);
+
+  const formattedBalance = useFormatWithDecimals(balance, decimals);
+
+  return formattedBalance;
+}

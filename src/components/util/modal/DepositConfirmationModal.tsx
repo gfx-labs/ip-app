@@ -11,14 +11,17 @@ import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useDeposit } from "../../../hooks/useDeposit";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import {useDepositCollateral} from "../../../hooks/useCollateral";
+import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const DepositConfirmationModal = () => {
   const { type, setType, deposit } = useModalContext();
   const {provider, currentAccount} = useWeb3Context()
   const rolodex = useRolodexContext()
 
+  const { vaultAddress } = useVaultDataContext();
   const handleDepositConfirmationRequest = async () => {
-    await useDeposit(deposit.amountFrom!,rolodex!, provider?.getSigner(currentAccount)!)
+    await useDepositCollateral(deposit.amountFrom!,deposit.token.address, provider?.getSigner(currentAccount)!, vaultAddress!, currentAccount)
 
     console.log('FINISHED')
   };
@@ -113,9 +116,11 @@ export const DepositConfirmationModal = () => {
         <Typography variant="body1" fontWeight={500} mb={1}>
           {deposit.token.name} deposit: {deposit.amountFrom}
         </Typography>
+        { deposit.amountTo ?(
         <Typography variant="body1" fontWeight={500}>
-          USDi to be receive: {deposit.amountTo}
-        </Typography>
+          USDi you will receive: {deposit.amountTo}
+          </Typography>):(<></>)
+        }
       </Box>
 
       <DisableableModalButton

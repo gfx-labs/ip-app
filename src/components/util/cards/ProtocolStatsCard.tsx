@@ -35,7 +35,6 @@ export const ProtocolStatsCard = () => {
       );
 
       Promise.all(allPromisesWithErrorHandler).then((results) => {
-      
         setTotalSupply(results[0]);
         setTotalUSDCDeposited(results[1] instanceof Error ? 0 : results[1]);
         setReserveRatio(results[2] instanceof Error ? 0 : results[2])
@@ -78,7 +77,7 @@ export const ProtocolStatsCard = () => {
       </Box>
 
         <SwapContainer />
-      
+
     </Box>
   );
 };

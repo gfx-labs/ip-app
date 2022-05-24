@@ -8,9 +8,8 @@ export const getVaultBorrowingPower = async (
   try {
     // get user balance
     const BP = await rolodex.VC?.accountBorrowingPower(vaultID);
-
     if(BP?._isBigNumber) {
-      return BNtoHexNumber(BP)
+      return BP.div(1e8).div(1e8).toNumber()/100
     }
 
     return 0
