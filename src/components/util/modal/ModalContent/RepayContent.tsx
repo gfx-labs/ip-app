@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
-
 import { Box, Typography, Button } from "@mui/material";
+
 import { formatColor, neutral } from "../../../../theme";
-import { useLight } from "../../../../hooks/useLight";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
+import { useRepay } from "../../../../hooks/useUSDIFactory";
+import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
+import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 
 interface RepayContent {
   tokenName: string;
   vaultBorrowPower: string;
   repayAmount: string;
   setRepayAmount: (e: string) => void;
+  accountLiability: number;
+  vaultID: number;
 }
 
 export const RepayContent = (props: RepayContent) => {
@@ -20,22 +24,28 @@ export const RepayContent = (props: RepayContent) => {
     vaultBorrowPower,
     setRepayAmount,
     repayAmount,
+    accountLiability,
+    vaultID
   } = props;
+  const rolodex = useRolodexContext();
+  const { provider, currentAccount } = useWeb3Context();
 
-  const isLight = useLight();
-
-  const setMax = () => setRepayAmount(vaultBorrowPower);
+  const setMax = () => setRepayAmount(accountLiability.toLocaleString());
 
   const [disabled, setDisabled] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
 
   useEffect(() => {
-    setDisabled(Number(repayAmount) < 1);
+    setDisabled(Number(repayAmount) <= 0);
   }, [repayAmount]);
 
-  const handleRepayRequest = () => {};
+  const handleRepayRequest = async () => {
+    setLoading(true);
+    await useRepay(vaultID, repayAmount, rolodex!, provider!.getSigner(currentAccount)!);
+    setLoading(false);
+  };
 
   return (
     <Box>
@@ -82,13 +92,15 @@ export const RepayContent = (props: RepayContent) => {
             </Typography>
           </Button>
         </Box>
-        </ModalInputContainer>
-
-      <DisableableModalButton
-        text="Repay"
-        onClick={handleRepayRequest}
-        disabled={disabled}
-      />
+      </ModalInputContainer>
+      <Box marginTop={2}>
+        <DisableableModalButton
+          text="Repay"
+          onClick={handleRepayRequest}
+          disabled={disabled}
+          loading={loading}
+        />
+      </Box>
     </Box>
   );
 };

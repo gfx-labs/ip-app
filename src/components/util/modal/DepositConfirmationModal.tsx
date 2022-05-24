@@ -79,7 +79,7 @@ export const DepositConfirmationModal = () => {
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="h3" color="text.secondary">
-              $1
+              ${deposit.token.value}
             </Typography>
           </Box>
 
@@ -102,7 +102,7 @@ export const DepositConfirmationModal = () => {
           fontWeight={500}
           textAlign="center"
         >
-          1 {deposit.token.ticker} = 1 USDi ($1){" "}
+          1 {deposit.token.ticker} = {deposit.token.value} USDi ($1){" "}
         </Typography>
       </Box>
 

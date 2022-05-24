@@ -20,7 +20,7 @@ export const BorrowRepayModal = () => {
 
   const rolodex = useRolodexContext();
 
-  const {tokens, setTokens,  vaultID, hasVault, setVaultID,vaultAddress,  setVaultAddress, borrowingPower,  } = useVaultDataContext();
+  const {tokens, setTokens,  vaultID, hasVault, setVaultID,vaultAddress,  setVaultAddress, borrowingPower, accountLiability  } = useVaultDataContext();
 
   const [tokenName, setTokenName] = useState("USDI");
   const [vaultBorrowPower, setVaultBorrowPower] = useState("0");
@@ -66,6 +66,9 @@ export const BorrowRepayModal = () => {
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
             Borrow Balance:
           </Typography>
+          <Typography variant="h3" color="text.secondary">
+              ${accountLiability}
+            </Typography>
         </Box>
       </Box>
 
@@ -76,13 +79,16 @@ export const BorrowRepayModal = () => {
           vaultID={Number(vaultID)}
           borrowAmount={borrowAmount}
           setBorrowAmount={setBorrowAmount}
+          accountLiability={accountLiability}
         />
       ) : (
         <RepayContent
           tokenName={tokenName}
           vaultBorrowPower={vaultBorrowPower}
+          vaultID={Number(vaultID)}
           repayAmount={repayAmount}
           setRepayAmount={setRepayAmount}
+          accountLiability={accountLiability}
         />
       )}
     </BaseModal>

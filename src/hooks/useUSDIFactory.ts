@@ -2,8 +2,6 @@ import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, utils } from "ethers";
 import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
 import { Rolodex } from "../chain/rolodex/rolodex";
-import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
-import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 
 export const useBorrow = async (
   vaultID: number,
@@ -12,12 +10,12 @@ export const useBorrow = async (
   signer: JsonRpcSigner
 ) => {
 
-  const formattedERC20Amount = utils.parseUnits(amount, 18);
+  const formattedUSDIAmount = utils.parseUnits(amount, 18);
 
   try {
    await rolodex.VC?.connect(signer).borrowUsdi(
       Number(vaultID),
-      formattedERC20Amount
+      formattedUSDIAmount
     )
 
   } catch (err) {
@@ -27,18 +25,26 @@ export const useBorrow = async (
 };
 
 export const useRepay = async (
+  vaultID: number,
   amount: string,
-  rolodex: Rolodex
+  rolodex: Rolodex,
+  signer: JsonRpcSigner
 ) => {
-  const { vaultID } = useVaultDataContext();
-
-  const formattedERC20Amount = utils.parseUnits(amount, 18);
+  const formattedUSDIAmount = utils.parseUnits(amount, 18);
 
   try {
-    await rolodex.VC?.repayUSDi(
+    const repayTransaction = await rolodex.VC?.connect(signer).repayUSDi(
       Number(vaultID),
-      formattedERC20Amount
+      formattedUSDIAmount
     )
+
+    console.log(repayTransaction, 'transation')
+
+    const repayRecipt = await repayTransaction?.wait()
+
+    console.log(repayRecipt, 'recipt')
+
+    return repayRecipt
 
   } catch (err) {
     console.log(err);

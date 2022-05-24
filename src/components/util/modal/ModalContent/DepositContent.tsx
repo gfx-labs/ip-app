@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
-import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
@@ -11,17 +10,14 @@ import { SwapIcon } from "../../../icons/misc/SwapIcon";
 import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const DepositContent = () => {
-  const { setType, deposit, updateDeposit } = useModalContext();
-
+  const { setType, deposit, updateDeposit, token } = useModalContext();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
 
-  const ctx = useWeb3Context();
-
   const setMax = () =>
-    updateDeposit("amountFrom", deposit.token.wallet_balance.toString());
+    updateDeposit("amountFrom", token.wallet_amount.toString());
 
   const numAmountFrom = Number(deposit.amountFrom);
 
@@ -54,7 +50,7 @@ export const DepositContent = () => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {deposit.token.wallet_balance} {deposit.token.ticker}
+        Wallet Balance: {token?.wallet_amount} {deposit.token.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>
