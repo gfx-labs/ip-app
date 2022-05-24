@@ -9,8 +9,7 @@ import { ModalInputContainer } from "./ModalInputContainer";
 
 interface RepayContent {
   tokenName: string;
-  tokenValue: string;
-  tokenWalletBalance: string;
+  vaultBorrowPower: string;
   repayAmount: string;
   setRepayAmount: (e: string) => void;
 }
@@ -18,15 +17,14 @@ interface RepayContent {
 export const RepayContent = (props: RepayContent) => {
   const {
     tokenName,
-    tokenWalletBalance,
-    tokenValue,
+    vaultBorrowPower,
     setRepayAmount,
     repayAmount,
   } = props;
 
   const isLight = useLight();
 
-  const setMax = () => setRepayAmount(tokenWalletBalance);
+  const setMax = () => setRepayAmount(vaultBorrowPower);
 
   const [disabled, setDisabled] = useState(true);
 
@@ -48,7 +46,7 @@ export const RepayContent = (props: RepayContent) => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {tokenWalletBalance} {tokenName}
+        Wallet Balance: {vaultBorrowPower} {tokenName}
       </Typography>
 
       <ModalInputContainer focus={focus}>
@@ -68,7 +66,7 @@ export const RepayContent = (props: RepayContent) => {
               marginLeft: 1,
             }}
           >
-            {`$${Number(repayAmount) * Number(tokenValue)}`}
+            {`$${Number(repayAmount)}`}
           </Typography>
 
           <Button onClick={setMax}>

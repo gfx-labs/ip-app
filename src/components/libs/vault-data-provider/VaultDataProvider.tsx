@@ -24,6 +24,7 @@ export type VaultDataContextType = {
   vaultAddress?: string;
   setVaultAddress: Dispatch<SetStateAction<string | undefined>>;
   borrowingPower: string;
+  accountLiability: number;
   tokens: CollateralTokens | undefined;
   setTokens: Dispatch<SetStateAction<CollateralTokens | undefined>>;
 };
@@ -40,6 +41,7 @@ export const VaultDataProvider = ({
   const [hasVault, setHasVault] = useState(false);
   const [vaultID, setVaultID] = useState<string | null>(null);
   const [vaultAddress, setVaultAddress] = useState<VaultDataContextType["vaultAddress"]>(undefined);
+  const [accountLiability, setAccountLiability] = useState(0)
   const [borrowingPower, setBorrowingPower] = useState('0')
   const [tokens, setTokens] = useState<VaultDataContextType["tokens"]>(undefined);
   useEffect(() => {
@@ -52,7 +54,7 @@ export const VaultDataProvider = ({
   }, [vaultID]);
 
   useEffect(() => {
-    if (vaultAddress && currentAccount) {
+    if (vaultAddress && currentAccount && rolodex && vaultID) {
       const tokenList = getTokensListOnCurrentChain(chainId);
       const reqs:Array<Promise<any>> = []
       for (const [key, token] of Object.entries(tokenList)) {
@@ -78,9 +80,14 @@ export const VaultDataProvider = ({
         });
         reqs.push(prm2)
         reqs.push(getBalance(token.address,  currentAccount).then((val)=>{
-          token.wallet_balance = val
+          (token.wallet_balance  * val).toFixed(2)
+          token.wallet_amount = val
         }))
       }
+      reqs.push(rolodex.VC!.accountLiability(vaultID).then((val)=>{
+        const vl = val.div(1e8).div(1e8).toNumber()/100
+        setAccountLiability(vl)
+      }))
       Promise.allSettled(reqs).then(()=>{
         setTokens(tokenList);
       }).catch((e)=>{
@@ -88,11 +95,11 @@ export const VaultDataProvider = ({
         setTokens(tokenList);
       })
     }
-  }, [vaultAddress, currentAccount]);
+  }, [vaultAddress, currentAccount, rolodex, vaultID]);
 
   return (
     <VaultDataContext.Provider
-      value={{ hasVault, setVaultID, vaultID, vaultAddress, setVaultAddress, borrowingPower, tokens, setTokens }}
+      value={{ hasVault, setVaultID, vaultID, vaultAddress, setVaultAddress, borrowingPower, tokens, setTokens, accountLiability}}
     >
       {children}
     </VaultDataContext.Provider>
