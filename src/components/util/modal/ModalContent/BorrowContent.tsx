@@ -27,7 +27,7 @@ export const BorrowContent = (props: BorrowContent) => {
     borrowAmount,
     setBorrowAmount,
     vaultID,
-    accountLiability
+    accountLiability,
   } = props;
 
   const isLight = useLight();
@@ -43,16 +43,21 @@ export const BorrowContent = (props: BorrowContent) => {
     setDisabled(Number(borrowAmount) < 1);
   }, [borrowAmount]);
 
-  const setMax = () => setBorrowAmount((Number(vaultBorrowPower) - accountLiability).toLocaleString());
+  const setMax = () =>
+    setBorrowAmount(
+      (Number(vaultBorrowPower) - accountLiability).toLocaleString()
+    );
 
   const handleBorrowRequest = async () => {
     setLoading(true);
+
     await useBorrow(
       vaultID,
       borrowAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
     );
+
     setLoading(false);
   };
 

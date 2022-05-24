@@ -5,17 +5,17 @@ import { formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
-import { SwapIcon } from "../../../icons/misc/SwapIcon";
+
 import {
   ModalType,
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const WithdrawUSDCContent = () => {
-  const { setType, withdraw, updateWithdraw } = useModalContext();
+  const { setType, USDC, updateUSDC } = useModalContext();
 
   const setMax = () =>
-    updateWithdraw("amountFrom", withdraw.token.vault_amount.toString());
+    updateUSDC("amountToWithdraw", USDC.token.vault_amount.toString());
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -23,27 +23,11 @@ export const WithdrawUSDCContent = () => {
 
   const [disabled, setDisabled] = useState(true);
 
-  const numAmountFrom = Number(withdraw.amountFrom);
+  const numAmountFrom = Number(USDC.amountToWithdraw);
 
   useEffect(() => {
     setDisabled(numAmountFrom <= 0);
-  }, [withdraw.amountFrom]);
-
-  const swapHandler = () => {
-    if (!isMoneyValue) {
-      updateWithdraw(
-        "amountFrom",
-        (numAmountFrom * withdraw.token.value).toString()
-      );
-    } else {
-      updateWithdraw(
-        "amountFrom",
-        (numAmountFrom / withdraw.token.value).toString()
-      );
-    }
-
-    setIsMoneyValue(!isMoneyValue);
-  };
+  }, [USDC.amountToWithdraw]);
 
   return (
     <Box>
@@ -54,36 +38,19 @@ export const WithdrawUSDCContent = () => {
         textAlign="right"
       >
         {" "}
-        Vault Balance: {withdraw.token.vault_amount} {withdraw.token.ticker}
+        Vault Balance: {USDC.token.vault_amount || 0} {USDC.token.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onBlur={toggle}
           onFocus={toggle}
-          onChange={(amount) => updateWithdraw("amountFrom", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : withdraw.token.ticker}`}
-          value={withdraw.amountFrom}
+          onChange={(amount) => updateUSDC("amountToWithdraw", amount)}
+          placeholder={`0 ${isMoneyValue ? "USD" : USDC.token.ticker}`}
+          value={USDC.amountToWithdraw}
           isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
-          <Typography
-            sx={{
-              color: formatColor(neutral.gray3),
-              fontSize: 14,
-              fontWeight: 600,
-              marginLeft: 1,
-              whiteSpace: "nowrap",
-            }}
-          >
-            {isMoneyValue
-              ? `${
-                  withdraw.amountFrom === "0"
-                    ? "0"
-                    : numAmountFrom / withdraw.token.value
-                } ${withdraw.token.ticker}`
-              : `$${numAmountFrom * withdraw.token.value}`}
-          </Typography>
 
           <Button
             onClick={setMax}
@@ -110,20 +77,6 @@ export const WithdrawUSDCContent = () => {
             >
               Max
             </Typography>
-          </Button>
-
-          <Button
-            sx={{
-              minWidth: "auto",
-              borderRadius: "50%",
-              width: 30,
-              height: 30,
-              paddingY: 0,
-              paddingX: 2,
-            }}
-            onClick={swapHandler}
-          >
-            <SwapIcon sx={{ width: 30, height: 30 }} />
           </Button>
         </Box>
       </ModalInputContainer>

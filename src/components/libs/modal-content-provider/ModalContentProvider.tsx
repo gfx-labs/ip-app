@@ -2,8 +2,10 @@ import { createContext, useState, useContext, useEffect } from "react";
 import {
   getStablecoins,
   Token,
+  getTokensListOnCurrentChain
 } from "../../../chain/tokens";
 import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
+import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 export enum ModalType {
   None = "",
@@ -20,31 +22,39 @@ export enum ModalType {
   WithdrawCollateralConfirmation = 'WITHDRAW_COLLATERAL_CONFIRMATION',
 }
 
-interface DepositWithdrawToken {
+interface DepositWithdrawUSDC {
   token: Token;
-  amountFrom: string;
-  amountTo: string;
+  amountToDeposit: string;
+  amountToWithdraw: string;
 }
 
 export type ModalContextType = {
+  // Control Modal
   type: ModalType | null;
   setType: (val: ModalType | null) => void;
-  token: Token | undefined
-  setToken: (val: Token | undefined) => void;
-  deposit: DepositWithdrawToken;
-  withdraw: DepositWithdrawToken;
-  updateDeposit: (prop: string, val: string) => void;
-  updateWithdraw: (prop: string, val: string) => void;
+
+  // Control Collateral
+  collateralToken: Token
+  setCollateralToken: (val: Token) => void;
+  collateralDepositAmount: number;
+  setCollateralDepositAmount: (val: number) => void;
+  collateralWithdrawAmount: number;
+  setCollateralWithdrawAmount: (val: number) => void;
+
+  // Control USDC
+  USDC: DepositWithdrawUSDC;
+  updateUSDC: (prop: string, val: string) => void;
 };
 
-const createDepositWithdrawToken = () => {
+const createDepositWithdrawUSDC = () => {
   const rolodex = useRolodexContext()
   return {
     token: getStablecoins(rolodex!).USDC,
-    amountFrom: "",
-    amountTo: "",
+    amountToDeposit: "0",
+    amountToWithdraw: '0'
   };
 };
+
 export const ModalContentContext = createContext({} as ModalContextType);
 
 export const ModalContentProvider = ({
@@ -52,37 +62,20 @@ export const ModalContentProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
+  const {chainId} = useWeb3Context()
+
   const [type, setType] = useState<ModalType | null>(null);
-  const [token, setToken] = useState<Token | undefined>(undefined);
-  const [deposit, setDeposit] = useState<DepositWithdrawToken>(
-    createDepositWithdrawToken()
-  );
-  const [withdraw, setWithdraw] = useState<DepositWithdrawToken>(
-    createDepositWithdrawToken()
+  const [collateralToken, setCollateralToken] = useState<Token>(getTokensListOnCurrentChain(chainId)['WETH']);
+  const [collateralDepositAmount, setCollateralDepositAmount] = useState(0)
+  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState(0)
+
+  const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
+    createDepositWithdrawUSDC()
   );
 
-  useEffect(() => {
-    if(token){
-      setDeposit({
-        ...deposit,
-        token: token,
-      })
-      setWithdraw({
-        ...deposit,
-        token: token,
-      })
-    }
-  }, [token]);
-
-  const updateDeposit = (prop: string, val: string) => {
-    setDeposit({
-      ...deposit,
-      [prop]: val
-    });
-  };
-  const updateWithdraw = (prop: string, val: string) => {
-    setWithdraw({
-      ...withdraw,
+  const updateUSDC = (prop: string, val: string) => {
+    setUSDC({
+      ...USDC,
       [prop]: val
     });
   };
@@ -91,13 +84,17 @@ export const ModalContentProvider = ({
     <ModalContentContext.Provider
       value={{
         type,
-        token,
         setType,
-        setToken,
-        deposit,
-        withdraw,
-        updateDeposit,
-        updateWithdraw,
+
+        collateralToken,
+        setCollateralToken,
+        collateralDepositAmount,
+        setCollateralDepositAmount,
+        collateralWithdrawAmount,
+        setCollateralWithdrawAmount,
+
+        USDC,
+        updateUSDC,
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
 import { formatColor, neutral } from "../../../theme";
 import {
   ModalType,
@@ -12,10 +13,18 @@ import { useWithdrawUSDC } from "../../../hooks/useWithdraw";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 
 export const WithdrawUSDCConfirmationModal = () => {
-  const { type, setType, withdraw } = useModalContext();
+  const { type, setType, USDC } = useModalContext();
   const rolodex = useRolodexContext()
-
+  const [loading, setLoading] = useState(false)
   const isLight = useLight();
+
+  const handleWithdrawUSDC = async () => {
+    setLoading(true)
+
+    await useWithdrawUSDC(USDC.amountToWithdraw, rolodex!)
+
+    setLoading(false)
+  }
 
   return (
     <BaseModal
@@ -74,13 +83,13 @@ export const WithdrawUSDCConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/${withdraw.token.ticker}.svg`}
-            alt={withdraw.token.ticker}
+            src={`images/${USDC.token.ticker}.svg`}
+            alt={USDC.token.ticker}
             marginRight={3}
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${withdraw.token.value}
+              ${USDC.token.value}
             </Typography>
           </Box>
         </Box>
@@ -95,7 +104,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           fontWeight={500}
           textAlign="center"
         >
-          1 {withdraw.token.ticker} = 1 USDi ($1){" "}
+          1 {USDC.token.ticker} = 1 USDi ($1){" "}
         </Typography>
       </Box>
 
@@ -106,17 +115,18 @@ export const WithdrawUSDCConfirmationModal = () => {
         }
       >
         <Typography variant="body1" fontWeight={500} mb={1}>
-          {withdraw.token.name} withdraw: {withdraw.amountFrom}
+          {USDC.token.name} withdraw: {USDC.amountToWithdraw}
         </Typography>
         <Typography variant="body1" fontWeight={500}>
-          USDi to be receive: {withdraw.amountTo}
+          USDi to be receive: {USDC.amountToWithdraw}
         </Typography>
       </Box>
 
       <DisableableModalButton
         text="Confirm Withdraw"
         disabled={false}
-        onClick={() => useWithdrawUSDC(withdraw.amountFrom, rolodex!)}
+        onClick={handleWithdrawUSDC}
+        loading={loading}
       />
     </BaseModal>
   );
