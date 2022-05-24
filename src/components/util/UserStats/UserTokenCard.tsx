@@ -6,6 +6,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { StringifyOptions } from "querystring";
 import React from "react";
 import { formatColor, neutral, blue } from "../../../theme";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";

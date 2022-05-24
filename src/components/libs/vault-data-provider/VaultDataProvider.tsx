@@ -9,6 +9,7 @@ import {
   CollateralTokens,
   getTokensListOnCurrentChain,
   Token,
+  SupportedTokens,
 } from "../../../chain/tokens";
 import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
@@ -49,7 +50,7 @@ export const VaultDataProvider = ({
     if(!!vaultID && rolodex) {
       getVaultBorrowingPower(vaultID, rolodex).then(res => setBorrowingPower(res as any))
     } else {
-      setBorrowingPower('0')
+      setBorrowingPower(0);
     }
   }, [vaultID]);
 
