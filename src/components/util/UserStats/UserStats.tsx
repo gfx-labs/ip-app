@@ -46,7 +46,7 @@ export const UserStats = () => {
   const theme = useTheme();
   const { connected, disconnectWallet, error, currentAccount } = useWeb3Context();
   const rolodex = useRolodexContext();
-  const {tokens, setTokens,  vaultID, hasVault, setVaultID,vaultAddress,  setVaultAddress } = useVaultDataContext();
+  const {tokens, setTokens,  vaultID, hasVault, setVaultID,vaultAddress,borrowingPower,  setVaultAddress,accountLiability } = useVaultDataContext();
   const {setType} = useModalContext()
 
   useEffect(() => {
@@ -75,6 +75,10 @@ export const UserStats = () => {
     }
   }, [currentAccount, rolodex]);
 
+  useEffect(()=>{
+    setUSDIBorrowed(accountLiability)
+  }, [accountLiability])
+
   useEffect(() => {
     if(tokens){
       (async () => {
@@ -83,7 +87,7 @@ export const UserStats = () => {
             return <UserTokenCard
               key={key}
               tokenName={val.ticker}
-              tokenValue={val.value?.toLocaleString()!}
+              tokenValue={"$" + val.value?.toLocaleString()!}
               vaultBalance={"$"+val.vault_balance?.toLocaleString()!}
               tokenAmount={val.vault_amount?.toLocaleString()!}
               image={{

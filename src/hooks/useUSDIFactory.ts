@@ -6,15 +6,16 @@ import { useVaultDataContext } from "../components/libs/vault-data-provider/Vaul
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 
 export const useBorrow = async (
+  vaultID: number,
   amount: string,
-  rolodex: Rolodex
+  rolodex: Rolodex,
+  signer: JsonRpcSigner
 ) => {
-  const { vaultID } = useVaultDataContext();
 
   const formattedERC20Amount = utils.parseUnits(amount, 18);
 
   try {
-   await rolodex.VC?.borrowUsdi(
+   await rolodex.VC?.connect(signer).borrowUsdi(
       Number(vaultID),
       formattedERC20Amount
     )

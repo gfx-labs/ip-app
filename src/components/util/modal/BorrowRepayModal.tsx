@@ -10,20 +10,27 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { BorrowContent } from "./ModalContent/BorrowContent";
 import { RepayContent } from "./ModalContent/RepayContent";
+import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const BorrowRepayModal = () => {
   const { type, setType } = useModalContext();
 
   const currType = type === ModalType.Borrow;
 
-  const [tokenName, setTokenName] = useState("WBTC");
-  const [tokenValue, setTokenValue] = useState("39900");
-  const [tokenWalletBalance, setTokenWalletBalance] = useState("2");
+  const rolodex = useRolodexContext();
+
+  const {tokens, setTokens,  vaultID, hasVault, setVaultID,vaultAddress,  setVaultAddress, borrowingPower,  } = useVaultDataContext();
+
+  const [tokenName, setTokenName] = useState("USDI");
+  const [vaultBorrowPower, setVaultBorrowPower] = useState("0");
   const [borrowAmount, setBorrowAmount] = useState("");
-
-  const [tokenVaultBalance, setTokenVaultBalance] = useState("32");
   const [repayAmount, setRepayAmount] = useState("");
-
+  useEffect(()=>{
+    if(borrowingPower){
+      setVaultBorrowPower(borrowingPower)
+    }
+  }, [borrowingPower])
   const onSwitch = (val: boolean) => setType(val ? ModalType.Borrow : ModalType.Repay);
 
   return (
@@ -57,10 +64,7 @@ export const BorrowRepayModal = () => {
         ></Box>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
-            Borrow Balance
-          </Typography>
-          <Typography variant="h3" color="text.secondary" my={1}>
-            ${tokenValue}
+            Borrow Balance:
           </Typography>
         </Box>
       </Box>
@@ -68,16 +72,15 @@ export const BorrowRepayModal = () => {
       {currType ? (
         <BorrowContent
           tokenName={tokenName}
-          tokenValue={tokenValue}
-          tokenWalletBalance={tokenWalletBalance}
+          vaultBorrowPower={vaultBorrowPower}
+          vaultID={Number(vaultID)}
           borrowAmount={borrowAmount}
           setBorrowAmount={setBorrowAmount}
         />
       ) : (
         <RepayContent
           tokenName={tokenName}
-          tokenValue={tokenValue}
-          tokenWalletBalance={tokenWalletBalance}
+          vaultBorrowPower={vaultBorrowPower}
           repayAmount={repayAmount}
           setRepayAmount={setRepayAmount}
         />
