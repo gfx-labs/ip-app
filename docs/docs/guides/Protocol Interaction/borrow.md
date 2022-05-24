@@ -10,21 +10,26 @@ To borrow USDi from the protocol, take the following steps:
 4. Deposit collateral into your vault.
 5. Borrow USDi.
 
-To borrow from Interest Protocol, the borrower needs to open a vault. Vaults are smart contracts that are the conduit between the vault owner and the protocol. Each vault has a unique ID and is owned by the creator. Vaults that have been minted exist forever. The borrower can deposit supported collateral to the vault through the frontend or by transferring assets to the vault. 
+To borrow from Interest Protocol, users needs to open a vault. Vaults are smart contracts that are the conduit between the vault owner and the protocol. Each vault has a unique ID and is owned by the creator. Vaults that have been minted exist forever. The borrower can deposit supported collateral to the vault through the frontend or by transferring assets to their vault address. 
 
 **Note**: Only send ERC20 supported tokens to a vault. **Do not send native ETH to a vault**. Only wETH is supported. 
 
-Once collateral has been deposited, the vault will have the borrowing power of the collateral's value discounted by the protocol's LTV for the asset. The vault can borrow USDi up to the vault's borrowing power. 
+A vault's borrowing power equals the sum of collateral values discounted by the collateral's LTV. A user can borrow USDi from their vault up to the vault's borrowing power.
 
-Upon a borrow, USDi is transferred to the vault owner, and interest begins to accrue. Interest is charged variably as the protocol's reserve ratio fluctuates.
+Upon a borrow transaction, USDi is transferred to the vault owner, and interest begins to accrue. Interest Protocol charges a variable rate that depends on the protocol's reserve ratio.
 
-Each vault is a living entity. Additional collateral assets can be deposited at any time, new loans can be made, and USDi can be repaid. Every vault operates under the same terms and procedures.
+**Note**: If at any time the vault's borrowing power is less than the vault's outstanding balance of USDi loan, the vault is eligible for liquidation. 
 
-Governance tokens deposited as collateral retain their voting power through delegation. For example, UNI holders can open a vault, deposit UNI, borrow USDi, and delegate their voting power to an address of their choosing. Governance token holders no longer need to choose between capital power and voting interests. 
+**Note**: Your loan will start accruing interest immediately after you borrow. If you borrow exactly up to your borrowing power, your vault will be eligible for liquidation after the next rebase, which can sometimes take place in the same block as your borrow transaction.
 
-To delegate the vault's voting power, look for the `delegate` button on the frontend and enter the destination for the voting power. 
+At any time, the vault owner can deposit additional collateral assets to their vault, borrow more USDi, or repay their loan.
 
-**Note**: If at any time the vault's borrowing power is less than the account's value of USDi borrowed at any time, it is eligible for liquidation. 
+## Voting with Collateral
+Governance tokens deposited as collateral retain their voting power through delegation. For example, UNI holders can open a vault, deposit UNI, borrow USDi, and delegate their voting power to an address of their choice. Governance token holders no longer need to choose between borrowing and governance participation. 
+
+To delegate the vault's voting power, look for the `delegate` button on the frontend and enter the address to delegate voting power to.
+
+
 
 ###### tags: `IP`
 
