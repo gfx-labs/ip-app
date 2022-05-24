@@ -101,6 +101,10 @@ export const UserStats = () => {
     }
   }, [currentAccount, rolodex]);
 
+  useEffect(()=>{
+    setUSDIBorrowed(accountLiability)
+  }, [accountLiability])
+
   useEffect(() => {
     setUSDIBorrowed(accountLiability);
   }, [accountLiability]);
