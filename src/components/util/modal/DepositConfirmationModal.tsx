@@ -8,7 +8,6 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
-import { useDeposit } from "../../../hooks/useDeposit";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import {useDepositCollateral} from "../../../hooks/useCollateral";
