@@ -5,14 +5,15 @@ Interest Protocol runs two liquidity mining programs to bootstrap protocol usage
 
 ## Borrowing Incentives
 
-Interest Protocol will distribute IPT rewards to users who borrow USDi from Interest Protocol. Note that this also benefits depositors (USDi holders) as well through higher interest rates, and that depositors will reap this benefit without having to spend gas to claim rewards.
+Interest Protocol will distribute IPT rewards to users who borrow USDi from Interest Protocol. The initial distribution speed will be x IPT per block. If the protocol were to decrease the distribution speed every three months by y IPT per block, the protocol would end up distributing 6.67 percent of the IPT supply on borrowing incentives over the course of two years.
 
-The initial distribution speed will be x IPT per block. If the protocol were to decrease the distribution speed every three months by y IPT per block, the protocol would end up distributing 6.67 percent of the IPT supply on borrowing incentives over the course of two years.
+Note that rewarding borrowers also benefits depositors (USDi holders) as well through higher interest rates. Depositors will reap this benefit without having to spend gas to claim rewards.
 
 
 ## Market Making Incentives
 
-Interest Protocol will distribute rewards to 
+Interest Protocol will distribute IPT rewards to users who provide ETH-USDi liquidity on Uniswap v2. The initial distribution speed will be x IPT per block. If the protocol If the protocol were to decrease the distribution speed every three months by y IPT per block, the protocol would end up distributing 3.33 percent of the IPT supply on market making incentives over the course of two years.
+
 
 ## Merkle Root Implementation
 We implement this using Balancer style merkle root sth. Help me Getty
