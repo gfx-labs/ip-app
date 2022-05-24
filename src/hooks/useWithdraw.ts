@@ -22,3 +22,24 @@ export const useWithdrawUSDC = async (
     throw new Error("Could not withdraw");
   }
 };
+
+export const useWithdrawCollateral = async (
+  collateral_amount: string,
+  rolodex: Rolodex,
+) => {
+  const formattedUSDCAmount = utils.parseUnits(collateral_amount, 6);
+
+  try {
+    const withdrawAttempt = await rolodex.USDI.withdraw(
+      Number(formattedUSDCAmount)
+    );
+
+    const receipt = await withdrawAttempt?.wait();
+    
+    console.log(receipt);
+    return receipt;
+  } catch (err) {
+    console.log(err);
+    throw new Error("Could not withdraw");
+  }
+};

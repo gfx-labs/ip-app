@@ -2,12 +2,9 @@ import {
   Box,
   BoxProps,
   Button,
-  SxProps,
   Typography,
   useTheme,
 } from "@mui/material";
-import { StringifyOptions } from "querystring";
-import React from "react";
 import { formatColor, neutral, blue } from "../../../theme";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import {
@@ -47,12 +44,12 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
   const openDeposit = () => {
     setToken((tokens as any)[tokenName])
-    setType(ModalType.Deposit);
+    setType(ModalType.DepositCollateral);
   };
 
   const openWithdraw = () => {
     setToken((tokens as any)[tokenName])
-    setType(ModalType.Withdraw);
+    setType(ModalType.WithdrawCollateral);
   };
 
   return (
