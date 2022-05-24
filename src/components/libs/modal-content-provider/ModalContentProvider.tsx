@@ -7,13 +7,17 @@ import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider"
 
 export enum ModalType {
   None = "",
-  Deposit = "DEPOSIT",
-  Withdraw = "WITHDRAW",
   Borrow = "BORROW",
   Repay = "REPAY",
   Claim = "CLAIM",
-  DepositConfirmation = "DEPOSIT_CONFIRMATION",
-  WithdrawConfirmation = "WITHDRAW_CONFIRMATION",
+  WithdrawUSDC = "WITHDRAW_USDC",
+  DepositUSDC = "DEPOSIT_USDC",
+  DepositUSDCConfirmation = "DEPOSIT_USDC_CONFIRMATION",
+  WithdrawUSDCConfirmation = "WITHDRAW_USDC_CONFIRMATION",
+  DepositCollateral = 'DEPOSIT_COLLATERAL',
+  WithdrawCollateral = 'WITHDRAW_COLLATERAL',
+  DepositCollateralConfirmation = 'DEPOSIT_COLLATERAL_CONFIRMATION',
+  WithdrawCollateralConfirmation = 'WITHDRAW_COLLATERAL_CONFIRMATION',
 }
 
 interface DepositWithdrawToken {

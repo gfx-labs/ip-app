@@ -12,7 +12,6 @@ export const useDepositCollateral = async (
   collateral_address: string,
   signer: JsonRpcSigner,
   vaultAddress: string,
-  currentAccount: string,
 ) => {
 
   const formattedERC20Amount = utils.parseUnits(amount, 18);
