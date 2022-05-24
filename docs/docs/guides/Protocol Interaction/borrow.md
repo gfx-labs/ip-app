@@ -3,14 +3,14 @@ id: How To Borrow
 ---
 
 # Borrowing
-Steps to borrow:
-1. Have a balance of a supported collateral asset
-2. Go to Interest Protocol's interface and connect your wallet
-3. If it is your first time borrowing you'll need to open a vault
-4. Deposit collateral into the vault
-5. Borrow USDi
+To borrow USDi from the protocol, take the following steps:
+1. Have a balance of a supported collateral asset in your wallet.
+2. Go to Interest Protocol's interface and connect your wallet.
+3. If it is your first time borrowing, you will be prompted to mint your vault.
+4. Deposit collateral into your vault.
+5. Borrow USDi.
 
-To borrow from Interest Protocol, the borrower needs to open a vault. Vaults are smart contracts that are the conduit between the vault owner and the protocol. Each vault has a unique ID, and the vault creator is the vault owner. Once a vault has been minted, it exists forever. The borrower can deposit supported collateral to the vault through the frontend or by transferring assets to the vault. 
+To borrow from Interest Protocol, the borrower needs to open a vault. Vaults are smart contracts that are the conduit between the vault owner and the protocol. Each vault has a unique ID and is owned by the creator. Vaults that have been minted exist forever. The borrower can deposit supported collateral to the vault through the frontend or by transferring assets to the vault. 
 
 **Note**: Only send ERC20 supported tokens to a vault. **Do not send native ETH to a vault**. Only wETH is supported. 
 
