@@ -37,6 +37,8 @@ pages-github:
     - site
   script:
     - git config --global credential.helper '!f() { sleep 1; echo "username=gfxlabs"; echo "password=$GITHUB_TOKEN"; }; f'
+    - git config --global user.email "bot@gfx.cafe"
+    - git config --global user.name "gfx.cafe"
     - git clone https://github.com/gfx-labs/ip-app-pages.git
     - cp -r dist ip-app-pages/$CI_COMMIT_SHORT_SHA
     - rm -rf ip-app-pages/latest
