@@ -40,6 +40,12 @@ Let X be the total amount of USDC that has been committed. The amount of IPT tok
 
 - Upon completion of the IPT sale, GFX's team & investors will collectively control a minority share of the protocol and will not be necessary for Interest Protocol to function. GFX will continue to be involved in Interest Protocol, but as community members subject to the same governance rules as any token holder. We have ideas for additional functionalities and components and intend to work with the community to create or vote for proposals that reflect those ideas.
 
+## Token Distribution
+
+Pie Chart
+
+- x% to abc with 100 year vesting (20 year cliff)
+
 ## Constructor
 ```
 constructor(bytes32 root, uint256 totalReward, uint256 floor, 
