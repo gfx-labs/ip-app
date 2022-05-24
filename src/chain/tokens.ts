@@ -11,19 +11,14 @@ export interface Token {
 
   vault_balance?: number;
   vault_amount?: number;
-}
 
-export enum SupportedTokens {
-  USDC = "USDC",
-  USDI = "USDI",
-  WETH = "WETH",
-  WBTC = "WBTC",
-  UNI = "UNI",
+  token_LTV?: number;
+  token_penalty?: number;
 }
 
 export const chainsToTokens = {
   //mainnet
-  [SupportedTokens.WBTC]: {
+  WBTC: {
     // *remove. Using ropsten address for testing
     [ChainIDs.MAINNET]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
     // [ChainIDs.ROPSTEN]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
@@ -31,13 +26,13 @@ export const chainsToTokens = {
     [ChainIDs.GOERLI]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
     [ChainIDs.MUMBAI]: "0x442Be68395613bDCD19778e761f03261ec46C06D",
   },
-  [SupportedTokens.WETH]: {
+  WETH: {
     [ChainIDs.MAINNET]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
     [ChainIDs.ROPSTEN]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
     [ChainIDs.GOERLI]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
     [ChainIDs.MUMBAI]: "0xc778417E063141139Fce010982780140Aa0cD5Ab",
   },
-  [SupportedTokens.UNI]: {
+  UNI: {
     [ChainIDs.MAINNET]: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
     // [ChainIDs.ROPSTEN]: "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
     [ChainIDs.ROPSTEN]: "0xC8F88977E21630Cf93c02D02d9E8812ff0DFC37a",
@@ -49,22 +44,22 @@ export const chainsToTokens = {
 export const getStablecoins = (
   rolodex: Rolodex
 ): {
-  [SupportedTokens.USDI]: Token;
-  [SupportedTokens.USDC]: Token;
+  USDI: Token;
+  USDC: Token;
 } => {
   return {
-    [SupportedTokens.USDI]: {
-      name: SupportedTokens.USDI,
+    USDI: {
+      name: "USDI",
       address: rolodex?.addressUSDI,
-      ticker: SupportedTokens.USDI,
+      ticker: "USDI",
       value: 1,
       wallet_balance: 0,
       wallet_amount: 0,
     },
-    [SupportedTokens.USDC]: {
-      name: SupportedTokens.USDC,
+    USDC: {
+      name: "USDC",
       address: rolodex?.addressUSDC!,
-      ticker: SupportedTokens.USDC,
+      ticker: "USDC",
       value: 1,
       wallet_balance: 0,
       wallet_amount: 0,
@@ -72,43 +67,52 @@ export const getStablecoins = (
   };
 };
 
+
+export interface CollateralTokens {
+  WETH: Token;
+  UNI: Token;
+  WBTC: Token;
+ [key: string]: Token};
 export const getTokensListOnCurrentChain = (
   chain_id: ChainIDs
-): {
-  [SupportedTokens.WETH]: Token;
-  [SupportedTokens.UNI]: Token;
-  [SupportedTokens.WBTC]: Token;
-} => {
+):CollateralTokens => {
   return {
-    [SupportedTokens.WETH]: {
+    WETH: {
       name: "Wrapped ETH",
-      address: chainsToTokens[SupportedTokens.WETH][chain_id],
-      ticker: SupportedTokens.WETH,
+      address: chainsToTokens.WETH[chain_id],
+      ticker: "WETH",
       value: 0,
       vault_balance: 0,
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      token_LTV: 0,
+      token_penalty:0,
     },
-    [SupportedTokens.UNI]: {
+    UNI: {
       name: "Uniswap",
-      address: chainsToTokens[SupportedTokens.UNI][chain_id],
-      ticker: SupportedTokens.UNI,
+      address: chainsToTokens.UNI[chain_id],
+      ticker: "UNI",
       value: 0,
       vault_balance: 0,
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      token_LTV: 0,
+      token_penalty:0,
     },
-    [SupportedTokens.WBTC]: {
+
+    WBTC: {
       name: "Wrapped BTC",
-      address: chainsToTokens[SupportedTokens.WBTC][chain_id],
-      ticker: SupportedTokens.WBTC,
+      address: chainsToTokens.WBTC[chain_id],
+      ticker: "WBTC",
       value: 0,
       vault_balance: 0,
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      token_LTV: 0,
+      token_penalty:0,
     },
   };
 };

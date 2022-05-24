@@ -10,19 +10,28 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DepositContent } from "./ModalContent/DepositContent";
 import { WithdrawContent } from "./ModalContent/WithdrawContent";
+import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const DepositWithdrawModal = () => {
-  const { type, setType } = useModalContext();
+  const {token, deposit, withdraw, type, setType } = useModalContext();
 
   const currType = type === ModalType.Deposit;
 
-  const [tokenName, setTokenName] = useState("WBTC");
+  const [tokenName, setTokenName] = useState("");
   const [tokenValue, setTokenValue] = useState("39900");
   const [tokenWalletBalance, setTokenWalletBalance] = useState("2");
   const [depositAmount, setDepositAmount] = useState("");
 
   const [tokenVaultBalance, setTokenVaultBalance] = useState("32");
   const [withdrawAmount, setWithdrawAmount] = useState("");
+
+  useEffect(() => {
+    if(token){
+      setTokenName(token?.ticker)
+      setTokenValue(token.value.toLocaleString())
+      setTokenWalletBalance(token.wallet_balance.toLocaleString())
+      setTokenVaultBalance(token.vault_balance!.toLocaleString())
+    }},[token])
 
   const onSwitch = (val: boolean) => setType(val ? ModalType.Deposit : ModalType.Withdraw);
 

@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { getStablecoins, SupportedTokens, Token } from "../../../chain/tokens";
+import { getStablecoins,  Token } from "../../../chain/tokens";
 import { useBalanceOf } from "../../../hooks/useBalanceOf";
 import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
@@ -27,10 +27,10 @@ export const StableCoinsProvider = ({
   const rolodex = useRolodexContext();
 
   const [USDC, setUSDC] = useState<Token>(
-    () => getStablecoins(rolodex!)[SupportedTokens.USDC]!
+    () => getStablecoins(rolodex!).USDC!
   );
   const [USDI, setUSDI] = useState<Token>(
-    () => getStablecoins(rolodex!)[SupportedTokens.USDI]!
+    () => getStablecoins(rolodex!).USDI!
   );
 
   useEffect(() => {
