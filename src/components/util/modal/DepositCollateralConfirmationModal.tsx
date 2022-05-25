@@ -18,17 +18,20 @@ export const DepositCollateralConfirmationModal = () => {
     useModalContext();
   const { provider, currentAccount } = useWeb3Context();
   const [loading, setLoading] = useState(false);
+  const [loadmsg, setLoadmsg] = useState("");
   const { vaultAddress } = useVaultDataContext();
   const handleDepositConfirmationRequest = async () => {
     setLoading(true);
-
-    await useDepositCollateral(
+    setLoadmsg("please sign transaction ")
+    const attempt = await useDepositCollateral(
       collateralDepositAmount,
       collateralToken.address,
       provider?.getSigner(currentAccount)!,
       vaultAddress!
     );
-
+    setLoadmsg("transaction pending ")
+    await attempt.wait()
+    setLoadmsg("")
     setLoading(false);
   };
 
@@ -98,6 +101,7 @@ export const DepositCollateralConfirmationModal = () => {
         disabled={false}
         onClick={handleDepositConfirmationRequest}
         loading={loading}
+        load_text={loadmsg}
       />
     </BaseModal>
   );

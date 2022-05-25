@@ -17,9 +17,7 @@ export const useBorrow = async (
       formattedUSDIAmount
     );
 
-    const borrowRecipt = borrowTransaction?.wait();
-
-    return borrowRecipt;
+    return borrowTransaction
   } catch (err) {
     console.log(err);
     throw new Error("Could not borrow");
@@ -31,25 +29,14 @@ export const useRepay = async (
   amount: string,
   rolodex: Rolodex,
   signer: JsonRpcSigner
-):Promise<ContractReceipt | undefined> => {
+) => {
   const formattedUSDIAmount = utils.parseUnits(amount, 18);
   const contract = rolodex.VC?.connect(signer)!
-    const repayTransaction = await contract.repayUSDi(
+    return await contract.repayUSDi(
       Number(vaultID),
       formattedUSDIAmount
     ).catch((e)=>{
       throw new Error("Could not repay:"+ e);
     })
-  try {
-    console.log(repayTransaction, "transation");
 
-    const repayRecipt = await repayTransaction?.wait();
-
-    console.log(repayRecipt, "recipt");
-
-    return repayRecipt;
-  } catch (err) {
-    console.log(err);
-    throw new Error("Could not repay");
-  }
 };

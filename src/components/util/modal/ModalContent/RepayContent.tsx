@@ -34,6 +34,7 @@ export const RepayContent = (props: RepayContent) => {
   const setMax = () => setRepayAmount(accountLiability.toString());
 
 
+  const [loadmsg, setLoadmsg] = useState("");
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [shaking, setShaking] = useState(false);
@@ -46,13 +47,19 @@ export const RepayContent = (props: RepayContent) => {
 
   const handleRepayRequest = async () => {
     setLoading(true);
+    setLoadmsg("please sign transaction");
     await useRepay(
       vaultID,
       repayAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
-    ).then(()=>{
+    ).then((res)=>{
+      setLoadmsg("transaction pending");
+      setLoading(true);
+      res!.wait().then(()=>{
+      setLoadmsg("");
       setLoading(false);
+      })
     }).catch((e)=>{
       setLoading(false);
       setShaking(true)
@@ -60,6 +67,8 @@ export const RepayContent = (props: RepayContent) => {
       console.log(e)
     })
   };
+
+
 
   return (
     <Box>
@@ -113,6 +122,7 @@ export const RepayContent = (props: RepayContent) => {
           onClick={handleRepayRequest}
           disabled={disabled}
           loading={loading}
+          load_text={loadmsg}
           shaking={shaking}
         />
       </Box>

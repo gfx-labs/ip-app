@@ -1,6 +1,6 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, ethers, utils } from "ethers";
-import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
+import { ERC20Detailed__factory } from "../chain/contracts/factories/_external/index";
 import { Rolodex } from "../chain/rolodex/rolodex";
 import { useDecimals } from "./useTokenInfo";
 
@@ -11,7 +11,7 @@ export const useDepositUSDC = async (
 ) => {
   const formattedUSDCAmount = utils.parseUnits(usdc_amount, 6);
   console.log(formattedUSDCAmount, "forms");
-  const contract = IERC20__factory.connect(
+  const contract = ERC20Detailed__factory.connect(
     rolodex.addressUSDC!,
     signer
   )
@@ -42,16 +42,16 @@ export const useDepositCollateral = async (
   signer: JsonRpcSigner,
   vaultAddress: string
 ) => {
-  const formattedERC20Amount = utils.parseUnits(amount, 18);
-
-  try {
-    const transferAttempt = await IERC20__factory.connect(
+const contract = ERC20Detailed__factory.connect(
       collateral_address,
       signer
-    ).transfer(vaultAddress!, formattedERC20Amount);
+    )
+  try {
+    const formattedERC20Amount = utils.parseUnits(amount, await contract.decimals());
 
+    const transferAttempt = await contract.transfer(vaultAddress!, formattedERC20Amount);
 
-    const transferReceipt = transferAttempt.wait();
+    return transferAttempt
 
     // const contract = new ethers.Contract(collateral_address, minABI, signer);
     // const formattedTransferAmount = utils.parseUnits(
@@ -59,39 +59,8 @@ export const useDepositCollateral = async (
     //   await useDecimals(contract)
     // );
 
-    console.log(transferReceipt);
-
-    return transferReceipt;
   } catch (err) {
     console.log(err);
     throw new Error("Could not deposit");
   }
 };
-
-const minABI = [
-  // transfer
-  {
-    constant: true,
-    inputs: [
-      { name: "target", type: "address" },
-      { name: "amount", type: "uint256" },
-    ],
-    name: "transfer",
-    outputs: [],
-    type: "function",
-  },
-  // decimals
-  {
-    constant: true,
-    inputs: [],
-    name: "decimals",
-    outputs: [
-      {
-        name: "",
-        type: "uint8",
-      },
-    ],
-    payable: false,
-    type: "function",
-  },
-];

@@ -11,7 +11,6 @@ export const getVaultBorrowingPower = async (
     if(BP?._isBigNumber) {
       return BP.div(1e8).div(1e8).toNumber()/100
     }
-
     return 0
   } catch (err) {
     console.log(err);

@@ -38,6 +38,8 @@ export const BorrowContent = (props: BorrowContent) => {
   const [focus, setFocus] = useState(false);
   const [loading, setLoading] = useState(false);
   const [shaking, setShaking] = useState(false);
+
+  const [loadmsg, setLoadmsg] = useState("");
   const toggle = () => setFocus(!focus);
   useEffect(() => {
     setDisabled(Number(borrowAmount) < 1);
@@ -50,13 +52,19 @@ export const BorrowContent = (props: BorrowContent) => {
 
   const handleBorrowRequest = async () => {
     setLoading(true);
+    setLoadmsg("please sign transaction");
     await useBorrow(
       vaultID,
       borrowAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
-    ).then(()=>{
+    ).then((res)=>{
+      setLoadmsg("transaction pending");
+      setLoading(true);
+      res!.wait().then(()=>{
+      setLoadmsg("");
       setLoading(false);
+      })
     }).catch((e)=>{
       setLoading(false);
       setShaking(true)
@@ -107,6 +115,7 @@ export const BorrowContent = (props: BorrowContent) => {
           disabled={disabled}
           onClick={handleBorrowRequest}
           loading={loading}
+          load_text={loadmsg}
           shaking={shaking}
         />
       </Box>

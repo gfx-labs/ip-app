@@ -16,10 +16,16 @@ import { getVaultTokenBalanceAndPrice, getVaultTokenMetadata } from "./getVaultT
 import { getVaultBorrowingPower } from "./getBorrowingPower";
 import {useBalanceOf} from "../../../hooks/useTokenInfo";
 import {getBalance} from "../../../hooks/useBalanceOf";
+import {BN} from "../../../easy/bn";
+import {JsonRpcSigner} from "@ethersproject/providers";
+import {Rolodex} from "../../../chain/rolodex/rolodex";
+import {BigNumberish} from "ethers";
 
 export type VaultDataContextType = {
   hasVault: boolean;
   setVaultID: Dispatch<SetStateAction<string | null>>;
+  refresh: boolean;
+  setRefresh: Dispatch<SetStateAction<boolean>>;
   vaultID: string | null;
   vaultAddress?: string;
   setVaultAddress: Dispatch<SetStateAction<string | undefined>>;
@@ -38,6 +44,7 @@ export const VaultDataProvider = ({
 }) => {
   const { provider, currentAccount, chainId } = useWeb3Context();
   const rolodex = useRolodexContext();
+  const [refresh, setRefresh] = useState(true)
   const [hasVault, setHasVault] = useState(false);
   const [vaultID, setVaultID] = useState<string | null>(null);
   const [vaultAddress, setVaultAddress] = useState<VaultDataContextType["vaultAddress"]>(undefined);
@@ -52,7 +59,7 @@ export const VaultDataProvider = ({
   }, [vaultID]);
 
   useEffect(() => {
-    if (vaultAddress && currentAccount && rolodex && vaultID) {
+    if (vaultAddress && currentAccount && rolodex && vaultID && refresh){
       const tokenList = getTokensListOnCurrentChain(chainId);
       const reqs:Array<Promise<any>> = []
       for (const [key, token] of Object.entries(tokenList)) {
@@ -83,7 +90,7 @@ export const VaultDataProvider = ({
         }))
       }
       reqs.push(rolodex.VC!.accountLiability(vaultID).then((val)=>{
-        const vl = val.div(1e8).div(1e8).toNumber()/100
+        const vl = val.div(BN('1e16')).toNumber()/100
         setAccountLiability(vl)
       }))
       Promise.allSettled(reqs).then(()=>{
@@ -93,11 +100,11 @@ export const VaultDataProvider = ({
         setTokens(tokenList);
       })
     }
-  }, [vaultAddress, currentAccount, rolodex, vaultID]);
+  }, [vaultAddress, currentAccount, rolodex, vaultID, refresh]);
 
   return (
     <VaultDataContext.Provider
-      value={{ hasVault, setVaultID, vaultID, vaultAddress, setVaultAddress, borrowingPower, tokens, setTokens, accountLiability}}
+      value={{ hasVault, setVaultID, vaultID, vaultAddress, setVaultAddress, borrowingPower,refresh, setRefresh, tokens, setTokens, accountLiability}}
     >
       {children}
     </VaultDataContext.Provider>
