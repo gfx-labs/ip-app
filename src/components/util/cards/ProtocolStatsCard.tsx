@@ -18,7 +18,7 @@ export const ProtocolStatsCard = () => {
   const [totalUSDCDeposited, setTotalUSDCDeposited] =
     useState<string>('');
   const [reserveRatio, setReserveRatio] = useState('0')
-  const { connected } = useWeb3Context();
+  const { connected, dataBlock } = useWeb3Context();
   const { setIsWalletModalOpen } = useWalletModalContext();
   useEffect(() => {
     if (rolodex && rolodex.addressUSDC) {
@@ -40,7 +40,7 @@ export const ProtocolStatsCard = () => {
         setReserveRatio(results[2] instanceof Error ? 0 : results[2])
       }).catch(err => console.log(err))
     }
-  }, [rolodex]);
+  }, [rolodex, dataBlock]);
 
   return (
     <Box

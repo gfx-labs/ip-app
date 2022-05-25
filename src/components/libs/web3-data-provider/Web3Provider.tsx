@@ -39,6 +39,7 @@ export type Web3Data = {
     loading: boolean;
     provider: JsonRpcProvider | undefined;
     chainId: number;
+    dataBlock: number;
     getTxError: (txHash: string) => Promise<string>;
     sendTx: (txData: transactionType) => Promise<TransactionResponse>;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,6 +76,8 @@ export const Web3ContextProvider = ({
 
     const [deactivated, setDeactivated] = useState<boolean>(false);
     const [tried, setTried] = useState<boolean>(false);
+
+    const [dataBlock, setDataBlock] = useState(0)
 
     // Wallet connection and disconnection
     // clean local storage
@@ -145,6 +148,24 @@ export const Web3ContextProvider = ({
         },
         [disconnectWallet]
     );
+
+    useEffect(()=>{
+        if(provider){
+            console.log("started auto refresh of blockNumber for", provider)
+           provider.on("block", ()=>{
+                provider.getBlockNumber().then((n)=>{
+                    setDataBlock(n)
+                    console.log("got block",n)
+                }).catch(()=>{
+                    console.log("failed to fetch block")
+                })
+            })
+            return () => {
+                console.log("stopped auto refresh of blockNumber for", provider)
+                provider.on("block", ()=>{})
+            }
+        }
+    },[provider])
 
     // handle logic to eagerly connect to the injected ethereum provider,
     // if it exists and has granted access already
@@ -254,10 +275,11 @@ export const Web3ContextProvider = ({
                     chainId: chainId || 1,
                     getTxError,
                     sendTx,
+                    dataBlock,
                     signTxData,
                     error,
                     currentAccount: account?.toLowerCase() || "",
-                },
+            },
             }}
         >
             {children}
@@ -270,7 +292,7 @@ export const useWeb3Context = () => {
     if (Object.keys(web3ProviderData).length === 0) {
         throw new Error(
             "useWeb3Context() can only be used inside of <Web3ContextProvider />, " +
-            "please declare it at a higher level."
+                "please declare it at a higher level."
         );
     }
 

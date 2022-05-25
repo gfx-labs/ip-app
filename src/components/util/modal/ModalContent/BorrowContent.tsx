@@ -10,6 +10,7 @@ import { useBorrow } from "../../../../hooks/useUSDIFactory";
 import { BigNumber, BigNumberish } from "ethers";
 import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
+import {locale} from "../../../../locale";
 
 interface BorrowContent {
   tokenName: string;
@@ -52,18 +53,18 @@ export const BorrowContent = (props: BorrowContent) => {
 
   const handleBorrowRequest = async () => {
     setLoading(true);
-    setLoadmsg("please sign transaction");
+    setLoadmsg(locale("CheckWallet"))
     await useBorrow(
       vaultID,
       borrowAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
-    ).then((res)=>{
-      setLoadmsg("transaction pending");
+    ).then(async (res)=>{
+      setLoadmsg(locale("TransactionPending"))
       setLoading(true);
-      res!.wait().then(()=>{
-      setLoadmsg("");
-      setLoading(false);
+      return res!.wait().then(()=>{
+        setLoadmsg("");
+        setLoading(false);
       })
     }).catch((e)=>{
       setLoading(false);
