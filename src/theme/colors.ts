@@ -23,6 +23,7 @@ export const neutral = {
   black3: [101, 101, 101], // #656565
   black4: [26, 26, 26], // #1B1A1A
   black5: [10, 11, 12], // #0A0B0C
+  black6: [29, 35, 46], // #1D232E
 };
 
 export const blue = {
@@ -40,16 +41,29 @@ export const blue = {
   blue12: [73, 111,246], // #496FF7
   blue13: [59, 66, 95], // #3B425F
   blue14: [84, 102, 165], // #5466A5
+  blue15: [53, 149, 255], // #3595FF
+  blue16: [26, 49, 85], // #1A3155
 };
 
 export const green = {
   green1: [80, 214, 109], // #50D66D
+  green2: [13,215,57], // #0DD739
+  green3: [0, 187, 41], // #00BB29
+  green4: [42, 61,45], // #2A3D2D
+  green5: [219, 249, 225], // #DBF9E1
+  green6: [51,65, 62], // #33413E
 };
 
 export const disabled = {
   disabled1: [176, 180, 194], // #B0B4C2
   disabled2: [140, 140, 200],
 };
+
+export const pink = {
+  pink1: [231, 66, 161], // E742A1
+  pink2: [251, 223, 239], // #FBDFEF
+  pink3: [73, 65, 74], // #49414A
+}
 
 export const gradient = {
   gradient1: {

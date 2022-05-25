@@ -5,6 +5,7 @@ import {
   gradient,
   green,
   neutral,
+  pink
 } from "./colors";
 import { ComponentsVariants } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
