@@ -22,9 +22,6 @@ export const DisableableModalButton = (props: DisableableModalButtonProps) => {
 
   let themeBackgroundColor = isLight? formatColor(neutral.black1): formatColor(neutral.white)
   let themeColor= isLight? formatColor(neutral.white): formatColor(neutral.black1)
-  if (shaking){
-    let red = [213, 146, 146]
-  }
   return (
     <Button
       className={shaking ? "shaking" : "still"}
