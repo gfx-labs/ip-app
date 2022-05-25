@@ -11,25 +11,30 @@ import { DisableableModalButton } from "../button/DisableableModalButton";
 import { useWithdrawCollateral } from "../../../hooks/useWithdraw";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
+import {locale} from "../../../locale";
 
 export const WithdrawCollateralConfirmationModal = () => {
-  const { type, setType, collateralToken, collateralWithdrawAmount } =
+  const { type, setType, collateralToken, collateralWithdrawAmount,setCollateralWithdrawAmount } =
     useModalContext();
   const { provider, currentAccount } = useWeb3Context();
   const { vaultAddress } = useVaultDataContext();
+  const [loadmsg, setLoadmsg] = useState("");
   const [loading, setLoading] = useState(false);
   const isLight = useLight();
 
   const handleCollateralWithdraw = async () => {
     setLoading(true);
-
-    await useWithdrawCollateral(
+    setLoadmsg(locale("CheckWallet"))
+    const attempt = await useWithdrawCollateral(
       collateralWithdrawAmount,
       collateralToken.address,
       vaultAddress!,
-      provider!.getSigner(currentAccount!)
+      provider?.getSigner(currentAccount)!,
     );
-    
+    setCollateralWithdrawAmount("")
+    setLoadmsg(locale("TransactionPending"))
+    await attempt.wait()
+    setLoadmsg("")
     setLoading(false);
   };
 
@@ -96,6 +101,7 @@ export const WithdrawCollateralConfirmationModal = () => {
         disabled={false}
         onClick={handleCollateralWithdraw}
         loading={loading}
+        load_text={loadmsg}
       />
     </BaseModal>
   );

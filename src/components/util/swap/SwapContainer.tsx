@@ -115,7 +115,11 @@ export const SwapContainer = () => {
           <Button
             variant="contained"
             sx={{ color: formatColor(neutral.white) }}
-            onClick={() => setType(ModalType.DepositUSDCConfirmation)}
+            onClick={() => {
+              if(Number(token1Amount) > 0) {
+                setType(ModalType.DepositUSDCConfirmation)
+              }
+            }}
           >
             Deposit
           </Button>

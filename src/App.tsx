@@ -72,7 +72,7 @@ const App = () => {
                                         element={<RedirectBook />}
                                       />
                                       <Route
-                                        path={`/book*`}
+                                        path={`/book/*`}
                                         element={<RedirectBook />}
                                       />
                                       <Route

@@ -23,7 +23,7 @@ export const StableCoinsProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const { currentAccount } = useWeb3Context();
+  const { currentAccount, dataBlock} = useWeb3Context();
   const rolodex = useRolodexContext();
 
   const [USDC, setUSDC] = useState<Token>(
@@ -41,7 +41,7 @@ export const StableCoinsProvider = ({
       ).then((res) => {
         setUSDC({ ...USDC, wallet_balance: res, wallet_amount: res })});
     }
-  }, [rolodex?.addressUSDC, currentAccount]);
+  }, [rolodex?.addressUSDC, currentAccount, dataBlock]);
 
   useEffect(() => {
     if (rolodex?.addressUSDI) {
@@ -50,7 +50,7 @@ export const StableCoinsProvider = ({
         rolodex.addressUSDI,
       ).then((res) => setUSDI({ ...USDI, wallet_balance: res, wallet_amount: res }));
     }
-  }, [rolodex?.addressUSDI, currentAccount]);
+  }, [rolodex?.addressUSDI, currentAccount, dataBlock]);
 
   return (
     <StableCoinsContext.Provider value={{ USDC, USDI }}>

@@ -11,18 +11,18 @@ import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useWithdrawUSDC } from "../../../hooks/useWithdraw";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 
 export const WithdrawUSDCConfirmationModal = () => {
   const { type, setType, USDC } = useModalContext();
   const rolodex = useRolodexContext()
   const [loading, setLoading] = useState(false)
+  const { provider, currentAccount } = useWeb3Context();
   const isLight = useLight();
 
   const handleWithdrawUSDC = async () => {
     setLoading(true)
-
-    await useWithdrawUSDC(USDC.amountToWithdraw, rolodex!)
-
+    await useWithdrawUSDC(USDC.amountToWithdraw, rolodex!,provider?.getSigner(currentAccount)!)
     setLoading(false)
   }
 
@@ -30,7 +30,7 @@ export const WithdrawUSDCConfirmationModal = () => {
     <BaseModal
       open={type === ModalType.WithdrawUSDCConfirmation}
       setOpen={() => {
-        setType(ModalType.WithdrawUSDC);
+        setType(null);
       }}
     >
       <Typography
@@ -57,12 +57,10 @@ export const WithdrawUSDCConfirmationModal = () => {
             : formatColor(neutral.gray7),
         }}
       >
-
-
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="h3" color="text.secondary">
-              $1
+              {'$'+USDC.amountToDeposit}
             </Typography>
           </Box>
 
@@ -77,7 +75,7 @@ export const WithdrawUSDCConfirmationModal = () => {
         </Box>
 
         <ForwardIcon sx={{width: 15, height: 15}} strokecolor={formatColor(neutral.gray3)}/>
-        
+
         <Box display="flex" alignItems="center">
           <Box
             component="img"
@@ -89,7 +87,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${USDC.token.value}
+              {'$'+USDC.token.value}
             </Typography>
           </Box>
         </Box>
@@ -115,10 +113,10 @@ export const WithdrawUSDCConfirmationModal = () => {
         }
       >
         <Typography variant="body1" fontWeight={500} mb={1}>
-          {USDC.token.name} withdraw: {USDC.amountToWithdraw}
+          USDI to withdraw: {USDC.amountToWithdraw}
         </Typography>
         <Typography variant="body1" fontWeight={500}>
-          USDi to be receive: {USDC.amountToWithdraw}
+          USDC to receive: {USDC.amountToWithdraw}
         </Typography>
       </Box>
 
