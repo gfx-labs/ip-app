@@ -51,6 +51,7 @@ export const VaultDataProvider = ({
   const [accountLiability, setAccountLiability] = useState(0)
   const [borrowingPower, setBorrowingPower] = useState(0)
   const [tokens, setTokens] = useState<VaultDataContextType["tokens"]>(undefined);
+  
   useEffect(() => {
     setHasVault(!!vaultID);
     if(!!vaultID && rolodex) {
