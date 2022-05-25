@@ -8,16 +8,15 @@ import { Vault__factory } from "../chain/contracts";
 export const useWithdrawUSDC = async (
   usdc_amount: string,
   rolodex: Rolodex,
+  signer:JsonRpcSigner,
 ) => {
   const formattedUSDCAmount = utils.parseUnits(usdc_amount, 6);
 
   try {
-    const withdrawAttempt = await rolodex.USDI.withdraw(
+    const withdrawAttempt = await rolodex.USDI.connect(signer).withdraw(
       Number(formattedUSDCAmount)
     );
-
     const receipt = await withdrawAttempt?.wait();
-    
     console.log(receipt);
     return receipt;
   } catch (err) {
