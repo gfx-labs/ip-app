@@ -15,7 +15,7 @@ export const WithdrawUSDCContent = () => {
   const { setType, USDC, updateUSDC } = useModalContext();
 
   const setMax = () =>
-    updateUSDC("amountToWithdraw", USDC.token.vault_amount.toString());
+    updateUSDC("amountToWithdraw", USDC!.token?.vault_amount.toString());
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -51,7 +51,6 @@ export const WithdrawUSDCContent = () => {
           isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
-
           <Button
             onClick={setMax}
             sx={{

@@ -1,9 +1,5 @@
 import { formatColor, neutral } from "../theme";
-import {
-  Box,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { ProtocolStatsCard } from "../components/util/cards";
 import { useLight } from "../hooks/useLight";
@@ -16,6 +12,7 @@ import { useRolodexContext } from "../components/libs/rolodex-data-provider/Rolo
 import { useEffect } from "react";
 import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
 import { BigNumber } from "ethers";
+import { useAppGovernanceContext } from "../components/libs/app-governance-provider/AppGovernanceProvider";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -23,6 +20,7 @@ const LandingPage = () => {
   const rolodex = useRolodexContext();
   const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext();
   const isLight = useLight();
+  const { isApp } = useAppGovernanceContext();
 
   useEffect(() => {
     if (currentAccount && rolodex) {
@@ -30,17 +28,16 @@ const LandingPage = () => {
         try {
           const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount);
           if (vaultIDs && vaultIDs?.length > 0) {
-            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString()
+            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString();
 
-            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID)
+            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID);
             setVaultID(vaultID);
-            setVaultAddress(vaultAddress)
-
+            setVaultAddress(vaultAddress);
           } else {
-            setVaultID(null)
+            setVaultID(null);
           }
         } catch (err) {
-          setVaultID(null)
+          setVaultID(null);
 
           throw new Error("cannot get vault");
         }
@@ -58,70 +55,48 @@ const LandingPage = () => {
         overflow: "hidden",
       }}
     >
-      <Box
-        color={formatColor(neutral.black)}
-        textAlign="left"
-        maxWidth="xl"
-        py={{ xs: 7, sm: 0 }}
-        px={{ xs: 2, md: 10 }}
-        margin="auto"
-        position="relative"
-        sx={{
-          [theme.breakpoints.down("md")]: {
-            mb: 0,
-            pb: 0,
-            marginLeft: "auto",
-          },
-        }}
-      >
-        <Typography
-          variant="body1"
-          paddingLeft={{ xs: 2, md: 6 }}
-          marginBottom={2}
-          color={formatColor(neutral.gray10)}
-        >
-          Protocol Stats
-        </Typography>
+      {isApp ? (
         <Box
+          color={formatColor(neutral.black)}
+          textAlign="left"
+          maxWidth="xl"
+          py={{ xs: 7, sm: 0 }}
+          px={{ xs: 2, md: 10 }}
+          margin="auto"
+          position="relative"
           sx={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            columnGap: 2,
-            [theme.breakpoints.down("lg")]: {
-              gridTemplateColumns: "1fr",
-              rowGap: 5,
+            [theme.breakpoints.down("md")]: {
+              mb: 0,
+              pb: 0,
+              marginLeft: "auto",
             },
           }}
         >
-          <ProtocolStatsCard />
-          <UsdiGraphCard />
-        </Box>
+          <Typography
+            variant="body1"
+            paddingLeft={{ xs: 2, md: 6 }}
+            marginBottom={2}
+            color={formatColor(neutral.gray10)}
+          >
+            Protocol Stats
+          </Typography>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              columnGap: 2,
+              [theme.breakpoints.down("lg")]: {
+                gridTemplateColumns: "1fr",
+                rowGap: 5,
+              },
+            }}
+          >
+            <ProtocolStatsCard />
+            <UsdiGraphCard />
+          </Box>
 
-        <Box sx={{ position: "relative" }}>
-          {!connected ? (
-            <Box
-              sx={{
-                position: "absolute",
-                zIndex: 9,
-                top: "-2%",
-                bottom: -16,
-                left: "-100%",
-                right: "-100%",
-                width: "auto",
-                height: "102%",
-                background: isLight
-                  ? "rgba(55, 66, 82, 0.42)"
-                  : "rgba(35, 40, 48, 0.82)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <ConnectWalletButton invertLight />
-            </Box>
-          ) : (
-            connected &&
-            !hasVault && (
+          <Box sx={{ position: "relative" }}>
+            {!connected ? (
               <Box
                 sx={{
                   position: "absolute",
@@ -140,16 +115,42 @@ const LandingPage = () => {
                   alignItems: "center",
                 }}
               >
-                <OpenVaultButton />
+                <ConnectWalletButton invertLight />
               </Box>
-            )
-          )}
-          <Box sx={{ marginY: 4 }}>
-            <StatsMeter />
+            ) : (
+              connected &&
+              !hasVault && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    zIndex: 9,
+                    top: "-2%",
+                    bottom: -16,
+                    left: "-100%",
+                    right: "-100%",
+                    width: "auto",
+                    height: "102%",
+                    background: isLight
+                      ? "rgba(55, 66, 82, 0.42)"
+                      : "rgba(35, 40, 48, 0.82)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <OpenVaultButton />
+                </Box>
+              )
+            )}
+            <Box sx={{ marginY: 4 }}>
+              <StatsMeter />
+            </Box>
+            <UserStats />
           </Box>
-          <UserStats />
         </Box>
-      </Box>
+      ) : (
+        <Box>GOVERNANCE</Box>
+      )}
     </Box>
   );
 };

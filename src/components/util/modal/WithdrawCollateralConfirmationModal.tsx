@@ -23,7 +23,7 @@ export const WithdrawCollateralConfirmationModal = () => {
     useWithdrawCollateral(
       collateralWithdrawAmount,
       collateralToken.address,
-      provider?.getSigner(currentAccount!)
+      provider!.getSigner(currentAccount!)
     );
     setLoading(false);
   };
