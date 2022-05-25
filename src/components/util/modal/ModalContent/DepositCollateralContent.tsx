@@ -24,12 +24,12 @@ export const DepositCollateralContent = () => {
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setCollateralDepositAmount((Number(collateralDepositAmount) * collateralToken.value).toString())
-      
+      setCollateralDepositAmount((
+        Math.round((Number(collateralDepositAmount) / collateralToken.value)*100)/100).toString()
+                                )
     } else {
       setCollateralDepositAmount(
-        
-        (Number(collateralDepositAmount) / collateralToken.value).toString()
+       (Math.round((Number(collateralDepositAmount) / collateralToken.value)*100)/100).toString()
       );
     }
 
@@ -72,9 +72,9 @@ export const DepositCollateralContent = () => {
               ? `${
                   collateralDepositAmount === '0'
                     ? "0"
-                    : Number(collateralDepositAmount) / collateralToken?.value
+                    : (Number(collateralDepositAmount) / collateralToken?.value).toFixed(8)
                 } ${collateralToken?.ticker}`
-              : `$${Number(collateralDepositAmount) * collateralToken?.value}`}
+              : `$${(Number(collateralDepositAmount) * collateralToken?.value).toFixed(2)}`}
           </Typography>
 
           <Button

@@ -10,12 +10,13 @@ import { neutral, formatColor, disabled as dis } from "../../../theme";
 import "./button.css"
 interface DisableableModalButtonProps extends ButtonProps {
   text: string;
+  load_text?: string;
   loading?: boolean;
   shaking?: boolean;
 }
 
 export const DisableableModalButton = (props: DisableableModalButtonProps) => {
-  const { disabled, onClick, text, shaking = false, loading = false } = props;
+  const { disabled, onClick, text, load_text = "",shaking = false, loading = false } = props;
   const isLight = useLight();
 
   let themeBackgroundColor = isLight? formatColor(neutral.black1): formatColor(neutral.white)
@@ -35,7 +36,7 @@ export const DisableableModalButton = (props: DisableableModalButtonProps) => {
         color: themeColor,
       }}
     >
-      {loading ? <CircularProgress size={20} /> : text}
+      {loading ? <>{load_text} <CircularProgress size={20} /></> : text}
     </Button>
   );
 };
