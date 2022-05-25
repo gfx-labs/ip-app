@@ -10,6 +10,9 @@ import { useLight } from "../../../hooks/useLight";
 import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalContent/ModalInputContainer";
+import { Vault__factory } from "../../../chain/contracts";
+import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
 export const DelegateModal = () => {
   const { type, setType } = useModalContext();
@@ -22,6 +25,8 @@ export const DelegateModal = () => {
   const toggle = () => setFocus(!focus);
 
   const { delegateToken } = useAppGovernanceContext();
+  const {vaultAddress} = useVaultDataContext()
+  const { provider, currentAccount } = useWeb3Context();
 
   return (
     <BaseModal
@@ -71,7 +76,8 @@ export const DelegateModal = () => {
         </Typography>
         <Box component="form" onSubmit={(e: FormEvent) => {
           e.preventDefault()
-          // handle address delegate here
+
+          // Vault__factory.connect(vaultAddress, provider?.getSigner(currentAccount))
         }}>
         <Box my={2}>
           <ModalInputContainer focus={focus}>

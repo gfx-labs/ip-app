@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
 import { BigNumber } from "ethers";
 import { useAppGovernanceContext } from "../components/libs/app-governance-provider/AppGovernanceProvider";
+import { Governance } from "./governance";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -149,7 +150,7 @@ const LandingPage = () => {
           </Box>
         </Box>
       ) : (
-        <Box>GOVERNANCE</Box>
+        <Governance />
       )}
     </Box>
   );
