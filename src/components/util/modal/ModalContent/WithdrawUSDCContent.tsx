@@ -10,12 +10,17 @@ import {
   ModalType,
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
+import { useStableCoinsContext } from "../../../libs/stable-coins-provider/StableCoinsProvider";
 
 export const WithdrawUSDCContent = () => {
   const { setType, USDC, updateUSDC } = useModalContext();
+  const { USDC: USDCToken } = useStableCoinsContext();
 
-  const setMax = () =>
-    updateUSDC("amountToWithdraw", USDC!.token?.vault_amount.toString());
+  const setMax = () => {
+    if (USDCToken && USDCToken.vault_amount) {
+      updateUSDC("amountToWithdraw", USDCToken.vault_amount.toString());
+    }
+  };
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -38,7 +43,7 @@ export const WithdrawUSDCContent = () => {
         textAlign="right"
       >
         {" "}
-        Vault Balance: {USDC.token.vault_amount || 0} {USDC.token.ticker}
+        Vault Balance: {USDCToken.vault_amount || 0} {USDCToken.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>
@@ -46,7 +51,7 @@ export const WithdrawUSDCContent = () => {
           onBlur={toggle}
           onFocus={toggle}
           onChange={(amount) => updateUSDC("amountToWithdraw", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : USDC.token.ticker}`}
+          placeholder={`0 ${isMoneyValue ? "USD" : USDCToken.ticker}`}
           value={USDC.amountToWithdraw}
           isMoneyValue={isMoneyValue}
         />

@@ -12,10 +12,21 @@ import {
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const WithdrawCollateralContent = () => {
-  const { setType, collateralToken, setCollateralWithdrawAmount, collateralWithdrawAmount } = useModalContext();
+  const {
+    setType,
+    collateralToken,
+    setCollateralWithdrawAmount,
+    collateralWithdrawAmount,
+  } = useModalContext();
 
-  const setMax = () =>
-    setCollateralWithdrawAmount(collateralToken!.vault_amount.toString() || '0');
+  const setMax = () => {
+    if(collateralToken && collateralToken.vault_amount)
+    setCollateralWithdrawAmount(
+      collateralToken.vault_amount.toString()
+    ); else {
+      setCollateralWithdrawAmount("0")
+    }
+  };
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -31,9 +42,13 @@ export const WithdrawCollateralContent = () => {
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setCollateralWithdrawAmount((numAmountToWithdraw * collateralToken.value).toString())
+      setCollateralWithdrawAmount(
+        (numAmountToWithdraw * collateralToken.value).toString()
+      );
     } else {
-      setCollateralWithdrawAmount((numAmountToWithdraw / collateralToken.value).toString())
+      setCollateralWithdrawAmount(
+        (numAmountToWithdraw / collateralToken.value).toString()
+      );
     }
 
     setIsMoneyValue(!isMoneyValue);
@@ -72,7 +87,7 @@ export const WithdrawCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  collateralWithdrawAmount === '0'
+                  collateralWithdrawAmount === "0"
                     ? "0"
                     : numAmountToWithdraw / collateralToken.value
                 } ${collateralToken.ticker}`
