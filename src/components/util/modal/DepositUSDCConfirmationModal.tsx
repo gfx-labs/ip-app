@@ -74,7 +74,7 @@ export const DepositUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              $1
+              {'$'+USDC.amountToDeposit}
             </Typography>
           </Box>
         </Box>
@@ -87,7 +87,7 @@ export const DepositUSDCConfirmationModal = () => {
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="h3" color="text.secondary">
-              $1
+              {'$'+USDC.amountToDeposit}
             </Typography>
           </Box>
 
@@ -120,14 +120,7 @@ export const DepositUSDCConfirmationModal = () => {
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
       >
-        <Typography variant="body1" fontWeight={500} mb={1}>
-          {USDC.token.name} deposit: {USDC.amountToDeposit}
-        </Typography>
-
-        <Typography variant="body1" fontWeight={500}>
-          USDi you will receive: {USDC.amountToDeposit}
-        </Typography>
-      </Box>
+             </Box>
 
       <DisableableModalButton
         text="Confirm Deposit"

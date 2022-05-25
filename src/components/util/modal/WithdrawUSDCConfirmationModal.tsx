@@ -57,12 +57,10 @@ export const WithdrawUSDCConfirmationModal = () => {
             : formatColor(neutral.gray7),
         }}
       >
-
-
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="h3" color="text.secondary">
-              $1
+              {'$'+USDC.amountToDeposit}
             </Typography>
           </Box>
 
@@ -89,7 +87,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${USDC.token.value}
+              {'$'+USDC.token.value}
             </Typography>
           </Box>
         </Box>
