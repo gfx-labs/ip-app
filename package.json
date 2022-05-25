@@ -13,7 +13,7 @@
         "preview": "vite preview",
         "_docs": "",
         "docs": "cd docs && npx yarn install && npm run build",
-        "abi":"cp -r ../contracts/typechain-types/* ./src/chain/contracts"
+        "abi": "cp -r ../contracts/typechain-types/* ./src/chain/contracts"
     },
     "dependencies": {
         "@emotion/react": "^11.9.0",
@@ -40,7 +40,8 @@
         "react-router-dom": "^6.3.0",
         "recharts": "^2.1.9",
         "rollup-plugin-node-polyfills": "^0.2.1",
-        "rollup-plugin-polyfill-node": "^0.9.0"
+        "rollup-plugin-polyfill-node": "^0.9.0",
+        "rollup-plugin-visualizer": "^5.6.0"
     },
     "devDependencies": {
         "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
@@ -50,6 +51,7 @@
         "@types/nodemailer": "^6.4.4",
         "@types/react": "^18.0.5",
         "@types/react-dom": "^18.0.1",
+        "@types/rollup-plugin-visualizer": "^4.2.1",
         "@vitejs/plugin-react": "^1.0.7",
         "typescript": "^4.5.4",
         "vite": "^2.9.0"

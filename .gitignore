@@ -27,3 +27,4 @@ docs/book
 *.sw?
 
 *.tsbuildinfo
+stats.html
