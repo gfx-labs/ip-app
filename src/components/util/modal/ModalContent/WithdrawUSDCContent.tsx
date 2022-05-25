@@ -19,6 +19,8 @@ export const WithdrawUSDCContent = () => {
   const setMax = () => {
     if (USDCToken && USDCToken.vault_amount) {
       updateUSDC("amountToWithdraw", USDCToken.vault_amount.toString());
+    } else {
+      updateUSDC("amountToWithdraw", '0');
     }
   };
 
