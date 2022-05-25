@@ -26,7 +26,6 @@ export const WithdrawUSDCContent = () => {
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
-  const [isMoneyValue, setIsMoneyValue] = useState(false);
 
   const [disabled, setDisabled] = useState(true);
 
@@ -53,9 +52,8 @@ export const WithdrawUSDCContent = () => {
           onBlur={toggle}
           onFocus={toggle}
           onChange={(amount) => updateUSDC("amountToWithdraw", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : USDCToken.ticker}`}
+          placeholder={`0 ${USDCToken.ticker}`}
           value={USDC.amountToWithdraw}
-          isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Button
