@@ -11,6 +11,7 @@ import { DisableableModalButton } from "../button/DisableableModalButton";
 import { useWithdrawCollateral } from "../../../hooks/useWithdraw";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
+import {locale} from "../../../locale";
 
 export const WithdrawCollateralConfirmationModal = () => {
   const { type, setType, collateralToken, collateralWithdrawAmount,setCollateralWithdrawAmount } =
@@ -23,7 +24,7 @@ export const WithdrawCollateralConfirmationModal = () => {
 
   const handleCollateralWithdraw = async () => {
     setLoading(true);
-    setLoadmsg("please sign transaction ")
+    setLoadmsg(locale("CheckWallet"))
     const attempt = await useWithdrawCollateral(
       collateralWithdrawAmount,
       collateralToken.address,
@@ -31,7 +32,7 @@ export const WithdrawCollateralConfirmationModal = () => {
       provider?.getSigner(currentAccount)!,
     );
     setCollateralWithdrawAmount("")
-    setLoadmsg("transaction pending ")
+    setLoadmsg(locale("TransactionPending"))
     await attempt.wait()
     setLoadmsg("")
     setLoading(false);

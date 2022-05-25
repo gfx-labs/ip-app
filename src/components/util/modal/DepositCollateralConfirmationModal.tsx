@@ -12,6 +12,7 @@ import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataP
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useDepositCollateral } from "../../../hooks/useDeposit";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
+import {locale} from "../../../locale";
 
 export const DepositCollateralConfirmationModal = () => {
   const { type, setType, collateralToken, collateralDepositAmount, setCollateralDepositAmount} =
@@ -22,7 +23,7 @@ export const DepositCollateralConfirmationModal = () => {
   const { vaultAddress } = useVaultDataContext();
   const handleDepositConfirmationRequest = async () => {
     setLoading(true);
-    setLoadmsg("please sign transaction ")
+    setLoadmsg(locale("CheckWallet"))
     const attempt = await useDepositCollateral(
       collateralDepositAmount,
       collateralToken.address,
@@ -30,7 +31,7 @@ export const DepositCollateralConfirmationModal = () => {
       vaultAddress!
     );
     setCollateralDepositAmount("")
-    setLoadmsg("transaction pending ")
+    setLoadmsg(locale("TransactionPending"))
     await attempt.wait()
     setLoadmsg("")
     setLoading(false);

@@ -8,6 +8,7 @@ import { ModalInputContainer } from "./ModalInputContainer";
 import { useRepay } from "../../../../hooks/useUSDIFactory";
 import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
+import {locale} from "../../../../locale";
 
 
 interface RepayContent {
@@ -47,14 +48,14 @@ export const RepayContent = (props: RepayContent) => {
 
   const handleRepayRequest = async () => {
     setLoading(true);
-    setLoadmsg("please sign transaction");
+    setLoadmsg(locale("CheckWallet"));
     await useRepay(
       vaultID,
       repayAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
     ).then((res)=>{
-      setLoadmsg("transaction pending");
+      setLoadmsg(locale("TransactionPending"));
       setLoading(true);
       res!.wait().then(()=>{
       setLoadmsg("");
