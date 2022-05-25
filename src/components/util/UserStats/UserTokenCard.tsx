@@ -2,11 +2,9 @@ import {
   Box,
   BoxProps,
   Button,
-  SxProps,
   Typography,
   useTheme,
 } from "@mui/material";
-import React from "react";
 import { formatColor, neutral, blue } from "../../../theme";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import {
@@ -32,7 +30,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme();
 
   const {tokens} = useVaultDataContext();
-  const {type, setType, setToken } = useModalContext();
+  const {type, setType, setCollateralToken } = useModalContext();
 
   const {
     tokenName,
@@ -45,13 +43,13 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   } = props;
 
   const openDeposit = () => {
-    setToken((tokens as any)[tokenName])
-    setType(ModalType.Deposit);
+    setCollateralToken((tokens as any)[tokenName])
+    setType(ModalType.DepositCollateral);
   };
 
   const openWithdraw = () => {
-    setToken((tokens as any)[tokenName])
-    setType(ModalType.Withdraw);
+    setCollateralToken((tokens as any)[tokenName])
+    setType(ModalType.WithdrawCollateral);
   };
 
   return (
@@ -140,6 +138,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               },
             },
           }}
+          onClick={() => setType(ModalType.Delegate)}
         >
           Delegate
           <ForwardIcon

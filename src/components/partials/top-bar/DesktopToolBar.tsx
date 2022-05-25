@@ -12,8 +12,7 @@ import { LightIcon } from "../../icons/misc/LightIcon";
 import { DarkIcon } from "../../icons/misc/DarkIcon";
 import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
 import { useLight } from "../../../hooks/useLight";
-import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
-import {Chains} from "../../../chain/chains";
+import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -21,6 +20,8 @@ export const DesktopToolBar = () => {
   const isLight = useLight();
 
   const { toggleMode } = useContext(PaletteModeContext);
+
+  const { setIsApp } = useAppGovernanceContext();
   return (
     <Toolbar>
       <Link to="./" role="heading" aria-level={1}>
@@ -30,7 +31,7 @@ export const DesktopToolBar = () => {
         <BaseSwitch
           option1="App"
           option2="Governance"
-          onOptionChange={console.log}
+          onOptionChange={setIsApp}
         />
         <Box display="flex" alignItems="center">
           <ConnectWalletButton />
