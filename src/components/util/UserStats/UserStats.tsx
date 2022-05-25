@@ -315,10 +315,6 @@ export const UserStats = () => {
           marginBottom: 5,
         }}
       >
-        <Box display="flex" alignItems="center"></Box>
-        <Box display="flex" alignItems="center">
-          <StatsBodyTypography text={`Vault #${vaultID}`} />
-        </Box>
       </Box>
     </Box>
   );

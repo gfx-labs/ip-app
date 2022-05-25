@@ -1,10 +1,12 @@
-import { createContext, useState, useContext, useEffect } from "react";
-import { Token } from "../../../chain/tokens";
-import { useStableCoinsContext } from "../stable-coins-provider/StableCoinsProvider";
+import { createContext, useState, useContext } from "react";
+import { getTokensListOnCurrentChain, Token } from "../../../chain/tokens";
+import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 type AppGovernanceContextType = {
   isApp: boolean;
-  setIsApp: (val: boolean) => void 
+  setIsApp: (val: boolean) => void;
+  delegateToken: Token;
+  setDelegateToken: (val: Token) => void;
 };
 
 export const AppGovernanceContext = createContext(
@@ -16,10 +18,17 @@ export const AppGovernanceProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const [isApp, setIsApp] = useState<boolean>(true);
+  const { chainId } = useWeb3Context();
 
+  const [isApp, setIsApp] = useState<boolean>(true);
+  const [delegateToken, setDelegateToken] = useState<Token>(
+    getTokensListOnCurrentChain(chainId || 1)["WETH"]
+  );
+    console.log(delegateToken, 'this is delegate token')
   return (
-    <AppGovernanceContext.Provider value={{isApp, setIsApp}}>
+    <AppGovernanceContext.Provider
+      value={{ isApp, setIsApp, delegateToken, setDelegateToken }}
+    >
       {children}
     </AppGovernanceContext.Provider>
   );
