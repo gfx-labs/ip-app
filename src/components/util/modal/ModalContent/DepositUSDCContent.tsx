@@ -27,7 +27,7 @@ export const DepositUSDCContent = () => {
   useEffect(() => {
     setDisabled(numAmountToDeposit <= 0);
   }, [USDC.amountToDeposit]);
-  console.log(USDC);
+  
   return (
     <Box>
       <Typography

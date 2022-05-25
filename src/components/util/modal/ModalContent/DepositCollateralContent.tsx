@@ -16,20 +16,20 @@ export const DepositCollateralContent = () => {
   const toggle = () => setFocus(!focus);
 
   const setMax = () =>
-  setCollateralDepositAmount(collateralToken.wallet_amount);
+  setCollateralDepositAmount(collateralToken.wallet_amount.toString());
 
   useEffect(() => {
-    setDisabled(collateralDepositAmount <= 0);
+    setDisabled(Number(collateralDepositAmount) <= 0);
   }, [collateralDepositAmount]);
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setCollateralDepositAmount(collateralDepositAmount * collateralToken.value)
+      setCollateralDepositAmount((Number(collateralDepositAmount) * collateralToken.value).toString())
       
     } else {
       setCollateralDepositAmount(
         
-        collateralDepositAmount / collateralToken.value
+        (Number(collateralDepositAmount) / collateralToken.value).toString()
       );
     }
 
@@ -52,9 +52,9 @@ export const DepositCollateralContent = () => {
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(amount) => setCollateralDepositAmount(Number(amount))}
+          onChange={(amount) => setCollateralDepositAmount(amount)}
           placeholder={`0 ${isMoneyValue ? "USD" : collateralToken?.ticker}`}
-          value={collateralDepositAmount.toString()}
+          value={collateralDepositAmount}
           isMoneyValue={isMoneyValue}
         />
 
@@ -70,11 +70,11 @@ export const DepositCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  collateralDepositAmount === 0
+                  collateralDepositAmount === '0'
                     ? "0"
-                    : collateralDepositAmount / collateralToken?.value
+                    : Number(collateralDepositAmount) / collateralToken?.value
                 } ${collateralToken?.ticker}`
-              : `$${collateralDepositAmount * collateralToken?.value}`}
+              : `$${Number(collateralDepositAmount) * collateralToken?.value}`}
           </Typography>
 
           <Button

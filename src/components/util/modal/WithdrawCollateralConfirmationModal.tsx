@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
+import { useState } from "react";
 import {
   ModalType,
   useModalContext,
@@ -8,14 +9,24 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { useWithdrawCollateral } from "../../../hooks/useWithdraw";
-import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
 export const WithdrawCollateralConfirmationModal = () => {
-  const { type, setType, collateralToken, collateralWithdrawAmount } = useModalContext();
+  const { type, setType, collateralToken, collateralWithdrawAmount } =
+    useModalContext();
   const { provider, currentAccount } = useWeb3Context();
-
+  const [loading, setLoading] = useState(false);
   const isLight = useLight();
+
+  const handleCollateralWithdraw = async () => {
+    setLoading(true);
+    useWithdrawCollateral(
+      collateralWithdrawAmount,
+      collateralToken.address,
+      provider?.getSigner(currentAccount!)
+    );
+    setLoading(false);
+  };
 
   return (
     <BaseModal
@@ -78,13 +89,8 @@ export const WithdrawCollateralConfirmationModal = () => {
       <DisableableModalButton
         text="Confirm Withdraw"
         disabled={false}
-        onClick={() =>
-          useWithdrawCollateral(
-            collateralWithdrawAmount.toLocaleString(),
-            collateralToken.address,
-            provider?.getSigner(currentAccount!)
-          )
-        }
+        onClick={handleCollateralWithdraw}
+        loading={loading}
       />
     </BaseModal>
   );

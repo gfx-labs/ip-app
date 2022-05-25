@@ -15,7 +15,7 @@ export const WithdrawCollateralContent = () => {
   const { setType, collateralToken, setCollateralWithdrawAmount, collateralWithdrawAmount } = useModalContext();
 
   const setMax = () =>
-    setCollateralWithdrawAmount(collateralToken.vault_amount || 0);
+    setCollateralWithdrawAmount(collateralToken.vault_amount || '0');
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
@@ -31,9 +31,9 @@ export const WithdrawCollateralContent = () => {
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setCollateralWithdrawAmount(numAmountToWithdraw * collateralToken.value)
+      setCollateralWithdrawAmount((numAmountToWithdraw * collateralToken.value).toString())
     } else {
-      setCollateralWithdrawAmount(numAmountToWithdraw / collateralToken.value)
+      setCollateralWithdrawAmount((numAmountToWithdraw / collateralToken.value).toString())
     }
 
     setIsMoneyValue(!isMoneyValue);
@@ -55,9 +55,9 @@ export const WithdrawCollateralContent = () => {
         <DecimalInput
           onBlur={toggle}
           onFocus={toggle}
-          onChange={(amount) => setCollateralWithdrawAmount(Number(amount))}
+          onChange={(amount) => setCollateralWithdrawAmount(amount)}
           placeholder={`0 ${isMoneyValue ? "USD" : collateralToken.ticker}`}
-          value={collateralWithdrawAmount.toLocaleString()}
+          value={collateralWithdrawAmount}
           isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
@@ -72,7 +72,7 @@ export const WithdrawCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  collateralWithdrawAmount === 0
+                  collateralWithdrawAmount === '0'
                     ? "0"
                     : numAmountToWithdraw / collateralToken.value
                 } ${collateralToken.ticker}`
