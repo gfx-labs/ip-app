@@ -16,7 +16,7 @@ export const WithdrawCollateralConfirmationModal = () => {
   const { type, setType, collateralToken, collateralWithdrawAmount } =
     useModalContext();
   const { provider, currentAccount } = useWeb3Context();
-  const { vaultAddress, updateData } = useVaultDataContext();
+  const { vaultAddress } = useVaultDataContext();
   const [loading, setLoading] = useState(false);
   const isLight = useLight();
 
@@ -29,8 +29,7 @@ export const WithdrawCollateralConfirmationModal = () => {
       vaultAddress!,
       provider!.getSigner(currentAccount!)
     );
-
-    updateData()
+    
     setLoading(false);
   };
 
