@@ -4,16 +4,23 @@ id: How To Lend
 
 # Lending
 
-Becoming a lender at Interest Protocol is easy.
+All USDi holders are depositors, or lenders, of Interest Protocol. Holding USDi is like having money in your bank account - the protocol pays you interest, and you can directly use USDi to purchase other assets.
 
-1. Make sure you have a balance of USDC.
+To become a lender, take the following steps:
+
+1. Have a balance of USDC in your wallet.
 2. Go to Interest Protocol's interface and connect your wallet.
-3. Enter the number of USDC you want to deposit and click deposit
+3. Enter the amount of USDC you want to deposit and click deposit.
 
-Once the transaction is mined, USDC will transfer from your wallet to the protocol's reserve, and you will receive USDi.
+The deposit transaction will transfer the USDC from your wallet to the protocol reserve, and USDi will be minted in your wallet.
 
-Interest is paid to USDi holders by updating all USDi holders' balances.
+To redeem USDi for USDC, take the following steps:
 
-USDi holders can redeem their USDi for USDC anytime by visiting the same interface.
+1. Have a balance of USDi in your wallet.
+2. Go to Interest Protocol's interface and connect your wallet.
+3. Enter the amount of USDC you want to withdraw and click withdraw.
 
-For more information on [USDI](../../../concepts/USDi)
+The withdraw transaction will burn the USDi in your wallet and transfer USDC from the protocol reserve to your wallet.
+
+
+For more information on USDi can be found [here](../../../concepts/USDi).
