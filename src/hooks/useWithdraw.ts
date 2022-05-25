@@ -39,13 +39,8 @@ export const useWithdrawCollateral = async (
       signer
     ).withdrawErc20(collateral_address, formattedERC20Amount);
 
-    console.log(transferAttempt)
 
-    const transferReceipt = transferAttempt.wait();
-
-    console.log(transferReceipt);
-
-    return transferReceipt;
+    return transferAttempt
   } catch (err) {
     console.log(err);
     throw new Error("Could not deposit");
