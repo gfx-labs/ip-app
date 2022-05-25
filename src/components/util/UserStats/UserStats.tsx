@@ -22,6 +22,7 @@ import { TitleText } from "../text";
 import { addressShortener } from "../text/";
 import { SingleStatCard } from "./SingleStatCard";
 import { UserTokenCard } from "./UserTokenCard";
+import {BN} from "../../../easy/bn";
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
@@ -38,11 +39,8 @@ export const UserStats = () => {
   const isLight = useLight();
   const [rewards, setRewards] = useState(0);
   const [rewardsClaimed, setRewardsClaimed] = useState(0);
-  const [collateralDeposited, setCollateralDeposited] = useState(0);
-  const [borrowAPR, setBorrowAPR] = useState(0);
-  const [USDIBorrowed, setUSDIBorrowed] = useState(0);
-  const [token_cards, setTokenCards] = useState(
-    <div
+
+  const spinner =     <div
       style={{
         display: "flex",
         alignItems: "center",
@@ -52,15 +50,18 @@ export const UserStats = () => {
     >
       {Spinner()}
     </div>
-  );
+  const [borrowAPR, setBorrowAPR] = useState(0);
+  const [token_cards, setTokenCards] = useState(spinner);
   const theme = useTheme();
-  const { connected, disconnectWallet, error, currentAccount } =
-    useWeb3Context();
+  const { connected, disconnectWallet, error, currentAccount } = useWeb3Context();
   const rolodex = useRolodexContext();
   const {
     tokens,
+    refresh,
     setTokens,
     vaultID,
+    redraw,
+    setRedraw,
     hasVault,
     setVaultID,
     vaultAddress,
@@ -71,76 +72,45 @@ export const UserStats = () => {
   const { setType } = useModalContext();
 
   useEffect(() => {
-    if (currentAccount && rolodex) {
-      (async (): Promise<void> => {
-        try {
-          const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount);
-          if (vaultIDs && vaultIDs?.length > 0) {
-            const id = BigNumber.from(vaultIDs[0]._hex).toString();
-            const addr = await rolodex?.VC?.vaultAddress(id);
-            setVaultID(id);
-            setVaultAddress(addr);
-            const collateral = await rolodex!.VC?.accountBorrowingPower(id);
-            setCollateralDeposited(
-              collateral!.div(1e8).div(1e8).toNumber() / 100
-            );
-            const bab = await rolodex!.Curve?.getValueAt(
-              "0x0000000000000000000000000000000000000000",
-              await rolodex!.USDI!.reserveRatio()
-            );
-            const borrowAPR = bab!.div(1e8).div(1e6).toNumber() / 100;
-            setBorrowAPR(borrowAPR);
-          } else {
-            setVaultID(null);
-          }
-        } catch (err) {
-          setVaultID(null);
-          throw new Error("cannot get vault");
-        }
-      })();
+    if (rolodex) {
+      rolodex!.USDI!.reserveRatio().then((ratio)=>{
+        return rolodex!.Curve?.getValueAt(
+          "0x0000000000000000000000000000000000000000",
+          ratio,
+        ).then((apr)=>{
+          setBorrowAPR(apr.div(BN("1e14")).toNumber() / 100)
+        })
+      }).catch((e)=>{
+        setBorrowAPR(0);
+      })
     }
-  }, [currentAccount, rolodex]);
-
-  useEffect(()=>{
-    setUSDIBorrowed(accountLiability)
-  }, [accountLiability])
-
-  useEffect(() => {
-    setUSDIBorrowed(accountLiability);
-  }, [accountLiability]);
+  }, [rolodex]);
 
   useEffect(() => {
     if (tokens) {
-      (async () => {
-        try {
-          const el = (
-            <>
-              {Object.entries(tokens!).map(([key, val]) => {
-                return (
-                  <UserTokenCard
-                    key={key}
-                    tokenName={val.ticker}
-                    tokenValue={"$" + val.value?.toLocaleString()!}
-                    vaultBalance={"$" + val.vault_balance?.toLocaleString()!}
-                    tokenAmount={val.vault_amount?.toLocaleString()!}
-                    image={{
-                      src: val.ticker,
-                      alt: val.ticker,
-                    }}
-                    LTVPercent={val.token_LTV!.toLocaleString()}
-                    penaltyPercent={val.token_penalty!.toLocaleString()}
-                  />
-                );
-              })}
-            </>
-          );
-          setTokenCards(el);
-        } catch (err) {
-          throw new Error("cannot load tokens in vault");
-        }
-      })();
+      let el:Array<any> = []
+      for(const [key, val] of Object.entries(tokens)){
+        el.push(
+          <UserTokenCard
+            key={key}
+            tokenName={val.ticker}
+            tokenValue={"$" + val.value?.toLocaleString()!}
+            vaultBalance={"$" + val.vault_balance?.toLocaleString()!}
+            tokenAmount={val.vault_amount?.toLocaleString()!}
+            image={{
+              src: val.ticker,
+              alt: val.ticker,
+            }}
+            LTVPercent={val.token_LTV!.toLocaleString()}
+            penaltyPercent={val.token_penalty!.toLocaleString()}
+          />
+        );
+      }
+      setTokenCards(<>{el}</>);
+    }else{
+      setTokenCards(spinner);
     }
-  }, [tokens]);
+  }, [redraw]);
 
   return (
     <Box
@@ -155,15 +125,15 @@ export const UserStats = () => {
           paddingX: 2,
           paddingY: 6,
           borderRadius: 5,
-        },
+      },
       }}
     >
       <Box
         sx={{
           display: "flex",
           justifyContent: { xs: "flex-end", md: "space-between" },
-          alignItems: "center",
-          marginBottom: 3,
+        alignItems: "center",
+        marginBottom: 3,
         }}
       >
         <Box display={{ xs: "none", md: "flex" }}>
@@ -209,13 +179,13 @@ export const UserStats = () => {
             columnGap: 1,
             rowGap: 3,
             marginBottom: 4,
-          },
+        },
         }}
       >
         <SingleStatCard>
           <TitleText
             title="Borrowing Power"
-            text={`$${collateralDeposited.toLocaleString()}`}
+            text={`$${borrowingPower.toLocaleString()}`}
           />
         </SingleStatCard>
 
@@ -229,7 +199,7 @@ export const UserStats = () => {
             [theme.breakpoints.down("lg")]: {
               gridColumn: "1 / -1",
               gridRow: 2,
-            },
+          },
           }}
         >
           <Box
@@ -240,12 +210,12 @@ export const UserStats = () => {
               justifyContent: "space-between",
               [theme.breakpoints.down("lg")]: {
                 flexWrap: "wrap",
-              },
+            },
             }}
           >
             <TitleText
               title="USDi Borrowed"
-              text={`$${USDIBorrowed.toLocaleString()}`}
+              text={`$${accountLiability.toLocaleString()}`}
             />
 
             <Box
@@ -257,7 +227,7 @@ export const UserStats = () => {
                 [theme.breakpoints.down("lg")]: {
                   width: "100%",
                   marginTop: 3,
-                },
+              },
               }}
             >
               <Button
@@ -267,7 +237,7 @@ export const UserStats = () => {
                   color: formatColor(blue.blue7),
                   "&:hover": {
                     backgroundColor: formatColor(blue.blue5),
-                  },
+                },
                 }}
                 onClick={() => setType(ModalType.Borrow)}
               >
@@ -281,7 +251,7 @@ export const UserStats = () => {
                   color: formatColor(blue.blue7),
                   "&:hover": {
                     backgroundColor: formatColor(blue.blue5),
-                  },
+                },
                 }}
                 onClick={() => setType(ModalType.Repay)}
               >
@@ -298,9 +268,9 @@ export const UserStats = () => {
             xs: "1fr",
             sm: "1fr 1fr",
             md: "repeat(3, 1fr)",
-          },
-          columnGap: 3,
-          rowGap: 3,
+        },
+        columnGap: 3,
+        rowGap: 3,
         }}
       >
         {token_cards}

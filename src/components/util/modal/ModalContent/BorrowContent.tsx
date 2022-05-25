@@ -59,12 +59,12 @@ export const BorrowContent = (props: BorrowContent) => {
       borrowAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
-    ).then((res)=>{
+    ).then(async (res)=>{
       setLoadmsg(locale("TransactionPending"))
       setLoading(true);
-      res!.wait().then(()=>{
-      setLoadmsg("");
-      setLoading(false);
+      return res!.wait().then(()=>{
+        setLoadmsg("");
+        setLoading(false);
       })
     }).catch((e)=>{
       setLoading(false);
