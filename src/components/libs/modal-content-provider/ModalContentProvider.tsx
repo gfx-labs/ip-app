@@ -36,10 +36,10 @@ export type ModalContextType = {
   // Control Collateral
   collateralToken: Token
   setCollateralToken: (val: Token) => void;
-  collateralDepositAmount: number;
-  setCollateralDepositAmount: (val: number) => void;
-  collateralWithdrawAmount: number;
-  setCollateralWithdrawAmount: (val: number) => void;
+  collateralDepositAmount: string;
+  setCollateralDepositAmount: (val: string) => void;
+  collateralWithdrawAmount: string;
+  setCollateralWithdrawAmount: (val: string) => void;
 
   // Control USDC
   USDC: DepositWithdrawUSDC;
@@ -66,14 +66,15 @@ export const ModalContentProvider = ({
 
   const [type, setType] = useState<ModalType | null>(null);
   const [collateralToken, setCollateralToken] = useState<Token>(getTokensListOnCurrentChain(chainId)['WETH']);
-  const [collateralDepositAmount, setCollateralDepositAmount] = useState(0)
-  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState(0)
+  const [collateralDepositAmount, setCollateralDepositAmount] = useState('0')
+  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState('0')
 
   const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
     createDepositWithdrawUSDC()
   );
 
   const updateUSDC = (prop: string, val: string) => {
+    console.log(prop,)
     setUSDC({
       ...USDC,
       [prop]: val

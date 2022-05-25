@@ -14,22 +14,22 @@ import { useDepositCollateral } from "../../../hooks/useDeposit";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const DepositCollateralConfirmationModal = () => {
-  const { type, setType, collateralToken, collateralDepositAmount } = useModalContext();
+  const { type, setType, collateralToken, collateralDepositAmount } =
+    useModalContext();
   const { provider, currentAccount } = useWeb3Context();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { vaultAddress } = useVaultDataContext();
   const handleDepositConfirmationRequest = async () => {
-    setLoading(true)
+    setLoading(true);
 
     await useDepositCollateral(
-      collateralDepositAmount.toLocaleString(),
+      collateralDepositAmount,
       collateralToken.address,
       provider?.getSigner(currentAccount)!,
       vaultAddress!
     );
 
-    setLoading(false)
-
+    setLoading(false);
   };
 
   const isLight = useLight();
