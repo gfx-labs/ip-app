@@ -30,7 +30,13 @@ export const TokenSelect = (props: TokenSelectProps) => {
     >
       <DecimalInput onChange={setTokenAmount} value={tokenAmount} />
       <Box>
-        <Box sx={{ display: "flex", alignItems: " center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: " center",
+            justifyContent: "flex-end",
+          }}
+        >
           <Box
             component="img"
             width={24}

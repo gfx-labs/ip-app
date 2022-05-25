@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
+import { useState } from "react";
 import {
   ModalType,
   useModalContext,
@@ -7,32 +8,37 @@ import {
 import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
-import { ForwardIcon } from "../../icons/misc/ForwardIcon";
-import { useDeposit } from "../../../hooks/useDeposit";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import {useDepositCollateral} from "../../../hooks/useCollateral";
-import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
+import { useDepositCollateral } from "../../../hooks/useDeposit";
+import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
-export const DepositConfirmationModal = () => {
-  const { type, setType, deposit } = useModalContext();
-  const {provider, currentAccount} = useWeb3Context()
-  const rolodex = useRolodexContext()
-
+export const DepositCollateralConfirmationModal = () => {
+  const { type, setType, collateralToken, collateralDepositAmount } =
+    useModalContext();
+  const { provider, currentAccount } = useWeb3Context();
+  const [loading, setLoading] = useState(false);
   const { vaultAddress } = useVaultDataContext();
   const handleDepositConfirmationRequest = async () => {
-    await useDepositCollateral(deposit.amountFrom!,deposit.token.address, provider?.getSigner(currentAccount)!, vaultAddress!, currentAccount)
+    setLoading(true);
 
-    console.log('FINISHED')
+    await useDepositCollateral(
+      collateralDepositAmount,
+      collateralToken.address,
+      provider?.getSigner(currentAccount)!,
+      vaultAddress!
+    );
+
+    setLoading(false);
   };
 
   const isLight = useLight();
 
   return (
     <BaseModal
-      open={type === ModalType.DepositConfirmation}
+      open={type === ModalType.DepositCollateralConfirmation}
       setOpen={() => {
-        setType(ModalType.Deposit);
+        setType(ModalType.DepositCollateral);
       }}
     >
       <Typography
@@ -64,47 +70,16 @@ export const DepositConfirmationModal = () => {
             component="img"
             width={36}
             height={36}
-            src={`images/${deposit.token.ticker}.svg`}
-            alt={deposit.token.ticker}
+            src={`images/${collateralToken.ticker}.svg`}
+            alt={collateralToken.ticker}
             marginRight={3}
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${deposit.token.value}
+              ${collateralToken.value}
             </Typography>
           </Box>
         </Box>
-
-        <ForwardIcon sx={{width: 15, height: 15}} strokecolor={formatColor(neutral.gray3)}/>
-
-        <Box display="flex" alignItems="center">
-          <Box>
-            <Typography variant="h3" color="text.secondary">
-              $1
-            </Typography>
-          </Box>
-
-          <Box
-            component="img"
-            width={36}
-            height={36}
-            src={`images/USDI.svg`}
-            alt="USDI"
-            marginLeft={3}
-          ></Box>
-        </Box>
-      </Box>
-
-      <Box>
-        <Typography
-          variant="body1"
-          color={formatColor(neutral.gray3)}
-          fontStyle="italic"
-          fontWeight={500}
-          textAlign="center"
-        >
-          1 {deposit.token.ticker} = 1 USDi ($1){" "}
-        </Typography>
       </Box>
 
       <Box
@@ -114,19 +89,15 @@ export const DepositConfirmationModal = () => {
         }
       >
         <Typography variant="body1" fontWeight={500} mb={1}>
-          {deposit.token.name} deposit: {deposit.amountFrom}
+          {collateralToken.name} deposit: {collateralDepositAmount}
         </Typography>
-        { deposit.amountTo ?(
-        <Typography variant="body1" fontWeight={500}>
-          USDi you will receive: {deposit.amountTo}
-          </Typography>):(<></>)
-        }
       </Box>
 
       <DisableableModalButton
         text="Confirm Deposit"
         disabled={false}
         onClick={handleDepositConfirmationRequest}
+        loading={loading}
       />
     </BaseModal>
   );
