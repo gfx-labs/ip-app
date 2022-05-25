@@ -37,28 +37,32 @@ export const BorrowContent = (props: BorrowContent) => {
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [shaking, setShaking] = useState(false);
   const toggle = () => setFocus(!focus);
-
   useEffect(() => {
     setDisabled(Number(borrowAmount) < 1);
   }, [borrowAmount]);
 
   const setMax = () =>
     setBorrowAmount(
-      (Number(vaultBorrowPower) - accountLiability).toLocaleString()
-    );
+      Math.floor(0.98 *(Number(vaultBorrowPower) - accountLiability)).toString()
+  );
 
   const handleBorrowRequest = async () => {
     setLoading(true);
-
     await useBorrow(
       vaultID,
       borrowAmount,
       rolodex!,
       provider!.getSigner(currentAccount)!
-    );
-
-    setLoading(false);
+    ).then(()=>{
+      setLoading(false);
+    }).catch((e)=>{
+      setLoading(false);
+      setShaking(true)
+      setTimeout(() => setShaking(false), 400);
+      console.log(e)
+    })
   };
 
   return (
@@ -103,6 +107,7 @@ export const BorrowContent = (props: BorrowContent) => {
           disabled={disabled}
           onClick={handleBorrowRequest}
           loading={loading}
+          shaking={shaking}
         />
       </Box>
     </Box>

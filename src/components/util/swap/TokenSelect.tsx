@@ -65,7 +65,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
               mt: 1,
             }}
           >
-            Balance: {token.wallet_balance}
+            Balance: {token.wallet_balance.toFixed(4)}
           </Typography>
         </Box>
       </Box>

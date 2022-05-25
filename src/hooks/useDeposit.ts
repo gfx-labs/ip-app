@@ -11,15 +11,18 @@ export const useDepositUSDC = async (
 ) => {
   const formattedUSDCAmount = utils.parseUnits(usdc_amount, 6);
   console.log(formattedUSDCAmount, "forms");
-
+  const contract = IERC20__factory.connect(
+    rolodex.addressUSDC!,
+    signer
+  )
   try {
-    const getApproval = await IERC20__factory.connect(
-      rolodex.addressUSDC!,
-      signer
-    ).approve(rolodex.addressUSDI, Number(formattedUSDCAmount));
+    // first check approval
 
-    getApproval.wait();
-
+    const initialApproval = await contract.allowance(await signer.getAddress(), rolodex.addressUSDI)
+    if(initialApproval.lt(formattedUSDCAmount)) {
+      const getApproval = await contract.approve(rolodex.addressUSDI, Number(formattedUSDCAmount));
+      await getApproval.wait();
+    }
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
       Number(formattedUSDCAmount)
     );
@@ -47,7 +50,7 @@ export const useDepositCollateral = async (
       signer
     ).transfer(vaultAddress!, formattedERC20Amount);
 
-    
+
     const transferReceipt = transferAttempt.wait();
 
     // const contract = new ethers.Contract(collateral_address, minABI, signer);

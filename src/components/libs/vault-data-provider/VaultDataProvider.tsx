@@ -23,7 +23,7 @@ export type VaultDataContextType = {
   vaultID: string | null;
   vaultAddress?: string;
   setVaultAddress: Dispatch<SetStateAction<string | undefined>>;
-  borrowingPower: string;
+  borrowingPower: number;
   accountLiability: number;
   tokens: CollateralTokens | undefined;
   setTokens: Dispatch<SetStateAction<CollateralTokens | undefined>>;
@@ -42,14 +42,12 @@ export const VaultDataProvider = ({
   const [vaultID, setVaultID] = useState<string | null>(null);
   const [vaultAddress, setVaultAddress] = useState<VaultDataContextType["vaultAddress"]>(undefined);
   const [accountLiability, setAccountLiability] = useState(0)
-  const [borrowingPower, setBorrowingPower] = useState('0')
+  const [borrowingPower, setBorrowingPower] = useState(0)
   const [tokens, setTokens] = useState<VaultDataContextType["tokens"]>(undefined);
   useEffect(() => {
     setHasVault(!!vaultID);
     if(!!vaultID && rolodex) {
       getVaultBorrowingPower(vaultID, rolodex).then(res => setBorrowingPower(res as any))
-    } else {
-      setBorrowingPower('0');
     }
   }, [vaultID]);
 

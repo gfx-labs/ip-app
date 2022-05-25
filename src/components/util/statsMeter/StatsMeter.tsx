@@ -1,5 +1,5 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatColor, neutral } from "../../../theme";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
@@ -7,8 +7,13 @@ import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataPro
 export const StatsMeter = () => {
   const [percentBorrowed, setPercentBorrowed] = useState(30);
 
-  const {borrowingPower} = useVaultDataContext()
+  const {borrowingPower, accountLiability} = useVaultDataContext()
 
+  useEffect(()=>{
+    if(borrowingPower && accountLiability){
+      setPercentBorrowed(Math.floor(100 * accountLiability / borrowingPower))
+    }
+  },[borrowingPower, accountLiability])
   return (
     <Box>
       <Typography variant="body1" fontWeight={600} color={formatColor(neutral.gray3)}>
@@ -23,7 +28,7 @@ export const StatsMeter = () => {
         </Typography>
 
         <Typography variant="body2" color={formatColor(neutral.gray3)}>
-          Borrowing Power: {borrowingPower.toLocaleString()}%
+          Borrowing Power: {borrowingPower} USDi
         </Typography>
       </Box>
     </Box>

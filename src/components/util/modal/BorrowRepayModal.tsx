@@ -28,7 +28,7 @@ export const BorrowRepayModal = () => {
   const [repayAmount, setRepayAmount] = useState("");
   useEffect(()=>{
     if(borrowingPower){
-      setVaultBorrowPower(borrowingPower)
+      setVaultBorrowPower(borrowingPower.toFixed(0))
     }
   }, [borrowingPower])
   const onSwitch = (val: boolean) => setType(val ? ModalType.Borrow : ModalType.Repay);
