@@ -81,7 +81,7 @@ export const DepositCollateralConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${collateralToken.value}
+              ${collateralToken.value.toFixed(2)} ({collateralDepositAmount})
             </Typography>
           </Box>
         </Box>
@@ -94,7 +94,7 @@ export const DepositCollateralConfirmationModal = () => {
         }
       >
         <Typography variant="body1" fontWeight={500} mb={1}>
-          {collateralToken.name} deposit: {collateralDepositAmount}
+          {collateralToken.name} deposit:
         </Typography>
       </Box>
 
