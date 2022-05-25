@@ -22,7 +22,7 @@ import {
   DepositUSDCConfirmationModal,
   WithdrawCollateralConfirmationModal,
   DepositCollateralConfirmationModal,
-  DelegateModal
+  DelegateModal,
 } from "./components/util/modal";
 import { ClaimModal } from "./components/util/modal/ClaimModal";
 import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/RolodexDataProvider";
@@ -53,47 +53,47 @@ const App = () => {
                     <StableCoinsProvider>
                       <VaultDataProvider>
                         <ModalContentProvider>
-                          <>
-                            <WalletModalProvider>
-                              <SwapTokenProvider>
-                                <AppGovernanceProvider>
-                                <AppLayout>
-                                  <Routes>
-                                    <Route
-                                      path={`/`}
-                                      element={<LandingPage />}
-                                    />
-                                    <Route
-                                      path={`/dashboard`}
-                                      element={<Dashboard />}
-                                    />
-                                    <Route
-                                      path={`/docs`}
-                                      element={<RedirectBook />}
-                                    />
-                                    <Route
-                                      path={`/book*`}
-                                      element={<RedirectBook />}
-                                    />
-                                    <Route
-                                      path={`*`}
-                                      element={<NotFound404Page />}
-                                    />
-                                  </Routes>
-                                </AppLayout>
-                                </AppGovernanceProvider>
-                              </SwapTokenProvider>
-                            </WalletModalProvider>
-                            <DelegateModal />
-                            <DepositWithdrawCollateralModal />
-                            <DepositCollateralConfirmationModal />
-                            <WithdrawCollateralConfirmationModal />
-                            <DepositWithdrawUSDCModal />
-                            <BorrowRepayModal />
-                            <DepositUSDCConfirmationModal />
-                            <WithdrawUSDCConfirmationModal />
-                            <ClaimModal />
-                          </>
+                          <AppGovernanceProvider>
+                            <>
+                              <WalletModalProvider>
+                                <SwapTokenProvider>
+                                  <AppLayout>
+                                    <Routes>
+                                      <Route
+                                        path={`/`}
+                                        element={<LandingPage />}
+                                      />
+                                      <Route
+                                        path={`/dashboard`}
+                                        element={<Dashboard />}
+                                      />
+                                      <Route
+                                        path={`/docs`}
+                                        element={<RedirectBook />}
+                                      />
+                                      <Route
+                                        path={`/book*`}
+                                        element={<RedirectBook />}
+                                      />
+                                      <Route
+                                        path={`*`}
+                                        element={<NotFound404Page />}
+                                      />
+                                    </Routes>
+                                  </AppLayout>
+                                </SwapTokenProvider>
+                              </WalletModalProvider>
+                              <DelegateModal />
+                              <DepositWithdrawCollateralModal />
+                              <DepositCollateralConfirmationModal />
+                              <WithdrawCollateralConfirmationModal />
+                              <DepositWithdrawUSDCModal />
+                              <BorrowRepayModal />
+                              <DepositUSDCConfirmationModal />
+                              <WithdrawUSDCConfirmationModal />
+                              <ClaimModal />
+                            </>
+                          </AppGovernanceProvider>
                         </ModalContentProvider>
                       </VaultDataProvider>
                     </StableCoinsProvider>

@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import { formatColor, neutral, blue } from "../../../theme";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
+import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 import {
   ModalType,
   useModalContext,
@@ -31,7 +32,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
   const {tokens} = useVaultDataContext();
   const {type, setType, setCollateralToken } = useModalContext();
-
+  const {setDelegateToken} = useAppGovernanceContext()
   const {
     tokenName,
     tokenValue,
@@ -51,6 +52,11 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     setCollateralToken((tokens as any)[tokenName])
     setType(ModalType.WithdrawCollateral);
   };
+
+  const setAndOpenDelegate = () => {
+    setDelegateToken((tokens as any)[tokenName])
+    setType(ModalType.Delegate)
+  }
 
   return (
     <Box
@@ -138,7 +144,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               },
             },
           }}
-          onClick={() => setType(ModalType.Delegate)}
+          onClick={setAndOpenDelegate}
         >
           Delegate
           <ForwardIcon
