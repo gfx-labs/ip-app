@@ -10,19 +10,23 @@ import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
 import { useWithdrawCollateral } from "../../../hooks/useWithdraw";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const WithdrawCollateralConfirmationModal = () => {
   const { type, setType, collateralToken, collateralWithdrawAmount } =
     useModalContext();
   const { provider, currentAccount } = useWeb3Context();
+  const { vaultAddress } = useVaultDataContext();
   const [loading, setLoading] = useState(false);
   const isLight = useLight();
 
   const handleCollateralWithdraw = async () => {
     setLoading(true);
-    useWithdrawCollateral(
+
+    await useWithdrawCollateral(
       collateralWithdrawAmount,
       collateralToken.address,
+      vaultAddress!,
       provider!.getSigner(currentAccount!)
     );
     setLoading(false);

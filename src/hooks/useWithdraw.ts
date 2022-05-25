@@ -3,7 +3,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { Rolodex } from "../chain/rolodex/rolodex";
 import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
-import { IERC20__factory } from "../chain/contracts";
+import { Vault__factory } from "../chain/contracts";
 
 export const useWithdrawUSDC = async (
   usdc_amount: string,
@@ -29,18 +29,18 @@ export const useWithdrawUSDC = async (
 export const useWithdrawCollateral = async (
   amount: string,
   collateral_address: string,
-  signer: JsonRpcSigner
+  vault_address: string,
+  signer: JsonRpcSigner,
 ) => {
-  const { vaultAddress } = useVaultDataContext();
-  const { currentAccount } = useWeb3Context();
-  
   const formattedERC20Amount = utils.parseUnits(amount, 18);
 
   try {
-    const transferAttempt = await IERC20__factory.connect(
-      collateral_address,
+    const transferAttempt = await Vault__factory.connect(
+      vault_address,
       signer
-    ).transferFrom(currentAccount, vaultAddress!, formattedERC20Amount);
+    ).withdrawErc20(collateral_address, formattedERC20Amount);
+
+    console.log(transferAttempt)
 
     const transferReceipt = transferAttempt.wait();
 
