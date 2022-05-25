@@ -31,8 +31,8 @@ export const DepositWithdrawCollateralModal = () => {
       }
       setOpen={() => {
         setType(null);
-        setCollateralDepositAmount(0);
-        setCollateralWithdrawAmount(0);
+        setCollateralDepositAmount('0');
+        setCollateralWithdrawAmount('0');
       }}
     >
       <BaseSwitch

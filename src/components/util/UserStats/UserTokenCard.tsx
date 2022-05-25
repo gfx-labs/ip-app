@@ -138,6 +138,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               },
             },
           }}
+          onClick={() => setType(ModalType.Delegate)}
         >
           Delegate
           <ForwardIcon

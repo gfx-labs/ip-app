@@ -1,8 +1,8 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext } from "react";
 import {
   getStablecoins,
   Token,
-  getTokensListOnCurrentChain
+  getTokensListOnCurrentChain,
 } from "../../../chain/tokens";
 import { useRolodexContext } from "../rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
@@ -16,10 +16,11 @@ export enum ModalType {
   DepositUSDC = "DEPOSIT_USDC",
   DepositUSDCConfirmation = "DEPOSIT_USDC_CONFIRMATION",
   WithdrawUSDCConfirmation = "WITHDRAW_USDC_CONFIRMATION",
-  DepositCollateral = 'DEPOSIT_COLLATERAL',
-  WithdrawCollateral = 'WITHDRAW_COLLATERAL',
-  DepositCollateralConfirmation = 'DEPOSIT_COLLATERAL_CONFIRMATION',
-  WithdrawCollateralConfirmation = 'WITHDRAW_COLLATERAL_CONFIRMATION',
+  DepositCollateral = "DEPOSIT_COLLATERAL",
+  WithdrawCollateral = "WITHDRAW_COLLATERAL",
+  DepositCollateralConfirmation = "DEPOSIT_COLLATERAL_CONFIRMATION",
+  WithdrawCollateralConfirmation = "WITHDRAW_COLLATERAL_CONFIRMATION",
+  Delegate = "DELEGATE",
 }
 
 interface DepositWithdrawUSDC {
@@ -34,7 +35,7 @@ export type ModalContextType = {
   setType: (val: ModalType | null) => void;
 
   // Control Collateral
-  collateralToken: Token
+  collateralToken: Token;
   setCollateralToken: (val: Token) => void;
   collateralDepositAmount: string;
   setCollateralDepositAmount: (val: string) => void;
@@ -47,11 +48,11 @@ export type ModalContextType = {
 };
 
 const createDepositWithdrawUSDC = () => {
-  const rolodex = useRolodexContext()
+  const rolodex = useRolodexContext();
   return {
     token: getStablecoins(rolodex!).USDC,
     amountToDeposit: "0",
-    amountToWithdraw: '0'
+    amountToWithdraw: "0",
   };
 };
 
@@ -62,22 +63,23 @@ export const ModalContentProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const {chainId} = useWeb3Context()
+  const { chainId } = useWeb3Context();
 
   const [type, setType] = useState<ModalType | null>(null);
-  const [collateralToken, setCollateralToken] = useState<Token>(getTokensListOnCurrentChain(chainId)['WETH']);
-  const [collateralDepositAmount, setCollateralDepositAmount] = useState('0')
-  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState('0')
+  const [collateralToken, setCollateralToken] = useState<Token>(
+    getTokensListOnCurrentChain(chainId)["WETH"]
+  );
+  const [collateralDepositAmount, setCollateralDepositAmount] = useState("0");
+  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState("0");
 
   const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
     createDepositWithdrawUSDC()
   );
 
   const updateUSDC = (prop: string, val: string) => {
-    console.log(prop,)
     setUSDC({
       ...USDC,
-      [prop]: val
+      [prop]: val,
     });
   };
 

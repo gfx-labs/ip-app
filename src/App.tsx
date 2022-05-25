@@ -22,12 +22,14 @@ import {
   DepositUSDCConfirmationModal,
   WithdrawCollateralConfirmationModal,
   DepositCollateralConfirmationModal,
+  DelegateModal
 } from "./components/util/modal";
 import { ClaimModal } from "./components/util/modal/ClaimModal";
 import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/RolodexDataProvider";
 import { SwapTokenProvider } from "./components/libs/swap-token-provider/SwapTokenProvider";
 import { VaultDataProvider } from "./components/libs/vault-data-provider/VaultDataProvider";
 import { StableCoinsProvider } from "./components/libs/stable-coins-provider/StableCoinsProvider";
+import { AppGovernanceProvider } from "./components/libs/app-governance-provider/AppGovernanceProvider";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +56,7 @@ const App = () => {
                           <>
                             <WalletModalProvider>
                               <SwapTokenProvider>
+                                <AppGovernanceProvider>
                                 <AppLayout>
                                   <Routes>
                                     <Route
@@ -78,8 +81,10 @@ const App = () => {
                                     />
                                   </Routes>
                                 </AppLayout>
+                                </AppGovernanceProvider>
                               </SwapTokenProvider>
                             </WalletModalProvider>
+                            <DelegateModal />
                             <DepositWithdrawCollateralModal />
                             <DepositCollateralConfirmationModal />
                             <WithdrawCollateralConfirmationModal />

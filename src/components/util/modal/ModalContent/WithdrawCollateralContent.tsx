@@ -15,7 +15,7 @@ export const WithdrawCollateralContent = () => {
   const { setType, collateralToken, setCollateralWithdrawAmount, collateralWithdrawAmount } = useModalContext();
 
   const setMax = () =>
-    setCollateralWithdrawAmount(collateralToken.vault_amount || '0');
+    setCollateralWithdrawAmount(collateralToken!.vault_amount.toString() || '0');
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);

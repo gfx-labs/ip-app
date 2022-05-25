@@ -30,6 +30,7 @@ import { formatColor, neutral } from "../../../theme";
 
 import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
 import { BaseSwitch } from "../../util/switch";
+import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 
 const iOS =
   typeof navigator !== "undefined" &&
@@ -41,6 +42,8 @@ export const MobileToolBar = () => {
   const navMenuButtonRef = useRef<HTMLButtonElement>(null);
 
   const { toggleMode } = useContext(PaletteModeContext);
+  const { setIsApp } = useAppGovernanceContext();
+
 
   const isLight = useLight();
 
@@ -177,7 +180,7 @@ export const MobileToolBar = () => {
         <BaseSwitch
           option1="App"
           option2="Governance"
-          onOptionChange={console.log}
+          onOptionChange={setIsApp}
         />
       </SwipeableDrawer>
     </Toolbar>
