@@ -3,6 +3,7 @@ import {
   ButtonProps,
   CircularProgress,
 } from "@mui/material";
+import {Box} from "@mui/system";
 import {useState} from "react";
 import { useLight } from "../../../hooks/useLight";
 import { neutral, formatColor, disabled as dis } from "../../../theme";
@@ -36,7 +37,7 @@ export const DisableableModalButton = (props: DisableableModalButtonProps) => {
         color: themeColor,
       }}
     >
-      {loading ? <>{load_text} <CircularProgress size={20} /></> : text}
+      {loading ? <><CircularProgress size={20} /> <Box sx={{marginLeft: 2}}>{load_text}</Box></> : text}
     </Button>
   );
 };
