@@ -88,7 +88,7 @@ export const UserStats = () => {
               "0x0000000000000000000000000000000000000000",
               await rolodex!.USDI!.reserveRatio()
             );
-            const borrowAPR = bab!.div(1e8).div(1e8).toNumber() / 100;
+            const borrowAPR = bab!.div(1e8).div(1e6).toNumber() / 100;
             setBorrowAPR(borrowAPR);
           } else {
             setVaultID(null);
