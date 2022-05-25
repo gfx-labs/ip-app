@@ -6,7 +6,7 @@ id: How To Lend
 
 All USDi holders are depositors, or lenders, of Interest Protocol. Holding USDi is like having money in your bank account - the protocol pays you interest, and you can directly use USDi to purchase other assets.
 
-To become a lender, take the following steps:
+To become a lender:
 
 1. Have a balance of USDC in your wallet.
 2. Go to Interest Protocol's interface and connect your wallet.

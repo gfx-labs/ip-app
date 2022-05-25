@@ -3,7 +3,8 @@ id: How To Borrow
 ---
 
 # Borrowing
-To borrow USDi from the protocol, take the following steps:
+
+To borrow USDi from the protocol:
 1. Have a balance of a supported collateral asset in your wallet.
 2. Go to Interest Protocol's interface and connect your wallet.
 3. If it is your first time borrowing, you will be prompted to mint your vault.
