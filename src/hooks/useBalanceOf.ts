@@ -34,12 +34,12 @@ export const useBalanceOf = (
   return getBalance(contract_address, wallet_address)
 };
 
-export const getBalance  = async (contract_address: string, target: string)=>{
+export const getBalance  = async (contract_address: string, target: string):Promise<number>=>{
   const contract = new ethers.Contract(contract_address, minABI, provider);
   const balance = await contract.balanceOf(target);
   const decimals = await useDecimals(contract);
 
   const formattedBalance = useFormatWithDecimals(balance, decimals);
 
-  return formattedBalance;
+  return Number(formattedBalance.toFixed(8));
 }

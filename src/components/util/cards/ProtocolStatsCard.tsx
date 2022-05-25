@@ -18,15 +18,15 @@ export const ProtocolStatsCard = () => {
   const [totalUSDCDeposited, setTotalUSDCDeposited] =
     useState<string>('');
   const [reserveRatio, setReserveRatio] = useState('0')
-
   const { connected } = useWeb3Context();
   const { setIsWalletModalOpen } = useWalletModalContext();
-
   useEffect(() => {
     if (rolodex && rolodex.addressUSDC) {
       const promises = [
         useTotalSupply(rolodex),
-        useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC),
+        useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC).then((val)=>{
+          return val.toFixed(0)
+        }),
         useReserveRatio(rolodex)
       ];
 

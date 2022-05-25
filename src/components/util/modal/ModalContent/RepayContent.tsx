@@ -9,6 +9,7 @@ import { useRepay } from "../../../../hooks/useUSDIFactory";
 import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 
+
 interface RepayContent {
   tokenName: string;
   vaultBorrowPower: string;
@@ -30,10 +31,12 @@ export const RepayContent = (props: RepayContent) => {
   const rolodex = useRolodexContext();
   const { provider, currentAccount } = useWeb3Context();
 
-  const setMax = () => setRepayAmount(accountLiability.toLocaleString());
+  const setMax = () => setRepayAmount(accountLiability.toString());
+
 
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [shaking, setShaking] = useState(false);
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
 
@@ -43,8 +46,19 @@ export const RepayContent = (props: RepayContent) => {
 
   const handleRepayRequest = async () => {
     setLoading(true);
-    await useRepay(vaultID, repayAmount, rolodex!, provider!.getSigner(currentAccount)!);
-    setLoading(false);
+    await useRepay(
+      vaultID,
+      repayAmount,
+      rolodex!,
+      provider!.getSigner(currentAccount)!
+    ).then(()=>{
+      setLoading(false);
+    }).catch((e)=>{
+      setLoading(false);
+      setShaking(true)
+      setTimeout(() => setShaking(false), 400);
+      console.log(e)
+    })
   };
 
   return (
@@ -99,6 +113,7 @@ export const RepayContent = (props: RepayContent) => {
           onClick={handleRepayRequest}
           disabled={disabled}
           loading={loading}
+          shaking={shaking}
         />
       </Box>
     </Box>

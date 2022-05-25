@@ -88,14 +88,12 @@ export const ModalContentProvider = ({
       value={{
         type,
         setType,
-
         collateralToken,
         setCollateralToken,
         collateralDepositAmount,
         setCollateralDepositAmount,
         collateralWithdrawAmount,
         setCollateralWithdrawAmount,
-
         USDC,
         updateUSDC,
       }}

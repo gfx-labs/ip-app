@@ -1,5 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, Contract, ContractReceipt, utils } from "ethers";
 import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
 import { Rolodex } from "../chain/rolodex/rolodex";
 
@@ -31,15 +31,16 @@ export const useRepay = async (
   amount: string,
   rolodex: Rolodex,
   signer: JsonRpcSigner
-) => {
+):Promise<ContractReceipt | undefined> => {
   const formattedUSDIAmount = utils.parseUnits(amount, 18);
-
-  try {
-    const repayTransaction = await rolodex.VC?.connect(signer).repayUSDi(
+  const contract = rolodex.VC?.connect(signer)!
+    const repayTransaction = await contract.repayUSDi(
       Number(vaultID),
       formattedUSDIAmount
-    );
-
+    ).catch((e)=>{
+      throw new Error("Could not repay:"+ e);
+    })
+  try {
     console.log(repayTransaction, "transation");
 
     const repayRecipt = await repayTransaction?.wait();
