@@ -306,8 +306,7 @@ const _abi = [
   },
 ];
 
-const _bytecode =
-  "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212200f8a518ef0b5123455772a5913dd1ce1d7c282ab05309808608ae4e63c3b133264736f6c63430008090033";
+const _bytecode = "";
 
 type GovernorBravoEventsConstructorParams =
   | [signer?: Signer]
