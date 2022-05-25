@@ -36,7 +36,7 @@ export const DepositUSDCConfirmationModal = () => {
     <BaseModal
       open={type === ModalType.DepositUSDCConfirmation}
       setOpen={() => {
-        setType(ModalType.DepositUSDC);
+        setType(null);
       }}
     >
       <Typography
