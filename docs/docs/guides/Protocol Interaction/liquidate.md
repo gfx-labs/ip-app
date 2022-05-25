@@ -13,10 +13,14 @@ Interest Protocol's liquidation system is simple yet efficient. Vaults with debt
 
 The protocol incentivizes liquidators by offering the collateral assets at a discount relative to the oracle price. The parameter `liquidationIncentive` represents the discount percentage for each asset.
 
-A liquidator can call the function `tokenToLiquidate(vault id, asset to liquidate)` to identify whether a vault can be liquidated, and if so, by how much. 
-
-Once an account has been identified as liquidatable, a liquidator can call the tokenToLiquidate(vault id, asset to liquidate) function, which will return the maximum number of tokens that can be liquidated at that time. 
+A liquidator can call the function `tokensToLiquidate(vault id, asset to liquidate)` to identify whether a vault can be liquidated, and if so, by how much. 
 
 **Note**: the number of tokens to liquidate is a moving number because prices are called on each function call, and interest is accrued constantly. 
 
-Use the liquidateAccount(vault ID, asset address to liquidate, token to liquidate) to liquidate a vault. The protocol needs to know the vault to verify whether it is eligible for liquidation, the asset to liquidate to check the vault's balance, and the number of tokens to liquidate so the liquidator can partially fill a liquidation if desired. If a liquidator specifies a number greater than the vault's balance, the protocol liquidates the vault's full balance. If a vault has multiple collateral assets, each asset must be liquidated in a separate call.
+The function `liquidateAccount(vault ID, asset address, tokens to liquidate)` liquidates a vault. The liquidator can liquidate any amount up to the maximum amount given by `tokensToLiquidate()`. If `tokens to liquidate` passed by the liquidator is greater than `tokensToLiquidate()`, the vault is liquidated up to `tokensToLiquidate()`. If a vault has multiple collateral assets, each asset must be liquidated in a separate call.
+
+
+
+
+
+
