@@ -11,19 +11,18 @@ import { formatColor, neutral, blue } from "../../theme";
 import { useLight } from "../../hooks/useLight";
 import { Status } from "../../components/util/governance/Status";
 import { VoteCount } from "./VoteCount";
+import { VoteModal } from "./VoteModal";
 
 const Proposal: React.FC = () => {
   const theme = useTheme();
   const isLight = useLight();
+  const [open, setOpen] = useState(false)
 
   const id = 9;
   const title = "Vote to Integrate Omniwop into Protocol";
   const status = "active";
   const time = "Voting ended on March 25, 2020";
-
-  const  voteHandler = () => {
-
-  }
+  const totalVotes = 23423424234
 
   const voters = [
     {
@@ -99,7 +98,7 @@ const Proposal: React.FC = () => {
         <Button
           sx={{ width: 133, color: formatColor(neutral.white), height: 43 }}
           variant="contained"
-          onClick={voteHandler}
+          onClick={() => setOpen(true)}
         >
           Vote
         </Button>
@@ -126,6 +125,8 @@ const Proposal: React.FC = () => {
           voters={voters}
         />
       </Box>
+
+      <VoteModal open={open} setOpen={setOpen} id={id} totalVotes={totalVotes}/>
     </Box>
   );
 };
