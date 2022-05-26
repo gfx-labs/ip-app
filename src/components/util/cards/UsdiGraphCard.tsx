@@ -108,7 +108,7 @@ export const UsdiGraphCard = () => {
                 marginRight: 1,
               }}
             ></Box>{" "}
-            <GraphTypography text={`Interest Paid (${lastPaid}%)`} />
+            <GraphTypography text={`Interest Paid ($${lastPaid})`} />
           </Box>
         </Box>
       </Box>
