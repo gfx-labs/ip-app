@@ -11,7 +11,6 @@ import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import { useDepositUSDC } from "../../../hooks/useDeposit";
 import {BN} from "../../../easy/bn";
 import {BigNumberish} from "ethers";
 import {locale} from "../../../locale";
@@ -58,6 +57,7 @@ export const DepositUSDCConfirmationModal = () => {
     if(rolodex && USDC.amountToDeposit) {
       let depositAmount = BN(USDC.amountToDeposit)
       const formattedUSDCAmount = depositAmount.mul(1e6)
+      console.log(formattedUSDCAmount)
       setLoading(true)
       try {
         setLoadmsg(locale("CheckWallet"))

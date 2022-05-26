@@ -2,6 +2,7 @@ import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, Contract, ethers, utils } from "ethers";
 import { ERC20Detailed__factory } from "../chain/contracts/factories/_external/index";
 import { Rolodex } from "../chain/rolodex/rolodex";
+import {BN} from "../easy/bn";
 import { useDecimals } from "./useTokenInfo";
 
 export const useDepositUSDC = async (
@@ -17,15 +18,13 @@ export const useDepositUSDC = async (
   )
   try {
     // first check approval
-
     const initialApproval = await contract.allowance(await signer.getAddress(), rolodex.addressUSDI)
     if(initialApproval.lt(formattedUSDCAmount)) {
       const getApproval = await contract.approve(rolodex.addressUSDI, Number(formattedUSDCAmount));
       await getApproval.wait();
     }
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
-      Number(formattedUSDCAmount)
-    );
+      Number(formattedUSDCAmount)    );
 
     console.log(depositAttempt);
     const receipt = await depositAttempt?.wait();
