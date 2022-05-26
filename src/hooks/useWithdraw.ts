@@ -39,7 +39,6 @@ export const useWithdrawCollateral = async (
       signer
     ).withdrawErc20(collateral_address, formattedERC20Amount);
 
-
     return transferAttempt
   } catch (err) {
     console.log(err);

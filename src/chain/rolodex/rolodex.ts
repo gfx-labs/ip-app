@@ -13,6 +13,8 @@ import {
   VaultController,
   ICurveMaster,
   CurveMaster__factory,
+  ERC20Detailed,
+  ERC20Detailed__factory,
 } from "../contracts";
 
 export const provider = new JsonRpcProvider(
@@ -33,6 +35,7 @@ export class Rolodex {
   Curve?: ICurveMaster;
 
   addressUSDC?: string;
+  USDC?: ERC20Detailed;
 
   constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
     this.addressUSDI = usdi;
@@ -63,6 +66,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
   // connect
   if(!rolo.addressUSDC) {
     rolo.addressUSDC = await rolo.USDI.reserveAddress();
+    rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!)
   }
 
   if (!rolo.addressOracle) {
@@ -74,6 +78,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
     rolo.addressCurve = await rolo.VC?.getCurveMaster();
     rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!);
   }
+
 
   console.log(rolo)
   return rolo;

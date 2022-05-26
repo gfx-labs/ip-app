@@ -14,8 +14,7 @@ const nav = [
     title: "Protocol",
     links: [
       { label: "Whitepaper", href: "/static/whitepaper.pdf" },
-      { label: "Docs", href: "/book/index.html" },
-      { label: "Guides", href: "/book/docs/category/guides/index.html" },
+      { label: "Docs & Guides", href: "/docs" },
     ],
   },
   {
