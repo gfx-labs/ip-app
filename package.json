@@ -13,7 +13,8 @@
         "preview": "vite preview",
         "_docs": "",
         "docs": "cd docs && npx yarn install && npm run build",
-        "abi": "cp -r ../contracts/typechain-types/* ./src/chain/contracts"
+        "abi": "cp -r ../contracts/typechain-types/* ./src/chain/contracts",
+        "watch_docs": "cd docs && npx yarn install && npm run start"
     },
     "dependencies": {
         "@emotion/react": "^11.9.0",
