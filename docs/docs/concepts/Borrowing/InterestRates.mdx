@@ -1,4 +1,4 @@
-# Interest Rates asdf
+# Interest Rates
 
 All USDi borrowers pay a single borrowing interest rate that varies depending on the current reserve ratio. The interest paid by borrowers, net of a protocol fee, is distributed pro rata to all USDi holders.
 
@@ -7,7 +7,7 @@ All USDi borrowers pay a single borrowing interest rate that varies depending on
 The *reserve ratio* is defined as
 
 $$
-\frac{USDC in protocol reserve}{USDi total supply}
+\frac{\text{USDC in protocol reserve}}{\text{USDi total supply}}
 $$
 
 The reserve ratio measures the amount of USDC liquidity that the protocol currently has to meet the potential redemption demand of USDi holders.
@@ -22,7 +22,7 @@ r_B (s)=  \begin{cases}
 \end{cases}
 $$
 
-The function has two kinks, at (s_1,r_1) and (s_2,r_2). The interval [s1,s2] is the range of reserve ratios that the protocol targets. The current parameters are provided in the table below.
+The function has two kinks, $(s_1,r_1)$ and $(s_2,r_2)$. The interval $[s_1,s_2]$ is the range of reserve ratios that the protocol targets. The current parameters are provided in the table below.
 
 | $s_1$ | $s_2$ |    | $r_1$ | $r_2$ | $r_3$|
 |-------|-------|----|-------|-------|------|
