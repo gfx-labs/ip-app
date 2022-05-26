@@ -30,16 +30,28 @@ export const Votes = ({
   } else if (yes > no) {
     upStrokeColor = formatColor(green.green2);
     downStrokeColor = formatColor(pink.pink1);
+  } else if (no > yes) {
+    upStrokeColor = formatColor(pink.pink1);
+    downStrokeColor = formatColor(green.green2);
+  } else {
+    upStrokeColor = formatColor(green.green2);
+    downStrokeColor = formatColor(green.green2);
   }
 
   return (
-    <Box display="flex" flexWrap="nowrap">
-      <Box display="flex">
-        <ArrowUpIcon strokecolor={upStrokeColor} />{" "}
+    <Box display="flex" flexWrap="nowrap" marginX={3}>
+      <Box display="flex" alignItems="center" marginX={2}>
+        <ArrowUpIcon
+          strokecolor={upStrokeColor}
+          sx={{ width: 10, height: 16, mr: 1 }}
+        />
         <Typography>{yes}</Typography>
       </Box>
-      <Box display="flex">
-        <ArrowDownIcon strokecolor={downStrokeColor} />{" "}
+      <Box display="flex" alignItems="center" marginX={2}>
+        <ArrowDownIcon
+          strokecolor={downStrokeColor}
+          sx={{ width: 10, height: 16, mr: 1 }}
+        />
         <Typography>{no}</Typography>
       </Box>
     </Box>

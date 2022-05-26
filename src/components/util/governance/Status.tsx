@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useLight } from "../../../hooks/useLight";
 import { green, formatColor, blue, neutral, pink } from "../../../theme";
@@ -11,57 +11,49 @@ const StatusContainerColor = (status: string): [bgColor, fontColor] => {
 
   switch (status) {
     case "active":
-      if (isLight) {
-        return [formatColor(green.green2), formatColor(green.green3)];
-      }
-      return [formatColor(green.green4), formatColor(green.green3)];
+      return isLight
+        ? [formatColor([...green.green2, 0.15]), formatColor(green.green3)]
+        : [formatColor(green.green4), formatColor(green.green3)];
+
     case "successful":
-      if (isLight) {
-        return [formatColor(green.green5), formatColor(green.green2)];
-      }
-      return [formatColor(green.green4), formatColor(green.green2)];
+      return isLight
+        ? [formatColor(green.green5), formatColor(green.green2)]
+        : [formatColor(green.green4), formatColor(green.green2)];
 
     case "pending":
-      if (isLight) {
-        return [formatColor(blue.blue9), formatColor(blue.blue15)];
-      }
-      return [formatColor(blue.blue16), formatColor(blue.blue15)];
+      return isLight
+        ? [formatColor(blue.blue9), formatColor(blue.blue15)]
+        : [formatColor(blue.blue16), formatColor(blue.blue15)];
 
     case "cancelled":
-      if (isLight) {
-        return [formatColor(neutral.gray5), formatColor(neutral.gray10)];
-      }
-      return [formatColor(green.green6), formatColor(blue.blue3)];
+      return isLight
+        ? [formatColor(neutral.gray5), formatColor(neutral.gray10)]
+        : [formatColor(green.green6), formatColor(blue.blue3)];
 
     case "queued":
-      if (isLight) {
-        return [formatColor(neutral.gray5), formatColor(neutral.gray10)];
-      }
-      return [formatColor(green.green6), formatColor(blue.blue3)];
+      return isLight
+        ? [formatColor(neutral.gray5), formatColor(neutral.gray10)]
+        : [formatColor(green.green6), formatColor(blue.blue3)];
 
     case "defeated":
-      if (isLight) {
-        return [formatColor(pink.pink2), formatColor(pink.pink1)];
-      }
-      return [formatColor(pink.pink3), formatColor(pink.pink1)];
+      return isLight
+        ? [formatColor(pink.pink2), formatColor(pink.pink1)]
+        : [formatColor(pink.pink3), formatColor(pink.pink1)];
 
     case "executed":
-      if (isLight) {
-        return [formatColor(green.green5), formatColor(green.green2)];
-      }
-      return [formatColor(green.green4), formatColor(green.green2)];
+      return isLight
+        ? [formatColor(green.green5), formatColor(green.green2)]
+        : [formatColor(green.green4), formatColor(green.green2)];
 
     case "expired":
-      if (isLight) {
-        return [formatColor(neutral.gray5), formatColor(neutral.gray10)];
-      }
-      return [formatColor(green.green6), formatColor(blue.blue3)];
+      return isLight
+        ? [formatColor(neutral.gray5), formatColor(neutral.gray10)]
+        : [formatColor(green.green6), formatColor(blue.blue3)];
 
     default:
-      if (isLight) {
-        return [formatColor(neutral.gray5), formatColor(neutral.gray10)];
-      }
-      return [formatColor(green.green6), formatColor(blue.blue3)];
+      return isLight
+        ? [formatColor(neutral.gray5), formatColor(neutral.gray10)]
+        : [formatColor(green.green6), formatColor(blue.blue3)];
   }
 };
 
@@ -71,18 +63,24 @@ const StatusContainer = ({ status }: { status: string }) => {
   return (
     <Box
       sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: 38,
+        width: {xs: 84, md: 108},
         backgroundColor: colors[0],
         color: colors[1],
+        borderRadius: 1,
       }}
     >
-      {status}
+      <Typography variant="body1">{status}</Typography>
     </Box>
   );
 };
 
 export const Status = ({ status }: { status: string }) => {
   return (
-    <Box>
+    <Box display="flex" alignItems="center">
       <StatusContainer status={status} />
     </Box>
   );
