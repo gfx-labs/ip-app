@@ -42,7 +42,7 @@ export const DepositUSDCConfirmationModal = () => {
 
 
   useEffect(() => {
-    if(rolodex) {
+    if(rolodex && USDC.amountToDeposit) {
       rolodex.USDC!.allowance(currentAccount, rolodex.addressUSDI).then((initialApproval)=>{
         const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN("1e6"))
         if(initialApproval.lt(formattedUSDCAmount)) {
@@ -55,9 +55,9 @@ export const DepositUSDCConfirmationModal = () => {
   }, [rolodex, dataBlock])
 
   const handleDepositConfirmationRequest = async () => {
-    let depositAmount = BN(USDC.amountToDeposit)
-    const formattedUSDCAmount = depositAmount.mul(1e6)
     if(rolodex && USDC.amountToDeposit) {
+      let depositAmount = BN(USDC.amountToDeposit)
+      const formattedUSDCAmount = depositAmount.mul(1e6)
       setLoading(true)
       try {
         setLoadmsg(locale("CheckWallet"))
@@ -71,12 +71,12 @@ export const DepositUSDCConfirmationModal = () => {
     }
   };
   const handleApprovalRequest = async () => {
+    if(rolodex && USDC.amountToDeposit) {
     let depositAmount = BN(USDC.amountToDeposit)
     if(shiftOn) {
       depositAmount = BN("1e18")
     }
     const formattedUSDCAmount = depositAmount.mul(BN("1e6"))
-    if(rolodex && USDC.amountToDeposit) {
       setLoading(true)
       try {
         setLoadmsg(locale("CheckWallet"))
