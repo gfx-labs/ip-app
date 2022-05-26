@@ -14,6 +14,8 @@ export interface Token {
 
   token_LTV?: number;
   token_penalty?: number;
+
+  can_delegate?:boolean;
 }
 
 export const chainsToTokens = {
@@ -96,6 +98,7 @@ export const getTokensListOnCurrentChain = (
       wallet_amount: 0,
       token_LTV: 0,
       token_penalty:0,
+      can_delegate: true,
     },
 
     WBTC: {
