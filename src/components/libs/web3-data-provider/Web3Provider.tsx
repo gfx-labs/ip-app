@@ -74,11 +74,13 @@ export const Web3ContextProvider = ({
 
     const [loading, setLoading] = useState<boolean>(false);
     const [connector, setConnector] = useState<AbstractConnector>();
+    const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
 
     const [deactivated, setDeactivated] = useState<boolean>(false);
     const [tried, setTried] = useState<boolean>(false);
 
     const [dataBlock, setDataBlock] = useState(0)
+
 
     // Wallet connection and disconnection
     // clean local storage
@@ -123,7 +125,6 @@ export const Web3ContextProvider = ({
     const connectWallet = useCallback(
         async (wallet: WalletType) => {
             setLoading(false);
-
             try {
                 const connector: AbstractConnector = getWallet(wallet, chainId);
 
@@ -264,6 +265,12 @@ export const Web3ContextProvider = ({
         }
     };
 
+    useEffect(() => {
+        if(provider && account){
+            setCurrentSigner(provider?.getSigner(account?.toLowerCase() || ""))
+        }
+    },[provider, account])
+
     return (
         <Web3Context.Provider
             value={{
@@ -271,7 +278,7 @@ export const Web3ContextProvider = ({
                     connectWallet,
                     disconnectWallet,
                     provider,
-                    currentSigner: provider?.getSigner(account?.toLowerCase() || ""),
+                    currentSigner,
                     connected: active,
                     loading,
                     chainId: chainId || 1,
