@@ -24,11 +24,11 @@ export const StatsMeter = () => {
 
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
         <Typography variant="body2" color={formatColor(neutral.gray3)}>
-          USDi Borrowed: {percentBorrowed}%
+          Borrowing Power: {borrowingPower} USDi
         </Typography>
 
         <Typography variant="body2" color={formatColor(neutral.gray3)}>
-          Borrowing Power: {borrowingPower} USDi
+          USDi Borrowed: {percentBorrowed}%
         </Typography>
       </Box>
     </Box>
