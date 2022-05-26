@@ -32,7 +32,6 @@ export const DepositCollateralContent = () => {
        (Math.round((Number(collateralDepositAmount) / collateralToken.value)*100)/100).toString()
       );
     }
-
     setIsMoneyValue(!isMoneyValue);
   };
 
@@ -45,7 +44,7 @@ export const DepositCollateralContent = () => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {collateralToken?.wallet_amount} {collateralToken?.ticker}
+        Wallet Balance: {collateralToken?.wallet_amount.toFixed(2)} {collateralToken?.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>

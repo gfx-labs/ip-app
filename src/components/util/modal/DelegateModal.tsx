@@ -13,6 +13,9 @@ import { ModalInputContainer } from "./ModalContent/ModalInputContainer";
 import { Vault__factory } from "../../../chain/contracts";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import {locale} from "../../../locale";
+import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import {useDelegate} from "../../../hooks/useDelegate";
 
 export const DelegateModal = () => {
   const { type, setType } = useModalContext();
@@ -20,6 +23,11 @@ export const DelegateModal = () => {
 
   const [focus, setFocus] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [shaking, setShaking] = useState(false);
+  const [loadmsg, setLoadmsg] = useState("");
+
+  const rolodex = useRolodexContext();
+
   const [address, setAddress] = useState("");
 
   const toggle = () => setFocus(!focus);
@@ -27,6 +35,31 @@ export const DelegateModal = () => {
   const { delegateToken } = useAppGovernanceContext();
   const {vaultAddress} = useVaultDataContext()
   const { provider, currentAccount } = useWeb3Context();
+
+  const handleDelegateRequest = async () => {
+    setLoading(true);
+    setLoadmsg(locale("CheckWallet"))
+    try{
+      await useDelegate(
+        vaultAddress!,
+        delegateToken.address,
+        address,
+        provider!.getSigner(currentAccount)!
+      ).then(async (res)=>{
+        setLoadmsg(locale("TransactionPending"))
+        setLoading(true);
+        return res!.wait().then(()=>{
+          setLoadmsg("");
+          setLoading(false);
+        })
+      })
+    } catch(e){
+      setLoading(false);
+      setShaking(true)
+      setTimeout(() => setShaking(false), 400);
+      console.log(e)
+    }
+  };
 
   return (
     <BaseModal
@@ -76,39 +109,45 @@ export const DelegateModal = () => {
         </Typography>
         <Box component="form" onSubmit={(e: FormEvent) => {
           e.preventDefault()
-
           // Vault__factory.connect(vaultAddress, provider?.getSigner(currentAccount))
         }}>
-        <Box my={2}>
-          <ModalInputContainer focus={focus}>
-            <TextField
-              placeholder="Address"
-              variant="standard"
-              onBlur={toggle}
-              onFocus={toggle}
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              InputProps={{
-                sx: {
-                  "&:before, &:after": {
-                    borderBottom: "none !important",
-                  },
+          <Box my={2}>
+            <ModalInputContainer focus={focus}>
+              <TextField
+                placeholder="Address"
+                variant="standard"
+                onBlur={toggle}
+                onFocus={toggle}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                InputProps={{
+                  sx: {
+                    "&:before, &:after": {
+                      borderBottom: "none !important",
                 },
-              }}
-              sx={{
-                width: "100%",
-                paddingBottom: "4px",
-                ".MuiInputBase-input": {
-                  fontWeight: 700,
-                  color: isLight
-                    ? formatColor(neutral.gray1)
-                    : formatColor(neutral.white),
                 },
-              }}
-            />
-          </ModalInputContainer>
-        </Box>
-        <DisableableModalButton type="submit" text="Delegate" loading={loading}/>
+                }}
+                sx={{
+                  width: "100%",
+                  paddingBottom: "4px",
+                  ".MuiInputBase-input": {
+                    fontWeight: 700,
+                    color: isLight
+                      ? formatColor(neutral.gray1)
+                      : formatColor(neutral.white),
+                },
+                }}
+              />
+            </ModalInputContainer>
+          </Box>
+          <DisableableModalButton
+            type="submit"
+            text="Delegate"
+            loading={loading}
+            shaking={shaking}
+            load_text={loadmsg}
+            onClick={handleDelegateRequest}
+          />
         </Box>
       </Box>
     </BaseModal>
