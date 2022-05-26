@@ -1,3 +1,7 @@
+---
+id: How To Lend
+---
+
 # Lending
 
 All USDi holders are depositors, or lenders, of Interest Protocol. Holding USDi is like having money in your bank account - the protocol pays you interest, and you can directly use USDi to purchase other assets.
