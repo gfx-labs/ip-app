@@ -37,10 +37,11 @@ export const BorrowContent = (props: BorrowContent) => {
   const { provider, currentAccount } = useWeb3Context();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [shaking, setShaking] = useState(false);
-
   const [loadmsg, setLoadmsg] = useState("");
+
   const toggle = () => setFocus(!focus);
   useEffect(() => {
     setDisabled(Number(borrowAmount) < 1);
