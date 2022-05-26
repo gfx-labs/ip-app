@@ -18,7 +18,7 @@ import {
 } from "../contracts";
 
 export const provider = new JsonRpcProvider(
-  "https://ropsten.infura.io/v3/105c9b31d23a48aa85b4b2deb78b42ce"
+  'https://eth-ropsten.alchemyapi.io/v2/5EGdI7OUE9ptMFggrLzsM2dDpBYPMujp'
 );
 
 export class Rolodex {

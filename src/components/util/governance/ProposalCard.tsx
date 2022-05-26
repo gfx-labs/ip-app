@@ -6,7 +6,7 @@ import { Votes } from "./Votes";
 import { Status } from "./Status";
 
 export interface Proposal {
-  votes: string;
+  id: string;
   title: string;
   yesVotes: string;
   noVotes: string;
@@ -18,27 +18,49 @@ export interface ProposalProps {
 }
 
 export const ProposalCard = (props: ProposalProps) => {
-  const { votes, title, yesVotes, noVotes, status, timeLeft } = props.proposal;
-  const isLight = useLight()
+  const { id, title, yesVotes, noVotes, status, timeLeft } = props.proposal;
+  const isLight = useLight();
 
   return (
-    <Box sx={{
-      backgroundColor: isLight ? formatColor(neutral.white) : formatColor(neutral.black6),
-      borderRadius: 2,
-      paddingX: 4,
-      paddingY: 3,
-    }}>
+    <Box
+      sx={{
+        backgroundColor: isLight
+          ? formatColor(neutral.white)
+          : formatColor(neutral.black6),
+        borderRadius: 2,
+        paddingX: { xs: 1, md: 4 },
+        paddingY: 3,
+        cursor: "pointer",
+      }}
+    >
       <Box display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="center">
-          <Typography color={formatColor(blue.blue1)}>{votes}</Typography>
-          <Box>
-            <Typography>{title}</Typography>
-            {timeLeft ? <Typography>{timeLeft}</Typography> : <></>}
+          <Typography
+            variant="h3"
+            fontWeight={500}
+            color={formatColor(blue.blue1)}
+            mr={1}
+          >
+            {id}
+          </Typography>
+          <Box position="relative" top={4}>
+            <Typography variant="h3" fontWeight={500} color="text.secondary">
+              {title}
+            </Typography>
+            {timeLeft ? (
+              <Typography variant="body2" color={formatColor(neutral.gray3)}>
+                {timeLeft}
+              </Typography>
+            ) : (
+              <Box height="8px"></Box>
+            )}
           </Box>
         </Box>
 
-        <Box>
-          <Votes noVotes={noVotes} yesVotes={yesVotes} />
+        <Box display="flex">
+          <Box display={{ xs: "none", md: "flex" }}>
+            <Votes noVotes={noVotes} yesVotes={yesVotes} />
+          </Box>
           <Status status={status} />
         </Box>
       </Box>

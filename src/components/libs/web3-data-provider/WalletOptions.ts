@@ -19,7 +19,7 @@ export enum WalletType {
 
 const appName = 'IP'
 // *remove later
-const rpc_url = 'https://mainnet.infura.io/v3/c21cd0dd200645f39a51d41368b956d9'
+const rpc_url = 'https://eth-ropsten.alchemyapi.io/v2/5EGdI7OUE9ptMFggrLzsM2dDpBYPMujp'
 
 export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): AbstractConnector => {
     switch (wallet) {
