@@ -1,14 +1,13 @@
 # Governance Overview
 
-## The Role IPT Holders & Protocol Governance 
-Interest Protocol's business is risk management. If the protocol can manage market risks better than the competing protocols then it can offer better oppurtunties for lenders and borrowers. To be the most effiecent protocol requires strong functional foundation, but to succed for the longterm requires thoughtful and progressive governance. 
+## The Role of IPT Holders & Protocol Governance
 
-IPT is the governance token for Interest Protocol. Token holders can influence the protocol and lead it after launch by creating and voting on proposals. Governance should be thought as the mechism to institue change in the protocol and token holders as the management of the protocol.  
+Interest Protocol Token (IPT) is the governance token for Interest Protocol. Token holders can influence the protocol and lead it after launch by creating and voting on proposals. Governance should be thought as the mechism to institue change in the protocol and token holders as the management of the protocol.
 
-Token holders (management) have three main responsibilities: 
+Token holders (management) have three main responsibilities:
 1. To prevent the centralization of power, manage control of the protocol, and asymmetry of information. An important part of building and maintaing a strong foundation is the community. The community needs to share the control of the protocol so no one alone can control the protocol, but control is still possible.
 2. To maintain the existing protocol. Typically, that means adjusting LTVs, interest rate curves, liquidation incentives, the protocol fee and other parameters. Management will need to have a strong understanding of the platform and its competitors to make informed decisions.
-3. To innovate and adapt. Management should think about the future of the platform. DeFi has a rapidly evolving landscape, and good management will guide the protocol to adapt to the evolving landscape to remain competitive and further grow the platform's market share. 
+3. To innovate and adapt. Management should think about the future of the platform. DeFi has a rapidly evolving landscape, and good management will guide the protocol to adapt to the evolving landscape to remain competitive and further grow the platform's market share.
 
 ## Capabilities
 
@@ -55,7 +54,7 @@ The sponsor of a Proposal Vote does not need to be the same as the sponsor of th
 
 Proposal Votes occur on [Tally](https://www.tally.xyz).
 
-Token holders are strongly encouraged to communicate early about proposal ideas, and to solicit feedback in the forum. 
+Token holders are strongly encouraged to communicate early about proposal ideas, and to solicit feedback in the forum.
 
 ## Emergency Proposals
 There may be a need for urgent action, for which an Emergency Proposal can be used.
