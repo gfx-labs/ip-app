@@ -103,6 +103,7 @@ export const UserStats = () => {
             }}
             LTVPercent={val.token_LTV!.toLocaleString()}
             penaltyPercent={val.token_penalty!.toLocaleString()}
+            canDelegate={val.can_delegate ? true : false}
           />
         );
       }
@@ -137,19 +138,7 @@ export const UserStats = () => {
         }}
       >
         <Box display={{ xs: "none", md: "flex" }}>
-          <StatsBodyTypography text={`Rewards:${rewards.toLocaleString()}`} />
-          <Box
-            sx={{
-              width: 26,
-              height: 0,
-              border: "1px solid #A3A9BA",
-              transform: "rotate(90deg) translateX(10px)",
-              marginX: 3,
-            }}
-          ></Box>
-          <StatsBodyTypography
-            text={`Rewards claimed: ${rewardsClaimed.toLocaleString()}`}
-          />
+          <StatsBodyTypography text={`Vault #${vaultID}`} />
         </Box>
 
         <Box display="flex" alignItems="center">

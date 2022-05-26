@@ -25,6 +25,7 @@ interface UserTokenCardProps extends BoxProps {
   };
   LTVPercent: string;
   penaltyPercent: string;
+  canDelegate:boolean | undefined;
 }
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
@@ -41,6 +42,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     image,
     LTVPercent,
     penaltyPercent,
+    canDelegate = false,
   } = props;
 
   const openDeposit = () => {
@@ -129,7 +131,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         </Button>
       </Box>
 
-      <Box display="flex" justifyContent="flex-end">
+      <Box display={canDelegate ? "flex" : "none"} justifyContent="flex-end">
         <Button
           variant="text"
           sx={{

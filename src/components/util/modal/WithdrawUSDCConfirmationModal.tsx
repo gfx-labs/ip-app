@@ -12,19 +12,34 @@ import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useWithdrawUSDC } from "../../../hooks/useWithdraw";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
+import {BN} from "../../../easy/bn";
+import {locale} from "../../../locale";
 
 export const WithdrawUSDCConfirmationModal = () => {
   const { type, setType, USDC } = useModalContext();
   const rolodex = useRolodexContext()
   const [loading, setLoading] = useState(false)
-  const { provider, currentAccount } = useWeb3Context();
+  const [loadmsg, setLoadmsg] = useState("");
+  const { provider, currentAccount , currentSigner } = useWeb3Context();
   const isLight = useLight();
 
+
   const handleWithdrawUSDC = async () => {
-    setLoading(true)
-    await useWithdrawUSDC(USDC.amountToWithdraw, rolodex!,provider?.getSigner(currentAccount)!)
-    setLoading(false)
-  }
+    let withdrawAmount = BN(USDC.amountToWithdraw)
+    const formattedUSDCAmount = withdrawAmount.mul(1e6)
+    if(rolodex) {
+      setLoading(true)
+      try {
+        setLoadmsg(locale("CheckWallet"))
+        const txn = await rolodex.USDI.connect(currentSigner!).withdraw(formattedUSDCAmount)
+        setLoadmsg(locale("TransactionPending"))
+        await txn?.wait()
+      }catch(e){
+        console.log(e)
+      }
+      setLoading(false)
+    }
+  };
 
   return (
     <BaseModal
@@ -60,7 +75,7 @@ export const WithdrawUSDCConfirmationModal = () => {
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="h3" color="text.secondary">
-              {'$'+USDC.amountToDeposit}
+              {'$'+USDC.amountToWithdraw}
             </Typography>
           </Box>
 
@@ -87,7 +102,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              {'$'+USDC.token.value}
+              {'$'+USDC.amountToWithdraw}
             </Typography>
           </Box>
         </Box>
@@ -125,6 +140,7 @@ export const WithdrawUSDCConfirmationModal = () => {
         disabled={false}
         onClick={handleWithdrawUSDC}
         loading={loading}
+        load_text={loadmsg}
       />
     </BaseModal>
   );
