@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState, useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 
 import { getWallet, WalletType } from "./WalletOptions";
-import { JsonRpcProvider, TransactionResponse } from "@ethersproject/providers";
+import { JsonRpcProvider, JsonRpcSigner, TransactionResponse } from "@ethersproject/providers";
 import { BigNumber, providers } from "ethers";
 
 import { SignatureLike } from "@ethersproject/bytes";
@@ -35,6 +35,7 @@ export type Web3Data = {
     connectWallet: (wallet: WalletType) => Promise<void>;
     disconnectWallet: () => void;
     currentAccount: string;
+    currentSigner: JsonRpcSigner | undefined;
     connected: boolean;
     loading: boolean;
     provider: JsonRpcProvider | undefined;
@@ -270,6 +271,7 @@ export const Web3ContextProvider = ({
                     connectWallet,
                     disconnectWallet,
                     provider,
+                    currentSigner: provider?.getSigner(account?.toLowerCase() || ""),
                     connected: active,
                     loading,
                     chainId: chainId || 1,
