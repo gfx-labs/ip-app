@@ -14,17 +14,20 @@ export const StatsMeter = () => {
     if(borrowingPower && accountLiability){
       setPercentBorrowed(Math.floor(100 * accountLiability / borrowingPower))
     }
+  },[borrowingPower, accountLiability])
+
+  useEffect(()=>{
     if(percentBorrowed > 80) {
       setBarColor("error")
     }
-  },[borrowingPower, accountLiability])
+  },[percentBorrowed])
   return (
     <Box>
       <Typography variant="body1" fontWeight={600} color={formatColor(neutral.gray3)}>
         Your Stats
       </Typography>
 
-      <LinearProgress color={barColor} variant="determinate" value={percentBorrowed} sx={{
+      <LinearProgress color={barColor as any} variant="determinate" value={percentBorrowed} sx={{
       marginY: 2,
       }}/>
 
