@@ -52,13 +52,6 @@ const contract = ERC20Detailed__factory.connect(
     const transferAttempt = await contract.transfer(vaultAddress!, formattedERC20Amount);
 
     return transferAttempt
-
-    // const contract = new ethers.Contract(collateral_address, minABI, signer);
-    // const formattedTransferAmount = utils.parseUnits(
-    //   amount,
-    //   await useDecimals(contract)
-    // );
-
   } catch (err) {
     console.log(err);
     throw new Error("Could not deposit");

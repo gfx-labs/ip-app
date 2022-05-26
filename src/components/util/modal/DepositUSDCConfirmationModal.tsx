@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {
   ModalType,
   useModalContext,
@@ -12,22 +12,82 @@ import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useDepositUSDC } from "../../../hooks/useDeposit";
+import {BN} from "../../../easy/bn";
+import {BigNumberish} from "ethers";
+import {locale} from "../../../locale";
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC } = useModalContext();
-  const { provider, currentAccount } = useWeb3Context();
+  const { provider, currentAccount, dataBlock, currentSigner } = useWeb3Context();
   const [loading, setLoading] = useState(false)
+  const [loadmsg, setLoadmsg] = useState("");
   const rolodex = useRolodexContext();
 
+  const [needAllowance, setNeedAllowance] = useState(true)
+  const [shiftOn, setShiftOn] = useState(false)
+
+  useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      if (e.shiftKey) {
+        setShiftOn(true)
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener('keyup', (e) => {
+      setShiftOn(false)
+    })
+  }, [])
+
+
+  useEffect(() => {
+    if(rolodex) {
+      rolodex.USDC!.allowance(currentAccount, rolodex.addressUSDI).then((initialApproval)=>{
+        const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN("1e6"))
+        if(initialApproval.lt(formattedUSDCAmount)) {
+          setNeedAllowance(true)
+        }else{
+          setNeedAllowance(false)
+        }
+      })
+    }
+  }, [rolodex, dataBlock])
+
   const handleDepositConfirmationRequest = async () => {
-    setLoading(true)
-    await useDepositUSDC(
-      USDC.amountToDeposit!,
-      rolodex!,
-      provider?.getSigner(currentAccount)!
-    );
-    console.log('finished')
-    setLoading(false)
+    let depositAmount = BN(USDC.amountToDeposit)
+    const formattedUSDCAmount = depositAmount.mul(1e6)
+    if(rolodex && USDC.amountToDeposit) {
+      setLoading(true)
+      try {
+        setLoadmsg(locale("CheckWallet"))
+        const txn = await rolodex.USDI.connect(currentSigner!).deposit(formattedUSDCAmount)
+        setLoadmsg(locale("TransactionPending"))
+        await txn?.wait()
+      }catch(e){
+        console.log(e)
+      }
+      setLoading(false)
+    }
+  };
+  const handleApprovalRequest = async () => {
+    let depositAmount = BN(USDC.amountToDeposit)
+    if(shiftOn) {
+      depositAmount = BN("1e18")
+    }
+    const formattedUSDCAmount = depositAmount.mul(BN("1e6"))
+    if(rolodex && USDC.amountToDeposit) {
+      setLoading(true)
+      try {
+        setLoadmsg(locale("CheckWallet"))
+        const txn = await rolodex.USDC?.connect(currentSigner!).approve(rolodex.addressUSDI, formattedUSDCAmount)
+        setLoadmsg(locale("TransactionPending"))
+        await txn?.wait()
+      }catch(e){
+        console.log(e)
+      }
+      setLoading(false)
+    }
   };
 
   const isLight = useLight();
@@ -120,13 +180,14 @@ export const DepositUSDCConfirmationModal = () => {
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
       >
-             </Box>
+      </Box>
 
       <DisableableModalButton
-        text="Confirm Deposit"
+        text={needAllowance ? ("Set" + (shiftOn ? " Max" : "") +" Allowance") : "Confirm Deposit"}
         disabled={false}
-        onClick={handleDepositConfirmationRequest}
+        onClick={needAllowance ?  handleApprovalRequest: handleDepositConfirmationRequest}
         loading={loading}
+        load_text={loadmsg}
       />
     </BaseModal>
   );
