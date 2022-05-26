@@ -6,6 +6,7 @@ import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataPro
 
 export const StatsMeter = () => {
   const [percentBorrowed, setPercentBorrowed] = useState(30);
+  const [barColor, setBarColor] = useState("success");
 
   const {borrowingPower, accountLiability} = useVaultDataContext()
 
@@ -14,21 +15,29 @@ export const StatsMeter = () => {
       setPercentBorrowed(Math.floor(100 * accountLiability / borrowingPower))
     }
   },[borrowingPower, accountLiability])
+
+  useEffect(()=>{
+    if(percentBorrowed > 80) {
+      setBarColor("error")
+    }
+  },[percentBorrowed])
   return (
     <Box>
       <Typography variant="body1" fontWeight={600} color={formatColor(neutral.gray3)}>
         Your Stats
       </Typography>
 
-      <LinearProgress variant="determinate" value={percentBorrowed} sx={{marginY: 2}}/>
+      <LinearProgress color={barColor as any} variant="determinate" value={percentBorrowed} sx={{
+      marginY: 2,
+      }}/>
 
       <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
         <Typography variant="body2" color={formatColor(neutral.gray3)}>
-          USDi Borrowed: {percentBorrowed}%
+          Borrowing Power: {borrowingPower} USDi
         </Typography>
 
         <Typography variant="body2" color={formatColor(neutral.gray3)}>
-          Borrowing Power: {borrowingPower} USDi
+          USDi Borrowed: {percentBorrowed}%
         </Typography>
       </Box>
     </Box>
