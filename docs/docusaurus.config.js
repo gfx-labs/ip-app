@@ -3,6 +3,8 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const math = require('remark-math');
+const katex = require('rehype-katex');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -26,6 +28,8 @@ const config = {
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://gfx.cafe/ip/app/-/tree/master/docs',
+                    remarkPlugins: [math],
+                    rehypePlugins: [katex],
                     async sidebarItemsGenerator({ defaultSidebarItemsGenerator, ...args }) {
                         const sidebarItems = await defaultSidebarItemsGenerator(args);
                         return clearIndex(sidebarItems);
@@ -37,63 +41,72 @@ const config = {
             }),
         ],
     ],
+    stylesheets: [
+        {
+            href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+            type: 'text/css',
+            integrity:
+            'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+            crossorigin: 'anonymous',
+        },
+    ],
     themeConfig:
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-        ({
-            navbar: {
-                title: 'Interest Protocol',
-                logo: {
-                    alt: 'Interest Protocol Logo',
-                    src: 'img/logo.svg',
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    ({
+        navbar: {
+            title: 'Interest Protocol',
+            logo: {
+                alt: 'Interest Protocol Logo',
+                src: 'img/logo.svg',
+            },
+            items: [
+                {
+                    href: 'https://gfx.cafe/ip/app',
+                    label: 'Contracts',
+                    position: 'right',
                 },
-                items: [
-                    {
-                        href: 'https://gfx.cafe/ip/app',
-                        label: 'Contracts',
-                        position: 'right',
-                    },
-                ],
-            },
-            footer: {
-                style: 'dark',
-                links: [
-                    {
-                        title: 'Community',
-                        items: [
-                            {
-                                label: 'Discord',
-                                href: 'https://discord.gg/W9mjQNTYca',
-                            },
-                            {
-                                label: 'Twitter',
-                                href: 'https://twitter.com/labsgfx',
-                            },
-                        ],
-                    },
-                    {
-                        title: 'More',
-                        items: [
-                            {
-                                label: 'Site Source',
-                                href: 'https://gfx.cafe/ip/app',
-                            },
-                            {
-                                label: 'Contract Source',
-                                href: 'https://gfx.cafe/ip/contracts',
-                            },
-                            {
-                                label: 'Contract Source (github mirror)',
-                                href: 'https://github.com/gfx-labs/ip',
-                            },
-                        ],
-                    },
-                ],
-            },
-            prism: {
-                theme: lightCodeTheme,
-                darkTheme: darkCodeTheme,
-            },
-        }),
+            ],
+        },
+        footer: {
+            style: 'dark',
+            links: [
+                {
+                    title: 'Community',
+                    items: [
+                        {
+                            label: 'Discord',
+                            href: 'https://discord.gg/W9mjQNTYca',
+                        },
+                        {
+                            label: 'Twitter',
+                            href: 'https://twitter.com/labsgfx',
+                        },
+                    ],
+                },
+                {
+                    title: 'More',
+                    items: [
+                        {
+                            label: 'Site Source',
+                            href: 'https://gfx.cafe/ip/app',
+                        },
+                        {
+                            label: 'Contract Source',
+                            href: 'https://gfx.cafe/ip/contracts',
+                        },
+                        {
+                            label: 'Contract Source (github mirror)',
+                            href: 'https://github.com/gfx-labs/ip',
+                        },
+                    ],
+                },
+            ],
+        },
+        prism: {
+            theme: lightCodeTheme,
+            darkTheme: darkCodeTheme,
+        },
+    }),
 
 };
 

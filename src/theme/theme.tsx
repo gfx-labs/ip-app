@@ -278,7 +278,7 @@ theme.components = {
           },
           "&:hover": {
             backgroundColor: formatColor(blue.blue12),
-            
+
           },
         },
       },
@@ -304,7 +304,7 @@ theme.components = {
     styleOverrides: {
       root: {
         borderRadius: 8,
-        
+
 
         "&:hover": {
           borderColor: formatColor(neutral.white),
@@ -406,7 +406,6 @@ theme.components = {
         height: 16,
         borderRadius: 8,
         ".MuiLinearProgress-bar": {
-          backgroundColor: formatColor(green.green1),
         },
       },
     },
