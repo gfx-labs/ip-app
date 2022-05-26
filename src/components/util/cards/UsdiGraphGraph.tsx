@@ -19,10 +19,13 @@ export interface MultilineChartProps {
   width:number
   height:number
   margin: {top:number, right:number, bottom: number, left:number}
+  setLastPaid:any
+  setLastRate:any
+  setLastTime:any
 }
 
 const MultilineChart = (props:MultilineChartProps) => {
-  const {width, height, margin, datamap} = props
+  const {width, height, margin, datamap, setLastRate, setLastPaid, setLastTime} = props
   const svgRef = React.useRef(null);
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
@@ -39,7 +42,6 @@ const MultilineChart = (props:MultilineChartProps) => {
   let notionalColor =  "#AFEABC"
 
   React.useEffect(() => {
-    console.log(data)
     // this scales the data to be within the size that we specify
     const xScale = d3.scaleTime()
     .domain(d3.extent(data, (d) => d.timestamp) as any)
@@ -73,7 +75,7 @@ const MultilineChart = (props:MultilineChartProps) => {
       return ystring.substring(0,ystring.length - 5)
   })
     const xAxisGroup = svg.append("g")
-    .attr("transform", `translate(0, ${height - margin.bottom + 25})`)
+    .attr("transform", `translate(0, ${height - margin.bottom + 40})`)
     .call(xAxis);
     xAxisGroup.select(".domain").remove();
     xAxisGroup.selectAll("line").attr("stroke", "rgba(00, 00, 00, 00)");
@@ -126,7 +128,7 @@ const MultilineChart = (props:MultilineChartProps) => {
     svg.append("path")
     .attr("class","line")
     .style("stroke", interestColor)
-    .style("stroke-width","3")
+    .style("stroke-width","2")
     .style("fill", "none")
     .attr("d", (d) => interestLine(data));
 
@@ -134,7 +136,7 @@ const MultilineChart = (props:MultilineChartProps) => {
     svg.append("path")
     .attr("class","line")
     .style("stroke", notionalColor)
-    .style("stroke-width","3")
+    .style("stroke-width","2")
     .style("fill", "none")
     .attr("d", (d) => notionalLine(data));
 
@@ -146,27 +148,26 @@ const MultilineChart = (props:MultilineChartProps) => {
     mouser.append("path")
     .attr("class", "mouse-line")
     .style("stroke", "black")
-    .style("stroke-dasharray","10,10")
-    .style("stroke-width","1px")
+    .style("stroke-width","0px")
     .style("opacity","0")
 
     var lines:HTMLCollectionOf<SVGGeometryElement> = document.getElementsByClassName('line') as any;
 
     var mouseLiner = mouser.selectAll('.mouse-per-line')
-    .data([data])
+    .data(["rate","paid"])
     .enter()
     .append("g")
     .attr("class","mouse-per-line")
 
     mouseLiner.append("circle")
-    .attr("r", 6)
+    .attr("r", 3)
     .style("stroke", "black")
     .style("fill","none")
     .style("stroke-width", "2px")
     .style("opacity", "0");
 
     mouseLiner.append("text")
-    .attr("transform","translate(10,-8)")
+    .attr("transform","translate(14,-10)")
 
     mouser.append('svg:rect')
     .attr('width', svgWidth)
@@ -219,23 +220,18 @@ const MultilineChart = (props:MultilineChartProps) => {
             else if (pos.x < mouse[0]) beginning = target;
             else break; //position found
           }
-          const ystring = xTimestamp.toLocaleDateString("en-US")
-          const displayTime = ystring.substring(0,ystring.length - 5)
-          d3.select(this)
-          .select('text')
-          .attr("x",10)
-          .attr("y",10)
-          .html(``+
-                `${displayTime}: $${yScaleNotional.invert(pos.y).toFixed(0)}@`+
-                `${yScale.invert(pos.y).toFixed(2)}%`+
-                ``
-            );
-          return "translate(" + mouse[0] + "," + pos.y +")";
+          if(i == 0) {
+            setLastRate(yScale.invert(pos.y).toFixed(2))
+          }else{
+            setLastPaid(yScaleNotional.invert(pos.y).toFixed(0))
+          }
+          setLastTime(xTimestamp.toLocaleString())
+          return "translate(" + mouse[0] + "," + pos.y+")";
         });
       });
   }, [datamap.size]); // Redraw chart if data size changes
 
-  return <svg ref={svgRef} width={svgWidth} height={svgHeight} />;
+  return <svg preserveAspectRatio={"xMidYMax meet"} viewBox={`0 0 ${svgWidth} ${svgHeight}`} ref={svgRef} />;
 };
 
 export default MultilineChart;

@@ -14,8 +14,11 @@ export const UsdiGraphCard = () => {
   const rolodex = useRolodexContext();
   const {dataBlock, provider} = useWeb3Context()
 
-  const [earlyBlock, setEarlyBlock] = useState(0)
   const [data, setData] = useState<Map<number, Observation>>(new Map<number, Observation>())
+
+  const [lastRate, setLastRate] = useState(0)
+  const [lastPaid, setLastPaid] = useState(0)
+  const [lastTime, setLastTime] = useState("")
 
   const addData = async (o:Observation)=>{
     if(!o.timestamp){
@@ -27,15 +30,6 @@ export const UsdiGraphCard = () => {
       data.set(o.block, o)
     }
   }
-
-  const [height, setHeight] = useState(250);
-  const [width, setWidth] = useState(600);
-  const div = useCallback((node:any) => {
-    if (node !== null) {
-      setHeight(node.getBoundingClientRect().height);
-      setWidth(node.getBoundingClientRect().width);
-    }
-  }, [])
 
   useEffect(()=>{
     const temp = new Map<number, Observation>()
@@ -88,7 +82,7 @@ export const UsdiGraphCard = () => {
             marginTop: -1
           }
           }}>
-          <GraphTypography text="Historical Interest" />
+          <GraphTypography text={`${lastTime}`} />
         </Box>
 
         <Box sx={{marginTop: -1}}>
@@ -102,7 +96,7 @@ export const UsdiGraphCard = () => {
                 marginRight: 1,
               }}
             ></Box>{" "}
-            <GraphTypography text="Interest Earned (%)" />
+            <GraphTypography text={`Interest Earned (${lastRate}%)`} />
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
@@ -114,16 +108,19 @@ export const UsdiGraphCard = () => {
                 marginRight: 1,
               }}
             ></Box>{" "}
-            <GraphTypography text="Interest Paid ($)" />
+            <GraphTypography text={`Interest Paid (${lastPaid}%)`} />
           </Box>
         </Box>
       </Box>
       <Box>
         <MultilineChart
           datamap={data}
-          width={width}
-          height={height}
-          margin={{top:30,right:50,bottom:20,left:50}}
+          width={400}
+          height={200}
+          margin={{top:10,right:40,bottom:30,left:50}}
+          setLastRate={setLastRate}
+          setLastPaid={setLastPaid}
+          setLastTime={setLastTime}
         />
       </Box>
     </Box>
