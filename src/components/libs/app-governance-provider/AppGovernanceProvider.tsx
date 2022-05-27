@@ -22,9 +22,8 @@ export const AppGovernanceProvider = ({
 
   const [isApp, setIsApp] = useState<boolean>(true);
   const [delegateToken, setDelegateToken] = useState<Token>(
-    getTokensListOnCurrentChain(chainId || 1)["WETH"]
+    getTokensListOnCurrentChain(chainId || 1)["UNI"]
   );
-    console.log(delegateToken, 'this is delegate token')
   return (
     <AppGovernanceContext.Provider
       value={{ isApp, setIsApp, delegateToken, setDelegateToken }}

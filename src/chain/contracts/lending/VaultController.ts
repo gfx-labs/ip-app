@@ -40,8 +40,8 @@ export interface VaultControllerInterface extends utils.Interface {
     "_vaultId_vaultAddress(uint96)": FunctionFragment;
     "_vaultsMinted()": FunctionFragment;
     "_wallet_vaultIDs(address,uint256)": FunctionFragment;
-    "accountBorrowingPower(uint96)": FunctionFragment;
-    "accountLiability(uint96)": FunctionFragment;
+    "vaultBorrowingPower(uint96)": FunctionFragment;
+    "vaultLiability(uint96)": FunctionFragment;
     "amountToSolvency(uint96)": FunctionFragment;
     "borrowUsdi(uint96,uint192)": FunctionFragment;
     "calculateInterest()": FunctionFragment;
@@ -90,8 +90,8 @@ export interface VaultControllerInterface extends utils.Interface {
       | "_vaultId_vaultAddress"
       | "_vaultsMinted"
       | "_wallet_vaultIDs"
-      | "accountBorrowingPower"
-      | "accountLiability"
+      | "vaultBorrowingPower"
+      | "vaultLiability"
       | "amountToSolvency"
       | "borrowUsdi"
       | "calculateInterest"
@@ -169,11 +169,11 @@ export interface VaultControllerInterface extends utils.Interface {
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "accountBorrowingPower",
+    functionFragment: "vaultBorrowingPower",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "accountLiability",
+    functionFragment: "vaultLiability",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -330,11 +330,11 @@ export interface VaultControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "accountBorrowingPower",
+    functionFragment: "vaultBorrowingPower",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "accountLiability",
+    functionFragment: "vaultLiability",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -693,12 +693,12 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    accountBorrowingPower(
+    vaultBorrowingPower(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    accountLiability(
+    vaultLiability(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
@@ -886,12 +886,12 @@ export interface VaultController extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  accountBorrowingPower(
+  vaultBorrowingPower(
     id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  accountLiability(
+  vaultLiability(
     id: BigNumberish,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
@@ -1073,12 +1073,12 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    accountBorrowingPower(
+    vaultBorrowingPower(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    accountLiability(
+    vaultLiability(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1359,12 +1359,12 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    accountBorrowingPower(
+    vaultBorrowingPower(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    accountLiability(
+    vaultLiability(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1549,12 +1549,12 @@ export interface VaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    accountBorrowingPower(
+    vaultBorrowingPower(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    accountLiability(
+    vaultLiability(
       id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
