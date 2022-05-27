@@ -13,9 +13,9 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
   const { option1, option2, onOptionChange, defaultIsOption1 = true } = props;
   const [option, setOption] = useState(() => {
     if (defaultIsOption1) {
-      return option1
+      return option1;
     }
-    return option2
+    return option2;
   });
 
   const [isOption1, setIsOption1] = useState(defaultIsOption1);
@@ -41,17 +41,32 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         justifyContent: "center",
       }}
     >
-      <Typography
-        variant="body1"
-        sx={{
-          color: isLight ? formatColor(neutral.gray2) : formatColor(blue.blue1),
-          display: "flex",
-          zIndex: 10,
-          alignItems: "center",
-        }}
-      >
-        {option}
-      </Typography>
+      {typeof option === "string" ? (
+        <Typography
+          variant="body1"
+          sx={{
+            color: isLight
+              ? formatColor(neutral.gray2)
+              : formatColor(blue.blue1),
+            display: "flex",
+            zIndex: 10,
+            alignItems: "center",
+          }}
+        >
+          {option}
+        </Typography>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            maxHeight: 15,
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
+          {option}
+        </Box>
+      )}
     </Box>
   );
 
@@ -83,9 +98,9 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         justifyContent: "space-between",
         textAlign: "center",
         position: "relative",
-        height: 48,
+        height: "48px",
         paddingX: "6px",
-        cursor: 'pointer'
+        cursor: "pointer",
       }}
       onClick={toggleHandler}
     >
@@ -99,7 +114,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
           backgroundColor: formatColor(neutral.white),
           color: formatColor(neutral.black),
           borderRadius: 2,
-          height: 36,
+          height: "36px",
           marginY: "6px",
           position: "absolute",
           animationName: "slide",
@@ -121,8 +136,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
           variant="body1"
           color={formatColor(neutral.black)}
           sx={{ display: "flex", alignItems: "center" }}
-        >
-        </Typography>
+        ></Typography>
       </Box>
     </Box>
   );

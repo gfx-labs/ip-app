@@ -1,12 +1,8 @@
 import { defineConfig, splitVendorChunkPlugin } from 'vite'
-import { resolve } from 'path'
 import react from '@vitejs/plugin-react'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
-import NodeModulesPolyfills from '@esbuild-plugins/node-modules-polyfill'
 
-import { truncate } from 'fs/promises';
 import nodePolyfills from "rollup-plugin-polyfill-node";
-import path from "path";
 
 
 // https://vitejs.dev/config/
@@ -37,9 +33,8 @@ export default defineConfig({
     publicDir: "./res",
     build: {
         rollupOptions: {
-            plugins: [nodePolyfills()],
+            plugins: [nodePolyfills({include: ['util']})],
         },
-
     },
     optimizeDeps: {
         esbuildOptions: {
@@ -51,7 +46,7 @@ export default defineConfig({
             plugins: [
                 GlobalsPolyfills({
                     buffer: true,
-                    process: true,
+                    process: true, 
                 }),
 
             ]
