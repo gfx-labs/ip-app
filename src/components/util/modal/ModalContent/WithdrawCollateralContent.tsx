@@ -10,6 +10,7 @@ import {
   ModalType,
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
+import {useVaultDataContext, VaultDataProvider} from "../../../libs/vault-data-provider/VaultDataProvider";
 
 export const WithdrawCollateralContent = () => {
   const {
@@ -18,6 +19,9 @@ export const WithdrawCollateralContent = () => {
     setCollateralWithdrawAmount,
     collateralWithdrawAmount,
   } = useModalContext();
+
+
+  const {borrowingPower,accountLiability} = useVaultDataContext()
 
   const setMax = () => {
     if(collateralToken && collateralToken.vault_amount)
@@ -54,6 +58,25 @@ export const WithdrawCollateralContent = () => {
     setIsMoneyValue(!isMoneyValue);
   };
 
+  const tryWithdrawCollateral = (amount:string)  => {
+    let newDollarValue = Number(amount)
+    let newAmount = Number(amount)
+    if (!isMoneyValue) {
+      newDollarValue = newDollarValue * collateralToken.value
+    }
+    let newResult = borrowingPower - accountLiability - newDollarValue
+    if(newResult < 0) {
+      newDollarValue = Math.round((newResult + newDollarValue) * 98)/100
+      newAmount = Math.round(newDollarValue *10000/ collateralToken.value)/10000
+    }
+    if (!isMoneyValue) {
+      setCollateralWithdrawAmount(newAmount.toString())
+    }else{
+
+      setCollateralWithdrawAmount(newDollarValue.toString())
+    }
+  }
+
   return (
     <Box>
       <Typography
@@ -70,7 +93,7 @@ export const WithdrawCollateralContent = () => {
         <DecimalInput
           onBlur={toggle}
           onFocus={toggle}
-          onChange={(amount) => setCollateralWithdrawAmount(amount)}
+          onChange={(amount) => tryWithdrawCollateral(amount)}
           placeholder={`0 ${isMoneyValue ? "USD" : collateralToken.ticker}`}
           value={collateralWithdrawAmount}
           isMoneyValue={isMoneyValue}
@@ -89,9 +112,9 @@ export const WithdrawCollateralContent = () => {
               ? `${
                   collateralWithdrawAmount === "0"
                     ? "0"
-                    : numAmountToWithdraw / collateralToken.value
+                    : Math.floor(numAmountToWithdraw*1000 / collateralToken.value)/1000
                 } ${collateralToken.ticker}`
-              : `$${numAmountToWithdraw * collateralToken.value}`}
+              : `$${(numAmountToWithdraw * collateralToken.value).toFixed(2)}`}
           </Typography>
 
           <Button
