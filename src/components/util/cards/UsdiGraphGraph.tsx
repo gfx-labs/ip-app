@@ -122,19 +122,13 @@ const MultilineChart = (props:MultilineChartProps) => {
     .curve(d3.curveMonotoneX)
     .x((d) => xScale(d.timestamp!))
     .y((d) => yScale(d.interestRate!));
-
-    const notionalLine = d3.line<Observation>()
-    .curve(d3.curveMonotoneX)
-    .x((d) => xScale(d.timestamp!))
-    .y((d) => yScaleNotional(d.interestPaid!));
-
     // Draw the lines
     svg.append("path")
     .attr("class","line")
     .style("stroke", interestColor)
     .style("stroke-width","2")
     .style("fill", "none")
-    .attr("d", (d) => interestLine(data));
+    .attr("d", (_) => interestLine(data));
 
     // Draw the interest rate payments
     svg.selectAll("barline")
