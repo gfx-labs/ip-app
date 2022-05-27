@@ -177,8 +177,8 @@ const MultilineChart = (props:MultilineChartProps) => {
     .attr("transform","translate(14,-10)")
 
     mouser.append('svg:rect')
-    .attr('width', svgWidth)
-    .attr('height', svgHeight)
+    .attr('width', width)
+    .attr('height', height)
     .attr('fill','none')
     .attr('pointer-events','all')
     .on('mouseout', () =>{
