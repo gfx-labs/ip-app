@@ -42,8 +42,8 @@ export const DesktopToolBar = () => {
         <SelectedChainButton />
 
         <BaseSwitch
-          option1={<LightIcon />}
-          option2={<DarkIcon />}
+          option1={<LightIcon sx={{width: 15}}/>}
+          option2={<DarkIcon sx={{width: 15}}/>}
           onOptionChange={toggleMode}
           defaultIsOption1={isLight}
         />
