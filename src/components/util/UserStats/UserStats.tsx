@@ -174,7 +174,7 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleText
             title="Borrowing Power"
-            text={`$${borrowingPower.toLocaleString()}`}
+            text={`$${Math.round(borrowingPower).toLocaleString()}`}
           />
         </SingleStatCard>
 
@@ -204,7 +204,7 @@ export const UserStats = () => {
           >
             <TitleText
               title="USDi Borrowed"
-              text={`$${accountLiability.toLocaleString()}`}
+              text={`$${Math.round(accountLiability).toLocaleString()}`}
             />
 
             <Box

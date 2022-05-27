@@ -10,6 +10,9 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
 import { useBalanceOf } from "../../../hooks/useBalanceOf";
 import { useReserveRatio } from "../../../hooks/useReserveRatio";
+import {Contract} from "ethers";
+import {Interface} from "readline";
+import {defaultAbiCoder} from "ethers/lib/utils";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
@@ -18,7 +21,7 @@ export const ProtocolStatsCard = () => {
   const [totalUSDCDeposited, setTotalUSDCDeposited] =
     useState<string>('');
   const [reserveRatio, setReserveRatio] = useState('0')
-  const { connected, dataBlock } = useWeb3Context();
+  const { connected, dataBlock, currentSigner} = useWeb3Context();
   const { setIsWalletModalOpen } = useWalletModalContext();
   useEffect(() => {
     if (rolodex && rolodex.addressUSDC) {
@@ -26,6 +29,8 @@ export const ProtocolStatsCard = () => {
         useTotalSupply(rolodex),
         useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC, rolodex.provider).then((val)=>{
           return val.toFixed(0)
+        }).catch((e)=>{
+          console.log("failed to get usdc and usdi balance", e)
         }),
         useReserveRatio(rolodex)
       ];
@@ -41,6 +46,13 @@ export const ProtocolStatsCard = () => {
       }).catch(err => console.log(err))
     }
   }, [rolodex, dataBlock]);
+
+  const mintTestUSDC = ()=>{
+    if(rolodex && rolodex.addressUSDC && currentSigner){
+      const c = new Contract(rolodex.addressUSDC,["function publicMint() external"],rolodex.provider)
+      c.connect(currentSigner).publicMint()
+    }
+  }
 
   return (
     <Box
@@ -63,6 +75,7 @@ export const ProtocolStatsCard = () => {
       >
         <TitleText title="USDi Minted" text={totalSupply} />
         <TitleText title="USDC Deposited" text={totalUSDCDeposited} />
+        <a onClick={mintTestUSDC} href={"#"}>mint test usdc</a>
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
