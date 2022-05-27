@@ -67,7 +67,8 @@ export const WithdrawCollateralContent = () => {
     let newResult = borrowingPower - accountLiability - newDollarValue
     if(newResult < 0) {
       newDollarValue = Math.round((newResult + newDollarValue) * 90)/100
-      newAmount = Math.round(newDollarValue *10000/ collateralToken.value)/10000
+      const ltvp =  ((collateralToken.token_LTV ? collateralToken.token_LTV : 100)/100)
+      newAmount = Math.round(newDollarValue *10000 / (collateralToken.value*ltvp))/10000
     }
     if (!isMoneyValue) {
       setCollateralWithdrawAmount(newAmount.toString())
