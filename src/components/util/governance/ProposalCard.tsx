@@ -1,9 +1,12 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import { useLight } from "../../../hooks/useLight";
 import { blue, formatColor, green, neutral, pink } from "../../../theme";
 import { Votes } from "./Votes";
 import { Status } from "./Status";
+import {Spinner} from "../loading";
+
+import ReactMarkdown from 'react-markdown'
 
 export interface Proposal {
   id: string;
@@ -20,9 +23,15 @@ export interface ProposalProps {
 export const ProposalCard = (props: ProposalProps) => {
   const { id, title, yesVotes, noVotes, status, timeLeft } = props.proposal;
   const isLight = useLight();
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [expandedContent, setExpandedContent] = useState<string | undefined>(undefined)
 
+  const expandCard = () => {
+    setIsExpanded(!isExpanded)
+  }
   return (
     <Box
+      onClick={expandCard}
       sx={{
         backgroundColor: isLight
           ? formatColor(neutral.white)
@@ -64,6 +73,16 @@ export const ProposalCard = (props: ProposalProps) => {
           <Status status={status} />
         </Box>
       </Box>
+
+      { isExpanded ?
+      <Box
+        sx={{
+          marginTop: 3,
+        }}
+      >
+        {expandedContent ? <ReactMarkdown>{expandedContent}</ReactMarkdown> : <Spinner/>}
+      </Box> : <></>
+      }
     </Box>
   );
 };
