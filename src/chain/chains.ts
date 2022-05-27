@@ -2,7 +2,7 @@ export enum ChainIDs {
     MAINNET = 1,
     ROPSTEN = 3,
     GOERLI = 5,
-    MUMBAI = 137
+    POLYGON = 137,
 }
 
 const configs: Array<ChainInfo> = [
@@ -24,9 +24,10 @@ const configs: Array<ChainInfo> = [
     ticker: "ETH",
   },
   {
-    id: ChainIDs.MUMBAI,
-    name: "Mumbai TESTNET",
+    id: ChainIDs.POLYGON,
+    name: "Polygon TESTDEPLOY",
     ticker: "MATIC",
+    usdiAddress: "0x1b23B531f7F176C30E0800D58EFC845660FA290E",
   },
 ];
 

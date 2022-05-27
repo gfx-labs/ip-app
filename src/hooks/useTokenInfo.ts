@@ -1,6 +1,6 @@
 import React from "react";
 import { BigNumber, Contract, utils } from "ethers";
-import { provider } from "../chain/rolodex/rolodex";
+import {JsonRpcProvider} from "@ethersproject/providers";
 
 const minABI = [
   // decimals
@@ -20,7 +20,8 @@ const minABI = [
 ];
 
 export const useDecimals = async (
-  contractAddressOrContract: string | Contract
+  contractAddressOrContract: string | Contract,
+  provider: JsonRpcProvider
 ): Promise<number> => {
   if (typeof contractAddressOrContract === "string") {
     const contract = new Contract(contractAddressOrContract, minABI, provider);
@@ -37,13 +38,14 @@ export const useDecimals = async (
 
 export const useBalanceOf = (
   wallet_address: string,
-  contract_address: string
+  contract_address: string,
+  provider: JsonRpcProvider
 ) => {
   const contract = new Contract(contract_address, minABI, provider);
 
   return (async function getBalance() {
     const balance = await contract.balanceOf(wallet_address);
-    const decimals = await useDecimals(contract);
+    const decimals = await useDecimals(contract, provider);
 
     const formattedBalance = useFormatWithDecimals(balance, decimals)
 

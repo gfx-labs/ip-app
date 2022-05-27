@@ -18,16 +18,14 @@ export enum WalletType {
 }
 
 const appName = 'IP'
-// *remove later
-const rpc_url = 'https://mainnet.infura.io/v3/c21cd0dd200645f39a51d41368b956d9'
+const rpc_url = ""
+    //'https://mainnet.infura.io/v3/c21cd0dd200645f39a51d41368b956d9'
 
 export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): AbstractConnector => {
     switch (wallet) {
         case WalletType.INJECTED:
             return new InjectedConnector({});
         case WalletType.WALLET_LINK:
-
-            // Need to test on non gitpod
             return new WalletLinkConnector({
                 url: rpc_url,
                 appName: "app",
@@ -35,7 +33,6 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): 
             });
 
         case WalletType.WALLET_CONNECT:
-
             return new WalletConnectConnector({
                 rpc: {
                     1: rpc_url
@@ -44,24 +41,10 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): 
                 qrcode: true
             });
         case WalletType.FRAME:
-            return new FrameConnector({ supportedChainIds: [1] });
+            return new FrameConnector({ supportedChainIds: [1, ] });
 
         // case WalletType.LEDGER:
         //   return new LedgerConnector({ chainId: 1, url: rpc_url, pollingInterval: 12000 });
-
-        //    case WalletType.TORUS:
-        //      return new TorusConnector({
-        //        chainId: chainId || 1,
-        //        initOptions: {
-        //          network: {
-        //            host: chainId,
-        //          },
-        //          showTorusButton: false,
-        //          enableLogging: false,
-        //          enabledVerifiers: false,
-        //        },
-        //      });
-
 
         default: {
             throw new Error(`unsupported wallet`);

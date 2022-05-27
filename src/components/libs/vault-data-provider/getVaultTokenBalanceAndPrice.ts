@@ -13,9 +13,9 @@ export const getVaultTokenBalanceAndPrice = async (
 ): Promise<{ balance: number; livePrice: number }> => {
     // get user balance
     try{
-    const balance = await useBalanceOf(vault_address, token_address);
+    const balance = await useBalanceOf(vault_address, token_address, rolodex.provider);
     const price = await rolodex?.Oracle?.getLivePrice(token_address);
-    const decimals = await useDecimals(token_address)
+    const decimals = await useDecimals(token_address, rolodex.provider)
     const livePrice = useFormatWithDecimals(price!, 18 + (18 - decimals));
     return { balance, livePrice };
     } catch(e:any) {

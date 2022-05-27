@@ -17,11 +17,11 @@ import {
   ERC20Detailed__factory,
 } from "../contracts";
 
-export const provider = new JsonRpcProvider(
-  "https://ropsten.infura.io/v3/105c9b31d23a48aa85b4b2deb78b42ce"
-);
+export const backupProvider = new JsonRpcProvider("https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw");
 
 export class Rolodex {
+  provider:  JsonRpcProvider
+
   addressUSDI: string;
   USDI: IUSDI;
 
@@ -38,6 +38,11 @@ export class Rolodex {
   USDC?: ERC20Detailed;
 
   constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
+    if (signerOrProvider instanceof JsonRpcSigner) {
+      this.provider = signerOrProvider.provider
+    }else {
+      this.provider = signerOrProvider
+    }
     this.addressUSDI = usdi;
     this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
   }
@@ -50,16 +55,16 @@ export const NewRolodex = async (ctx: Web3Data) => {
   // *remove or use mainnet 1
   const token = Chains.getInfo(ctx.chainId || 3);
   let rolo: Rolodex;
-  // use provider if not connected
-  if (!ctx.connected) {
+  let provider = backupProvider;
+  if (!ctx.provider) {
     rolo = new Rolodex(provider!, token.usdiAddress!);
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
   } else {
     console.log('getting signer')
-    const signer = ctx.provider?.getSigner(ctx.currentAccount);
+    const signer = ctx.provider.getSigner(ctx.currentAccount);
+    provider = ctx.provider
     rolo = new Rolodex(signer!, token.usdiAddress!);
-
     rolo.addressVC = await rolo.USDI?.getVaultController();
     rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
   }
