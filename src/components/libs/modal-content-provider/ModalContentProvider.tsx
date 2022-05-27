@@ -55,9 +55,6 @@ export type ModalContextType = {
   transactionState: TransactionState;
   updateTransactionState: (val: ContractReceipt | ContractTransaction) => void;
   transaction: ContractReceipt | ContractTransaction | null;
-  setTransactionState: (
-    val: ContractReceipt | ContractTransaction | null
-  ) => void;
 };
 
 const createDepositWithdrawUSDC = () => {
@@ -144,7 +141,6 @@ export const ModalContentProvider = ({
         transactionState,
         updateTransactionState,
         transaction,
-        setTransactionState,
       }}
     >
       {children}
