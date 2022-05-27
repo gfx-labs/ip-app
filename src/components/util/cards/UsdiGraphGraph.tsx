@@ -161,7 +161,7 @@ const MultilineChart = (props:MultilineChartProps) => {
     var lines:HTMLCollectionOf<SVGGeometryElement> = document.getElementsByClassName('line') as any;
 
     var mouseLiner = mouser.selectAll('.mouse-per-line')
-    .data(["rate","paid"])
+    .data(["rate"])
     .enter()
     .append("g")
     .attr("class","mouse-per-line")
