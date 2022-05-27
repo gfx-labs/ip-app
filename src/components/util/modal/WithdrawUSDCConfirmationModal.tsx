@@ -11,33 +11,38 @@ import { DisableableModalButton } from "../button/DisableableModalButton";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useWithdrawUSDC } from "../../../hooks/useWithdraw";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
-import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
-import {BN} from "../../../easy/bn";
-import {locale} from "../../../locale";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import { BN } from "../../../easy/bn";
+import { locale } from "../../../locale";
 
 export const WithdrawUSDCConfirmationModal = () => {
-  const { type, setType, USDC } = useModalContext();
-  const rolodex = useRolodexContext()
-  const [loading, setLoading] = useState(false)
+  const { type, setType, USDC, updateTransactionState } = useModalContext();
+  const rolodex = useRolodexContext();
+  const [loading, setLoading] = useState(false);
   const [loadmsg, setLoadmsg] = useState("");
-  const { provider, currentAccount , currentSigner } = useWeb3Context();
+  const { provider, currentAccount, currentSigner } = useWeb3Context();
   const isLight = useLight();
 
-
   const handleWithdrawUSDC = async () => {
-    let withdrawAmount = BN(USDC.amountToWithdraw)
-    const formattedUSDCAmount = withdrawAmount.mul(1e6)
-    if(rolodex) {
-      setLoading(true)
+    let withdrawAmount = BN(USDC.amountToWithdraw);
+    const formattedUSDCAmount = withdrawAmount.mul(1e6);
+    if (rolodex) {
+      setLoading(true);
       try {
-        setLoadmsg(locale("CheckWallet"))
-        const txn = await rolodex.USDI.connect(currentSigner!).withdraw(formattedUSDCAmount)
-        setLoadmsg(locale("TransactionPending"))
-        await txn?.wait()
-      }catch(e){
-        console.log(e)
+        setLoadmsg(locale("CheckWallet"));
+        const txn = await rolodex.USDI.connect(currentSigner!).withdraw(
+          formattedUSDCAmount
+        );
+        setLoadmsg(locale("TransactionPending"));
+        updateTransactionState(txn);
+        const receipt = await txn?.wait();
+
+        updateTransactionState(receipt);
+      } catch (e) {
+        console.log(e);
+        updateTransactionState(e);
       }
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -75,7 +80,7 @@ export const WithdrawUSDCConfirmationModal = () => {
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="h3" color="text.secondary">
-              {'$'+USDC.amountToWithdraw}
+              {"$" + USDC.amountToWithdraw}
             </Typography>
           </Box>
 
@@ -89,7 +94,10 @@ export const WithdrawUSDCConfirmationModal = () => {
           ></Box>
         </Box>
 
-        <ForwardIcon sx={{width: 15, height: 15}} strokecolor={formatColor(neutral.gray3)}/>
+        <ForwardIcon
+          sx={{ width: 15, height: 15 }}
+          strokecolor={formatColor(neutral.gray3)}
+        />
 
         <Box display="flex" alignItems="center">
           <Box
@@ -102,11 +110,10 @@ export const WithdrawUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              {'$'+USDC.amountToWithdraw}
+              {"$" + USDC.amountToWithdraw}
             </Typography>
           </Box>
         </Box>
-
       </Box>
 
       <Box>

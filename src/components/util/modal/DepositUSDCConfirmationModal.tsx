@@ -16,7 +16,7 @@ import {BigNumberish} from "ethers";
 import {locale} from "../../../locale";
 
 export const DepositUSDCConfirmationModal = () => {
-  const { type, setType, USDC } = useModalContext();
+  const { type, setType, USDC, updateTransactionState } = useModalContext();
   const { provider, currentAccount, dataBlock, currentSigner, chainId} = useWeb3Context();
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState("");
@@ -63,8 +63,11 @@ export const DepositUSDCConfirmationModal = () => {
       try {
         setLoadmsg(locale("CheckWallet"))
         const txn = await rolodex.USDI.connect(currentSigner!).deposit(formattedUSDCAmount)
+        updateTransactionState(txn)
+        
         setLoadmsg(locale("TransactionPending"))
-        await txn?.wait()
+        const response = await txn?.wait()
+        updateTransactionState(response)
       }catch(e){
         console.log(e)
       }

@@ -9,6 +9,7 @@ import { useRepay } from "../../../../hooks/useUSDIFactory";
 import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 import {locale} from "../../../../locale";
+import { useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 
 interface RepayContent {
@@ -31,7 +32,7 @@ export const RepayContent = (props: RepayContent) => {
   } = props;
   const rolodex = useRolodexContext();
   const { provider, currentAccount } = useWeb3Context();
-
+  const {updateTransactionState} = useModalContext()
   const setMax = () => setRepayAmount(accountLiability.toString());
 
 
@@ -57,15 +58,20 @@ export const RepayContent = (props: RepayContent) => {
     ).then((res)=>{
       setLoadmsg(locale("TransactionPending"));
       setLoading(true);
-      res!.wait().then(()=>{
+      updateTransactionState(res)
+      res!.wait().then((res)=>{
       setLoadmsg("");
       setLoading(false);
+
+      updateTransactionState(res)
       })
     }).catch((e)=>{
       setLoading(false);
       setShaking(true)
       setTimeout(() => setShaking(false), 400);
       console.log(e)
+
+      updateTransactionState(e)
     })
   };
 

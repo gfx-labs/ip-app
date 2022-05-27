@@ -22,6 +22,7 @@ import {
   WithdrawCollateralConfirmationModal,
   DepositCollateralConfirmationModal,
   DelegateModal,
+  TransactionStatusModal,
 } from "./components/util/modal";
 import { ClaimModal } from "./components/util/modal/ClaimModal";
 import { RolodexContentProvider } from "./components/libs/rolodex-data-provider/RolodexDataProvider";
@@ -92,6 +93,7 @@ const App = () => {
                               <DepositUSDCConfirmationModal />
                               <WithdrawUSDCConfirmationModal />
                               <ClaimModal />
+                              <TransactionStatusModal />
                             </>
                           </AppGovernanceProvider>
                         </ModalContentProvider>

@@ -21,13 +21,15 @@ export const useDepositUSDC = async (
     const initialApproval = await contract.allowance(await signer.getAddress(), rolodex.addressUSDI)
     if(initialApproval.lt(formattedUSDCAmount)) {
       const getApproval = await contract.approve(rolodex.addressUSDI, Number(formattedUSDCAmount));
+      console.log('24', getApproval)
       await getApproval.wait();
     }
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
       Number(formattedUSDCAmount)    );
 
-    console.log(depositAttempt);
+    console.log('depositAttempte',depositAttempt);
     const receipt = await depositAttempt?.wait();
+    console.log('RECIPT', receipt);
     return receipt;
   } catch (err) {
     console.log(err);

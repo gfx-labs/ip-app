@@ -7,10 +7,11 @@ import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
 import { useBorrow } from "../../../../hooks/useUSDIFactory";
-import { BigNumber, BigNumberish } from "ethers";
+import { BigNumber, BigNumberish, ContractReceipt, ContractTransaction } from "ethers";
 import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 import {locale} from "../../../../locale";
+import { useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 
 interface BorrowContent {
   tokenName: string;
@@ -30,7 +31,7 @@ export const BorrowContent = (props: BorrowContent) => {
     vaultID,
     accountLiability,
   } = props;
-
+const {updateTransactionState} = useModalContext()
   const isLight = useLight();
   const rolodex = useRolodexContext();
 
@@ -63,15 +64,22 @@ export const BorrowContent = (props: BorrowContent) => {
     ).then(async (res)=>{
       setLoadmsg(locale("TransactionPending"))
       setLoading(true);
-      return res!.wait().then(()=>{
+
+      updateTransactionState(res as ContractTransaction)
+
+      return res!.wait().then((res)=>{
         setLoadmsg("");
         setLoading(false);
+
+        updateTransactionState(res as ContractReceipt)
       })
     }).catch((e)=>{
       setLoading(false);
       setShaking(true)
       setTimeout(() => setShaking(false), 400);
       console.log(e)
+
+      updateTransactionState(e as ContractReceipt)
     })
   };
 

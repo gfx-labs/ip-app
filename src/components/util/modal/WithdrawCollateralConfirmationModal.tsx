@@ -14,7 +14,7 @@ import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataPro
 import {locale} from "../../../locale";
 
 export const WithdrawCollateralConfirmationModal = () => {
-  const { type, setType, collateralToken, collateralWithdrawAmount,setCollateralWithdrawAmount } =
+  const { type, setType, collateralToken, collateralWithdrawAmount,setCollateralWithdrawAmount, updateTransactionState } =
     useModalContext();
   const { provider, currentAccount } = useWeb3Context();
   const { vaultAddress } = useVaultDataContext();
@@ -31,11 +31,16 @@ export const WithdrawCollateralConfirmationModal = () => {
       vaultAddress!,
       provider?.getSigner(currentAccount)!,
     );
+
+    updateTransactionState(attempt)
+
     setCollateralWithdrawAmount("")
     setLoadmsg(locale("TransactionPending"))
-    await attempt.wait()
+    const receipt = await attempt.wait()
     setLoadmsg("")
     setLoading(false);
+
+    updateTransactionState(receipt)
   };
 
   return (
