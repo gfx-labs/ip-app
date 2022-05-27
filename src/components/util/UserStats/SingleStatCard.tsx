@@ -17,6 +17,7 @@ export const SingleStatCard = ({
         borderRadius: 5,
         paddingY: 2,
         paddingLeft: {xs: 2, md: 3},
+        paddingRight: {xs: 2, md: 3},
         ...sx
       }}
     >
