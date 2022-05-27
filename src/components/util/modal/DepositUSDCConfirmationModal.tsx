@@ -41,8 +41,9 @@ export const DepositUSDCConfirmationModal = () => {
 
 
   useEffect(() => {
-    if(rolodex && USDC.amountToDeposit) {
+    if(rolodex && USDC.amountToDeposit && rolodex.USDC) {
       rolodex.USDC!.allowance(currentAccount, rolodex.addressUSDI).then((initialApproval)=>{
+        console.log(initialApproval)
         const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN("1e6"))
         if(initialApproval.lt(formattedUSDCAmount)) {
           setNeedAllowance(true)
