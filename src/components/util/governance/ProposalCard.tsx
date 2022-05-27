@@ -1,12 +1,16 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import React, {useState} from "react";
 import { useLight } from "../../../hooks/useLight";
-import { blue, formatColor, green, neutral, pink } from "../../../theme";
+import { blue, formatColor, green, neutral, pink, theme } from "../../../theme";
 import { Votes } from "./Votes";
 import { Status } from "./Status";
 import {Spinner} from "../loading";
 
 import ReactMarkdown from 'react-markdown'
+import {exampleProposal} from "../../../hooks/useGovernance";
+import {NormalComponents} from "react-markdown/lib/complex-types";
+import {SpecialComponents} from "react-markdown/lib/ast-to-react";
+import remarkGfm from "remark-gfm";
 
 export interface Proposal {
   id: string;
@@ -28,10 +32,10 @@ export const ProposalCard = (props: ProposalProps) => {
 
   const expandCard = () => {
     setIsExpanded(!isExpanded)
+    setExpandedContent(exampleProposal)
   }
   return (
     <Box
-      onClick={expandCard}
       sx={{
         backgroundColor: isLight
           ? formatColor(neutral.white)
@@ -52,7 +56,9 @@ export const ProposalCard = (props: ProposalProps) => {
           >
             {id}
           </Typography>
-          <Box position="relative" top={4}>
+          <Box
+            onClick={expandCard}
+            position="relative" top={4}>
             <Typography variant="h3" fontWeight={500} color="text.secondary">
               {title}
             </Typography>
@@ -78,11 +84,89 @@ export const ProposalCard = (props: ProposalProps) => {
       <Box
         sx={{
           marginTop: 3,
-        }}
-      >
-        {expandedContent ? <ReactMarkdown>{expandedContent}</ReactMarkdown> : <Spinner/>}
+          cursor: 'auto',
+        }}>
+        {expandedContent ? <ReactMarkdown
+          children={expandedContent}
+          components={markdownComponentConfig}
+          remarkPlugins={[remarkGfm]}
+        /> : <Spinner/>}
       </Box> : <></>
       }
     </Box>
   );
 };
+
+const markdownComponentConfig:Partial<Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents> = {
+  a: ({node, style,children, ...props}) =>{
+    return <Link {...props} style={{
+      ...style
+    }}>{children}</Link>
+  },
+  table: ({node, style,children, ...props}) =>{
+    return <table {...props} style={{
+      borderRadius: 10,
+      backgroundColor: '#fcfcfc',
+      color: '#303030',
+      border: '1px solid black',
+      borderCollapse: 'collapse',
+      ...style
+    }}>{children}</table>
+  },
+  td: ({node, style,children, isHeader, ...props}) =>{
+    if(isHeader) {
+      return <th style={{
+        border: '1px solid black',
+        padding: '2px',
+        paddingRight: '4px',
+        paddingLeft: '4px',
+        ...style}}>
+        {children}
+      </th>
+    }
+    return <td style={{
+      border: '1px solid black',
+      padding: '2px',
+      paddingRight: '4px',
+      paddingLeft: '4px',
+      ...style
+    }}>
+      {children}
+    </td>
+  },
+  tr: ({node, style,children, isHeader, ...props}) =>{
+    return <tr {...props} style={{
+      border: '1px solid black',
+      ...style
+    }}>{children}</tr>
+  },
+  img: ({node, ...props}) =>{
+    return <img {...props} style={{
+      width: '25%',
+    }}></img>
+  },
+  pre: ({node, ...props}) =>{
+    return <pre {...props} style={{
+      border: '1px solid #CCCCCC',
+      borderRadius: 3,
+      backgroundColor: '#fafafa',
+      color: '#303030',
+      whiteSpace: 'pre',
+      fontFamily: 'monospace',
+      margin: '1em 0',
+      overflow: 'auto',
+      padding:'6px 10px',
+    }}></pre>
+  },
+  code: ({node, inline, className, children, ...props}) => {
+    return <code className={className} {...props} style={{
+      fontFamily: 'monospace',
+      borderRadius: 3,
+      backgroundColor: '#fafafa',
+      color: '#303030',
+      border: inline ? '1px solid #EAEAEA': 'none',
+      }}>
+      {children}
+    </code>
+  }
+}
