@@ -11,15 +11,15 @@ export const RolodexContentProvider = ({
 }) => {
   const ctx = useWeb3Context();
   const [rolodex, setRolodex] = useState<Rolodex | null>(null);
-  
-  useEffect(() => {
-      const newRolodex = async () => {
-        console.log('fetching new rolo')
-        const rolo = await NewRolodex(ctx) 
-        setRolodex(rolo)
-      }
 
-      newRolodex()
+  useEffect(() => {
+    console.log('fetching new rolo')
+    NewRolodex(ctx).then((rolo)=>{
+      setRolodex(rolo)
+    }).catch(()=>{
+      setRolodex(null)
+      console.log("failed rolodex init")
+    })
   }, [ctx.connected, ctx.currentAccount]);
 
   return (

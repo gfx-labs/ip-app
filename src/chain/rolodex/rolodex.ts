@@ -48,6 +48,8 @@ export class Rolodex {
   }
 }
 
+const zaddr = "0x0000000000000000000000000000000000000000"
+
 export const NewRolodex = async (ctx: Web3Data) => {
   if (!ctx.chainId) {
     throw new Error("Must connect to a chain first");
@@ -56,38 +58,36 @@ export const NewRolodex = async (ctx: Web3Data) => {
   const token = Chains.getInfo(ctx.chainId || 3);
   let rolo: Rolodex;
   let provider = backupProvider;
-  if (!ctx.provider) {
-    rolo = new Rolodex(provider!, token.usdiAddress!);
-    rolo.addressVC = await rolo.USDI?.getVaultController().catch(()=>{
-      console.log("failed to fetch vault controller")
-      return ""
-    });
-    rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
-  } else {
-    console.log('getting signer')
-    const signer = ctx.provider.getSigner(ctx.currentAccount);
-    provider = ctx.provider
-    rolo = new Rolodex(signer!, token.usdiAddress!);
-    rolo.addressVC = await rolo.USDI?.getVaultController();
-    rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
-  }
-  // connect
-  if(!rolo.addressUSDC) {
-    rolo.addressUSDC = await rolo.USDI.reserveAddress();
-    rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!)
-  }
+  rolo = new Rolodex(provider!, token.usdiAddress!);
+  try {
+    if (!ctx.provider) {
+      rolo.addressVC = await rolo.USDI?.getVaultController()
+      rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
+    } else {
+      console.log('getting signer')
+      const signer = ctx.provider.getSigner(ctx.currentAccount);
+      provider = ctx.provider
+      rolo = new Rolodex(signer!, token.usdiAddress!);
+      rolo.addressVC = await rolo.USDI?.getVaultController();
+      rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
+    }
+    // connect
+    if(!rolo.addressUSDC) {
+      rolo.addressUSDC = await rolo.USDI.reserveAddress()
+      rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!)
+    }
 
-  if (!rolo.addressOracle) {
-    rolo.addressOracle = await rolo.VC?.getOracleMaster();
-    rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);
+    if (!rolo.addressOracle) {
+      rolo.addressOracle = await rolo.VC?.getOracleMaster();
+      rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);
+    }
+
+    if (!rolo.addressCurve) {
+      rolo.addressCurve = await rolo.VC?.getCurveMaster();
+      rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!);
+    }
+  }catch(e){
+    return rolo
   }
-
-  if (!rolo.addressCurve) {
-    rolo.addressCurve = await rolo.VC?.getCurveMaster();
-    rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!);
-  }
-
-
-  console.log(rolo)
   return rolo;
 };
