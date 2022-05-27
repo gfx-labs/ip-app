@@ -90,11 +90,11 @@ export const VaultDataProvider = ({
           token.address,
           rolodex!
         ).then((res) => {
-          token.value = Number(res.livePrice);
-          token.vault_amount = Number(res.balance);
-          token.vault_balance = Number(
-            (token.vault_amount * token.value).toFixed(2)
-          );
+          if(res.livePrice) {
+            token.value = Math.round(100 * Number(res.livePrice))/100;
+            token.vault_amount = Number(res.balance);
+            token.vault_balance = Number((token.vault_amount * token.value).toFixed(0));
+          }
         }).catch((e)=>{
           console.log("failed vault balance & price", e)
         });

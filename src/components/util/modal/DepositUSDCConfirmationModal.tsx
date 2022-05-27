@@ -17,7 +17,7 @@ import {locale} from "../../../locale";
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC } = useModalContext();
-  const { provider, currentAccount, dataBlock, currentSigner } = useWeb3Context();
+  const { provider, currentAccount, dataBlock, currentSigner, chainId} = useWeb3Context();
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState("");
   const rolodex = useRolodexContext();
@@ -51,7 +51,7 @@ export const DepositUSDCConfirmationModal = () => {
         }
       })
     }
-  }, [rolodex, dataBlock])
+  }, [rolodex, dataBlock, chainId, USDC.amountToDeposit])
 
   const handleDepositConfirmationRequest = async () => {
     if(rolodex && USDC.amountToDeposit) {
