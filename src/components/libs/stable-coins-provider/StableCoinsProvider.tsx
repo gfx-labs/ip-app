@@ -23,7 +23,7 @@ export const StableCoinsProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const { currentAccount, dataBlock} = useWeb3Context();
+  const { currentAccount, dataBlock, chainId} = useWeb3Context();
   const rolodex = useRolodexContext();
 
   const [USDC, setUSDC] = useState<Token>(
@@ -34,7 +34,7 @@ export const StableCoinsProvider = ({
   );
 
   useEffect(() => {
-    if (rolodex?.addressUSDC) {
+    if (rolodex && rolodex?.addressUSDC) {
       useBalanceOf(
         currentAccount,
         rolodex.addressUSDC,
@@ -42,17 +42,17 @@ export const StableCoinsProvider = ({
       ).then((res) => {
         setUSDC({ ...USDC, wallet_balance: res, wallet_amount: res })});
     }
-  }, [rolodex?.addressUSDC, currentAccount, dataBlock]);
+  }, [currentAccount, dataBlock, chainId]);
 
   useEffect(() => {
-    if (rolodex?.addressUSDI) {
+    if (rolodex && rolodex?.addressUSDI) {
        useBalanceOf(
         currentAccount,
         rolodex.addressUSDI,
         rolodex.provider,
       ).then((res) => setUSDI({ ...USDI, wallet_balance: res, wallet_amount: res }));
     }
-  }, [rolodex?.addressUSDI, currentAccount, dataBlock]);
+  }, [currentAccount, dataBlock, chainId]);
 
   return (
     <StableCoinsContext.Provider value={{ USDC, USDI }}>

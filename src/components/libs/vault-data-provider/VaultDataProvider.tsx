@@ -57,8 +57,8 @@ export const VaultDataProvider = ({
 
   const update = async ()=>{
     const px:Array<Promise<any>> = []
-    if (rolodex){
-      rolodex!.VC!.vaultLiability(vaultID!).then((val)=>{
+    if (rolodex && rolodex.VC){
+      rolodex.VC!.vaultLiability(vaultID!).then((val)=>{
         const vl = val.div(BN('1e16')).toNumber()/100
         setAccountLiability(vl)
       }).catch((e)=>{
