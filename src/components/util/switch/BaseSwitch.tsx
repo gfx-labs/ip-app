@@ -46,6 +46,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         sx={{
           color: isLight ? formatColor(neutral.gray2) : formatColor(blue.blue1),
           display: "flex",
+          zIndex: 10,
           alignItems: "center",
         }}
       >
@@ -104,6 +105,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
           animationName: "slide",
           animationDuration: "1s",
           transition: ".4s",
+          zIndex: 1,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -120,7 +122,6 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
           color={formatColor(neutral.black)}
           sx={{ display: "flex", alignItems: "center" }}
         >
-          {option}
         </Typography>
       </Box>
     </Box>
