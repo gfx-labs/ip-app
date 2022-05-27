@@ -19,7 +19,7 @@ export const WalletModalContent = () => {
                 size="large"
                 onClick={() => connectWallet(WalletType.INJECTED)}
             >
-                browser wallet
+                Browser wallet
             </Button>
 
             <Button
@@ -34,7 +34,7 @@ export const WalletModalContent = () => {
                 size="large"
                 onClick={() => connectWallet(WalletType.WALLET_LINK)}
             >
-                coinbase
+                Coinbase
             </Button>
 
             <Button
@@ -52,7 +52,7 @@ export const WalletModalContent = () => {
                 Wallet Connect
             </Button>
 
-            <Button
+            {/* <Button
                 variant="outlined"
                 sx={{
                     display: "flex",
@@ -65,7 +65,7 @@ export const WalletModalContent = () => {
                 onClick={() => connectWallet(WalletType.FRAME)}
             >
                 Frame
-            </Button>
+            </Button> */}
 
         </Box>
     );

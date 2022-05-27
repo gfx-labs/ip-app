@@ -18,8 +18,7 @@ export enum WalletType {
 }
 
 const appName = 'IP'
-const rpc_url = ""
-    //'https://mainnet.infura.io/v3/c21cd0dd200645f39a51d41368b956d9'
+const rpc_url = 'https://mainnet.infura.io/v3/c21cd0dd200645f39a51d41368b956d9'
 
 export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): AbstractConnector => {
     switch (wallet) {
@@ -28,8 +27,9 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): 
         case WalletType.WALLET_LINK:
             return new WalletLinkConnector({
                 url: rpc_url,
-                appName: "app",
-                appLogoUrl: 'https://aave.com/favicon.ico'
+                appName,
+                appLogoUrl: 'https://aave.com/favicon.ico',
+                supportedChainIds: [1, 3, 4, 5, 42],
             });
 
         case WalletType.WALLET_CONNECT:
