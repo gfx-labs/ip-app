@@ -20,7 +20,7 @@ export const RolodexContentProvider = ({
       setRolodex(null)
       console.log("failed rolodex init")
     })
-  }, [ctx.connected, ctx.currentAccount]);
+  }, [ctx.connected, ctx.currentAccount, ctx.chainId]);
 
   return (
     <RolodexContentContext.Provider value={rolodex}>

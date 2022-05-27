@@ -13,6 +13,7 @@ import { useReserveRatio } from "../../../hooks/useReserveRatio";
 import {Contract} from "ethers";
 import {Interface} from "readline";
 import {defaultAbiCoder} from "ethers/lib/utils";
+import {BN} from "../../../easy/bn";
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight();
@@ -21,31 +22,21 @@ export const ProtocolStatsCard = () => {
   const [totalUSDCDeposited, setTotalUSDCDeposited] =
     useState<string>('');
   const [reserveRatio, setReserveRatio] = useState('0')
-  const { connected, dataBlock, currentSigner} = useWeb3Context();
+  const { connected, dataBlock, currentSigner, chainId} = useWeb3Context();
   const { setIsWalletModalOpen } = useWalletModalContext();
   useEffect(() => {
-    if (rolodex && rolodex.addressUSDC) {
-      const promises = [
-        useTotalSupply(rolodex),
-        useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC, rolodex.provider).then((val)=>{
-          return val.toFixed(0)
-        }).catch((e)=>{
-          console.log("failed to get usdc and usdi balance", e)
-        }),
-        useReserveRatio(rolodex)
-      ];
-
-      const allPromisesWithErrorHandler = promises.map(promise =>
-        promise.catch(error => error),
-      );
-
-      Promise.all(allPromisesWithErrorHandler).then((results) => {
-        setTotalSupply(results[0]);
-        setTotalUSDCDeposited(results[1] instanceof Error ? 0 : results[1]);
-        setReserveRatio(results[2] instanceof Error ? 0 : results[2])
-      }).catch(err => console.log(err))
+    if (rolodex && rolodex.USDC && rolodex.addressUSDI) {
+      rolodex.USDC.balanceOf(rolodex.addressUSDI).then((val)=>{
+        setTotalUSDCDeposited(val.div(BN("1e6")).toString())
+      })
+      useTotalSupply(rolodex).then(res=>{
+        setTotalSupply(res)
+      })
+      useReserveRatio(rolodex).then(res=>{
+        setReserveRatio(res)
+      })
     }
-  }, [rolodex, dataBlock]);
+  }, [rolodex, dataBlock, chainId]);
 
   const mintTestUSDC = ()=>{
     if(rolodex && rolodex.addressUSDC && currentSigner){
@@ -58,10 +49,10 @@ export const ProtocolStatsCard = () => {
     <Box
       sx={{
         padding: { xs: 3, md: 6 },
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.gradient1 : gradient.gradient2
-        )})`,
-        borderRadius: { xs: 5, md: 17 },
+      backgroundImage: `linear-gradient(${formatGradient(
+        isLight ? gradient.gradient1 : gradient.gradient2
+      )})`,
+      borderRadius: { xs: 5, md: 17 },
       }}
     >
       <Box
@@ -89,7 +80,7 @@ export const ProtocolStatsCard = () => {
         <Typography variant="caption">Reserve Ratio: {reserveRatio}%</Typography>
       </Box>
 
-        <SwapContainer />
+      <SwapContainer />
 
     </Box>
   );

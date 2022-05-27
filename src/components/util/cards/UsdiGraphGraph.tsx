@@ -49,6 +49,7 @@ const MultilineChart = (props:MultilineChartProps) => {
     const xScale = d3.scaleTime()
     .domain(d3.extent(data, (d) => d.timestamp) as any)
     .range([0, width]);
+
     const yScale = d3.scaleLinear()
     .domain(d3.extent(data, (d) => d.interestRate) as any)
     .range([height, 0]);
@@ -135,13 +136,16 @@ const MultilineChart = (props:MultilineChartProps) => {
     .style("fill", "none")
     .attr("d", (d) => interestLine(data));
 
-    // Draw the lines
-    svg.append("path")
-    .attr("class","line")
-    .style("stroke", notionalColor)
-    .style("stroke-width","2")
-    .style("fill", "none")
-    .attr("d", (d) => notionalLine(data));
+    // Draw the interest rate payments
+    svg.selectAll("barline")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("x", (d)=>{return xScale(d.timestamp!)-10})
+    .attr("y", (d)=>{return yScaleNotional(d.interestPaid!)+5})
+    .attr("width", 10)
+    .attr("height", (d)=>{return height - yScaleNotional(d.interestPaid!)-5})
+    .attr("fill", notionalColor)
 
 
     // create hover effect
@@ -206,6 +210,17 @@ const MultilineChart = (props:MultilineChartProps) => {
           var xTimestamp = xScale.invert(mouse[0])
           const bisect = d3.bisector(function(d:Observation) { return d.timestamp!; }).right
           bisect(data, xTimestamp)
+          setLastTime(xTimestamp.toLocaleString())
+          let paid = 0;
+          let lastDiff = 10000000000000;
+          for (const d of data){
+            const diff = Math.abs(xTimestamp.getTime() - d.timestamp!)
+            if(diff < lastDiff) {
+              lastDiff = diff
+              paid = d.interestPaid!
+            }
+          }
+          setLastPaid(paid)
           var beginning = 0
           if (lines[i] == undefined) {
             return ""
@@ -223,12 +238,7 @@ const MultilineChart = (props:MultilineChartProps) => {
             else if (pos.x < mouse[0]) beginning = target;
             else break; //position found
           }
-          if(i == 0) {
-            setLastRate(yScale.invert(pos.y).toFixed(2))
-          }else{
-            setLastPaid(yScaleNotional.invert(pos.y).toFixed(0))
-          }
-          setLastTime(xTimestamp.toLocaleString())
+          setLastRate(yScale.invert(pos.y).toFixed(2))
           return "translate(" + mouse[0] + "," + pos.y+")";
         });
       });
