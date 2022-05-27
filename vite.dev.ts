@@ -22,6 +22,9 @@ export default defineConfig({
             clientPort: 443
         } : true
     },
+    resolve: {
+        dedupe: ["buffer","bn.js", "keccak"],
+    },
     plugins: [
         react({
             jsxImportSource: '@emotion/react',
@@ -48,6 +51,7 @@ export default defineConfig({
             define: {
                 global: 'globalThis'
             },
+            treeShaking: true,
             // Enable esbuild polyfill plugins
             plugins: [
                 GlobalsPolyfills({
