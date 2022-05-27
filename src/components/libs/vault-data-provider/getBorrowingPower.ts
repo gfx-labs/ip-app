@@ -8,7 +8,8 @@ export const getVaultBorrowingPower = async (
 ): Promise<number> => {
   try {
     // get user balance
-    const BP = await rolodex.VC?.accountBorrowingPower(vaultID);
+    console.log("asking for bp of vault", vaultID, rolodex.VC!.address)
+    const BP = await rolodex.VC?.vaultBorrowingPower(vaultID);
     if(BP?._isBigNumber) {
       return BP.div(BN("1e16")).toNumber()/100
     }

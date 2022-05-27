@@ -55,12 +55,10 @@ export const VaultDataProvider = ({
   const [borrowingPower, setBorrowingPower] = useState(0)
   const [tokens, setTokens] = useState<VaultDataContextType["tokens"]>(undefined);
 
-
-
   const update = async ()=>{
     const px:Array<Promise<any>> = []
     if (rolodex){
-      rolodex!.VC!.accountLiability(vaultID!).then((val)=>{
+      rolodex!.VC!.vaultLiability(vaultID!).then((val)=>{
         const vl = val.div(BN('1e16')).toNumber()/100
         setAccountLiability(vl)
       }).catch((e)=>{
@@ -107,7 +105,7 @@ export const VaultDataProvider = ({
           console.log("failed to get token balances")
         })
         px.push(p3)
-    }
+      }
     }
     return Promise.all(px)
   }

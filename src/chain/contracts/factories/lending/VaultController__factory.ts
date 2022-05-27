@@ -502,7 +502,7 @@ const _abi = [
         type: "uint96",
       },
     ],
-    name: "accountBorrowingPower",
+    name: "vaultBorrowingPower",
     outputs: [
       {
         internalType: "uint192",
@@ -521,7 +521,7 @@ const _abi = [
         type: "uint96",
       },
     ],
-    name: "accountLiability",
+    name: "vaultLiability",
     outputs: [
       {
         internalType: "uint192",

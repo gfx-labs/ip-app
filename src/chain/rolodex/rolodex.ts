@@ -58,7 +58,10 @@ export const NewRolodex = async (ctx: Web3Data) => {
   let provider = backupProvider;
   if (!ctx.provider) {
     rolo = new Rolodex(provider!, token.usdiAddress!);
-    rolo.addressVC = await rolo.USDI?.getVaultController();
+    rolo.addressVC = await rolo.USDI?.getVaultController().catch(()=>{
+      console.log("failed to fetch vault controller")
+      return ""
+    });
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
   } else {
     console.log('getting signer')
