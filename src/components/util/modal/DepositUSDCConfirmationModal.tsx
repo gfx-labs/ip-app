@@ -73,11 +73,11 @@ export const DepositUSDCConfirmationModal = () => {
   };
   const handleApprovalRequest = async () => {
     if(rolodex && USDC.amountToDeposit) {
-    let depositAmount = BN(USDC.amountToDeposit)
-    if(shiftOn) {
-      depositAmount = BN("1e18")
-    }
-    const formattedUSDCAmount = depositAmount.mul(BN("1e6"))
+      let depositAmount = BN(USDC.amountToDeposit)
+      if(shiftOn) {
+        depositAmount = BN("1e18")
+      }
+      const formattedUSDCAmount = depositAmount.mul(BN("1e6"))
       setLoading(true)
       try {
         setLoadmsg(locale("CheckWallet"))
