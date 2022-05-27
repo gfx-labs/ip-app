@@ -1,3 +1,5 @@
+import { TransactionResponse } from "@ethersproject/providers";
+import { ContractReceipt, ContractTransaction } from "ethers";
 import { createContext, useState, useContext } from "react";
 import {
   getStablecoins,
@@ -21,7 +23,10 @@ export enum ModalType {
   DepositCollateralConfirmation = "DEPOSIT_COLLATERAL_CONFIRMATION",
   WithdrawCollateralConfirmation = "WITHDRAW_COLLATERAL_CONFIRMATION",
   Delegate = "DELEGATE",
+  TransactionStatus = "TRANSACTION_STATUS",
 }
+
+type TransactionState = "PENDING" | "SUCCESS" | "FAILURE" | null;
 
 interface DepositWithdrawUSDC {
   token: Token;
@@ -45,6 +50,14 @@ export type ModalContextType = {
   // Control USDC
   USDC: DepositWithdrawUSDC;
   updateUSDC: (prop: string, val: string) => void;
+
+  // Transaction State
+  transactionState: TransactionState;
+  updateTransactionState: (val: ContractReceipt | ContractTransaction) => void;
+  transaction: ContractReceipt | ContractTransaction | null;
+  setTransactionState: (
+    val: ContractReceipt | ContractTransaction | null
+  ) => void;
 };
 
 const createDepositWithdrawUSDC = () => {
@@ -83,6 +96,37 @@ export const ModalContentProvider = ({
     });
   };
 
+  const [transactionState, setTransactionState] =
+    useState<TransactionState>(null);
+    
+  const [transaction, setTransaction] =
+    useState<ModalContextType["transaction"]>(null);
+
+  function isContractTransaction(
+    transaction: ContractReceipt | ContractTransaction
+  ): transaction is ContractTransaction {
+    return Object.prototype.hasOwnProperty.call(transaction, "wait");
+  }
+
+  const updateTransactionState = (
+    transaction: ContractReceipt | ContractTransaction
+  ) => {
+    console.log("THIS IS TRANSACTION", transaction);
+    if (isContractTransaction(transaction)) {
+      setTransactionState("PENDING");
+      setTransaction(transaction);
+      setType(ModalType.TransactionStatus);
+    } else {
+      if (transaction.status === 1) {
+        setTransactionState("SUCCESS");
+      } else {
+        setTransactionState("FAILURE");
+      }
+    }
+
+    setTransaction(transaction);
+  };
+
   return (
     <ModalContentContext.Provider
       value={{
@@ -96,6 +140,11 @@ export const ModalContentProvider = ({
         setCollateralWithdrawAmount,
         USDC,
         updateUSDC,
+
+        transactionState,
+        updateTransactionState,
+        transaction,
+        setTransactionState,
       }}
     >
       {children}

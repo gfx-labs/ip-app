@@ -18,7 +18,7 @@ import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataPro
 import {useDelegate} from "../../../hooks/useDelegate";
 
 export const DelegateModal = () => {
-  const { type, setType } = useModalContext();
+  const { type, setType, updateTransactionState } = useModalContext();
   const isLight = useLight();
 
   const [focus, setFocus] = useState(false);
@@ -46,11 +46,14 @@ export const DelegateModal = () => {
         address,
         provider!.getSigner(currentAccount)!
       ).then(async (res)=>{
+        updateTransactionState(res)
         setLoadmsg(locale("TransactionPending"))
         setLoading(true);
-        return res!.wait().then(()=>{
+        return res!.wait().then((res)=>{
           setLoadmsg("");
           setLoading(false);
+
+          updateTransactionState(res)
         })
       })
     } catch(e){
@@ -58,6 +61,8 @@ export const DelegateModal = () => {
       setShaking(true)
       setTimeout(() => setShaking(false), 400);
       console.log(e)
+
+      updateTransactionState(e)
     }
   };
 
