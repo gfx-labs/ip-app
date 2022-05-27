@@ -1,5 +1,7 @@
 import { Box, Typography, Button, TextField, FormControl } from "@mui/material";
 import { useState, useEffect, FormEvent } from "react";
+import { ContractReceipt } from "ethers";
+
 import { formatColor, neutral } from "../../../theme";
 import {
   ModalType,
@@ -13,9 +15,9 @@ import { ModalInputContainer } from "./ModalContent/ModalInputContainer";
 import { Vault__factory } from "../../../chain/contracts";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import {locale} from "../../../locale";
-import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
-import {useDelegate} from "../../../hooks/useDelegate";
+import { locale } from "../../../locale";
+import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import { useDelegate } from "../../../hooks/useDelegate";
 
 export const DelegateModal = () => {
   const { type, setType, updateTransactionState } = useModalContext();
@@ -33,36 +35,38 @@ export const DelegateModal = () => {
   const toggle = () => setFocus(!focus);
 
   const { delegateToken } = useAppGovernanceContext();
-  const {vaultAddress} = useVaultDataContext()
+  const { vaultAddress } = useVaultDataContext();
   const { provider, currentAccount } = useWeb3Context();
 
   const handleDelegateRequest = async () => {
     setLoading(true);
-    setLoadmsg(locale("CheckWallet"))
-    try{
+    setLoadmsg(locale("CheckWallet"));
+    try {
       await useDelegate(
         vaultAddress!,
         delegateToken.address,
         address,
         provider!.getSigner(currentAccount)!
-      ).then(async (res)=>{
-        updateTransactionState(res)
-        setLoadmsg(locale("TransactionPending"))
+      ).then(async (res) => {
+        updateTransactionState(res);
+        setLoadmsg(locale("TransactionPending"));
         setLoading(true);
-        return res!.wait().then((res)=>{
+        return res!.wait().then((res) => {
           setLoadmsg("");
           setLoading(false);
 
-          updateTransactionState(res)
-        })
-      })
-    } catch(e){
+          updateTransactionState(res);
+        });
+      });
+    } catch (e) {
       setLoading(false);
-      setShaking(true)
+      setShaking(true);
       setTimeout(() => setShaking(false), 400);
-      console.log(e)
+      console.log(e);
 
-      updateTransactionState(e)
+      const err = e as ContractReceipt;
+
+      updateTransactionState(err);
     }
   };
 
@@ -112,10 +116,13 @@ export const DelegateModal = () => {
         >
           Enter the address you would like to delegate your vote to
         </Typography>
-        <Box component="form" onSubmit={(e: FormEvent) => {
-          e.preventDefault()
-          // Vault__factory.connect(vaultAddress, provider?.getSigner(currentAccount))
-        }}>
+        <Box
+          component="form"
+          onSubmit={(e: FormEvent) => {
+            e.preventDefault();
+            // Vault__factory.connect(vaultAddress, provider?.getSigner(currentAccount))
+          }}
+        >
           <Box my={2}>
             <ModalInputContainer focus={focus}>
               <TextField
@@ -129,8 +136,8 @@ export const DelegateModal = () => {
                   sx: {
                     "&:before, &:after": {
                       borderBottom: "none !important",
-                },
-                },
+                    },
+                  },
                 }}
                 sx={{
                   width: "100%",
@@ -140,7 +147,7 @@ export const DelegateModal = () => {
                     color: isLight
                       ? formatColor(neutral.gray1)
                       : formatColor(neutral.white),
-                },
+                  },
                 }}
               />
             </ModalInputContainer>

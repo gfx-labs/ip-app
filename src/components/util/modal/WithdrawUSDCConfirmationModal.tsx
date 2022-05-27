@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
+import { ContractReceipt } from "ethers";
+
 import { formatColor, neutral } from "../../../theme";
 import {
   ModalType,
@@ -40,7 +42,8 @@ export const WithdrawUSDCConfirmationModal = () => {
         updateTransactionState(receipt);
       } catch (e) {
         console.log(e);
-        updateTransactionState(e);
+        const error = e as ContractReceipt
+        updateTransactionState(error);
       }
       setLoading(false);
     }
