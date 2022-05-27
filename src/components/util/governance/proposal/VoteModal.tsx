@@ -1,6 +1,6 @@
 import { Typography, Button, Box } from '@mui/material';
-import { BaseModal } from '../../components/util/modal';
-import { formatColor, neutral } from '../../theme';
+import { BaseModal } from '../../modal';
+import { formatColor, neutral } from '../../../../theme';
 
 type VoteModalProps = {
   open: boolean,

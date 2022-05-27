@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Typography, Button, LinearProgress } from "@mui/material";
-import { addressShortener } from "../../components/util/text";
-import { formatColor, neutral } from "../../theme";
-import { useLight } from "../../hooks/useLight";
-import { BaseModal } from "../../components/util/modal";
+import { addressShortener } from "../../text";
+import { formatColor, neutral } from "../../../../theme";
+import { useLight } from "../../../../hooks/useLight";
+import { BaseModal } from "../../modal";
 
 interface Voter {
   address: string;

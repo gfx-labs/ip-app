@@ -12,7 +12,6 @@ import { PaletteModeContextProvider } from "./components/libs/palette-mode-provi
 import LandingPage from "./pages";
 import RedirectBook from "./pages/book";
 import Dashboard from "./pages/dashboard";
-import Proposal from "./pages/proposal";
 import NotFound404Page from "./pages/404";
 import {
   DepositWithdrawUSDCModal,
@@ -67,16 +66,6 @@ const App = () => {
                                         path={`/dashboard`}
                                         element={<Dashboard />}
                                       />
-
-                                      <Route
-                                        path={`/governance`}
-                                        element={<Proposal />}
-                                      >
-                                        <Route
-                                          path=":id"
-                                          element={<Proposal />}
-                                        />
-                                      </Route>
 
                                       <Route
                                         path={`/docs`}

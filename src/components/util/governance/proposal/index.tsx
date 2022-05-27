@@ -6,10 +6,8 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { ForwardIcon } from "../../components/icons/misc/ForwardIcon";
-import { formatColor, neutral, blue } from "../../theme";
-import { useLight } from "../../hooks/useLight";
-import { Status } from "../../components/util/governance/Status";
+import { formatColor, neutral, blue } from "../../../../theme";
+import { useLight } from "../../../../hooks/useLight";
 import { VoteCount } from "./VoteCount";
 import { VoteModal } from "./VoteModal";
 
@@ -57,7 +55,7 @@ const Proposal: React.FC = () => {
       textAlign="left"
       maxWidth="xl"
       py={{ xs: 7, sm: 0 }}
-      px={{ xs: 2, md: 10 }}
+      
       margin="auto"
       position="relative"
       sx={{
@@ -68,14 +66,14 @@ const Proposal: React.FC = () => {
         },
       }}
     >
-      <ForwardIcon
+      {/* <ForwardIcon
         sx={{ width: 18, height: 14, transform: "rotate(180deg)", mb: 1 }}
         strokecolor={
           isLight ? formatColor(neutral.black) : formatColor(neutral.white)
         }
-      />
+      /> */}
 
-      <Box display="flex" alignItems="center">
+      {/* <Box display="flex" alignItems="center">
         <Typography
           variant="h3"
           fontWeight={500}
@@ -88,11 +86,11 @@ const Proposal: React.FC = () => {
         <Typography variant="h3" fontWeight={500} color="text.secondary">
           {title}
         </Typography>
-      </Box>
+      </Box> */}
 
-      <Box display="flex" justifyContent="end">
+      {/* <Box display="flex" justifyContent="end">
         <Status status={status} />
-      </Box>
+      </Box> */}
 
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Button
