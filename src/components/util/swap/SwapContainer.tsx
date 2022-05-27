@@ -52,6 +52,7 @@ export const SwapContainer = () => {
           columnGap: 2,
           rowGap: 1,
           mb: 2,
+          borderRadius: 2,
           position: "relative",
           [theme.breakpoints.down("md")]: {
             flexDirection: "column",

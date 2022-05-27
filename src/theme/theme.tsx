@@ -31,7 +31,7 @@ declare module "@mui/material/Button" {
 
 export const theme = createTheme({
   shape: {
-    borderRadius: 0,
+    borderRadius: 4,
   },
   typography: {
     htmlFontSize: HTML_FONT_SIZE,
