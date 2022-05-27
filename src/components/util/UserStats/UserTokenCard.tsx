@@ -76,7 +76,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2.5 }}>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
-            {tokenName}
+            <a target={"_blank"} href={"https://polygonscan.com/address/"+(tokens as any)[tokenName].address +"#writeContract"}>
+              {tokenName}
+            </a>
           </Typography>
           <Typography variant="h3" color="text.secondary" mb={1}>
             {tokenValue}
@@ -88,7 +90,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           <Typography variant="h3" color="text.secondary">
             {vaultBalance}
           </Typography>
-
           <Typography variant="body2" color={formatColor(neutral.gray10)}>
             {tokenAmount} {tokenName}
           </Typography>
@@ -143,8 +144,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
               "& path": {
                 stroke: formatColor(neutral.gray3),
-              },
-            },
+          },
+          },
           }}
           onClick={setAndOpenDelegate}
         >

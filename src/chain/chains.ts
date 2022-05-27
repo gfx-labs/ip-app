@@ -27,7 +27,7 @@ const configs: Array<ChainInfo> = [
     id: ChainIDs.POLYGON,
     name: "Polygon TESTDEPLOY",
     ticker: "MATIC",
-    usdiAddress: "0x1b23B531f7F176C30E0800D58EFC845660FA290E",
+    usdiAddress: "0x711771cddf715064d14005dbeeF91203aFF72c28",
   },
 ];
 
