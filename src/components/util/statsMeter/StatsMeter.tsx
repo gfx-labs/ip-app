@@ -5,14 +5,14 @@ import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataP
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const StatsMeter = () => {
-  const [percentBorrowed, setPercentBorrowed] = useState(30);
+  const [percentBorrowed, setPercentBorrowed] = useState(0);
   const [barColor, setBarColor] = useState("success");
 
   const {borrowingPower, accountLiability} = useVaultDataContext()
 
   useEffect(()=>{
     if(borrowingPower && accountLiability){
-      setPercentBorrowed(Math.floor(100 * accountLiability / borrowingPower))
+      setPercentBorrowed(Math.floor(100 * (accountLiability / borrowingPower)))
     }
   },[borrowingPower, accountLiability])
 
