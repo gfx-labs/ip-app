@@ -1,4 +1,4 @@
-import { ModalProps, Typography, Button, Box } from '@mui/material';
+import { Typography, Button, Box } from '@mui/material';
 import { BaseModal } from '../../components/util/modal';
 import { formatColor, neutral } from '../../theme';
 
