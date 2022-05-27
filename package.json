@@ -16,14 +16,6 @@
         "abi": "cp -r ../contracts/typechain-types/* ./src/chain/contracts",
         "watch_docs": "cd docs && npx yarn install && npm run start"
     },
-    "overrides": {
-        "qrcode": {
-            "buffer": "$buffer"
-        },
-        "keccak": {
-            "buffer": "$buffer"
-        }
-    },
     "dependencies": {
         "@emotion/react": "^11.9.0",
         "@emotion/styled": "^11.8.1",
