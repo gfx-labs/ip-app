@@ -15,12 +15,15 @@ import {
   CurveMaster__factory,
   ERC20Detailed,
   ERC20Detailed__factory,
+  GovernorCharlieDelegate,
 } from "../contracts";
 
 export const backupProvider = new JsonRpcProvider("https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw");
 
 export class Rolodex {
   provider:  JsonRpcProvider
+
+  charlie?: GovernorCharlieDelegate
 
   addressUSDI: string;
   USDI: IUSDI;
