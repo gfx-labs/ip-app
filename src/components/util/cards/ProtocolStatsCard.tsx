@@ -24,7 +24,7 @@ export const ProtocolStatsCard = () => {
     if (rolodex && rolodex.addressUSDC) {
       const promises = [
         useTotalSupply(rolodex),
-        useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC).then((val)=>{
+        useBalanceOf(rolodex.addressUSDI, rolodex.addressUSDC, rolodex.provider).then((val)=>{
           return val.toFixed(0)
         }),
         useReserveRatio(rolodex)

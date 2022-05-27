@@ -1,5 +1,5 @@
+import {JsonRpcProvider} from "@ethersproject/providers";
 import { ethers } from "ethers";
-import { provider } from "../chain/rolodex/rolodex";
 import { useDecimals, useFormatWithDecimals } from "./useTokenInfo";
 
 const minABI = [
@@ -29,15 +29,20 @@ const minABI = [
 
 export const useBalanceOf = (
   wallet_address: string,
-  contract_address: string
+  contract_address: string,
+  provider: JsonRpcProvider,
 ) => {
-  return getBalance(contract_address, wallet_address)
+  return getBalance(contract_address, wallet_address, provider)
 };
 
-export const getBalance  = async (contract_address: string, target: string):Promise<number>=>{
+export const getBalance  = async (
+  contract_address: string,
+  target: string,
+  provider: JsonRpcProvider,
+):Promise<number>=>{
   const contract = new ethers.Contract(contract_address, minABI, provider);
   const balance = await contract.balanceOf(target);
-  const decimals = await useDecimals(contract);
+  const decimals = await useDecimals(contract, provider);
 
   const formattedBalance = useFormatWithDecimals(balance, decimals);
 
