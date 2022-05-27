@@ -65,7 +65,10 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       sx={{
         backgroundColor: "smallCard.background",
         borderRadius: 5,
-        padding: 5,
+        paddingTop:5,
+        paddingLeft:6,
+        paddingRight:6,
+        paddingBottom:3,
         [theme.breakpoints.down("lg")]: {
           paddingX: 2,
           paddingY: 4,
