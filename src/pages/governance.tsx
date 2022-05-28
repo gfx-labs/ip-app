@@ -1,40 +1,44 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToolTipInfoIcon } from "../components/icons/misc/ToolTipInfoIcon";
+import {useWeb3Context} from "../components/libs/web3-data-provider/Web3Provider";
 import {
-  Proposal,
   ProposalCard,
 } from "../components/util/governance/ProposalCard";
+import {Spinner} from "../components/util/loading";
 import { GovernanceToolTip } from "../components/util/tooltip/GovernanceToolTip";
+import {getRecentProposals, useProposalCount, useProposalInfo} from "../hooks/useGovernance";
+
+
+export interface Proposal {
+  id: string;
+  proposer: string;
+  body: string;
+  endBlock: number;
+}
 
 export const Governance = () => {
   const theme = useTheme();
-  const [proposals, setProposals] = useState<Proposal[]>([
-    {
-      id: "11",
-      title: "Emergency vote for 323811",
-      yesVotes: "5",
-      noVotes: "9",
-      status: "active",
-      timeLeft: "30 min",
-    },
-    {
-      id: "111",
-      title: "Emergency vote for 323811",
-      yesVotes: "15",
-      noVotes: "9",
-      status: "pending",
-      timeLeft: "",
-    },
-    {
-      id: "19",
-      title: "Emergency vote for 323811",
-      yesVotes: "9",
-      noVotes: "9",
-      status: "suspended",
-      timeLeft: "expired",
-    },
-  ]);
+  const {dataBlock, provider, chainId} = useWeb3Context()
+  const [proposals, setProposals] = useState<Map<number,Proposal>>(new Map<number, Proposal>([]))
+  useEffect(()=>{
+    if(provider) {
+      getRecentProposals(provider).then((pl)=>{
+        pl.forEach((val)=>{
+          proposals.set(val.args.id.toNumber(),{
+            id: val.args.id.toString(),
+            proposer: val.args.proposer,
+            body: val.args.description,
+            endBlock: val.args.endBlock.toNumber(),
+          })
+        })
+        setProposals(new Map(proposals))
+      }).catch((e)=>{
+        console.log("failed to load proposal info", e)
+      })
+    }
+  },[provider, dataBlock, chainId])
+
   return (
     <Box
       maxWidth="xl"
@@ -48,7 +52,7 @@ export const Governance = () => {
           mb: 0,
           pb: 0,
           marginLeft: "auto",
-        },
+      },
       }}
     >
       <Box display="flex" mb={3} columnGap={2} rowGap={1} flexDirection={{xs: 'column', md: 'row'}}>
@@ -97,11 +101,16 @@ export const Governance = () => {
         />
       </Box>
 
-      {proposals.map((proposal, index) => (
+
+      { proposals.size != 0 ?
+        Array.from(proposals.values()).sort((a, b)=>{
+        return Number(a.id) < Number(b.id) ? 1 : -1
+      }).map((proposal, index) => (
         <Box key={index} mb={2}>
           <ProposalCard proposal={proposal} />
         </Box>
-      ))}
+      )): <Spinner/>
+      }
     </Box>
   );
 };

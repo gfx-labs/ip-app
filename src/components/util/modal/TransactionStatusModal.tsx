@@ -17,7 +17,6 @@ export const TransactionStatusModal = () => {
   const { chainId } = useWeb3Context();
 
   const renderTransitionState = () => {
-    console.log(transaction);
     const isLight = useLight();
 
     const chain = Chains.getInfo(chainId);
