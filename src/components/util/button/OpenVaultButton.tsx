@@ -1,25 +1,29 @@
 import { ButtonProps, Button, Typography } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
+import { useModalContext } from "../../libs/modal-content-provider/ModalContentProvider";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 
 export const OpenVaultButton = () => {
   const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext();
 
-  const rolodex = useRolodexContext()
+  const rolodex = useRolodexContext();
   let isLight = useLight();
-
+  const { updateTransactionState } = useModalContext();
   const openVault = async () => {
-    try{
-      const mintVaultRes = await rolodex?.VC?.mintVault()
+    console.log(rolodex, " this is rolodex");
+    try {
+      const mintVaultRes = await rolodex!.VC!.mintVault();
+      updateTransactionState(mintVaultRes);
+      const mintVaultReceipt = await mintVaultRes.wait();
 
-      mintVaultRes?.wait()
+      updateTransactionState(mintVaultReceipt);
 
       console.log(mintVaultRes);
-      return mintVaultRes
-    } catch(err) {
-      console.log(err)
+      return mintVaultRes;
+    } catch (err) {
+      console.log(err);
       throw new Error("Error creating vault");
     }
   };
