@@ -34,7 +34,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   useEffect(()=>{
     const bdiff = endBlock - dataBlock
     const secs = bdiff * 13.5
-    const hrdiff = Math.abs(Math.round(100 * secs/(60*60*60))/100)
+    const hrdiff = Math.abs(Math.round(100 * secs/(60*60))/100)
     if(bdiff < 0) {
       setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`)
       return
