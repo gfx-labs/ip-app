@@ -2,8 +2,8 @@ import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 import nodePolyfills from "rollup-plugin-polyfill-node";
-
 
 // https://vitejs.dev/config/
 
@@ -19,11 +19,10 @@ export default defineConfig({
         } : true
     },
     resolve: {
-        dedupe: ["buffer","bn.js", "keccak"],
+        dedupe: ["buffer","bn.js", "keccak", "ethers"],
     },
     plugins: [
         react(),
-        splitVendorChunkPlugin(),
     ],
     define: {
         global: 'globalThis'
@@ -31,7 +30,13 @@ export default defineConfig({
     publicDir: "./res",
     build: {
         rollupOptions: {
-            plugins: [nodePolyfills({include: ['util']})],
+            plugins: [nodePolyfills()],
+            output: {
+                manualChunks: {
+                    "mui" : ["@mui/material"],
+                    "ethers":["ethers"],
+                }
+            }
         },
     },
     esbuild: {
@@ -44,13 +49,14 @@ export default defineConfig({
             define: {
                 global: 'globalThis'
             },
+            treeShaking: true,
             // Enable esbuild polyfill plugins
             plugins: [
                 GlobalsPolyfills({
                     buffer: true,
                     process: true,
                 }),
-
+                NodeModulesPolyfillPlugin()
             ]
         }
     }
