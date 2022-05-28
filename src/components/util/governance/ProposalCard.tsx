@@ -4,7 +4,7 @@ import { useLight } from "../../../hooks/useLight";
 import { blue, formatColor, green, neutral, pink, theme } from "../../../theme";
 import { Votes } from "./Votes";
 import { Status } from "./Status";
-import { Spinner } from "../loading";
+import { Spinner, WithDots } from "../loading";
 
 import ReactMarkdown from "react-markdown";
 import { exampleProposal, ProposalInfo, useProposalInfo } from "../../../hooks/useGovernance";
@@ -29,6 +29,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
     undefined
   );
 
+  const [status, setStatus] = useState("")
+
   const [timeLeft, setTimeLeft] = useState("")
 
   useEffect(()=>{
@@ -37,9 +39,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
     const hrdiff = Math.abs(Math.round(100 * secs/(60*60))/100)
     if(bdiff < 0) {
       setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`)
+      setStatus("Ended")
       return
     }
     setTimeLeft(`Active for ${hrdiff} Hour(s)`)
+    setStatus("Active")
   }, [dataBlock])
 
   const expandCard = () => {
@@ -88,7 +92,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
           <Box display={{ xs: "none", md: "flex" }}>
             <Votes noVotes={"0"} yesVotes={"1"} />
           </Box>
-          <Status status={"a"} />
+          <Status status={status} />
         </Box>
       </Box>
 
