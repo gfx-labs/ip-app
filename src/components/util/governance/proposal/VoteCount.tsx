@@ -5,15 +5,16 @@ import { formatColor, neutral } from "../../../../theme";
 import { useLight } from "../../../../hooks/useLight";
 import { BaseModal } from "../../modal";
 
-interface Voter {
+export interface Voter {
   address: string;
   votingPower: number;
+  direction: number;
 }
 
 interface VoteCountProps {
   votes: number;
   totalVotes: number;
-  voters: Voter[];
+  voters: Array<Voter>;
   forOrAgainst: string;
 }
 
