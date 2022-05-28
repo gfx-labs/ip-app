@@ -1,5 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { NewRolodex, Rolodex } from "../../../chain/rolodex/rolodex";
+import {Logp} from "../../../logger";
 import { useWeb3Context } from "../web3-data-provider/Web3Provider";
 
 export const RolodexContentContext = createContext({} as Rolodex | null);
@@ -14,13 +15,14 @@ export const RolodexContentProvider = ({
 
   useEffect(() => {
     console.log('fetching new rolo')
-    NewRolodex(ctx).then((rolo)=>{
-      setRolodex(rolo)
-    }).catch(()=>{
-      setRolodex(null)
-      console.log("failed rolodex init")
-    })
-  }, [ctx.connected, ctx.currentAccount, ctx.chainId]);
+    if(ctx){
+      if(ctx.connected && ctx.currentAccount && ctx.chainId){
+        NewRolodex(ctx)
+        .then(setRolodex)
+        .catch(Logp("failed setting up rolodex"))
+      }
+    }
+  }, [ctx, ctx.connected, ctx.currentAccount, ctx.chainId]);
 
   return (
     <RolodexContentContext.Provider value={rolodex}>
