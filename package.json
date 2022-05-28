@@ -33,6 +33,7 @@
         "@web3-react/walletlink-connector": "^6.2.14",
         "axios": "^0.26.1",
         "buffer": "^6.0.3",
+        "chroma.ts": "^1.0.10",
         "d3": "^7.4.4",
         "ethers": "^5.6.8",
         "framer-motion": "^6.2.9",
