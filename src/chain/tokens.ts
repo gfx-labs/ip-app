@@ -6,8 +6,8 @@ export interface Token {
   ticker: string;
   value: number;
 
-  wallet_balance: number;
-  wallet_amount: number;
+  wallet_balance?: number;
+  wallet_amount?: number;
 
   vault_balance?: number;
   vault_amount?: number;
@@ -51,16 +51,16 @@ export const getStablecoins = (
       address: rolodex?.addressUSDI,
       ticker: "USDI",
       value: 1,
-      wallet_balance: 0,
-      wallet_amount: 0,
+      wallet_balance: undefined,
+      wallet_amount: undefined,
     },
     USDC: {
       name: "USDC",
       address: rolodex?.addressUSDC!,
       ticker: "USDC",
       value: 1,
-      wallet_balance: 0,
-      wallet_amount: 0,
+      wallet_balance: undefined,
+      wallet_amount: undefined,
     },
   };
 };

@@ -1,5 +1,5 @@
 import {CircularProgress, CircularProgressPropsColorOverrides, LinearProgress, Typography} from "@mui/material";
-import {FC, useEffect, useState} from "react";
+import {FC, ReactNode, useEffect, useState} from "react";
 
 
 export const ProgressLine = () => {
@@ -16,22 +16,22 @@ export const Dots = () => {
     setTimeout(()=>{setStage(stage > 3 ? 0 : stage + 1)}, 1000)
   },[stage])
 
-  return <Typography>{".".repeat(stage)}</Typography>
+  return <span>{".".repeat(stage+1)}</span>
 
 }
 
-export const Loads = (props:{def: any, val:any, e?:any}) => {
-  let {val, e, def} = props
+export const Loads = (props:{def: any, val:any, children?:ReactNode}) => {
+  let {val, def, children} = props
   if(val) {
-    return e ? e : val
+    return children ? children : val
   }
   return def
 }
 
-export const WithSpinner = (props:{val:any, e?:any}) => {
+export const WithSpinner = (props:{val:any, children?:ReactNode}) => {
   return Loads({def:Spinner(), ...props})
 }
 
-export const WithDots = (props:{val:any, e?:any}) => {
+export const WithDots = (props:{val:any, children?:ReactNode}) => {
   return Loads({def:Dots(), ...props})
 }
