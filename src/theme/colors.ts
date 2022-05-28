@@ -1,11 +1,22 @@
-export type Color = number[];
+import {generateSmoothGradient} from "./gradient/easing";
+
+export type Color = [number, number, number] | [number, number, number, number];
+
+export type ColorStop = [Color, number]
 
 export interface Gradient {
   angle: number;
-  stops: [Color, number][];
+  stops: ColorStop[];
 }
 
-export const neutral = {
+export const fixAlpha = (c:Color):Color => {
+  if(c.length == 3) {
+    return [...c, 1]
+  }
+  return c
+}
+
+export const neutral:{[key:string]:Color} = {
   white: [255, 255, 255],
   gray1: [55, 66, 82], // #374252 grey-300
   gray2: [117, 126, 140], // #757E8C grey-200
@@ -26,7 +37,7 @@ export const neutral = {
   black6: [29, 35, 46], // #1D232E
 };
 
-export const blue = {
+export const blue:{[key:string]:Color} = {
   blue1: [116, 143, 241], // #748FF1
   blue2: [5, 45, 255], // #052DFF
   blue3: [205, 225, 255], // #CDE1FF
@@ -45,7 +56,7 @@ export const blue = {
   blue16: [26, 49, 85], // #1A3155
 };
 
-export const green = {
+export const green:{[key:string]:Color} = {
   green1: [80, 214, 109], // #50D66D
   green2: [13, 215, 57], // #0DD739
   green3: [0, 187, 41], // #00BB29
@@ -54,76 +65,77 @@ export const green = {
   green6: [51, 65, 62], // #33413E
 };
 
-export const disabled = {
+export const disabled:{[key:string]:Color} = {
   disabled1: [176, 180, 194], // #B0B4C2
   disabled2: [140, 140, 200],
 };
 
-export const pink = {
+export const pink:{[key:string]:Color} = {
   pink1: [231, 66, 161], // E742A1
   pink2: [251, 223, 239], // #FBDFEF
   pink3: [73, 65, 74], // #49414A
 };
 
-export const gradient = {
+export const gradient:{[key:string]:Gradient}= {
   gradient1: {
     angle: 180,
     stops: [
       [[255, 255, 255], 0],
       [[229, 229, 229, 0.31], 1],
     ],
-  } as Gradient,
+  } ,
   gradient2: {
     angle: 180,
     stops: [
       [[9, 9, 9], 0],
       [[8, 11, 15, 0.31], 1],
     ],
-  } as Gradient,
+  } ,
   bgDefaultLight: {
     angle: 180,
     stops: [
       [[255, 255, 255], 0],
       [[238, 236, 242], 1],
     ],
-  } as Gradient,
+  } ,
   bgDefaultDark: {
     angle: 180,
     stops: [
-      [[47, 55, 68], 0],
-      [[19, 22, 26], 0.33],
-      [[27, 32, 39], 0.66],
-      [[20, 25, 31], 1],
+      [[48, 55, 68], 0],
+      [[20, 24, 28], 0.33],
+      [[28, 32, 38], 0.66],
+      [[20, 24, 32], 1],
     ],
-  } as Gradient,
+  } ,
   cardDefaultLight: {
     angle: 180,
     stops: [
       [[255, 255, 255], 0],
       [[229, 229, 229, 0], 1],
     ],
-  } as Gradient,
+  } ,
   cardDefaultDark: {
     angle: 180,
     stops: [
       [[9, 9, 9], 0],
       [[8, 11, 15, 0], 1],
     ],
-  } as Gradient,
+  } ,
   statDefaultLight: {
     angle: 180,
     stops: [
       [[255, 255, 255], 0],
+      [[255, 255, 255], 0.33],
       [[229, 229, 229, 0], 1],
     ],
-  } as Gradient,
+  } ,
   statDefaultDark: {
     angle: 180,
     stops: [
       [[9, 9, 9], 0],
       [[8, 11, 15, 0], 1],
     ],
-  } as Gradient,
+  } ,
 };
 
 const formatHexChannel = (channel: number) => {
@@ -136,7 +148,7 @@ const formatRgbChannel = (channel: number) => {
   return Math.max(0, Math.min(255, channel | 0)).toString();
 };
 
-export const formatColor = (color: number[]) => {
+export const formatColor = (color: Color) => {
   switch (color.length) {
     case 3:
       return `#${formatHexChannel(color[0])}${formatHexChannel(
@@ -150,12 +162,12 @@ export const formatColor = (color: number[]) => {
         Math.min(1, color[3])
       ).toPrecision(3)})`;
   }
-
-  throw new TypeError("Invalid color: " + String(color));
 };
 
-export const formatGradient = ({ angle, stops }: Gradient) => {
-  return `${angle}deg, ${stops
+export const formatGradient = (gr: Gradient) => {
+  const {angle, stops} = generateSmoothGradient(gr)
+  const cr = `${angle}deg, ${stops
     .map(([color, position]) => `${formatColor(color)} ${position * 100}%`)
     .join(", ")}`;
+    return cr
 };

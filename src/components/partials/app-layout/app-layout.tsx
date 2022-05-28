@@ -19,14 +19,17 @@ export const AppLayout = (props: AppLayoutProps) => {
       <TopBar />
       <Box
         sx={{
-          backgroundImage: `linear-gradient(${formatGradient(
-            isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
-          )})`,
+          backgroundImage: `linear-gradient(
+            ${formatGradient(
+              isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
+            )}
+          )`,
           pt: { xs: 10, sm: 18 },
         }}
       >
         {children}
       </Box>
+
       <Footer />
     </Box>
   );
