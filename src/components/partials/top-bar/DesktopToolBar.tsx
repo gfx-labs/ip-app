@@ -27,20 +27,19 @@ export const DesktopToolBar = () => {
       <Link to="./" role="heading" aria-level={1}>
         <Box component="img" src="images/usdi.svg" width={50} height={50}></Box>
       </Link>
-      <Box display="flex" ml={3}>
+      <Box sx={{gap: 3}} display="flex" ml={3}>
         <BaseSwitch
           option1="App"
           option2="Governance"
           onOptionChange={setIsApp}
         />
         <Box display="flex" alignItems="center">
-          <ConnectWalletButton />
         </Box>
       </Box>
-      <Box display="flex" mr={-1} ml="auto">
+      <Box sx={{gap: 2}} display="flex" mr={-1} ml="auto">
         <ClaimsButton />
         <SelectedChainButton />
-
+        <ConnectWalletButton />
         <BaseSwitch
           option1={<LightIcon sx={{width: 15}}/>}
           option2={<DarkIcon sx={{width: 15}}/>}
