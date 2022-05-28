@@ -51,156 +51,159 @@ const MultilineChart = (props:MultilineChartProps) => {
 
   React.useEffect(() => {
     try{
-    if(data.length < 4) {
-      return undefined
-    }
-    // this scales the data to be within the size that we specify
-    const xScale = d3.scaleTime()
-    .domain(d3.extent(data, (d) => d.timestamp) as any)
-    .range([0, width]);
+      console.log(data)
+      // this scales the data to be within the size that we specify
+      const xScale = d3.scaleTime()
+      .domain(d3.extent(data, (d) => d.timestamp) as any)
+      .range([0, width]);
+      const yScale = d3.scaleLinear()
+      .domain(d3.extent(data, (d) => d.interestRate) as any)
+      .range([height, 0]);
+      const yScaleNotional = d3.scaleLinear()
+      .domain(d3.extent(data, (d) => d.interestPaid) as any)
+      .range([height, 0]);
 
-    const yScale = d3.scaleLinear()
-    .domain(d3.extent(data, (d) => d.interestRate) as any)
-    .range([height, 0]);
-   const yScaleNotional = d3.scaleLinear()
-    .domain(d3.extent(data, (d) => d.interestPaid) as any)
-    .range([height, 0]);
+      // Create root container where we will append all other chart elements
+      const svgEl = d3.select(svgRef.current);
+      svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
+      const svg = svgEl
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Create root container where we will append all other chart elements
-    const svgEl = d3.select(svgRef.current);
-    svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
-    const svg = svgEl
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+      // Add X grid lines with labels
+      const xAxis = d3.axisBottom(xScale)
+      .ticks(5)
+      .tickSize(-height + margin.bottom)
+      .tickFormat((val)=>{
+        let dat:Date = new Date(0)
+        if((val instanceof Date)) {
+          dat = val
+        }else{
+          dat = new Date(val.valueOf())
+        }
+        const ystring = dat.toLocaleDateString("en-US")
+        return ystring.substring(0,ystring.length - 5)
+      })
 
-    // Add X grid lines with labels
-    const xAxis = d3.axisBottom(xScale)
-    .ticks(6)
-    .tickSize(-height + margin.bottom)
-    .tickFormat((val)=>{
-      let dat:Date = new Date(0)
-      if((val instanceof Date)) {
-        dat = val
-      }else{
-        dat = new Date(val.valueOf())
+      try {
+      const xAxisGroup = svg.append("g")
+      .attr("transform", `translate(-5, ${height - margin.bottom + 40})`)
+      .call(xAxis);
+
+      xAxisGroup.select(".domain").remove();
+      xAxisGroup.selectAll("line").attr("stroke", "rgba(00, 00, 00, 00)");
+      xAxisGroup.selectAll("text")
+      .attr("opacity", 1)
+      .attr("color", fontColor)
+      .attr("font-size", "0.75rem")
+      }catch(e){
+        console.log("failed to draw x axis", e)
       }
-      const ystring = dat.toLocaleDateString("en-US")
-      return ystring.substring(0,ystring.length - 5)
-  })
-    const xAxisGroup = svg.append("g")
-    .attr("transform", `translate(-5, ${height - margin.bottom + 40})`)
-    .call(xAxis);
-    xAxisGroup.select(".domain").remove();
-    xAxisGroup.selectAll("line").attr("stroke", "rgba(00, 00, 00, 00)");
-    xAxisGroup.selectAll("text")
-    .attr("opacity", 1)
-    .attr("color", fontColor)
-    .attr("font-size", "0.75rem")
 
-    // Add Y grid lines with labels
- // const yAxis = d3.axisLeft(yScale)
- // .ticks(10)
- // .tickSize(-width)
- // .tickFormat((val) => `${val}%`);
+      // Add Y grid lines with labels
+      // const yAxis = d3.axisLeft(yScale)
+      // .ticks(10)
+      // .tickSize(-width)
+      // .tickFormat((val) => `${val}%`);
 
-//  const yAxisGroup = svg.append("g").call(yAxis);
-//  yAxisGroup.select(".domain").remove();
-//  yAxisGroup.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.1)");
-//  yAxisGroup.selectAll("text")
-//  .attr("opacity", 0.5)
-//  .attr("color", "black")
-//  .attr("font-size", "0.75rem");
+      //  const yAxisGroup = svg.append("g").call(yAxis);
+      //  yAxisGroup.select(".domain").remove();
+      //  yAxisGroup.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.1)");
+      //  yAxisGroup.selectAll("text")
+      //  .attr("opacity", 0.5)
+      //  .attr("color", "black")
+      //  .attr("font-size", "0.75rem");
 
-    // Add Y grid lines with labels
- // const yAxis2 = d3.axisRight(yScaleNotional)
- // .ticks(10)
- // .tickSize(-width)
- // .tickFormat((val) => `$${val}`);
+      // Add Y grid lines with labels
+      // const yAxis2 = d3.axisRight(yScaleNotional)
+      // .ticks(10)
+      // .tickSize(-width)
+      // .tickFormat((val) => `$${val}`);
 
- //const yAxis2Group = svg.append("g").call(yAxis2);
- // yAxis2Group.select(".domain").remove();
- // yAxis2Group.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.0)");
- // yAxis2Group.selectAll("text")
- // .attr("transform", `translate(${width},0)`)
- // .attr("opacity", 0.5)
- // .attr("color", "black")
- // .attr("font-size", "0.75rem");
+      //const yAxis2Group = svg.append("g").call(yAxis2);
+      // yAxis2Group.select(".domain").remove();
+      // yAxis2Group.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.0)");
+      // yAxis2Group.selectAll("text")
+      // .attr("transform", `translate(${width},0)`)
+      // .attr("opacity", 0.5)
+      // .attr("color", "black")
+      // .attr("font-size", "0.75rem");
 
-    // this line function is used to draw the data
-    const interestLine = d3.line<Observation>()
-    .curve(d3.curveMonotoneX)
-    .x((d) => xScale(d.timestamp!))
-    .y((d) => yScale(d.interestRate!));
+      // this line function is used to draw the data
+      const interestLine = d3.line<Observation>()
+      .curve(d3.curveMonotoneX)
+      .x((d) => xScale(d.timestamp!))
+      .y((d) => yScale(d.interestRate!));
 
 
 
-    // Draw the interest rate payments
-    svg.selectAll("barline")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("x", (d)=>{return xScale(d.timestamp!)-10})
-    .attr("y", (d)=>{return yScaleNotional(d.interestPaid!)+5})
-    .attr("width", 10)
-    .attr("height", (d)=>{return height - yScaleNotional(d.interestPaid!)-5})
-    .attr("fill", notionalColor)
+      // Draw the interest rate payments
+      svg.selectAll("barline")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", (d)=>{return xScale(d.timestamp!)-10})
+      .attr("y", (d)=>{return yScaleNotional(d.interestPaid!)+5})
+      .attr("width", 10)
+      .attr("height", (d)=>{return height - yScaleNotional(d.interestPaid!)-5})
+      .attr("fill", notionalColor)
 
-    // Draw the lines
-    svg.append("path")
-    .attr("class","line")
-    .style("stroke", interestColor)
-    .style("stroke-width","3")
-    .style("fill", "none")
-    .attr("d", (_) => interestLine(data));
+      // Draw the lines
+      svg.append("path")
+      .attr("class","line")
+      .style("stroke", interestColor)
+      .style("stroke-width","3")
+      .style("fill", "none")
+      .attr("d", (_) => interestLine(data));
 
-    // create hover effect
-    var mouser = svg.append('g')
-    .attr('class','mouse-over-effects')
+      // create hover effect
+      var mouser = svg.append('g')
+      .attr('class','mouse-over-effects')
 
-    mouser.append("path")
-    .attr("class", "mouse-line")
-    .style("stroke", "black")
-    .style("stroke-width","0px")
-    .style("opacity","0")
+      mouser.append("path")
+      .attr("class", "mouse-line")
+      .style("stroke", "black")
+      .style("stroke-width","0px")
+      .style("opacity","0")
 
-    var lines:HTMLCollectionOf<SVGGeometryElement> = document.getElementsByClassName('line') as any;
+      var lines:HTMLCollectionOf<SVGGeometryElement> = document.getElementsByClassName('line') as any;
 
-    var mouseLiner = mouser.selectAll('.mouse-per-line')
-    .data(["rate"])
-    .enter()
-    .append("g")
-    .attr("class","mouse-per-line")
+      var mouseLiner = mouser.selectAll('.mouse-per-line')
+      .data(["rate"])
+      .enter()
+      .append("g")
+      .attr("class","mouse-per-line")
 
-    mouseLiner.append("circle")
-    .attr("r", 3)
-    .style("stroke", interestColor)
-    .style("fill","none")
-    .style("stroke-width", "2px")
-    .style("opacity", "0");
+      mouseLiner.append("circle")
+      .attr("r", 3)
+      .style("stroke", interestColor)
+      .style("fill","none")
+      .style("stroke-width", "2px")
+      .style("opacity", "0");
 
-    mouseLiner.append("text")
-    .attr("transform","translate(14,-10)")
+      mouseLiner.append("text")
+      .attr("transform","translate(14,-10)")
 
-    mouser.append('svg:rect')
-    .attr('width', width)
-    .attr('height', height)
-    .attr('fill','none')
-    .attr('pointer-events','all')
-    .on('mouseout', () =>{
+      mouser.append('svg:rect')
+      .attr('width', width)
+      .attr('height', height)
+      .attr('fill','none')
+      .attr('pointer-events','all')
+      .on('mouseout', () =>{
         d3.select(".mouse-line")
-          .style("opacity", "0");
+        .style("opacity", "0");
         d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "0");
+        .style("opacity", "0");
         d3.selectAll(".mouse-per-line text")
-          .style("opacity", "0");
+        .style("opacity", "0");
       })
       .on('mouseover', ()=> {
         d3.select(".mouse-line")
-          .style("opacity", "1");
+        .style("opacity", "1");
         d3.selectAll(".mouse-per-line circle")
-          .style("opacity", "1");
+        .style("opacity", "1");
         d3.selectAll(".mouse-per-line text")
-          .style("opacity", "1");
+        .style("opacity", "1");
       })
       .on('mousemove', (e) => { // mouse moving over canvas
         var mouse = d3.pointer(e);

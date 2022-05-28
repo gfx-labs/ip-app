@@ -23,25 +23,31 @@ export default defineConfig({
         } : true
     },
     resolve: {
-        dedupe: ["buffer","bn.js", "keccak"],
+        dedupe: ["buffer","bn.js", "keccak", "ethers"],
     },
     plugins: [
-        react({
-            jsxImportSource: '@emotion/react',
-            babel: {
-                plugins: ['@emotion/babel-plugin']
-            }
-        }),
         visualizer(),
-        splitVendorChunkPlugin(),
+        react(),
     ],
+    esbuild: {
+        jsxFactory: 'jsx',
+        jsxInject: `import {jsx} from '@emotion/react'`
+    },
+
     define: {
         global: 'globalThis'
     },
     publicDir: "./res",
     build: {
         rollupOptions: {
-            plugins: [nodePolyfills()],
+            plugins: [nodePolyfills({include: ['util']})],
+            output: {
+                manualChunks: {
+                    "coinbase" : ["@coinbase/wallet-sdk"],
+                    "mui" : ["@mui/material"],
+                    "ethers":["ethers"],
+                }
+            }
         },
 
     },
