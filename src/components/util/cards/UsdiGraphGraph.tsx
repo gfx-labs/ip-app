@@ -2,6 +2,8 @@
 import React from "react";
 import * as d3 from "d3";
 import {Box} from "@mui/system";
+import {useTheme} from "@mui/material";
+import {formatColor, neutral} from "../../../theme";
 
 
 type GraphType = "line" | "fill";
@@ -31,6 +33,9 @@ const MultilineChart = (props:MultilineChartProps) => {
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
   const data = Array.from(datamap.values())
+  const theme = useTheme()
+  let isLight = theme.palette.mode === "light";
+
   data.sort((a:Observation, b:Observation)=>{
     if(a.block < b.block) {
       return -1
@@ -41,6 +46,8 @@ const MultilineChart = (props:MultilineChartProps) => {
 
   let interestColor = "#6929F0"
   let notionalColor =  "#AFEABC"
+
+  let fontColor = formatColor(neutral.gray3)
 
   React.useEffect(() => {
     try{
@@ -68,7 +75,7 @@ const MultilineChart = (props:MultilineChartProps) => {
 
     // Add X grid lines with labels
     const xAxis = d3.axisBottom(xScale)
-    .ticks(3)
+    .ticks(6)
     .tickSize(-height + margin.bottom)
     .tickFormat((val)=>{
       let dat:Date = new Date(0)
@@ -86,38 +93,38 @@ const MultilineChart = (props:MultilineChartProps) => {
     xAxisGroup.select(".domain").remove();
     xAxisGroup.selectAll("line").attr("stroke", "rgba(00, 00, 00, 00)");
     xAxisGroup.selectAll("text")
-    .attr("opacity", 0.5)
-    .attr("color", "black")
+    .attr("opacity", 1)
+    .attr("color", fontColor)
     .attr("font-size", "0.75rem")
 
     // Add Y grid lines with labels
-    const yAxis = d3.axisLeft(yScale)
-    .ticks(10)
-    .tickSize(-width)
-    .tickFormat((val) => `${val}%`);
+ // const yAxis = d3.axisLeft(yScale)
+ // .ticks(10)
+ // .tickSize(-width)
+ // .tickFormat((val) => `${val}%`);
 
-    const yAxisGroup = svg.append("g").call(yAxis);
-    yAxisGroup.select(".domain").remove();
-    yAxisGroup.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.1)");
-    yAxisGroup.selectAll("text")
-    .attr("opacity", 0.5)
-    .attr("color", "black")
-    .attr("font-size", "0.75rem");
+//  const yAxisGroup = svg.append("g").call(yAxis);
+//  yAxisGroup.select(".domain").remove();
+//  yAxisGroup.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.1)");
+//  yAxisGroup.selectAll("text")
+//  .attr("opacity", 0.5)
+//  .attr("color", "black")
+//  .attr("font-size", "0.75rem");
 
     // Add Y grid lines with labels
-    const yAxis2 = d3.axisRight(yScaleNotional)
-    .ticks(10)
-    .tickSize(-width)
-    .tickFormat((val) => `$${val}`);
+ // const yAxis2 = d3.axisRight(yScaleNotional)
+ // .ticks(10)
+ // .tickSize(-width)
+ // .tickFormat((val) => `$${val}`);
 
-   const yAxis2Group = svg.append("g").call(yAxis2);
-    yAxis2Group.select(".domain").remove();
-    yAxis2Group.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.0)");
-    yAxis2Group.selectAll("text")
-    .attr("transform", `translate(${width},0)`)
-    .attr("opacity", 0.5)
-    .attr("color", "black")
-    .attr("font-size", "0.75rem");
+ //const yAxis2Group = svg.append("g").call(yAxis2);
+ // yAxis2Group.select(".domain").remove();
+ // yAxis2Group.selectAll("line").attr("stroke", "rgba(0, 0, 0, 0.0)");
+ // yAxis2Group.selectAll("text")
+ // .attr("transform", `translate(${width},0)`)
+ // .attr("opacity", 0.5)
+ // .attr("color", "black")
+ // .attr("font-size", "0.75rem");
 
     // this line function is used to draw the data
     const interestLine = d3.line<Observation>()
@@ -142,7 +149,7 @@ const MultilineChart = (props:MultilineChartProps) => {
     svg.append("path")
     .attr("class","line")
     .style("stroke", interestColor)
-    .style("stroke-width","2")
+    .style("stroke-width","3")
     .style("fill", "none")
     .attr("d", (_) => interestLine(data));
 
@@ -166,7 +173,7 @@ const MultilineChart = (props:MultilineChartProps) => {
 
     mouseLiner.append("circle")
     .attr("r", 3)
-    .style("stroke", "black")
+    .style("stroke", interestColor)
     .style("fill","none")
     .style("stroke-width", "2px")
     .style("opacity", "0");

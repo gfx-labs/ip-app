@@ -68,8 +68,8 @@ export const UsdiGraphCard = () => {
       setChart(<MultilineChart
         datamap={data}
         width={400}
-        height={240}
-        margin={{top:20,right:40,bottom:30,left:50}}
+        height={200}
+        margin={{top:20,right:5,bottom:30,left:5}}
         setLastRate={setLastRate}
         setLastPaid={setLastPaid}
         setLastTime={setLastTime}
