@@ -21,6 +21,7 @@ export const UsdiGraphCard = () => {
 
   const [lastRate, setLastRate] = useState(0)
   const [lastPaid, setLastPaid] = useState(0)
+  const [lastBlock, setLastBlock] = useState(0)
   const [lastTime, setLastTime] = useState("")
 
 
@@ -72,6 +73,7 @@ export const UsdiGraphCard = () => {
         setLastRate={setLastRate}
         setLastPaid={setLastPaid}
         setLastTime={setLastTime}
+        setLastBlock={setLastBlock}
       />)
     }
   },[data.size])
@@ -101,6 +103,7 @@ export const UsdiGraphCard = () => {
           }
           }}>
           <GraphTypography text={`${lastTime}`} />
+          <GraphTypography text={`${lastBlock}`} />
         </Box>
 
         <Box sx={{marginTop: -1}}>

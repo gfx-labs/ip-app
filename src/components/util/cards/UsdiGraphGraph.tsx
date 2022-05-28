@@ -22,10 +22,11 @@ export interface MultilineChartProps {
   setLastPaid:any
   setLastRate:any
   setLastTime:any
+  setLastBlock:any
 }
 
 const MultilineChart = (props:MultilineChartProps) => {
-  const {width, height, margin, datamap, setLastRate, setLastPaid, setLastTime} = props
+  const {width, height, margin, datamap, setLastRate, setLastPaid, setLastTime, setLastBlock} = props
   const svgRef = React.useRef(null);
   const svgWidth = width + margin.left + margin.right;
   const svgHeight = height + margin.top + margin.bottom;
@@ -208,13 +209,16 @@ const MultilineChart = (props:MultilineChartProps) => {
           setLastTime(xTimestamp.toLocaleString())
           let paid = 0;
           let lastDiff = 10000000000000;
+          let blk = 0;
           for (const d of data){
             const diff = Math.abs(xTimestamp.getTime() - d.timestamp!)
             if(diff < lastDiff) {
               lastDiff = diff
               paid = d.interestPaid!
+              blk = d.block
             }
           }
+          setLastBlock(blk)
           setLastPaid(paid)
           var beginning = 0
           if (lines[i] == undefined) {

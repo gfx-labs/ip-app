@@ -26,11 +26,10 @@ export const SwapTokenProvider = ({
       setToken2(USDC)
     }
   }, [USDI, USDC])
-  
+
 
   const swapTokenPositions = () => {
     const newToken2 = { ...token1 };
-
     setToken1({ ...token2 });
     setToken2({ ...newToken2 });
   };
