@@ -20,14 +20,14 @@ export const DepositUSDCContent = () => {
   const toggle = () => setFocus(!focus);
 
   const setMax = () =>
-    updateUSDC("amountToDeposit", USDCToken.wallet_amount.toString());
+    updateUSDC("amountToDeposit", USDCToken.wallet_amount!.toString());
 
   const numAmountToDeposit = Number(USDC.amountToDeposit);
 
   useEffect(() => {
     setDisabled(numAmountToDeposit <= 0);
   }, [USDC.amountToDeposit]);
-  
+
   return (
     <Box>
       <Typography

@@ -16,7 +16,7 @@ export const DepositCollateralContent = () => {
   const toggle = () => setFocus(!focus);
 
   const setMax = () =>
-  setCollateralDepositAmount(collateralToken.wallet_amount.toString());
+  setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
 
   useEffect(() => {
     setDisabled(Number(collateralDepositAmount) <= 0);
@@ -44,7 +44,7 @@ export const DepositCollateralContent = () => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {collateralToken?.wallet_amount.toFixed(2)} {collateralToken?.ticker}
+        Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)} {collateralToken?.ticker}
       </Typography>
 
       <ModalInputContainer focus={focus}>

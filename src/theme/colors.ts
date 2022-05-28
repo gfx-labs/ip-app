@@ -16,7 +16,7 @@ export const fixAlpha = (c:Color):Color => {
   return c
 }
 
-export const neutral:{[key:string]:Color} = {
+export const neutral:{[key:string]:[number, number, number]} = {
   white: [255, 255, 255],
   gray1: [55, 66, 82], // #374252 grey-300
   gray2: [117, 126, 140], // #757E8C grey-200
@@ -37,7 +37,7 @@ export const neutral:{[key:string]:Color} = {
   black6: [29, 35, 46], // #1D232E
 };
 
-export const blue:{[key:string]:Color} = {
+export const blue:{[key:string]:[number, number, number]} = {
   blue1: [116, 143, 241], // #748FF1
   blue2: [5, 45, 255], // #052DFF
   blue3: [205, 225, 255], // #CDE1FF
@@ -56,7 +56,7 @@ export const blue:{[key:string]:Color} = {
   blue16: [26, 49, 85], // #1A3155
 };
 
-export const green:{[key:string]:Color} = {
+export const green:{[key:string]:[number, number, number]} = {
   green1: [80, 214, 109], // #50D66D
   green2: [13, 215, 57], // #0DD739
   green3: [0, 187, 41], // #00BB29
@@ -65,7 +65,7 @@ export const green:{[key:string]:Color} = {
   green6: [51, 65, 62], // #33413E
 };
 
-export const disabled:{[key:string]:Color} = {
+export const disabled:{[key:string]:[number, number, number]} = {
   disabled1: [176, 180, 194], // #B0B4C2
   disabled2: [140, 140, 200],
 };
