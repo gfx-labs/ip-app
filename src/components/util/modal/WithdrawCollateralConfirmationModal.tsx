@@ -11,11 +11,18 @@ import { DisableableModalButton } from "../button/DisableableModalButton";
 import { useWithdrawCollateral } from "../../../hooks/useWithdraw";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
-import {locale} from "../../../locale";
+import { locale } from "../../../locale";
+import { TransactionReceipt } from "@ethersproject/providers";
 
 export const WithdrawCollateralConfirmationModal = () => {
-  const { type, setType, collateralToken, collateralWithdrawAmount,setCollateralWithdrawAmount, updateTransactionState } =
-    useModalContext();
+  const {
+    type,
+    setType,
+    collateralToken,
+    collateralWithdrawAmount,
+    setCollateralWithdrawAmount,
+    updateTransactionState,
+  } = useModalContext();
   const { provider, currentAccount } = useWeb3Context();
   const { vaultAddress } = useVaultDataContext();
   const [loadmsg, setLoadmsg] = useState("");
@@ -24,23 +31,31 @@ export const WithdrawCollateralConfirmationModal = () => {
 
   const handleCollateralWithdraw = async () => {
     setLoading(true);
-    setLoadmsg(locale("CheckWallet"))
-    const attempt = await useWithdrawCollateral(
-      collateralWithdrawAmount,
-      collateralToken.address,
-      vaultAddress!,
-      provider?.getSigner(currentAccount)!,
-    );
+    setLoadmsg(locale("CheckWallet"));
+    try {
+      const attempt = await useWithdrawCollateral(
+        collateralWithdrawAmount,
+        collateralToken.address,
+        vaultAddress!,
+        provider?.getSigner(currentAccount)!
+      );
 
-    updateTransactionState(attempt)
+      updateTransactionState(attempt);
 
-    setCollateralWithdrawAmount("")
-    setLoadmsg(locale("TransactionPending"))
-    const receipt = await attempt.wait()
-    setLoadmsg("")
+      setCollateralWithdrawAmount("");
+      setLoadmsg(locale("TransactionPending"));
+      const receipt = await attempt.wait();
+      setLoadmsg("");
+      setLoading(false);
+
+      updateTransactionState(receipt);
+    } catch (err) {
+      const error = err as TransactionReceipt;
+      updateTransactionState(error);
+    }
+
+    setLoadmsg("");
     setLoading(false);
-
-    updateTransactionState(receipt)
   };
 
   return (
@@ -85,20 +100,11 @@ export const WithdrawCollateralConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${collateralToken.value * Number(collateralWithdrawAmount)}
+              ${collateralToken.value * Number(collateralWithdrawAmount)} (
+              {collateralWithdrawAmount} {collateralToken.ticker} )
             </Typography>
           </Box>
         </Box>
-      </Box>
-      <Box
-        my={5}
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      >
-        <Typography variant="body1" fontWeight={500} mb={1}>
-          {collateralToken.name} withdraw: {collateralWithdrawAmount}
-        </Typography>
       </Box>
 
       <DisableableModalButton

@@ -8,38 +8,50 @@ import {
 import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { DisableableModalButton } from "../button/DisableableModalButton";
-import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useDepositCollateral } from "../../../hooks/useDeposit";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
-import {locale} from "../../../locale";
+import { locale } from "../../../locale";
+import { ContractReceipt } from "ethers";
 
 export const DepositCollateralConfirmationModal = () => {
-  const { type, setType, collateralToken, collateralDepositAmount, updateTransactionState , setCollateralDepositAmount} =
-    useModalContext();
+  const {
+    type,
+    setType,
+    collateralToken,
+    collateralDepositAmount,
+    updateTransactionState,
+    setCollateralDepositAmount,
+  } = useModalContext();
   const { provider, currentAccount } = useWeb3Context();
   const [loading, setLoading] = useState(false);
   const [loadmsg, setLoadmsg] = useState("");
   const { vaultAddress } = useVaultDataContext();
   const handleDepositConfirmationRequest = async () => {
     setLoading(true);
-    setLoadmsg(locale("CheckWallet"))
-    const attempt = await useDepositCollateral(
-      collateralDepositAmount,
-      collateralToken.address,
-      provider?.getSigner(currentAccount)!,
-      vaultAddress!
-    );
+    setLoadmsg(locale("CheckWallet"));
+    try {
+      const attempt = await useDepositCollateral(
+        collateralDepositAmount,
+        collateralToken.address,
+        provider?.getSigner(currentAccount)!,
+        vaultAddress!
+      );
 
-    updateTransactionState(attempt)
-    
-    setCollateralDepositAmount("")
-    setLoadmsg(locale("TransactionPending"))
-    const receipt = await attempt.wait()
+      updateTransactionState(attempt);
 
-    updateTransactionState(receipt)
+      setCollateralDepositAmount("");
+      setLoadmsg(locale("TransactionPending"));
+      const receipt = await attempt.wait();
 
-    setLoadmsg("")
+      updateTransactionState(receipt);
+    } catch (err) {
+      const error = err as ContractReceipt;
+
+      updateTransactionState(error);
+    }
+
+    setLoadmsg("");
     setLoading(false);
   };
 
@@ -87,21 +99,14 @@ export const DepositCollateralConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="h3" color="text.secondary">
-              ${collateralToken.value.toFixed(2)} ({collateralDepositAmount})
+              $
+              {(
+                collateralToken.value * Number(collateralDepositAmount)
+              ).toFixed(2)}{" "}
+              ({collateralDepositAmount} {collateralToken.ticker})
             </Typography>
           </Box>
         </Box>
-      </Box>
-
-      <Box
-        my={5}
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      >
-        <Typography variant="body1" fontWeight={500} mb={1}>
-          {collateralToken.name} deposit:
-        </Typography>
       </Box>
 
       <DisableableModalButton

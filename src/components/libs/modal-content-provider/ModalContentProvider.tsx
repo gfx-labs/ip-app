@@ -79,8 +79,8 @@ export const ModalContentProvider = ({
   const [collateralToken, setCollateralToken] = useState<Token>(
     getTokensListOnCurrentChain(chainId)["WETH"]
   );
-  const [collateralDepositAmount, setCollateralDepositAmount] = useState("0");
-  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState("0");
+  const [collateralDepositAmount, setCollateralDepositAmount] = useState("");
+  const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState("");
 
   const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
     createDepositWithdrawUSDC()
@@ -93,11 +93,13 @@ export const ModalContentProvider = ({
     });
   };
 
-  const [transactionState, setTransactionState] =
-    useState<TransactionState>(null);
-    
-  const [transaction, setTransaction] =
-    useState<ModalContextType["transaction"]>(null);
+  const [transactionState, setTransactionState] = useState<TransactionState>(
+    null
+  );
+
+  const [transaction, setTransaction] = useState<
+    ModalContextType["transaction"]
+  >(null);
 
   function isContractTransaction(
     transaction: ContractReceipt | ContractTransaction
@@ -108,7 +110,7 @@ export const ModalContentProvider = ({
   const updateTransactionState = (
     transaction: ContractReceipt | ContractTransaction
   ) => {
-    console.log("THIS IS TRANSACTION", transaction);
+    console.log("THIS IS TRANSACTION", transaction, typeof transaction);
     if (isContractTransaction(transaction)) {
       setTransactionState("PENDING");
       setTransaction(transaction);
@@ -117,10 +119,11 @@ export const ModalContentProvider = ({
       if (transaction.status === 1) {
         setTransactionState("SUCCESS");
       } else {
+        console.log("hitting failure");
         setTransactionState("FAILURE");
       }
     }
-
+    console.log("setting....");
     setTransaction(transaction);
   };
 
