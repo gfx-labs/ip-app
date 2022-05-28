@@ -124,13 +124,8 @@ const MultilineChart = (props:MultilineChartProps) => {
     .curve(d3.curveMonotoneX)
     .x((d) => xScale(d.timestamp!))
     .y((d) => yScale(d.interestRate!));
-    // Draw the lines
-    svg.append("path")
-    .attr("class","line")
-    .style("stroke", interestColor)
-    .style("stroke-width","2")
-    .style("fill", "none")
-    .attr("d", (_) => interestLine(data));
+
+
 
     // Draw the interest rate payments
     svg.selectAll("barline")
@@ -143,6 +138,13 @@ const MultilineChart = (props:MultilineChartProps) => {
     .attr("height", (d)=>{return height - yScaleNotional(d.interestPaid!)-5})
     .attr("fill", notionalColor)
 
+    // Draw the lines
+    svg.append("path")
+    .attr("class","line")
+    .style("stroke", interestColor)
+    .style("stroke-width","2")
+    .style("fill", "none")
+    .attr("d", (_) => interestLine(data));
 
     // create hover effect
     var mouser = svg.append('g')
@@ -206,7 +208,7 @@ const MultilineChart = (props:MultilineChartProps) => {
           var xTimestamp = xScale.invert(mouse[0])
           const bisect = d3.bisector(function(d:Observation) { return d.timestamp!; }).right
           bisect(data, xTimestamp)
-          setLastTime(xTimestamp.toLocaleString())
+          setLastTime(xTimestamp.toUTCString())
           let paid = 0;
           let lastDiff = 10000000000000;
           let blk = 0;

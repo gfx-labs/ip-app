@@ -68,8 +68,8 @@ export const UsdiGraphCard = () => {
       setChart(<MultilineChart
         datamap={data}
         width={400}
-        height={200}
-        margin={{top:10,right:40,bottom:30,left:50}}
+        height={240}
+        margin={{top:20,right:40,bottom:30,left:50}}
         setLastRate={setLastRate}
         setLastPaid={setLastPaid}
         setLastTime={setLastTime}
@@ -82,8 +82,9 @@ export const UsdiGraphCard = () => {
   return (
     <Box
       sx={{
-        paddingX: {xs: 3, md: 6},
+      paddingX: {xs: 3, md: 6},
       paddingY: {xs: 6, md: 6},
+      paddingBottom: {xs: 2, md: 2},
       backgroundImage: `linear-gradient(${formatGradient(
         isLight ? gradient.gradient1 : gradient.gradient2
       )})`,
@@ -94,18 +95,6 @@ export const UsdiGraphCard = () => {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box display="flex" sx={{
-          display: 'flex',
-          [theme.breakpoints.down('md')]:{
-            flexDirection: 'column',
-            rowGap: 1,
-            marginTop: -1
-          }
-          }}>
-          <GraphTypography text={`${lastTime}`} />
-          <GraphTypography text={`${lastBlock}`} />
-        </Box>
-
         <Box sx={{marginTop: -1}}>
           <Box sx={{ display: "flex", alignItems: "center", }}>
             <Box
@@ -117,7 +106,7 @@ export const UsdiGraphCard = () => {
                 marginRight: 1,
               }}
             ></Box>{" "}
-            <GraphTypography text={`Interest Earned (${lastRate}%)`} />
+            <GraphTypography text={`Interest Rate (${lastRate}%)`} />
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box
@@ -130,6 +119,28 @@ export const UsdiGraphCard = () => {
               }}
             ></Box>{" "}
             <GraphTypography text={`Interest Paid ($${lastPaid})`} />
+          </Box>
+        </Box>
+        <Box sx={{marginTop: -1}}>
+          <Box display="flex" sx={{
+            display: 'flex',
+            [theme.breakpoints.down('md')]:{
+              flexDirection: 'column',
+              rowGap: 1,
+              marginTop: -1
+            }
+            }}>
+            <GraphTypography text={`Block #${lastBlock}`}/>
+          </Box>
+          <Box display="flex" sx={{
+            display: 'flex',
+            [theme.breakpoints.down('md')]:{
+              flexDirection: 'column',
+              rowGap: 1,
+              marginTop: -1
+            }
+            }}>
+            <GraphTypography text={`${lastTime}`}/>
           </Box>
         </Box>
       </Box>
