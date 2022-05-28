@@ -57,7 +57,7 @@ export const generateSmoothGradient = (g:Gradient):Gradient => {
 
 export const generateStopsBetween = (a: ColorStop, b:ColorStop):ColorStop[] => {
   const stops: ColorStop[] = []
-  const curve = cubicCoordinates(0.4,a[1],0.6,b[1],5)
+  const curve = cubicCoordinates(0.4,a[1],0.6,b[1],10)
   const scalar = (b[1] - a[1]) / 1
   curve.forEach(coord=>{
     const amt = coord.y
