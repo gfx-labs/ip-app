@@ -88,7 +88,7 @@ const MultilineChart = (props:MultilineChartProps) => {
       return ystring.substring(0,ystring.length - 5)
   })
     const xAxisGroup = svg.append("g")
-    .attr("transform", `translate(0, ${height - margin.bottom + 40})`)
+    .attr("transform", `translate(-5, ${height - margin.bottom + 40})`)
     .call(xAxis);
     xAxisGroup.select(".domain").remove();
     xAxisGroup.selectAll("line").attr("stroke", "rgba(00, 00, 00, 00)");

@@ -69,7 +69,7 @@ export const UsdiGraphCard = () => {
         datamap={data}
         width={400}
         height={200}
-        margin={{top:20,right:5,bottom:30,left:5}}
+        margin={{top:20,right:5,bottom:30,left:0}}
         setLastRate={setLastRate}
         setLastPaid={setLastPaid}
         setLastTime={setLastTime}
