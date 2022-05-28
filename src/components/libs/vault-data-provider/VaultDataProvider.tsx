@@ -20,6 +20,7 @@ import {BN} from "../../../easy/bn";
 import {JsonRpcSigner} from "@ethersproject/providers";
 import {Rolodex} from "../../../chain/rolodex/rolodex";
 import {BigNumber, BigNumberish} from "ethers";
+import {Logp} from "../../../logger";
 
 export type VaultDataContextType = {
   hasVault: boolean;
@@ -79,9 +80,7 @@ export const VaultDataProvider = ({
         ).then((res) => {
           token.token_penalty = res.penalty
           token.token_LTV = res.ltv
-        }).catch((e)=>{
-          console.log("failed token metadata check", e)
-        })
+        }).catch(Logp("failed token metadata check"))
         if(!(token.token_LTV && token.token_penalty)){
           px.push(p1)
         }

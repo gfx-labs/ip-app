@@ -44,7 +44,7 @@ const MultilineChart = (props:MultilineChartProps) => {
   React.useEffect(() => {
     try{
     if(data.length < 4) {
-      return
+      return undefined
     }
     // this scales the data to be within the size that we specify
     const xScale = d3.scaleTime()
@@ -239,6 +239,7 @@ const MultilineChart = (props:MultilineChartProps) => {
       });
     }catch(e){
       console.log("failed to draw graph", e)
+      return undefined
     }
   }, [datamap.size]); // Redraw chart if data size changes
 
