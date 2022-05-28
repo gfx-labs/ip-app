@@ -1,6 +1,6 @@
 import { Box, Typography, Button, useTheme } from "@mui/material";
 import { BigNumber } from "ethers";
-import { Spinner } from "../loading";
+import { Spinner, WithSpinner } from "../loading";
 import { useState, useEffect, Suspense } from "react";
 import { useLight } from "../../../hooks/useLight";
 import {
@@ -40,18 +40,8 @@ export const UserStats = () => {
   const [rewards, setRewards] = useState(0);
   const [rewardsClaimed, setRewardsClaimed] = useState(0);
 
-  const spinner =     <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-      }}
-    >
-      {Spinner()}
-    </div>
   const [borrowAPR, setBorrowAPR] = useState(0);
-  const [token_cards, setTokenCards] = useState(spinner);
+  const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(undefined);
   const theme = useTheme();
   const { connected, disconnectWallet, error, currentAccount } = useWeb3Context();
   const rolodex = useRolodexContext();
@@ -108,8 +98,6 @@ export const UserStats = () => {
         );
       }
       setTokenCards(<>{el}</>);
-    }else{
-      setTokenCards(spinner);
     }
   }, [redraw]);
 
@@ -262,7 +250,7 @@ export const UserStats = () => {
         rowGap: 3,
         }}
       >
-        {token_cards}
+        <WithSpinner val={token_cards}/>
       </Box>
       <Box
         sx={{

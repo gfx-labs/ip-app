@@ -7,6 +7,7 @@ import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataPro
 import {useCallback, useEffect, useState} from "react";
 import {BN} from "../../../easy/bn";
 import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
+import {Spinner, WithSpinner} from "../loading";
 
 export const UsdiGraphCard = () => {
   const isLight = useLight();
@@ -16,9 +17,12 @@ export const UsdiGraphCard = () => {
 
   const [data, setData] = useState<Map<number, Observation>>(new Map<number, Observation>())
 
+  const [chart, setChart] = useState<JSX.Element | undefined>(undefined)
+
   const [lastRate, setLastRate] = useState(0)
   const [lastPaid, setLastPaid] = useState(0)
   const [lastTime, setLastTime] = useState("")
+
 
   const addData = async (o:Observation)=>{
     if(!o.timestamp){
@@ -57,6 +61,20 @@ export const UsdiGraphCard = () => {
 
       })    }
   },[rolodex, dataBlock])
+
+  useEffect(()=>{
+    if(data.size > 4) {
+      setChart(<MultilineChart
+        datamap={data}
+        width={400}
+        height={200}
+        margin={{top:10,right:40,bottom:30,left:50}}
+        setLastRate={setLastRate}
+        setLastPaid={setLastPaid}
+        setLastTime={setLastTime}
+      />)
+    }
+  },[data.size])
 
 
   return (
@@ -113,15 +131,7 @@ export const UsdiGraphCard = () => {
         </Box>
       </Box>
       <Box>
-        <MultilineChart
-          datamap={data}
-          width={400}
-          height={200}
-          margin={{top:10,right:40,bottom:30,left:50}}
-          setLastRate={setLastRate}
-          setLastPaid={setLastPaid}
-          setLastTime={setLastTime}
-        />
+        <WithSpinner val={chart}/>
       </Box>
     </Box>
   );
