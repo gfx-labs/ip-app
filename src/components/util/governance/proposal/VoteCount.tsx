@@ -23,7 +23,7 @@ export const VoteCount = (props: VoteCountProps) => {
 
   const isLight = useLight();
 
-  const [barColor, setBarColor] = useState("success");
+  const barColor = forOrAgainst == "For" ? "success" : "error"
   const [seeAllOpen, setSeeAllOpen] = useState(false);
 
   const votePercent =
