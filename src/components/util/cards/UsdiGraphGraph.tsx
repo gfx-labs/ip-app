@@ -42,6 +42,7 @@ const MultilineChart = (props:MultilineChartProps) => {
   let notionalColor =  "#AFEABC"
 
   React.useEffect(() => {
+    try{
     if(data.length < 4) {
       return
     }
@@ -236,6 +237,9 @@ const MultilineChart = (props:MultilineChartProps) => {
           return "translate(" + mouse[0] + "," + pos.y+")";
         });
       });
+    }catch(e){
+      console.log("failed to draw graph", e)
+    }
   }, [datamap.size]); // Redraw chart if data size changes
 
   return <svg preserveAspectRatio={"xMidYMax meet"} viewBox={`0 0 ${svgWidth} ${svgHeight}`} ref={svgRef} />;
