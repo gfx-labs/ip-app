@@ -478,7 +478,7 @@
 
 "@emotion/styled@^11.8.1":
   version "11.8.1"
-  resolved "https://registry.npmjs.org/@emotion/styled/-/styled-11.8.1.tgz"
+  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-11.8.1.tgz#856f6f63aceef0eb783985fa2322e2bf66d04e17"
   integrity sha512-OghEVAYBZMpEquHZwuelXcRjRJQOVayvbmNR0zr174NHdmMgrNkLC6TljKC5h9lZLkN5WGrdUcrKlOJ4phhoTQ==
   dependencies:
     "@babel/runtime" "^7.13.10"

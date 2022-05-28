@@ -22,12 +22,7 @@ export default defineConfig({
         dedupe: ["buffer","bn.js", "keccak"],
     },
     plugins: [
-        react({
-            jsxImportSource: '@emotion/react',
-            babel: {
-                plugins: ['@emotion/babel-plugin']
-            }
-        }),
+        react(),
         splitVendorChunkPlugin(),
     ],
     define: {
@@ -38,6 +33,10 @@ export default defineConfig({
         rollupOptions: {
             plugins: [nodePolyfills({include: ['util']})],
         },
+    },
+    esbuild: {
+        jsxFactory: 'jsx',
+        jsxInject: `import {jsx} from '@emotion/react'`
     },
     optimizeDeps: {
         esbuildOptions: {
