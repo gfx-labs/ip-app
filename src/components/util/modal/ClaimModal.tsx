@@ -13,9 +13,8 @@ export const ClaimModal = () => {
   const { type, setType } = useModalContext();
   const isLight = useLight()
 
-  const [tokenName, setTokenName] = useState("WBTC");
-  const [tokenValue, setTokenValue] = useState("39900");
-  const [iptBalance, setIPTBalance] = useState("1543");
+  const [tokenName, setTokenName] = useState("IPT");
+  const [iptBalance, setIPTBalance] = useState("0");
 
   const [claimAmount , setClaimAmount ] = useState("");
 
@@ -86,7 +85,7 @@ export const ClaimModal = () => {
           marginTop: 1
         }}
       >
-        
+
         <DecimalInput
           onChange={(e) => setClaimAmount(e)}
           placeholder={`0 ${tokenName}`}

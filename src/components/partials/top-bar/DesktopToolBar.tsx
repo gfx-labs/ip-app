@@ -36,6 +36,7 @@ export const DesktopToolBar = () => {
         <Box display="flex" alignItems="center">
         </Box>
       </Box>
+
       <Box sx={{gap: 2}} display="flex" mr={-1} ml="auto">
         <ClaimsButton />
         <SelectedChainButton />

@@ -9,7 +9,7 @@ import {
 } from "../../libs/modal-content-provider/ModalContentProvider";
 
 export const ClaimsButton = () => {
-  const [claimAmount, setClaimAmount] = useState(1543);
+  const [claimAmount, setClaimAmount] = useState(0);
   const { setType } = useModalContext();
 
   const isLight = useLight()
@@ -23,7 +23,7 @@ export const ClaimsButton = () => {
       onClick={claimRewardsHandler}
       variant="cta"
       sx={{
-        width: "100%",
+        width: "50%",
         backgroundColor: isLight ? formatColor(blue.blue9) : formatColor(blue.blue13),
         color: isLight ? formatColor(blue.blue1) : formatColor(blue.blue3),
         padding: 2,
