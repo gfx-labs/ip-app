@@ -1,14 +1,14 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import { ToolTipInfoIcon } from "../components/icons/misc/ToolTipInfoIcon";
-import {useWeb3Context} from "../components/libs/web3-data-provider/Web3Provider";
-import {
-  ProposalCard,
-} from "../components/util/governance/ProposalCard";
-import {Spinner} from "../components/util/loading";
+import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
+import { ProposalCard } from "../components/util/governance/ProposalCard";
+import { Spinner } from "../components/util/loading";
 import { GovernanceToolTip } from "../components/util/tooltip/GovernanceToolTip";
-import {getRecentProposals, useProposalCount, useProposalInfo} from "../hooks/useGovernance";
-
+import {
+  getRecentProposals,
+  useProposalCount,
+  useProposalInfo,
+} from "../hooks/useGovernance";
 
 export interface Proposal {
   id: string;
@@ -19,25 +19,35 @@ export interface Proposal {
 
 export const Governance = () => {
   const theme = useTheme();
-  const {dataBlock, provider, chainId} = useWeb3Context()
-  const [proposals, setProposals] = useState<Map<number,Proposal>>(new Map<number, Proposal>([]))
-  useEffect(()=>{
-    if(provider) {
-      getRecentProposals(provider).then((pl)=>{
-        pl.forEach((val)=>{
-          proposals.set(val.args.id.toNumber(),{
-            id: val.args.id.toString(),
-            proposer: val.args.proposer,
-            body: val.args.description,
-            endBlock: val.args.endBlock.toNumber(),
-          })
+  const { dataBlock, provider, chainId } = useWeb3Context();
+  const [proposals, setProposals] = useState<Map<number, Proposal>>(
+    new Map<number, Proposal>([])
+  );
+
+  const [noProposals, setNoProposals] = useState(false);
+
+  useEffect(() => {
+    if (provider) {
+      getRecentProposals(provider)
+        .then((pl) => {
+          console.log(pl, "PL");
+          pl.forEach((val) => {
+            proposals.set(val.args.id.toNumber(), {
+              id: val.args.id.toString(),
+              proposer: val.args.proposer,
+              body: val.args.description,
+              endBlock: val.args.endBlock.toNumber(),
+            });
+          });
+          setProposals(new Map(proposals));
         })
-        setProposals(new Map(proposals))
-      }).catch((e)=>{
-        console.log("failed to load proposal info", e)
-      })
+        .catch((e) => {
+          console.log("failed to load proposal info", e);
+
+          setNoProposals(true);
+        });
     }
-  },[provider, dataBlock, chainId])
+  }, [provider, dataBlock, chainId]);
 
   return (
     <Box
@@ -52,10 +62,16 @@ export const Governance = () => {
           mb: 0,
           pb: 0,
           marginLeft: "auto",
-      },
+        },
       }}
     >
-      <Box display="flex" mb={3} columnGap={2} rowGap={1} flexDirection={{xs: 'column', md: 'row'}}>
+      <Box
+        display="flex"
+        mb={3}
+        columnGap={2}
+        rowGap={1}
+        flexDirection={{ xs: "column", md: "row" }}
+      >
         <GovernanceToolTip
           title={
             <>
@@ -101,16 +117,25 @@ export const Governance = () => {
         />
       </Box>
 
-
-      { proposals.size != 0 ?
-        Array.from(proposals.values()).sort((a, b)=>{
-        return Number(a.id) < Number(b.id) ? 1 : -1
-      }).map((proposal, index) => (
-        <Box key={index} mb={2}>
-          <ProposalCard proposal={proposal} />
+      {proposals.size != 0 ? (
+        Array.from(proposals.values())
+          .sort((a, b) => {
+            return Number(a.id) < Number(b.id) ? 1 : -1;
+          })
+          .map((proposal, index) => (
+            <Box key={index} mb={2}>
+              <ProposalCard proposal={proposal} />
+            </Box>
+          ))
+      ) : (
+        <Box display="flex" justifyContent="center" mt="30vh">
+          {noProposals ? (
+            <Box>No Proposals available to show</Box>
+          ) : (
+            <Spinner />
+          )}
         </Box>
-      )): <Spinner/>
-      }
+      )}
     </Box>
   );
 };
