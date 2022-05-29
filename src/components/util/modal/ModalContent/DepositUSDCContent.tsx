@@ -71,8 +71,7 @@ export const DepositUSDCContent = () => {
                 color: formatColor(neutral.gray3),
                 fontSize: 14,
                 fontWeight: 600,
-              }}
-            >
+              }}>
               Max
             </Typography>
           </Button>

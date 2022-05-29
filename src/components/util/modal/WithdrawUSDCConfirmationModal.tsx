@@ -137,14 +137,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
       >
-        <Typography variant="body1" fontWeight={500} mb={1}>
-          USDI to withdraw: {USDC.amountToWithdraw}
-        </Typography>
-        <Typography variant="body1" fontWeight={500}>
-          USDC to receive: {USDC.amountToWithdraw}
-        </Typography>
       </Box>
-
       <DisableableModalButton
         text="Confirm Withdraw"
         disabled={false}
