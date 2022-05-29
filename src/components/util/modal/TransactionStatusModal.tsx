@@ -15,7 +15,6 @@ import { ContractReceipt, ContractTransaction } from "ethers";
 export const TransactionStatusModal = () => {
   const { type, setType, transactionState, transaction } = useModalContext();
   const { chainId } = useWeb3Context();
-  console.log(transactionState, "update transaction stata");
   const renderTransitionState = () => {
     const isLight = useLight();
 

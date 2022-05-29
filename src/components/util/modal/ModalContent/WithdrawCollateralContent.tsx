@@ -10,7 +10,10 @@ import {
   ModalType,
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
-import {useVaultDataContext, VaultDataProvider} from "../../../libs/vault-data-provider/VaultDataProvider";
+import {
+  useVaultDataContext,
+  VaultDataProvider,
+} from "../../../libs/vault-data-provider/VaultDataProvider";
 
 export const WithdrawCollateralContent = () => {
   const {
@@ -20,15 +23,13 @@ export const WithdrawCollateralContent = () => {
     collateralWithdrawAmount,
   } = useModalContext();
 
-
-  const {borrowingPower,accountLiability} = useVaultDataContext()
+  const { borrowingPower, accountLiability } = useVaultDataContext();
 
   const setMax = () => {
-    if(collateralToken && collateralToken.vault_amount)
-    setCollateralWithdrawAmount(
-      collateralToken.vault_amount.toString()
-    ); else {
-      setCollateralWithdrawAmount("0")
+    if (collateralToken && collateralToken.vault_amount)
+      setCollateralWithdrawAmount(collateralToken.vault_amount.toString());
+    else {
+      setCollateralWithdrawAmount("0");
     }
   };
 
@@ -58,24 +59,27 @@ export const WithdrawCollateralContent = () => {
     setIsMoneyValue(!isMoneyValue);
   };
 
-  const tryWithdrawCollateral = (amount:string)  => {
-    let newDollarValue = Number(amount)
-    let newAmount = Number(amount)
+  const tryWithdrawCollateral = (amount: string) => {
+    let newDollarValue = Number(amount);
+    let newAmount = Number(amount);
     if (!isMoneyValue) {
-      newDollarValue = newDollarValue * collateralToken.value
+      newDollarValue = newDollarValue * collateralToken.value;
     }
-    let newResult = borrowingPower - accountLiability - newDollarValue
-    if(newResult < 0) {
-      newDollarValue = Math.round((newResult + newDollarValue) * 90)/100
-      const ltvp =  ((collateralToken.token_LTV ? collateralToken.token_LTV : 100)/100)
-      newAmount = Math.round(newDollarValue *10000 / (collateralToken.value*ltvp))/10000
+    let newResult = borrowingPower - accountLiability - newDollarValue;
+    if (newResult < 0) {
+      newDollarValue = Math.round((newResult + newDollarValue) * 90) / 100;
+      const ltvp =
+        (collateralToken.token_LTV ? collateralToken.token_LTV : 100) / 100;
+      newAmount =
+        Math.round((newDollarValue * 10000) / (collateralToken.value * ltvp)) /
+        10000;
     }
     if (!isMoneyValue) {
-      setCollateralWithdrawAmount(newAmount.toString())
-    }else{
-      setCollateralWithdrawAmount(newDollarValue.toString())
+      setCollateralWithdrawAmount(newAmount.toString());
+    } else {
+      setCollateralWithdrawAmount(newDollarValue.toString());
     }
-  }
+  };
 
   return (
     <Box>
@@ -112,7 +116,9 @@ export const WithdrawCollateralContent = () => {
               ? `${
                   collateralWithdrawAmount === "0"
                     ? "0"
-                    : Math.floor(numAmountToWithdraw*1000 / collateralToken.value)/1000
+                    : Math.floor(
+                        (numAmountToWithdraw * 1000) / collateralToken.value
+                      ) / 1000
                 } ${collateralToken.ticker}`
               : `$${(numAmountToWithdraw * collateralToken.value).toFixed(2)}`}
           </Typography>
