@@ -37,6 +37,17 @@ export const ProposalCard = (props: ProposalCardProps) => {
     undefined
   );
 
+  const getTitle = (body: string) => {
+    const splitBody = body.split("\n");
+    let title = splitBody.find((n) => n[0] === "#");
+    if (title !== undefined) {
+      title = title.substring(1);
+    } else {
+      title = splitBody[0].replace(/[#]/g, "");
+    }
+
+    return title;
+  };
   const [proposal, setProposal] = useState<ProposalInfo>();
 
   const [status, setStatus] = useState("");
@@ -85,6 +96,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const expandCard = () => {
     setIsExpanded(!isExpanded);
+    console.log(body);
     setExpandedContent(body);
   };
   return (
@@ -114,10 +126,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
           </Typography>
           <Box position="relative" top={4}>
             <Typography variant="h3" fontWeight={500} color="text.secondary">
-              {"title"}
+              {getTitle(body)}
             </Typography>
             {timeLeft ? (
-              <Typography variant="body2" color={formatColor(neutral.gray3)}>
+              <Typography
+                variant="body2"
+                color={formatColor(neutral.gray3)}
+                mt={0.25}
+              >
                 {timeLeft}
               </Typography>
             ) : (

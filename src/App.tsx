@@ -11,7 +11,7 @@ import { ModalContentProvider } from "./components/libs/modal-content-provider/M
 import { PaletteModeContextProvider } from "./components/libs/palette-mode-provider/palette-mode-provider";
 import Dashboard from "./pages";
 import RedirectBook from "./pages/book";
-import LandingPage  from "./pages/landing";
+import LandingPage from "./pages/landing";
 import NotFound404Page from "./pages/404";
 import {
   DepositWithdrawUSDCModal,
@@ -22,6 +22,7 @@ import {
   WithdrawCollateralConfirmationModal,
   DepositCollateralConfirmationModal,
   DelegateModal,
+  DelegateIPTModal,
   TransactionStatusModal,
 } from "./components/util/modal";
 import { ClaimModal } from "./components/util/modal/ClaimModal";
@@ -39,78 +40,61 @@ function getWeb3Library(provider: any): providers.Web3Provider {
   return library;
 }
 
-const WalletContext = (props:{children:any}) => {
-  return(<Web3ReactProvider getLibrary={getWeb3Library}>
-    <Web3ContextProvider>
-      <RolodexContentProvider>
-        <StableCoinsProvider>
-          <VaultDataProvider>
-            <ModalContentProvider>
-              <AppGovernanceProvider>
+const WalletContext = (props: { children: any }) => {
+  return (
+    <Web3ReactProvider getLibrary={getWeb3Library}>
+      <Web3ContextProvider>
+        <RolodexContentProvider>
+          <StableCoinsProvider>
+            <VaultDataProvider>
+              <ModalContentProvider>
+                <AppGovernanceProvider>
+                  <>
+                    <WalletModalProvider>
+                      <SwapTokenProvider>{props.children}</SwapTokenProvider>
+                    </WalletModalProvider>
+                    <DelegateModal />
+                    <DelegateIPTModal />
+                    <DepositWithdrawCollateralModal />
+                    <DepositCollateralConfirmationModal />
+                    <WithdrawCollateralConfirmationModal />
+                    <DepositWithdrawUSDCModal />
+                    <BorrowRepayModal />
+                    <DepositUSDCConfirmationModal />
+                    <WithdrawUSDCConfirmationModal />
+                    <ClaimModal />
+                    <TransactionStatusModal />
+                  </>
+                </AppGovernanceProvider>
+              </ModalContentProvider>
+            </VaultDataProvider>
+          </StableCoinsProvider>
+        </RolodexContentProvider>
+      </Web3ContextProvider>
+    </Web3ReactProvider>
+  );
+};
 
-                <>
-                  <WalletModalProvider>
-                    <SwapTokenProvider>
-                      {props.children}
-                    </SwapTokenProvider>
-                  </WalletModalProvider>
-                  <DelegateModal />
-                  <DepositWithdrawCollateralModal />
-                  <DepositCollateralConfirmationModal />
-                  <WithdrawCollateralConfirmationModal />
-                  <DepositWithdrawUSDCModal />
-                  <BorrowRepayModal />
-                  <DepositUSDCConfirmationModal />
-                  <WithdrawUSDCConfirmationModal />
-                  <ClaimModal />
-                  <TransactionStatusModal />
-                </>
-              </AppGovernanceProvider>
-            </ModalContentProvider>
-          </VaultDataProvider>
-        </StableCoinsProvider>
-      </RolodexContentProvider>
-
-    </Web3ContextProvider>
-  </Web3ReactProvider>)
-}
-
-const AppRouter = ()=>{
-  return (<Routes>
-    <Route
-      path={`/`}
-      element={
-        <WalletContext>
-          <AppLayout>
-            <Dashboard/>
-          </AppLayout>
-        </WalletContext>
-
-      }
-    />
-    <Route
-      path={`/landing`}
-      element={
-        <LandingPage />
-      }
-    />
-    <Route
-      path={`/docs`}
-      element={<RedirectBook />}
-    />
-    <Route
-      path={`/book`}
-      element={<RedirectBook />}
-    />
-    <Route
-      path={`*`}
-      element={
-          <NotFound404Page />
-      }
-    />
-  </Routes>)
-}
-
+const AppRouter = () => {
+  return (
+    <Routes>
+      <Route
+        path={`/`}
+        element={
+          <WalletContext>
+            <AppLayout>
+              <Dashboard />
+            </AppLayout>
+          </WalletContext>
+        }
+      />
+      <Route path={`/landing`} element={<LandingPage />} />
+      <Route path={`/docs`} element={<RedirectBook />} />
+      <Route path={`/book`} element={<RedirectBook />} />
+      <Route path={`*`} element={<NotFound404Page />} />
+    </Routes>
+  );
+};
 
 const App = () => {
   return (

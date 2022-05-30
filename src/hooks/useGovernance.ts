@@ -5,7 +5,10 @@ import { useVaultDataContext } from "../components/libs/vault-data-provider/Vaul
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import {
   GovernorCharlieDelegate__factory,
+  GovernorCharlieDelegator__factory,
   GovernorCharlieEvents__factory,
+  TokenDelegateStorageV1__factory,
+  TokenDelegatorStorage__factory,
   Vault__factory,
 } from "../chain/contracts";
 import {
@@ -13,6 +16,7 @@ import {
   VoteCastEventObject,
 } from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
 import { useModalContext } from "../components/libs/modal-content-provider/ModalContentProvider";
+import { tokenDelegatorSol } from "../chain/contracts/factories/governance/token";
 
 export interface ProposalInfo {
   id: BigNumber;
@@ -30,7 +34,7 @@ export interface ProposalInfo {
   delay: BigNumber;
 }
 
-export const governor = "0xf5010a6787ef0ee6669d646ea227b6e03f8974a2";
+export const governor = "0x3389d29e457345e4f22731292d9c10ddfc78088f";
 
 interface rawProposalInfo {
   id: BigNumber;
