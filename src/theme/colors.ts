@@ -28,6 +28,7 @@ export const neutral:{[key:string]:[number, number, number]} = {
   gray8: [47, 56, 72], // #2F3848
   gray9: [127, 127, 127], // #7F7F7F
   gray10: [107, 118, 135], // #6B7687
+  gray11: [251,252,253], // #FBFCFD
   black: [0, 0, 0],
   black1: [47, 45, 45], // #2F2D2D
   black2: [22, 22, 22], // #161616,
@@ -90,7 +91,21 @@ export const gradient:{[key:string]:Gradient}= {
       [[9, 9, 9], 0],
       [[8, 11, 15, 0.31], 1],
     ],
-  } ,
+  },
+  gradientPinkBlue: {
+    angle: 110,
+    stops: [
+      [[213, 184, 242],0],
+      [[80,174,255],1],
+    ]
+  },
+  gradientPinkBlue2: {
+    angle: 130,
+    stops: [
+      [[120,155,255],0],
+      [[129, 162, 255],1],
+    ]
+  },
   bgDefaultLight: {
     angle: 180,
     stops: [
@@ -167,7 +182,7 @@ export const formatColor = (color: Color) => {
 export const formatGradient = (gr: Gradient) => {
   const {angle, stops} = generateSmoothGradient(gr)
   const cr = `${angle}deg, ${stops
-    .map(([color, position]) => `${formatColor(color)} ${position * 100}%`)
+    .map(([color, position]) => `${formatColor(color)} ${Math.round(position * 100)}%`)
     .join(", ")}`;
     return cr
 };
