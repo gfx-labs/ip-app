@@ -57,8 +57,6 @@ export const Highlights: React.FC = ()=> {
                 flexBasis:"100%",
                 width:"100%",
                 maxWidth:1000,
-                alignItems: "left",
-                justifyContent:"left",
                 }}>
                <Box sx={{flexBasis:"33%"}}>
                    <HighlightBox icon={""} header={"Stability First"} copy={"USDi maintains peg under averse condeitions, without any intervention."}/>
