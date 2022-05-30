@@ -110,7 +110,6 @@ export const ModalContentProvider = ({
   const updateTransactionState = (
     transaction: ContractReceipt | ContractTransaction
   ) => {
-    console.log("THIS IS TRANSACTION", transaction, typeof transaction);
     if (isContractTransaction(transaction)) {
       setTransactionState("PENDING");
       setTransaction(transaction);
@@ -119,11 +118,9 @@ export const ModalContentProvider = ({
       if (transaction.status === 1) {
         setTransactionState("SUCCESS");
       } else {
-        console.log("hitting failure");
         setTransactionState("FAILURE");
       }
     }
-    console.log("setting....");
     setTransaction(transaction);
   };
 

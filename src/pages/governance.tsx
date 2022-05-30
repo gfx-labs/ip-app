@@ -15,17 +15,7 @@ export interface Proposal {
   body: string;
   id: string;
   proposer: string;
-  eta: BigNumber;
-  startBlock: BigNumber;
   endBlock: number;
-  forVotes: BigNumber;
-  againstVotes: BigNumber;
-  abstainVotes: BigNumber;
-  canceled: boolean;
-  executed: boolean;
-  emergency: boolean;
-  quorumVotes: BigNumber;
-  delay: BigNumber;
 }
 
 export const Governance = () => {
@@ -38,15 +28,9 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false);
 
   useEffect(() => {
-    console.log("MOEWWWWW");
-    console.log(provider);
     if (provider) {
       getRecentProposals(provider)
         .then((pl) => {
-          console.log(
-            pl,
-            "PGAOIREGOAENROGNARENGOIUANEORGNOAERNGOANERGNOAERNGOAENRGIOL"
-          );
           pl.forEach((val) => {
             proposals.set(val.args.id.toNumber(), {
               id: val.args.id.toString(),
@@ -62,44 +46,6 @@ export const Governance = () => {
 
           setNoProposals(true);
         });
-
-      const newProposals = new Map();
-
-      newProposals.set(1, {
-        body: "body body body",
-        id: "1",
-        proposer: "0x9723hr9f239dn329nd92n39dn2983nd8",
-        eta: BigNumber.from("456456456"),
-        startBlock: BigNumber.from("412312356456456"),
-        endBlock: BigNumber.from("56456456"),
-        forVotes: BigNumber.from("56"),
-        againstVotes: BigNumber.from("456"),
-        abstainVotes: BigNumber.from("6"),
-        canceled: false,
-        executed: false,
-        emergency: false,
-        quorumVotes: BigNumber.from("741256456"),
-        delay: BigNumber.from("9412312356456456"),
-      });
-
-      newProposals.set(2, {
-        body: "body body body",
-        id: "2",
-        proposer: "0x119723hr9f239dn329nd92n39dn2983nd8",
-        eta: BigNumber.from("456456456"),
-        startBlock: BigNumber.from("412312356456456"),
-        endBlock: BigNumber.from("56456456"),
-        forVotes: BigNumber.from("56"),
-        againstVotes: BigNumber.from("456"),
-        abstainVotes: BigNumber.from("6"),
-        canceled: false,
-        executed: false,
-        emergency: true,
-        quorumVotes: BigNumber.from("741256456"),
-        delay: BigNumber.from("9412312356456456"),
-      });
-
-      setProposals(newProposals);
     }
   }, [provider, dataBlock, chainId]);
 

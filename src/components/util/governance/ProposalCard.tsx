@@ -19,6 +19,9 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import ProposalDetails from "./proposal";
 import { Logp } from "../../../logger";
 import { Proposal } from "../../../pages/governance";
+import { BNtoHexNumber, BNtoHexString } from "../helpers/BNtoHex";
+import { useFormatWithDecimals } from "../../../hooks/useTokenInfo";
+import VoteButton from "./VoteButton";
 
 export interface ProposalCardProps {
   proposal: Proposal;
@@ -26,16 +29,46 @@ export interface ProposalCardProps {
 
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider } = useWeb3Context();
-  const { id, proposer, body, endBlock, emergency } = props.proposal;
+  const { id, proposer, body, endBlock } = props.proposal;
+
   const isLight = useLight();
   const [isExpanded, setIsExpanded] = useState(false);
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   );
 
+  const [proposal, setProposal] = useState<ProposalInfo>();
+
   const [status, setStatus] = useState("");
 
   const [timeLeft, setTimeLeft] = useState("");
+  const [forVotes, setForVotes] = useState(0);
+  const [abstainVotes, setAbstainVotes] = useState(0);
+  const [againstVotes, setAgainstVotes] = useState(0);
+  const [totalVotes, setTotalVotes] = useState(0);
+  useEffect(() => {
+    const getProposalInfo = async () => {
+      return await useProposalInfo(id, provider!);
+    };
+
+    getProposalInfo().then((res) => {
+      setProposal(res);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    if (proposal) {
+      console.log(proposal, "THIS IS PROPOSAL");
+      const abstainVotes = useFormatWithDecimals(proposal?.abstainVotes, 18);
+      const forVotes = useFormatWithDecimals(proposal?.forVotes, 18);
+      const againstVotes = useFormatWithDecimals(proposal?.againstVotes, 18);
+      const totalVotes = abstainVotes + forVotes + againstVotes;
+      setAbstainVotes(abstainVotes);
+      setAgainstVotes(againstVotes);
+      setForVotes(forVotes);
+      setTotalVotes(totalVotes);
+    }
+  }, [proposal]);
 
   useEffect(() => {
     const bdiff = endBlock - dataBlock;
@@ -66,7 +99,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         cursor: "pointer",
         borderColor: formatColor(pink.pink1),
         borderWidth: 2,
-        borderStyle: emergency ? "solid" : "none",
+        borderStyle: proposal?.emergency ? "solid" : "none",
       }}
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
@@ -95,7 +128,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
         <Box display="flex">
           <Box display={{ xs: "none", md: "flex" }}>
-            <Votes noVotes={"0"} yesVotes={"1"} />
+            <Votes noVotes={againstVotes} yesVotes={forVotes} />
           </Box>
           <Status status={status} />
         </Box>
@@ -110,12 +143,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
         >
           {expandedContent ? (
             <Box>
-              <ProposalDetails id={Number(id)} />
+              <ProposalDetails id={id} status={status} />
               <ReactMarkdown
                 children={expandedContent}
                 components={markdownComponentConfig}
                 remarkPlugins={[remarkGfm]}
               />
+              <VoteButton id={id} status={status} totalVotes={totalVotes} />
             </Box>
           ) : (
             <Spinner />

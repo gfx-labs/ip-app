@@ -1,7 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import {
-  Web3Data,
-} from "../../components/libs/web3-data-provider/Web3Provider";
+import { Web3Data } from "../../components/libs/web3-data-provider/Web3Provider";
 import { Chains } from "../chains";
 import {
   IUSDI,
@@ -18,12 +16,14 @@ import {
   GovernorCharlieDelegate,
 } from "../contracts";
 
-export const backupProvider = new JsonRpcProvider("https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw");
+export const backupProvider = new JsonRpcProvider(
+  "https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw"
+);
 
 export class Rolodex {
-  provider:  JsonRpcProvider
+  provider: JsonRpcProvider;
 
-  charlie?: GovernorCharlieDelegate
+  charlie?: GovernorCharlieDelegate;
 
   addressUSDI: string;
   USDI: IUSDI;
@@ -42,16 +42,16 @@ export class Rolodex {
 
   constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
     if (signerOrProvider instanceof JsonRpcSigner) {
-      this.provider = signerOrProvider.provider
-    }else {
-      this.provider = signerOrProvider
+      this.provider = signerOrProvider.provider;
+    } else {
+      this.provider = signerOrProvider;
     }
     this.addressUSDI = usdi;
     this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
   }
 }
 
-const zaddr = "0x0000000000000000000000000000000000000000"
+const zaddr = "0x0000000000000000000000000000000000000000";
 
 export const NewRolodex = async (ctx: Web3Data) => {
   if (!ctx.chainId) {
@@ -64,33 +64,35 @@ export const NewRolodex = async (ctx: Web3Data) => {
   rolo = new Rolodex(provider!, token.usdiAddress!);
   try {
     if (!ctx.provider) {
-      rolo.addressVC = await rolo.USDI?.getVaultController()
+      rolo.addressVC = await rolo.USDI?.getVaultController();
       rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
     } else {
-      console.log('getting signer')
       const signer = ctx.provider.getSigner(ctx.currentAccount);
-      provider = ctx.provider
+      provider = ctx.provider;
       rolo = new Rolodex(signer!, token.usdiAddress!);
       rolo.addressVC = await rolo.USDI?.getVaultController();
       rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
     }
     // connect
-    if(!rolo.addressUSDC) {
-      rolo.addressUSDC = await rolo.USDI.reserveAddress()
-      rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!)
+    if (!rolo.addressUSDC) {
+      rolo.addressUSDC = await rolo.USDI.reserveAddress();
+      rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!);
     }
 
     if (!rolo.addressOracle) {
       rolo.addressOracle = await rolo.VC?.getOracleMaster();
-      rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!);
+      rolo.Oracle = OracleMaster__factory.connect(
+        rolo.addressOracle!,
+        provider!
+      );
     }
 
     if (!rolo.addressCurve) {
       rolo.addressCurve = await rolo.VC?.getCurveMaster();
       rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!);
     }
-  }catch(e){
-    return rolo
+  } catch (e) {
+    return rolo;
   }
   return rolo;
 };
