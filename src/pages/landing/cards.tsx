@@ -73,7 +73,8 @@ const GradientBox = (props:{left:string, right:string, bg:string})=>{
     return (<Box
         sx={{
             paddingX:2,
-            paddingY: 8,
+            paddingY:8,
+            marginRight: 8,
             flexBasis: "100%",
             display:"flex",
             width:"100%",

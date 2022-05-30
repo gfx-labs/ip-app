@@ -35,7 +35,7 @@ const TopBar: React.FC<{sx?: any}> = (props?:{sx?:any})=> {
         paddingBottom: 5,
         left: 0,
         right: 0,
-        ...props.sx,
+        ...props?.sx,
         }}
     >
         <Toolbar sx={{}}>
