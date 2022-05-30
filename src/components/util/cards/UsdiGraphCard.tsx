@@ -44,7 +44,7 @@ export const UsdiGraphCard = () => {
           if(!temp.has(event.blockNumber)) {
             temp.set(event.blockNumber, {block:event.blockNumber})
           }
-          temp.get(event.blockNumber)!.interestRate = event.args[2].div(BN("1e16")).toNumber()
+          temp.get(event.blockNumber)!.interestRate = event.args[2].div(BN("1e14")).toNumber()/100
         })
       }).then(async ()=>{
         return rolodex.USDI.queryFilter(rolodex.USDI.filters.Donation()).then((events)=>{
