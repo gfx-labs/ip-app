@@ -60,7 +60,7 @@ export const TransactionStatusModal = () => {
               my={3}
               height={30}
               width={30}
-              src="/images/ip_green.svg"
+              src="images/ip_green.svg"
             ></Box>
 
             <MuiLink
