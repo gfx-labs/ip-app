@@ -14,8 +14,18 @@ import { useVaultDataContext } from "../components/libs/vault-data-provider/Vaul
 import { BigNumber } from "ethers";
 import { useAppGovernanceContext } from "../components/libs/app-governance-provider/AppGovernanceProvider";
 import { Governance } from "./governance";
+import Cookies from "universal-cookie";
+import {useNavigate} from "react-router";
 
-const LandingPage = () => {
+const Dashboard = () => {
+  const cookies = new Cookies()
+  const isFirst = cookies.get("first-visit")
+  if(isFirst) {
+  }else{
+    console.log("detected first login")
+    return <><meta http-equiv="refresh" content="0; url=landing" />
+    <a href="landing">please click here if you are not redirected</a></>
+  }
   const theme = useTheme();
   const { currentAccount, connected } = useWeb3Context();
   const rolodex = useRolodexContext();
@@ -70,7 +80,7 @@ const LandingPage = () => {
               mb: 0,
               pb: 0,
               marginLeft: "auto",
-            },
+          },
           }}
         >
           <Typography
@@ -89,7 +99,7 @@ const LandingPage = () => {
               [theme.breakpoints.down("lg")]: {
                 gridTemplateColumns: "1fr",
                 rowGap: 5,
-              },
+            },
             }}
           >
             <ProtocolStatsCard />
@@ -111,15 +121,15 @@ const LandingPage = () => {
                   background: isLight
                     ? "rgba(55, 66, 82, 0.42)"
                     : "rgba(35, 40, 48, 0.82)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                 }}
               >
                 <ConnectWalletButton invertLight />
               </Box>
             ) : (
-              connected &&
+            connected &&
               !hasVault && (
                 <Box
                   sx={{
@@ -134,14 +144,14 @@ const LandingPage = () => {
                     background: isLight
                       ? "rgba(55, 66, 82, 0.42)"
                       : "rgba(35, 40, 48, 0.82)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
                   }}
                 >
                   <OpenVaultButton />
                 </Box>
-              )
+            )
             )}
             <Box sx={{ marginY: 4 }}>
               <StatsMeter />
@@ -156,4 +166,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Dashboard;
