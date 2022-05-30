@@ -38,7 +38,8 @@ export const DelegateModal = () => {
   const { vaultAddress } = useVaultDataContext();
   const { provider, currentAccount } = useWeb3Context();
 
-  const handleDelegateRequest = async () => {
+  const handleDelegateRequest = async (e: FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setLoadmsg(locale("CheckWallet"));
     try {
@@ -116,13 +117,7 @@ export const DelegateModal = () => {
         >
           Enter the address you would like to delegate your vote to
         </Typography>
-        <Box
-          component="form"
-          onSubmit={(e: FormEvent) => {
-            e.preventDefault();
-            // Vault__factory.connect(vaultAddress, provider?.getSigner(currentAccount))
-          }}
-        >
+        <Box component="form" onSubmit={handleDelegateRequest}>
           <Box my={2}>
             <ModalInputContainer focus={focus}>
               <TextField
