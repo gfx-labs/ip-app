@@ -39,7 +39,7 @@ const TopBar: React.FC<{sx?: any}> = (props?:{sx?:any})=> {
         }}
     >
         <Toolbar sx={{}}>
-            <Box component="img" src="../images/usdi.svg" width={80} height={80}></Box>
+            <Box component="img" src="images/usdi.svg" width={80} height={80}></Box>
             <Box sx={{gap: 10}} display="flex" ml={10}>
                 <Typography
                     sx={{
@@ -60,7 +60,7 @@ const TopBar: React.FC<{sx?: any}> = (props?:{sx?:any})=> {
                         fontSize: "150%",
                         alignItems: "center",
                     }}>
-                    <Link href="docs" sx={{color:"inherit"}}>
+                    <Link href="#/docs" sx={{color:"inherit"}}>
                         Docs
                     </Link>
                 </Typography>
@@ -71,7 +71,7 @@ const TopBar: React.FC<{sx?: any}> = (props?:{sx?:any})=> {
                         fontSize: "150%",
                         alignItems: "center",
                     }}>
-                    <Link href="docs" sx={{color:"inherit"}}>
+                    <Link href="#/docs" sx={{color:"inherit"}}>
                         Git
                     </Link>
                 </Typography>

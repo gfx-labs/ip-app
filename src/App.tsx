@@ -78,12 +78,6 @@ const WalletContext = (props:{children:any}) => {
 const AppRouter = ()=>{
   return (<Routes>
     <Route
-      path={`/landing`}
-      element={
-        <LandingPage />
-      }
-    />
-    <Route
       path={`/`}
       element={
         <WalletContext>
@@ -95,15 +89,23 @@ const AppRouter = ()=>{
       }
     />
     <Route
-      path={`/^\/(docs|book)`}
+      path={`/landing`}
+      element={
+        <LandingPage />
+      }
+    />
+    <Route
+      path={`/docs`}
+      element={<RedirectBook />}
+    />
+    <Route
+      path={`/book`}
       element={<RedirectBook />}
     />
     <Route
       path={`*`}
       element={
-        <AppLayout>
           <NotFound404Page />
-        </AppLayout>
       }
     />
   </Routes>)
