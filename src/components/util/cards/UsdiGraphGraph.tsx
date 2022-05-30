@@ -43,6 +43,7 @@ const MultilineChart = (props:MultilineChartProps) => {
       return 1
     }
   })
+  data.shift()
 
   let interestColor = "#6929F0"
   let notionalColor =  "#AFEABC"

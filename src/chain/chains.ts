@@ -33,7 +33,7 @@ const configs: Array<ChainInfo> = [
     id: ChainIDs.POLYGON,
     name: "Polygon TESTDEPLOY",
     ticker: "MATIC",
-    usdiAddress: "0x711771cddf715064d14005dbeeF91203aFF72c28",
+    usdiAddress: "0x203c05ACb6FC02F5fA31bd7bE371E7B213e59Ff7",
     scanUrl: 'https://polygonscan.com/tx/',
     scanSite: 'PolygonScan'
   },

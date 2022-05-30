@@ -1,4 +1,5 @@
 const RedirectBook: React.FC = () => {
+    console.log("redirecting to docs")
     return (
         <div>
             <meta http-equiv="refresh" content="0; url=book/index.html" />

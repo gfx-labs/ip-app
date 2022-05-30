@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { Box, Typography, Button } from "@mui/material";
 import { formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
@@ -18,10 +17,8 @@ export const DepositUSDCContent = () => {
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
-
   const setMax = () =>
     updateUSDC("amountToDeposit", USDCToken.wallet_amount!.toString());
-
   const numAmountToDeposit = Number(USDC.amountToDeposit);
 
   useEffect(() => {
