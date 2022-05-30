@@ -5,6 +5,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import {Contract} from "ethers";
 import { formatColor, neutral, blue } from "../../../theme";
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
@@ -12,7 +13,9 @@ import {
   ModalType,
   useModalContext,
 } from "../../libs/modal-content-provider/ModalContentProvider";
+import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
+import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string;
@@ -30,6 +33,8 @@ interface UserTokenCardProps extends BoxProps {
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme();
+  const rolodex = useRolodexContext();
+  const {currentSigner} = useWeb3Context();
 
   const {tokens} = useVaultDataContext();
   const {type, setType, setCollateralToken } = useModalContext();
@@ -60,6 +65,15 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     setType(ModalType.Delegate)
   }
 
+  const getTokens = () => {
+    if(rolodex && rolodex.provider && currentSigner) {
+      const c = new Contract(
+(tokens as any)[tokenName].address
+      ,["function publicMint() external"],rolodex.provider)
+      c.connect(currentSigner).publicMint()
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -72,16 +86,14 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         [theme.breakpoints.down("lg")]: {
           paddingX: 2,
           paddingY: 4,
-        },
-        ...props.sx,
+      },
+      ...props.sx,
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2.5 }}>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
-            <a target={"_blank"} href={"https://polygonscan.com/address/"+(tokens as any)[tokenName].address +"#writeContract"}>
-              {tokenName}
-            </a>
+            {tokenName}
           </Typography>
           <Typography variant="h3" color="text.secondary" mb={1}>
             {tokenValue}
@@ -134,7 +146,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           Withdraw
         </Button>
       </Box>
-
+      <a display="inline" onClick={getTokens}>
+        click to get tokens
+      </a>
       <Box display={canDelegate ? "flex" : "none"} justifyContent="flex-end">
         <Button
           variant="text"
