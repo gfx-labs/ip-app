@@ -1,10 +1,17 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import {  BigNumber, BigNumberish, Contract, EventFilter, utils } from "ethers";
+import { BigNumber, BigNumberish, Contract, EventFilter, utils } from "ethers";
 import { Rolodex } from "../chain/rolodex/rolodex";
 import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
-import { GovernorCharlieDelegate__factory, GovernorCharlieEvents__factory, Vault__factory } from "../chain/contracts";
-import {ProposalCreatedEventFilter, VoteCastEventObject} from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
+import {
+  GovernorCharlieDelegate__factory,
+  GovernorCharlieEvents__factory,
+  Vault__factory,
+} from "../chain/contracts";
+import {
+  ProposalCreatedEventFilter,
+  VoteCastEventObject,
+} from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
 
 export interface ProposalInfo {
   id: BigNumber;
@@ -22,11 +29,9 @@ export interface ProposalInfo {
   delay: BigNumber;
 }
 
-
-
 export const governor = "0xf5010a6787ef0ee6669d646ea227b6e03f8974a2";
 
-interface rawProposalInfo  {
+interface rawProposalInfo {
   id: BigNumber;
   proposer: string;
   eta: BigNumber;
@@ -42,46 +47,62 @@ interface rawProposalInfo  {
   delay: BigNumber;
 }
 
-export const getRecentProposals = async(
-  signer:JsonRpcProvider,
-  headBlock?:number,
+export const getRecentProposals = async (
+  signer: JsonRpcProvider,
+  headBlock?: number
 ) => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer)
-  const logs = await contract.queryFilter(
-    contract.filters.ProposalCreated(),undefined,headBlock
-  )
-  return logs
-}
+  try {
+    const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
+    console.log(contract, "this is contract");
+
+    const filters = await contract.filters.ProposalCreated();
+
+    console.log(filters, "THIS BE FILTERSSSSS");
+
+    const logs = await contract.queryFilter(filters, undefined, headBlock);
+
+    console.log(logs, "THIS IS LOGSSS");
+    return logs;
+  } catch (err) {
+    console.log(err, "THIS IS GOV ERROR");
+    throw new Error("error getting proposals");
+  }
+};
 
 export const useProposalInfo = async (
   id: BigNumberish,
-  signer:JsonRpcProvider,
-):Promise<ProposalInfo> => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer)
-  return contract.proposals(id)
+  signer: JsonRpcProvider
+): Promise<ProposalInfo> => {
+  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
+  return contract.proposals(id);
 };
 
-
-export const getProposalVoters = async(
+export const getProposalVoters = async (
   id: BigNumberish,
-  signer:JsonRpcProvider,
-):Promise<VoteCastEventObject[]> => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer)
-  const log = await contract.queryFilter(contract.filters.VoteCast(undefined),undefined,undefined)
-  return log.filter((x)=>{return x.args.proposalId.eq(id)}).map((x)=>{return {
-    ...x.args
-    }
-  })
-}
+  signer: JsonRpcProvider
+): Promise<VoteCastEventObject[]> => {
+  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
+  const log = await contract.queryFilter(
+    contract.filters.VoteCast(undefined),
+    undefined,
+    undefined
+  );
+  return log
+    .filter((x) => {
+      return x.args.proposalId.eq(id);
+    })
+    .map((x) => {
+      return {
+        ...x.args,
+      };
+    });
+};
 
-export const useProposalCount = async (signer:JsonRpcProvider)=>{
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer)
-  const info = await contract.proposalCount()
-  return info.toNumber()
-}
-
-
-
+export const useProposalCount = async (signer: JsonRpcProvider) => {
+  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
+  const info = await contract.proposalCount();
+  return info.toNumber();
+};
 
 export const exampleProposal = `
 ---
@@ -319,4 +340,4 @@ Term 2
   ::: warning
 *here be dragons*
   :::
-  `
+  `;

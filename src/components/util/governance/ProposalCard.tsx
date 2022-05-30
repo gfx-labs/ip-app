@@ -7,44 +7,48 @@ import { Status } from "./Status";
 import { Spinner, WithDots } from "../loading";
 
 import ReactMarkdown from "react-markdown";
-import { exampleProposal, ProposalInfo, useProposalInfo } from "../../../hooks/useGovernance";
+import {
+  exampleProposal,
+  ProposalInfo,
+  useProposalInfo,
+} from "../../../hooks/useGovernance";
 import { NormalComponents } from "react-markdown/lib/complex-types";
 import { SpecialComponents } from "react-markdown/lib/ast-to-react";
 import remarkGfm from "remark-gfm";
-import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import ProposalDetails from "./proposal";
-import {Logp} from "../../../logger";
-import {Proposal} from "../../../pages/governance";
+import { Logp } from "../../../logger";
+import { Proposal } from "../../../pages/governance";
 
 export interface ProposalCardProps {
   proposal: Proposal;
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const {dataBlock,provider} = useWeb3Context()
-  const { id, proposer, body, endBlock} = props.proposal;
+  const { dataBlock, provider } = useWeb3Context();
+  const { id, proposer, body, endBlock, emergency } = props.proposal;
   const isLight = useLight();
   const [isExpanded, setIsExpanded] = useState(false);
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   );
 
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState("");
 
-  const [timeLeft, setTimeLeft] = useState("")
+  const [timeLeft, setTimeLeft] = useState("");
 
-  useEffect(()=>{
-    const bdiff = endBlock - dataBlock
-    const secs = bdiff * 13.5
-    const hrdiff = Math.abs(Math.round(100 * secs/(60*60))/100)
-    if(bdiff < 0) {
-      setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`)
-      setStatus("Ended")
-      return
+  useEffect(() => {
+    const bdiff = endBlock - dataBlock;
+    const secs = bdiff * 13.5;
+    const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100);
+    if (bdiff < 0) {
+      setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`);
+      setStatus("Ended");
+      return;
     }
-    setTimeLeft(`Active for ${hrdiff} Hour(s)`)
-    setStatus("Active")
-  }, [dataBlock])
+    setTimeLeft(`Active for ${hrdiff} Hour(s)`);
+    setStatus("Active");
+  }, [dataBlock]);
 
   const expandCard = () => {
     setIsExpanded(!isExpanded);
@@ -60,11 +64,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
         paddingX: { xs: 1, md: 4 },
         paddingY: 3,
         cursor: "pointer",
+        borderColor: formatColor(pink.pink1),
+        borderWidth: 2,
+        borderStyle: emergency ? "solid" : "none",
       }}
     >
-      <Box
-        onClick={expandCard}
-        display="flex" justifyContent="space-between">
+      <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <Typography
             variant="h3"
@@ -74,7 +79,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
           >
             {id}
           </Typography>
-          <Box  position="relative" top={4}>
+          <Box position="relative" top={4}>
             <Typography variant="h3" fontWeight={500} color="text.secondary">
               {"title"}
             </Typography>
@@ -97,17 +102,20 @@ export const ProposalCard = (props: ProposalCardProps) => {
       </Box>
 
       {isExpanded ? (
-        <Box sx={{
+        <Box
+          sx={{
             marginTop: 3,
             cursor: "auto",
-          }}>
+          }}
+        >
           {expandedContent ? (
             <Box>
               <ProposalDetails id={Number(id)} />
               <ReactMarkdown
                 children={expandedContent}
                 components={markdownComponentConfig}
-                remarkPlugins={[remarkGfm]}/>
+                remarkPlugins={[remarkGfm]}
+              />
             </Box>
           ) : (
             <Spinner />
@@ -121,7 +129,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 };
 
 const markdownComponentConfig: Partial<
-Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents
+  Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents
 > = {
   a: ({ node, style, children, ...props }) => {
     return (
