@@ -13,8 +13,6 @@ site:
     - paths:
         - docs/.docusaurus/
   script:
-    - mkdir -p ~/.ssh
-    - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
     - npx yarn install
     - npm run build
   artifacts:
