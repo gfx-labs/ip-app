@@ -23,8 +23,8 @@ const Dashboard = () => {
   if(isFirst) {
   }else{
     console.log("detected first login")
-    return <><meta http-equiv="refresh" content="0; url=landing" />
-    <a href="landing">please click here if you are not redirected</a></>
+    return <><meta http-equiv="refresh" content="0; url=#/landing" />
+    <a href="#/landing">please click here if you are not redirected</a></>
   }
   const theme = useTheme();
   const { currentAccount, connected } = useWeb3Context();
