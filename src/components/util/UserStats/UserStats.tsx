@@ -126,7 +126,9 @@ export const UserStats = () => {
         }}
       >
         <Box display={{ xs: "none", md: "flex" }}>
-          <StatsBodyTypography text={`Vault #${vaultID}`} />
+          {vaultID ? <StatsBodyTypography text={`Vault #${
+            vaultID
+          }`} /> : <></>}
         </Box>
 
         <Box display="flex" alignItems="center">
@@ -162,12 +164,12 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleText
             title="Borrowing Power"
-            text={`$${Math.round(borrowingPower).toLocaleString()}`}
+            text={borrowingPower ? "$"+Math.round(borrowingPower).toLocaleString() : null}
           />
         </SingleStatCard>
 
         <SingleStatCard>
-          <TitleText title="Borrow APR" text={`${borrowAPR}%`} />
+          <TitleText title="Borrow APR" text={borrowAPR ? borrowAPR.toString()+"%" : null} />
         </SingleStatCard>
 
         <SingleStatCard
@@ -192,7 +194,7 @@ export const UserStats = () => {
           >
             <TitleText
               title="USDi Borrowed"
-              text={`$${Math.round(accountLiability).toLocaleString()}`}
+              text={accountLiability ? "$"+Math.round(accountLiability).toLocaleString() : null }
             />
 
             <Box

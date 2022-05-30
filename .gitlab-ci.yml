@@ -41,8 +41,8 @@ pages-github:
     - git config --global user.name "gfx.cafe"
     - git clone https://github.com/gfx-labs/ip-app-pages.git
     - cp -r dist ip-app-pages/$CI_COMMIT_SHORT_SHA
-    - rm -rf ip-app-pages/docs
-    - cp -r dist ip-app-pages/docs
+    - rm -rf ip-app-pages/latest ip-app-pages/docs
+    - cp -r dist ip-app-pages/latest
     - cd ip-app-pages
     - git add -A && git commit -m "added commit $CI_COMMIT_SHORT_SHA"
     - git push
