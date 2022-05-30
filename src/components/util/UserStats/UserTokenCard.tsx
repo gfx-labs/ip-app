@@ -146,7 +146,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           Withdraw
         </Button>
       </Box>
-      <a display="inline" onClick={getTokens}>
+      <a onClick={getTokens}>
         click to get tokens
       </a>
       <Box display={canDelegate ? "flex" : "none"} justifyContent="flex-end">
