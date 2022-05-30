@@ -52,7 +52,7 @@ export const UsdiGraphCard = () => {
             if(!temp.has(event.blockNumber)) {
               temp.set(event.blockNumber, {block:event.blockNumber})
             }
-            temp.get(event.blockNumber)!.interestPaid = event.args[1].div(BN("1e16")).toNumber()/100
+            temp.get(event.blockNumber)!.interestPaid = event.args[1].div(BN("1e14")).toNumber()/10000
           })
         }).then(()=>{
           for(const [k, v] of temp.entries()) {
