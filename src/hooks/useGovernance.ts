@@ -12,6 +12,7 @@ import {
   ProposalCreatedEventFilter,
   VoteCastEventObject,
 } from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
+import { useModalContext } from "../components/libs/modal-content-provider/ModalContentProvider";
 
 export interface ProposalInfo {
   id: BigNumber;
@@ -57,11 +58,8 @@ export const getRecentProposals = async (
 
     const filters = await contract.filters.ProposalCreated();
 
-    console.log(filters, "THIS BE FILTERSSSSS");
-
     const logs = await contract.queryFilter(filters, undefined, headBlock);
 
-    console.log(logs, "THIS IS LOGSSS");
     return logs;
   } catch (err) {
     console.log(err, "THIS IS GOV ERROR");
@@ -102,6 +100,26 @@ export const useProposalCount = async (signer: JsonRpcProvider) => {
   const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
   const info = await contract.proposalCount();
   return info.toNumber();
+};
+
+export const useCastVote = async (
+  id: string,
+  vote: number,
+  signer: JsonRpcSigner
+) => {
+  const { updateTransactionState } = useModalContext();
+
+  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
+
+  const castVoteTransaction = await contract.castVote(id, vote);
+
+  updateTransactionState(castVoteTransaction);
+
+  const voteReceipt = await castVoteTransaction.wait();
+
+  updateTransactionState(voteReceipt);
+
+  return voteReceipt;
 };
 
 export const exampleProposal = `

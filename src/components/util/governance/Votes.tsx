@@ -8,18 +8,15 @@ export const Votes = ({
   noVotes,
   yesVotes,
 }: {
-  noVotes: string;
-  yesVotes: string;
+  noVotes: number;
+  yesVotes: number;
 }) => {
   const isLight = useLight();
-
-  const no = Number(noVotes);
-  const yes = Number(yesVotes);
 
   let upStrokeColor;
   let downStrokeColor;
 
-  if (no === 0 && yes === 0) {
+  if (noVotes === 0 && yesVotes === 0) {
     if (isLight) {
       upStrokeColor = formatColor(neutral.gray1);
       downStrokeColor = formatColor(neutral.gray1);
@@ -27,10 +24,10 @@ export const Votes = ({
       upStrokeColor = formatColor(neutral.white);
       downStrokeColor = formatColor(neutral.white);
     }
-  } else if (yes > no) {
+  } else if (yesVotes > noVotes) {
     upStrokeColor = formatColor(green.green2);
     downStrokeColor = formatColor(pink.pink1);
-  } else if (no > yes) {
+  } else if (noVotes > yesVotes) {
     upStrokeColor = formatColor(pink.pink1);
     downStrokeColor = formatColor(green.green2);
   } else {
@@ -45,14 +42,14 @@ export const Votes = ({
           strokecolor={upStrokeColor}
           sx={{ width: 10, height: 16, mr: 1 }}
         />
-        <Typography>{yes}</Typography>
+        <Typography>{yesVotes.toLocaleString()}</Typography>
       </Box>
       <Box display="flex" alignItems="center" marginX={2}>
         <ArrowDownIcon
           strokecolor={downStrokeColor}
           sx={{ width: 10, height: 16, mr: 1 }}
         />
-        <Typography>{no}</Typography>
+        <Typography>{noVotes.toLocaleString()}</Typography>
       </Box>
     </Box>
   );
