@@ -22,7 +22,7 @@ import { TitleText } from "../text";
 import { addressShortener } from "../text/";
 import { SingleStatCard } from "./SingleStatCard";
 import { UserTokenCard } from "./UserTokenCard";
-import {BN} from "../../../easy/bn";
+import { BN } from "../../../easy/bn";
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
@@ -41,9 +41,16 @@ export const UserStats = () => {
   const [rewardsClaimed, setRewardsClaimed] = useState(0);
 
   const [borrowAPR, setBorrowAPR] = useState(0);
-  const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(undefined);
+  const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
+    undefined
+  );
   const theme = useTheme();
-  const { connected, disconnectWallet, error, currentAccount } = useWeb3Context();
+  const {
+    connected,
+    disconnectWallet,
+    error,
+    currentAccount,
+  } = useWeb3Context();
   const rolodex = useRolodexContext();
   const {
     tokens,
@@ -60,26 +67,29 @@ export const UserStats = () => {
     accountLiability,
   } = useVaultDataContext();
   const { setType } = useModalContext();
-
+  console.log("BORRWOING POWER:", borrowingPower, accountLiability);
   useEffect(() => {
     if (rolodex) {
-      rolodex!.USDI!.reserveRatio().then((ratio)=>{
-        return rolodex!.Curve?.getValueAt(
-          "0x0000000000000000000000000000000000000000",
-          ratio,
-        ).then((apr)=>{
-          setBorrowAPR(apr.div(BN("1e14")).toNumber() / 100)
+      rolodex!
+        .USDI!.reserveRatio()
+        .then((ratio) => {
+          return rolodex!.Curve?.getValueAt(
+            "0x0000000000000000000000000000000000000000",
+            ratio
+          ).then((apr) => {
+            setBorrowAPR(apr.div(BN("1e14")).toNumber() / 100);
+          });
         })
-      }).catch((e)=>{
-        setBorrowAPR(0);
-      })
+        .catch((e) => {
+          setBorrowAPR(0);
+        });
     }
   }, [rolodex]);
 
   useEffect(() => {
     if (tokens) {
-      let el:Array<any> = []
-      for(const [key, val] of Object.entries(tokens)){
+      let el: Array<any> = [];
+      for (const [key, val] of Object.entries(tokens)) {
         el.push(
           <UserTokenCard
             key={key}
@@ -114,21 +124,19 @@ export const UserStats = () => {
           paddingX: 2,
           paddingY: 6,
           borderRadius: 5,
-      },
+        },
       }}
     >
       <Box
         sx={{
           display: "flex",
           justifyContent: { xs: "flex-end", md: "space-between" },
-        alignItems: "center",
-        marginBottom: 3,
+          alignItems: "center",
+          marginBottom: 3,
         }}
       >
         <Box display={{ xs: "none", md: "flex" }}>
-          {vaultID ? <StatsBodyTypography text={`Vault #${
-            vaultID
-          }`} /> : <></>}
+          {vaultID ? <StatsBodyTypography text={`Vault #${vaultID}`} /> : <></>}
         </Box>
 
         <Box display="flex" alignItems="center">
@@ -158,18 +166,25 @@ export const UserStats = () => {
             columnGap: 1,
             rowGap: 3,
             marginBottom: 4,
-        },
+          },
         }}
       >
         <SingleStatCard>
           <TitleText
             title="Borrowing Power"
-            text={borrowingPower ? "$"+Math.round(borrowingPower).toLocaleString() : null}
+            text={
+              borrowingPower !== null
+                ? "$" + Math.round(borrowingPower).toLocaleString()
+                : null
+            }
           />
         </SingleStatCard>
 
         <SingleStatCard>
-          <TitleText title="Borrow APR" text={borrowAPR ? borrowAPR.toString()+"%" : null} />
+          <TitleText
+            title="Borrow APR"
+            text={borrowAPR !== null ? borrowAPR.toString() + "%" : null}
+          />
         </SingleStatCard>
 
         <SingleStatCard
@@ -178,7 +193,7 @@ export const UserStats = () => {
             [theme.breakpoints.down("lg")]: {
               gridColumn: "1 / -1",
               gridRow: 2,
-          },
+            },
           }}
         >
           <Box
@@ -189,12 +204,16 @@ export const UserStats = () => {
               justifyContent: "space-between",
               [theme.breakpoints.down("lg")]: {
                 flexWrap: "wrap",
-            },
+              },
             }}
           >
             <TitleText
               title="USDi Borrowed"
-              text={accountLiability ? "$"+Math.round(accountLiability).toLocaleString() : null }
+              text={
+                accountLiability !== null
+                  ? "$" + Math.round(accountLiability).toLocaleString()
+                  : null
+              }
             />
 
             <Box
@@ -206,7 +225,7 @@ export const UserStats = () => {
                 [theme.breakpoints.down("lg")]: {
                   width: "100%",
                   marginTop: 3,
-              },
+                },
               }}
             >
               <Button
@@ -216,7 +235,7 @@ export const UserStats = () => {
                   color: formatColor(blue.blue7),
                   "&:hover": {
                     backgroundColor: formatColor(blue.blue5),
-                },
+                  },
                 }}
                 onClick={() => setType(ModalType.Borrow)}
               >
@@ -230,7 +249,7 @@ export const UserStats = () => {
                   color: formatColor(blue.blue7),
                   "&:hover": {
                     backgroundColor: formatColor(blue.blue5),
-                },
+                  },
                 }}
                 onClick={() => setType(ModalType.Repay)}
               >
@@ -247,12 +266,12 @@ export const UserStats = () => {
             xs: "1fr",
             sm: "1fr 1fr",
             md: "repeat(3, 1fr)",
-        },
-        columnGap: 3,
-        rowGap: 3,
+          },
+          columnGap: 3,
+          rowGap: 3,
         }}
       >
-        <WithSpinner val={token_cards}/>
+        <WithSpinner val={token_cards} />
       </Box>
       <Box
         sx={{
@@ -263,8 +282,7 @@ export const UserStats = () => {
           marginTop: 2,
           marginBottom: 5,
         }}
-      >
-      </Box>
+      ></Box>
     </Box>
   );
 };
