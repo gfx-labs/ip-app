@@ -126,7 +126,9 @@ export const UserStats = () => {
         }}
       >
         <Box display={{ xs: "none", md: "flex" }}>
-          <StatsBodyTypography text={`Vault #${vaultID}`} />
+          {vaultID ? <StatsBodyTypography text={`Vault #${
+            vaultID
+          }`} /> : <></>}
         </Box>
 
         <Box display="flex" alignItems="center">
