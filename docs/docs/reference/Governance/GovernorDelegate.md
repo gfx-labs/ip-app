@@ -1,9 +1,24 @@
 # Governor Delegate
 The governor delegate contract contains the logic for the governor delegator to reference. The delegate can be changed by governance to introduce new logic without changing the governance contract of the protocol 
 
+More information on governance can be found [here](../../../concepts/Governance/Overview).
+
+
 ## Initialize
-* function initialize(address ipt_,uint256 votingPeriod_,uint256 votingDelay_,uint256 proposalThreshold_,uint256 proposalTimelockDelay_,uint256 quorumVotes_,uint256 emergencyQuorumVotes_,uint256 emergencyVotingPeriod_,uint256 emergencyTimelockDelay_) external override 
-    * The initialize is called by the governor delegator contract.
+  ```
+function initialize(
+    address ipt_,
+    uint256 votingPeriod_,
+    uint256 votingDelay_,
+    uint256 proposalThreshold_,
+    uint256 proposalTimelockDelay_,
+    uint256 quorumVotes_,
+    uint256 emergencyQuorumVotes_,
+    uint256 emergencyVotingPeriod_,
+    uint256 emergencyTimelockDelay_
+  )
+
+```
 
 ## Functions
 * function propose(address[] memory targets,uint256[] memory values,string[] memory signatures,bytes[] memory calldatas,string memory description,bool emergency) public override returns (uint256)

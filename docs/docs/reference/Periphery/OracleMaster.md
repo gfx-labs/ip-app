@@ -3,6 +3,8 @@
 ## Overview
 The Oracle Master acts as the addressbook for oracle relays. The VaultController can call the getLivePrice() to fecth the price of an asset and this contract will route that call to the appropriate oracle relay.
 
+More information on governance can be found [here](../../../concepts/Borrowing/OracleSystem).
+
 ## Secondary contracts
 * Ownable so the owner can manage the contract as needed.
 

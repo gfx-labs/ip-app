@@ -2,7 +2,7 @@
 
 
 ## Overview
-Interest Protocol is the first fractional reserve banking protocol on the Ethereum blockchain that pays interest to all depositors. Interest Protocol issues a stablecoin, named USDi, that is both over-collateralized and highly scalable. USDi holders automatically earn yield without having to stake, which means Interest Protocol provides yield opportunities to gas-conscious users. Compared to lending protocols without fractional reserves, Interest Protocol can generate more loans from a given amount of capital while incurring less liquidity risk.
+Interest Protocol (IP) is the first fractional reserve banking protocol on the Ethereum blockchain that pays interest to all depositors. Interest Protocol issues a stablecoin, named USDi, that is both over-collateralized and highly scalable. USDi holders automatically earn yield without having to stake, which means Interest Protocol provides yield opportunities to gas-conscious users. Compared to lending protocols without fractional reserves, Interest Protocol can generate more loans from a given amount of capital while incurring less liquidity risk.
 
 
 ## Who participates?
@@ -29,8 +29,12 @@ We have improved upon each piece to offer the most efficent credit market in DeF
 
 The combination of capital-efficient lending, a robust interest rate system, and a simple yet efficient liquidation system makes for a strong foundation to become the best lending platform in DeFi.
 
+## Why did we build Interest Protocol? 
+1. *To increase access to financial services.* IP offers fair and transparent access to a lending market to anyone with an internet connection—increasing access to capital and thus economic opportunity for everyone around the world. IP's gas efficiency allows small users to participate in yield farming on Ethereum without sacrificing liquidity.
 
+2. *To increase the efficiency of financial services.* US commercial banks charge an average annual interest rate of 2–13% while paying depositors an average annual interest rate of just 0.06%. The difference goes to cover the middlemen expenses. Even DeFi lending protocols often operate based on manual decisions, which raises costs. IP’s smart contracts are designed to ___(manage things without having an FOMC meeting)___.  The corresponding efficiency gains are transferred to the depositor.
 
+3. *To bring much-needed innovations to DeFi.* GFX team members have been active contributors of prominent DeFi protocols. We came to realize that DeFi lacks a fractional reserve bank that pays interest to depositors. So we built one ourselves.
 
 
 

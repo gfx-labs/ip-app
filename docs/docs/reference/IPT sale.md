@@ -38,7 +38,7 @@ Let X be the total amount of USDC that has been committed. The amount of IPT tok
 
 - All participants pay the same price. Since the global cap is 35,000,000 USDC, the maximum price that participants can pay is 1 USDC per IPT.
 
-- Upon completion of the IPT sale, GFX's team & investors will collectively control a minority share of the protocol and will not be necessary for Interest Protocol to function. GFX will continue to be involved in Interest Protocol, but as community members subject to the same governance rules as any token holder. We have ideas for additional functionalities and components and intend to work with the community to create or vote for proposals that reflect those ideas.
+- Upon completion of the IPT sale, GFX's team and investors will collectively control a minority share of the protocol and will not be necessary for Interest Protocol to function. (*this is not necessarily true if the sale is undersubscribed. Also, we should specify what will happen to the remaining tokens. Set aside for future sale but cannot vote?*) GFX will continue to be involved in Interest Protocol, but as community members subject to the same governance rules as any token holder. We have ideas for additional functionalities and components and intend to work with the community to create or vote for proposals that reflect those ideas.
 
 ## Token Distribution
 
@@ -52,24 +52,62 @@ Pie Chart
 
 ## Constructor
 ```
-constructor(bytes32 root, uint256 totalReward, uint256 floor, 
-uint256 maxPoints, uint256 enableTime, uint256 disableTime, address receiver ) {
-        _enableTime = enableTime;
-        _disableTime = disableTime;
-        _floor = floor;
-        _maxPoints = maxPoints;
-        _totalClaimed = totalReward;
-        _receiver = receiver;
-        merkleRoot = root;
-    }
+constructor(
+    address receiver,
+    uint256 totalReward,
+    address rewardToken,
+    uint256 claimTime,
+    bytes32 merkle1,
+    uint256 enable1,
+    bytes32 merkle2,
+    uint256 enable2,
+    bytes32 merkle3,
+    uint256 enable3
+  ) {
+    // price information
+    _floor = 500_000; // 50 cents
+    _cap = 500_000 * 30_000_000 * 4; // 4 * 50 cents * 30,000,000 tokens, or $60,000,000 of USDC
+    _claimTime = claimTime;
+    // reward information
+    _rewardToken = IERC20(rewardToken);
+    _totalReward = totalReward;
+
+    // set receiver of IPT
+    _receiver = receiver;
+
+    // wave metadata
+    _metadata[1].enabled = true;
+    _metadata[1].merkleRoot = merkle1;
+    _metadata[1].enableTime = enable1;
+
+    _metadata[2].enabled = true;
+    _metadata[2].merkleRoot = merkle2;
+    _metadata[2].enableTime = enable2;
+
+    _metadata[3].enabled = true;
+    _metadata[3].merkleRoot = merkle3;
+    _metadata[3].enableTime = enable3;
+
+    calculated = false;
+    saturation = false;
+    withdrawn = false;
+  }
 ```
 
 ## Functions
+* function isEnabled() public view returns (bool)
+    * Whether the wave is in progress. True if yes.
+* function canClaim() public view returns (bool)
+    * Whether or not the USDC cap has been reached
+* function canRedeem() public view returns (bool)
+    * Whether or not the wave has started. True is yes. 
+* function calculatePricing() internal
+    * calculate the price once after the waves have ended.
 * function redeem() external
     * redeem points for token
-* function getPoints(uint256 amount,uint256 key,bytes32[] memory merkleProof) public
-    * Get points by depositing usdc up to the max allocated. Amount is usdc, key is the max number of points they can claim, and the merkle proof is the proof.  
-* function verifyClaim(address claimer,uint256 key,bytes32[] memory merkleProof) private view returns (bool) 
+* function getPoints(uint 256 wave, uint256 amount,uint256 key,bytes32[] memory merkleProof) public
+    * Get points by depositing usdc up to the max allocated. Wave is their wave number, amount is usdc, key is the max number of points they can claim, and the merkle proof is the proof.  
+* function verifyClaim(uint256 wave, address claimer,uint256 key,bytes32[] memory merkleProof) private view returns (bool) 
     * Validates an address' claim by checking their proof against the merkle root. 
 * function verifyProof(bytes32[] memory proof,bytes32 root,bytes32 leaf) internal pure returns (bool)
     * Called by verify claim
@@ -79,7 +117,5 @@ uint256 maxPoints, uint256 enableTime, uint256 disableTime, address receiver ) {
     * Called by the getPoints which transfers usdc
 * function giveTo(address target, uint256 amount) internal
     * Called by the redeem function which sends the token to the target address.
-* function isEnabled() public view returns (bool)
-    * Whether the wave is in progress. True if yes.
-* function canRedeem() public view returns (bool)
-    * Whether or not the wave has completed. True if completed. 
+* function withdraw() external
+    * sends all of the unclaimed rewards tokens to the receiver
