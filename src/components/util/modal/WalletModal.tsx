@@ -6,7 +6,7 @@ import { BaseModal } from "./BaseModal";
 export const WalletModal = () => {
   const { isWalletModalOpen, setIsWalletModalOpen } = useWalletModalContext();
   return (
-    <BaseModal open={isWalletModalOpen} setOpen={setIsWalletModalOpen}>
+    <BaseModal open={isWalletModalOpen} setOpen={setIsWalletModalOpen} withCloseButton>
       <WalletModalContent />
     </BaseModal>
   );

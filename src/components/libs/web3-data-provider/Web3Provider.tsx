@@ -153,11 +153,15 @@ export const Web3ContextProvider = ({
         localStorage.setItem("walletProvider", wallet.toString());
         setDeactivated(false);
         setLoading(false);
+        return true
       } catch (e) {
         const err = e as Error;
         setError(err);
         setLoading(false);
         console.error(err);
+
+        throw new Error("Error connecting to wallet");
+        
       }
     },
     [disconnectWallet]
