@@ -80,8 +80,8 @@ export const UsdiGraphCard = () => {
       }).catch((e)=>{
         if(e.data && e.data.message) {
           const msg = e.data.message as string
-          if(msg.includes("limited")) {
-            setQueryLimit(8000)
+          if(msg.includes("limited") || msg.includes("large")) {
+            setQueryLimit(3000)
             return
           }
         }
