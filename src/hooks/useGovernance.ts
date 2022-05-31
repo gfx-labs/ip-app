@@ -66,7 +66,6 @@ export const getRecentProposals = async (
 
     return logs;
   } catch (err) {
-    console.log(err, "THIS IS GOV ERROR");
     throw new Error("error getting proposals");
   }
 };
