@@ -36,7 +36,7 @@ export type ERC20TokenType = {
 };
 
 export type Web3Data = {
-  connectWallet: (wallet: WalletType) => Promise<void>;
+  connectWallet: (wallet: WalletType) => Promise<boolean>;
   disconnectWallet: () => void;
   currentAccount: string;
   currentSigner: JsonRpcSigner | undefined;
@@ -160,7 +160,7 @@ export const Web3ContextProvider = ({
         setLoading(false);
         console.error(err);
 
-        throw new Error("Error connecting to wallet");
+        throw new Error("Error connecting to");
         
       }
     },
