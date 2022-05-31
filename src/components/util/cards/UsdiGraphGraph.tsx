@@ -43,7 +43,6 @@ const MultilineChart = (props:MultilineChartProps) => {
       return 1
     }
   })
-  data.shift()
 
   let interestColor = "#6929F0"
   let notionalColor =  "#AFEABC"
@@ -146,7 +145,10 @@ const MultilineChart = (props:MultilineChartProps) => {
       .attr("x", (d)=>{return xScale(d.timestamp!)-10})
       .attr("y", (d)=>{return yScaleNotional(d.interestPaid!)+5})
       .attr("width", 10)
-      .attr("height", (d)=>{return height - yScaleNotional(d.interestPaid!)-5})
+      .attr("height", (d)=>{
+        const v = height - yScaleNotional(d.interestPaid!)-5
+        return (v < 0) ? 0 : v
+      })
       .attr("fill", notionalColor)
 
       // Draw the lines
