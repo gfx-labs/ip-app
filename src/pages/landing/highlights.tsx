@@ -59,7 +59,7 @@ export const Highlights: React.FC = ()=> {
                 maxWidth:1000,
                 }}>
                <Box sx={{flexBasis:"33%"}}>
-                   <HighlightBox icon={""} header={"Stability First"} copy={"USDi maintains peg under averse condeitions, without any intervention."}/>
+                   <HighlightBox icon={""} header={"Stability First"} copy={"USDi maintains peg under averse conditions, without any intervention."}/>
                </Box>
                <Box sx={{flexBasis:"33%"}}>
                 <HighlightBox icon={""} header={"Community Led"} copy={"Built for you, led by you. Your participation creates the future of finance."}/>
