@@ -53,32 +53,32 @@ const DashboardContext = (props :{children:any}) =>{
   return (
     <Web3ContextProvider>
       <RolodexContentProvider>
-      <StableCoinsProvider>
-        <VaultDataProvider>
-          <ModalContentProvider>
-            <AppGovernanceProvider>
-              <>
-                <WalletModalProvider>
-                  <SwapTokenProvider>{props.children}</SwapTokenProvider>
-                </WalletModalProvider>
-                <DelegateModal />
-                <DelegateIPTModal />
-                <DepositWithdrawCollateralModal />
-                <DepositCollateralConfirmationModal />
-                <WithdrawCollateralConfirmationModal />
-                <DepositWithdrawUSDCModal />
-                <BorrowRepayModal />
-                <DepositUSDCConfirmationModal />
-                <WithdrawUSDCConfirmationModal />
-                <ClaimModal />
-                <TransactionStatusModal />
-              </>
-            </AppGovernanceProvider>
-          </ModalContentProvider>
-        </VaultDataProvider>
-      </StableCoinsProvider>
-    </RolodexContentProvider>
-      </Web3ContextProvider>
+        <StableCoinsProvider>
+          <VaultDataProvider>
+            <ModalContentProvider>
+              <AppGovernanceProvider>
+                <>
+                  <WalletModalProvider>
+                    <SwapTokenProvider>{props.children}</SwapTokenProvider>
+                  </WalletModalProvider>
+                  <DelegateModal />
+                  <DelegateIPTModal />
+                  <DepositWithdrawCollateralModal />
+                  <DepositCollateralConfirmationModal />
+                  <WithdrawCollateralConfirmationModal />
+                  <DepositWithdrawUSDCModal />
+                  <BorrowRepayModal />
+                  <DepositUSDCConfirmationModal />
+                  <WithdrawUSDCConfirmationModal />
+                  <ClaimModal />
+                  <TransactionStatusModal />
+                </>
+              </AppGovernanceProvider>
+            </ModalContentProvider>
+          </VaultDataProvider>
+        </StableCoinsProvider>
+      </RolodexContentProvider>
+    </Web3ContextProvider>
   )
 
 }
@@ -87,7 +87,10 @@ const AppRouter = () => {
   return (
     <WalletContext>
       <Routes>
-        <Route path={`/sale`} element={<PurchasePage />} />
+        <Route path={`/sale`} element={
+          <Web3ContextProvider>
+        <PurchasePage />
+          </Web3ContextProvider>} />
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/docs`} element={<RedirectBook />} />
         <Route path={`/book`} element={<RedirectBook />} />
