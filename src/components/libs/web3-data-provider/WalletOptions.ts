@@ -28,7 +28,7 @@ export const getWallet = (wallet: WalletType, chainId: number | undefined = 1): 
             return new WalletLinkConnector({
                 url: rpc_url,
                 appName,
-                appLogoUrl: 'https://aave.com/favicon.ico',
+                appLogoUrl: 'https://interestprotocol.io/images/ip_green.svg',
                 supportedChainIds: [1, 3, 4, 5, 42],
             });
 
