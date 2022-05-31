@@ -27,12 +27,17 @@
 ### Loans
 * Calling `repayAll()` consumes about half as much gas as compared to repay(), though calling `repayAll()` while holding insufficient USDi will revert
 
+* It is possible to borrow up to exactly your maximum borrow power (based on collateral). However, doing so will put your vault into a state of insolvency as of the very next block, making the risk of liquidation high. 
+
 ### Vaults
 * Vaults cannot currently accept native ether, sending ether to a vault or to any contract in IP will revert. One future upgrade may be to allow the option to mint a vault that supports native ether. Minting such a vault will cost additional gas (compared to the current vaults) and many users may not need this functionality. 
 
 ### USDi in AMM Protocols (i.e. Uniswap)
 
 * USDi may be used in AMM protocols like uniswap. However, because USDi is constantly rebasing, its value may not be accurately reflected while in the custody of these protocols. For example, a uniswap v2 pair will report the value of USDI in the pool as of the last swap, and any interest generated will not be reported by `getReserves()` until the next swap takes place. The true value can still be attained by calling `balanceOf` on the USDi contract. Users can freely supply USDi and generate LP rewards while still earning interest on their USDi. When removing liquidity, the user's Uniswap LP tokens represent their share of the whole amount of USDi in the pool, and the user will receive their amount pro rata, thusly receiving their interest on the USDi supplied. 
+
+### Pausability
+* The designated pauser (address stored on USDI contract) has the capability of pausing the VaultController & USDI contracts, though this must be done separately. 
 
 ### Upgradeability
 * Only the VaultController and USDi contracts are explicitly upgradeable. Other future changes (such as new oracles, vaults, or curves) can be achieved by deploying new logic and pointing the VaultController and/or USDi contracts to the new versions as needed. 
