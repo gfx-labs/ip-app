@@ -60,7 +60,7 @@ export const MobileToolBar = () => {
       <MuiLink component={Link} to="/" aria-level={1}>
         <Box
           component="img"
-          src="images/usdi.svg"
+          src="images/ip_green.svg"
           width={40}
           height={40}
         ></Box>

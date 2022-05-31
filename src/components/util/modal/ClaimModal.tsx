@@ -44,8 +44,8 @@ export const ClaimModal = () => {
           component="img"
           width={80}
           height={80}
-          src={`images/${tokenName}.svg`}
-          alt={tokenName}
+          src={`images/ip_green.svg`}
+          alt="IPT"
         ></Box>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>

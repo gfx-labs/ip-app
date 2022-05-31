@@ -3,7 +3,7 @@ import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 import { DecimalInput } from "../textFields";
 import { Token } from "../../../chain/tokens";
-import {WithDots} from "../loading";
+import { WithDots } from "../loading";
 
 interface TokenSelectProps {
   token: Token;
@@ -29,7 +29,11 @@ export const TokenSelect = (props: TokenSelectProps) => {
         boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
       }}
     >
-      <DecimalInput onChange={setTokenAmount} value={tokenAmount} />
+      <DecimalInput
+        onChange={setTokenAmount}
+        value={tokenAmount}
+        useLargerFont
+      />
       <Box>
         <Box
           sx={{
@@ -66,8 +70,11 @@ export const TokenSelect = (props: TokenSelectProps) => {
               mt: 1,
             }}
           >
-            Balance:<br/>
-            <WithDots val={token.wallet_balance != undefined}>{token.wallet_balance?.toFixed(2)}</WithDots>
+            Balance:
+            <br />
+            <WithDots val={token.wallet_balance != undefined}>
+              {token.wallet_balance?.toFixed(2)}
+            </WithDots>
           </Typography>
         </Box>
       </Box>
