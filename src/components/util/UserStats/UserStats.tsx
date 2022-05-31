@@ -23,6 +23,7 @@ import { addressShortener } from "../text/";
 import { SingleStatCard } from "./SingleStatCard";
 import { UserTokenCard } from "./UserTokenCard";
 import { BN } from "../../../easy/bn";
+import { OpenVaultButton } from "../button/OpenVaultButton";
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
@@ -44,13 +45,10 @@ export const UserStats = () => {
   const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
     undefined
   );
+
   const theme = useTheme();
-  const {
-    connected,
-    disconnectWallet,
-    error,
-    currentAccount,
-  } = useWeb3Context();
+  const { connected, disconnectWallet, error, currentAccount } =
+    useWeb3Context();
   const rolodex = useRolodexContext();
   const {
     tokens,
@@ -142,10 +140,19 @@ export const UserStats = () => {
           <StatsBodyTypography text="Vault Address" />{" "}
           <Box marginRight={2}></Box>
           {connected ? (
-            <CopyButton
-              text={addressShortener(vaultAddress!)}
-              copy={vaultAddress}
-            />
+            vaultAddress ? (
+              <CopyButton
+                text={addressShortener(vaultAddress!)}
+                copy={vaultAddress}
+              />
+            ) : (
+              <CopyButton
+                text={addressShortener(
+                  "0x0000000000000000000000000000000000000000"
+                )}
+                copy={`0x0000000000000000000000000000000000000000`}
+              />
+            )
           ) : (
             <ConnectWalletButton />
           )}
@@ -215,50 +222,61 @@ export const UserStats = () => {
               }
             />
 
-            <Box
-              display="grid"
-              alignItems="center"
-              columnGap={2}
-              gridTemplateColumns="1fr 1fr"
-              sx={{
-                [theme.breakpoints.down("lg")]: {
-                  width: "100%",
-                  marginTop: 3,
-                },
-              }}
-            >
-              <Button
-                variant="contained"
+            {hasVault ? (
+              <Box
+                display="grid"
+                alignItems="center"
+                columnGap={2}
+                gridTemplateColumns="1fr 1fr"
                 sx={{
-                  backgroundColor: formatColor(blue.blue8),
-                  boxShadow:0,
-                  color: formatColor(blue.blue7),
-                  "&:hover": {
-                    boxShadow:0,
-                    backgroundColor: formatColor(blue.blue5),
+                  [theme.breakpoints.down("lg")]: {
+                    width: "100%",
+                    marginTop: 3,
                   },
                 }}
-                onClick={() => setType(ModalType.Borrow)}
               >
-                Borrow
-              </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: formatColor(blue.blue8),
+                    boxShadow: 0,
+                    color: formatColor(blue.blue7),
+                    "&:hover": {
+                      boxShadow: 0,
+                      backgroundColor: formatColor(blue.blue5),
+                    },
+                  }}
+                  onClick={() => setType(ModalType.Borrow)}
+                >
+                  Borrow
+                </Button>
 
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: formatColor(blue.blue8),
-                  boxShadow:0,
-                  color: formatColor(blue.blue7),
-                  "&:hover": {
-                    boxShadow:0,
-                    backgroundColor: formatColor(blue.blue5),
-                  },
-                }}
-                onClick={() => setType(ModalType.Repay)}
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: formatColor(blue.blue8),
+                    boxShadow: 0,
+                    color: formatColor(blue.blue7),
+                    "&:hover": {
+                      boxShadow: 0,
+                      backgroundColor: formatColor(blue.blue5),
+                    },
+                  }}
+                  onClick={() => setType(ModalType.Repay)}
+                >
+                  Repay
+                </Button>
+              </Box>
+            ) : (
+              <Box
+                maxWidth={350}
+                width="100%"
+                display="flex"
+                alignItems="center"
               >
-                Repay
-              </Button>
-            </Box>
+                <OpenVaultButton />
+              </Box>
+            )}
           </Box>
         </SingleStatCard>
       </Box>

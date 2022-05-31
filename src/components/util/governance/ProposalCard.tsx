@@ -69,7 +69,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   useEffect(() => {
     if (proposal) {
-      console.log(proposal, "THIS IS PROPOSAL");
       const abstainVotes = useFormatWithDecimals(proposal?.abstainVotes, 18);
       const forVotes = useFormatWithDecimals(proposal?.forVotes, 18);
       const againstVotes = useFormatWithDecimals(proposal?.againstVotes, 18);

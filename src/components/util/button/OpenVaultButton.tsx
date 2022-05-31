@@ -5,14 +5,29 @@ import { formatColor, neutral } from "../../../theme";
 import { useModalContext } from "../../libs/modal-content-provider/ModalContentProvider";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
+import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
+import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
 export const OpenVaultButton = () => {
   const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext();
-
+  const { setIsWalletModalOpen } = useWalletModalContext();
   const rolodex = useRolodexContext();
   let isLight = useLight();
   const { updateTransactionState } = useModalContext();
+  const { connected, currentAccount } = useWeb3Context();
+
   const openVault = async () => {
+    if (
+      !connected ||
+      currentAccount === null ||
+      currentAccount === undefined ||
+      currentAccount === ""
+    ) {
+      setIsWalletModalOpen(true);
+
+      return;
+    }
+
     try {
       const mintVaultRes = await rolodex!.VC!.mintVault();
       updateTransactionState(mintVaultRes);
@@ -34,8 +49,8 @@ export const OpenVaultButton = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
-          width: "fit-content",
+          width: "100%",
+          textAlign: "center",
           backgroundColor: !isLight
             ? formatColor(neutral.white)
             : formatColor(neutral.gray7),
@@ -50,7 +65,6 @@ export const OpenVaultButton = () => {
           },
           ...sx,
         }}
-        size="medium"
         onClick={onClick}
       >
         {children}

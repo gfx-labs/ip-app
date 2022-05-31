@@ -16,6 +16,7 @@ import {
 import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
 import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
+import {OpenVaultButton} from '../button/OpenVaultButton'
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string;
@@ -38,6 +39,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
   const {tokens} = useVaultDataContext();
   const {type, setType, setCollateralToken } = useModalContext();
+  const {hasVault, vaultAddress} = useVaultDataContext()
   const {setDelegateToken} = useAppGovernanceContext()
   const {
     tokenName,
@@ -132,21 +134,26 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         </Typography>
       </Box>
 
-      <Box
-        sx={{
-          display: "grid",
-          justifyContent: "space-between",
-          gridTemplateColumns: "1fr 1fr",
-          columnGap: 2.5,
-        }}
-      >
-        <Button variant="cta" onClick={openDeposit}>
-          Deposit
-        </Button>
-        <Button variant="cta" onClick={openWithdraw}>
-          Withdraw
-        </Button>
-      </Box>
+      {
+        hasVault && vaultAddress !== undefined ? (      <Box
+          sx={{
+            display: "grid",
+            justifyContent: "space-between",
+            gridTemplateColumns: "1fr 1fr",
+            columnGap: 2.5,
+          }}
+        >
+          <Button variant="cta" onClick={openDeposit}>
+            Deposit
+          </Button>
+          <Button variant="cta" onClick={openWithdraw}>
+            Withdraw
+          </Button>
+        </Box>) : (
+          <OpenVaultButton />
+        )
+      }
+
       <a onClick={getTokens}>
         click to get tokens
       </a>
