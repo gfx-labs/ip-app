@@ -1,9 +1,11 @@
 # ip-app
 
 repository url:
+
 gfx.cafe: https://gfx.cafe/ip/app
 
 mirrors:
+
 github: https://github.com/gfx-labs/ip-app
 
 
