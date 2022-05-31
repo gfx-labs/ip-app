@@ -41,7 +41,6 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
-          width: "fit-content",
           backgroundColor: isLight
             ? formatColor(neutral.white)
             : formatColor(neutral.gray7),
