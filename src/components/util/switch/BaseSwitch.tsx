@@ -43,7 +43,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
     >
       {typeof option === "string" ? (
         <Typography
-          variant="body1"
+          variant="h6"
           sx={{
             color: isLight
               ? formatColor(neutral.gray2)

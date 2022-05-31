@@ -62,7 +62,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
             sx={{
               color: formatColor(neutral.gray3),
               textAlign: "right",
-              fontWeight: 500,
+              fontWeight: 750,
               mt: 1,
             }}
           >
