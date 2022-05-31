@@ -11,17 +11,29 @@ github: https://github.com/gfx-labs/ip-app
 this is a non-official frontend for interest protocol
 
 The `master` branch of this site is auto-built and deployed to:
+
+
 https://interestprotocol.io
+
 https://gcp.interestprotocol.io
+
 https://do.interestprotocol.io
+
 https://netlify.interestprotocol.io
+
 https://github.interestprotocol.io
 
+
 coming soon...
+
 https://surge.interestprotocol.io
+
 https://swarm.interestprotocol.io
+
 https://ipfs.interestprotocol.io
+
 ens://interestprotocol.eth
+
 
 Looking for the contracts? [Click here](https://gfx.cafe/ip/contracts)
 
