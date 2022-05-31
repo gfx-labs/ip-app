@@ -16,7 +16,7 @@ export const TitleText = (props: TitleTextProps & BoxProps) => {
       </Typography>
 
       {text !== null ? (
-        <Typography variant="subtitle1" fontWeight={700} fontSize= {28} color="#374252">
+        <Typography variant="subtitle1" fontWeight={700} fontSize= {28} color="text.primary">
           {text}
         </Typography>
       ) : (

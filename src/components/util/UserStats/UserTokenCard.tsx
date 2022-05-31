@@ -92,20 +92,20 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2.5 }}>
         <Box>
-          <Typography variant="body1" fontSize={16} fontWeight={600} color={formatColor(neutral.gray3)}>
+          <Typography variant="body1" fontSize={16} fontWeight={600} color="text.secondary">
             {tokenName}
           </Typography>
-          <Typography variant="h3" fontSize={20} fontWeight={700} color="#374252" mb={1}>
+          <Typography variant="h3" fontSize={20} fontWeight={700} color="text.primary" mb={1}>
             {tokenValue}
           </Typography>
 
-          <Typography variant="body2" fontWeight={600} fontSize={14} color={formatColor(neutral.gray3)}>
+          <Typography variant="body2" fontWeight={600} fontSize={14} color="text.secondary">
             Vault Balance
           </Typography>
-          <Typography variant="h3" fontWeight={600} color="#374252">
+          <Typography variant="h3" fontWeight={600} color="text.primary">
             {vaultBalance}
           </Typography>
-          <Typography variant="body2" fontWeight={600} color="#6B7687">
+          <Typography variant="body2" fontWeight={600} color="text.secondary">
             {tokenAmount} {tokenName}
           </Typography>
         </Box>
