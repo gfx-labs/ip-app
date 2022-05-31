@@ -6,9 +6,10 @@ Interest Protocol governance manages changes and upgrades to the protocol.
 Interest Protocol Token (IPT) is the governance token for Interest Protocol. Token holders can influence the protocol and lead it after launch by creating and voting on proposals. Governance should be thought as the mechism to institue change in the protocol and token holders as the management of the protocol.  
 
 Token holders (management) have three main responsibilities: 
-1. To prevent the centralization of power, manage control of the protocol, and asymmetry of information. An important part of building and maintaing a strong foundation is the community. The community needs to share the control of the protocol so no one alone can control the protocol, but control is still possible.
-2. To maintain the existing protocol. Typically, that means adjusting LTVs, interest rate curves, liquidation incentives, the protocol fee and other parameters. Management will need to have a strong understanding of the platform and its competitors to make informed decisions.
-3. To innovate and adapt. Management should think about the future of the platform. DeFi has a rapidly evolving landscape, and good management will guide the protocol to adapt to the evolving landscape to remain competitive and further grow the platform's market share. 
+1. To maintain the protocol while preventing information asymmetry and centralization of power. A protocol cannot be safe for use without a strong foundation, and the bedrock of that foundation is the community. Fair and transparent governance distributes control of the protocol but ensures community control is still possible when it counts.
+2. To maintain the existing protocol. Typically, that means adjusting LTVs, interest rate curves, liquidation incentives, the protocol fee and other parameters. To make informed decisions, the community will need to attract those with a strong understanding of both the platform and its competitors.
+
+3. To innovate and adapt. Management should think about the future of the platform. DeFi exists in an ever-evolving landscape; good governance will guide the protocol through changing circumstances, allowing the protocol to remain competitive and further grow the platform's market share.
 
 ## Capabilities
 
@@ -21,7 +22,7 @@ Holders of IPT have the ability to make substantial upgrades to Interest Protoco
 - Revising liquidation incentives
 
 ## Governance Communications & Discussions
-Collaboration and discussion is key to good governance. To paritipcate in protocol innovation we have the Interest Protocol Forum and Discord. The Discord is helpful quick questions and fluid conversation and the forum is more condusive to longterm and or more thoughful discussions. Holders of IPT are encouraged to visit it regularly for updates and participate in discussions.
+Collaboration and discussion is key to good governance. To paritipcate in protocol innovation we have the Interest Protocol Forum and Discord. The Discord is helpful for quick questions and fluid conversation and the forum is more condusive to longterm and or more thoughful discussions. Holders of IPT are encouraged to visit it regularly for updates and participate in discussions.
 
 ## Proposal Process
 The process for upgrading or altering the Interest Protocol typically consists of two steps, first a Consensus Check and then a Proposal Vote.
@@ -53,8 +54,6 @@ In order for a Proposal Vote to be successful, it must have more Yes votes than 
 
 The sponsor of a Proposal Vote does not need to be the same as the sponsor of the Consensus Check. This allows those who successfully proposed a Consensus Check to collaborate with a party that meets the threshold to initiate a Proposal Vote.
 
-Proposal Votes occur on [Tally](https://www.tally.xyz).
-
 Token holders are strongly encouraged to communicate early about proposal ideas, and to solicit feedback in the forum. 
 
 ## Emergency Proposals
@@ -66,7 +65,6 @@ In order to initiate an Emergency Proposal, a proposer must have (or have been d
 
 In order for an Emergency Proposal to be successful, it must have more Yes votes than No, and meet a quorum of 51% of IPT supply.
 
-Emergency Proposals occur on [Tally](https://www.tally.xyz).
 
 ## Voting Parameters
 Each parameter is governed by the token holders.

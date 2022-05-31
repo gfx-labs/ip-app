@@ -16,7 +16,7 @@
 ### Collateral Assset Parameters
 * wETH: LTV: 85%, oracle address: tbd, liquidation incentive: 5%
 * wBTC: LTV: 80%, oracle address: tbd, liquidation incentive: 5%
-* UNI: LTV: 70%, oracle address: tbd, liquidation incentive: 8%
+* UNI: LTV: 55%, oracle address: tbd, liquidation incentive: 9%
 
 ### wETH Oracle
 * AnchoredViewRelay: widthNumerator: 10
@@ -25,8 +25,8 @@
 * UniswapV3OracleRelay: _mul: 1e12
 * UniswapV3OracleRelay: _div: 1
 * UniswapV3OracleRelay: _quoteTokenIsToken0: true
-* UniswapV3OracleRelay: _pool: 0x1bcb372A9E3c1B67c09BadD9c02ba0BfBBDa8a90
-* ChainlinkOracleRelay: feed_address:
+* UniswapV3OracleRelay: _pool: 0x45dda9cb7c25131df268515131f647d726f50608
+* ChainlinkOracleRelay: feed_address: 0xf9680d99d6c9589e2a93a78a04a279e509205945
 * ChainlinkOracleRelay: mul: 1e10
 * ChainlinkOracleRelay: div: 1
 
@@ -37,8 +37,8 @@
 * UniswapV3OracleRelay: _mul: 1e12
 * UniswapV3OracleRelay: _div: 1
 * UniswapV3OracleRelay: _quoteTokenIsToken0: true
-* UniswapV3OracleRelay: _pool:
-* ChainlinkOracleRelay: feed_address:
+* UniswapV3OracleRelay: _pool: 0x847b64f9d3a95e977d157866447a5c0a5dfa0ee5
+* ChainlinkOracleRelay: feed_address: 0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6
 * ChainlinkOracleRelay: mul: 1e10
 * ChainlinkOracleRelay: div: 1
 
@@ -49,8 +49,8 @@
 * UniswapV3OracleRelay: _mul: 1e12
 * UniswapV3OracleRelay: _div: 1
 * UniswapV3OracleRelay: _quoteTokenIsToken0: true
-* UniswapV3OracleRelay: _pool: 
-* ChainlinkOracleRelay: feed_address:
+* UniswapV3OracleRelay: _pool: 0x74d3c85df4dbd03c7c12f7649faa6457610e7604
+* ChainlinkOracleRelay: feed_address: 0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c
 * ChainlinkOracleRelay: mul: 1e10
 * ChainlinkOracleRelay: div: 1
 

@@ -3,7 +3,17 @@
 ## Overview
 The anchor view relay uses a main relay and anchor relay to return an asset price. The main relay price is checked against the anchor relay on each call to certify the main relay price is within the set bounds of the anchor relay.
 
+More information on governance can be found [here](../../../concepts/Borrowing/OracleSystem).
+
 ## Constructor
+```
+constructor(
+    address anchor_address,
+    address main_address,
+    uint256 widthNumerator,
+    uint256 widthDenominator
+  )
+```
 * anchor_address: the relay address of the anchor. This will be the Uniswap v3 relay at launch but additional relays could be implemented.
 * main_address: the relay address of the main. This will be the Chainlink relay at launch but additional relays could be implemented.
 * widthNumerator: to implement the buffer around the anchor price.
