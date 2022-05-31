@@ -26,8 +26,6 @@ https://github.interestprotocol.io
 
 coming soon...
 
-https://surge.interestprotocol.io
-
 https://swarm.interestprotocol.io
 
 https://ipfs.interestprotocol.io
