@@ -1,5 +1,5 @@
 import { Chains } from "../../../chain/chains";
-import { Button, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { blue, formatColor, neutral } from "../../../theme";
 import { useLight } from "../../../hooks/useLight";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
@@ -36,7 +36,9 @@ export const SelectedChainButton = () => {
         },
       }}
     >
+      <Typography variant="h6">
       {name}
+      </Typography>
     </Button>
   );
 };

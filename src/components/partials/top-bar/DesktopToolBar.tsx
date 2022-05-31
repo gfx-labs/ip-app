@@ -25,7 +25,7 @@ export const DesktopToolBar = () => {
   return (
     <Toolbar>
       <Link to="./" role="heading" aria-level={1}>
-        <Box component="img" src="images/usdi.svg" width={50} height={50}></Box>
+        <Box component="img" src="images/ip_green.svg" width={50} height={50}></Box>
       </Link>
       <Box sx={{gap: 3}} display="flex" ml={3}>
         <BaseSwitch

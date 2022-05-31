@@ -1,4 +1,11 @@
-import { TextField, TextFieldProps, InputAdornment } from "@mui/material";
+import {
+  TextField,
+  TextFieldProps,
+  InputAdornment,
+  SxProps,
+  Theme,
+} from "@mui/material";
+import { fontSize } from "@mui/system";
 import { useState, useEffect } from "react";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
@@ -22,6 +29,8 @@ interface DecimalInputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   isMoneyValue?: boolean;
+  inputSX: SxProps<Theme>;
+  useLargerFont: boolean;
 }
 
 export const DecimalInput = (props: DecimalInputProps) => {
@@ -32,6 +41,7 @@ export const DecimalInput = (props: DecimalInputProps) => {
     onFocus,
     onBlur,
     isMoneyValue = false,
+    useLargerFont = false,
   } = props;
 
   const isLight = useLight();
@@ -65,6 +75,8 @@ export const DecimalInput = (props: DecimalInputProps) => {
           color: isLight
             ? formatColor(neutral.gray1)
             : formatColor(neutral.white),
+
+          fontSize: useLargerFont ? { xs: 20, md: 24 } : 16,
         },
       }}
     />
