@@ -9,7 +9,7 @@ Recognized Delegates are delegates that have fulfilled some basic requirements (
 
 At launch, Recognized Delegates must meet the following criteria:
 - Unambiguously and publicly post their intention to become a Recognized Delegate in the appropriate section of the Interest Protocol forum.
-- Provide any platform or appeal to potential delegators in that post.
+- Provide a platform to potential delegators in that post.
 - Provide the address they wish to serve as their delegate address.
 - Disclose any conflicts of interest and their policy (if any) when those conflicts are relevant to a vote.
 

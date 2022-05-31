@@ -2,9 +2,12 @@
 
 ## Overview
 
-Interest Protocol vaults are multi-collateral vaults. Each borrower must create a vault and deposit collateral assets to borrow USDi. Assets in vaults are not rehypothicated and are only asseciable to the protocol in the event of a liquidation. 
+Interest Protocol vaults are multi-collateral vaults. Each borrower must create a vault and deposit collateral assets to borrow USDi. Assets in vaults are not rehypothicated and are only accessible to the protocol in the event of a liquidation. 
 
 Governance participants will be excited to know they can use their governance tokens as collateral on Interest Protocol and retain voting power by delegating votes from their vault to their regular voting address. 
+
+Learn more about borrowing [here](../../../concepts/Borrowing/InterestRates).
+
 
 ## Constructor
 Each vault is assigned an ID, minter, master_address, and usdi_address. 
@@ -12,10 +15,8 @@ Each vault is assigned an ID, minter, master_address, and usdi_address.
     * the number of the vault. Increases from 0. 
 * address minter
     * the owner of the vault.
-* address master_address
+* address controller_address
     * where the vault references for access to the protocol.
-* address usdi_address
-    * the address of the dollar synth.
 
 ## Modifier
 * onlyVaultController
@@ -36,7 +37,7 @@ Each vault is assigned an ID, minter, master_address, and usdi_address.
     * to withdraw collateral assets.
 * function delegateCompLikeTo(address delegatee, address token_address) external override onlyMinter
     * delegate votes of a collateral asset with voting capability an address for voting.
-* function masterTransfer(address _token, address _to, uint256 _amount)
+* function controllerTransfer(address _token, address _to, uint256 _amount)
     * to transfer colllateral from the vault to the protocol for liquidation.
 * function modifyLiability(bool increase, uint256 base_amount)
     * function used by the VaultController to reduce a vaults liability. true to increase, false to decerase
