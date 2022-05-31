@@ -43,7 +43,6 @@ export default defineConfig({
             plugins: [nodePolyfills({include: ['util']})],
             output: {
                 manualChunks: {
-                    "coinbase" : ["@coinbase/wallet-sdk"],
                     "mui" : ["@mui/material"],
                     "ethers":["ethers"],
                 }
