@@ -32,8 +32,8 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           secondary: { main: formatColor(blue.blue2) },
           success: { main: formatColor(green.green1) },
           text: {
-            primary: formatColor(neutral.gray2),
-            secondary: formatColor(neutral.black),
+            primary: "#374252",
+            secondary: "#A3A9BA",
           },
           background: {
             default: `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
