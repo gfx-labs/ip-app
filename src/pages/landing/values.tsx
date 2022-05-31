@@ -94,17 +94,16 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
         flexWrap: "wrap",
         borderRadius: 5,
         background: bg,
-        gap: 1,
         minHeight: 320,
       }}
     >
       <Box>
-        <Typography variant="h3" sx={{ color: formatColor(neutral.black) }}>
+        <Typography variant="h4" sx={{ color: formatColor(neutral.black) }}>
           {left}
         </Typography>
       </Box>
       <Box>
-        <Typography sx={{ color: formatColor(neutral.black) }}>
+        <Typography sx={{ color: formatColor(neutral.black), fontWeight: 600 }}>
           {right}
         </Typography>
       </Box>

@@ -46,68 +46,6 @@ export const Highlights: React.FC = () => {
             display={{ xs: "inline-block", md: "inline" }}
             variant="h1"
             sx={{
-<<<<<<< HEAD
-                maxWidth: "100%",
-                paddingTop: 10,
-                paddingLeft: 10,
-                paddingBottom: 10,
-                backgroundColor: formatColor(neutral.white),
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                justifyContent:"center",
-                gap: 5,
-            }}>
-            <Box sx={{
-                display:"flex",
-                flexWrap:"wrap",
-                flexBasis:"100%",
-                width:"100%",
-                maxWidth:1000,
-                alignItems: "left",
-                justifyContent:"left",
-                }}>
-                <Typography
-                    display="inline"
-                    variant="h1"
-                    sx={{
-                        fontSize: "200%",
-                        color: formatColor(neutral.gray8),
-                    }}
-                >
-                    Interest Protocol's stablecoin USDi
-                </Typography>
-                <Box sx={{flexBasis: "100%"}}/>
-                <Typography
-                    display="inline"
-                    variant="h1"
-                    sx={{
-                        fontSize: "200%",
-                        color: formatColor(neutral.black),
-                    }}
-                >
-                    is scalable, over-collateralized, and accrues yield without staking.
-                </Typography>
-                <Box sx={{flexBasis: "100%"}}/>
-            </Box>
-           <Box sx={{
-                display:"flex",
-                flexWrap:"wrap",
-                flexBasis:"100%",
-                width:"100%",
-                maxWidth:1000,
-                }}>
-               <Box sx={{flexBasis:"33%"}}>
-                   <HighlightBox icon={""} header={"Stability First"} copy={"USDi maintains peg under averse conditions, without any intervention."}/>
-               </Box>
-               <Box sx={{flexBasis:"33%"}}>
-                <HighlightBox icon={""} header={"Community Led"} copy={"Built for you, led by you. Your participation creates the future of finance."}/>
-               </Box>
-               <Box sx={{flexBasis:"33%"}}>
-                <HighlightBox icon={""} header={"Full Transparency"} copy={"Everything from contract to interface is FOSS, and we mean it."}/>
-               </Box>
-           </Box>
-=======
               fontSize: "200%",
               color: formatColor(neutral.black),
             }}
@@ -153,7 +91,6 @@ export const Highlights: React.FC = () => {
               }
             />
           </Box>
->>>>>>> landing page
         </Box>
       </Box>
     </>

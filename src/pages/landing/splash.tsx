@@ -1,5 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { ForwardIcon } from "../../components/icons/misc/ForwardIcon";
 import { formatColor, neutral } from "../../theme";
 
 export const Splash: React.FC = () => {
@@ -56,7 +57,7 @@ export const Splash: React.FC = () => {
                 px: 3,
               }}
             >
-              IP Whitepaper -{">"}
+              IP Whitepaper <ForwardIcon sx={{width: 11, ml: 1, top: 1, position: 'relative'}}/>
             </Button>
           </Box>
           <Box />

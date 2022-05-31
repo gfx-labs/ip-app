@@ -65,7 +65,7 @@ export const Fractional: React.FC = () => {
                   whiteSpace: "nowrap",
                 }}
               >
-                Learn More <ForwardIcon sx={{ width: 12, ml: 1 }} />
+                Learn More <ForwardIcon sx={{ width: 12, ml: 1, top: 1, position: 'relative' }} />
               </Button>
             </Typography>
           </Box>

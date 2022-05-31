@@ -147,14 +147,14 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               </Button>
 
               <Box sx={{ gap: 4 }} display="flex" flexDirection="column">
-              <Typography
+                <Typography
                   sx={{
                     color: formatColor(neutral.black),
                     display: "flex",
                     zIndex: 10,
                     fontSize: "16px",
                     alignItems: "center",
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
                   <Link href="#/" sx={{ color: "inherit" }}>
@@ -162,31 +162,18 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                   </Link>
                 </Typography>
                 <Typography
-<<<<<<< HEAD
-                    sx={{
-                        color: formatColor(neutral.gray2),
-                        display: "flex",
-                        zIndex: 10,
-                        fontSize: "150%",
-                        alignItems: "center",
-                    }}>
-                    <Link href="whitepaper.pdf" sx={{color:"inherit"}}>
-                        Whitepaper
-                    </Link>
-=======
                   sx={{
                     color: formatColor(neutral.black),
                     display: "flex",
                     zIndex: 10,
                     fontSize: "16px",
                     alignItems: "center",
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
-                  <Link href="#/whitepaper" sx={{ color: "inherit" }}>
+                  <Link href="whitepaper.pdf" sx={{ color: "inherit" }}>
                     Whitepaper
                   </Link>
->>>>>>> landing page
                 </Typography>
                 <Typography
                   sx={{
@@ -194,7 +181,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                     display: "flex",
                     fontSize: "16px",
                     alignItems: "center",
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
                   <Link href="#/docs" sx={{ color: "inherit" }}>
@@ -202,40 +189,32 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                   </Link>
                 </Typography>
                 <Typography
-<<<<<<< HEAD
-                    sx={{
-                        color:formatColor(neutral.gray2),
-                        display: "flex",
-                        fontSize: "150%",
-                        alignItems: "center",
-                    }}>
-                    <Link href="https://gfx.cafe/ip/contracts" sx={{color:"inherit"}}>
-                        Git
-                    </Link>
-                </Typography>
-                <Typography
-                    sx={{
-                        color:formatColor(neutral.gray2),
-                        display: "flex",
-                        fontSize: "150%",
-                        alignItems: "center",
-                    }}>
-                    <Link href="#/sale" sx={{color:"inherit"}}>
-                        Sale
-                    </Link>
-                </Typography>
-            </Box>
-=======
                   sx={{
                     color: formatColor(neutral.black),
                     display: "flex",
                     fontSize: "16px",
                     alignItems: "center",
-                    fontWeight: 600
+                    fontWeight: 600,
                   }}
                 >
-                  <Link href="#/docs" sx={{ color: "inherit" }}>
+                  <Link
+                    href="https://gfx.cafe/ip/contracts"
+                    sx={{ color: "inherit" }}
+                  >
                     Git
+                  </Link>
+                </Typography>
+                <Typography
+                  sx={{
+                    color: formatColor(neutral.black),
+                    display: "flex",
+                    fontSize: "16px",
+                    alignItems: "center",
+                    fontWeight: 600,
+                  }}
+                >
+                  <Link href="#/sale" sx={{ color: "inherit" }}>
+                    Sale
                   </Link>
                 </Typography>
               </Box>
@@ -284,12 +263,26 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 alignItems: "center",
               }}
             >
-              <Link href="#/docs" sx={{ color: "inherit" }}>
+              <Link
+                href="https://gfx.cafe/ip/contracts"
+                sx={{ color: "inherit" }}
+              >
                 Git
               </Link>
             </Typography>
+            <Typography
+              sx={{
+                color: formatColor(neutral.gray2),
+                display: "flex",
+                fontSize: "16px",
+                alignItems: "center",
+              }}
+            >
+              <Link href="#/sale" sx={{ color: "inherit" }}>
+                Sale
+              </Link>
+            </Typography>
           </Box>
->>>>>>> landing page
 
           <Box sx={{ gap: 2 }} display="flex" mr={0} ml="auto">
             <Button
