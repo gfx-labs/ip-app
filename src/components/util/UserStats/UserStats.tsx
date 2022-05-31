@@ -67,7 +67,6 @@ export const UserStats = () => {
     accountLiability,
   } = useVaultDataContext();
   const { setType } = useModalContext();
-  console.log("BORRWOING POWER:", borrowingPower, accountLiability);
   useEffect(() => {
     if (rolodex) {
       rolodex!
