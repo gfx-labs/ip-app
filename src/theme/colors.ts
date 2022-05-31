@@ -152,6 +152,27 @@ export const gradient: { [key: string]: Gradient } = {
       [[8, 11, 15, 0], 1],
     ],
   },
+  gradientPinkPeach: {
+    angle: 90,
+    stops: [
+      [[255, 154, 158], 0],
+      [[250, 208, 196], 1],
+    ],
+  },
+  gradientPurpleGrey: {
+    angle: 90,
+    stops: [
+      [[235, 192, 253], 0],
+      [[217, 222, 216], 1],
+    ],
+  },
+  gradientPurpleYellow: {
+    angle: 90,
+    stops: [
+      [[233, 222, 250], 0],
+      [[251, 252, 219], 1],
+    ],
+  },
 };
 
 const formatHexChannel = (channel: number) => {

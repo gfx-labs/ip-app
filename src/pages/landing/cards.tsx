@@ -79,7 +79,7 @@ const GradientBox = (props:{left:string, right:string, bg:string})=>{
     const theme = useTheme()
     return (<Box
         sx={{
-            paddingX:2,
+            paddingX: {xs: 2, md: 6},
             paddingY:{xs: 4, md: 8},
             marginRight: {xs: 0, md: 8},
             flexBasis: "100%",
@@ -97,7 +97,7 @@ const GradientBox = (props:{left:string, right:string, bg:string})=>{
             </Typography>
         </Box>
         <Box ml="auto">
-            <Typography  sx={{color: formatColor(neutral.white), fontSize: "100%", textAlign: 'right'}}>
+            <Typography  sx={{color: formatColor(neutral.white), fontSize: "100%", textAlign: 'right', fontWeight: 600}}>
                 {right}
             </Typography>
         </Box>

@@ -35,6 +35,7 @@ const nav = [
 ];
 
 import { formatColor, neutral } from "../../../theme";
+import { useLight } from "../../../hooks/useLight";
 
 export const Footer = () => {
   const theme = useTheme();
@@ -55,6 +56,7 @@ export const Footer = () => {
 };
 
 const DesktopFooter = () => {
+  const isLight = useLight()
   const theme = useTheme();
   return (
     <Box
@@ -68,7 +70,7 @@ const DesktopFooter = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: { xs: "space-between", md: "space-evenly" },
+          justifyContent: { xs: "space-evenly", md: "space-evenly" },
           maxWidth: 900,
           margin: "auto",
           [theme.breakpoints.down("md")]: {
@@ -142,14 +144,14 @@ const DesktopFooter = () => {
         <Box>
           <Box
             component="img"
-            src="/images/discord_icon_grey.svg"
+            src={`/images/discord_icon_${isLight ? 'black' : 'grey'}.svg`}
             width="24px"
             height="24px"
             marginX={3}
           ></Box>
           <Box
             component="img"
-            src="/images/twitter_bird_icon_grey.svg"
+            src={`/images/twitter_bird_icon_${isLight ? 'black' :'grey'}.svg`}
             width="25px"
             height="26px"
             marginX={3}
