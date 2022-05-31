@@ -24,7 +24,7 @@ https://netlify.interestprotocol.io
 https://github.interestprotocol.io
 
 
-coming soon...
+coming soon... (not yet live)
 
 https://swarm.interestprotocol.io
 
