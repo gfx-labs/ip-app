@@ -92,20 +92,20 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2.5 }}>
         <Box>
-          <Typography variant="body1" color={formatColor(neutral.gray3)}>
+          <Typography variant="body1" fontSize={16} fontWeight={600} color={formatColor(neutral.gray3)}>
             {tokenName}
           </Typography>
-          <Typography variant="h3" color="text.secondary" mb={1}>
+          <Typography variant="h3" fontSize={20} fontWeight={700} color="#374252" mb={1}>
             {tokenValue}
           </Typography>
 
-          <Typography variant="body2" color={formatColor(neutral.gray3)}>
+          <Typography variant="body2" fontWeight={600} fontSize={14} color={formatColor(neutral.gray3)}>
             Vault Balance
           </Typography>
-          <Typography variant="h3" color="text.secondary">
+          <Typography variant="h3" fontWeight={600} color="#374252">
             {vaultBalance}
           </Typography>
-          <Typography variant="body2" color={formatColor(neutral.gray10)}>
+          <Typography variant="body2" fontWeight={600} color="#6B7687">
             {tokenAmount} {tokenName}
           </Typography>
         </Box>
@@ -119,13 +119,14 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
-        <Typography variant="body2" color={formatColor(neutral.gray3)}>
+        <Typography variant="body2" fontWeight={600} color={formatColor(neutral.gray3)}>
           LTV: {LTVPercent}%
         </Typography>
         <Typography
           variant="body2"
           color={formatColor(neutral.gray3)}
           marginLeft={2}
+          fontWeight={600}
         >
           Penalty: {penaltyPercent}%
         </Typography>

@@ -11,12 +11,12 @@ export const TitleText = (props: TitleTextProps & BoxProps) => {
   console.log(text, "TEXT FOR ", title);
   return (
     <Box {...props}>
-      <Typography variant="body1" color={formatColor(neutral.gray3)} mb={1}>
+      <Typography variant="body1" fontWeight={600} fontSize= {16} color={formatColor(neutral.gray3)} mb={1}>
         {title}
       </Typography>
 
       {text !== null ? (
-        <Typography variant="subtitle1" color="text.primary">
+        <Typography variant="subtitle1" fontWeight={700} fontSize= {28} color="#374252">
           {text}
         </Typography>
       ) : (

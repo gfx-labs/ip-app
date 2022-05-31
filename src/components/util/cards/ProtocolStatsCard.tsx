@@ -27,7 +27,7 @@ export const ProtocolStatsCard = () => {
   useEffect(() => {
     if (rolodex && rolodex.USDC && rolodex.addressUSDI) {
       rolodex.USDC.balanceOf(rolodex.addressUSDI).then((val)=>{
-        setTotalUSDCDeposited(val.div(BN("1e6")).toString())
+        setTotalUSDCDeposited(val.div(BN("1e6")).toLocaleString())
       })
       useTotalSupply(rolodex).then(res=>{
         setTotalSupply(res)
@@ -64,8 +64,8 @@ export const ProtocolStatsCard = () => {
           marginBottom: 4,
         }}
       >
-        <TitleText title="USDi Minted" text={totalSupply} />
-        <TitleText title="USDC Deposited" text={totalUSDCDeposited} />
+        <TitleText title="USDi Minted" text={Math.round(totalSupply).toLocaleString()} />
+        <TitleText title="USDC Deposited" text={Math.round(totalUSDCDeposited).toLocaleString()} />
         <a onClick={mintTestUSDC} href={"#"}>mint test usdc</a>
       </Box>
 

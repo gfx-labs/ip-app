@@ -87,6 +87,7 @@ const Dashboard = () => {
             variant="body1"
             paddingLeft={{ xs: 2, md: 6 }}
             marginBottom={2}
+            fontWeight={600}
             color={formatColor(neutral.gray10)}
           >
             Protocol Stats
