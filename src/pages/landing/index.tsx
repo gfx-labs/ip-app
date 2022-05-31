@@ -49,7 +49,7 @@ const TopBar: React.FC<{sx?: any}> = (props?:{sx?:any})=> {
                         fontSize: "150%",
                         alignItems: "center",
                     }}>
-                    <Link href="#/whitepaper" sx={{color:"inherit"}}>
+                    <Link href="whitepaper.pdf" sx={{color:"inherit"}}>
                         Whitepaper
                     </Link>
                 </Typography>

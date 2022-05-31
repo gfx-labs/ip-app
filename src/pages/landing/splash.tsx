@@ -38,7 +38,7 @@ export const Splash: React.FC = ()=> {
                 <Box/>
                 <Box sx={{flexBasis: "100%"}}/>
                 <Box sx={{flexBasis: "100%"}}>
-                    <Button sx={{
+                    <Button href="whitepaper.pdf" sx={{
                         marginTop: 5,
                         color: formatColor(neutral.black),
                         width: "25%",
