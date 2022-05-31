@@ -10,6 +10,7 @@ import { WalletModalProvider } from "./components/libs/wallet-modal-provider/Wal
 import { ModalContentProvider } from "./components/libs/modal-content-provider/ModalContentProvider";
 import { PaletteModeContextProvider } from "./components/libs/palette-mode-provider/palette-mode-provider";
 import Dashboard from "./pages";
+import PurchasePage from "./pages/sale";
 import RedirectBook from "./pages/book";
 import LandingPage from "./pages/landing";
 import NotFound404Page from "./pages/404";
@@ -88,6 +89,7 @@ const AppRouter = () => {
           </WalletContext>
         }
       />
+      <Route path={`/sale`} element={<PurchasePage />} />
       <Route path={`/landing`} element={<LandingPage />} />
       <Route path={`/docs`} element={<RedirectBook />} />
       <Route path={`/book`} element={<RedirectBook />} />

@@ -71,8 +71,19 @@ const TopBar: React.FC<{sx?: any}> = (props?:{sx?:any})=> {
                         fontSize: "150%",
                         alignItems: "center",
                     }}>
-                    <Link href="#/docs" sx={{color:"inherit"}}>
+                    <Link href="https://gfx.cafe/ip/contracts" sx={{color:"inherit"}}>
                         Git
+                    </Link>
+                </Typography>
+                <Typography
+                    sx={{
+                        color:formatColor(neutral.gray2),
+                        display: "flex",
+                        fontSize: "150%",
+                        alignItems: "center",
+                    }}>
+                    <Link href="#/sale" sx={{color:"inherit"}}>
+                        Sale
                     </Link>
                 </Typography>
             </Box>

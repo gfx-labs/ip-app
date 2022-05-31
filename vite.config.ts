@@ -34,7 +34,6 @@ export default defineConfig({
             output: {
                 manualChunks: {
                     "mui" : ["@mui/material"],
-                    "ethers":["ethers"],
                 }
             }
         },
