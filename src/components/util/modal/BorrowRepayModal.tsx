@@ -12,6 +12,8 @@ import { BorrowContent } from "./ModalContent/BorrowContent";
 import { RepayContent } from "./ModalContent/RepayContent";
 import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
+import {Spacer} from "../../../easy/spacer";
+import {ForwardIcon} from "../../icons/misc/ForwardIcon";
 
 export const BorrowRepayModal = () => {
   const { type, setType } = useModalContext();
@@ -25,13 +27,14 @@ export const BorrowRepayModal = () => {
   const [tokenName, setTokenName] = useState("USDI");
   const [vaultBorrowPower, setVaultBorrowPower] = useState("0");
   const [borrowAmount, setBorrowAmount] = useState("");
-  const [repayAmount, setRepayAmount] = useState("");
   useEffect(()=>{
     if(borrowingPower){
       setVaultBorrowPower(borrowingPower.toFixed(0))
     }
   }, [borrowingPower])
-  const onSwitch = (val: boolean) => setType(val ? ModalType.Borrow : ModalType.Repay);
+  const onSwitch = (val: boolean) => {
+    setType(val ? ModalType.Borrow : ModalType.Repay);
+  }
 
   return (
     <BaseModal
@@ -64,16 +67,54 @@ export const BorrowRepayModal = () => {
         ></Box>
         <Box>
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
-            Borrow Balance:
+            Liability:
           </Typography>
           <Typography variant="h3" color="text.secondary">
-              ${accountLiability}
+              ${accountLiability.toFixed(0)}
             </Typography>
         </Box>
+          { currType ?
+            (borrowAmount ?<Box>
+              <Typography variant="body1" color={formatColor(neutral.gray3)}>
+                {Spacer}
+              </Typography>
+              <Typography variant="h3" color="text.secondary">
+                {"->"}
+              </Typography></Box>
+              :<></>) :
+                (borrowAmount ?<Box>
+                  <Typography variant="body1" color={formatColor(neutral.gray3)}>
+                    {Spacer}
+                  </Typography>
+                  <Typography variant="h3" color="text.secondary">
+                    {"->"}
+                  </Typography>
+                </Box>
+                :<></>)
+        }
+        {borrowAmount ?
+          ( currType ?
+            <Box>
+              <Typography variant="body1" color={formatColor(neutral.gray3)}>
+                New:
+              </Typography>
+              <Typography variant="h3" color="text.secondary">
+                {(Number(accountLiability)+Number(borrowAmount)).toFixed(0)}
+              </Typography></Box>
+              :
+              <Box>
+                <Typography variant="body1" color={formatColor(neutral.gray3)}>
+                  New:
+                </Typography>
+                <Typography variant="h3" color="text.secondary">
+                  {(Number(accountLiability)-Number(borrowAmount)).toFixed(0)}
+                </Typography>
+              </Box>
+          ):<></>}
       </Box>
 
-      {currType ? (
-        <BorrowContent
+      {currType ?
+        (<BorrowContent
           tokenName={tokenName}
           vaultBorrowPower={vaultBorrowPower}
           vaultID={Number(vaultID)}
@@ -81,16 +122,16 @@ export const BorrowRepayModal = () => {
           setBorrowAmount={setBorrowAmount}
           accountLiability={accountLiability}
         />
-      ) : (
-        <RepayContent
-          tokenName={tokenName}
-          vaultBorrowPower={vaultBorrowPower}
-          vaultID={Number(vaultID)}
-          repayAmount={repayAmount}
-          setRepayAmount={setRepayAmount}
-          accountLiability={accountLiability}
-        />
-      )}
+        ) : (
+          <RepayContent
+            tokenName={tokenName}
+            vaultBorrowPower={vaultBorrowPower}
+            vaultID={Number(vaultID)}
+            repayAmount={borrowAmount}
+            setRepayAmount={setBorrowAmount}
+            accountLiability={accountLiability}
+          />
+        )}
     </BaseModal>
   );
 };

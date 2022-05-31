@@ -12,6 +12,7 @@ import { useRolodexContext } from "../../../libs/rolodex-data-provider/RolodexDa
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
 import {locale} from "../../../../locale";
 import { useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
+import {getVaultBorrowingPower} from "../../../libs/vault-data-provider/getBorrowingPower";
 
 interface BorrowContent {
   tokenName: string;
@@ -43,15 +44,26 @@ const {updateTransactionState} = useModalContext()
   const [shaking, setShaking] = useState(false);
   const [loadmsg, setLoadmsg] = useState("");
 
+  const [newHealth, setNewHealth] = useState(100 * (accountLiability / Number(vaultBorrowPower)))
+
+  const [buttonText, newButtonText] = useState("Borrow")
+
   const toggle = () => setFocus(!focus);
   useEffect(() => {
     setDisabled(Number(borrowAmount) < 1);
   }, [borrowAmount]);
+  const onInputChange = (e:string) => {
+    const newLib = (accountLiability + Number(e)) / Number(vaultBorrowPower)
+    if(newLib >= 1){
+      setBorrowAmount((0.95 * (Number(vaultBorrowPower) - accountLiability)).toFixed(2))
+    }else{
+      setBorrowAmount(e)
+    }
+  }
 
-  const setMax = () =>
-    setBorrowAmount(
-      Math.floor(0.98 *(Number(vaultBorrowPower) - accountLiability)).toString()
-  );
+  useEffect(()=>{
+    setNewHealth(100*(accountLiability + Number(borrowAmount))/Number(vaultBorrowPower))
+  },[borrowAmount])
 
   const handleBorrowRequest = async () => {
     setLoading(true);
@@ -64,21 +76,16 @@ const {updateTransactionState} = useModalContext()
     ).then(async (res)=>{
       setLoadmsg(locale("TransactionPending"))
       setLoading(true);
-
       updateTransactionState(res as ContractTransaction)
-
       return res!.wait().then((res)=>{
         setLoadmsg("");
         setLoading(false);
-
         updateTransactionState(res as ContractReceipt)
       })
     }).catch((e)=>{
       setLoading(false);
       setShaking(true)
       setTimeout(() => setShaking(false), 400);
-      console.log(e)
-
       updateTransactionState(e as ContractReceipt)
     })
   };
@@ -89,7 +96,7 @@ const {updateTransactionState} = useModalContext()
         <DecimalInput
           onBlur={toggle}
           onFocus={toggle}
-          onChange={(e) => setBorrowAmount(e)}
+          onChange={onInputChange}
           placeholder={`0 ${tokenName}`}
           value={borrowAmount}
         />
@@ -102,26 +109,13 @@ const {updateTransactionState} = useModalContext()
               marginLeft: 1,
             }}
           >
-            {`$${Number(borrowAmount)}`}
+            {`${newHealth.toFixed(2)}%`}
           </Typography>
-
-          <Button onClick={setMax}>
-            <Typography
-              sx={{
-                color: formatColor(neutral.gray3),
-                fontSize: 14,
-                fontWeight: 600,
-                marginLeft: 1,
-              }}
-            >
-              Max
-            </Typography>
-          </Button>
         </Box>
       </ModalInputContainer>
       <Box marginTop={2}>
         <DisableableModalButton
-          text="Borrow"
+          text={buttonText}
           disabled={disabled}
           onClick={handleBorrowRequest}
           loading={loading}
