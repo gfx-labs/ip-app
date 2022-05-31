@@ -1,10 +1,11 @@
-import { Typography} from "@mui/material"
+import { Typography, useTheme } from "@mui/material"
 import {Box} from "@mui/system"
 import {formatColor, formatGradient, gradient, neutral} from "../../theme"
 import {generateSmoothGradient} from "../../theme/gradient/easing"
 
 
 export const Cards: React.FC = ()=> {
+    const theme = useTheme()
     return(<>
         <Box
             sx={{
@@ -17,16 +18,22 @@ export const Cards: React.FC = ()=> {
                 flexWrap: "wrap",
                 alignItems: "center",
                 justifyContent:"center",
-                gap: 5,
+                gap: {xs: 2, md: 5},
+                [theme.breakpoints.down('md')]: {
+                    paddingX: 2
+                }
             }}>
             <Box sx={{
                 display:"flex",
-                flexWrap:"nowrap",
+                flexWrap: "nowrap",
                 flexBasis:"100%",
+                flexDirection: {xs: 'column', md: 'row'},
+                columnGap: 2,
                 width:"100%",
                 maxWidth:1250,
                 alignItems: "left",
                 justifyContent:"left",
+                marginBottom: {xs: 2, md: 0}
                 }}>
                 <Typography
                     display="inline"
@@ -43,8 +50,7 @@ export const Cards: React.FC = ()=> {
                     variant="h1"
                     sx={{
                         fontSize: "200%",
-                        marginLeft: 2,
-                        color: formatColor(neutral.gray8),
+                        color: formatColor(neutral.gray2),
                     }}
                 >
                     Save Simply.
@@ -70,25 +76,28 @@ export const Cards: React.FC = ()=> {
 
 const GradientBox = (props:{left:string, right:string, bg:string})=>{
     const {left, right, bg} = props
+    const theme = useTheme()
     return (<Box
         sx={{
-            paddingX:2,
-            paddingY:8,
-            marginRight: 8,
+            paddingX: {xs: 2, md: 6},
+            paddingY:{xs: 4, md: 8},
+            marginRight: {xs: 0, md: 8},
             flexBasis: "100%",
             display:"flex",
+            alignItems: 'center',
             width:"100%",
             maxWidth:1250,
             background:bg,
             borderRadius: 5,
+            columnGap: 5
         }}>
         <Box >
             <Typography variant="h1" sx={{color: formatColor(neutral.white), fontSize: "200%"}}>
                 {left}
             </Typography>
         </Box>
-        <Box ml="auto" mr={5}>
-            <Typography  sx={{color: formatColor(neutral.white), fontSize: "100%"}}>
+        <Box ml="auto">
+            <Typography  sx={{color: formatColor(neutral.white), fontSize: "100%", textAlign: 'right', fontWeight: 600}}>
                 {right}
             </Typography>
         </Box>
