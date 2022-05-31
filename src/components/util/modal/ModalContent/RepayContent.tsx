@@ -33,7 +33,8 @@ export const RepayContent = (props: RepayContent) => {
   const rolodex = useRolodexContext();
   const { provider, currentAccount } = useWeb3Context();
   const {updateTransactionState} = useModalContext()
-  const setMax = () => setRepayAmount(accountLiability.toString());
+
+  const [newHealth, setNewHealth] = useState(100 * (accountLiability / Number(vaultBorrowPower)))
 
 
   const [loadmsg, setLoadmsg] = useState("");
@@ -46,6 +47,19 @@ export const RepayContent = (props: RepayContent) => {
   useEffect(() => {
     setDisabled(Number(repayAmount) <= 0);
   }, [repayAmount]);
+
+  const onInputChange = (e:string) => {
+    const newLib = (accountLiability - Number(e))
+    if(newLib < 0){
+      setRepayAmount(accountLiability.toString())
+    }else{
+      setRepayAmount(e)
+    }
+  }
+
+  useEffect(()=>{
+    setNewHealth(100*(accountLiability - Number(repayAmount))/Number(vaultBorrowPower))
+  },[repayAmount])
 
   const handleRepayRequest = async () => {
     setLoading(true);
@@ -60,17 +74,16 @@ export const RepayContent = (props: RepayContent) => {
       setLoading(true);
       updateTransactionState(res)
       res!.wait().then((res)=>{
-      setLoadmsg("");
-      setLoading(false);
+        setLoadmsg("");
+        setLoading(false);
 
-      updateTransactionState(res)
+        updateTransactionState(res)
       })
     }).catch((e)=>{
       setLoading(false);
       setShaking(true)
       setTimeout(() => setShaking(false), 400);
       console.log(e)
-
       updateTransactionState(e)
     })
   };
@@ -86,14 +99,13 @@ export const RepayContent = (props: RepayContent) => {
         textAlign="right"
       >
         {" "}
-        Wallet Balance: {vaultBorrowPower} {tokenName}
       </Typography>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(e) => setRepayAmount(e)}
+          onChange={onInputChange}
           placeholder={`0 ${tokenName}`}
           value={repayAmount}
         />
@@ -106,21 +118,8 @@ export const RepayContent = (props: RepayContent) => {
               marginLeft: 1,
             }}
           >
-            {`$${Number(repayAmount)}`}
+            {`${Number(newHealth).toFixed(2)}%`}
           </Typography>
-
-          <Button onClick={setMax}>
-            <Typography
-              sx={{
-                color: formatColor(neutral.gray3),
-                fontSize: 14,
-                fontWeight: 600,
-                marginLeft: 1,
-              }}
-            >
-              Max
-            </Typography>
-          </Button>
         </Box>
       </ModalInputContainer>
       <Box marginTop={2}>
