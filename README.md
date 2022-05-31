@@ -6,6 +6,10 @@ gfx.cafe: https://gfx.cafe/ip/app
 mirrors:
 github: https://github.com/gfx-labs/ip-app
 
+
+Looking for the contracts? [Click here](https://gfx.cafe/ip/contracts)
+
+
 ## overview
 
 this is a non-official frontend for interest protocol
@@ -32,8 +36,6 @@ https://ipfs.interestprotocol.io
 
 ens://interestprotocol.eth
 
-
-Looking for the contracts? [Click here](https://gfx.cafe/ip/contracts)
 
 ## setup
 
