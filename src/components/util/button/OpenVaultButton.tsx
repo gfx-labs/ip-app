@@ -17,9 +17,7 @@ export const OpenVaultButton = () => {
       const mintVaultRes = await rolodex!.VC!.mintVault();
       updateTransactionState(mintVaultRes);
       const mintVaultReceipt = await mintVaultRes.wait();
-
       updateTransactionState(mintVaultReceipt);
-
       return mintVaultRes;
     } catch (err) {
       updateTransactionState(err as ContractReceipt);
