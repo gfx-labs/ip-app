@@ -231,8 +231,10 @@ export const UserStats = () => {
                 variant="contained"
                 sx={{
                   backgroundColor: formatColor(blue.blue8),
+                  boxShadow:0,
                   color: formatColor(blue.blue7),
                   "&:hover": {
+                    boxShadow:0,
                     backgroundColor: formatColor(blue.blue5),
                   },
                 }}
@@ -245,8 +247,10 @@ export const UserStats = () => {
                 variant="contained"
                 sx={{
                   backgroundColor: formatColor(blue.blue8),
+                  boxShadow:0,
                   color: formatColor(blue.blue7),
                   "&:hover": {
+                    boxShadow:0,
                     backgroundColor: formatColor(blue.blue5),
                   },
                 }}
