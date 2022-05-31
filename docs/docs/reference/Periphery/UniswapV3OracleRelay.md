@@ -3,10 +3,21 @@
 ## Overview
 The Uniswap v3 oracle relay contract returns a price for a specified pool. At launch, this contract is used as the anchor relay for the AnchorViewRelay. 
 
+More information on governance can be found [here](../../../concepts/Borrowing/OracleSystem).
+
 ## Secondary contracts
 * IUniswapV3PoolDerivedState & TickMath to get pool info and handle the math involved.
 
 ## Constructor
+```
+constructor(
+    uint32 lookback,
+    address pool_address,
+    bool quote_token_is_token0,
+    uint256 mul,
+    uint256 div
+  )
+```
 * lookback: how far back to get tick data from. 
 * pool_address: the address of the Uniswap v3 pool.
 * quote_token_is_token0: a boolean check if the quote token is token0. If so, we need to flip the pricing around. For exmaple, this comes in handy for ETH/USDC vs USDC/ETH markets.
