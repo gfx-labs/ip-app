@@ -20,7 +20,7 @@ export const neutral: { [key: string]: [number, number, number] } = {
   white: [255, 255, 255],
   gray1: [55, 66, 82], // #374252 grey-300
   gray2: [117, 126, 140], // #757E8C grey-200
-  gray3: [163, 169, 186], //#AFAFAF grey-400
+  gray3: [163, 169, 186], //#AFAFAF
   gray4: [32, 32, 32], //#202020
   gray5: [243, 243, 243], // #F3F3F3
   gray6: [237, 237, 237], // #EDEDED
