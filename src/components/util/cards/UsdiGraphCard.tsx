@@ -8,6 +8,8 @@ import {useCallback, useEffect, useState} from "react";
 import {BN} from "../../../easy/bn";
 import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 import {Spinner, WithSpinner} from "../loading";
+import {InterestEventEvent} from "../../../chain/contracts/lending/VaultController";
+import {DonationEvent} from "../../../chain/contracts/USDI";
 
 export const UsdiGraphCard = () => {
   const isLight = useLight();
@@ -24,44 +26,111 @@ export const UsdiGraphCard = () => {
   const [lastBlock, setLastBlock] = useState(0)
   const [lastTime, setLastTime] = useState("")
 
+  const [queryLimit, setQueryLimit] = useState(0)
+  const HISTORY_MAX = 10
+  const [queryHistory, setQueryHistory] = useState(0)
 
   const addData = async (o:Observation)=>{
     if(!o.timestamp){
-      provider?.getBlock(o.block).then((b)=>{
+      await provider?.getBlock(o.block).then((b)=>{
         o.timestamp = b.timestamp * 1000
-        data.set(o.block, o)
       })
-    }else{
-      data.set(o.block, o)
     }
+    if(data.has(o.block)){
+      let n = data.get(o.block)
+      if(o.interestPaid && n){
+        n.interestPaid = o.interestPaid
+      }
+      if(o.interestRate && n) {
+        n.interestRate = o.interestRate
+      }
+      o = n!
+    }
+    data.set(o.block, o)
+  }
+
+  const temp = new Map<number, Observation>()
+  const addInterestEvents = (xs:InterestEventEvent[]) =>{
+    xs.forEach((event:InterestEventEvent) =>{
+      if(!temp.has(event.blockNumber)) {
+        temp.set(event.blockNumber, {block:event.blockNumber})
+      }
+      temp.get(event.blockNumber)!.interestRate = event.args[2].div(BN("1e14")).toNumber()/100
+    })
+  }
+  const addDonateEvents = (xs:DonationEvent[]) =>{
+    xs.forEach((event:DonationEvent) =>{
+      if(!temp.has(event.blockNumber)) {
+        temp.set(event.blockNumber, {block:event.blockNumber})
+      }
+      temp.get(event.blockNumber)!.interestPaid = event.args[1].div(BN("1e14")).toNumber()/10000
+    })
   }
 
   useEffect(()=>{
-    const temp = new Map<number, Observation>()
-    if(rolodex && rolodex.VC){
-      rolodex.VC.queryFilter(rolodex.VC.filters.InterestEvent()).then((events)=>{
-        events.forEach((event) =>{
-          if(!temp.has(event.blockNumber)) {
-            temp.set(event.blockNumber, {block:event.blockNumber})
+    const startBlock = ((queryLimit == 0) ? undefined : dataBlock - queryLimit)
+    if(rolodex && rolodex.VC && queryLimit == 0){
+      const getRates = rolodex.VC.queryFilter(rolodex.VC.filters.InterestEvent(), startBlock, dataBlock).then(addInterestEvents)
+      const getPays = rolodex.USDI.queryFilter(rolodex.USDI.filters.Donation(), startBlock, dataBlock).then(addDonateEvents)
+      Promise.all([getRates, getPays]).then(()=>{
+        for(const [k, v] of temp.entries()) {
+          addData(v)
+        }
+        temp.clear()
+      }).catch((e)=>{
+        if(e.data && e.data.message) {
+          const msg = e.data.message as string
+          if(msg.includes("limited")) {
+            setQueryLimit(8000)
+            return
           }
-          temp.get(event.blockNumber)!.interestRate = event.args[2].div(BN("1e14")).toNumber()/100
-        })
-      }).then(async ()=>{
-        return rolodex.USDI.queryFilter(rolodex.USDI.filters.Donation()).then((events)=>{
-          events.forEach((event) =>{
-            if(!temp.has(event.blockNumber)) {
-              temp.set(event.blockNumber, {block:event.blockNumber})
-            }
-            temp.get(event.blockNumber)!.interestPaid = event.args[1].div(BN("1e14")).toNumber()/10000
-          })
-        }).then(()=>{
-          for(const [k, v] of temp.entries()) {
-            addData(v)
-          }
-        })
-
-      })    }
+        }
+        console.log("error getting data", e)
+      })
+    }
   },[rolodex, dataBlock])
+
+  useEffect(()=>{
+    if(rolodex && rolodex.VC && queryLimit > 0 && queryHistory < HISTORY_MAX ){
+      const from = dataBlock - (1+queryHistory) * queryLimit
+      const to = dataBlock - queryHistory * queryLimit
+      console.log(from,to)
+      const getRates = rolodex.VC.queryFilter(
+        rolodex.VC.filters.InterestEvent(),
+        from,to
+      ).then(addInterestEvents)
+      const getPays = rolodex.USDI.queryFilter(
+        rolodex.USDI.filters.Donation(),
+        from,to
+      ).then(addDonateEvents)
+      Promise.all([getRates, getPays]).then(()=>{
+        for(const [k, v] of temp.entries()) {
+          addData(v)
+        }
+        setQueryHistory(queryHistory + 1)
+        temp.clear()
+      }).catch((e)=>{
+        setQueryHistory(HISTORY_MAX)
+        if(e.data && e.data.message) {
+          const msg = e.data.message as string
+          if(msg.includes("limited")) {
+            if(queryLimit > 100) {
+              setQueryLimit(queryLimit / 2)
+            }else{
+              setQueryLimit(-1)
+            }
+            return
+          }
+        }
+        console.log("error getting smaller data with max", e, queryHistory)
+      })
+    }
+  },[rolodex, dataBlock, queryHistory, queryLimit])
+
+
+
+
+
 
   useEffect(()=>{
     if(data.size > 4) {
@@ -82,7 +151,7 @@ export const UsdiGraphCard = () => {
   return (
     <Box
       sx={{
-      paddingX: {xs: 3, md: 6},
+        paddingX: {xs: 3, md: 6},
       paddingY: {xs: 6, md: 6},
       paddingBottom: {xs: 2, md: 2},
       backgroundImage: `linear-gradient(${formatGradient(

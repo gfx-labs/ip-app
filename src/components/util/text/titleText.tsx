@@ -8,7 +8,6 @@ type TitleTextProps = {
 
 export const TitleText = (props: TitleTextProps & BoxProps) => {
   const { title, text } = props;
-  console.log(text, "TEXT FOR ", title);
   return (
     <Box {...props}>
       <Typography variant="body1" fontWeight={600} fontSize= {16} color={formatColor(neutral.gray3)} mb={1}>
