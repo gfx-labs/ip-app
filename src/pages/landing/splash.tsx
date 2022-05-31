@@ -8,9 +8,9 @@ export const Splash: React.FC = ()=> {
         <Box
             sx={{
                 maxWidth: "100%",
-                paddingTop: 40,
-                paddingLeft: 10,
-                paddingBottom: 50,
+                paddingTop: {xs:30, md:40},
+                paddingLeft: {xs: 2, md: 10},
+                paddingBottom: {xs: 25,md: 50},
                 backgroundColor: formatColor(neutral.gray11),
                 display: "flex",
                 alignItems: "left",
@@ -23,13 +23,15 @@ export const Splash: React.FC = ()=> {
                 display:"flex",
                 flexWrap:"wrap",
                 justifyContent:"left",
+                flexDirection: 'column'
                 }}>
                 <Box>
                     <Typography
                         flexBasis="50%"
-                        fontSize= "400%"
                         variant="h1"
                         sx={{
+                            fontSize:{ xs: 40, md: 88},
+                            lineHeight: {xs: 1.35},
                             color: formatColor(neutral.gray1),
                         }}>
                         Interest Protocol
@@ -39,12 +41,14 @@ export const Splash: React.FC = ()=> {
                 <Box sx={{flexBasis: "100%"}}/>
                 <Box sx={{flexBasis: "100%"}}>
                     <Button href="whitepaper.pdf" sx={{
-                        marginTop: 5,
+                        marginTop: {xs: 2, md: 5},
                         color: formatColor(neutral.black),
-                        width: "25%",
                         border: "1px solid "+ formatColor(neutral.black),
+                        width: 'auto',
+                        whiteSpace: 'nowrap',
+                        px: 3
                         }}>
-                        IP Whitepaper
+                        IP Whitepaper -{">"}
                     </Button>
                 </Box>
                 <Box/>
