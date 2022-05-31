@@ -29,8 +29,7 @@ interface DecimalInputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   isMoneyValue?: boolean;
-  inputSX: SxProps<Theme>;
-  useLargerFont: boolean;
+  useLargerFont?: boolean;
 }
 
 export const DecimalInput = (props: DecimalInputProps) => {
