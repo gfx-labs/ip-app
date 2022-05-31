@@ -148,9 +148,7 @@ export const Web3ContextProvider = ({
 
         console.log("activating...");
         await activate(connector, undefined, true);
-
         console.log("activated");
-
         setConnector(connector);
         localStorage.setItem("walletProvider", wallet.toString());
         setDeactivated(false);

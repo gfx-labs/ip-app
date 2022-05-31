@@ -44,57 +44,66 @@ function getWeb3Library(provider: any): providers.Web3Provider {
 const WalletContext = (props: { children: any }) => {
   return (
     <Web3ReactProvider getLibrary={getWeb3Library}>
-      <Web3ContextProvider>
-        <RolodexContentProvider>
-          <StableCoinsProvider>
-            <VaultDataProvider>
-              <ModalContentProvider>
-                <AppGovernanceProvider>
-                  <>
-                    <WalletModalProvider>
-                      <SwapTokenProvider>{props.children}</SwapTokenProvider>
-                    </WalletModalProvider>
-                    <DelegateModal />
-                    <DelegateIPTModal />
-                    <DepositWithdrawCollateralModal />
-                    <DepositCollateralConfirmationModal />
-                    <WithdrawCollateralConfirmationModal />
-                    <DepositWithdrawUSDCModal />
-                    <BorrowRepayModal />
-                    <DepositUSDCConfirmationModal />
-                    <WithdrawUSDCConfirmationModal />
-                    <ClaimModal />
-                    <TransactionStatusModal />
-                  </>
-                </AppGovernanceProvider>
-              </ModalContentProvider>
-            </VaultDataProvider>
-          </StableCoinsProvider>
-        </RolodexContentProvider>
-      </Web3ContextProvider>
+        {props.children}
     </Web3ReactProvider>
   );
 };
 
+const DashboardContext = (props :{children:any}) =>{
+  return (
+    <Web3ContextProvider>
+      <RolodexContentProvider>
+      <StableCoinsProvider>
+        <VaultDataProvider>
+          <ModalContentProvider>
+            <AppGovernanceProvider>
+              <>
+                <WalletModalProvider>
+                  <SwapTokenProvider>{props.children}</SwapTokenProvider>
+                </WalletModalProvider>
+                <DelegateModal />
+                <DelegateIPTModal />
+                <DepositWithdrawCollateralModal />
+                <DepositCollateralConfirmationModal />
+                <WithdrawCollateralConfirmationModal />
+                <DepositWithdrawUSDCModal />
+                <BorrowRepayModal />
+                <DepositUSDCConfirmationModal />
+                <WithdrawUSDCConfirmationModal />
+                <ClaimModal />
+                <TransactionStatusModal />
+              </>
+            </AppGovernanceProvider>
+          </ModalContentProvider>
+        </VaultDataProvider>
+      </StableCoinsProvider>
+    </RolodexContentProvider>
+      </Web3ContextProvider>
+  )
+
+}
+
 const AppRouter = () => {
   return (
-    <Routes>
-      <Route
-        path={`/`}
-        element={
-          <WalletContext>
-            <AppLayout>
-              <Dashboard />
-            </AppLayout>
-          </WalletContext>
-        }
-      />
-      <Route path={`/sale`} element={<PurchasePage />} />
-      <Route path={`/landing`} element={<LandingPage />} />
-      <Route path={`/docs`} element={<RedirectBook />} />
-      <Route path={`/book`} element={<RedirectBook />} />
-      <Route path={`*`} element={<NotFound404Page />} />
-    </Routes>
+    <WalletContext>
+      <Routes>
+        <Route path={`/sale`} element={<PurchasePage />} />
+        <Route path={`/landing`} element={<LandingPage />} />
+        <Route path={`/docs`} element={<RedirectBook />} />
+        <Route path={`/book`} element={<RedirectBook />} />
+        <Route path={`*`} element={<NotFound404Page />} />
+        <Route
+          path={`/`}
+          element={
+            <DashboardContext>
+              <AppLayout>
+                <Dashboard />
+              </AppLayout>
+            </DashboardContext>
+          }
+        />
+      </Routes>
+    </WalletContext>
   );
 };
 

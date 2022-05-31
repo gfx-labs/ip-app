@@ -51,7 +51,6 @@ const MultilineChart = (props:MultilineChartProps) => {
 
   React.useEffect(() => {
     try{
-      console.log(data)
       // this scales the data to be within the size that we specify
       const xScale = d3.scaleTime()
       .domain(d3.extent(data, (d) => d.timestamp) as any)
