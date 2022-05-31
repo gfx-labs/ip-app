@@ -98,7 +98,7 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
       }}
     >
       <Box>
-        <Typography variant="h4" sx={{ color: formatColor(neutral.black) }}>
+        <Typography variant="h3" sx={{ fontSize: {xs: 20, md: 24}, color: formatColor(neutral.black) }}>
           {left}
         </Typography>
       </Box>
