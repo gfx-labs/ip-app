@@ -48,7 +48,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
       position="fixed"
       elevation={0}
       sx={{
-        backgroundColor: formatColor(neutral.white),
+        backgroundColor: 'transparent',
         paddingTop: { xs: 1, md: 5 },
         paddingX: isMobile ? 1 : 2,
         width: "100%",
