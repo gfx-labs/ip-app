@@ -46,7 +46,7 @@ export const WalletModalContent = () => {
           >
             <Box
               component="img"
-              src="/images/metamask.svg"
+              src="images/metamask.svg"
               width={26}
               mr={2}
             ></Box>{" "}
@@ -65,7 +65,7 @@ export const WalletModalContent = () => {
           >
             <Box
               component="img"
-              src="/images/coinbase.svg"
+              src="images/coinbase.svg"
               width={26}
               mr={2}
             ></Box>
@@ -84,7 +84,7 @@ export const WalletModalContent = () => {
           >
             <Box
               component="img"
-              src="/images/wallet_connect.svg"
+              src="images/wallet_connect.svg"
               width={26}
               mr={2}
             ></Box>
@@ -101,8 +101,8 @@ export const WalletModalContent = () => {
       <Box mt={2}>
         <Typography variant="h6">
           By connecting to Interest Protocol you agree to GFX Labs{" "}
-          <Link href="/#/terms" target="_blank">Terms of Service</Link> and acknowledge you have read
-          and understand the <Link href="/#/whitepaper" target="_blank">Interest Protocol Whitepaper.</Link>
+          <Link href="#/terms" target="_blank">Terms of Service</Link> and acknowledge you have read
+          and understand the <Link href="#/whitepaper" target="_blank">Interest Protocol Whitepaper.</Link>
         </Typography>
       </Box>
     </Box>
