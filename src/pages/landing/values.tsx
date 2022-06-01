@@ -51,7 +51,7 @@ export const Values: React.FC = () => {
             gap: 4,
             maxWidth: 1250,
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "stretch",
           }}
         >
           <GradientBox
@@ -95,6 +95,8 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
         borderRadius: 5,
         background: bg,
         minHeight: 320,
+        marginX: 'auto',
+        rowGap: 2
       }}
     >
       <Box>
