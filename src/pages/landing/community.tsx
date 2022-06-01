@@ -38,6 +38,7 @@ export const Community: React.FC = () => {
             textAlign="center"
             sx={{
               color: formatColor(neutral.black),
+              fontSize: {xs: 24, md: 54},
             }}
           >
             Join the Community
