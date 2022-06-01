@@ -18,7 +18,7 @@ export const Cards: React.FC = ()=> {
                 flexWrap: "wrap",
                 alignItems: "center",
                 justifyContent:"center",
-                gap: {xs: 2, md: 5},
+                gap: 2,
                 [theme.breakpoints.down('md')]: {
                     paddingX: 2
                 }
@@ -33,7 +33,7 @@ export const Cards: React.FC = ()=> {
                 maxWidth:1250,
                 alignItems: "left",
                 justifyContent:"left",
-                marginBottom: {xs: 2, md: 0}
+                marginBottom: {xs: 2, md: 5}
                 }}>
                 <Typography
                     display="inline"

@@ -103,9 +103,9 @@ const DesktopFooter = () => {
                       target="_blank"
                       key={link.label}
                       to={link.href}
-                      variant="h5"
+                      variant="h6"
                       color={formatColor(neutral.gray2)}
-                      paddingBottom={2}
+                      paddingBottom={1}
                       sx={{
                         "&:hover": {
                           color: "text.tertiary",
