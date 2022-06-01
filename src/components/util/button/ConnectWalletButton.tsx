@@ -7,7 +7,7 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral } from "../../../theme";
+import { formatColor, neutral, blue } from "../../../theme";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 
@@ -38,24 +38,27 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
       <Button
         variant="outlined"
         sx={{
+          minWidth: 'auto',
+          width: '100%',
           display: "flex",
           flexDirection: "row",
+          px: 3,
           justifyContent: "space-between",
           backgroundColor: isLight
             ? formatColor(neutral.white)
-            : formatColor(neutral.gray7),
+            : formatColor(neutral.gray4),
           color: isLight
             ? formatColor(neutral.black)
             : formatColor(neutral.white),
           "&:hover": {
             backgroundColor: isLight
               ? formatColor(neutral.gray5)
-              : formatColor(neutral.gray4),
+              : formatColor(blue.blue1),
             border: "none",
           },
           ...sx,
         }}
-        size="medium"
+        size="large"
         onClick={onClick}
       >
         {children}
