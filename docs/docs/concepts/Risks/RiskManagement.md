@@ -18,7 +18,7 @@ Timely liquidation also depends on the characteristics of each collateral asset,
 ## Comparison against other stablecoins
 
 ### Dai
-Dai's peg to $1 relies on the Peg Stability Module (PSM). The PSM lets Dai holders redeem 1 Dai for 1 USDC and allows USDC holders to deposit 1 USDC for 1 Dai. So long as the PSM has USDC, Dai will not trade below $1. However, if the PSM were to have a balance of 0 USDC, Dai can lose peg. MakerDao relies on governance to maintain enough USDC in the PSM. For example, governance can raise the interest rate (Stability Fee) to encourage Dai borrowers to close their position, or increase the Dai Savings Rate (DSR) to incentivize users to deposit USDC into the PSM.
+Dai's peg to $1 relies on the Peg Stability Module (PSM). The PSM lets Dai holders redeem 1 Dai for 1 USDC and allows USDC holders to deposit 1 USDC for 1 Dai. So long as the PSM has USDC, Dai will not trade below $1. However, if the PSM were to have a balance of 0 USDC, Dai can lose peg. MakerDao relies on governance to maintain enough USDC in the PSM. For example, governance can raise the interest rate (stability fee) to encourage Dai borrowers to close their position, or increase the Dai Savings Rate (DSR) to incentivize users to deposit USDC into the PSM.
 
 Interest Protocol does not rely on governance to hold the peg. Instead, as the reserve ratio decreases, the interest rate function automatically raises both the borrow rate and the deposit rate to discourage borrowing and encourage depositing.
 
