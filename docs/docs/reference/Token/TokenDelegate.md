@@ -4,7 +4,7 @@
 The token delegate contract contains the core logic of IPT. The protocol can add or change the functionality by updating the implementation contract on the delegetor.
 
 ## Initialize
-Used to initialize the contract during delegator constructor. The account is where the total supply of IPT is initially transfer to.
+Used to initialize the contract during delegator constructor. The account is where the total supply of IPT is initially transfered.
 ```
 function initialize(address account_, uint256 initialSupply_) public override {
     require(totalSupply == 0, "initialize: can only do once");

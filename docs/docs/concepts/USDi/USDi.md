@@ -1,7 +1,7 @@
 # USDi
 ## What is USDi?
 
-USDi is a stablecoin pegged to \$1 that automatically earns interest. Anyone can mint USDi by depositing an equal amount of USDC into the protocol, and anyone can redeem their USDi for an equal amount of USDC held by the protocol. 
+USDi is a stablecoin pegged to $1 that automatically earns interest. Anyone can mint USDi by depositing an equal amount of USDC into the protocol, and anyone can redeem their USDi for an equal amount of USDC held by the protocol. 
 USDi is also minted when users borrow from the protocol. Borrowers can post collateral and take out loans denominated in USDi. The protocol mints USDi to generate loans and burns USDi when they are repaid.
 
 ## Fractional Reserve
@@ -18,7 +18,7 @@ Therefore, USDi holders can earn compounding yield without staking. This improve
 
 ## Stability of USDi
 
-USDi can _maintain a stable_ value even in adverse market conditions because USDi is a fully collateralized stablecoin, backed by USDC and over-collateralized loans.
+USDi can maintain a stable value even in adverse market conditions because USDi is a fully collateralized stablecoin, backed by USDC and over-collateralized loans.
 
 USDi is _pegged to $1_ because 1 USDi can be redeemed for 1 USDC at Interest Protocol.
 

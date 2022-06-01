@@ -4,7 +4,7 @@
 The token delegator contract is the base contract for IPT. 
 
 ## Constructor
-The account is where the initial supply is trasfered to. The owner is the governance contract. The implementation is the token delegate contract. The initial supply is the amount of IPT to mint and trasfer to the account. 
+The account is where the initial supply is trasferred. The owner is the governance contract. The implementation is the token delegate contract. The initial supply is the amount of IPT to mint and transfer to the account. 
 ```
 constructor(
     address account_,

@@ -6,7 +6,7 @@
 * 2nd kink (s2): 60%
 * 1st kink rate (r1): 0.5%
 * 2nd kink rate (r2): 10%
-* Max rate (r3): 200%
+* Max rate (r3): 600%
 
 ### Fee Parameter
 * Protocol Fee: 15%

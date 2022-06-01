@@ -2,7 +2,7 @@
 
 ## Overview
 
-Interest Protocol vaults are multi-collateral vaults. Each borrower must create a vault and deposit collateral assets to borrow USDi. Assets in vaults are not rehypothicated and are only accessible to the protocol in the event of a liquidation. 
+Interest Protocol vaults are multi-collateral. Each borrower must create a vault and deposit collateral assets to borrow USDi. Assets in vaults are not rehypothicated and are only accessible to the protocol in the event of a liquidation. 
 
 Governance participants will be excited to know they can use their governance tokens as collateral on Interest Protocol and retain voting power by delegating votes from their vault to their regular voting address. 
 

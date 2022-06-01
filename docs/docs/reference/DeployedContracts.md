@@ -1,6 +1,6 @@
-# Deployed Contracts
+# Deployed Contracts TESTING
 
-The protocol is currently deployed for testing purposes on Polygon Mainnet. We are on mainnet, so we can plug our oracle system into live Chainlink and Uniswap contracts. Testnet tokens are available on the app page.
+The protocol is currently deployed for on Polygon Mainnet so we can plug our oracle system into live Chainlink and Uniswap contracts for test. Testnet tokens are available on the app page.
 
 ## Polygon Mainnet
 *    USDC_UNI_CL: 0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c
