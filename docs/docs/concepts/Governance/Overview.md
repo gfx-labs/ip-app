@@ -3,12 +3,12 @@
 ## The Role of IPT Holders & Protocol Governance 
 Interest Protocol governance manages changes and upgrades to the protocol. 
 
-Interest Protocol Token (IPT) is the governance token for Interest Protocol. Token holders can influence the protocol's development after launch by creating and voting on proposals. Governance should be thought as the mechism to institue change in the protocol and token holders as the management of the protocol.  
+Interest Protocol Token (IPT) is the governance token for Interest Protocol. Token holders can influence the protocol's development after launch by creating and voting on proposals. Interest Protocol governance includes the processes and mechanisms available to institute changes to the protocol; IPT gives its holder the right to use those processes and mechanisms. IPT holders thus manage the protocol.
 
 Token holders (management) have three main responsibilities: 
 1. To prevent information asymmetry and centralization of power. A protocol cannot be safe for use without a strong foundation, and the bedrock of that foundation is the community. Fair and transparent governance distributes control of the protocol but ensures community control is still possible when it counts.
 2. To maintain the existing protocol. Typically, that means adjusting LTVs, interest rate curves, liquidation incentives, the protocol fee and other parameters. To make informed decisions, the community will need to attract those with a strong understanding of both the platform and its competitors.
-3. To innovate and adapt. Management should think about the future of the platform. DeFi exists in an ever-evolving landscape; good governance will guide the protocol through changing circumstances, ensuring the protocol remains competitive and further grow the platform's market share.
+3. To innovate and adapt. Management should think about the future of the platform. DeFi exists in an ever-evolving landscape; good governance will guide the protocol through changing circumstances, ensuring the protocol remains competitive and captures more market share.
 
 ## Capabilities
 
@@ -21,7 +21,7 @@ IPT holders can make substantial upgrades to Interest Protocol. These include, b
 - Revising liquidation incentives
 
 ## Governance Communications & Discussions
-Good governance depends on quality discussions and collaboration. The Interest Protocol Forum and Discord Channel are the venue for those discussions. Discord is more useful for quick questions and fluid conversation, where the forum is better for longterm and in-depth discussions. IPT holders are encouraged to visit both regularly for updates and participate in discussions.
+Good governance depends on quality discussions and collaboration. The Interest Protocol Forum and Discord Channel are the two main venues for those discussions. Discord is more useful for quick questions and fluid conversation, whereas the forum is better for in-depth discussions. IPT holders are encouraged to visit both regularly to receive updates and participate in discussions.
 
 ## Proposal Process
 The process for upgrading or altering the protocol typically consists of two steps: first a Consensus Check and then a Proposal Vote.
@@ -30,7 +30,7 @@ A *Consensus Check* confirms whether the community should invest time producing 
 
 When formulating a Consensus Check, authors should strive to:
 
-- Be clear about the impact & goals of their proposal.
+- Be clear about the impact and goals of their proposal.
 - Avoid contradiction with existing code unless the intent is to remove/edit active code.
 - Be as brief as possible.
 - Be complete. Any reliance upon previous or future proposals should be explicit and clear.
