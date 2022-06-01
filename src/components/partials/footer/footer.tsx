@@ -138,7 +138,7 @@ const DesktopFooter = () => {
         <Box>
           <MuiLink
             component={Link}
-            to="https://discord.gg/W9mjQNTYca"
+            to="https://discord.gg/s9Wja2tb6k"
             target="_blank"
             paddingBottom={2}
           >
