@@ -144,7 +144,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`/images/discord_icon_${isLight ? "black" : "grey"}.svg`}
+              src={`images/discord_icon_${isLight ? "black" : "grey"}.svg`}
               width="24px"
               height="24px"
               marginX={3}
@@ -158,7 +158,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`/images/twitter_bird_icon_${
+              src={`images/twitter_bird_icon_${
                 isLight ? "black" : "grey"
               }.svg`}
               width="25px"
@@ -174,7 +174,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`/images/medium_icon_${isLight ? "black" : "grey"}.svg`}
+              src={`images/medium_icon_${isLight ? "black" : "grey"}.svg`}
               width="24px"
               height="24px"
               marginX={3}
