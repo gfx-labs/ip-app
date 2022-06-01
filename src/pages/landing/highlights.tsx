@@ -69,7 +69,7 @@ export const Highlights: React.FC = () => {
               icon={"stability"}
               header={"Stability First"}
               copy={
-                "USDi maintains peg under averse condeitions, without any intervention."
+                "USDi maintains peg under averse conditions, without any intervention."
               }
             />
           </Box>
