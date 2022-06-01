@@ -153,21 +153,21 @@ export const gradient: { [key: string]: Gradient } = {
     ],
   },
   gradientPinkPeach: {
-    angle: 90,
+    angle: 125,
     stops: [
       [[255, 154, 158], 0],
       [[250, 208, 196], 1],
     ],
   },
   gradientPurpleGrey: {
-    angle: 90,
+    angle: 115,
     stops: [
       [[235, 192, 253], 0],
       [[217, 222, 216], 1],
     ],
   },
   gradientPurpleYellow: {
-    angle: 90,
+    angle: 55,
     stops: [
       [[233, 222, 250], 0],
       [[251, 252, 219], 1],
