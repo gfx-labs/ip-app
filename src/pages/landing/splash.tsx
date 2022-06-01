@@ -12,7 +12,6 @@ export const Splash: React.FC = () => {
           paddingTop: { xs: 30, md: 40 },
           paddingLeft: { xs: 2, md: 10 },
           paddingBottom: { xs: 25, md: 50 },
-          backgroundColor: formatColor(neutral.gray11),
           backgroundImage: 'url("/images/landing_splash.png")',
           backgroundRepeat: "no-repeat",
           backgroundSize: {xs: "cover", md: 'contain'},
