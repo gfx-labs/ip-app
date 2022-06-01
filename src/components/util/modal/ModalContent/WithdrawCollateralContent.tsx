@@ -91,7 +91,11 @@ export const WithdrawCollateralContent = () => {
         setCollateralWithdrawAmount(newAmount.toString());
       }
     } else {
+      if (tryDecimal) {
+      setCollateralWithdrawAmount(newDollarValue.toFixed(0)+".");
+      } else {
       setCollateralWithdrawAmount(newDollarValue.toString());
+      }
     }
   };
 

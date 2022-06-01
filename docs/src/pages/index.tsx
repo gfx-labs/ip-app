@@ -112,7 +112,7 @@ export default function Home(): JSX.Element {
                             <CardLayout href="docs/guides/Protocol Interaction/How To Lend" icon={"🔗"} title="Lending"
                                 description={"How to Lend to the Protocol"}
                             />
-                            <CardLayout href="docs/concepts/Risks/RiskManagement" icon={"🔗"} title="Liquidating"
+                            <CardLayout href="docs/concepts/guides/Protocol Interaction/How To Liquidate" icon={"🔗"} title="Liquidating"
                                 description={"How to Liquidate a Vault"}
                             />
                         </div>
