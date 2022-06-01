@@ -31,7 +31,3 @@ Governance tokens deposited as collateral retain their voting power through dele
 To delegate the vault's voting power, look for the `delegate` button on the frontend and enter the address to delegate voting power to.
 
 More information on borrowing available [here](../../../concepts/Borrowing/InterestRates).
-
-
-###### tags: `IP`
-

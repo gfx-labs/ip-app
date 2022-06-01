@@ -35,9 +35,9 @@ When formulating a Consensus Check, authors should strive to:
 - Be as brief as possible.
 - Be complete. Any reliance upon previous or future proposals should be explicit and clear.
 
-Consensus Checks must have a 5-day voting window. In order to initiate a Consensus Check, a proposer must have (or have been delegated) .01% of IPT supply. For a Consensus Check to be successful, it must receive more Yes votes than No, and meet a quorum of 15% of IPT supply. Consensus Check votes occur on [Snapshot](https://snapshot.org/#/).
+Consensus Checks must have a 5-day voting window. In order to initiate a Consensus Check, a proposer must have (or have been delegated) .01% of IPT supply. For a Consensus Check to be successful, it must receive more Yes votes than No, and meet a quorum of 10% of IPT supply. Consensus Check votes occur on [Snapshot](https://snapshot.org/#/).
 
-A *Proposal Vote* approves and executes a formalized proposal, which has already passed a Consensus Check. In order to initiate a Proposal Vote, a proposer must have (or have been delegated) 0.1% of IPT supply. Proposal Votes have a 5-day voting window and a 48-hour time lock during which they are queued before execution. In order for a Proposal Vote to be successful, it must have more Yes votes than No, and meet a quorum of 5% of IPT supply. The sponsor of a Proposal Vote does not need to be the same as the sponsor of the Consensus Check. This allows those who successfully proposed a Consensus Check to collaborate with a party that meets the proposal threshold.
+A *Proposal Vote* approves and executes a formalized proposal, which has already passed a Consensus Check. In order to initiate a Proposal Vote, a proposer must have (or have been delegated) 0.10% of IPT supply. Proposal Votes have a 6-day voting window and a 48-hour time lock during which they are queued before execution. In order for a Proposal Vote to be successful, it must have more Yes votes than No, and meet a quorum of 10% of IPT supply. The sponsor of a Proposal Vote does not need to be the same as the sponsor of the Consensus Check. This allows those who successfully proposed a Consensus Check to collaborate with a party that meets the proposal threshold.
 
 Token holders are strongly encouraged to communicate early about proposal ideas, and to solicit feedback in the forum. 
 
@@ -47,17 +47,24 @@ There may be a need for urgent action, for which an Emergency Proposal can be us
 
 An *Emergency Proposal* is a special proposal process with a unique voting period, quourm threshold, and timelock period. At launch the voting period is 12-hours and Emergency Proposals have a 6-hour time lock during which they are queued before execution.
 
-In order to initiate an Emergency Proposal, a proposer must have (or have been delegated) 0.1% of IPT supply.
+In order to initiate an Emergency Proposal, a proposer must have (or have been delegated) 0.10% of IPT supply.
 
-In order for an Emergency Proposal to be successful, it must have more Yes votes than No, and meet a quorum of 51% of IPT supply.
+In order for an Emergency Proposal to be successful, it must have more Yes votes than No, and meet a quorum of 50% of IPT supply.
 
 
 ## Voting Parameters
 The following, parameters are governed by the token holders:
-* proposal threshold:
-* proposal voting period:
-* proposal quourm threshold:
-* proposal timelock period:
-* emergency proposal voting period:
-* emergency proposal quorum threshold:
-* emergency proposal timelock period:
+
+### Governance Parameters
+* proposalThreshold: 10000000
+
+#### Proposal Parameters
+* votingDelay (blocks): 13140
+* votingPeriod (blocks): 40320
+* proposalTimelockDelay (seconds): 172800
+* quorumVotes: 10000000
+
+#### Emergency Parameters
+* emergencyVotingPeriod (blocks): 6570
+* emergencyVotingTimelockDelay (seconds): 43200
+* emergencyQuorumVotes: 50000000
