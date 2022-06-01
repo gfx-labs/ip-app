@@ -29,9 +29,10 @@ export const WhitepaperPage: React.FC = () => {
 
     useEffect(() => {
         let bottom = (document.documentElement.scrollHeight - window.innerHeight) *0.7
-        console.log(scrollTop, bottom)
         if(numPages && (bottom < scrollTop && pageNumber < numPages)) {
-            setPageNumber(pageNumber+1)
+            if(pageNumber <= numPages-2){
+                setPageNumber(pageNumber+1)
+            }
         }
     },[scrollTop]);
 
@@ -45,10 +46,10 @@ export const WhitepaperPage: React.FC = () => {
             <Button href="whitepaper.pdf">
                 <Typography
                     sx={{
-                    color: formatColor(neutral.black),
-                    width: "auto",
-                    whiteSpace: "nowrap",
-                    px: 3
+                        color: formatColor(neutral.black),
+                        width: "auto",
+                        whiteSpace: "nowrap",
+                        px: 3
                     }}
                 >
                     Click Here to Download Document
