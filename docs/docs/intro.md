@@ -38,7 +38,7 @@ The combination of capital-efficient lending, a robust interest rate system, and
 
 ## Protocol Audit
 
-GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol. No high or medium severity issues where found. Their audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf)
+GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol. No high or medium severity issues were found. Their audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf)
 
 
 

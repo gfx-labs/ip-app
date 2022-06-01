@@ -1,6 +1,6 @@
 # Delegation
 
-The governance token for Interest Protocol, IPT, allows its holder to delegate their associated governance rights to a designated representatives address. Delegates can then use that voting power on Consensus Checks, Proposal Votes, and Emergency Votes.
+The governance token for Interest Protocol, IPT, allows its holder to delegate their associated governance rights to a designated representative's address. Delegates can then use that voting power on Consensus Checks, Proposal Votes, and Emergency Votes.
 
 Delegates have access only to the voting weight, and not the actual IPT, assigned to them by governance token holders. Delegates do not require any special identification unless they wish to be Recognized Delegates
 
