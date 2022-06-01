@@ -58,22 +58,22 @@ export const Values: React.FC = () => {
             bg={`linear-gradient(${formatGradient(
               gradient.gradientPinkPeach
             )})`}
-            left="1. Capital Efficiency"
-            right="Because capital moves easily in DeFi, it inevitably flows toward the greatest returns. Thus, the most capital-efficient protocol will command the most market share.  Interest Protocol’s improved risk management mechanisms, automated interest rate adjustments, and superior terms for users make it the most capital-efficient protocol in the borrow-lend market."
+            left="1. Efficiency"
+            right="Capital flows to capital-efficient protocols. Interest Protocol’s improved risk management, automated rate adjustments, and superior terms make it the most capital-efficient lending protocol."
           />
           <GradientBox
             bg={`linear-gradient(${formatGradient(
               gradient.gradientPurpleGrey
             )})`}
             left="2. Community"
-            right="Community is the bedrock of Interest Protocol. A keep-it-simple approach to concepts and code encourages participation, leading to a vibrant community and an adaptable protocol. "
+            right="Community is the bedrock of Interest Protocol. A keep-it-simple approach to concepts and code encourages participation, leading to a vibrant community and an adaptable protocol."
           />
           <GradientBox
             bg={`linear-gradient(${formatGradient(
               gradient.gradientPurpleYellow
             )})`}
             left="3. Transparency"
-            right="Nothing is hidden. On-chain finances mean anyone can audit Interest Protocol, and our whitepaper and documents provide info on how Interest Protocol works, what risks are involved, and how governance manages the protocol."
+            right="Anyone can audit Interest Protocol's finances on-chain. Whitepaper and docs explain how Interest Protocol works, risks involved, and governance processes. Nothing is hidden."
           />
         </Box>
       </Box>
