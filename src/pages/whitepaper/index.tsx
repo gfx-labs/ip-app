@@ -42,7 +42,7 @@ export const WhitepaperPage: React.FC = () => {
                 setPageNumber(numPages - 1)
                 // automatically download the entire thing after 10 seconds
             }
-        }, 1000 * 5)
+        }, 1000 * 15)
     },[numPages])
 
     const mw = 1500
