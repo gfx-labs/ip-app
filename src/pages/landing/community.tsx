@@ -54,7 +54,9 @@ export const Community: React.FC = () => {
           }}
         >
           <Box sx={{ flexBasis: "30%" }} />
-          <Link href="https://discord.gg/W9mjQNTYca">
+          <Link
+            href="https://discord.gg/s9Wja2tb6k"
+          >
             <Box
               sx={{
                 mx: 2,
