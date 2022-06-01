@@ -49,7 +49,7 @@ export const Footer = () => {
 };
 
 const DesktopFooter = () => {
-  const isLight = useLight()
+  const isLight = useLight();
   const theme = useTheme();
   return (
     <Box
@@ -135,20 +135,51 @@ const DesktopFooter = () => {
           Interest Protocol 2022
         </Typography>
         <Box>
-          <Box
-            component="img"
-            src={`/images/discord_icon_${isLight ? 'black' : 'grey'}.svg`}
-            width="24px"
-            height="24px"
-            marginX={3}
-          ></Box>
-          <Box
-            component="img"
-            src={`/images/twitter_bird_icon_${isLight ? 'black' :'grey'}.svg`}
-            width="25px"
-            height="26px"
-            marginX={3}
-          ></Box>
+          <MuiLink
+            component={Link}
+            to="https://discord.gg/W9mjQNTYca"
+            target="_blank"
+            
+            paddingBottom={2}
+          >
+            <Box
+              component="img"
+              src={`/images/discord_icon_${isLight ? "black" : "grey"}.svg`}
+              width="24px"
+              height="24px"
+              marginX={3}
+            ></Box>
+          </MuiLink>
+          <MuiLink
+            component={Link}
+            to="https://twitter.com/labsgfx"
+            target="_blank"
+            paddingBottom={2}
+          >
+            <Box
+              component="img"
+              src={`/images/twitter_bird_icon_${
+                isLight ? "black" : "grey"
+              }.svg`}
+              width="25px"
+              height="26px"
+              marginX={3}
+            ></Box>
+          </MuiLink>
+          <MuiLink
+            component={Link}
+            to="https://medium.com/interest-protocol"
+            target="_blank"
+            paddingBottom={2}
+          >
+            <Box
+              component="img"
+              src={`/images/medium_icon_${isLight ? "black" : "grey"}.svg`}
+              width="24px"
+              height="24px"
+              marginX={3}
+            ></Box>
+          </MuiLink>
         </Box>
       </Box>
     </Box>

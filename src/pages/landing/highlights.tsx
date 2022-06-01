@@ -37,10 +37,10 @@ export const Highlights: React.FC = () => {
             variant="h1"
             sx={{
               fontSize: "200%",
-              color: formatColor(neutral.gray8),
+              color: formatColor(neutral.gray2),
             }}
           >
-            Interest Protocol's stablecoin USDi
+            The stablecoin USDi
           </Typography>
           <Typography
             display={{ xs: "inline-block", md: "inline" }}
@@ -69,7 +69,7 @@ export const Highlights: React.FC = () => {
               icon={"stability"}
               header={"Stability First"}
               copy={
-                "USDi maintains peg under averse condeitions, without any intervention."
+                "USDi maintains peg under averse conditions, without any intervention."
               }
             />
           </Box>

@@ -48,7 +48,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
       position="fixed"
       elevation={0}
       sx={{
-        backgroundColor: formatColor(neutral.white),
+        backgroundColor: "transparent",
         paddingTop: { xs: 1, md: 5 },
         paddingX: isMobile ? 1 : 2,
         width: "100%",
@@ -147,20 +147,24 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               </Button>
 
               <Box sx={{ gap: 4 }} display="flex" flexDirection="column">
-                <Typography
-                  sx={{
-                    color: formatColor(neutral.black),
-                    display: "flex",
-                    zIndex: 10,
-                    fontSize: "16px",
-                    alignItems: "center",
-                    fontWeight: 600,
-                  }}
+                <Button
+                  variant="text"
+                  onClick={toApp}
+                  sx={{ color: "inherit", justifyContent: "start", mb: -1 }}
+                  disableRipple
                 >
-                  <Link href="#/" sx={{ color: "inherit" }}>
+                  <Typography
+                    sx={{
+                      color: formatColor(neutral.black),
+                      display: "flex",
+                      fontSize: "16px",
+                      alignItems: "center",
+                      fontWeight: 600,
+                    }}
+                  >
                     App
-                  </Link>
-                </Typography>
+                  </Typography>
+                </Button>
                 <Typography
                   sx={{
                     color: formatColor(neutral.black),

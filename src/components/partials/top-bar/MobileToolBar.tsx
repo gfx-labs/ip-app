@@ -108,7 +108,6 @@ export const MobileToolBar = () => {
             backgroundColor: "mobileToolBar.background",
             backgroundImage: "none",
             display: "flex",
-
             justifyContent: "start",
           },
         }}
@@ -122,7 +121,9 @@ export const MobileToolBar = () => {
             setNavMenuOpen(false);
           }}
           sx={{
+            display: "flex",
             alignSelf: "start",
+            width: "auto",
             height: 23,
             marginBottom: 5,
             minWidth: 14,
