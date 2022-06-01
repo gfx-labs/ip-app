@@ -92,12 +92,12 @@ const GradientBox = (props:{left:string, right:string, bg:string})=>{
             columnGap: 5
         }}>
         <Box >
-            <Typography variant="h1" sx={{color: formatColor(neutral.white), fontSize: "200%"}}>
+            <Typography variant="h1" sx={{color: formatColor(neutral.white), fontSize: {xs: 24, md: 54}}}>
                 {left}
             </Typography>
         </Box>
         <Box ml="auto">
-            <Typography  sx={{color: formatColor(neutral.white), fontSize: "100%", textAlign: 'right', fontWeight: 600}}>
+            <Typography variant="h2"  sx={{color: formatColor(neutral.white), textAlign: 'right', fontWeight: 600}}>
                 {right}
             </Typography>
         </Box>
