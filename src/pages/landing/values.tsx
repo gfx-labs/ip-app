@@ -58,8 +58,8 @@ export const Values: React.FC = () => {
             bg={`linear-gradient(${formatGradient(
               gradient.gradientPinkPeach
             )})`}
-            left="1. Accessibility "
-            right="Interest Protocol breaks down financial barriers. Whether banked or bankless, Interest Protocol provides yield for all."
+            left="1. Capital Efficiency"
+            right="Because capital moves easily in DeFi, it inevitably flows toward the greatest returns. Thus, the most capital-efficient protocol will command the most market share.  Interest Protocol’s improved risk management mechanisms, automated interest rate adjustments, and superior terms for users make it the most capital-efficient protocol in the borrow-lend market."
           />
           <GradientBox
             bg={`linear-gradient(${formatGradient(
@@ -72,8 +72,8 @@ export const Values: React.FC = () => {
             bg={`linear-gradient(${formatGradient(
               gradient.gradientPurpleYellow
             )})`}
-            left="3. Innovation"
-            right="Existing stablecoins and lending markets were stagnant, so we innovated. Interest Protocol and its community will build the future of DeFi."
+            left="3. Transparency"
+            right="Nothing is hidden. On-chain finances mean anyone can audit Interest Protocol, and our whitepaper and documents provide info on how Interest Protocol works, what risks are involved, and how governance manages the protocol."
           />
         </Box>
       </Box>

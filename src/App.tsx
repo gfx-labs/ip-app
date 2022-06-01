@@ -33,6 +33,7 @@ import { VaultDataProvider } from "./components/libs/vault-data-provider/VaultDa
 import { StableCoinsProvider } from "./components/libs/stable-coins-provider/StableCoinsProvider";
 import { AppGovernanceProvider } from "./components/libs/app-governance-provider/AppGovernanceProvider";
 import {WhitepaperPage} from "./pages/whitepaper";
+import { TermsPage } from "./pages/terms";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,6 +95,7 @@ const AppRouter = () => {
           </Web3ContextProvider>} />
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/whitepaper`} element={<WhitepaperPage />} />
+        <Route path={`/terms`} element={<TermsPage />} />
         <Route path={`/docs`} element={<RedirectBook />} />
         <Route path={`/book`} element={<RedirectBook />} />
         <Route path={`*`} element={<NotFound404Page />} />

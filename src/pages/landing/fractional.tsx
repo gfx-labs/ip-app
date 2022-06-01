@@ -82,7 +82,7 @@ export const Fractional: React.FC = () => {
               textAlign: "center",
             }}
             component="img"
-            src="images/landing_tokens.svg"
+            src="images/landing_tokens.png"
           ></Box>
         </Box>
       </Box>

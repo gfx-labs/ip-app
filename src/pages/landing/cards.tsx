@@ -63,13 +63,13 @@ export const Cards: React.FC = ()=> {
             />
             <GradientBox
                 bg={ `linear-gradient(${formatGradient(gradient.gradientPinkBlue)})`}
-                left="Scalable" right="Build to be the leading lending market"/>
+                left="Scalable" right="Built to be the leading lending market"/>
             <GradientBox
                 bg={ `linear-gradient(${formatGradient(gradient.gradientPinkBlue2)})`}
                 left="Stable" right="Thrives in volatile markets"/>
             <GradientBox
                 bg={ `linear-gradient(${formatGradient(gradient.gradientPinkBlue)})`}
-                left="Gas Efficient" right="No claiming neccesary"/>
+                left="Gas Efficient" right="No claiming necessary"/>
         </Box>
     </>)
 }

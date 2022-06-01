@@ -64,7 +64,7 @@ export const Community: React.FC = () => {
                 width: { xs: 36, md: 48 },
               }}
               component="img"
-              src="/images/discord_icon_black.svg"
+              src="images/discord_icon_black.svg"
             ></Box>
           </Link>
           <Link href="https://twitter.com/labsgfx">
@@ -75,7 +75,7 @@ export const Community: React.FC = () => {
                 width: { xs: 36, md: 48 },
               }}
               component="img"
-              src="/images/twitter_bird_icon_black.svg"
+              src="images/twitter_bird_icon_black.svg"
             ></Box>
           </Link>
           <Link
@@ -88,7 +88,7 @@ export const Community: React.FC = () => {
                 width: { xs: 36, md: 48 },
               }}
               component="img"
-              src="/images/medium_icon_black.svg"
+              src="images/medium_icon_black.svg"
             ></Box>
           </Link>
           <Box sx={{ flexBasis: "30%" }} />
