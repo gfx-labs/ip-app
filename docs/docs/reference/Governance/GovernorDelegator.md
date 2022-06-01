@@ -3,7 +3,7 @@
 ## Overview
 The governor delegator contract is the governance/timelock contract for Interest Protocol. The contract references the implementation contract (governor delegate) for its logic. The logic can be updated by setting a new implementation contract. 
 
-More information on governance can be found [here](../../../concepts/Governance/Overview).
+More information on governance available [here](../../../concepts/Governance/Overview).
 
 
 ## Constructor 

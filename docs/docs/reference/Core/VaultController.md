@@ -2,11 +2,11 @@
 
 ## Overview
 
-The VaultController is the brain of the protocol. It is responsible for adding and mananging collateral assets, handling liquidations of Vaults and of course, lending  USDi.
+The VaultController is the brain of the protocol. It is responsible for adding and mananging collateral assets, handling liquidations of vaults, and lending USDi.
 
 Each Vault is minted from the VaultController and references the controller for access to the protocol. 
 
-The VaultController is purposely simple and adaptable. Governance can upgrade the contract to make complex changes or stick to regular changes on onlyOwner functions such as:
+The VaultController is simple and adaptable by design. Governance can upgrade the contract to introduce additional functionality or utilize onlyOwner functions such as:
 
 1. register_oracle_master
 2. register_curve_master
@@ -34,7 +34,7 @@ _totalBaseLiability = 0;
 ```
 ## Modifier
 * paysInterest
-    * Any functions that changes the reserve ratio will require payInterest() to be called prior to operations. The payInterest function is on the vaultController. Interest will accurue from the last timestamp it was called to the current timestamp.
+    * Any functions that change the reserve ratio will require payInterest() to be called prior to operations. The payInterest function is on the vaultController. Interest will accrue from the last timestamp it was called to the current timestamp.
 * onlyPauser
     * Limit function call to only the Pauser
 * 

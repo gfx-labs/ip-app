@@ -4,7 +4,7 @@
 
 The wave contract handles the IPT token sale. GFX has allocated 35,000,000 IPT, or 35% of the token supply, to be sold at a price between $0.50 and $1.00 per IPT. The sale mechanics are described in the next section.
 
-Interest Protocol Token sale is designed to encourage a wide dispersion of IPT and decentralize the protocol from the outset. It also aims to distribute voting power to historical governance participants and DeFi users. To achieve these goals, the sale has two whitelists that specify the maximum amount of USDC that each address can commit.
+The IPT sale is designed to encourage a wide dispersion of IPT and decentralize the protocol from the outset. It also aims to distribute voting power to historical governance participants and DeFi users. To achieve these goals, the sale has two whitelists that specify the maximum amount of USDC that each address can commit.
 
 The sale will take place in three staggered waves. Only addresses whitelisted by GFX Labs according to the criterion below will be able to participate in Waves 1 and 2, while Wave 3 will be available to the general public. All participants, regardless of which wave(s) they belong to, will pay the same final price per IPT. However, there is a global cap on the total amount of USDC that can be committed to the sale. If the global cap is reached during the course of the sale, no further participation will be possible.
 
@@ -18,9 +18,9 @@ At the end of the sale, each address can claim their pro-rata share of the IPT t
 - Wave 3 starts at noon CDT on June 17th, 2022.
 - All 3 waves close at noon CDT on June 19th, 2022. At this time, IPT claiming will begin.
 
-- Wave 1 whitelist consists of historical governance participants at Aave, Compound, MakerDao, Uniswap, dYdX, Sushi, and ENS. Each address can commit up to an individual cap of 1,200,000 USDC.
+- Wave 1 whitelist consists of *historical governance participants* at Aave, Compound, MakerDao, Uniswap, dYdX, Sushi, and ENS. Each address can commit up to an individual cap of 1,200,000 USDC.
 
-- Wave 2 whitelist consists of historical users of Aave, Compound, MakerDao, Uniswap, dYdX, Sushi, and ENS. Each address can commit up to an individual cap of 200,000 USDC. If an address meets the criteria for both Waves 1 and 2, it is only whitelisted for Wave 1, and its individual cap remains at 1,200,000 USDC.
+- Wave 2 whitelist consists of *historical users* of Aave, Compound, MakerDao, Uniswap, dYdX, Sushi, and ENS. Each address can commit up to an individual cap of 200,000 USDC. If an address meets the criteria for both Waves 1 and 2, it is only whitelisted for Wave 1, and its individual cap remains at 1,200,000 USDC.
 
 - Wave 3 has no whitelist. Once Wave 3 starts, anyone can participate without being subject to individual caps.
 

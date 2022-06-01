@@ -1,7 +1,7 @@
 # Governor Delegate
 The governor delegate contract contains the logic for the governor delegator to reference. The delegate can be changed by governance to introduce new logic without changing the governance contract of the protocol 
 
-More information on governance can be found [here](../../../concepts/Governance/Overview).
+More information on governance available [here](../../../concepts/Governance/Overview).
 
 
 ## Initialize
