@@ -101,8 +101,8 @@ export const WalletModalContent = () => {
       <Box mt={2}>
         <Typography variant="h6">
           By connecting to Interest Protocol you agree to GFX Labs{" "}
-          <Link href="/">Terms of Service</Link> and acknowledge you have read
-          and understand the <Link href="/">Interest Protocol Disclaimer.</Link>
+          <Link href="/#/terms" target="_blank">Terms of Service</Link> and acknowledge you have read
+          and understand the <Link href="/#/whitepaper" target="_blank">Interest Protocol Whitepaper.</Link>
         </Typography>
       </Box>
     </Box>

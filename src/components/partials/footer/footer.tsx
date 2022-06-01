@@ -13,16 +13,16 @@ const nav = [
   {
     title: "Protocol",
     links: [
-      { label: "Whitepaper", href: "whitepaper" },
+      { label: "Whitepaper", href: "/whitepaper" },
       { label: "Docs & Guides", href: "/docs" },
     ],
   },
   {
-    title: "Community",
+    title: "Company",
     links: [
-      { label: "Twitter", href: "https://twitter.com/labsgfx" },
-      { label: "Discord", href: "https://discord.gg/s9Wja2tb6k" },
-      { label: "Github", href: "https://github.com/gfx-labs/ip-contracts" },
+      { label: "Developer", href: "https://github.com/gfx-labs/ip-contracts" },
+      { label: "Contact", href: "https://discord.gg/s9Wja2tb6k" },
+      { label: "Terms of Use", href: "/terms" },
     ],
   },
 ];

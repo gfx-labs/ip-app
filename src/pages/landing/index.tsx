@@ -48,7 +48,6 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
       position="fixed"
       elevation={0}
       sx={{
-        backgroundColor: "transparent",
         paddingTop: { xs: 1, md: 5 },
         paddingX: isMobile ? 1 : 2,
         width: "100%",
@@ -343,6 +342,7 @@ const LandingPage: React.FC = () => {
                 document.documentElement.scrollHeight - window.innerHeight - 30
                 ? "0"
                 : -160,
+                backgroundColor: scrollTop < 50 ? 'transparent'  : formatColor(neutral.white)
           }}
         />
 
