@@ -174,7 +174,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                     fontWeight: 600,
                   }}
                 >
-                  <Link href="whitepaper.pdf"  sx={{ color: "inherit" }}>
+                  <Link href="whitepaper.pdf" sx={{ color: "inherit" }}>
                     Whitepaper
                   </Link>
                 </Typography>
@@ -239,7 +239,8 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 color: formatColor(neutral.gray2),
                 display: "flex",
                 zIndex: 10,
-                fontSize: "6px%",
+                fontSize: "16px",
+                fontWeight: 600,
                 alignItems: "center",
               }}
             >
@@ -252,6 +253,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 color: formatColor(neutral.gray2),
                 display: "flex",
                 fontSize: "16px",
+                fontWeight: 600,
                 alignItems: "center",
               }}
             >
@@ -264,6 +266,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 color: formatColor(neutral.gray2),
                 display: "flex",
                 fontSize: "16px",
+                fontWeight: 600,
                 alignItems: "center",
               }}
             >
@@ -280,6 +283,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 color: formatColor(neutral.gray2),
                 display: "flex",
                 fontSize: "16px",
+                fontWeight: 600,
                 alignItems: "center",
               }}
             >
@@ -344,7 +348,8 @@ const LandingPage: React.FC = () => {
                 document.documentElement.scrollHeight - window.innerHeight - 30
                 ? "0"
                 : -160,
-                backgroundColor: scrollTop < 50 ? 'transparent'  : formatColor(neutral.white)
+            backgroundColor:
+              scrollTop < 50 ? "transparent" : formatColor(neutral.white),
           }}
         />
 
