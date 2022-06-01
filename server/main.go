@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
 	"github.com/valyala/fasthttp"
 )
@@ -10,8 +11,9 @@ import (
 func main() {
 	fs := &fasthttp.FS{
 		// Path to directory to serve.
-		Root:       "dist",
-		IndexNames: []string{"index.html"},
+		Root:          "dist",
+		IndexNames:    []string{"index.html"},
+		CacheDuration: 24 * time.Hour,
 		// Enable transparent compression to save network traffic.
 		Compress: true,
 	}
