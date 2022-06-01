@@ -60,6 +60,11 @@ export const WithdrawCollateralContent = () => {
   };
 
   const tryWithdrawCollateral = (amount: string) => {
+    let tryDecimal = false
+    if(amount.endsWith(".")) {
+      tryDecimal = true
+      amount = amount + "0"
+    }
     let newDollarValue = Number(amount);
     let newAmount = Number(amount);
     if (!isMoneyValue) {
@@ -67,15 +72,24 @@ export const WithdrawCollateralContent = () => {
     }
     let newResult = borrowingPower - accountLiability - newDollarValue;
     if (newResult < 0) {
-      newDollarValue = Math.round((newResult + newDollarValue) * 90) / 100;
+      newDollarValue = Math.round((newResult + newDollarValue)*100)/100
       const ltvp =
         (collateralToken.token_LTV ? collateralToken.token_LTV : 100) / 100;
       newAmount =
         Math.round((newDollarValue * 10000) / (collateralToken.value * ltvp)) /
         10000;
+        console.log(newAmount, collateralToken.vault_amount!)
+    }
+    if (newAmount > collateralToken.vault_amount!) {
+      newAmount = collateralToken.vault_amount!
+      newDollarValue = collateralToken.vault_balance!
     }
     if (!isMoneyValue) {
-      setCollateralWithdrawAmount(newAmount.toString());
+      if (tryDecimal) {
+        setCollateralWithdrawAmount(newAmount.toFixed(0) + ".");
+      } else {
+        setCollateralWithdrawAmount(newAmount.toString());
+      }
     } else {
       setCollateralWithdrawAmount(newDollarValue.toString());
     }
@@ -113,13 +127,12 @@ export const WithdrawCollateralContent = () => {
             }}
           >
             {isMoneyValue
-              ? `${
-                  collateralWithdrawAmount === "0"
-                    ? "0"
-                    : Math.floor(
-                        (numAmountToWithdraw * 1000) / collateralToken.value
-                      ) / 1000
-                } ${collateralToken.ticker}`
+              ? `${collateralWithdrawAmount === "0"
+                ? "0"
+                : Math.floor(
+                  (numAmountToWithdraw * 1000) / collateralToken.value
+                ) / 1000
+              } ${collateralToken.ticker}`
               : `$${(numAmountToWithdraw * collateralToken.value).toFixed(2)}`}
           </Typography>
 

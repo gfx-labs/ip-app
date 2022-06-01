@@ -27,7 +27,7 @@ export const UsdiGraphCard = () => {
   const [lastTime, setLastTime] = useState("")
 
   const [queryLimit, setQueryLimit] = useState(0)
-  const HISTORY_MAX = 10
+  const HISTORY_MAX = 20
   const [queryHistory, setQueryHistory] = useState(0)
 
   const addData = async (o:Observation)=>{

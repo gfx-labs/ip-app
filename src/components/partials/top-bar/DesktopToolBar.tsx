@@ -13,18 +13,20 @@ import { DarkIcon } from "../../icons/misc/DarkIcon";
 import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
 import { useLight } from "../../../hooks/useLight";
 import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
+import Cookies from "universal-cookie";
 
 export const DesktopToolBar = () => {
   //desktop menu config
 
   const isLight = useLight();
 
+  const cookies = new Cookies()
   const { toggleMode } = useContext(PaletteModeContext);
 
   const { setIsApp } = useAppGovernanceContext();
   return (
     <Toolbar>
-      <Link to="./" role="heading" aria-level={1}>
+      <Link to="/landing" role="heading" aria-level={1}>
         <Box component="img" src="images/ip_green.svg" width={50} height={50}></Box>
       </Link>
       <Box sx={{gap: 3}} display="flex" ml={3}>

@@ -115,7 +115,7 @@ export const DelegateModal = () => {
           }
           fontWeight={600}
         >
-          Enter the address you would like to delegate your vote to
+          Enter the address you would like to delegate your vote(s) to
         </Typography>
         <Box component="form" onSubmit={handleDelegateRequest}>
           <Box my={2}>

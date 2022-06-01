@@ -13,23 +13,16 @@ const nav = [
   {
     title: "Protocol",
     links: [
-      { label: "Whitepaper", href: "/static/whitepaper.pdf" },
+      { label: "Whitepaper", href: "whitepaper" },
       { label: "Docs & Guides", href: "/docs" },
-    ],
-  },
-  {
-    title: "Governance",
-    links: [
-      { label: "Overview", href: "/" },
-      { label: "USDi", href: "/" },
     ],
   },
   {
     title: "Community",
     links: [
       { label: "Twitter", href: "https://twitter.com/labsgfx" },
-      { label: "Discord", href: "https://discord.gg/W9mjQNTYca" },
-      { label: "Github", href: "https://github.com/gfx-labs/ip" },
+      { label: "Discord", href: "https://discord.gg/s9Wja2tb6k" },
+      { label: "Github", href: "https://github.com/gfx-labs/ip-contracts" },
     ],
   },
 ];
