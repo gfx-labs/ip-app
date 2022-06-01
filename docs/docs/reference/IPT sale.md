@@ -38,7 +38,7 @@ Let X be the total amount of USDC that has been committed. The amount of IPT tok
 
 - All participants pay the same price. Since the global cap is 35,000,000 USDC, the maximum price that participants can pay is 1 USDC per IPT.
 
-- Upon completion of the IPT sale, GFX's team and investors will collectively control a minority share of the protocol and will not be necessary for Interest Protocol to function. (*this is not necessarily true if the sale is undersubscribed. Also, we should specify what will happen to the remaining tokens. Set aside for future sale but cannot vote?*) GFX will continue to be involved in Interest Protocol, but as community members subject to the same governance rules as any token holder. We have ideas for additional functionalities and components and intend to work with the community to create or vote for proposals that reflect those ideas.
+- Upon completion of the IPT sale, Interest Protocol will be goverened by a decentralized community of IPT holders, and GFX's team and investors will not be necessary for Interest Protocol to function. GFX will continue to be involved in Interest Protocol, but as community members subject to the same governance rules as any token holder. We have ideas for additional functionalities and components and intend to work with the community to create or vote for proposals that reflect those ideas.
 
 ## Token Distribution
 

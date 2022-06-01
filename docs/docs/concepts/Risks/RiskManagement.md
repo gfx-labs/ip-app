@@ -3,7 +3,7 @@
 To operate safely in adverse market environments, Interest Protocol manages two major financial risks - liquidity risk and credit risk. Managing these risks is essential for maintaining USDi's peg.
 
 ## Liquidity Risk
-Liquidity is defined as the protocol's ability to meet redemption demand at all times. The protocol has an obligation to USDi holders to redeem 1 USDi for 1 USDC on demand. On the other hand, the protocol allows borrowers to maintain a outstanding loan balances as long as they wish to, provided that they maintain enough collateral to stay over-collateralized. This causes a maturity mismatch, and it is possible at times for the protocol to face redemption demand in excess of the USDC held in Reserve. The protocol uses two mechanisms to minimize this possibility.
+Liquidity is defined as the protocol's ability to meet redemption demand. The protocol has an obligation to USDi holders to redeem 1 USDi for 1 USDC on demand. On the other hand, the protocol allows borrowers to maintain a outstanding loan balances as long as they wish to, provided that they maintain enough collateral to stay over-collateralized. This causes a maturity mismatch, and it is possible at times for the protocol to face redemption demand in excess of the USDC held in Reserve. The protocol uses two mechanisms to minimize this possibility.
 
 First, Interest Protocol aims to maintain a sufficiently high reserve ratio at all times by using a variable interest rate. As explained in the USDi section and in the interest rate section, whenever the reserve ratio is low, a high interest rate incentivizes users to replenish the reserve by repaying their debt or depositing USDC. This ensures that any shortage in reserve is short-lived.
 
