@@ -81,7 +81,10 @@ theme.typography.h2 = {
   fontWeight: 700,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
-  [theme.breakpoints.down("md")]: {},
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(16),
+    lineHeight: fzTolineHeight(16),
+  },
 };
 
 theme.typography.h3 = {
