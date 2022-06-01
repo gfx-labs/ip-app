@@ -41,6 +41,7 @@
         "react-awesome-reveal": "npm:@gfxlabs/react-awesome-reveal@^3.8.4",
         "react-dom": "^18.0.0",
         "react-markdown": "^8.0.3",
+        "react-pdf": "^5.7.2",
         "react-router": "^6.3.0",
         "react-router-dom": "^6.3.0",
         "remark-gfm": "^3.0.1",
@@ -59,9 +60,11 @@
         "@types/nodemailer": "^6.4.4",
         "@types/react": "^18.0.5",
         "@types/react-dom": "^18.0.1",
+        "@types/react-pdf": "^5.7.2",
         "@types/rollup-plugin-visualizer": "^4.2.1",
         "@vitejs/plugin-react": "^1.0.7",
         "typescript": "^4.5.4",
-        "vite": "^2.9.0"
+        "vite": "^2.9.0",
+        "vite-plugin-shim-react-pdf": "^1.0.5"
     }
 }

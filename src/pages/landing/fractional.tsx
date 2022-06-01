@@ -64,6 +64,7 @@ export const Fractional: React.FC = () => {
                   paddingX: 3,
                   whiteSpace: "nowrap",
                 }}
+                href={"#/docs"}
               >
                 Learn More <ForwardIcon sx={{ width: 12, ml: 1, top: 1, position: 'relative' }} />
               </Button>
@@ -81,7 +82,7 @@ export const Fractional: React.FC = () => {
               textAlign: "center",
             }}
             component="img"
-            src="/images/landing_tokens.svg"
+            src="images/landing_tokens.svg"
           ></Box>
         </Box>
       </Box>

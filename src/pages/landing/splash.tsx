@@ -49,6 +49,7 @@ export const Splash: React.FC = () => {
           <Box />
           <Box sx={{ flexBasis: "100%" }}>
             <Button
+              href={"#/whitepaper"}
               sx={{
                 marginTop: { xs: 2, md: 5 },
                 color: formatColor(neutral.black),

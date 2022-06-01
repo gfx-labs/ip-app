@@ -57,7 +57,7 @@ const config = {
             title: 'Interest Protocol',
             logo: {
                 alt: 'Interest Protocol Logo',
-                src: 'img/logo.svg',
+                src: 'img/ip_green.svg',
             },
             items: [
                 {
@@ -91,12 +91,16 @@ const config = {
                             href: 'https://gfx.cafe/ip/app',
                         },
                         {
+                            label: 'Site Source (github mirror)',
+                            href: 'https://github.com/gfx-labs/ip-app',
+                        },
+                        {
                             label: 'Contract Source',
                             href: 'https://gfx.cafe/ip/contracts',
                         },
                         {
                             label: 'Contract Source (github mirror)',
-                            href: 'https://github.com/gfx-labs/ip',
+                            href: 'https://github.com/gfx-labs/ip-contracts',
                         },
                     ],
                 },

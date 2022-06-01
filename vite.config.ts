@@ -5,6 +5,8 @@ import GlobalsPolyfills from '@esbuild-plugins/node-globals-polyfill'
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
 import nodePolyfills from "rollup-plugin-polyfill-node";
 
+import shimReactPdf from "vite-plugin-shim-react-pdf";
+
 // https://vitejs.dev/config/
 
 // https://github.com/vitejs/vite/issues/1973
@@ -23,6 +25,7 @@ export default defineConfig({
     },
     plugins: [
         react(),
+        shimReactPdf()
     ],
     define: {
         global: 'globalThis'
