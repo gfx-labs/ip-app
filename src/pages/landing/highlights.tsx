@@ -123,7 +123,7 @@ const HighlightBox = (props: { icon: any; header: string; copy: string }) => {
           borderRadius: "50%",
         }}
         component="img"
-        src={`/images/${icon}.svg`}
+        src={`images/${icon}.svg`}
       ></Box>
 
       <Typography variant="h3" sx={{ color: formatColor(neutral.black) }}>
