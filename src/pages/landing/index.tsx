@@ -174,7 +174,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                     fontWeight: 600,
                   }}
                 >
-                  <Link href="whitepaper.pdf" sx={{ color: "inherit" }}>
+                  <Link href="whitepaper.pdf"  sx={{ color: "inherit" }}>
                     Whitepaper
                   </Link>
                 </Typography>
@@ -203,6 +203,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                   <Link
                     href="https://gfx.cafe/ip/contracts"
                     sx={{ color: "inherit" }}
+                    target="_blank"
                   >
                     Git
                   </Link>
@@ -268,6 +269,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
             >
               <Link
                 href="https://gfx.cafe/ip/contracts"
+                target="_blank"
                 sx={{ color: "inherit" }}
               >
                 Git

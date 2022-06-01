@@ -54,9 +54,7 @@ export const Community: React.FC = () => {
           }}
         >
           <Box sx={{ flexBasis: "30%" }} />
-          <Link
-            href="https://discord.gg/s9Wja2tb6k"
-          >
+          <Link href="https://discord.gg/s9Wja2tb6k" target="_blank">
             <Box
               sx={{
                 mx: 2,
@@ -67,7 +65,7 @@ export const Community: React.FC = () => {
               src="images/discord_icon_black.svg"
             ></Box>
           </Link>
-          <Link href="https://twitter.com/labsgfx">
+          <Link href="https://twitter.com/labsgfx" target="_blank">
             <Box
               sx={{
                 mx: 2,
@@ -78,9 +76,7 @@ export const Community: React.FC = () => {
               src="images/twitter_bird_icon_black.svg"
             ></Box>
           </Link>
-          <Link
-            href="https://medium.com/interest-protocol"
-          >
+          <Link href="https://medium.com/interest-protocol" target="_blank">
             <Box
               sx={{
                 mx: 2,

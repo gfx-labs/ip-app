@@ -100,6 +100,7 @@ const DesktopFooter = () => {
                   return (
                     <MuiLink
                       component={Link}
+                      target="_blank"
                       key={link.label}
                       to={link.href}
                       variant="h5"
@@ -139,7 +140,6 @@ const DesktopFooter = () => {
             component={Link}
             to="https://discord.gg/W9mjQNTYca"
             target="_blank"
-            
             paddingBottom={2}
           >
             <Box
