@@ -146,13 +146,8 @@ const DesktopFooter = () => {
             component={Link}
             to="https://discord.gg/W9mjQNTYca"
             target="_blank"
-            color={formatColor(neutral.gray2)}
+            
             paddingBottom={2}
-            sx={{
-              "&:hover": {
-                color: "text.tertiary",
-              },
-            }}
           >
             <Box
               component="img"
@@ -166,13 +161,7 @@ const DesktopFooter = () => {
             component={Link}
             to="https://twitter.com/labsgfx"
             target="_blank"
-            color={formatColor(neutral.gray2)}
             paddingBottom={2}
-            sx={{
-              "&:hover": {
-                color: "text.tertiary",
-              },
-            }}
           >
             <Box
               component="img"
@@ -181,6 +170,20 @@ const DesktopFooter = () => {
               }.svg`}
               width="25px"
               height="26px"
+              marginX={3}
+            ></Box>
+          </MuiLink>
+          <MuiLink
+            component={Link}
+            to="https://medium.com/interest-protocol"
+            target="_blank"
+            paddingBottom={2}
+          >
+            <Box
+              component="img"
+              src={`/images/medium_icon_${isLight ? "black" : "grey"}.svg`}
+              width="24px"
+              height="24px"
               marginX={3}
             ></Box>
           </MuiLink>

@@ -78,6 +78,19 @@ export const Community: React.FC = () => {
               src="/images/twitter_bird_icon_black.svg"
             ></Box>
           </Link>
+          <Link
+            href="https://medium.com/interest-protocol"
+          >
+            <Box
+              sx={{
+                mx: 2,
+                textAlign: "center",
+                width: { xs: 36, md: 48 },
+              }}
+              component="img"
+              src="/images/medium_icon_black.svg"
+            ></Box>
+          </Link>
           <Box sx={{ flexBasis: "30%" }} />
         </Box>
         <Box sx={{ flexBasis: "100%" }} />
