@@ -55,13 +55,13 @@
 * ChainlinkOracleRelay: div: 1
 
 ## Governance Parameters
-* proposalThreshold: 250000
+* proposalThreshold: 10000000
 
 ### Proposal Parameters
 * votingDelay (blocks): 13140
-* votingPeriod (blocks): 19710
+* votingPeriod (blocks): 40320
 * proposalTimelockDelay (seconds): 172800
-* quorumVotes: 20000000
+* quorumVotes: 10000000
 
 ### Emergency Parameters
 * emergencyVotingPeriod (blocks): 6570
