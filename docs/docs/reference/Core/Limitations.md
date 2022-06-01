@@ -16,9 +16,9 @@
  
 * Calling `tokensToLiquidate()` prior to liquidations is a good way to get an approximate amount of tokens that can be liquidated from a particular vault, but the amount will not be exact. Even calling this in the same block as a liquidation will result in a slight discrepancy, as interest is calculated prior to liquidation. As a result, the result from `tokensToLiquidate()` will be very slightly less than the true amount. Passing a value sufficiently larger than this result will result in a complete liquidation, as the liquidation math will accurately calculate the maximum tokens to liquidate upon liquidation.  
  
-* liquidationPenalty: LTV has to be strictly positive for each asset! Governance proposal should be checked before adding new assets to the protocol.
- 
 * Calling `tokensToLiquidate()` on a vault that is solvent will revert. Use `checkVault`()` to determine solvency first. 
+
+* liquidationPenalty: LTV has to be strictly positive for each asset! Governance proposal should be checked before adding new assets to the protocol.
  
 * If a vault contains multiple assets and is insolvent by only a small amount, it is possible for a liquidator to potentially liquidate the vault's entire holdings of one of the assets, provided doing so will put the vault back into a healthy state. It is not possible to borrow against one particular asset in the vault, all registered assets held by the vault will contribute to borrow power, and all are at risk for liquidation if the vault becomes insolvent. 
  
