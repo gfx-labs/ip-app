@@ -34,9 +34,11 @@ The combination of capital-efficient lending, a robust interest rate system, and
 
 2. *To increase the efficiency of financial services.* US commercial banks charge an average annual interest rate of 2–13% while paying depositors an average annual interest rate of just 0.06%. The difference goes to cover the middlemen expenses. Even DeFi lending protocols often operate based on manual decisions, which raises costs. IP’s smart contracts are designed so that the protocol can operate in volatile market environments without manual intervention. The corresponding efficiency gains are transferred to the depositor.
 
-3. *To bring much-needed innovations to DeFi.* GFX team members have been active contributors of prominent DeFi protocols. We came to realize that DeFi lacks a fractional reserve bank that pays interest to depositors. So we built one ourselves.
-
 3. *To bring much-needed innovations to DeFi.* GFX team members have been active contributors to various prominent DeFi protocols. During that time, we grew a unique perspective on their limitations and the remaining gaps to be filled in DeFi. Most importantly, we realized that DeFi lacks a fractional reserve bank that pays interest to depositors. So we built one ourselves.
+
+## Protocol Audit
+
+GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol. No high or medium severity issues where found. Their audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf)
 
 
 
