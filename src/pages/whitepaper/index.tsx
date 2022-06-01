@@ -36,6 +36,15 @@ export const WhitepaperPage: React.FC = () => {
         }
     },[scrollTop]);
 
+    useEffect(() => {
+        setTimeout(()=>{
+            if(numPages){
+                setPageNumber(numPages - 1)
+                // automatically download the entire thing after 10 seconds
+            }
+        }, 1000 * 5)
+    },[numPages])
+
     const mw = 1500
     return (
         <Box display="flex" sx={{
