@@ -1,4 +1,10 @@
-FROM node:18-alpine3.14
+FROM golang:1.18-alpine3.14 as GOBUILDER
+
+WORKDIR /wd
+COPY server .
+RUN go build .
+
+FROM node:18-alpine3.14 as NODEBUILDER
 
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
@@ -13,6 +19,10 @@ WORKDIR /wd
 COPY . .
 RUN npx yarn install
 RUN npm run build
-RUN mv /wd/dist /dist
-RUN rm -rf *
-CMD ["npx","http-server","-p $PORT","/dist"]
+
+FROM alpine:3.14
+
+WORKDIR /wd
+COPY --from=GOBUILDER /wd/server server
+COPY --from=NODEBUILDER /wd/dist dist
+CMD ["/wd/server","/wd/dist"]
