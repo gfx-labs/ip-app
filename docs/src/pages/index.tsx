@@ -59,8 +59,10 @@ function CardLayout({
       </h2>
       {description && (
         <p
-          className={clsx('text--truncate', styles.cardDescription)}
-          title={description}>
+          className={clsx(styles.cardDescription)}
+          title={description}
+            style={{wordWrap:"normal", overflowWrap:"anywhere", maxWidth:"250px"}}
+        >
           {description}
         </p>
       )}
@@ -85,8 +87,14 @@ export default function Home(): JSX.Element {
                         className="hero__subtitle"
                         style={{textAlign:"center"}}
                     >Try one of these articles:</h3>
-                    <div style={{display:"flex",flexDirection:"column", alignItems:"center", justifyContent:"center", gap: 20}}>
-                        <div style={{display:"flex",flexDirection:"row", alignItems:"center", justifyContent:"center", gap: 20}}>
+                    <div style={{
+                        display:"flex",
+                        flex:"1 1 0px",
+                        flexDirection:"column",
+                        justifyContent:"center",
+                        gap: 20,
+                        }}>
+                        <div style={{flexBasis:"100%", display:"flex",flexDirection:"row", justifyContent:"center", gap: 20}}>
                             <CardLayout href="docs/intro" icon={"🔗"} title="Intro"
                                 description={"A brief overview of Interest Protocol"}
                             />
@@ -97,7 +105,7 @@ export default function Home(): JSX.Element {
                                 description={"How IP manages Risk"}
                             />
                         </div>
-                        <div style={{display:"flex",flexDirection:"row", alignItems:"center", justifyContent:"center", gap: 20}}>
+                        <div style={{flexBasis:"100%", display:"flex",flexDirection:"row", justifyContent:"center", gap: 20}}>
                             <CardLayout href="docs/guides/Protocol Interaction/How To Borrow" icon={"🔗"} title="Borrowing"
                                 description={"How to Borrow from the Protocol"}
                             />
