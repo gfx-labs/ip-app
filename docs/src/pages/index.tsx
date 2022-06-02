@@ -90,7 +90,7 @@ export default function Home(): JSX.Element {
           content={`${siteConfig.title} Documentation and guides`}
         />
 
-        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@InterestDeFi" />
         <meta name="twitter:creator" content="@labsGFX" />
         <meta name="twitter:title" content={`${siteConfig.title}`} />
