@@ -1,6 +1,5 @@
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { AbstractConnector } from "@web3-react/abstract-connector";
-import { CoinbaseWallet } from '@web3-react/coinbase-wallet';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { FrameConnector } from '@web3-react/frame-connector';
 import { WalletLinkConnector } from "@web3-react/walletlink-connector";
