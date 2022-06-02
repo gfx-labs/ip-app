@@ -216,6 +216,17 @@ export const Web3ContextProvider = ({
     }
   }, [activate, setTried, active, connectWallet, deactivated]);
 
+  useEffect(() => {
+    if (window && window.ethereum) {
+      window.ethereum.on("chainChanged", () => {
+        window.location.reload();
+      });
+      window.ethereum.on("accountsChanged", () => {
+        window.location.reload();
+      });
+    }
+  }, []);
+
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
     if (!tried && active) {
