@@ -73,6 +73,7 @@ const config = {
           name: "twitter:image",
           content: "https://interestprotocol.io/images/ip.png",
         },
+        {name: 'keywords', key: 'keywords', content: 'Interest, Protocol, usdi, usdc, weth, crypto, Decentralized Finance, DeFi, lending, borrowing, stablecoins, Ethereum,'}
       ],
       navbar: {
         title: "Interest Protocol",
