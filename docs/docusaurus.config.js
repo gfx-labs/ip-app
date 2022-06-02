@@ -62,13 +62,13 @@ const config = {
           property: "og:image",
           content: "https://interestprotocol.io/images/ip.png",
         },
-        { property: "og:title", content: "Interest Protocol" },
+        // { property: "og:title", content: "Interest Protocol" },
         { property: "og:name", content: "Interest Protocol" },
 
         { name: "twitter:card", content: "summary" },
         { name: "twitter:site", content: "@InterestDeFi" },
         { name: "twitter:creator", content: "@labsGFX" },
-        { name: "twitter:title", content: "Interest Protocol" },
+        // { name: "twitter:title", content: "Interest Protocol" },
         {
           name: "twitter:image",
           content: "https://interestprotocol.io/images/ip.png",
