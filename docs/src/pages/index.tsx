@@ -82,7 +82,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout title={`${siteConfig.title}`} description="interest protocol">
       <Head>
-        <meta property="og:image" content="images/ip_green.svg" />
+        <meta property="og:image" content="img/favicon.ico" />
         <meta property="og:title" content={`${siteConfig.title}`} />
         <meta property="og:name" content={`${siteConfig.title}`} />
         <meta
@@ -98,7 +98,7 @@ export default function Home(): JSX.Element {
           name="twitter:description"
           content={`${siteConfig.title} Documentation and guides`}
         />
-        <meta name="twitter:image" content="images/ip_green.svg" />
+        <meta name="twitter:image" content="img/favicon.ico" />
       </Head>
       <HomepageHeader />
       <main>
