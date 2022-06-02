@@ -34,6 +34,7 @@ import { StableCoinsProvider } from "./components/libs/stable-coins-provider/Sta
 import { AppGovernanceProvider } from "./components/libs/app-governance-provider/AppGovernanceProvider";
 import {WhitepaperPage} from "./pages/whitepaper";
 import { TermsPage } from "./pages/terms";
+import {TestingPage} from "./pages/playground";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,6 +99,7 @@ const AppRouter = () => {
         <Route path={`/terms`} element={<TermsPage />} />
         <Route path={`/docs`} element={<RedirectBook />} />
         <Route path={`/book`} element={<RedirectBook />} />
+        <Route path={`/testing`} element={<TestingPage/>} />
         <Route path={`*`} element={<NotFound404Page />} />
         <Route
           path={`/`}
