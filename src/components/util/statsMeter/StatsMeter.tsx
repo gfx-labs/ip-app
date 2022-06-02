@@ -6,37 +6,65 @@ import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataPro
 
 export const StatsMeter = () => {
   const [percentBorrowed, setPercentBorrowed] = useState(0);
+  const [percentBorrowedGraph, setPercentBorrowedGraph] = useState(0);
+
   const [barColor, setBarColor] = useState("success");
 
-  const {borrowingPower, accountLiability} = useVaultDataContext()
+  const { borrowingPower, accountLiability } = useVaultDataContext();
 
-  useEffect(()=>{
-    if(borrowingPower && accountLiability){
-      setPercentBorrowed(Math.floor(100 * (accountLiability / borrowingPower)))
-    }
-  },[borrowingPower, accountLiability])
+  useEffect(() => {
+    if (borrowingPower && accountLiability) {
+      const borrowPercent = Math.floor(
+        100 * (accountLiability / borrowingPower)
+      );
 
-  useEffect(()=>{
-    if(percentBorrowed > 80) {
-      setBarColor("error")
+      setPercentBorrowed(borrowPercent);
+
+      // limits graph value to 100%
+      setPercentBorrowedGraph(borrowPercent > 100 ? 100 : borrowPercent);
     }
-  },[percentBorrowed])
+  }, [borrowingPower, accountLiability]);
+
+  useEffect(() => {
+    if (percentBorrowed > 80) {
+      setBarColor("error");
+    }
+  }, [percentBorrowed]);
   return (
     <Box>
-      <Typography variant="body1" fontWeight={600} color={formatColor(neutral.gray10)}>
+      <Typography
+        variant="body1"
+        fontWeight={600}
+        color={formatColor(neutral.gray10)}
+      >
         Vault Stats
       </Typography>
 
-      <LinearProgress color={barColor as any} variant="determinate" value={percentBorrowed} sx={{
-      marginY: 2,
-      }}/>
+      <LinearProgress
+        color={barColor as any}
+        variant="determinate"
+        value={percentBorrowedGraph}
+        sx={{
+          marginY: 2,
+        }}
+      />
 
-      <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-        <Typography variant="body2" fontWeight={600} fontSize={14} color={formatColor(neutral.gray3)}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography
+          variant="body2"
+          fontWeight={600}
+          fontSize={14}
+          color={formatColor(neutral.gray3)}
+        >
           Borrowing Power: {Math.round(borrowingPower).toLocaleString()} USDi
         </Typography>
 
-        <Typography variant="body2" fontWeight={600} fontSize={14} color={formatColor(neutral.gray3)}>
+        <Typography
+          variant="body2"
+          fontWeight={600}
+          fontSize={14}
+          color={formatColor(neutral.gray3)}
+        >
           USDi Borrowed: {percentBorrowed}%
         </Typography>
       </Box>
