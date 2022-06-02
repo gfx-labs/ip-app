@@ -151,12 +151,12 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .attr("fill", "#69b3a2")
     },[rr, deposits])
 
-        svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 50)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("Total Issuable Loans ($)");
+    svg.append("text")
+    .attr("x", (width / 2))
+    .attr("y", 50)
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Total Issuable Loans ($)");
     return <svg
         preserveAspectRatio={"xMaxYMax"} viewBox={`0 0 ${width} ${height}`} ref={svgRef}
     />;
