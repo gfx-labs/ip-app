@@ -60,7 +60,7 @@ const config = {
       metadata: [
         {
           property: "og:image",
-          content: "https://interestprotocol.io/images/favicon.ico",
+          content: "https://interestprotocol.io/images/ip.png",
         },
         { property: "og:title", content: "Interest Protocol" },
         { property: "og:name", content: "Interest Protocol" },
@@ -71,7 +71,7 @@ const config = {
         { name: "twitter:title", content: "Interest Protocol" },
         {
           name: "twitter:image",
-          content: "https://interestprotocol.io/images/favicon.ico",
+          content: "https://interestprotocol.io/images/ip.png",
         },
       ],
       navbar: {
