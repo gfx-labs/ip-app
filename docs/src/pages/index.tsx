@@ -99,6 +99,7 @@ export default function Home(): JSX.Element {
           content={`${siteConfig.title} Documentation and guides`}
         />
         <meta name="twitter:image" content="https://interestprotocol.io/images/ip.png" />
+        <meta name="keywords" key="keywords" content="Interest, Protocol, usdi, usdc, weth, crypto, Decentralized Finance, DeFi, lending, borrowing, stablecoins, Ethereum"/>
       </Head>
       <HomepageHeader />
       <main>
