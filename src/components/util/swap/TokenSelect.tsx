@@ -87,6 +87,9 @@ export const TokenSelect = (props: TokenSelectProps) => {
                 width: "auto",
                 minWidth: 'auto',
                 justifyContent: "end",
+                '&.Mui-disabled': {
+                  color: formatColor(neutral.gray3),
+                }
               }}
               onClick={setBalance}
               disabled={token.wallet_balance === undefined}
