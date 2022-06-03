@@ -1,6 +1,5 @@
-import React from "react";
 import { BigNumber, Contract, utils } from "ethers";
-import {JsonRpcProvider} from "@ethersproject/providers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 
 const minABI = [
   // decimals
@@ -47,7 +46,7 @@ export const useBalanceOf = (
     const balance = await contract.balanceOf(wallet_address);
     const decimals = await useDecimals(contract, provider);
 
-    const formattedBalance = useFormatWithDecimals(balance, decimals)
+    const formattedBalance = useFormatWithDecimals(balance, decimals);
 
     return formattedBalance;
   })();

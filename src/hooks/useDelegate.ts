@@ -1,13 +1,8 @@
-import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, Contract, ethers, utils } from "ethers";
+import { JsonRpcSigner } from "@ethersproject/providers";
 import {
   InterestProtocolTokenDelegate__factory,
   Vault__factory,
 } from "../chain/contracts";
-import { ERC20Detailed__factory } from "../chain/contracts/factories/_external/index";
-import { Rolodex } from "../chain/rolodex/rolodex";
-import { useDecimals } from "./useTokenInfo";
-
 export const useDelegate = async (
   vault_address: string,
   token: string,

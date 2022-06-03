@@ -1,4 +1,4 @@
-import {JsonRpcProvider} from "@ethersproject/providers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 import { ethers } from "ethers";
 import { useDecimals, useFormatWithDecimals } from "./useTokenInfo";
 
@@ -30,16 +30,16 @@ const minABI = [
 export const useBalanceOf = (
   wallet_address: string,
   contract_address: string,
-  provider: JsonRpcProvider,
+  provider: JsonRpcProvider
 ) => {
-  return getBalance(contract_address, wallet_address, provider)
+  return getBalance(contract_address, wallet_address, provider);
 };
 
-export const getBalance  = async (
+export const getBalance = async (
   contract_address: string,
   target: string,
-  provider: JsonRpcProvider,
-):Promise<number>=>{
+  provider: JsonRpcProvider
+): Promise<number> => {
   const contract = new ethers.Contract(contract_address, minABI, provider);
   const balance = await contract.balanceOf(target);
   const decimals = await useDecimals(contract, provider);
@@ -47,4 +47,4 @@ export const getBalance  = async (
   const formattedBalance = useFormatWithDecimals(balance, decimals);
 
   return Number(formattedBalance.toFixed(8));
-}
+};
