@@ -37,7 +37,7 @@ export const DiscreteSliderSteps: React.FC = () =>{
         if(nv <= 0) {
             nv = 1
         }
-        if(nv > 1e12) {
+        if(nv > 1000*1000) {
             return
         }
         setDeposits(nv)
@@ -48,13 +48,13 @@ export const DiscreteSliderSteps: React.FC = () =>{
             <Box
                 sx={{
                     display:'flex',
-                    paddingLeft:3,
+                    paddingLeft:5,
                     paddingRight:1,
                     paddingY: 5,
                     gap: 8,
                 }}
             >
-                <Box sx={{ width: 250, marginTop: 2}}>
+                <Box sx={{ width: 400, marginTop: 2}}>
                     <Slider
                         aria-label="Target Reserve Ratio"
                         id="slider"
@@ -72,7 +72,7 @@ export const DiscreteSliderSteps: React.FC = () =>{
                        Target Reserve Ratio
                     </InputLabel>
                 </Box>
-                <Box sx={{ width: 200}}>
+                <Box sx={{ width: 300}}>
                     <FormControl fullWidth sx={{ marginTop: 3, marginLeft: -1 }}>
                         <InputLabel htmlFor="outlined-adornment-amount">Total USDC Deposited</InputLabel>
                         <OutlinedInput
@@ -93,7 +93,7 @@ export const DiscreteSliderSteps: React.FC = () =>{
             </Box>
             <Box
                 sx={{
-                    padding: 5,
+                    padding: 0,
                     width: 800,
                 }}>
                 <BarChart rr={reserveRatio} deposits={deposits}/>
@@ -107,9 +107,9 @@ export const DiscreteSliderSteps: React.FC = () =>{
 const BarChart = (props:{rr:number, deposits:number})=>{
     const {rr, deposits} = props
     const svgRef = useRef(null);
-    var margin = {top: -30, right: 0, bottom: -30, left: 60},
+    var margin = {top: -30, right: 0, bottom: -30, left: 80},
     width = 800 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 600 - margin.top - margin.bottom;
 
     const svgEl = d3.select(svgRef.current);
     svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
@@ -117,11 +117,14 @@ const BarChart = (props:{rr:number, deposits:number})=>{
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
+
     // X axis
     useEffect(()=>{
+        const cval = Math.floor(deposits - rr * deposits / 100)
+        const ival = Math.floor(100 * deposits/(rr) - deposits)
         let data = [
-            {group: "IP", value: Math.floor(deposits/(1-rr/100) - deposits)},
-            {group: "COMP/AAVE", value: Math.floor(rr*deposits/100)},
+            {group: `IP ($${ival})`, value: ival},
+            {group: `COMP/AAVE ($${cval})`, value: cval},
         ]
         var x = d3.scaleBand()
         .range([ 0, width ])
@@ -133,7 +136,7 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .call(d3.axisBottom(x))
 
         var y = d3.scaleLinear()
-        .domain([data[0].value * 1.4,0])
+        .domain([data[0].value * 1.2,0])
         .range([ 0,height]);
         svg.append("g")
         .attr("class", "myYaxis")
