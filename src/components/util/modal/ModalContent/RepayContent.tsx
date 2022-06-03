@@ -58,7 +58,14 @@ export const RepayContent = (props: RepayContent) => {
   }
 
   useEffect(()=>{
-    setNewHealth(100*(accountLiability - Number(repayAmount))/Number(vaultBorrowPower))
+    const newHealth = 100*(accountLiability + Number(repayAmount))/Number(vaultBorrowPower)
+
+    if(isNaN(newHealth)) {
+      setNewHealth(0)
+    } else {
+     
+      setNewHealth(newHealth)
+    }
   },[repayAmount])
 
   const handleRepayRequest = async () => {
