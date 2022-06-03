@@ -65,7 +65,7 @@ export const ClaimModal = () => {
         textAlign="left"
       >
         {" "}
-        Amount you with to claim:
+        Amount you wish to claim:
       </Typography>
 
       <Box
