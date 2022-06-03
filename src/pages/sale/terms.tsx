@@ -35,7 +35,9 @@ export const Terms: React.FC = () => {
         sx={{
           color: "#fff",
           zIndex: 1,
+          marginTop: {xs: 13, md: 20},
         }}
+        
       >
         <DialogTitle>Please scroll to bottom</DialogTitle>
         <DialogContent>
@@ -56,9 +58,11 @@ export const Terms: React.FC = () => {
 const copyTermsSale = `
 Updated: June 1, 2022
 
-Terms of UseWelcome to https://interestprotocol.io, a user interface (the “Interface” or “App”) provided byGFX Labs, Inc. (“we,” “our,” or “us”). The Interface allows access to a decentralized protocol thatallows users to borrow and lend stablecoins on the Ethereum and Ethereum-compatibleblockchains. ("Interest Protocol" or the "Protocol").
+Terms of Use
 
-This Terms of Use Agreement (the “Agreement” or the “Terms”) explains the terms andconditions by which you may access and use the Interface. You must read this Agreementcarefully. By accessing or using the Interface, you signify that you have read, understand, andagree to be bound by this Agreement in its entirety. If you do not agree, you are not authorizedto access or use the Interface.
+Welcome to https://interestprotocol.io, a user interface (the “Interface” or “App”) provided byGFX Labs, Inc. (“we,” “our,” or “us”). The Interface allows access to a decentralized protocol thatallows users to borrow and lend stablecoins on the Ethereum and Ethereum-compatible blockchains. ("Interest Protocol" or the "Protocol").
+
+This Terms of Use Agreement (the “Agreement” or the “Terms”) explains the terms andconditions by which you may access and use the Interface. You must read this Agreementcarefully. By accessing or using the Interface, you signify that you have read, understand, andagree to be bound by this Agreement in its entirety. If you do not agree, you are not authorized to access or use the Interface.
 
 BY USING THE INTERFACE, YOU ARE ENTERING INTO A BINDING AGREEMENT.
 
