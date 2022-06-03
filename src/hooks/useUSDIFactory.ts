@@ -10,14 +10,14 @@ export const useBorrow = async (
   signer: JsonRpcSigner
 ) => {
   const formattedUSDIAmount = utils.parseUnits(amount, 18);
-  console.log(rolodex, signer);
   try {
     const borrowTransaction = await rolodex.VC?.connect(signer).borrowUsdi(
       Number(vaultID),
-      formattedUSDIAmount
+      formattedUSDIAmount,
+      { gasLimit: 800000 }
     );
 
-    return borrowTransaction
+    return borrowTransaction;
   } catch (err) {
     console.log(err);
     throw new Error("Could not borrow");
@@ -31,12 +31,10 @@ export const useRepay = async (
   signer: JsonRpcSigner
 ) => {
   const formattedUSDIAmount = utils.parseUnits(amount, 18);
-  const contract = rolodex.VC?.connect(signer)!
-    return await contract.repayUSDi(
-      Number(vaultID),
-      formattedUSDIAmount
-    ).catch((e)=>{
-      throw new Error("Could not repay:"+ e);
-    })
-
+  const contract = rolodex.VC?.connect(signer)!;
+  return await contract
+    .repayUSDi(Number(vaultID), formattedUSDIAmount)
+    .catch((e) => {
+      throw new Error("Could not repay:" + e);
+    });
 };
