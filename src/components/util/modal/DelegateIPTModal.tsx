@@ -1,5 +1,5 @@
-import { Box, Typography, Button, TextField, FormControl } from "@mui/material";
-import { useState, useEffect, FormEvent } from "react";
+import { Box, Typography, Button, TextField } from "@mui/material";
+import { useState} from "react";
 import { ContractReceipt } from "ethers";
 
 import { formatColor, neutral } from "../../../theme";
@@ -30,33 +30,6 @@ export const DelegateIPTModal = () => {
   const toggle = () => setFocus(!focus);
 
   const { currentSigner, currentAccount } = useWeb3Context();
-
-  const selfDelegateHandler = async () => {
-    setLoading(true);
-    setLoadmsg(locale("CheckWallet"));
-    try {
-      await useIPTDelegate(currentAccount, currentSigner!).then(async (res) => {
-        updateTransactionState(res);
-        setLoadmsg(locale("TransactionPending"));
-        setLoading(true);
-        return res!.wait().then((res) => {
-          setLoadmsg("");
-          setLoading(false);
-
-          updateTransactionState(res);
-        });
-      });
-    } catch (e) {
-      setLoading(false);
-      setShaking(true);
-      setTimeout(() => setShaking(false), 400);
-      console.log(e);
-
-      const err = e as ContractReceipt;
-
-      updateTransactionState(err);
-    }
-  };
 
   const handleDelegateRequest = async (delegateToSomeoneElse: boolean) => {
     setLoading(true);

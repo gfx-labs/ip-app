@@ -1,23 +1,8 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, BigNumberish, Contract, EventFilter, utils } from "ethers";
-import { Rolodex } from "../chain/rolodex/rolodex";
-import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
-import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
-import {
-  GovernorCharlieDelegate__factory,
-  GovernorCharlieDelegator__factory,
-  GovernorCharlieEvents__factory,
-  TokenDelegateStorageV1__factory,
-  TokenDelegatorStorage__factory,
-  Vault__factory,
-} from "../chain/contracts";
-import {
-  ProposalCreatedEventFilter,
-  VoteCastEventObject,
-} from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
+import { BigNumber, BigNumberish } from "ethers";
+import { GovernorCharlieDelegate__factory } from "../chain/contracts";
+import { VoteCastEventObject } from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
 import { useModalContext } from "../components/libs/modal-content-provider/ModalContentProvider";
-import { tokenDelegatorSol } from "../chain/contracts/factories/governance/token";
-
 export interface ProposalInfo {
   id: BigNumber;
   proposer: string;
@@ -58,7 +43,6 @@ export const getRecentProposals = async (
 ) => {
   try {
     const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-    console.log(contract, "this is contract");
 
     const filters = await contract.filters.ProposalCreated();
 

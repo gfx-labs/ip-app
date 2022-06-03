@@ -1,5 +1,5 @@
 import { Box, Typography, Button } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { formatColor, neutral } from "../../../theme";
 import {
   ModalType,

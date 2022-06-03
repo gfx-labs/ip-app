@@ -3,7 +3,6 @@ import { Web3Data } from "../../components/libs/web3-data-provider/Web3Provider"
 import { Chains } from "../chains";
 import {
   IUSDI,
-  IVaultController,
   USDI__factory,
   VaultController__factory,
   OracleMaster__factory,
@@ -50,8 +49,6 @@ export class Rolodex {
     this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
   }
 }
-
-const zaddr = "0x0000000000000000000000000000000000000000";
 
 export const NewRolodex = async (ctx: Web3Data) => {
   if (!ctx.chainId) {

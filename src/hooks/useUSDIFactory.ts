@@ -1,6 +1,5 @@
-import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, Contract, ContractReceipt, utils } from "ethers";
-import { IERC20__factory } from "../chain/contracts/factories/genesis/wave.sol";
+import { JsonRpcSigner } from "@ethersproject/providers";
+import { utils } from "ethers";
 import { Rolodex } from "../chain/rolodex/rolodex";
 
 export const useBorrow = async (
