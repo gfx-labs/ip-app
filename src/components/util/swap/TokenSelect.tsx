@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 import { DecimalInput } from "../textFields";
@@ -14,6 +14,12 @@ interface TokenSelectProps {
 export const TokenSelect = (props: TokenSelectProps) => {
   const { token, tokenAmount, setTokenAmount } = props;
   const isLight = useLight();
+
+  const setBalance = () => {
+    if (token.wallet_balance != undefined) {
+      setTokenAmount(token.wallet_balance.toFixed(2).toString());
+    }
+  };
 
   return (
     <Box
@@ -72,9 +78,23 @@ export const TokenSelect = (props: TokenSelectProps) => {
           >
             Balance:
             <br />
-            <WithDots val={token.wallet_balance != undefined}>
-              {token.wallet_balance?.toFixed(2)}
-            </WithDots>
+            <Button
+              sx={{
+                paddingY: 0,
+                paddingX: 1,
+                marginRight: -1,
+                height: "auto",
+                width: "auto",
+                minWidth: 'auto',
+                justifyContent: "end",
+              }}
+              onClick={setBalance}
+              disabled={token.wallet_balance === undefined}
+            >
+              <WithDots val={token.wallet_balance != undefined}>
+                {token.wallet_balance?.toFixed(2)}
+              </WithDots>
+            </Button>
           </Typography>
         </Box>
       </Box>
