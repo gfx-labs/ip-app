@@ -62,7 +62,14 @@ const {updateTransactionState} = useModalContext()
   }
 
   useEffect(()=>{
-    setNewHealth(100*(accountLiability + Number(borrowAmount))/Number(vaultBorrowPower))
+    const newHealth = 100*(accountLiability + Number(borrowAmount))/Number(vaultBorrowPower)
+
+    if(isNaN(newHealth)) {
+      setNewHealth(0)
+    } else {
+     
+      setNewHealth(newHealth)
+    }
   },[borrowAmount])
 
   const handleBorrowRequest = async () => {
