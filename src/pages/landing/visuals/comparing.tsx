@@ -132,7 +132,7 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         const ival = Math.floor(100 * deposits/(rr) - deposits)
         const cval = Math.floor(100*deposits / (rr+100))
         let data = [
-            {group: `IP ($${ival.toLocaleString()})`, value: ival, color:"#69b3a2"},
+            {group: `IP w/ USDi ($${ival.toLocaleString()})`, value: ival, color:"#69b3a2"},
             {group: `COMP/AAVE ($${cval.toLocaleString()})`, value: cval, color: "#707070"},
         ]
         var x = d3.scaleBand()
