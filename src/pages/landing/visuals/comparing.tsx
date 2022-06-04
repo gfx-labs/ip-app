@@ -43,12 +43,6 @@ export const DiscreteSliderSteps: React.FC = () =>{
         setDeposits(nv)
     };
 
-    useEffect(()=>{
-        setTimeout(()=>{
-            setReserveRatio(33)
-        }, 1 * 1000)
-    },[])
-
 
     return (
         <Paper>
@@ -68,6 +62,7 @@ export const DiscreteSliderSteps: React.FC = () =>{
                         defaultValue={33}
                         getAriaValueText={(n)=>{return Math.round(n)+"%"}}
                         valueLabelFormat={(n)=>{return Math.round(n)+"%"}}
+                        value={reserveRatio}
                         step={1}
                         min={1}
                         max={99}
