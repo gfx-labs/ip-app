@@ -70,7 +70,7 @@ export const DiscreteSliderSteps: React.FC = () =>{
                         valueLabelFormat={(n)=>{return Math.round(n)+"%"}}
                         step={1}
                         min={1}
-                        max={60}
+                        max={99}
                         onChange={handleSliderChange}
                         valueLabelDisplay="on"
                        // marks={answer}
@@ -119,10 +119,10 @@ const BarChart = (props:{rr:number, deposits:number})=>{
     height = 600 - margin.top - margin.bottom;
     // X axis
     //
-    // RR = (deposits - lent) / lent
-    // RR * lent = deposits - lent
-    // (RR + 1) * lent = deposits
-    // lent = deposits / (RR+1)
+    // rr = (deposits - lent) / lent
+    // rr * lent = deposits - lent
+    // (rr + 1) * lent = deposits
+    // lent = deposits / (rr+1)
     useEffect(()=>{
         const svgEl = d3.select(svgRef.current);
         svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
@@ -130,7 +130,7 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
         const ival = Math.floor(100 * deposits/(rr) - deposits)
-        const cval = Math.floor(100*deposits / (rr+100))
+        const cval = Math.floor(deposits - rr * deposits/(100))
         let data = [
             {group: `IP w/ USDi ($${ival.toLocaleString()})`, value: ival, color:"#69b3a2"},
             {group: `COMP/AAVE ($${cval.toLocaleString()})`, value: cval, color: "#707070"},
@@ -171,7 +171,7 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .attr("y", 80)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .text(`$${deposits.toLocaleString()} USDC deposited, ${rr}% Reserve Ratio`);
+        .text(`$${deposits.toLocaleString()} USDC supplied, ${rr}% Reserve Ratio`);
     },[rr, deposits])
     return <svg
         preserveAspectRatio={"xMaxYMax"} viewBox={`0 0 ${width} ${height}`} ref={svgRef}
