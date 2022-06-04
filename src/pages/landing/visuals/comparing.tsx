@@ -70,7 +70,7 @@ export const DiscreteSliderSteps: React.FC = () =>{
                         valueLabelFormat={(n)=>{return Math.round(n)+"%"}}
                         step={1}
                         min={1}
-                        max={99}
+                        max={60}
                         onChange={handleSliderChange}
                         valueLabelDisplay="on"
                        // marks={answer}
