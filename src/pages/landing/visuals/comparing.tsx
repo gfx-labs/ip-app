@@ -119,10 +119,6 @@ const BarChart = (props:{rr:number, deposits:number})=>{
     height = 600 - margin.top - margin.bottom;
     // X axis
     //
-    // rr = (deposits - lent) / lent
-    // rr * lent = deposits - lent
-    // (rr + 1) * lent = deposits
-    // lent = deposits / (rr+1)
     useEffect(()=>{
         const svgEl = d3.select(svgRef.current);
         svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
