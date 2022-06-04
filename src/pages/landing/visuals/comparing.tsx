@@ -118,17 +118,22 @@ const BarChart = (props:{rr:number, deposits:number})=>{
     width = 800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
     // X axis
+    //
+    // RR = (deposits - lent) / lent
+    // RR * lent = deposits - lent
+    // (RR + 1) * lent = deposits
+    // lent = deposits / (RR+1)
     useEffect(()=>{
         const svgEl = d3.select(svgRef.current);
         svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
         const svg = svgEl
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
-        const cval = Math.floor(deposits - rr * deposits / 100)
         const ival = Math.floor(100 * deposits/(rr) - deposits)
+        const cval = Math.floor(100*deposits / (rr+100))
         let data = [
-            {group: `IP ($${ival.toLocaleString()})`, value: ival},
-            {group: `COMP/AAVE ($${cval.toLocaleString()})`, value: cval},
+            {group: `IP ($${ival.toLocaleString()})`, value: ival, color:"#69b3a2"},
+            {group: `COMP/AAVE ($${cval.toLocaleString()})`, value: cval, color: "#707070"},
         ]
         var x = d3.scaleBand()
         .range([ 0, width ])
@@ -153,7 +158,7 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .attr("y", (d)=> { return y(d.value); })
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d.value); })
-        .attr("fill", "#69b3a2")
+        .attr("fill", (d)=>{return d.color})
 
         svg.append("text")
         .attr("x", (width / 2))
