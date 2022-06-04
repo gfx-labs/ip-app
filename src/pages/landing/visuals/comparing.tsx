@@ -165,7 +165,7 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .attr("y", 50)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .text(`Total Issuable Loans, $${deposits.toLocaleString()} USDC deposited`);
+        .text(`Total Issuable Loans`);
         svg.append("text")
         .attr("x", (width / 2))
         .attr("y", 80)
