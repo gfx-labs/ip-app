@@ -43,6 +43,13 @@ export const DiscreteSliderSteps: React.FC = () =>{
         setDeposits(nv)
     };
 
+    useEffect(()=>{
+        setTimeout(()=>{
+            setReserveRatio(33)
+        }, 1 * 1000)
+    },[])
+
+
     return (
         <Paper>
             <Box
@@ -107,24 +114,21 @@ export const DiscreteSliderSteps: React.FC = () =>{
 const BarChart = (props:{rr:number, deposits:number})=>{
     const {rr, deposits} = props
     const svgRef = useRef(null);
-    var margin = {top: -30, right: 0, bottom: -30, left: 80},
+    var margin = {top: -30, right: 0, bottom: -30, left: 0},
     width = 800 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
-
-    const svgEl = d3.select(svgRef.current);
-    svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
-    const svg = svgEl
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
-
-
     // X axis
     useEffect(()=>{
+        const svgEl = d3.select(svgRef.current);
+        svgEl.selectAll("*").remove(); // Clear svg content before adding new elements
+        const svg = svgEl
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
         const cval = Math.floor(deposits - rr * deposits / 100)
         const ival = Math.floor(100 * deposits/(rr) - deposits)
         let data = [
-            {group: `IP ($${ival})`, value: ival},
-            {group: `COMP/AAVE ($${cval})`, value: cval},
+            {group: `IP ($${ival.toLocaleString()})`, value: ival},
+            {group: `COMP/AAVE ($${cval.toLocaleString()})`, value: cval},
         ]
         var x = d3.scaleBand()
         .range([ 0, width ])
@@ -133,14 +137,12 @@ const BarChart = (props:{rr:number, deposits:number})=>{
 
         svg.append("g")
         .attr("transform", "translate(0," + height + ")")
+        .style("font-size", "16px")
         .call(d3.axisBottom(x))
 
         var y = d3.scaleLinear()
         .domain([data[0].value * 1.2,0])
         .range([ 0,height]);
-        svg.append("g")
-        .attr("class", "myYaxis")
-        .call(d3.axisLeft(y));
 
         var u = svg.selectAll("rect")
         .data(data)
@@ -152,14 +154,20 @@ const BarChart = (props:{rr:number, deposits:number})=>{
         .attr("width", x.bandwidth())
         .attr("height", function(d) { return height - y(d.value); })
         .attr("fill", "#69b3a2")
-    },[rr, deposits])
 
-    svg.append("text")
-    .attr("x", (width / 2))
-    .attr("y", 50)
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .text("Total Issuable Loans ($)");
+        svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 50)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text(`Total Issuable Loans, $${deposits.toLocaleString()} USDC deposited`);
+        svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 80)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text(`$${deposits.toLocaleString()} USDC deposited, ${rr}% Reserve Ratio`);
+    },[rr, deposits])
     return <svg
         preserveAspectRatio={"xMaxYMax"} viewBox={`0 0 ${width} ${height}`} ref={svgRef}
     />;
