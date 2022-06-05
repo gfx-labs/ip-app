@@ -30,3 +30,6 @@ docs/book
 *.tsbuildinfo
 stats.html
 tsconfig.tsbuildinfo
+
+#yarn
+.yarn
