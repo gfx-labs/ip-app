@@ -22,7 +22,7 @@ const convertAbsolutePathsToRelative = (content, filePath) =>
         return `${$1}="${relativePath}"`;
     });
 
-const websiteTextualFileExtensions = ['.css', '.js', '.html', '.xml'];
+const websiteTextualFileExtensions = ['.css', '.js', '.html', '.xml', '.svg'];
 const isNotWebsiteTextualFile = (filePath, stats) =>
     !(stats.isDirectory() || websiteTextualFileExtensions.includes(path.extname(filePath)));
 

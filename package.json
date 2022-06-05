@@ -5,16 +5,16 @@
     "config": {},
     "homepage": ".",
     "scripts": {
-        "prebuild": "npx yarn install && yarn run docs",
+        "prebuild": "npx yarn install && npm run docs",
         "build": "tsc && vite build",
         "postbuild": "mkdir -p ./dist/book && cp -r ./docs/build/* ./dist/book",
         "_vite": "",
         "dev": "vite",
         "preview": "vite preview",
         "_docs": "",
-        "docs": "cd docs && npx yarn install && yarn run build",
+        "docs": "cd docs && npx yarn install && npm run build",
         "abi": "cp -r ../contracts/typechain-types/* ./src/chain/contracts",
-        "watch_docs": "cd docs && npx yarn install && yarn run start"
+        "watch_docs": "cd docs && npx yarn install && npm run start"
     },
     "dependencies": {
         "@emotion/react": "^11.9.0",
