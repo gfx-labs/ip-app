@@ -248,7 +248,6 @@ theme.typography.label = {
   fontWeight: 600,
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(16),
-  color: formatColor(blue.blue1),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
     lineHeight: fzTolineHeight(12),

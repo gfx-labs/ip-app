@@ -207,7 +207,7 @@ function TabPanel(props: TabPanelProps) {
                 sx={{
                   width: "100%",
                   height: "100%",
-                  paddingBottom: "1em"
+                  paddingBottom: 1
                 }}
               />
             </ModalInputContainer>
@@ -221,33 +221,37 @@ function TabPanel(props: TabPanelProps) {
           <Box mt={5} display="flex" justifyContent="center" flexDirection={{ xs: 'column', md: 'row' }}>
             {(included == true) ? (<Box sx={{ whiteSpace: "pre" }}>
               <Typography
-                variant="h1"
+                variant="h2"
                 textAlign="center"
                 mb="1em"
                 color="#50b543">
                 Congratulations!
               </Typography>
-              <Typography variant="h5" textAlign="center">
+              <Box textAlign="center">
+              <Typography variant="label" textAlign="center">
                 Address {address} is included in Wave {waveNum}
                 <br />
                   <br />
                   <Typography variant="h6" textAlign="center">
                 Wave {waveNum} Starts At ~ {waveStart} </Typography>
               </Typography>
+              </Box>
             </Box>
             ) : (
               (message != "") ? (<>
                 <Typography color={"#fc3903"}> {message} </Typography>
               </>) : (<Box sx={{ whiteSpace: "pre" }}>
-                <Typography color={"#fc3903"} variant="h1" textAlign="center" mb="1em">
+                <Typography color={"#fc3903"} variant="h2" textAlign="center" mb="1em">
                   Too Bad!
                 </Typography>
-                <Typography variant="body1" sx={{ whiteSpace: "pre" }} textAlign="center">
+                <Box textAlign="center">
+                <Typography variant="label" sx={{ whiteSpace: "pre" }}>
                   Address {address} is not in Wave {waveNum}
                   <br />
                   <br />
                   {(waveNum == 1) ? "Try Wave 2!" : ""}
                 </Typography>
+                </Box>
               </Box>)
             )}
 
