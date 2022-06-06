@@ -300,7 +300,6 @@ export const UserStats = () => {
           gridTemplateColumns: "10fr 1fr",
           columnGap: 4,
           marginTop: 2,
-          marginBottom: 5,
         }}
       ></Box>
     </Box>

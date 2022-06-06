@@ -71,14 +71,14 @@ const Dashboard = () => {
           color={formatColor(neutral.black)}
           textAlign="left"
           maxWidth="xl"
-          py={{ xs: 7, sm: 0 }}
+          pt={{ xs: 7, sm: 0 }}
+          pb={{ xs: 5, sm: 12 }}
           px={{ xs: 2, md: 10 }}
           margin="auto"
           position="relative"
           sx={{
             [theme.breakpoints.down("md")]: {
               mb: 0,
-              pb: 0,
               marginLeft: "auto",
           },
           }}
