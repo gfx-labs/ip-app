@@ -80,7 +80,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     <Box
       sx={{
         backgroundColor: "smallCard.background",
-        borderRadius: 5,
+        borderRadius: 4,
         paddingTop:5,
         paddingLeft:6,
         paddingRight:6,

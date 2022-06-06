@@ -57,7 +57,7 @@ export const theme = createTheme({
     values: {
       xs: 0,
       sm: 768,
-      md: 992,
+      md: 800,
       lg: 1280,
       xl: 1440,
     },
@@ -140,7 +140,7 @@ theme.typography.subtitle1 = {
 };
 
 theme.typography.subtitle2 = {
-  fontWeight: 400,
+  fontWeight: 600,
   fontSize: pxToRem(24),
   lineHeight: pxToRem(38),
 
@@ -151,7 +151,7 @@ theme.typography.subtitle2 = {
 };
 
 theme.typography.body1 = {
-  fontWeight: 400,
+  fontWeight: 600,
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(16),
   [theme.breakpoints.down("md")]: {},
@@ -183,7 +183,7 @@ theme.typography.caption = {
 theme.typography.button = {
   fontWeight: 600,
   fontSize: pxToRem(16),
-  lineHeight: pxToRem(24),
+  lineHeight: pxToRem(16),
 };
 
 const MuiTextFieldVariants: ComponentsVariants["MuiTextField"] = [
@@ -263,11 +263,11 @@ theme.components = {
       {
         props: { variant: "cta" },
         style: {
-          color: formatColor(blue.blue2),
-          backgroundColor: formatColor(blue.blue3),
+          color: formatColor(neutral.white),
+          backgroundColor: formatColor(blue.blue1),
 
           "&:hover": {
-            backgroundColor: formatColor(blue.blue4),
+            backgroundColor: formatColor(blue.blue14),
           },
         },
       },
@@ -283,7 +283,7 @@ theme.components = {
             minWidth: 120,
           },
           "&:hover": {
-            backgroundColor: formatColor(blue.blue12),
+            backgroundColor: formatColor(blue.blue14),
 
           },
         },

@@ -61,7 +61,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           success: { main: formatColor(green.green1) },
           text: {
             primary: formatColor(neutral.white),
-            secondary: formatColor(neutral.white),
+            secondary: formatColor(neutral.gray3),
           },
           background: {
             default: `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`,
@@ -73,7 +73,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
             color: formatColor(neutral.white)
           },
           smallCard: {
-            background: formatColor(neutral.gray7),
+            background: formatColor(neutral.gray4),
             title: formatColor(neutral.gray3),
             text: formatColor(neutral.white)
           },

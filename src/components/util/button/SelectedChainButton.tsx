@@ -25,7 +25,7 @@ export const SelectedChainButton = () => {
         paddingY: 1,
         boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.03)",
         backgroundColor: isLight
-        ? formatColor(neutral.gray5)
+        ? formatColor(neutral.white)
         : formatColor(neutral.gray4),
         "&:hover": {
           border: "none",
