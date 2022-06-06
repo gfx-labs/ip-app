@@ -63,7 +63,7 @@ export const Community: React.FC = () => {
               src="images/discord_icon_black.svg"
             ></Box>
           </Link>
-          <Link href="https://twitter.com/labsgfx" target="_blank">
+          <Link href="https://twitter.com/InterestDeFi" target="_blank">
             <Box
               sx={{
                 mx: 2,

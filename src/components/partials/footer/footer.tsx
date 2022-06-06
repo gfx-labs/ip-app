@@ -153,7 +153,7 @@ const DesktopFooter = () => {
           </MuiLink>
           <MuiLink
             component={Link}
-            to="https://twitter.com/labsgfx"
+            to="https://twitter.com/InterestDeFi"
             target="_blank"
             paddingBottom={2}
           >
