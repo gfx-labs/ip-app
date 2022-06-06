@@ -14,7 +14,7 @@ export const SingleStatCard = ({
       sx={{
         width: '100%',
         backgroundColor: 'smallCard.background',
-        borderRadius: 5,
+        borderRadius: 4,
         paddingY: 2,
         paddingLeft: {xs: 2, md: 3},
         paddingRight: {xs: 2, md: 3},

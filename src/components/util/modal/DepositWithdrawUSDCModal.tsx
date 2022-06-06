@@ -50,7 +50,7 @@ export const DepositWithdrawUSDCModal = () => {
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
             1 USDC
           </Typography>
-          <Typography variant="h3" color="text.secondary" mb={1}>
+          <Typography variant="h3" color="text.primary" mb={1}>
             $1
           </Typography>
         </Box>

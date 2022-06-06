@@ -144,7 +144,7 @@ export const DepositUSDCConfirmationModal = () => {
             marginRight={3}
           ></Box>
           <Box>
-            <Typography variant="h3" color="text.secondary">
+            <Typography variant="h3" color="text.primary">
               {"$" + USDC.amountToDeposit}
             </Typography>
           </Box>
@@ -157,7 +157,7 @@ export const DepositUSDCConfirmationModal = () => {
 
         <Box display="flex" alignItems="center">
           <Box>
-            <Typography variant="h3" color="text.secondary">
+            <Typography variant="h3" color="text.primary">
               {"$" + USDC.amountToDeposit}
             </Typography>
           </Box>

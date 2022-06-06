@@ -61,7 +61,7 @@ export const DepositWithdrawCollateralModal = () => {
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
             1 {collateralToken.ticker}
           </Typography>
-          <Typography variant="h3" color="text.secondary" mb={1}>
+          <Typography variant="h3" color="text.primary" mb={1}>
             ${collateralToken.value.toFixed(2)}
           </Typography>
         </Box>

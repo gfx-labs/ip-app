@@ -238,9 +238,9 @@ export const UserStats = () => {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: formatColor(blue.blue8),
+                    backgroundColor: formatColor(neutral.white),
                     boxShadow: 0,
-                    color: formatColor(blue.blue7),
+                    color: formatColor(neutral.black),
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
@@ -254,9 +254,9 @@ export const UserStats = () => {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: formatColor(blue.blue8),
+                    backgroundColor: formatColor(neutral.white),
                     boxShadow: 0,
-                    color: formatColor(blue.blue7),
+                    color: formatColor(neutral.black),
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),

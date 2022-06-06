@@ -51,7 +51,7 @@ export const ClaimModal = () => {
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
             Rewards
           </Typography>
-          <Typography variant="h3" color="text.secondary" mb={1}>
+          <Typography variant="h3" color="text.primary" mb={1}>
             {iptBalance}
           </Typography>
         </Box>
