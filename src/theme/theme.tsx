@@ -223,7 +223,6 @@ theme.typography.body2_semi = {
   fontWeight: 600,
   fontSize: pxToRem(18),
   lineHeight: fzTolineHeight(32),
-  color: formatColor(blue.blue1),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(14),
     lineHeight: fzTolineHeight(24),
@@ -234,14 +233,12 @@ theme.typography.body3 = {
   fontWeight: 600,
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(20),
-  color: formatColor(blue.blue1),
 };
 
 theme.typography.body3_medium = {
   fontWeight: 500,
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(16),
-  color: formatColor(blue.blue1),
 };
 
 theme.typography.label = {
@@ -268,7 +265,6 @@ theme.typography.label2_medium = {
   fontWeight: 500,
   fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(18),
-  color: formatColor(blue.blue1),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
     lineHeight: fzTolineHeight(16),

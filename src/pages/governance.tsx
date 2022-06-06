@@ -81,20 +81,20 @@ export const Governance = () => {
           <GovernanceToolTip
             title={
               <>
-                <Typography variant="h3">Voting</Typography> <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="subtitle1" color="text.primary">Voting</Typography> <br />
+                <Typography variant="body3" whiteSpace="nowrap">
                   Threshold: 40,000,000
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Qurourum Threshold: 20,000,000
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Voting Period: 5 days
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Timelock Period: 15 seconds
                 </Typography>
               </>
@@ -105,16 +105,16 @@ export const Governance = () => {
           <GovernanceToolTip
             title={
               <>
-                <Typography variant="h3">Emergency Voting</Typography> <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="subtitle1" color="text.primary" >Emergency Voting</Typography> <br />
+                <Typography variant="body3" whiteSpace="nowrap">
                   Voting Period: 1 day
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Qurourum Threshold: 20,000,000
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Timelock Period: 15 seconds
                 </Typography>
               </>
