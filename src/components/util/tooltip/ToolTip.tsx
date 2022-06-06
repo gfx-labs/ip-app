@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
@@ -6,8 +5,9 @@ import Typography from "@mui/material/Typography";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 import { ToolTipInfoIcon } from "../../icons/misc/ToolTipInfoIcon";
+import { Variant } from "@mui/material/styles/createTypography";
 
-const GovernanceToolTipContainer = styled(
+const BaseToolTipContainer = styled(
   ({ className, ...props }: TooltipProps) => {
     return <Tooltip {...props} classes={{ popper: className }} />;
   }
@@ -21,22 +21,23 @@ const GovernanceToolTipContainer = styled(
         : formatColor(neutral.black5),
       color: isLight ? formatColor(neutral.black5) : formatColor(neutral.white),
       borderRadius: '20px',
-      padding: '32px',
+      padding: '12px',
     },
   };
 });
 
-export const GovernanceToolTip = (props: {
+export const ToolTip = (props: {
   content: TooltipProps["title"];
   text: string;
+  text_variant?: Variant;
 }) => {
-  const { content, text } = props;
+  const { content, text, text_variant = 'body1' } = props;
   const isLight = useLight();
 
   return (
-    <GovernanceToolTipContainer title={content}>
+    <BaseToolTipContainer title={content}>
       <Box display="flex" alignItems="center">
-        <Typography variant="body1" color="text.secondary" fontWeight={600}>
+        <Typography variant={text_variant} color="text.secondary">
           {text}
         </Typography>
         <ToolTipInfoIcon
@@ -46,6 +47,6 @@ export const GovernanceToolTip = (props: {
           }
         />
       </Box>
-    </GovernanceToolTipContainer>
+    </BaseToolTipContainer>
   );
 };

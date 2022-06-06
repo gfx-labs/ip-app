@@ -82,7 +82,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         paddingRight: 6,
         paddingBottom: 3,
         [theme.breakpoints.down("lg")]: {
-          paddingX: 2,
+          paddingX: 3,
           paddingY: 4,
         },
         ...props.sx,
