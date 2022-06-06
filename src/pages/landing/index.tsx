@@ -239,8 +239,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 color: formatColor(neutral.gray2),
                 display: "flex",
                 zIndex: 10,
-                fontSize: "16px",
-                fontWeight: 600,
+                variant: "body3",
                 alignItems: "center",
               }}
             >
@@ -252,8 +251,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               sx={{
                 color: formatColor(neutral.gray2),
                 display: "flex",
-                fontSize: "16px",
-                fontWeight: 600,
+                variant: "body3",
                 alignItems: "center",
               }}
             >
@@ -265,8 +263,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               sx={{
                 color: formatColor(neutral.gray2),
                 display: "flex",
-                fontSize: "16px",
-                fontWeight: 600,
+                variant: "body3",
                 alignItems: "center",
               }}
             >
@@ -282,8 +279,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               sx={{
                 color: formatColor(neutral.gray2),
                 display: "flex",
-                fontSize: "16px",
-                fontWeight: 600,
+                variant: "body3",
                 alignItems: "center",
               }}
             >

@@ -33,11 +33,8 @@ export const Values: React.FC = () => {
         >
           <Typography
             display="inline"
-            variant="h1"
-            sx={{
-              fontSize: {xs: 24, md: 54},
-              color: formatColor(neutral.black),
-            }}
+            variant="h2"
+            color={formatColor(neutral.black)}
           >
             Our Values
           </Typography>
@@ -100,12 +97,12 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
       }}
     >
       <Box>
-        <Typography variant="h3" sx={{ fontSize: {xs: 20, md: 24}, color: formatColor(neutral.black) }}>
+        <Typography variant="h5" color={formatColor(neutral.black)} mb={3}>
           {left}
         </Typography>
       </Box>
       <Box>
-        <Typography sx={{ color: formatColor(neutral.gray1), fontWeight: 600}}>
+        <Typography variant="subtitle2_semi" color={formatColor(neutral.gray1)}>
           {right}
         </Typography>
       </Box>

@@ -34,21 +34,15 @@ export const Highlights: React.FC = () => {
         >
           <Typography
             display={{ xs: "inline-block", md: "inline" }}
-            variant="h1"
-            sx={{
-              fontSize: "200%",
-              color: formatColor(neutral.gray2),
-            }}
+            variant="h4"
+            color={formatColor(neutral.gray2)}
           >
             The stablecoin USDi
           </Typography>
           <Typography
             display={{ xs: "inline-block", md: "inline" }}
-            variant="h1"
-            sx={{
-              fontSize: "200%",
-              color: formatColor(neutral.black),
-            }}
+            variant="h4"
+            color={formatColor(neutral.black)}
           >
             is scalable, over-collateralized, and accrues yield without staking.
           </Typography>
@@ -60,8 +54,9 @@ export const Highlights: React.FC = () => {
             flexWrap: "wrap",
             flexBasis: "100%",
             width: "100%",
-            maxWidth: 1000,
+            maxWidth: 1300,
             flexDirection: { xs: "column", md: "row" },
+            justifyContent: 'center'
           }}
         >
           <Box sx={{ flexBasis: "33%" }}>
@@ -126,7 +121,7 @@ const HighlightBox = (props: { icon: any; header: string; copy: string }) => {
         src={`images/${icon}.svg`}
       ></Box>
 
-      <Typography variant="h3" sx={{ color: formatColor(neutral.black) }}>
+      <Typography variant="h4" color={formatColor(neutral.black)} whiteSpace="nowrap">
         {header}
       </Typography>
 
@@ -134,7 +129,6 @@ const HighlightBox = (props: { icon: any; header: string; copy: string }) => {
         variant="body1"
         sx={{
           color: formatColor(neutral.black),
-          fontSize: "100%",
           textAlign: { xs: "center", md: "left" },
           paddingX: { xs: 5 },
         }}

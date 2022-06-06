@@ -35,22 +35,22 @@ declare module "@mui/material/styles" {
     subtitle2_semi: React.CSSProperties;
     body2_semi: React.CSSProperties;
     body3: React.CSSProperties;
-    body3_semi: React.CSSProperties;
+    body3_medium: React.CSSProperties;
     label: React.CSSProperties;
     label2: React.CSSProperties;
-    label2_semi: React.CSSProperties;
+    label2_medium: React.CSSProperties;
   }
 }
 
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     h6Semi: true;
-    subtitle2Semi: true;
+    subtitle2_semi: true;
     body3: true;
-    body3_semi: true;
+    body3_medium: true;
     label: true;
     label2: true;
-    label2_semi: true;
+    label2_medium: true;
   }
 }
 
@@ -126,7 +126,7 @@ theme.typography.h3 = {
 theme.typography.h4 = {
   fontWeight: 700,
   fontSize: pxToRem(40),
-  lineHeight: fzTolineHeight(56),
+  lineHeight: fzTolineHeight(46),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(24),
     lineHeight: fzTolineHeight(24),
@@ -240,7 +240,7 @@ theme.typography.body3 = {
   },
 };
 
-theme.typography.body3_semi = {
+theme.typography.body3_medium = {
   fontWeight: 500,
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(16),
@@ -273,7 +273,7 @@ theme.typography.label2 = {
   },
 };
 
-theme.typography.label2_semi = {
+theme.typography.label2_medium = {
   fontWeight: 500,
   fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(18),
