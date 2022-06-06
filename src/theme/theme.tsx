@@ -96,6 +96,7 @@ const isLight = theme.palette.mode;
 theme.typography.h1 = {
   fontWeight: 800,
   fontSize: pxToRem(88),
+  letterSpacing: -2,
   lineHeight: fzTolineHeight(90),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(40),
@@ -106,6 +107,7 @@ theme.typography.h1 = {
 theme.typography.h2 = {
   fontWeight: 800,
   fontSize: pxToRem(54),
+  letterSpacing: -2,
   lineHeight: fzTolineHeight(56),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(28),
@@ -117,7 +119,7 @@ theme.typography.h3 = {
   fontWeight: 700,
   fontSize: pxToRem(48),
   lineHeight: fzTolineHeight(50),
-
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(28),
     lineHeight: fzTolineHeight(32),
@@ -128,6 +130,7 @@ theme.typography.h4 = {
   fontWeight: 700,
   fontSize: pxToRem(40),
   lineHeight: fzTolineHeight(46),
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(24),
     lineHeight: fzTolineHeight(24),
@@ -138,6 +141,7 @@ theme.typography.h5 = {
   fontWeight: 700,
   fontSize: pxToRem(28),
   lineHeight: fzTolineHeight(28),
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(24),
     lineHeight: fzTolineHeight(24),
@@ -148,6 +152,7 @@ theme.typography.h6 = {
   fontWeight: 800,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),
@@ -158,6 +163,7 @@ theme.typography.h6_semi = {
   fontWeight: 700,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),

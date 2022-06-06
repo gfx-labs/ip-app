@@ -6,8 +6,6 @@ import { useLight } from "../hooks/useLight";
 import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 import { StatsMeter } from "../components/util/statsMeter";
 import { UserStats } from "../components/util/UserStats";
-import { ConnectWalletButton } from "../components/util/button";
-import { OpenVaultButton } from "../components/util/button/OpenVaultButton";
 import { useRolodexContext } from "../components/libs/rolodex-data-provider/RolodexDataProvider";
 import { useEffect } from "react";
 import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
@@ -15,7 +13,6 @@ import { BigNumber } from "ethers";
 import { useAppGovernanceContext } from "../components/libs/app-governance-provider/AppGovernanceProvider";
 import { Governance } from "./governance";
 import Cookies from "universal-cookie";
-import {useNavigate} from "react-router";
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -72,7 +69,7 @@ const Dashboard = () => {
           textAlign="left"
           maxWidth="xl"
           pt={{ xs: 7, sm: 0 }}
-          pb={{ xs: 5, sm: 12 }}
+          pb={{ xs: 5, sm: 10 }}
           px={{ xs: 2, md: 10 }}
           margin="auto"
           position="relative"

@@ -55,7 +55,7 @@ export const Highlights: React.FC = () => {
             flexBasis: "100%",
             width: "100%",
             maxWidth: 1300,
-            flexDirection: { xs: "column", md: "row" },
+            flexDirection: { xs: "column", lg: "row" },
             justifyContent: 'center'
           }}
         >

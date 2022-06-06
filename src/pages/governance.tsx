@@ -8,7 +8,7 @@ import {
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { ProposalCard } from "../components/util/governance/ProposalCard";
 import { Spinner } from "../components/util/loading";
-import { GovernanceToolTip } from "../components/util/tooltip/GovernanceToolTip";
+import { ToolTip } from "../components/util/tooltip/ToolTip";
 import {
   getRecentProposals,
   useProposalCount,
@@ -78,8 +78,8 @@ export const Governance = () => {
           rowGap={1}
           flexDirection={{ xs: "column", md: "row" }}
         >
-          <GovernanceToolTip
-            title={
+          <ToolTip
+            content={
               <>
                 <Typography variant="subtitle1" color="text.primary">Voting</Typography> <br />
                 <Typography variant="body3" whiteSpace="nowrap">
@@ -102,8 +102,8 @@ export const Governance = () => {
             text="Proposal Voting"
           />
 
-          <GovernanceToolTip
-            title={
+          <ToolTip
+            content={
               <>
                 <Typography variant="subtitle1" color="text.primary" >Emergency Voting</Typography> <br />
                 <Typography variant="body3" whiteSpace="nowrap">

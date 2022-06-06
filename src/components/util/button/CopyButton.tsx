@@ -42,7 +42,7 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
         }
       >
         <Typography
-          variant="body3"
+          variant="label"
           color="text.primary"
           sx={{ position: "relative", top: 1 }}
         >

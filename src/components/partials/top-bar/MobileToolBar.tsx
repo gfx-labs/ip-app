@@ -69,15 +69,14 @@ export const MobileToolBar = () => {
       <Box display="flex">
         <SelectedChainButton />
 
-        <Box marginX={2}>
+        <Box marginLeft={2} marginRight={1}>
           <ConnectWalletButton />
         </Box>
 
         <Button
           ref={navMenuButtonRef}
           sx={{
-            p: 0,
-
+            p: 1,
             display: "flex",
             minWidth: "auto",
           }}

@@ -231,6 +231,11 @@ export const UserStats = () => {
                   [theme.breakpoints.down("lg")]: {
                     width: "100%",
                     marginTop: 3,
+    
+                  },
+                  [theme.breakpoints.down("sm")]: {
+                    gridTemplateColumns: "1fr",
+                    rowGap: 1
                   },
                 }}
               >
@@ -247,7 +252,9 @@ export const UserStats = () => {
                   }}
                   onClick={() => setType(ModalType.Borrow)}
                 >
+                  <Typography variant="body3">
                   Borrow
+                  </Typography>
                 </Button>
 
                 <Button
@@ -263,7 +270,9 @@ export const UserStats = () => {
                   }}
                   onClick={() => setType(ModalType.Repay)}
                 >
+                  <Typography variant="body3">
                   Repay
+                  </Typography>
                 </Button>
               </Box>
             ) : (
