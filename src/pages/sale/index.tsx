@@ -145,17 +145,17 @@ function TabPanel(props: TabPanelProps) {
               width={80}
               mr={3}
             ></Box>
-            <Typography variant="subtitle2" fontWeight={600}>
+            <Typography variant="h6_semi" fontWeight={600}>
               IPT Sale
             </Typography>
           </Box>
 
           <Box display="flex" mt={3}>
-            <Typography variant="body2" fontWeight={600} color="#A3A9BA" mr={1}>
+            <Typography variant="body3" fontWeight={600} color="#A3A9BA" mr={1}>
               Sale Period:{" "}
             </Typography>
             <Typography
-              variant="body2"
+              variant="body3"
               fontWeight={600}
               color={
                 isLight
@@ -169,11 +169,11 @@ function TabPanel(props: TabPanelProps) {
 
           <Box display="flex" flexWrap="wrap" mt={3} columnGap={4} rowGap={2}>
             <Box display="flex">
-              <Typography variant="h3" fontWeight={600} color="#A3A9BA" mr={1}>
+              <Typography variant="body1" fontWeight={600} color="#A3A9BA" mr={1}>
                 IPT for sale:{" "}
               </Typography>
               <Typography
-                variant="h3"
+                variant="body1"
                 fontWeight={600}
                 color={
                   isLight
@@ -186,11 +186,11 @@ function TabPanel(props: TabPanelProps) {
               </Typography>
             </Box>
             <Box display="flex">
-              <Typography variant="h3" fontWeight={600} color="#A3A9BA" mr={1}>
+              <Typography variant="body1" fontWeight={600} color="#A3A9BA" mr={1}>
                 USDC Committed:{" "}
               </Typography>
               <Typography
-                variant="h3"
+                variant="body1"
                 fontWeight={600}
                 color={
                   isLight
