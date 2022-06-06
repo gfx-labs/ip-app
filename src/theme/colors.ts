@@ -18,13 +18,13 @@ export const fixAlpha = (c: Color): Color => {
 
 export const neutral: { [key: string]: [number, number, number] } = {
   white: [255, 255, 255],
-  gray1: [55, 66, 82], // #374252 grey-300
-  gray2: [117, 126, 140], // #757E8C grey-200
+  gray1: [55, 66, 82], // #374252 
+  gray2: [117, 126, 140], // #757E8C
   gray3: [163, 169, 186], //#A3A9BA
-  gray4: [53, 57, 71], //#
+  gray4: [53, 57, 71], //#353947
   gray5: [243, 243, 243], // #F3F3F3
   gray6: [237, 237, 237], // #EDEDED
-  gray7: [32, 38, 47], // #20262F
+  gray7: [37, 38, 44], // #25262C
   gray8: [47, 56, 72], // #2F3848
   gray9: [127, 127, 127], // #7F7F7F
   gray10: [107, 118, 135], // #6B7687
@@ -82,8 +82,8 @@ export const gradient: { [key: string]: Gradient } = {
   gradient1: {
     angle: 180,
     stops: [
-      [[255, 255, 255], 0],
-      [[229, 229, 229, 0.31], 1]
+      [[255, 255, 255], 1],
+      [[255, 250, 250, 1], 1]
     ],
   },
   gradient2: {
@@ -126,7 +126,7 @@ export const gradient: { [key: string]: Gradient } = {
     angle: 180,
     stops: [
       [[255, 255, 255], 1],
-      [[229, 229, 229, 0.31], 1]
+      [[255, 255, 255], 1]
     ],
   },
   cardDefaultDark: {
@@ -139,8 +139,8 @@ export const gradient: { [key: string]: Gradient } = {
   statDefaultLight: {
     angle: 180,
     stops: [
-      [[254, 254, 254], 0],
-     [[229, 229, 229, 0.31], 1]
+      [[255, 255, 255], 1],
+      [[255, 250, 250, 1], 1]
     ],
   },
   statDefaultDark: {
@@ -151,21 +151,21 @@ export const gradient: { [key: string]: Gradient } = {
     ],
   },
   gradientPinkPeach: {
-    angle: 125,
+    angle: 90,
     stops: [
       [[255, 154, 158], 0],
       [[250, 208, 196], 1],
     ],
   },
   gradientPurpleGrey: {
-    angle: 115,
+    angle: 90,
     stops: [
       [[235, 192, 253], 0],
       [[217, 222, 216], 1],
     ],
   },
   gradientPurpleYellow: {
-    angle: 55,
+    angle: 90,
     stops: [
       [[233, 222, 250], 0],
       [[251, 252, 219], 1],
