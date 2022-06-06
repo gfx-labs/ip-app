@@ -44,8 +44,9 @@ declare module "@mui/material/styles" {
 
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
-    h6Semi: true;
+    h6_semi: true;
     subtitle2_semi: true;
+    body2_semi: true;
     body3: true;
     body3_medium: true;
     label: true;
@@ -220,12 +221,12 @@ theme.typography.body2 = {
 
 theme.typography.body2_semi = {
   fontWeight: 600,
-  fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(14),
+  fontSize: pxToRem(18),
+  lineHeight: fzTolineHeight(32),
   color: formatColor(blue.blue1),
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(12),
-    lineHeight: fzTolineHeight(12),
+    fontSize: pxToRem(14),
+    lineHeight: fzTolineHeight(24),
   },
 };
 
@@ -234,10 +235,6 @@ theme.typography.body3 = {
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(20),
   color: formatColor(blue.blue1),
-  [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(16),
-    lineHeight: fzTolineHeight(20),
-  },
 };
 
 theme.typography.body3_medium = {
@@ -245,10 +242,6 @@ theme.typography.body3_medium = {
   fontSize: pxToRem(16),
   lineHeight: fzTolineHeight(16),
   color: formatColor(blue.blue1),
-  [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(16),
-    lineHeight: fzTolineHeight(16),
-  },
 };
 
 theme.typography.label = {
@@ -266,7 +259,6 @@ theme.typography.label2 = {
   fontWeight: 600,
   fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(18),
-  color: formatColor(blue.blue1),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
     lineHeight: fzTolineHeight(16),

@@ -33,8 +33,8 @@ export const ClaimsButton = () => {
         },
       }}
     >
-      <ClaimIcon  islight={isLight.toString()} sx={{width: 20, mr: 1}}  />
-      <Typography variant="h6" whiteSpace="nowrap">
+      <ClaimIcon  islight={isLight.toString()} sx={{width: 18, mr: 1}}  />
+      <Typography variant="label" whiteSpace="nowrap">
         {claimAmount.toLocaleString()} IPT
       </Typography>
     </Button>

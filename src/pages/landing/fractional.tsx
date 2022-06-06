@@ -46,9 +46,8 @@ export const Fractional: React.FC = () => {
             </Typography>
             <Typography
               display="inline"
-              variant="h1"
+              variant="body3"
               sx={{
-                fontSize: "200%",
                 marginLeft: 0,
                 color: formatColor(neutral.gray8),
               }}

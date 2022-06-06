@@ -153,74 +153,48 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                   disableRipple
                 >
                   <Typography
-                    sx={{
-                      color: formatColor(neutral.black),
-                      display: "flex",
-                      fontSize: "16px",
-                      alignItems: "center",
-                      fontWeight: 600,
-                    }}
+                    variant="body3"
+                    color={formatColor(neutral.black)}
                   >
                     App
                   </Typography>
                 </Button>
-                <Typography
-                  sx={{
-                    color: formatColor(neutral.black),
-                    display: "flex",
-                    zIndex: 10,
-                    fontSize: "16px",
-                    alignItems: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  <Link href="whitepaper.pdf" sx={{ color: "inherit" }}>
+                <Link href="whitepaper.pdf">
+                  <Typography
+                    variant="body3"
+                    color={formatColor(neutral.black)}
+                  >
                     Whitepaper
-                  </Link>
-                </Typography>
-                <Typography
-                  sx={{
-                    color: formatColor(neutral.black),
-                    display: "flex",
-                    fontSize: "16px",
-                    alignItems: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  <Link href="#/docs" sx={{ color: "inherit" }}>
+                  </Typography>
+                </Link>
+                <Link href="#/docs">
+                  <Typography
+                    variant="body3"
+                    color={formatColor(neutral.black)}
+                  >
                     Docs
-                  </Link>
-                </Typography>
-                <Typography
-                  sx={{
-                    color: formatColor(neutral.black),
-                    display: "flex",
-                    fontSize: "16px",
-                    alignItems: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  <Link
-                    href="https://gfx.cafe/ip/contracts"
-                    sx={{ color: "inherit" }}
-                    target="_blank"
+                  </Typography>
+                </Link>
+                <Link href="https://gfx.cafe/ip/contracts" target="_blank">
+                  <Typography
+                    variant="body3"
+                    color={formatColor(neutral.black)}
                   >
                     Git
-                  </Link>
-                </Typography>
-                { <Typography
-                  sx={{
-                    color: formatColor(neutral.black),
-                    display: "flex",
-                    fontSize: "16px",
-                    alignItems: "center",
-                    fontWeight: 600,
-                  }}
-                >
-                  <Link href="#/whitelist" sx={{ color: "inherit" }}>
-                    Sale
-                  </Link>
-                </Typography> }
+                  </Typography>
+                </Link>
+                {
+                  <Typography
+                  variant="body3"
+                    sx={{
+                      color: formatColor(neutral.black)
+                    }}
+                  >
+                    <Link href="#/whitelist" sx={{ color: "inherit" }}>
+                      Sale
+                    </Link>
+                  </Typography>
+                }
               </Box>
             </SwipeableDrawer>
           </Toolbar>
@@ -275,18 +249,20 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 Git
               </Link>
             </Typography>
-            { <Typography
-              sx={{
-                color: formatColor(neutral.gray2),
-                display: "flex",
-                variant: "body3",
-                alignItems: "center",
-              }}
-            >
-              <Link href="#/whitelist" sx={{ color: "inherit" }}>
-                Sale
-              </Link>
-            </Typography> }
+            {
+              <Typography
+                sx={{
+                  color: formatColor(neutral.gray2),
+                  display: "flex",
+                  variant: "body3",
+                  alignItems: "center",
+                }}
+              >
+                <Link href="#/whitelist" sx={{ color: "inherit" }}>
+                  Sale
+                </Link>
+              </Typography>
+            }
           </Box>
 
           <Box sx={{ gap: 2 }} display="flex" mr={0} ml="auto">

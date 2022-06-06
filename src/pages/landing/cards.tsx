@@ -102,7 +102,6 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
           variant="h2"
           sx={{
             color: formatColor(neutral.white),
-            fontSize: { xs: 24, md: 54 },
           }}
         >
           {left}

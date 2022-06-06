@@ -84,16 +84,15 @@ const Dashboard = () => {
           }}
         >
           <Typography
-            variant="body1"
+            variant="label"
             paddingLeft={{ xs: 2, md: 6 }}
-            marginBottom={2}
-            fontWeight={600}
-            color={formatColor(neutral.gray10)}
+            color={formatColor(neutral.gray3)}
           >
             Protocol Stats
           </Typography>
           <Box
             sx={{
+              marginTop: 3,
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               columnGap: 2,

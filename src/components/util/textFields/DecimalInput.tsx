@@ -1,12 +1,7 @@
 import {
   TextField,
-  TextFieldProps,
   InputAdornment,
-  SxProps,
-  Theme,
 } from "@mui/material";
-import { fontSize } from "@mui/system";
-import { useState, useEffect } from "react";
 import { useLight } from "../../../hooks/useLight";
 import { formatColor, neutral } from "../../../theme";
 
@@ -70,7 +65,7 @@ export const DecimalInput = (props: DecimalInputProps) => {
       sx={{
         paddingBottom: "4px",
         ".MuiInputBase-input": {
-          fontWeight: 700,
+          fontWeight: useLargerFont ? 600 : 700,
           color: isLight
             ? formatColor(neutral.gray1)
             : formatColor(neutral.white),

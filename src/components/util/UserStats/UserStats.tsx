@@ -27,8 +27,7 @@ import { OpenVaultButton } from "../button/OpenVaultButton";
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
-    variant="body2"
-    fontWeight={600}
+    variant="label2"
     color={formatColor(neutral.gray3)}
     whiteSpace="nowrap"
   >
@@ -285,8 +284,8 @@ export const UserStats = () => {
           display: "grid",
           gridTemplateColumns: {
             xs: "1fr",
-            sm: "1fr 1fr",
-            md: "repeat(3, 1fr)",
+            md: "1fr 1fr",
+            lg: "repeat(3, 1fr)",
           },
           columnGap: 3,
           rowGap: 3,

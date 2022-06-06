@@ -20,7 +20,7 @@ export const WithdrawUSDCContent = () => {
     if (USDCToken && USDCToken.vault_amount) {
       updateUSDC("amountToWithdraw", USDCToken.vault_amount.toString());
     } else {
-      updateUSDC("amountToWithdraw", '0');
+      updateUSDC("amountToWithdraw", "0");
     }
   };
 
@@ -73,10 +73,9 @@ export const WithdrawUSDCContent = () => {
             }}
           >
             <Typography
+              variant="body3"
               sx={{
                 color: formatColor(neutral.gray3),
-                fontSize: 14,
-                fontWeight: 600,
               }}
             >
               Max

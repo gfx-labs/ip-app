@@ -111,8 +111,7 @@ export const DepositUSDCConfirmationModal = () => {
       }}
     >
       <Typography
-        variant="body1"
-        fontWeight={600}
+        variant="body3"
         color={
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
@@ -144,7 +143,7 @@ export const DepositUSDCConfirmationModal = () => {
             marginRight={3}
           ></Box>
           <Box>
-            <Typography variant="h3" color="text.primary">
+            <Typography variant="body3" color="text.primary">
               {"$" + USDC.amountToDeposit}
             </Typography>
           </Box>
@@ -157,7 +156,7 @@ export const DepositUSDCConfirmationModal = () => {
 
         <Box display="flex" alignItems="center">
           <Box>
-            <Typography variant="h3" color="text.primary">
+            <Typography variant="body3" color="text.primary">
               {"$" + USDC.amountToDeposit}
             </Typography>
           </Box>
@@ -173,13 +172,11 @@ export const DepositUSDCConfirmationModal = () => {
         </Box>
       </Box>
 
-      <Box>
+      <Box textAlign="center">
         <Typography
-          variant="body1"
+          variant="body3_medium"
           color={formatColor(neutral.gray3)}
           fontStyle="italic"
-          fontWeight={500}
-          textAlign="center"
         >
           1 USDC = 1 USDi ($1){" "}
         </Typography>

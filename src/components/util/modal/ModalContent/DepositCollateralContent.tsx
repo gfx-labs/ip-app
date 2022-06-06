@@ -1,22 +1,30 @@
 import { useState, useEffect } from "react";
 
 import { Box, Typography, Button } from "@mui/material";
-import { formatColor, neutral } from "../../../../theme";
+import { formatColor, neutral, blue } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
 import { SwapIcon } from "../../../icons/misc/SwapIcon";
-import { ModalType, useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
+import {
+  ModalType,
+  useModalContext,
+} from "../../../libs/modal-content-provider/ModalContentProvider";
 
 export const DepositCollateralContent = () => {
-  const { setType, setCollateralDepositAmount, collateralToken, collateralDepositAmount } = useModalContext();
+  const {
+    setType,
+    setCollateralDepositAmount,
+    collateralToken,
+    collateralDepositAmount,
+  } = useModalContext();
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
 
   const setMax = () =>
-  setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
+    setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
 
   useEffect(() => {
     setDisabled(Number(collateralDepositAmount) <= 0);
@@ -24,12 +32,20 @@ export const DepositCollateralContent = () => {
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setCollateralDepositAmount((
-        Math.round((Number(collateralDepositAmount) / collateralToken.value)*100)/100).toString()
-                                )
+      setCollateralDepositAmount(
+        (
+          Math.round(
+            (Number(collateralDepositAmount) / collateralToken.value) * 100
+          ) / 100
+        ).toString()
+      );
     } else {
       setCollateralDepositAmount(
-       (Math.round((Number(collateralDepositAmount) / collateralToken.value)*100)/100).toString()
+        (
+          Math.round(
+            (Number(collateralDepositAmount) / collateralToken.value) * 100
+          ) / 100
+        ).toString()
       );
     }
     setIsMoneyValue(!isMoneyValue);
@@ -37,15 +53,13 @@ export const DepositCollateralContent = () => {
 
   return (
     <Box>
-      <Typography
-        variant="body2"
-        fontWeight={600}
-        color={formatColor(neutral.gray10)}
-        textAlign="right"
-      >
-        {" "}
-        Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)} {collateralToken?.ticker}
-      </Typography>
+      <Box textAlign="right">
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+          {" "}
+          Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)}{" "}
+          {collateralToken?.ticker}
+        </Typography>
+      </Box>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
@@ -59,21 +73,24 @@ export const DepositCollateralContent = () => {
 
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
+            variant="body3"
             sx={{
               color: formatColor(neutral.gray3),
-              fontSize: 14,
-              fontWeight: 600,
               marginLeft: 1,
               whiteSpace: "nowrap",
             }}
           >
             {isMoneyValue
               ? `${
-                  collateralDepositAmount === '0'
+                  collateralDepositAmount === "0"
                     ? "0"
-                    : (Number(collateralDepositAmount) / collateralToken?.value).toFixed(8)
+                    : (
+                        Number(collateralDepositAmount) / collateralToken?.value
+                      ).toFixed(8)
                 } ${collateralToken?.ticker}`
-              : `$${(Number(collateralDepositAmount) * collateralToken?.value).toFixed(2)}`}
+              : `$${(
+                  Number(collateralDepositAmount) * collateralToken?.value
+                ).toFixed(2)}`}
           </Typography>
 
           <Button
@@ -92,13 +109,7 @@ export const DepositCollateralContent = () => {
               },
             }}
           >
-            <Typography
-              sx={{
-                color: formatColor(neutral.gray3),
-                fontSize: 14,
-                fontWeight: 600,
-              }}
-            >
+            <Typography variant="body3" color={formatColor(neutral.gray3)}>
               Max
             </Typography>
           </Button>
@@ -135,7 +146,7 @@ export const DepositCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="caption">Borrowing Power</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>Borrowing Power</Typography>
         <Box
           component="img"
           src="images/up_arrow_blue.png"
@@ -143,7 +154,7 @@ export const DepositCollateralContent = () => {
           height={12}
           marginX={1}
         />
-        <Typography variant="caption">$0</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>$0</Typography>
       </Box>
     </Box>
   );
