@@ -64,10 +64,9 @@ export const DepositUSDCContent = () => {
             }}
           >
             <Typography
+            variant="body3"
               sx={{
-                color: formatColor(neutral.gray3),
-                fontSize: 14,
-                fontWeight: 600,
+                color: formatColor(neutral.gray3)
               }}>
               Max
             </Typography>

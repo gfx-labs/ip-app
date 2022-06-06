@@ -36,7 +36,7 @@ export const SelectedChainButton = () => {
         },
       }}
     >
-      <Typography variant="h6">
+      <Typography variant="label2">
       {name}
       </Typography>
     </Button>

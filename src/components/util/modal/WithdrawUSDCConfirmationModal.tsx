@@ -57,8 +57,7 @@ export const WithdrawUSDCConfirmationModal = () => {
       }}
     >
       <Typography
-        variant="body1"
-        fontWeight={600}
+        variant="body3"
         color={
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
@@ -82,7 +81,7 @@ export const WithdrawUSDCConfirmationModal = () => {
       >
         <Box display="flex" alignItems="center">
           <Box>
-            <Typography variant="h3" color="text.secondary">
+            <Typography variant="body3" color="text.secondary">
               {"$" + USDC.amountToWithdraw}
             </Typography>
           </Box>
@@ -112,20 +111,19 @@ export const WithdrawUSDCConfirmationModal = () => {
             marginRight={3}
           ></Box>
           <Box>
-            <Typography variant="h3" color="text.secondary">
+            <Typography variant="body3" color="text.secondary">
               {"$" + USDC.amountToWithdraw}
             </Typography>
           </Box>
         </Box>
       </Box>
 
-      <Box>
+      <Box           textAlign="center"
+>
         <Typography
-          variant="body1"
+          variant="body3_medium"
           color={formatColor(neutral.gray3)}
           fontStyle="italic"
-          fontWeight={500}
-          textAlign="center"
         >
           1 {USDC.token.ticker} = 1 USDi ($1){" "}
         </Typography>

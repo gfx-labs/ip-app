@@ -15,11 +15,11 @@ import { WalletModal } from "../modal";
 import { addressShortener } from "../text/";
 
 interface ConnectWalletButtonProps {
-  invertLight?: boolean
+  invertLight?: boolean;
 }
 
 export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
-  const {invertLight = false} = props;
+  const { invertLight = false } = props;
 
   const { setIsWalletModalOpen } = useWalletModalContext();
 
@@ -38,8 +38,8 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
       <Button
         variant="outlined"
         sx={{
-          minWidth: 'auto',
-          width: '100%',
+          minWidth: "auto",
+          width: "100%",
           display: "flex",
           flexDirection: "row",
           px: 3,
@@ -47,9 +47,6 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
           backgroundColor: isLight
             ? formatColor(neutral.white)
             : formatColor(neutral.gray4),
-          color: isLight
-            ? formatColor(neutral.black)
-            : formatColor(neutral.white),
           "&:hover": {
             backgroundColor: isLight
               ? formatColor(neutral.gray5)
@@ -61,7 +58,17 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
         size="large"
         onClick={onClick}
       >
-        {children}
+        <Typography
+          variant="label2"
+          whiteSpace="nowrap"
+          sx={{
+            color: isLight
+              ? formatColor(neutral.black)
+              : formatColor(neutral.white),
+          }}
+        >
+          {children}
+        </Typography>
       </Button>
     );
   };
@@ -85,9 +92,7 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
             id="panel1a-header"
           >
             <StyledConnectButton>
-              <Typography fontWeight={600}>
-                {addressShortener(currentAccount)}
-              </Typography>
+              {addressShortener(currentAccount)}
             </StyledConnectButton>
           </AccordionSummary>
           <AccordionDetails sx={{ position: "absolute", px: 0, width: "100%" }}>
@@ -95,14 +100,14 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
               onClick={disconnectWallet}
               sx={{ width: "100%", justifyContent: "center" }}
             >
-              <Typography variant="h6">Disconnect</Typography>
+              Disconnect
             </StyledConnectButton>
           </AccordionDetails>
         </Accordion>
       ) : (
         <>
           <StyledConnectButton onClick={() => setIsWalletModalOpen(true)}>
-            <Typography variant="h6" whiteSpace="nowrap">Connect wallet</Typography>
+            Connect wallet
           </StyledConnectButton>
           <WalletModal />
         </>

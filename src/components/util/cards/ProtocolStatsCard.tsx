@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useLight } from "../../../hooks/useLight";
-import { formatGradient, gradient } from "../../../theme";
+import { blue, formatGradient, gradient, formatColor } from "../../../theme";
 import { SwapContainer } from "../swap";
 import { TitleText } from "../text";
 import { useRolodexContext } from "../../../components/libs/rolodex-data-provider/RolodexDataProvider";
@@ -8,11 +8,8 @@ import { useTotalSupply } from "../../../hooks/useTotalSupply";
 import { useEffect, useState } from "react";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
-import { useBalanceOf } from "../../../hooks/useBalanceOf";
 import { useReserveRatio } from "../../../hooks/useReserveRatio";
 import {Contract} from "ethers";
-import {Interface} from "readline";
-import {defaultAbiCoder} from "ethers/lib/utils";
 import {BN} from "../../../easy/bn";
 
 export const ProtocolStatsCard = () => {
@@ -77,7 +74,7 @@ export const ProtocolStatsCard = () => {
           height={18}
           marginRight={1}
         />
-        <Typography variant="caption">Reserve Ratio: {reserveRatio}%</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>Reserve Ratio: {reserveRatio}%</Typography>
       </Box>
 
       <SwapContainer />

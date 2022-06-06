@@ -22,7 +22,7 @@ export const WalletModalContent = () => {
   return (
     <Box>
       <Typography
-        fontWeight={600}
+        variant="subtitle1"
         position="relative"
         top={-8}
         textAlign="center"
@@ -99,7 +99,7 @@ export const WalletModalContent = () => {
       )}
 
       <Box mt={2}>
-        <Typography variant="h6">
+        <Typography variant="label2">
           By connecting to Interest Protocol you agree to GFX Labs{" "}
           <Link href="#/terms" target="_blank">Terms of Service</Link> and acknowledge you have read
           and understand the <Link href="#/whitepaper" target="_blank">Interest Protocol Whitepaper.</Link>

@@ -118,10 +118,9 @@ export const RepayContent = (props: RepayContent) => {
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
+            variant="body3"
             sx={{
               color: formatColor(neutral.gray3),
-              fontSize: 14,
-              fontWeight: 600,
               marginLeft: 1,
             }}
           >

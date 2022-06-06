@@ -34,12 +34,9 @@ export const Community: React.FC = () => {
         >
           <Typography
             display="inline"
-            variant="h1"
+            variant="h2"
             textAlign="center"
-            sx={{
-              color: formatColor(neutral.black),
-              fontSize: {xs: 24, md: 54},
-            }}
+            color={formatColor(neutral.black)}
           >
             Join the Community
           </Typography>
