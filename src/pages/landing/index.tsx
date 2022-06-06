@@ -208,7 +208,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                     Git
                   </Link>
                 </Typography>
-                {/* <Typography
+                { <Typography
                   sx={{
                     color: formatColor(neutral.black),
                     display: "flex",
@@ -217,10 +217,10 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                     fontWeight: 600,
                   }}
                 >
-                  <Link href="#/sale" sx={{ color: "inherit" }}>
+                  <Link href="#/whitelist" sx={{ color: "inherit" }}>
                     Sale
                   </Link>
-                </Typography> */}
+                </Typography> }
               </Box>
             </SwipeableDrawer>
           </Toolbar>
@@ -278,7 +278,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 Git
               </Link>
             </Typography>
-            {/* <Typography
+            { <Typography
               sx={{
                 color: formatColor(neutral.gray2),
                 display: "flex",
@@ -287,10 +287,10 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 alignItems: "center",
               }}
             >
-              <Link href="#/sale" sx={{ color: "inherit" }}>
+              <Link href="#/whitelist" sx={{ color: "inherit" }}>
                 Sale
               </Link>
-            </Typography> */}
+            </Typography> }
           </Box>
 
           <Box sx={{ gap: 2 }} display="flex" mr={0} ml="auto">
