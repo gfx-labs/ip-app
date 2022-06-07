@@ -103,7 +103,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
       sx={{
         backgroundColor: isLight
           ? formatColor(neutral.white)
-          : formatColor(neutral.black6),
+          : formatColor(neutral.gray7),
         borderRadius: 2,
         paddingX: { xs: 1, md: 4 },
         paddingY: 3,
@@ -116,22 +116,25 @@ export const ProposalCard = (props: ProposalCardProps) => {
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="center">
           <Typography
-            variant="h3"
-            fontWeight={500}
+            variant="subtitle2_semi"
             color={formatColor(blue.blue1)}
             mr={1}
           >
             {id}
           </Typography>
           <Box position="relative" top={4}>
-            <Typography variant="h3" fontWeight={500} color="text.secondary">
+            
+            
+            <Typography display="block" variant="subtitle2_semi" color="text.secondary">
               {getTitle(body)}
             </Typography>
             {timeLeft ? (
+              
               <Typography
-                variant="body2"
+                variant="label2_medium"
                 color={formatColor(neutral.gray3)}
-                mt={0.25}
+                position="relative"
+                top={-10}
               >
                 {timeLeft}
               </Typography>

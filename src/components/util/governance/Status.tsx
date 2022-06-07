@@ -73,7 +73,7 @@ const StatusContainer = ({ status }: { status: string }) => {
         borderRadius: 1,
       }}
     >
-      <Typography variant="body1">{status}</Typography>
+      <Typography variant="body3">{status}</Typography>
     </Box>
   );
 };

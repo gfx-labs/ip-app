@@ -80,22 +80,25 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
         [theme.breakpoints.down("md")]: {
           mb: 0,
           pb: 0,
+          pt: 2,
           marginLeft: "auto",
         },
       }}
     >
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column-reverse", md: "row" }}
+        justifyContent="space-between"
+        alignItems={{ xs: "start", md: "center" }}
+        rowGap={1}
+      >
         <VoteButton id={id} status={status} totalVotes={votesTotal} />
 
-        <Typography
-          fontWeight={500}
-          color={formatColor(neutral.gray10)}
-          variant="body1"
-        >
+        <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
           {time}
         </Typography>
       </Box>
-      <Box display="flex" columnGap={2} mt={4}>
+      <Box display="flex" columnGap={2} mt={4} flexWrap="wrap">
         <VoteCount
           forOrAgainst="For"
           votes={votersFor.reduce((a, b) => {

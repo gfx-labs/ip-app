@@ -73,7 +73,7 @@ export const Governance = () => {
       <Box display="flex" justifyContent="space-between">
         <Box
           display="flex"
-          mb={3}
+          mb={1}
           columnGap={2}
           rowGap={1}
           flexDirection={{ xs: "column", md: "row" }}
@@ -100,6 +100,7 @@ export const Governance = () => {
               </>
             }
             text="Proposal Voting"
+            text_variant="body2_semi"
           />
 
           <ToolTip
@@ -120,6 +121,8 @@ export const Governance = () => {
               </>
             }
             text="Emergency Voting"
+            text_variant="body2_semi"
+
           />
         </Box>
 
