@@ -25,15 +25,25 @@ export interface IIptInterface extends utils.Interface {
     "getPriorVotes(address,uint256)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "getPriorVotes"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "getPriorVotes" | "getPriorVotes(address,uint256)"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "getPriorVotes",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "getPriorVotes(address,uint256)",
+    values: [string, BigNumberish]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "getPriorVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getPriorVotes(address,uint256)",
     data: BytesLike
   ): Result;
 
@@ -72,6 +82,12 @@ export interface IIpt extends BaseContract {
       blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
+
+    "getPriorVotes(address,uint256)"(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
   };
 
   getPriorVotes(
@@ -80,8 +96,20 @@ export interface IIpt extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  "getPriorVotes(address,uint256)"(
+    account: string,
+    blockNumber: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   callStatic: {
     getPriorVotes(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getPriorVotes(address,uint256)"(
       account: string,
       blockNumber: BigNumberish,
       overrides?: CallOverrides
@@ -96,10 +124,22 @@ export interface IIpt extends BaseContract {
       blockNumber: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    "getPriorVotes(address,uint256)"(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     getPriorVotes(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getPriorVotes(address,uint256)"(
       account: string,
       blockNumber: BigNumberish,
       overrides?: CallOverrides

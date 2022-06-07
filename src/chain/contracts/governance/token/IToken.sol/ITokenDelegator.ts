@@ -26,15 +26,25 @@ export interface ITokenDelegatorInterface extends utils.Interface {
     "_setImplementation(address)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "_setImplementation"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "_setImplementation" | "_setImplementation(address)"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "_setImplementation",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "_setImplementation(address)",
+    values: [string]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "_setImplementation",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setImplementation(address)",
     data: BytesLike
   ): Result;
 
@@ -72,6 +82,11 @@ export interface ITokenDelegator extends BaseContract {
       implementation_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   _setImplementation(
@@ -79,8 +94,18 @@ export interface ITokenDelegator extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setImplementation(address)"(
+    implementation_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     _setImplementation(
+      implementation_: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "_setImplementation(address)"(
       implementation_: string,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -93,10 +118,20 @@ export interface ITokenDelegator extends BaseContract {
       implementation_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _setImplementation(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "_setImplementation(address)"(
       implementation_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

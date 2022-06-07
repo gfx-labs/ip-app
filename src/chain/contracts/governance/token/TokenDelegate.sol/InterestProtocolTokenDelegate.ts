@@ -63,34 +63,63 @@ export interface InterestProtocolTokenDelegateInterface
   getFunction(
     nameOrSignatureOrTopic:
       | "DELEGATION_TYPEHASH"
+      | "DELEGATION_TYPEHASH()"
       | "DOMAIN_TYPEHASH"
+      | "DOMAIN_TYPEHASH()"
       | "PERMIT_TYPEHASH"
+      | "PERMIT_TYPEHASH()"
       | "UINT256_MAX"
+      | "UINT256_MAX()"
       | "UINT96_MAX"
+      | "UINT96_MAX()"
       | "allowance"
+      | "allowance(address,address)"
       | "approve"
+      | "approve(address,uint256)"
       | "balanceOf"
+      | "balanceOf(address)"
       | "changeName"
+      | "changeName(string)"
       | "changeSymbol"
+      | "changeSymbol(string)"
       | "checkpoints"
+      | "checkpoints(address,uint32)"
       | "decimals"
+      | "decimals()"
       | "delegate"
+      | "delegate(address)"
       | "delegateBySig"
+      | "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)"
       | "delegates"
+      | "delegates(address)"
       | "getCurrentVotes"
+      | "getCurrentVotes(address)"
       | "getPriorVotes"
+      | "getPriorVotes(address,uint256)"
       | "implementation"
+      | "implementation()"
       | "initialize"
+      | "initialize(address,uint256)"
       | "mint"
+      | "mint(address,uint256)"
       | "name"
+      | "name()"
       | "nonces"
+      | "nonces(address)"
       | "numCheckpoints"
+      | "numCheckpoints(address)"
       | "owner"
+      | "owner()"
       | "permit"
+      | "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"
       | "symbol"
+      | "symbol()"
       | "totalSupply"
+      | "totalSupply()"
       | "transfer"
+      | "transfer(address,uint256)"
       | "transferFrom"
+      | "transferFrom(address,address,uint256)"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -98,7 +127,15 @@ export interface InterestProtocolTokenDelegateInterface
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "DELEGATION_TYPEHASH()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "DOMAIN_TYPEHASH",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "DOMAIN_TYPEHASH()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -106,7 +143,15 @@ export interface InterestProtocolTokenDelegateInterface
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "PERMIT_TYPEHASH()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "UINT256_MAX",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "UINT256_MAX()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -114,25 +159,61 @@ export interface InterestProtocolTokenDelegateInterface
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "UINT96_MAX()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "allowance",
+    values: [string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowance(address,address)",
     values: [string, string]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "approve(address,uint256)",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "balanceOf(address)",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "changeName", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "changeName(string)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "changeSymbol",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "changeSymbol(string)",
     values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "checkpoints",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "checkpoints(address,uint32)",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "decimals()",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "delegate", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "delegate(address)",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "delegateBySig",
     values: [
@@ -144,9 +225,28 @@ export interface InterestProtocolTokenDelegateInterface
       BytesLike
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)",
+    values: [
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike
+    ]
+  ): string;
   encodeFunctionData(functionFragment: "delegates", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "delegates(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getCurrentVotes",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getCurrentVotes(address)",
     values: [string]
   ): string;
   encodeFunctionData(
@@ -154,7 +254,15 @@ export interface InterestProtocolTokenDelegateInterface
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "getPriorVotes(address,uint256)",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "implementation",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "implementation()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -162,16 +270,34 @@ export interface InterestProtocolTokenDelegateInterface
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "initialize(address,uint256)",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "mint",
     values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "mint(address,uint256)",
+    values: [string, BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "name()", values?: undefined): string;
   encodeFunctionData(functionFragment: "nonces", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "nonces(address)",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "numCheckpoints",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "numCheckpoints(address)",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "permit",
     values: [
@@ -184,9 +310,26 @@ export interface InterestProtocolTokenDelegateInterface
       BytesLike
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+    values: [
+      string,
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BytesLike,
+      BytesLike
+    ]
+  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "symbol()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -194,7 +337,15 @@ export interface InterestProtocolTokenDelegateInterface
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "transfer(address,uint256)",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom(address,address,uint256)",
     values: [string, string, BigNumberish]
   ): string;
 
@@ -203,7 +354,15 @@ export interface InterestProtocolTokenDelegateInterface
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "DELEGATION_TYPEHASH()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "DOMAIN_TYPEHASH",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "DOMAIN_TYPEHASH()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -211,31 +370,84 @@ export interface InterestProtocolTokenDelegateInterface
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "PERMIT_TYPEHASH()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "UINT256_MAX",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "UINT256_MAX()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "UINT96_MAX", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "UINT96_MAX()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "allowance(address,address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "approve(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "balanceOf(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "changeName", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "changeName(string)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "changeSymbol",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "changeSymbol(string)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "checkpoints",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "checkpoints(address,uint32)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decimals()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "delegate", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "delegate(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "delegateBySig",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "delegates", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "delegates(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "getCurrentVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getCurrentVotes(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -243,27 +455,70 @@ export interface InterestProtocolTokenDelegateInterface
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getPriorVotes(address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "implementation",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "implementation()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initialize(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mint(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "nonces(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "numCheckpoints",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "numCheckpoints(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "transfer(address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom(address,address,uint256)",
     data: BytesLike
   ): Result;
 
@@ -279,13 +534,35 @@ export interface InterestProtocolTokenDelegateInterface
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Approval(address,address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangedName"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ChangedName(string,string)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangedSymbol"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ChangedSymbol(string,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DelegateChanged(address,address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DelegateVotesChanged(address,uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinterChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "MinterChanged(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewImplementation"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewImplementation(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Transfer(address,address,uint256)"
+  ): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -411,15 +688,31 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
   functions: {
     DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    "DELEGATION_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+
+    "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
+
     UINT256_MAX(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "UINT256_MAX()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     UINT96_MAX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "UINT96_MAX()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     allowance(
+      account: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "allowance(address,address)"(
       account: string,
       spender: string,
       overrides?: CallOverrides
@@ -431,14 +724,35 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "approve(address,uint256)"(
+      spender: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "balanceOf(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     changeName(
       name_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "changeName(string)"(
+      name_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     changeSymbol(
+      symbol_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "changeSymbol(string)"(
       symbol_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -449,9 +763,22 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
+    "checkpoints(address,uint32)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
+
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<[number]>;
+
     delegate(
+      delegatee: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "delegate(address)"(
       delegatee: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -466,9 +793,29 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)"(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     delegates(arg0: string, overrides?: CallOverrides): Promise<[string]>;
 
+    "delegates(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     getCurrentVotes(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "getCurrentVotes(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
@@ -479,9 +826,23 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    "getPriorVotes(address,uint256)"(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     implementation(overrides?: CallOverrides): Promise<[string]>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<[string]>;
+
     initialize(
+      account_: string,
+      initialSupply_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "initialize(address,uint256)"(
       account_: string,
       initialSupply_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -493,13 +854,33 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "mint(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    "name()"(overrides?: CallOverrides): Promise<[string]>;
 
     nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "nonces(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<[number]>;
 
+    "numCheckpoints(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[number]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
+
+    "owner()"(overrides?: CallOverrides): Promise<[string]>;
 
     permit(
       owner: string,
@@ -512,11 +893,32 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: string,
+      spender: string,
+      rawAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transfer(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "transfer(address,uint256)"(
       dst: string,
       rawAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -528,19 +930,42 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       rawAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    "transferFrom(address,address,uint256)"(
+      src: string,
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
   DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  "DELEGATION_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
   DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
+  "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
   UINT256_MAX(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "UINT256_MAX()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   UINT96_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "UINT96_MAX()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   allowance(
+    account: string,
+    spender: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "allowance(address,address)"(
     account: string,
     spender: string,
     overrides?: CallOverrides
@@ -552,14 +977,35 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "approve(address,uint256)"(
+    spender: string,
+    rawAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  "balanceOf(address)"(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   changeName(
     name_: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "changeName(string)"(
+    name_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   changeSymbol(
+    symbol_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "changeSymbol(string)"(
     symbol_: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -570,9 +1016,22 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
+  "checkpoints(address,uint32)"(
+    arg0: string,
+    arg1: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
+
   decimals(overrides?: CallOverrides): Promise<number>;
 
+  "decimals()"(overrides?: CallOverrides): Promise<number>;
+
   delegate(
+    delegatee: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "delegate(address)"(
     delegatee: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -587,9 +1046,29 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)"(
+    delegatee: string,
+    nonce: BigNumberish,
+    expiry: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   delegates(arg0: string, overrides?: CallOverrides): Promise<string>;
 
+  "delegates(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   getCurrentVotes(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "getCurrentVotes(address)"(
     account: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
@@ -600,9 +1079,23 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  "getPriorVotes(address,uint256)"(
+    account: string,
+    blockNumber: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   implementation(overrides?: CallOverrides): Promise<string>;
 
+  "implementation()"(overrides?: CallOverrides): Promise<string>;
+
   initialize(
+    account_: string,
+    initialSupply_: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "initialize(address,uint256)"(
     account_: string,
     initialSupply_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -614,13 +1107,33 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "mint(address,uint256)"(
+    dst: string,
+    rawAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   name(overrides?: CallOverrides): Promise<string>;
+
+  "name()"(overrides?: CallOverrides): Promise<string>;
 
   nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  "nonces(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<number>;
 
+  "numCheckpoints(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<number>;
+
   owner(overrides?: CallOverrides): Promise<string>;
+
+  "owner()"(overrides?: CallOverrides): Promise<string>;
 
   permit(
     owner: string,
@@ -633,11 +1146,32 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+    owner: string,
+    spender: string,
+    rawAmount: BigNumberish,
+    deadline: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   symbol(overrides?: CallOverrides): Promise<string>;
+
+  "symbol()"(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   transfer(
+    dst: string,
+    rawAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "transfer(address,uint256)"(
     dst: string,
     rawAmount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -650,18 +1184,41 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "transferFrom(address,address,uint256)"(
+    src: string,
+    dst: string,
+    rawAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
     DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    "DELEGATION_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
+    "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
     UINT256_MAX(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "UINT256_MAX()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     UINT96_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "UINT96_MAX()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
+      account: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "allowance(address,address)"(
       account: string,
       spender: string,
       overrides?: CallOverrides
@@ -673,11 +1230,32 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    "approve(address,uint256)"(
+      spender: string,
+      rawAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "balanceOf(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     changeName(name_: string, overrides?: CallOverrides): Promise<void>;
 
+    "changeName(string)"(
+      name_: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     changeSymbol(symbol_: string, overrides?: CallOverrides): Promise<void>;
+
+    "changeSymbol(string)"(
+      symbol_: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     checkpoints(
       arg0: string,
@@ -685,9 +1263,22 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
+    "checkpoints(address,uint32)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
+
     decimals(overrides?: CallOverrides): Promise<number>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<number>;
+
     delegate(delegatee: string, overrides?: CallOverrides): Promise<void>;
+
+    "delegate(address)"(
+      delegatee: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     delegateBySig(
       delegatee: string,
@@ -699,9 +1290,29 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)"(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     delegates(arg0: string, overrides?: CallOverrides): Promise<string>;
 
+    "delegates(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
     getCurrentVotes(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getCurrentVotes(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -712,9 +1323,23 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "getPriorVotes(address,uint256)"(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     implementation(overrides?: CallOverrides): Promise<string>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<string>;
+
     initialize(
+      account_: string,
+      initialSupply_: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "initialize(address,uint256)"(
       account_: string,
       initialSupply_: BigNumberish,
       overrides?: CallOverrides
@@ -726,13 +1351,33 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "mint(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     name(overrides?: CallOverrides): Promise<string>;
+
+    "name()"(overrides?: CallOverrides): Promise<string>;
 
     nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    "nonces(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<number>;
 
+    "numCheckpoints(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<number>;
+
     owner(overrides?: CallOverrides): Promise<string>;
+
+    "owner()"(overrides?: CallOverrides): Promise<string>;
 
     permit(
       owner: string,
@@ -745,9 +1390,24 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: string,
+      spender: string,
+      rawAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     symbol(overrides?: CallOverrides): Promise<string>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<string>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       dst: string,
@@ -755,7 +1415,20 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    "transfer(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     transferFrom(
+      src: string,
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "transferFrom(address,address,uint256)"(
       src: string,
       dst: string,
       rawAmount: BigNumberish,
@@ -842,15 +1515,31 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
   estimateGas: {
     DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "DELEGATION_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     UINT256_MAX(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "UINT256_MAX()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     UINT96_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "UINT96_MAX()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
+      account: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "allowance(address,address)"(
       account: string,
       spender: string,
       overrides?: CallOverrides
@@ -862,14 +1551,35 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "approve(address,uint256)"(
+      spender: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    "balanceOf(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     changeName(
       name_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "changeName(string)"(
+      name_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     changeSymbol(
+      symbol_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "changeSymbol(string)"(
       symbol_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -880,9 +1590,22 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "checkpoints(address,uint32)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     delegate(
+      delegatee: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "delegate(address)"(
       delegatee: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -897,9 +1620,29 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)"(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     delegates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    "delegates(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getCurrentVotes(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getCurrentVotes(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -910,9 +1653,23 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "getPriorVotes(address,uint256)"(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
+      account_: string,
+      initialSupply_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "initialize(address,uint256)"(
       account_: string,
       initialSupply_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -924,13 +1681,33 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "mint(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    "nonces(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    "numCheckpoints(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
       owner: string,
@@ -943,9 +1720,24 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: string,
+      spender: string,
+      rawAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       dst: string,
@@ -953,7 +1745,20 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "transfer(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     transferFrom(
+      src: string,
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "transferFrom(address,address,uint256)"(
       src: string,
       dst: string,
       rawAmount: BigNumberish,
@@ -966,15 +1771,37 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "DELEGATION_TYPEHASH()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "DOMAIN_TYPEHASH()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "PERMIT_TYPEHASH()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     UINT256_MAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "UINT256_MAX()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     UINT96_MAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "UINT96_MAX()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     allowance(
+      account: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "allowance(address,address)"(
       account: string,
       spender: string,
       overrides?: CallOverrides
@@ -986,7 +1813,18 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "approve(address,uint256)"(
+      spender: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     balanceOf(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "balanceOf(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -996,7 +1834,17 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "changeName(string)"(
+      name_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     changeSymbol(
+      symbol_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "changeSymbol(string)"(
       symbol_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1007,14 +1855,37 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "checkpoints(address,uint32)"(
+      arg0: string,
+      arg1: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     delegate(
       delegatee: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "delegate(address)"(
+      delegatee: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     delegateBySig(
+      delegatee: string,
+      nonce: BigNumberish,
+      expiry: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)"(
       delegatee: string,
       nonce: BigNumberish,
       expiry: BigNumberish,
@@ -1029,7 +1900,17 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "delegates(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     getCurrentVotes(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getCurrentVotes(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1040,9 +1921,25 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "getPriorVotes(address,uint256)"(
+      account: string,
+      blockNumber: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "implementation()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialize(
+      account_: string,
+      initialSupply_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "initialize(address,uint256)"(
       account_: string,
       initialSupply_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1054,9 +1951,22 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "mint(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     nonces(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "nonces(address)"(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1066,7 +1976,14 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "numCheckpoints(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
       owner: string,
@@ -1079,9 +1996,24 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: string,
+      spender: string,
+      rawAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
       dst: string,
@@ -1089,7 +2021,20 @@ export interface InterestProtocolTokenDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "transfer(address,uint256)"(
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     transferFrom(
+      src: string,
+      dst: string,
+      rawAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "transferFrom(address,address,uint256)"(
       src: string,
       dst: string,
       rawAmount: BigNumberish,

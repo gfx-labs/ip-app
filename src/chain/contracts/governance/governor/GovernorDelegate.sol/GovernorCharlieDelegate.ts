@@ -93,52 +93,99 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "BALLOT_TYPEHASH"
+      | "BALLOT_TYPEHASH()"
       | "DOMAIN_TYPEHASH"
+      | "DOMAIN_TYPEHASH()"
       | "GRACE_PERIOD"
+      | "GRACE_PERIOD()"
       | "_setDelay"
+      | "_setDelay(uint256)"
       | "_setEmergencyDelay"
+      | "_setEmergencyDelay(uint256)"
       | "_setEmergencyQuorumVotes"
+      | "_setEmergencyQuorumVotes(uint256)"
       | "_setEmergencyVotingPeriod"
+      | "_setEmergencyVotingPeriod(uint256)"
       | "_setProposalThreshold"
+      | "_setProposalThreshold(uint256)"
       | "_setQuorumVotes"
+      | "_setQuorumVotes(uint256)"
       | "_setVotingDelay"
+      | "_setVotingDelay(uint256)"
       | "_setVotingPeriod"
+      | "_setVotingPeriod(uint256)"
       | "_setWhitelistAccountExpiration"
+      | "_setWhitelistAccountExpiration(address,uint256)"
       | "_setWhitelistGuardian"
+      | "_setWhitelistGuardian(address)"
       | "cancel"
+      | "cancel(uint256)"
       | "castVote"
+      | "castVote(uint256,uint8)"
       | "castVoteBySig"
+      | "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)"
       | "castVoteWithReason"
+      | "castVoteWithReason(uint256,uint8,string)"
       | "emergencyQuorumVotes"
+      | "emergencyQuorumVotes()"
       | "emergencyTimelockDelay"
+      | "emergencyTimelockDelay()"
       | "emergencyVotingPeriod"
+      | "emergencyVotingPeriod()"
       | "execute"
+      | "execute(uint256)"
       | "executeTransaction"
+      | "executeTransaction(address,uint256,string,bytes,uint256)"
       | "getActions"
+      | "getActions(uint256)"
       | "getReceipt"
+      | "getReceipt(uint256,address)"
       | "implementation"
+      | "implementation()"
       | "initialProposalId"
+      | "initialProposalId()"
       | "initialize"
+      | "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)"
       | "initialized"
+      | "initialized()"
       | "ipt"
+      | "ipt()"
       | "isWhitelisted"
+      | "isWhitelisted(address)"
       | "latestProposalIds"
+      | "latestProposalIds(address)"
       | "name"
+      | "name()"
       | "proposalCount"
+      | "proposalCount()"
       | "proposalMaxOperations"
+      | "proposalMaxOperations()"
       | "proposalReceipts"
+      | "proposalReceipts(uint256,address)"
       | "proposalThreshold"
+      | "proposalThreshold()"
       | "proposalTimelockDelay"
+      | "proposalTimelockDelay()"
       | "proposals"
+      | "proposals(uint256)"
       | "propose"
+      | "propose(address[],uint256[],string[],bytes[],string,bool)"
       | "queue"
+      | "queue(uint256)"
       | "queuedTransactions"
+      | "queuedTransactions(bytes32)"
       | "quorumVotes"
+      | "quorumVotes()"
       | "state"
+      | "state(uint256)"
       | "votingDelay"
+      | "votingDelay()"
       | "votingPeriod"
+      | "votingPeriod()"
       | "whitelistAccountExpirations"
+      | "whitelistAccountExpirations(address)"
       | "whitelistGuardian"
+      | "whitelistGuardian()"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -146,7 +193,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "BALLOT_TYPEHASH()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "DOMAIN_TYPEHASH",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "DOMAIN_TYPEHASH()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -154,7 +209,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "GRACE_PERIOD()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "_setDelay",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setDelay(uint256)",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -162,7 +225,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "_setEmergencyDelay(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "_setEmergencyQuorumVotes",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setEmergencyQuorumVotes(uint256)",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -170,7 +241,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "_setEmergencyVotingPeriod(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "_setProposalThreshold",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setProposalThreshold(uint256)",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -178,7 +257,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "_setQuorumVotes(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "_setVotingDelay",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setVotingDelay(uint256)",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -186,7 +273,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "_setVotingPeriod(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "_setWhitelistAccountExpiration",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_setWhitelistAccountExpiration(address,uint256)",
     values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
@@ -194,7 +289,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "_setWhitelistGuardian(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "cancel",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "cancel(uint256)",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -202,7 +305,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "castVote(uint256,uint8)",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "castVoteBySig",
+    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)",
     values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(
@@ -210,7 +321,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "castVoteWithReason(uint256,uint8,string)",
+    values: [BigNumberish, BigNumberish, string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "emergencyQuorumVotes",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "emergencyQuorumVotes()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -218,7 +337,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "emergencyTimelockDelay()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "emergencyVotingPeriod",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "emergencyVotingPeriod()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -226,7 +353,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "execute(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "executeTransaction",
+    values: [string, BigNumberish, string, BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "executeTransaction(address,uint256,string,bytes,uint256)",
     values: [string, BigNumberish, string, BytesLike, BigNumberish]
   ): string;
   encodeFunctionData(
@@ -234,7 +369,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "getActions(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getReceipt",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getReceipt(uint256,address)",
     values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
@@ -242,7 +385,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "implementation()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialProposalId",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialProposalId()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -260,21 +411,53 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
+    values: [
+      string,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialized",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "initialized()",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "ipt", values?: undefined): string;
+  encodeFunctionData(functionFragment: "ipt()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isWhitelisted",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isWhitelisted(address)",
     values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "latestProposalIds",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "latestProposalIds(address)",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "name()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "proposalCount",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalCount()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -282,7 +465,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "proposalMaxOperations()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "proposalReceipts",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalReceipts(uint256,address)",
     values: [BigNumberish, string]
   ): string;
   encodeFunctionData(
@@ -290,7 +481,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "proposalThreshold()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "proposalTimelockDelay",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "proposalTimelockDelay()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -298,21 +497,49 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "proposals(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "propose",
+    values: [string[], BigNumberish[], string[], BytesLike[], string, boolean]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "propose(address[],uint256[],string[],bytes[],string,bool)",
     values: [string[], BigNumberish[], string[], BytesLike[], string, boolean]
   ): string;
   encodeFunctionData(functionFragment: "queue", values: [BigNumberish]): string;
   encodeFunctionData(
+    functionFragment: "queue(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "queuedTransactions",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "queuedTransactions(bytes32)",
     values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "quorumVotes",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "quorumVotes()",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "state", values: [BigNumberish]): string;
   encodeFunctionData(
+    functionFragment: "state(uint256)",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "votingDelay",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "votingDelay()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -320,11 +547,23 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "votingPeriod()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "whitelistAccountExpirations",
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "whitelistAccountExpirations(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "whitelistGuardian",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "whitelistGuardian()",
     values?: undefined
   ): string;
 
@@ -333,16 +572,36 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "BALLOT_TYPEHASH()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "DOMAIN_TYPEHASH",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "DOMAIN_TYPEHASH()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "GRACE_PERIOD",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "GRACE_PERIOD()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "_setDelay", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "_setDelay(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_setEmergencyDelay",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setEmergencyDelay(uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -350,7 +609,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_setEmergencyQuorumVotes(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_setEmergencyVotingPeriod",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setEmergencyVotingPeriod(uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -358,7 +625,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_setProposalThreshold(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_setQuorumVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setQuorumVotes(uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -366,7 +641,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_setVotingDelay(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_setVotingPeriod",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setVotingPeriod(uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -374,13 +657,33 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_setWhitelistAccountExpiration(address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_setWhitelistGuardian",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setWhitelistGuardian(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "cancel", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "cancel(uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "castVote", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "castVote(uint256,uint8)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "castVoteBySig",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -388,7 +691,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "castVoteWithReason(uint256,uint8,string)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "emergencyQuorumVotes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "emergencyQuorumVotes()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -396,41 +707,95 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "emergencyTimelockDelay()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "emergencyVotingPeriod",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "emergencyVotingPeriod()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "execute", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "execute(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "executeTransaction",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "executeTransaction(address,uint256,string,bytes,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getActions", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getActions(uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getReceipt", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "getReceipt(uint256,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "implementation",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "implementation()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "initialProposalId",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "initialProposalId()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "initialized",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "initialized()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "ipt", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ipt()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isWhitelisted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isWhitelisted(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "latestProposalIds",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "latestProposalIds(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proposalCount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalCount()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -438,7 +803,15 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "proposalMaxOperations()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "proposalReceipts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalReceipts(uint256,address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -446,23 +819,59 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "proposalThreshold()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "proposalTimelockDelay",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "proposalTimelockDelay()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "proposals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "proposals(uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "propose", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "propose(address[],uint256[],string[],bytes[],string,bool)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "queue", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "queue(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "queuedTransactions",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "queuedTransactions(bytes32)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "quorumVotes",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "quorumVotes()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "state", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "state(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "votingDelay",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "votingDelay()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -470,11 +879,23 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "votingPeriod()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "whitelistAccountExpirations",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "whitelistAccountExpirations(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "whitelistGuardian",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "whitelistGuardian()",
     data: BytesLike
   ): Result;
 
@@ -503,28 +924,81 @@ export interface GovernorCharlieDelegateInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "CancelTransaction"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "CancelTransaction(bytes32,address,uint256,string,bytes,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EmergencyVotingPeriodSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "EmergencyVotingPeriodSet(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ExecuteTransaction"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ExecuteTransaction(bytes32,address,uint256,string,bytes,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewAdmin"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewAdmin(address,address)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewDelay"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewDelay(uint256,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewEmergencyDelay"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewEmergencyDelay(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewEmergencyQuorum"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewEmergencyQuorum(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewImplementation"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewImplementation(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewPendingAdmin"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewPendingAdmin(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewQuorum"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewQuorum(uint256,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalCanceled"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProposalCanceled(uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalCreated"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProposalExecuted(uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalQueued"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ProposalQueued(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalThresholdSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ProposalThresholdSet(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "QueueTransaction"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "QueueTransaction(bytes32,address,uint256,string,bytes,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VoteCast"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "VoteCast(address,uint256,uint8,uint256,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VotingDelaySet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "VotingDelaySet(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VotingPeriodSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "VotingPeriodSet(uint256,uint256)"
+  ): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "WhitelistAccountExpirationSet"
   ): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "WhitelistAccountExpirationSet(address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WhitelistGuardianSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "WhitelistGuardianSet(address,address)"
+  ): EventFragment;
 }
 
 export interface CancelTransactionEventObject {
@@ -826,11 +1300,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
   functions: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    "BALLOT_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+
+    "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
 
     GRACE_PERIOD(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "GRACE_PERIOD()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     _setDelay(
+      proposalTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "_setDelay(uint256)"(
       proposalTimelockDelay_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -840,7 +1325,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setEmergencyDelay(uint256)"(
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     _setEmergencyQuorumVotes(
+      newEmergencyQuorumVotes: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "_setEmergencyQuorumVotes(uint256)"(
       newEmergencyQuorumVotes: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -850,7 +1345,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setEmergencyVotingPeriod(uint256)"(
+      newEmergencyVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     _setProposalThreshold(
+      newProposalThreshold: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "_setProposalThreshold(uint256)"(
       newProposalThreshold: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -860,12 +1365,27 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setQuorumVotes(uint256)"(
+      newQuorumVotes: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     _setVotingDelay(
       newVotingDelay: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setVotingDelay(uint256)"(
+      newVotingDelay: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     _setVotingPeriod(
+      newVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "_setVotingPeriod(uint256)"(
       newVotingPeriod: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -876,12 +1396,28 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setWhitelistAccountExpiration(address,uint256)"(
+      account: string,
+      expiration: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     _setWhitelistGuardian(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setWhitelistGuardian(address)"(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     cancel(
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "cancel(uint256)"(
       proposalId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -892,7 +1428,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "castVote(uint256,uint8)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     castVoteBySig(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)"(
       proposalId: BigNumberish,
       support: BigNumberish,
       v: BigNumberish,
@@ -908,18 +1459,45 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "castVoteWithReason(uint256,uint8,string)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     emergencyQuorumVotes(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "emergencyQuorumVotes()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     emergencyTimelockDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "emergencyTimelockDelay()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     emergencyVotingPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "emergencyVotingPeriod()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     execute(
       proposalId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "execute(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     executeTransaction(
+      target: string,
+      value: BigNumberish,
+      signature: string,
+      data: BytesLike,
+      eta: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "executeTransaction(address,uint256,string,bytes,uint256)"(
       target: string,
       value: BigNumberish,
       signature: string,
@@ -940,7 +1518,25 @@ export interface GovernorCharlieDelegate extends BaseContract {
       }
     >;
 
+    "getActions(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string[], BigNumber[], string[], string[]] & {
+        targets: string[];
+        values: BigNumber[];
+        signatures: string[];
+        calldatas: string[];
+      }
+    >;
+
     getReceipt(
+      proposalId: BigNumberish,
+      voter: string,
+      overrides?: CallOverrides
+    ): Promise<[ReceiptStructOutput]>;
+
+    "getReceipt(uint256,address)"(
       proposalId: BigNumberish,
       voter: string,
       overrides?: CallOverrides
@@ -948,7 +1544,11 @@ export interface GovernorCharlieDelegate extends BaseContract {
 
     implementation(overrides?: CallOverrides): Promise<[string]>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<[string]>;
+
     initialProposalId(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "initialProposalId()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
       ipt_: string,
@@ -963,11 +1563,33 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)"(
+      ipt_: string,
+      votingPeriod_: BigNumberish,
+      votingDelay_: BigNumberish,
+      proposalThreshold_: BigNumberish,
+      proposalTimelockDelay_: BigNumberish,
+      quorumVotes_: BigNumberish,
+      emergencyQuorumVotes_: BigNumberish,
+      emergencyVotingPeriod_: BigNumberish,
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     initialized(overrides?: CallOverrides): Promise<[boolean]>;
+
+    "initialized()"(overrides?: CallOverrides): Promise<[boolean]>;
 
     ipt(overrides?: CallOverrides): Promise<[string]>;
 
+    "ipt()"(overrides?: CallOverrides): Promise<[string]>;
+
     isWhitelisted(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
+    "isWhitelisted(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
@@ -977,11 +1599,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    "latestProposalIds(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    "name()"(overrides?: CallOverrides): Promise<[string]>;
 
     proposalCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "proposalCount()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     proposalMaxOperations(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "proposalMaxOperations()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     proposalReceipts(
       arg0: BigNumberish,
@@ -995,11 +1628,62 @@ export interface GovernorCharlieDelegate extends BaseContract {
       }
     >;
 
+    "proposalReceipts(uint256,address)"(
+      arg0: BigNumberish,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<
+      [boolean, number, BigNumber] & {
+        hasVoted: boolean;
+        support: number;
+        votes: BigNumber;
+      }
+    >;
+
     proposalThreshold(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "proposalThreshold()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     proposalTimelockDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "proposalTimelockDelay()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     proposals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        BigNumber,
+        string,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        boolean,
+        boolean,
+        boolean,
+        BigNumber,
+        BigNumber
+      ] & {
+        id: BigNumber;
+        proposer: string;
+        eta: BigNumber;
+        startBlock: BigNumber;
+        endBlock: BigNumber;
+        forVotes: BigNumber;
+        againstVotes: BigNumber;
+        abstainVotes: BigNumber;
+        canceled: boolean;
+        executed: boolean;
+        emergency: boolean;
+        quorumVotes: BigNumber;
+        delay: BigNumber;
+      }
+    >;
+
+    "proposals(uint256)"(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
@@ -1044,7 +1728,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "propose(address[],uint256[],string[],bytes[],string,bool)"(
+      targets: string[],
+      values: BigNumberish[],
+      signatures: string[],
+      calldatas: BytesLike[],
+      description: string,
+      emergency: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     queue(
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    "queue(uint256)"(
       proposalId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -1054,32 +1753,66 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    "queuedTransactions(bytes32)"(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     quorumVotes(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "quorumVotes()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     state(
       proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[number]>;
 
+    "state(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[number]>;
+
     votingDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "votingDelay()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     votingPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "votingPeriod()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     whitelistAccountExpirations(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    "whitelistAccountExpirations(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     whitelistGuardian(overrides?: CallOverrides): Promise<[string]>;
+
+    "whitelistGuardian()"(overrides?: CallOverrides): Promise<[string]>;
   };
 
   BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  "BALLOT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
   DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
+  "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
 
   GRACE_PERIOD(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "GRACE_PERIOD()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   _setDelay(
+    proposalTimelockDelay_: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "_setDelay(uint256)"(
     proposalTimelockDelay_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1089,7 +1822,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setEmergencyDelay(uint256)"(
+    emergencyTimelockDelay_: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   _setEmergencyQuorumVotes(
+    newEmergencyQuorumVotes: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "_setEmergencyQuorumVotes(uint256)"(
     newEmergencyQuorumVotes: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1099,7 +1842,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setEmergencyVotingPeriod(uint256)"(
+    newEmergencyVotingPeriod: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   _setProposalThreshold(
+    newProposalThreshold: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "_setProposalThreshold(uint256)"(
     newProposalThreshold: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1109,12 +1862,27 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setQuorumVotes(uint256)"(
+    newQuorumVotes: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   _setVotingDelay(
     newVotingDelay: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setVotingDelay(uint256)"(
+    newVotingDelay: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   _setVotingPeriod(
+    newVotingPeriod: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "_setVotingPeriod(uint256)"(
     newVotingPeriod: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1125,12 +1893,28 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setWhitelistAccountExpiration(address,uint256)"(
+    account: string,
+    expiration: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   _setWhitelistGuardian(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setWhitelistGuardian(address)"(
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   cancel(
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "cancel(uint256)"(
     proposalId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1141,7 +1925,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "castVote(uint256,uint8)"(
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   castVoteBySig(
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)"(
     proposalId: BigNumberish,
     support: BigNumberish,
     v: BigNumberish,
@@ -1157,18 +1956,45 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "castVoteWithReason(uint256,uint8,string)"(
+    proposalId: BigNumberish,
+    support: BigNumberish,
+    reason: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   emergencyQuorumVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "emergencyQuorumVotes()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   emergencyTimelockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "emergencyTimelockDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   emergencyVotingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "emergencyVotingPeriod()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   execute(
     proposalId: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "execute(uint256)"(
+    proposalId: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   executeTransaction(
+    target: string,
+    value: BigNumberish,
+    signature: string,
+    data: BytesLike,
+    eta: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "executeTransaction(address,uint256,string,bytes,uint256)"(
     target: string,
     value: BigNumberish,
     signature: string,
@@ -1189,7 +2015,25 @@ export interface GovernorCharlieDelegate extends BaseContract {
     }
   >;
 
+  "getActions(uint256)"(
+    proposalId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [string[], BigNumber[], string[], string[]] & {
+      targets: string[];
+      values: BigNumber[];
+      signatures: string[];
+      calldatas: string[];
+    }
+  >;
+
   getReceipt(
+    proposalId: BigNumberish,
+    voter: string,
+    overrides?: CallOverrides
+  ): Promise<ReceiptStructOutput>;
+
+  "getReceipt(uint256,address)"(
     proposalId: BigNumberish,
     voter: string,
     overrides?: CallOverrides
@@ -1197,7 +2041,11 @@ export interface GovernorCharlieDelegate extends BaseContract {
 
   implementation(overrides?: CallOverrides): Promise<string>;
 
+  "implementation()"(overrides?: CallOverrides): Promise<string>;
+
   initialProposalId(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "initialProposalId()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
     ipt_: string,
@@ -1212,22 +2060,55 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)"(
+    ipt_: string,
+    votingPeriod_: BigNumberish,
+    votingDelay_: BigNumberish,
+    proposalThreshold_: BigNumberish,
+    proposalTimelockDelay_: BigNumberish,
+    quorumVotes_: BigNumberish,
+    emergencyQuorumVotes_: BigNumberish,
+    emergencyVotingPeriod_: BigNumberish,
+    emergencyTimelockDelay_: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   initialized(overrides?: CallOverrides): Promise<boolean>;
+
+  "initialized()"(overrides?: CallOverrides): Promise<boolean>;
 
   ipt(overrides?: CallOverrides): Promise<string>;
 
+  "ipt()"(overrides?: CallOverrides): Promise<string>;
+
   isWhitelisted(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+  "isWhitelisted(address)"(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   latestProposalIds(
     arg0: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  "latestProposalIds(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   name(overrides?: CallOverrides): Promise<string>;
+
+  "name()"(overrides?: CallOverrides): Promise<string>;
 
   proposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "proposalCount()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   proposalMaxOperations(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "proposalMaxOperations()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   proposalReceipts(
     arg0: BigNumberish,
@@ -1241,11 +2122,62 @@ export interface GovernorCharlieDelegate extends BaseContract {
     }
   >;
 
+  "proposalReceipts(uint256,address)"(
+    arg0: BigNumberish,
+    arg1: string,
+    overrides?: CallOverrides
+  ): Promise<
+    [boolean, number, BigNumber] & {
+      hasVoted: boolean;
+      support: number;
+      votes: BigNumber;
+    }
+  >;
+
   proposalThreshold(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "proposalThreshold()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   proposalTimelockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "proposalTimelockDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   proposals(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<
+    [
+      BigNumber,
+      string,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      BigNumber,
+      boolean,
+      boolean,
+      boolean,
+      BigNumber,
+      BigNumber
+    ] & {
+      id: BigNumber;
+      proposer: string;
+      eta: BigNumber;
+      startBlock: BigNumber;
+      endBlock: BigNumber;
+      forVotes: BigNumber;
+      againstVotes: BigNumber;
+      abstainVotes: BigNumber;
+      canceled: boolean;
+      executed: boolean;
+      emergency: boolean;
+      quorumVotes: BigNumber;
+      delay: BigNumber;
+    }
+  >;
+
+  "proposals(uint256)"(
     arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<
@@ -1290,7 +2222,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "propose(address[],uint256[],string[],bytes[],string,bool)"(
+    targets: string[],
+    values: BigNumberish[],
+    signatures: string[],
+    calldatas: BytesLike[],
+    description: string,
+    emergency: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   queue(
+    proposalId: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  "queue(uint256)"(
     proposalId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -1300,29 +2247,63 @@ export interface GovernorCharlieDelegate extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  "queuedTransactions(bytes32)"(
+    arg0: BytesLike,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   quorumVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "quorumVotes()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   state(proposalId: BigNumberish, overrides?: CallOverrides): Promise<number>;
 
+  "state(uint256)"(
+    proposalId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<number>;
+
   votingDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "votingDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   votingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "votingPeriod()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   whitelistAccountExpirations(
     arg0: string,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  "whitelistAccountExpirations(address)"(
+    arg0: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   whitelistGuardian(overrides?: CallOverrides): Promise<string>;
+
+  "whitelistGuardian()"(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    "BALLOT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
+    "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
 
     GRACE_PERIOD(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "GRACE_PERIOD()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     _setDelay(
+      proposalTimelockDelay_: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "_setDelay(uint256)"(
       proposalTimelockDelay_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1332,7 +2313,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setEmergencyDelay(uint256)"(
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     _setEmergencyQuorumVotes(
+      newEmergencyQuorumVotes: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "_setEmergencyQuorumVotes(uint256)"(
       newEmergencyQuorumVotes: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1342,7 +2333,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setEmergencyVotingPeriod(uint256)"(
+      newEmergencyVotingPeriod: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     _setProposalThreshold(
+      newProposalThreshold: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "_setProposalThreshold(uint256)"(
       newProposalThreshold: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1352,12 +2353,27 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setQuorumVotes(uint256)"(
+      newQuorumVotes: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     _setVotingDelay(
       newVotingDelay: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setVotingDelay(uint256)"(
+      newVotingDelay: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     _setVotingPeriod(
+      newVotingPeriod: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "_setVotingPeriod(uint256)"(
       newVotingPeriod: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -1368,12 +2384,28 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setWhitelistAccountExpiration(address,uint256)"(
+      account: string,
+      expiration: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     _setWhitelistGuardian(
       account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setWhitelistGuardian(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     cancel(proposalId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    "cancel(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     castVote(
       proposalId: BigNumberish,
@@ -1381,7 +2413,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "castVote(uint256,uint8)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     castVoteBySig(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)"(
       proposalId: BigNumberish,
       support: BigNumberish,
       v: BigNumberish,
@@ -1397,13 +2444,31 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "castVoteWithReason(uint256,uint8,string)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     emergencyQuorumVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "emergencyQuorumVotes()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyTimelockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "emergencyTimelockDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     emergencyVotingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "emergencyVotingPeriod()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     execute(proposalId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    "execute(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     executeTransaction(
       target: string,
@@ -1412,9 +2477,30 @@ export interface GovernorCharlieDelegate extends BaseContract {
       data: BytesLike,
       eta: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<string>;
+    ): Promise<void>;
+
+    "executeTransaction(address,uint256,string,bytes,uint256)"(
+      target: string,
+      value: BigNumberish,
+      signature: string,
+      data: BytesLike,
+      eta: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     getActions(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [string[], BigNumber[], string[], string[]] & {
+        targets: string[];
+        values: BigNumber[];
+        signatures: string[];
+        calldatas: string[];
+      }
+    >;
+
+    "getActions(uint256)"(
       proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
@@ -1432,9 +2518,19 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<ReceiptStructOutput>;
 
+    "getReceipt(uint256,address)"(
+      proposalId: BigNumberish,
+      voter: string,
+      overrides?: CallOverrides
+    ): Promise<ReceiptStructOutput>;
+
     implementation(overrides?: CallOverrides): Promise<string>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<string>;
+
     initialProposalId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "initialProposalId()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
       ipt_: string,
@@ -1449,22 +2545,55 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)"(
+      ipt_: string,
+      votingPeriod_: BigNumberish,
+      votingDelay_: BigNumberish,
+      proposalThreshold_: BigNumberish,
+      proposalTimelockDelay_: BigNumberish,
+      quorumVotes_: BigNumberish,
+      emergencyQuorumVotes_: BigNumberish,
+      emergencyVotingPeriod_: BigNumberish,
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     initialized(overrides?: CallOverrides): Promise<boolean>;
+
+    "initialized()"(overrides?: CallOverrides): Promise<boolean>;
 
     ipt(overrides?: CallOverrides): Promise<string>;
 
+    "ipt()"(overrides?: CallOverrides): Promise<string>;
+
     isWhitelisted(account: string, overrides?: CallOverrides): Promise<boolean>;
+
+    "isWhitelisted(address)"(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     latestProposalIds(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "latestProposalIds(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<string>;
+
+    "name()"(overrides?: CallOverrides): Promise<string>;
 
     proposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "proposalCount()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     proposalMaxOperations(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "proposalMaxOperations()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalReceipts(
       arg0: BigNumberish,
@@ -1478,11 +2607,62 @@ export interface GovernorCharlieDelegate extends BaseContract {
       }
     >;
 
+    "proposalReceipts(uint256,address)"(
+      arg0: BigNumberish,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<
+      [boolean, number, BigNumber] & {
+        hasVoted: boolean;
+        support: number;
+        votes: BigNumber;
+      }
+    >;
+
     proposalThreshold(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "proposalThreshold()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalTimelockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "proposalTimelockDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     proposals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [
+        BigNumber,
+        string,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        BigNumber,
+        boolean,
+        boolean,
+        boolean,
+        BigNumber,
+        BigNumber
+      ] & {
+        id: BigNumber;
+        proposer: string;
+        eta: BigNumber;
+        startBlock: BigNumber;
+        endBlock: BigNumber;
+        forVotes: BigNumber;
+        againstVotes: BigNumber;
+        abstainVotes: BigNumber;
+        canceled: boolean;
+        executed: boolean;
+        emergency: boolean;
+        quorumVotes: BigNumber;
+        delay: BigNumber;
+      }
+    >;
+
+    "proposals(uint256)"(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<
@@ -1527,27 +2707,65 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "propose(address[],uint256[],string[],bytes[],string,bool)"(
+      targets: string[],
+      values: BigNumberish[],
+      signatures: string[],
+      calldatas: BytesLike[],
+      description: string,
+      emergency: boolean,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     queue(proposalId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    "queue(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     queuedTransactions(
       arg0: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    "queuedTransactions(bytes32)"(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     quorumVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "quorumVotes()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     state(proposalId: BigNumberish, overrides?: CallOverrides): Promise<number>;
 
+    "state(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<number>;
+
     votingDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "votingDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     votingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "votingPeriod()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistAccountExpirations(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "whitelistAccountExpirations(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     whitelistGuardian(overrides?: CallOverrides): Promise<string>;
+
+    "whitelistGuardian()"(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -1651,40 +2869,47 @@ export interface GovernorCharlieDelegate extends BaseContract {
     ): NewQuorumEventFilter;
     NewQuorum(oldQuorumVotes?: null, quorumVotes?: null): NewQuorumEventFilter;
 
-    "ProposalCanceled(uint256)"(id?: null): ProposalCanceledEventFilter;
-    ProposalCanceled(id?: null): ProposalCanceledEventFilter;
+    "ProposalCanceled(uint256)"(
+      id?: BigNumberish | null
+    ): ProposalCanceledEventFilter;
+    ProposalCanceled(id?: BigNumberish | null): ProposalCanceledEventFilter;
 
     "ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)"(
-      id?: null,
-      proposer?: null,
+      id?: BigNumberish | null,
+      proposer?: string | null,
       targets?: null,
       values?: null,
       signatures?: null,
       calldatas?: null,
-      startBlock?: null,
+      startBlock?: BigNumberish | null,
       endBlock?: null,
       description?: null
     ): ProposalCreatedEventFilter;
     ProposalCreated(
-      id?: null,
-      proposer?: null,
+      id?: BigNumberish | null,
+      proposer?: string | null,
       targets?: null,
       values?: null,
       signatures?: null,
       calldatas?: null,
-      startBlock?: null,
+      startBlock?: BigNumberish | null,
       endBlock?: null,
       description?: null
     ): ProposalCreatedEventFilter;
 
-    "ProposalExecuted(uint256)"(id?: null): ProposalExecutedEventFilter;
-    ProposalExecuted(id?: null): ProposalExecutedEventFilter;
+    "ProposalExecuted(uint256)"(
+      id?: BigNumberish | null
+    ): ProposalExecutedEventFilter;
+    ProposalExecuted(id?: BigNumberish | null): ProposalExecutedEventFilter;
 
     "ProposalQueued(uint256,uint256)"(
-      id?: null,
+      id?: BigNumberish | null,
       eta?: null
     ): ProposalQueuedEventFilter;
-    ProposalQueued(id?: null, eta?: null): ProposalQueuedEventFilter;
+    ProposalQueued(
+      id?: BigNumberish | null,
+      eta?: null
+    ): ProposalQueuedEventFilter;
 
     "ProposalThresholdSet(uint256,uint256)"(
       oldProposalThreshold?: null,
@@ -1714,14 +2939,14 @@ export interface GovernorCharlieDelegate extends BaseContract {
 
     "VoteCast(address,uint256,uint8,uint256,string)"(
       voter?: string | null,
-      proposalId?: null,
+      proposalId?: BigNumberish | null,
       support?: null,
       votes?: null,
       reason?: null
     ): VoteCastEventFilter;
     VoteCast(
       voter?: string | null,
-      proposalId?: null,
+      proposalId?: BigNumberish | null,
       support?: null,
       votes?: null,
       reason?: null
@@ -1767,11 +2992,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
   estimateGas: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "BALLOT_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "DOMAIN_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     GRACE_PERIOD(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "GRACE_PERIOD()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     _setDelay(
+      proposalTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "_setDelay(uint256)"(
       proposalTimelockDelay_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1781,7 +3017,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setEmergencyDelay(uint256)"(
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     _setEmergencyQuorumVotes(
+      newEmergencyQuorumVotes: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "_setEmergencyQuorumVotes(uint256)"(
       newEmergencyQuorumVotes: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1791,7 +3037,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setEmergencyVotingPeriod(uint256)"(
+      newEmergencyVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     _setProposalThreshold(
+      newProposalThreshold: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "_setProposalThreshold(uint256)"(
       newProposalThreshold: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1801,12 +3057,27 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setQuorumVotes(uint256)"(
+      newQuorumVotes: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     _setVotingDelay(
       newVotingDelay: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setVotingDelay(uint256)"(
+      newVotingDelay: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     _setVotingPeriod(
+      newVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "_setVotingPeriod(uint256)"(
       newVotingPeriod: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1817,12 +3088,28 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setWhitelistAccountExpiration(address,uint256)"(
+      account: string,
+      expiration: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     _setWhitelistGuardian(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setWhitelistGuardian(address)"(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     cancel(
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "cancel(uint256)"(
       proposalId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1833,7 +3120,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "castVote(uint256,uint8)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     castVoteBySig(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)"(
       proposalId: BigNumberish,
       support: BigNumberish,
       v: BigNumberish,
@@ -1849,13 +3151,31 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "castVoteWithReason(uint256,uint8,string)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     emergencyQuorumVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "emergencyQuorumVotes()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyTimelockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "emergencyTimelockDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     emergencyVotingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "emergencyVotingPeriod()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     execute(
+      proposalId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "execute(uint256)"(
       proposalId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1869,7 +3189,21 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "executeTransaction(address,uint256,string,bytes,uint256)"(
+      target: string,
+      value: BigNumberish,
+      signature: string,
+      data: BytesLike,
+      eta: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     getActions(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getActions(uint256)"(
       proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1880,11 +3214,34 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "getReceipt(uint256,address)"(
+      proposalId: BigNumberish,
+      voter: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialProposalId(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "initialProposalId()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
+      ipt_: string,
+      votingPeriod_: BigNumberish,
+      votingDelay_: BigNumberish,
+      proposalThreshold_: BigNumberish,
+      proposalTimelockDelay_: BigNumberish,
+      quorumVotes_: BigNumberish,
+      emergencyQuorumVotes_: BigNumberish,
+      emergencyVotingPeriod_: BigNumberish,
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)"(
       ipt_: string,
       votingPeriod_: BigNumberish,
       votingDelay_: BigNumberish,
@@ -1899,9 +3256,18 @@ export interface GovernorCharlieDelegate extends BaseContract {
 
     initialized(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "initialized()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     ipt(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "ipt()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     isWhitelisted(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "isWhitelisted(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1911,11 +3277,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "latestProposalIds(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalCount(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "proposalCount()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     proposalMaxOperations(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "proposalMaxOperations()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalReceipts(
       arg0: BigNumberish,
@@ -1923,11 +3300,26 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "proposalReceipts(uint256,address)"(
+      arg0: BigNumberish,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     proposalThreshold(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "proposalThreshold()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposalTimelockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "proposalTimelockDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     proposals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "proposals(uint256)"(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -1942,7 +3334,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "propose(address[],uint256[],string[],bytes[],string,bool)"(
+      targets: string[],
+      values: BigNumberish[],
+      signatures: string[],
+      calldatas: BytesLike[],
+      description: string,
+      emergency: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     queue(
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    "queue(uint256)"(
       proposalId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1952,33 +3359,71 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "queuedTransactions(bytes32)"(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     quorumVotes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "quorumVotes()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     state(
       proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "state(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     votingDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "votingDelay()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     votingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "votingPeriod()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistAccountExpirations(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "whitelistAccountExpirations(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     whitelistGuardian(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "whitelistGuardian()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     BALLOT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "BALLOT_TYPEHASH()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     DOMAIN_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "DOMAIN_TYPEHASH()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     GRACE_PERIOD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "GRACE_PERIOD()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     _setDelay(
+      proposalTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "_setDelay(uint256)"(
       proposalTimelockDelay_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1988,7 +3433,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setEmergencyDelay(uint256)"(
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     _setEmergencyQuorumVotes(
+      newEmergencyQuorumVotes: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "_setEmergencyQuorumVotes(uint256)"(
       newEmergencyQuorumVotes: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1998,7 +3453,17 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setEmergencyVotingPeriod(uint256)"(
+      newEmergencyVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     _setProposalThreshold(
+      newProposalThreshold: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "_setProposalThreshold(uint256)"(
       newProposalThreshold: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -2008,12 +3473,27 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setQuorumVotes(uint256)"(
+      newQuorumVotes: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     _setVotingDelay(
       newVotingDelay: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setVotingDelay(uint256)"(
+      newVotingDelay: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     _setVotingPeriod(
+      newVotingPeriod: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "_setVotingPeriod(uint256)"(
       newVotingPeriod: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -2024,12 +3504,28 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setWhitelistAccountExpiration(address,uint256)"(
+      account: string,
+      expiration: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     _setWhitelistGuardian(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setWhitelistGuardian(address)"(
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     cancel(
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "cancel(uint256)"(
       proposalId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -2040,7 +3536,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "castVote(uint256,uint8)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     castVoteBySig(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "castVoteBySig(uint256,uint8,uint8,bytes32,bytes32)"(
       proposalId: BigNumberish,
       support: BigNumberish,
       v: BigNumberish,
@@ -2056,7 +3567,18 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "castVoteWithReason(uint256,uint8,string)"(
+      proposalId: BigNumberish,
+      support: BigNumberish,
+      reason: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     emergencyQuorumVotes(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "emergencyQuorumVotes()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2064,11 +3586,24 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "emergencyTimelockDelay()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     emergencyVotingPeriod(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "emergencyVotingPeriod()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     execute(
+      proposalId: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "execute(uint256)"(
       proposalId: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -2082,7 +3617,21 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "executeTransaction(address,uint256,string,bytes,uint256)"(
+      target: string,
+      value: BigNumberish,
+      signature: string,
+      data: BytesLike,
+      eta: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     getActions(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getActions(uint256)"(
       proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -2093,9 +3642,23 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "getReceipt(uint256,address)"(
+      proposalId: BigNumberish,
+      voter: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "implementation()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialProposalId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "initialProposalId()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     initialize(
       ipt_: string,
@@ -2110,11 +3673,33 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "initialize(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)"(
+      ipt_: string,
+      votingPeriod_: BigNumberish,
+      votingDelay_: BigNumberish,
+      proposalThreshold_: BigNumberish,
+      proposalTimelockDelay_: BigNumberish,
+      quorumVotes_: BigNumberish,
+      emergencyQuorumVotes_: BigNumberish,
+      emergencyVotingPeriod_: BigNumberish,
+      emergencyTimelockDelay_: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     initialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "initialized()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ipt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "ipt()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     isWhitelisted(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "isWhitelisted(address)"(
       account: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -2124,11 +3709,24 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "latestProposalIds(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposalCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "proposalCount()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     proposalMaxOperations(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "proposalMaxOperations()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2138,13 +3736,32 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "proposalReceipts(uint256,address)"(
+      arg0: BigNumberish,
+      arg1: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     proposalThreshold(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "proposalThreshold()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     proposalTimelockDelay(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "proposalTimelockDelay()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     proposals(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "proposals(uint256)"(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -2159,7 +3776,22 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "propose(address[],uint256[],string[],bytes[],string,bool)"(
+      targets: string[],
+      values: BigNumberish[],
+      signatures: string[],
+      calldatas: BytesLike[],
+      description: string,
+      emergency: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     queue(
+      proposalId: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "queue(uint256)"(
       proposalId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -2169,22 +3801,47 @@ export interface GovernorCharlieDelegate extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "queuedTransactions(bytes32)"(
+      arg0: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     quorumVotes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "quorumVotes()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     state(
       proposalId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "state(uint256)"(
+      proposalId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     votingDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "votingDelay()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     votingPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "votingPeriod()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     whitelistAccountExpirations(
       arg0: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "whitelistAccountExpirations(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     whitelistGuardian(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "whitelistGuardian()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

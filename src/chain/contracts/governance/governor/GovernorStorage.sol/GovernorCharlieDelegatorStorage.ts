@@ -25,15 +25,25 @@ export interface GovernorCharlieDelegatorStorageInterface
     "implementation()": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "implementation"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "implementation" | "implementation()"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "implementation",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "implementation()",
+    values?: undefined
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "implementation",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "implementation()",
     data: BytesLike
   ): Result;
 
@@ -68,21 +78,33 @@ export interface GovernorCharlieDelegatorStorage extends BaseContract {
 
   functions: {
     implementation(overrides?: CallOverrides): Promise<[string]>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<[string]>;
   };
 
   implementation(overrides?: CallOverrides): Promise<string>;
 
+  "implementation()"(overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
     implementation(overrides?: CallOverrides): Promise<string>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "implementation()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

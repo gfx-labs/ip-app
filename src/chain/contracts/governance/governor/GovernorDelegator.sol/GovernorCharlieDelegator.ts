@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -32,7 +33,11 @@ export interface GovernorCharlieDelegatorInterface extends utils.Interface {
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "_setImplementation" | "implementation"
+    nameOrSignatureOrTopic:
+      | "_setImplementation"
+      | "_setImplementation(address)"
+      | "implementation"
+      | "implementation()"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -40,7 +45,15 @@ export interface GovernorCharlieDelegatorInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "_setImplementation(address)",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "implementation",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "implementation()",
     values?: undefined
   ): string;
 
@@ -49,7 +62,15 @@ export interface GovernorCharlieDelegatorInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_setImplementation(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "implementation",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "implementation()",
     data: BytesLike
   ): Result;
 
@@ -78,28 +99,81 @@ export interface GovernorCharlieDelegatorInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "CancelTransaction"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "CancelTransaction(bytes32,address,uint256,string,bytes,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "EmergencyVotingPeriodSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "EmergencyVotingPeriodSet(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ExecuteTransaction"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ExecuteTransaction(bytes32,address,uint256,string,bytes,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewAdmin"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewAdmin(address,address)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewDelay"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewDelay(uint256,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewEmergencyDelay"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewEmergencyDelay(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewEmergencyQuorum"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewEmergencyQuorum(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewImplementation"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewImplementation(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewPendingAdmin"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewPendingAdmin(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewQuorum"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "NewQuorum(uint256,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalCanceled"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProposalCanceled(uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalCreated"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalExecuted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ProposalExecuted(uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalQueued"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ProposalQueued(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProposalThresholdSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ProposalThresholdSet(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "QueueTransaction"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "QueueTransaction(bytes32,address,uint256,string,bytes,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VoteCast"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "VoteCast(address,uint256,uint8,uint256,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VotingDelaySet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "VotingDelaySet(uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "VotingPeriodSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "VotingPeriodSet(uint256,uint256)"
+  ): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "WhitelistAccountExpirationSet"
   ): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "WhitelistAccountExpirationSet(address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "WhitelistGuardianSet"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "WhitelistGuardianSet(address,address)"
+  ): EventFragment;
 }
 
 export interface CancelTransactionEventObject {
@@ -404,7 +478,14 @@ export interface GovernorCharlieDelegator extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     implementation(overrides?: CallOverrides): Promise<[string]>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<[string]>;
   };
 
   _setImplementation(
@@ -412,7 +493,14 @@ export interface GovernorCharlieDelegator extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setImplementation(address)"(
+    implementation_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   implementation(overrides?: CallOverrides): Promise<string>;
+
+  "implementation()"(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     _setImplementation(
@@ -420,7 +508,14 @@ export interface GovernorCharlieDelegator extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     implementation(overrides?: CallOverrides): Promise<string>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -524,40 +619,47 @@ export interface GovernorCharlieDelegator extends BaseContract {
     ): NewQuorumEventFilter;
     NewQuorum(oldQuorumVotes?: null, quorumVotes?: null): NewQuorumEventFilter;
 
-    "ProposalCanceled(uint256)"(id?: null): ProposalCanceledEventFilter;
-    ProposalCanceled(id?: null): ProposalCanceledEventFilter;
+    "ProposalCanceled(uint256)"(
+      id?: BigNumberish | null
+    ): ProposalCanceledEventFilter;
+    ProposalCanceled(id?: BigNumberish | null): ProposalCanceledEventFilter;
 
     "ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)"(
-      id?: null,
-      proposer?: null,
+      id?: BigNumberish | null,
+      proposer?: string | null,
       targets?: null,
       values?: null,
       signatures?: null,
       calldatas?: null,
-      startBlock?: null,
+      startBlock?: BigNumberish | null,
       endBlock?: null,
       description?: null
     ): ProposalCreatedEventFilter;
     ProposalCreated(
-      id?: null,
-      proposer?: null,
+      id?: BigNumberish | null,
+      proposer?: string | null,
       targets?: null,
       values?: null,
       signatures?: null,
       calldatas?: null,
-      startBlock?: null,
+      startBlock?: BigNumberish | null,
       endBlock?: null,
       description?: null
     ): ProposalCreatedEventFilter;
 
-    "ProposalExecuted(uint256)"(id?: null): ProposalExecutedEventFilter;
-    ProposalExecuted(id?: null): ProposalExecutedEventFilter;
+    "ProposalExecuted(uint256)"(
+      id?: BigNumberish | null
+    ): ProposalExecutedEventFilter;
+    ProposalExecuted(id?: BigNumberish | null): ProposalExecutedEventFilter;
 
     "ProposalQueued(uint256,uint256)"(
-      id?: null,
+      id?: BigNumberish | null,
       eta?: null
     ): ProposalQueuedEventFilter;
-    ProposalQueued(id?: null, eta?: null): ProposalQueuedEventFilter;
+    ProposalQueued(
+      id?: BigNumberish | null,
+      eta?: null
+    ): ProposalQueuedEventFilter;
 
     "ProposalThresholdSet(uint256,uint256)"(
       oldProposalThreshold?: null,
@@ -587,14 +689,14 @@ export interface GovernorCharlieDelegator extends BaseContract {
 
     "VoteCast(address,uint256,uint8,uint256,string)"(
       voter?: string | null,
-      proposalId?: null,
+      proposalId?: BigNumberish | null,
       support?: null,
       votes?: null,
       reason?: null
     ): VoteCastEventFilter;
     VoteCast(
       voter?: string | null,
-      proposalId?: null,
+      proposalId?: BigNumberish | null,
       support?: null,
       votes?: null,
       reason?: null
@@ -643,7 +745,14 @@ export interface GovernorCharlieDelegator extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "implementation()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -652,6 +761,15 @@ export interface GovernorCharlieDelegator extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "implementation()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

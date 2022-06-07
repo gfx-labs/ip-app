@@ -43,11 +43,9 @@ export const getRecentProposals = async (
 ) => {
   try {
     const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-
-    const filters = await contract.filters.ProposalCreated();
-
+    const filters = contract.filters.ProposalCreated();
     const logs = await contract.queryFilter(filters, undefined, headBlock);
-
+    console.log(logs[0])
     return logs;
   } catch (err) {
     throw new Error("error getting proposals");

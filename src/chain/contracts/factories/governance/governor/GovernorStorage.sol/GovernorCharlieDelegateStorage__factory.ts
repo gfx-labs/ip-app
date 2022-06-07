@@ -363,7 +363,8 @@ const _abi = [
   },
 ];
 
-const _bytecode = "";
+const _bytecode = ""
+
 
 type GovernorCharlieDelegateStorageConstructorParams =
   | [signer?: Signer]

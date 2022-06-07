@@ -274,13 +274,7 @@ const _abi = [
       },
     ],
     name: "executeTransaction",
-    outputs: [
-      {
-        internalType: "bytes",
-        name: "",
-        type: "bytes",
-      },
-    ],
+    outputs: [],
     stateMutability: "payable",
     type: "function",
   },

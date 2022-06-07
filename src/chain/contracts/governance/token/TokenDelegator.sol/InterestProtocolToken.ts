@@ -39,28 +39,54 @@ export interface InterestProtocolTokenInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "_setImplementation"
+      | "_setImplementation(address)"
       | "decimals"
+      | "decimals()"
       | "implementation"
+      | "implementation()"
       | "name"
+      | "name()"
       | "owner"
+      | "owner()"
       | "symbol"
+      | "symbol()"
       | "totalSupply"
+      | "totalSupply()"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "_setImplementation",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "_setImplementation(address)",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "decimals()",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "implementation",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "implementation()",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "name()", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner()", values?: undefined): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "symbol()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply()",
     values?: undefined
   ): string;
 
@@ -68,16 +94,32 @@ export interface InterestProtocolTokenInterface extends utils.Interface {
     functionFragment: "_setImplementation",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "_setImplementation(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decimals()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "implementation",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "implementation()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply()",
     data: BytesLike
   ): Result;
 
@@ -93,13 +135,35 @@ export interface InterestProtocolTokenInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Approval(address,address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangedName"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ChangedName(string,string)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangedSymbol"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ChangedSymbol(string,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DelegateChanged(address,address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DelegateVotesChanged(address,uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinterChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "MinterChanged(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewImplementation"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewImplementation(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Transfer(address,address,uint256)"
+  ): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -228,17 +292,34 @@ export interface InterestProtocolToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<[number]>;
+
+    "decimals()"(overrides?: CallOverrides): Promise<[number]>;
 
     implementation(overrides?: CallOverrides): Promise<[string]>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<[string]>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    "name()"(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   _setImplementation(
@@ -246,17 +327,34 @@ export interface InterestProtocolToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  "_setImplementation(address)"(
+    implementation_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   decimals(overrides?: CallOverrides): Promise<number>;
+
+  "decimals()"(overrides?: CallOverrides): Promise<number>;
 
   implementation(overrides?: CallOverrides): Promise<string>;
 
+  "implementation()"(overrides?: CallOverrides): Promise<string>;
+
   name(overrides?: CallOverrides): Promise<string>;
+
+  "name()"(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  "owner()"(overrides?: CallOverrides): Promise<string>;
+
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  "symbol()"(overrides?: CallOverrides): Promise<string>;
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     _setImplementation(
@@ -264,17 +362,34 @@ export interface InterestProtocolToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     decimals(overrides?: CallOverrides): Promise<number>;
+
+    "decimals()"(overrides?: CallOverrides): Promise<number>;
 
     implementation(overrides?: CallOverrides): Promise<string>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<string>;
+
     name(overrides?: CallOverrides): Promise<string>;
+
+    "name()"(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    "owner()"(overrides?: CallOverrides): Promise<string>;
+
     symbol(overrides?: CallOverrides): Promise<string>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<string>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
@@ -359,17 +474,34 @@ export interface InterestProtocolToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     implementation(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "implementation()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -378,16 +510,35 @@ export interface InterestProtocolToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    "_setImplementation(address)"(
+      implementation_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "implementation()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

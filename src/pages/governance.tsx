@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme, Button } from "@mui/material";
 import { BigNumber } from "ethers";
 import { useEffect, useState } from "react";
+import {GovernorCharlieDelegate__factory} from "../chain/contracts";
 import {
   useModalContext,
   ModalType,
@@ -48,7 +49,6 @@ export const Governance = () => {
         })
         .catch((e) => {
           console.log("failed to load proposal info", e);
-
           setNoProposals(true);
         });
     }

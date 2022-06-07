@@ -26,13 +26,35 @@ export interface TokenEventsInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Approval(address,address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangedName"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ChangedName(string,string)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ChangedSymbol"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "ChangedSymbol(string,string)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DelegateChanged(address,address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "DelegateVotesChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "DelegateVotesChanged(address,uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "MinterChanged"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "MinterChanged(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewImplementation"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewImplementation(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Transfer(address,address,uint256)"
+  ): EventFragment;
 }
 
 export interface ApprovalEventObject {
