@@ -14,6 +14,7 @@ import {
   useVaultDataContext,
   VaultDataProvider,
 } from "../../../libs/vault-data-provider/VaultDataProvider";
+import { useLight } from "../../../../hooks/useLight";
 
 export const WithdrawCollateralContent = () => {
   const {
@@ -23,6 +24,7 @@ export const WithdrawCollateralContent = () => {
     collateralWithdrawAmount,
   } = useModalContext();
 
+  const isLight = useLight();
   const { borrowingPower, accountLiability } = useVaultDataContext();
 
   const setMax = () => {
@@ -157,7 +159,17 @@ export const WithdrawCollateralContent = () => {
               },
             }}
           >
-            <Typography variant="body3" color={formatColor(neutral.gray3)}>
+            <Typography
+              variant="body3"
+              color={formatColor(neutral.gray3)}
+              sx={{
+                "&:hover": {
+                  color: isLight
+                    ? formatColor(neutral.gray1)
+                    : formatColor(neutral.white),
+                },
+              }}
+            >
               Max
             </Typography>
           </Button>

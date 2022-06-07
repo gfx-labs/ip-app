@@ -10,6 +10,7 @@ import {
   ModalType,
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
+import { useLight } from "../../../../hooks/useLight";
 
 export const DepositCollateralContent = () => {
   const {
@@ -22,6 +23,7 @@ export const DepositCollateralContent = () => {
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
+  const isLight = useLight()
 
   const setMax = () =>
     setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
@@ -111,7 +113,17 @@ export const DepositCollateralContent = () => {
               },
             }}
           >
-            <Typography variant="body3" color={formatColor(neutral.gray3)}>
+            <Typography
+              variant="body3"
+              color={formatColor(neutral.gray3)}
+              sx={{
+                "&:hover": {
+                  color: isLight
+                    ? formatColor(neutral.gray1)
+                    : formatColor(neutral.white),
+                },
+              }}
+            >
               Max
             </Typography>
           </Button>
@@ -148,7 +160,9 @@ export const DepositCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="label2" color={formatColor(blue.blue1)}>Borrowing Power</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>
+          Borrowing Power
+        </Typography>
         <Box
           component="img"
           src="images/up_arrow_blue.png"
@@ -156,7 +170,9 @@ export const DepositCollateralContent = () => {
           height={12}
           marginX={1}
         />
-        <Typography variant="label2" color={formatColor(blue.blue1)}>$0</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>
+          $0
+        </Typography>
       </Box>
     </Box>
   );

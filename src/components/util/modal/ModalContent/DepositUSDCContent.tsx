@@ -9,6 +9,7 @@ import {
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 import { useStableCoinsContext } from "../../../libs/stable-coins-provider/StableCoinsProvider";
+import { useLight } from "../../../../hooks/useLight";
 
 export const DepositUSDCContent = () => {
   const { USDC: USDCToken } = useStableCoinsContext();
@@ -20,7 +21,7 @@ export const DepositUSDCContent = () => {
   const setMax = () =>
     updateUSDC("amountToDeposit", USDCToken.wallet_amount!.toString());
   const numAmountToDeposit = Number(USDC.amountToDeposit);
-
+  const isLight = useLight()
   useEffect(() => {
     setDisabled(numAmountToDeposit <= 0);
   }, [USDC.amountToDeposit]);
@@ -65,9 +66,15 @@ export const DepositUSDCContent = () => {
           >
             <Typography
             variant="body3"
-              sx={{
-                color: formatColor(neutral.gray3)
-              }}>
+            color={formatColor(neutral.gray3)}
+            sx={{
+              "&:hover": {
+                color: isLight
+                  ? formatColor(neutral.gray1)
+                  : formatColor(neutral.white),
+              },
+            }}
+              >
               Max
             </Typography>
           </Button>
