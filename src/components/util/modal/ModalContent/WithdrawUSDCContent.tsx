@@ -11,10 +11,12 @@ import {
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 import { useStableCoinsContext } from "../../../libs/stable-coins-provider/StableCoinsProvider";
+import { useLight } from "../../../../hooks/useLight";
 
 export const WithdrawUSDCContent = () => {
   const { setType, USDC, updateUSDC } = useModalContext();
   const { USDC: USDCToken } = useStableCoinsContext();
+  const isLight = useLight();
 
   const setMax = () => {
     if (USDCToken && USDCToken.vault_amount) {
@@ -74,8 +76,13 @@ export const WithdrawUSDCContent = () => {
           >
             <Typography
               variant="body3"
+              color={formatColor(neutral.gray3)}
               sx={{
-                color: formatColor(neutral.gray3),
+                "&:hover": {
+                  color: isLight
+                    ? formatColor(neutral.gray1)
+                    : formatColor(neutral.white),
+                },
               }}
             >
               Max

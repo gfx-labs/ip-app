@@ -14,6 +14,7 @@ import {
   useVaultDataContext,
   VaultDataProvider,
 } from "../../../libs/vault-data-provider/VaultDataProvider";
+import { useLight } from "../../../../hooks/useLight";
 
 export const WithdrawCollateralContent = () => {
   const {
@@ -23,6 +24,7 @@ export const WithdrawCollateralContent = () => {
     collateralWithdrawAmount,
   } = useModalContext();
 
+  const isLight = useLight();
   const { borrowingPower, accountLiability } = useVaultDataContext();
 
   const setMax = () => {
@@ -133,7 +135,12 @@ export const WithdrawCollateralContent = () => {
                         (numAmountToWithdraw * 1000) / collateralToken.value
                       ) / 1000
                 } ${collateralToken.ticker}`
-              : `$${(numAmountToWithdraw * collateralToken.value).toFixed(2)}`}
+              : `$${(
+                  numAmountToWithdraw * collateralToken.value
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </Typography>
 
           <Button
@@ -152,7 +159,17 @@ export const WithdrawCollateralContent = () => {
               },
             }}
           >
-            <Typography variant="body3" color={formatColor(neutral.gray3)}>
+            <Typography
+              variant="body3"
+              color={formatColor(neutral.gray3)}
+              sx={{
+                "&:hover": {
+                  color: isLight
+                    ? formatColor(neutral.gray1)
+                    : formatColor(neutral.white),
+                },
+              }}
+            >
               Max
             </Typography>
           </Button>
@@ -189,7 +206,9 @@ export const WithdrawCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="label2" color={formatColor(blue.blue1)}>Borrowing Power</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>
+          Borrowing Power
+        </Typography>
         <Box
           component="img"
           src="images/up_arrow_blue.png"
@@ -200,7 +219,9 @@ export const WithdrawCollateralContent = () => {
             transform: "rotate(180deg)",
           }}
         />
-        <Typography variant="label2" color={formatColor(blue.blue1)}>$0</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>
+          $0
+        </Typography>
       </Box>
     </Box>
   );

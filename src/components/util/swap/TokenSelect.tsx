@@ -83,17 +83,20 @@ export const TokenSelect = (props: TokenSelectProps) => {
                 marginRight: -1,
                 height: "auto",
                 width: "auto",
-                minWidth: 'auto',
+                minWidth: "auto",
                 justifyContent: "end",
-                '&.Mui-disabled': {
+                "&.Mui-disabled": {
                   color: formatColor(neutral.gray3),
-                }
+                },
               }}
               onClick={setBalance}
               disabled={token.wallet_balance === undefined}
             >
               <WithDots val={token.wallet_balance != undefined}>
-                {token.wallet_balance?.toFixed(2)}
+                {token.wallet_balance?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </WithDots>
             </Button>
           </Typography>

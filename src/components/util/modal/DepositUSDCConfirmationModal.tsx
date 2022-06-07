@@ -144,7 +144,11 @@ export const DepositUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="body3" color="text.primary">
-              {"$" + USDC.amountToDeposit}
+              {"$" +
+                Number(USDC.amountToDeposit).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
             </Typography>
           </Box>
         </Box>
@@ -157,7 +161,11 @@ export const DepositUSDCConfirmationModal = () => {
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="body3" color="text.primary">
-              {"$" + USDC.amountToDeposit}
+              {"$" +
+                Number(USDC.amountToDeposit).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
             </Typography>
           </Box>
 

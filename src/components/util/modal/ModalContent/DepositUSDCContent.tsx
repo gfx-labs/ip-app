@@ -9,6 +9,7 @@ import {
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 import { useStableCoinsContext } from "../../../libs/stable-coins-provider/StableCoinsProvider";
+import { useLight } from "../../../../hooks/useLight";
 
 export const DepositUSDCContent = () => {
   const { USDC: USDCToken } = useStableCoinsContext();
@@ -20,22 +21,19 @@ export const DepositUSDCContent = () => {
   const setMax = () =>
     updateUSDC("amountToDeposit", USDCToken.wallet_amount!.toString());
   const numAmountToDeposit = Number(USDC.amountToDeposit);
-
+  const isLight = useLight();
   useEffect(() => {
     setDisabled(numAmountToDeposit <= 0);
   }, [USDC.amountToDeposit]);
 
   return (
     <Box>
-      <Typography
-        variant="body2"
-        fontWeight={600}
-        color={formatColor(neutral.gray10)}
-        textAlign="right"
-      >
-        {" "}
-        Wallet Balance: {USDCToken.wallet_balance} USDC
-      </Typography>
+      <Box textAlign="right" mb={2}>
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+          {" "}
+          Wallet Balance: {USDCToken.wallet_balance} USDC
+        </Typography>
+      </Box>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
@@ -64,10 +62,16 @@ export const DepositUSDCContent = () => {
             }}
           >
             <Typography
-            variant="body3"
+              variant="body3"
+              color={formatColor(neutral.gray3)}
               sx={{
-                color: formatColor(neutral.gray3)
-              }}>
+                "&:hover": {
+                  color: isLight
+                    ? formatColor(neutral.gray1)
+                    : formatColor(neutral.white),
+                },
+              }}
+            >
               Max
             </Typography>
           </Button>
