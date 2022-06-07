@@ -114,22 +114,23 @@ export const ProposalCard = (props: ProposalCardProps) => {
       }}
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="start">
           <Typography
             variant="subtitle2_semi"
             color={formatColor(blue.blue1)}
-            mr={1}
+            mr={2}
           >
             {id}
           </Typography>
-          <Box position="relative" top={4}>
-            
-            
-            <Typography display="block" variant="subtitle2_semi" color="text.secondary">
+          <Box position="relative">
+            <Typography
+              display="block"
+              variant="subtitle2_semi"
+              color="text.secondary"
+            >
               {getTitle(body)}
             </Typography>
             {timeLeft ? (
-              
               <Typography
                 variant="label2_medium"
                 color={formatColor(neutral.gray3)}

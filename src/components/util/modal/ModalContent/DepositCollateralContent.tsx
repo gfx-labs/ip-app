@@ -90,14 +90,16 @@ export const DepositCollateralContent = () => {
                 } ${collateralToken?.ticker}`
               : `$${(
                   Number(collateralDepositAmount) * collateralToken?.value
-                ).toFixed(2)}`}
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </Typography>
 
           <Button
             onClick={setMax}
             sx={{
               minWidth: "auto",
-
               height: 30,
               paddingY: 2,
               paddingX: 1,

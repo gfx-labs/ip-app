@@ -36,7 +36,7 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
                 color: formatColor(neutral.black),
               }
             : {
-                backgroundColor: formatColor(neutral.gray7),
+                backgroundColor: formatColor(neutral.gray4),
                 color: formatColor(neutral.white),
               }
         }

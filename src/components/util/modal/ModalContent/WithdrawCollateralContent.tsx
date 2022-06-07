@@ -133,7 +133,12 @@ export const WithdrawCollateralContent = () => {
                         (numAmountToWithdraw * 1000) / collateralToken.value
                       ) / 1000
                 } ${collateralToken.ticker}`
-              : `$${(numAmountToWithdraw * collateralToken.value).toFixed(2)}`}
+              : `$${(
+                  numAmountToWithdraw * collateralToken.value
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </Typography>
 
           <Button
@@ -189,7 +194,9 @@ export const WithdrawCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="label2" color={formatColor(blue.blue1)}>Borrowing Power</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>
+          Borrowing Power
+        </Typography>
         <Box
           component="img"
           src="images/up_arrow_blue.png"
@@ -200,7 +207,9 @@ export const WithdrawCollateralContent = () => {
             transform: "rotate(180deg)",
           }}
         />
-        <Typography variant="label2" color={formatColor(blue.blue1)}>$0</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>
+          $0
+        </Typography>
       </Box>
     </Box>
   );
