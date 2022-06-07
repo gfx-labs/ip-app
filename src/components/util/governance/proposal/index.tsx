@@ -98,7 +98,12 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
           {time}
         </Typography>
       </Box>
-      <Box display="flex" columnGap={2} mt={4} flexWrap="wrap">
+      <Box
+        display="flex"
+        columnGap={2}
+        mt={4}
+        flexDirection={{ xs: "column", md: "row" }}
+      >
         <VoteCount
           forOrAgainst="For"
           votes={votersFor.reduce((a, b) => {
