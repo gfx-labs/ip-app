@@ -16,12 +16,24 @@ export const PaletteModeContextProvider = ({
   children: React.ReactElement;
 }) => {
   // default light dark mode on start
-  const [mode, setMode] = useState<PaletteMode>("dark");
+  const [mode, setMode] = useState<PaletteMode>((): PaletteMode => {
+    const paletteMode = localStorage.getItem("paletteMode") as PaletteMode | null;
+
+    if(paletteMode === null) {
+      return 'dark'
+    }
+    return paletteMode
+  });
 
   const theme = createTheme(getDesignTokens(mode));
 
   const toggleMode = () => {
-    setMode(mode === "light" ? "dark" : "light");
+    const newMode = mode === "light" ? "dark" : "light"
+
+    setMode(newMode);
+
+    localStorage.setItem("paletteMode", newMode);
+
   };
 
   return (
