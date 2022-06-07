@@ -55,7 +55,7 @@ export const DepositCollateralContent = () => {
 
   return (
     <Box>
-      <Box textAlign="right">
+      <Box textAlign="right" mb={2}>
         <Typography variant="label2" color={formatColor(neutral.gray3)}>
           {" "}
           Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)}{" "}
