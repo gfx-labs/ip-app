@@ -33,6 +33,8 @@ declare module "@mui/material/styles" {
   interface TypographyVariants {
     h6_semi: React.CSSProperties;
     subtitle2_semi: React.CSSProperties;
+    subtitle3_semi: React.CSSProperties;
+    subtitle3: React.CSSProperties;
     body2_semi: React.CSSProperties;
     body3: React.CSSProperties;
     body3_medium: React.CSSProperties;
@@ -46,6 +48,8 @@ declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     h6_semi: true;
     subtitle2_semi: true;
+    subtitle3_semi: true;
+    subtitle3: true; 
     body2_semi: true;
     body3: true;
     body3_medium: true;
@@ -62,10 +66,10 @@ export const theme = createTheme({
   typography: {
     htmlFontSize: HTML_FONT_SIZE,
     fontFamily: ["Inter", "sans-serif"].join(),
+    fontWeightLight: 400,
+    fontWeightRegular: 400,
     fontWeightMedium: 500,
-    fontWeightSemiBold: 600,
     fontWeightBold: 700,
-    fontWeightExtraBold: 800,
     allVariants: {
       letterSpacing: 0,
       fontWeight: 400,
