@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography, Button, LinearProgress } from "@mui/material";
 import { addressShortener } from "../../text";
 import { formatColor, neutral } from "../../../../theme";
@@ -26,8 +26,14 @@ export const VoteCount = (props: VoteCountProps) => {
   const barColor = forOrAgainst == "For" ? "success" : "error";
   const [seeAllOpen, setSeeAllOpen] = useState(false);
 
-  const votePercent =
-    (votes / totalVotes) * 100 > 100 ? 100 : (votes / totalVotes) * 100;
+  const [votePercent, setVotePercent] = useState(0);
+
+  useEffect(() => {
+    const votePercent =
+      (votes / totalVotes) * 100 > 100 ? 100 : (votes / totalVotes) * 100;
+
+    setVotePercent(votePercent);
+  }, [votes]);
 
   const seeAllHandler = () => {
     setSeeAllOpen(true);
@@ -47,7 +53,7 @@ export const VoteCount = (props: VoteCountProps) => {
             ? formatColor(neutral.white)
             : formatColor(neutral.gray4),
           borderRadius: 2,
-          p: {xs: 1, md: 4},
+          p: { xs: 1, md: 4 },
           mb: 2,
         }}
       >
@@ -79,13 +85,13 @@ export const VoteCount = (props: VoteCountProps) => {
             ? formatColor(neutral.white)
             : formatColor(neutral.gray4),
           borderRadius: 2,
-          px: {xs: 1, md: 4},
+          px: { xs: 1, md: 4 },
           pt: 4,
           pb: 2,
           my: 2,
           height: "fill-available",
           display: "flex",
-          flexDirection: 'column'
+          flexDirection: "column",
         }}
       >
         {voters.map((voter, index) => (

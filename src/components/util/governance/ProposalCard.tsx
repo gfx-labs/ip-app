@@ -11,6 +11,7 @@ import {
   exampleProposal,
   ProposalInfo,
   useProposalInfo,
+  useProposalState,
 } from "../../../hooks/useGovernance";
 import { NormalComponents } from "react-markdown/lib/complex-types";
 import { SpecialComponents } from "react-markdown/lib/ast-to-react";
@@ -50,7 +51,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   };
   const [proposal, setProposal] = useState<ProposalInfo>();
 
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(0);
 
   const [timeLeft, setTimeLeft] = useState("");
   const [forVotes, setForVotes] = useState(0);
@@ -62,9 +63,18 @@ export const ProposalCard = (props: ProposalCardProps) => {
       return await useProposalInfo(id, provider!);
     };
 
+    const getProposalStatus = async () => {
+      return await useProposalState(id, provider!)
+    }
+
     getProposalInfo().then((res) => {
       setProposal(res);
     });
+
+    getProposalStatus().then((res) => {
+      setStatus(res)
+    })
+
   }, [id]);
 
   useEffect(() => {
@@ -86,11 +96,9 @@ export const ProposalCard = (props: ProposalCardProps) => {
     const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100);
     if (bdiff < 0) {
       setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`);
-      setStatus("Ended");
       return;
     }
     setTimeLeft(`Active for ${hrdiff} Hour(s)`);
-    setStatus("Active");
   }, [dataBlock]);
 
   const expandCard = () => {

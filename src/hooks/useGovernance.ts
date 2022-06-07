@@ -45,7 +45,7 @@ export const getRecentProposals = async (
     const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
     const filters = contract.filters.ProposalCreated();
     const logs = await contract.queryFilter(filters, undefined, headBlock);
-    console.log(logs[0])
+    console.log(logs[0]);
     return logs;
   } catch (err) {
     throw new Error("error getting proposals");
@@ -92,18 +92,29 @@ export const useCastVote = async (
   vote: number,
   signer: JsonRpcSigner
 ) => {
+  const { updateTransactionState } = useModalContext();
 
   const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
 
   const castVoteTransaction = await contract.castVote(id, vote);
 
-//  updateTransactionState(castVoteTransaction);
+  updateTransactionState(castVoteTransaction);
 
   const voteReceipt = await castVoteTransaction.wait();
 
-//  updateTransactionState(voteReceipt);
+  updateTransactionState(voteReceipt);
 
   return voteReceipt;
+};
+
+export const useProposalState = async (
+  id: BigNumberish,
+  provider: JsonRpcProvider
+): Promise<number> => {
+  const contract = GovernorCharlieDelegate__factory.connect(governor, provider);
+  const status = await contract.state(id);
+
+  return status
 };
 
 export const exampleProposal = `

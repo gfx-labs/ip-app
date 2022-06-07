@@ -12,7 +12,7 @@ import VoteButton from "../VoteButton";
 
 export interface ProposalDetailsProps {
   id: string;
-  status: string;
+  status: number;
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = (
