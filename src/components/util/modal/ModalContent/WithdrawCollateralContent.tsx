@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 
-import { formatColor, neutral } from "../../../../theme";
+import { blue, formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
 import { DisableableModalButton } from "../../button/DisableableModalButton";
 import { ModalInputContainer } from "./ModalInputContainer";
@@ -60,10 +60,10 @@ export const WithdrawCollateralContent = () => {
   };
 
   const tryWithdrawCollateral = (amount: string) => {
-    let tryDecimal = false
-    if(amount.endsWith(".")) {
-      tryDecimal = true
-      amount = amount + "0"
+    let tryDecimal = false;
+    if (amount.endsWith(".")) {
+      tryDecimal = true;
+      amount = amount + "0";
     }
     let newDollarValue = Number(amount);
     let newAmount = Number(amount);
@@ -72,17 +72,17 @@ export const WithdrawCollateralContent = () => {
     }
     let newResult = borrowingPower - accountLiability - newDollarValue;
     if (newResult < 0) {
-      newDollarValue = Math.round((newResult + newDollarValue)*100)/100
+      newDollarValue = Math.round((newResult + newDollarValue) * 100) / 100;
       const ltvp =
         (collateralToken.token_LTV ? collateralToken.token_LTV : 100) / 100;
       newAmount =
         Math.round((newDollarValue * 10000) / (collateralToken.value * ltvp)) /
         10000;
-        console.log(newAmount, collateralToken.vault_amount!)
+      console.log(newAmount, collateralToken.vault_amount!);
     }
     if (newAmount > collateralToken.vault_amount!) {
-      newAmount = collateralToken.vault_amount!
-      newDollarValue = collateralToken.vault_balance!
+      newAmount = collateralToken.vault_amount!;
+      newDollarValue = collateralToken.vault_balance!;
     }
     if (!isMoneyValue) {
       if (tryDecimal) {
@@ -92,24 +92,20 @@ export const WithdrawCollateralContent = () => {
       }
     } else {
       if (tryDecimal) {
-      setCollateralWithdrawAmount(newDollarValue.toFixed(0)+".");
+        setCollateralWithdrawAmount(newDollarValue.toFixed(0) + ".");
       } else {
-      setCollateralWithdrawAmount(newDollarValue.toString());
+        setCollateralWithdrawAmount(newDollarValue.toString());
       }
     }
   };
 
   return (
     <Box>
-      <Typography
-        variant="body2"
-        fontWeight={600}
-        color={formatColor(neutral.gray10)}
-        textAlign="right"
-      >
-        {" "}
-        Vault Balance: {collateralToken.vault_amount} {collateralToken.ticker}
-      </Typography>
+      <Box textAlign="right">
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+          Vault Balance: {collateralToken.vault_amount} {collateralToken.ticker}
+        </Typography>
+      </Box>
 
       <ModalInputContainer focus={focus}>
         <DecimalInput
@@ -122,21 +118,21 @@ export const WithdrawCollateralContent = () => {
         />
         <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
           <Typography
+            variant="body3"
             sx={{
               color: formatColor(neutral.gray3),
-              fontSize: 14,
-              fontWeight: 600,
               marginLeft: 1,
               whiteSpace: "nowrap",
             }}
           >
             {isMoneyValue
-              ? `${collateralWithdrawAmount === "0"
-                ? "0"
-                : Math.floor(
-                  (numAmountToWithdraw * 1000) / collateralToken.value
-                ) / 1000
-              } ${collateralToken.ticker}`
+              ? `${
+                  collateralWithdrawAmount === "0"
+                    ? "0"
+                    : Math.floor(
+                        (numAmountToWithdraw * 1000) / collateralToken.value
+                      ) / 1000
+                } ${collateralToken.ticker}`
               : `$${(numAmountToWithdraw * collateralToken.value).toFixed(2)}`}
           </Typography>
 
@@ -156,13 +152,7 @@ export const WithdrawCollateralContent = () => {
               },
             }}
           >
-            <Typography
-              sx={{
-                color: formatColor(neutral.gray3),
-                fontSize: 14,
-                fontWeight: 600,
-              }}
-            >
+            <Typography variant="body3" color={formatColor(neutral.gray3)}>
               Max
             </Typography>
           </Button>
@@ -199,7 +189,7 @@ export const WithdrawCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="caption">Borrowing Power</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>Borrowing Power</Typography>
         <Box
           component="img"
           src="images/up_arrow_blue.png"
@@ -210,7 +200,7 @@ export const WithdrawCollateralContent = () => {
             transform: "rotate(180deg)",
           }}
         />
-        <Typography variant="caption">$0</Typography>
+        <Typography variant="label2" color={formatColor(blue.blue1)}>$0</Typography>
       </Box>
     </Box>
   );

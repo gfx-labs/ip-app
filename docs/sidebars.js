@@ -23,6 +23,11 @@ const sidebars = {
             id: 'intro',
         },
         {
+            type: 'doc',
+            label: 'IPT Sale',
+            id: 'IPTsale',
+        },
+        {
             type: 'category',
             collapsed: false,
             label: "Concepts",
@@ -48,11 +53,6 @@ const sidebars = {
             collapsed: false,
             link: { type: 'doc', id: "reference/index" },
             items: [
-//              {
-//                  type: 'doc',
-//                  label: 'IPT Sale',
-//                  id: 'reference/IPT sale',
-//              },
                 {
                     type: 'doc',
                     label: 'Deployed Contracts',

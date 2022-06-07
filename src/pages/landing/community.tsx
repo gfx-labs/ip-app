@@ -34,12 +34,9 @@ export const Community: React.FC = () => {
         >
           <Typography
             display="inline"
-            variant="h1"
+            variant="h2"
             textAlign="center"
-            sx={{
-              color: formatColor(neutral.black),
-              fontSize: {xs: 24, md: 54},
-            }}
+            color={formatColor(neutral.black)}
           >
             Join the Community
           </Typography>
@@ -66,7 +63,7 @@ export const Community: React.FC = () => {
               src="images/discord_icon_black.svg"
             ></Box>
           </Link>
-          <Link href="https://twitter.com/labsgfx" target="_blank">
+          <Link href="https://twitter.com/InterestDeFi" target="_blank">
             <Box
               sx={{
                 mx: 2,

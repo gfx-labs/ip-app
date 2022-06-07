@@ -5,7 +5,7 @@ import {
   gradient,
   green,
   neutral,
-  pink
+  pink,
 } from "./colors";
 import { ComponentsVariants } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
@@ -26,6 +26,32 @@ declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     cta: true;
     solidText: true;
+  }
+}
+
+declare module "@mui/material/styles" {
+  interface TypographyVariants {
+    h6_semi: React.CSSProperties;
+    subtitle2_semi: React.CSSProperties;
+    body2_semi: React.CSSProperties;
+    body3: React.CSSProperties;
+    body3_medium: React.CSSProperties;
+    label: React.CSSProperties;
+    label2: React.CSSProperties;
+    label2_medium: React.CSSProperties;
+  }
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    h6_semi: true;
+    subtitle2_semi: true;
+    body2_semi: true;
+    body3: true;
+    body3_medium: true;
+    label: true;
+    label2: true;
+    label2_medium: true;
   }
 }
 
@@ -57,40 +83,141 @@ export const theme = createTheme({
     values: {
       xs: 0,
       sm: 768,
-      md: 992,
+      md: 800,
       lg: 1280,
       xl: 1440,
     },
   },
 });
 
-const isLight = theme.palette.mode
+const isLight = theme.palette.mode;
 
 // Responsive typography
 theme.typography.h1 = {
+  fontWeight: 800,
+  fontSize: pxToRem(88),
+  letterSpacing: -2,
+  lineHeight: fzTolineHeight(90),
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(40),
+    lineHeight: fzTolineHeight(42),
+  },
+};
+
+theme.typography.h2 = {
+  fontWeight: 800,
+  fontSize: pxToRem(54),
+  letterSpacing: -2,
+  lineHeight: fzTolineHeight(56),
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(28),
+    lineHeight: fzTolineHeight(32),
+  },
+};
+
+theme.typography.h3 = {
+  fontWeight: 700,
+  fontSize: pxToRem(48),
+  lineHeight: fzTolineHeight(50),
+  letterSpacing: -2,
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(28),
+    lineHeight: fzTolineHeight(32),
+  },
+};
+
+theme.typography.h4 = {
+  fontWeight: 700,
+  fontSize: pxToRem(40),
+  lineHeight: fzTolineHeight(46),
+  letterSpacing: -2,
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(24),
+    lineHeight: fzTolineHeight(24),
+  },
+};
+
+theme.typography.h5 = {
   fontWeight: 700,
   fontSize: pxToRem(28),
   lineHeight: fzTolineHeight(28),
+  letterSpacing: -2,
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(24),
+    lineHeight: fzTolineHeight(24),
+  },
+};
+
+theme.typography.h6 = {
+  fontWeight: 800,
+  fontSize: pxToRem(24),
+  lineHeight: fzTolineHeight(24),
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),
   },
 };
 
-theme.typography.h2 = {
+theme.typography.h6_semi = {
   fontWeight: 700,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
+  letterSpacing: -2,
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(16),
-    lineHeight: fzTolineHeight(16),
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(20),
   },
 };
 
-theme.typography.h3 = {
+theme.typography.subtitle1 = {
+  fontWeight: 600,
+  fontSize: pxToRem(24),
+  lineHeight: fzTolineHeight(24),
+  color: theme.palette.text.primary,
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(20),
+  },
+};
+
+theme.typography.subtitle2 = {
   fontWeight: 700,
+  fontSize: pxToRem(24),
+  lineHeight: fzTolineHeight(28),
+
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(16),
+    lineHeight: fzTolineHeight(18),
+  },
+};
+
+theme.typography.subtitle2_semi = {
+  fontWeight: 600,
+  fontSize: pxToRem(24),
+  lineHeight: fzTolineHeight(28),
+
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(16),
+    lineHeight: fzTolineHeight(18),
+  },
+};
+
+theme.typography.body1 = {
+  fontWeight: 600,
   fontSize: pxToRem(20),
-  lineHeight: fzTolineHeight(20),
+  lineHeight: fzTolineHeight(24),
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(16),
+    lineHeight: fzTolineHeight(20),
+  },
+};
+
+// tertiary in design
+theme.typography.body2 = {
+  fontWeight: 700,
+  fontSize: pxToRem(18),
+  lineHeight: fzTolineHeight(18),
 
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(14),
@@ -98,92 +225,62 @@ theme.typography.h3 = {
   },
 };
 
-theme.typography.h4 = {
-  fontWeight: 700,
-  fontSize: pxToRem(36),
-  lineHeight: pxToRem(54),
+theme.typography.body2_semi = {
+  fontWeight: 600,
+  fontSize: pxToRem(18),
+  lineHeight: fzTolineHeight(32),
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(20),
-    lineHeight: pxToRem(27),
+    fontSize: pxToRem(14),
+    lineHeight: fzTolineHeight(24),
   },
 };
 
-theme.typography.h5 = {
+theme.typography.body3 = {
   fontWeight: 600,
-  fontSize: pxToRem(18),
+  fontSize: pxToRem(16),
+  lineHeight: fzTolineHeight(20),
+};
+
+theme.typography.body3_medium = {
+  fontWeight: 500,
+  fontSize: pxToRem(16),
+  lineHeight: fzTolineHeight(16),
+};
+
+theme.typography.label = {
+  fontWeight: 600,
+  fontSize: pxToRem(16),
+  lineHeight: fzTolineHeight(16),
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(12),
+  },
+};
+
+theme.typography.label2 = {
+  fontWeight: 600,
+  fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(18),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
-    lineHeight: fzTolineHeight(12),
+    lineHeight: fzTolineHeight(16),
   },
 };
 
-theme.typography.h6 = {
-  fontWeight: 600,
-  fontSize: pxToRem(14),
-  lineHeight: pxToRem(24),
-  [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(12),
-    lineHeight: pxToRem(20),
-  },
-};
-
-theme.typography.subtitle1 = {
-  fontWeight: 800,
-  fontSize: pxToRem(28),
-  lineHeight: fzTolineHeight(28),
-  color: theme.palette.text.primary,
-  [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(18),
-    lineHeight: fzTolineHeight(18),
-  },
-};
-
-theme.typography.subtitle2 = {
-  fontWeight: 400,
-  fontSize: pxToRem(24),
-  lineHeight: pxToRem(38),
-
-  [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(20),
-    lineHeight: pxToRem(31.68),
-  },
-};
-
-theme.typography.body1 = {
-  fontWeight: 400,
-  fontSize: pxToRem(16),
-  lineHeight: fzTolineHeight(16),
-  [theme.breakpoints.down("md")]: {},
-};
-
-// tertiary in design
-theme.typography.body2 = {
+theme.typography.label2_medium = {
   fontWeight: 500,
   fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(14),
-
+  lineHeight: fzTolineHeight(18),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
-    lineHeight: fzTolineHeight(12),
-  },
-};
-
-theme.typography.caption = {
-  fontWeight: 600,
-  fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(14),
-  color: formatColor(blue.blue1),
-  [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(12),
-    lineHeight: fzTolineHeight(12),
+    lineHeight: fzTolineHeight(16),
   },
 };
 
 theme.typography.button = {
   fontWeight: 600,
   fontSize: pxToRem(16),
-  lineHeight: pxToRem(24),
+  lineHeight: pxToRem(16),
 };
 
 const MuiTextFieldVariants: ComponentsVariants["MuiTextField"] = [
@@ -263,11 +360,11 @@ theme.components = {
       {
         props: { variant: "cta" },
         style: {
-          color: formatColor(blue.blue2),
-          backgroundColor: formatColor(blue.blue3),
+          color: formatColor(neutral.white),
+          backgroundColor: formatColor(blue.blue1),
 
           "&:hover": {
-            backgroundColor: formatColor(blue.blue4),
+            backgroundColor: formatColor(blue.blue14),
           },
         },
       },
@@ -279,11 +376,11 @@ theme.components = {
           width: "100%",
           minWidth: 150,
           fontSize: 14,
-          [theme.breakpoints.down('md')]: {
+          [theme.breakpoints.down("md")]: {
             minWidth: 120,
           },
           "&:hover": {
-            backgroundColor: formatColor(blue.blue12),
+            backgroundColor: formatColor(blue.blue14),
 
           },
         },
@@ -294,14 +391,14 @@ theme.components = {
           backgroundColor: formatColor(neutral.white),
           color: formatColor(neutral.black),
           width: "100%",
-          boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
+          boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.03)",
           padding: "16px 20px",
           borderRadius: 10,
           border: "none",
-          '&:hover': {
+          "&:hover": {
             backgroundColor: formatColor(neutral.gray5),
             border: "none",
-        }
+          },
         },
       },
     ],
@@ -311,7 +408,6 @@ theme.components = {
       root: {
         borderRadius: 8,
 
-
         "&:hover": {
           borderColor: formatColor(neutral.white),
           backgroundColor: formatColor(neutral.white),
@@ -320,13 +416,13 @@ theme.components = {
         "&.Mui-focused": {
           backgroundColor: formatColor(neutral.white),
         },
-        '&:before': {
-          borderBottom: 'none !important',
+        "&:before": {
+          borderBottom: "none !important",
 
-          '&:hover' :{
-            borderBottom: 'none'
-          }
-        }
+          "&:hover": {
+            borderBottom: "none",
+          },
+        },
       },
       input: {
         ":hover": {
@@ -364,7 +460,6 @@ theme.components = {
       },
       InputProps: {
         disableUnderline: true,
-
       },
     },
     styleOverrides: {
@@ -411,8 +506,7 @@ theme.components = {
         backgroundColor: formatColor(neutral.white),
         height: 16,
         borderRadius: 8,
-        ".MuiLinearProgress-bar": {
-        },
+        ".MuiLinearProgress-bar": {},
       },
     },
   },
@@ -420,8 +514,8 @@ theme.components = {
     styleOverrides: {
       gutters: 2,
       root: {
-        borderRadius: 10
-      }
-    }
-  }
+        borderRadius: 10,
+      },
+    },
+  },
 };

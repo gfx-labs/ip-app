@@ -72,7 +72,6 @@ export const DelegateIPTModal = () => {
       <Box
         sx={{
           alignItems: "center",
-          mb: 2.5,
           mt: 4,
           columnGap: 2,
         }}
@@ -87,15 +86,15 @@ export const DelegateIPTModal = () => {
           }}
         >
           <Box>
-            <Typography variant="h3" color="text.secondary" mb={1}>
+            <Typography variant="h6_semi" color="text.primary" mb={1}>
               {screen === 0 ? "Delegate your Vote" : "Add Delegate"}
             </Typography>
           </Box>
         </Box>
         <Typography
-          variant="body2"
+          variant="body3"
           color={
-            isLight ? formatColor(neutral.black) : formatColor(neutral.white)
+            isLight ? formatColor(neutral.black) : formatColor(neutral.gray3)
           }
           fontWeight={600}
         >

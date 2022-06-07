@@ -58,21 +58,19 @@ export const TokenSelect = (props: TokenSelectProps) => {
           <Typography
             sx={{
               color: formatColor(neutral.gray3),
-              fontSize: 18,
-              fontWeight: 600,
               marginLeft: 1,
             }}
+            variant="body2_semi"
           >
             {token.ticker}
           </Typography>
         </Box>
-        <Box>
+        <Box display="flex" justifyContent="end">
           <Typography
-            variant="body2"
+            variant="label2"
             sx={{
               color: formatColor(neutral.gray3),
               textAlign: "right",
-              fontWeight: 750,
               mt: 1,
             }}
           >

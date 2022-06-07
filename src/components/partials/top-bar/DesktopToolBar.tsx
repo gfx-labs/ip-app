@@ -3,7 +3,6 @@ import { useContext } from "react";
 
 import { Link } from "../../util/link";
 import {
-  ClaimsButton,
   ConnectWalletButton,
   SelectedChainButton,
 } from "../../util/button";
@@ -40,7 +39,6 @@ export const DesktopToolBar = () => {
       </Box>
 
       <Box sx={{gap: 2}} display="flex" mr={-1} ml="auto">
-        <ClaimsButton />
         <SelectedChainButton />
         <ConnectWalletButton />
         <BaseSwitch

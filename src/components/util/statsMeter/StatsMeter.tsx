@@ -32,11 +32,7 @@ export const StatsMeter = () => {
   }, [percentBorrowed]);
   return (
     <Box>
-      <Typography
-        variant="body1"
-        fontWeight={600}
-        color={formatColor(neutral.gray10)}
-      >
+      <Typography variant="label" color={formatColor(neutral.gray3)}>
         Vault Stats
       </Typography>
 
@@ -50,21 +46,11 @@ export const StatsMeter = () => {
       />
 
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography
-          variant="body2"
-          fontWeight={600}
-          fontSize={14}
-          color={formatColor(neutral.gray3)}
-        >
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
           Borrowing Power: {Math.round(borrowingPower).toLocaleString()} USDi
         </Typography>
 
-        <Typography
-          variant="body2"
-          fontWeight={600}
-          fontSize={14}
-          color={formatColor(neutral.gray3)}
-        >
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
           USDi Borrowed: {percentBorrowed}%
         </Typography>
       </Box>

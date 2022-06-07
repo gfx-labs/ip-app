@@ -69,7 +69,7 @@ export const BorrowRepayModal = () => {
           <Typography variant="body1" color={formatColor(neutral.gray3)}>
             Liability:
           </Typography>
-          <Typography variant="h3" color="text.secondary">
+          <Typography variant="h6" color="text.primary">
               ${accountLiability.toFixed(0)}
             </Typography>
         </Box>
@@ -78,7 +78,7 @@ export const BorrowRepayModal = () => {
               <Typography variant="body1" color={formatColor(neutral.gray3)}>
                 {Spacer}
               </Typography>
-              <Typography variant="h3" color="text.secondary">
+              <Typography variant="h3" color="text.primary">
                 {"->"}
               </Typography></Box>
               :<></>) :
@@ -86,7 +86,7 @@ export const BorrowRepayModal = () => {
                   <Typography variant="body1" color={formatColor(neutral.gray3)}>
                     {Spacer}
                   </Typography>
-                  <Typography variant="h3" color="text.secondary">
+                  <Typography variant="h3" color="text.primary">
                     {"->"}
                   </Typography>
                 </Box>
@@ -98,7 +98,7 @@ export const BorrowRepayModal = () => {
               <Typography variant="body1" color={formatColor(neutral.gray3)}>
                 New:
               </Typography>
-              <Typography variant="h3" color="text.secondary">
+              <Typography variant="h6" color="text.primary">
                 {(Number(accountLiability)+Number(borrowAmount)).toFixed(0)}
               </Typography></Box>
               :
@@ -106,7 +106,7 @@ export const BorrowRepayModal = () => {
                 <Typography variant="body1" color={formatColor(neutral.gray3)}>
                   New:
                 </Typography>
-                <Typography variant="h3" color="text.secondary">
+                <Typography variant="h6" color="text.primary">
                   {(Number(accountLiability)-Number(borrowAmount)).toFixed(0)}
                 </Typography>
               </Box>

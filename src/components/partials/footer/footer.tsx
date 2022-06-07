@@ -103,7 +103,7 @@ const DesktopFooter = () => {
                       target="_blank"
                       key={link.label}
                       to={link.href}
-                      variant="h6"
+                      variant="body3"
                       color={formatColor(neutral.gray2)}
                       paddingBottom={1}
                       sx={{
@@ -123,6 +123,7 @@ const DesktopFooter = () => {
       </Box>
       <Box
         sx={{
+          mt: 4,
           display: "flex",
           justifyContent: "space-between",
           [theme.breakpoints.down("md")]: {
@@ -152,7 +153,7 @@ const DesktopFooter = () => {
           </MuiLink>
           <MuiLink
             component={Link}
-            to="https://twitter.com/labsgfx"
+            to="https://twitter.com/InterestDeFi"
             target="_blank"
             paddingBottom={2}
           >

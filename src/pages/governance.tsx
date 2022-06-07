@@ -9,7 +9,7 @@ import {
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { ProposalCard } from "../components/util/governance/ProposalCard";
 import { Spinner } from "../components/util/loading";
-import { GovernanceToolTip } from "../components/util/tooltip/GovernanceToolTip";
+import { ToolTip } from "../components/util/tooltip/ToolTip";
 import {
   getRecentProposals,
   useProposalCount,
@@ -78,23 +78,23 @@ export const Governance = () => {
           rowGap={1}
           flexDirection={{ xs: "column", md: "row" }}
         >
-          <GovernanceToolTip
-            title={
+          <ToolTip
+            content={
               <>
-                <Typography variant="h3">Voting</Typography> <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="subtitle1" color="text.primary">Voting</Typography> <br />
+                <Typography variant="body3" whiteSpace="nowrap">
                   Threshold: 40,000,000
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Qurourum Threshold: 20,000,000
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Voting Period: 5 days
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Timelock Period: 15 seconds
                 </Typography>
               </>
@@ -102,19 +102,19 @@ export const Governance = () => {
             text="Proposal Voting"
           />
 
-          <GovernanceToolTip
-            title={
+          <ToolTip
+            content={
               <>
-                <Typography variant="h3">Emergency Voting</Typography> <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="subtitle1" color="text.primary" >Emergency Voting</Typography> <br />
+                <Typography variant="body3" whiteSpace="nowrap">
                   Voting Period: 1 day
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Qurourum Threshold: 20,000,000
                 </Typography>{" "}
                 <br />
-                <Typography variant="body1" whiteSpace="nowrap">
+                <Typography variant="body3" whiteSpace="nowrap">
                   Timelock Period: 15 seconds
                 </Typography>
               </>

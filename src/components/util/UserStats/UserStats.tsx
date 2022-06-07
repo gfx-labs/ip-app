@@ -27,8 +27,7 @@ import { OpenVaultButton } from "../button/OpenVaultButton";
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
-    variant="body2"
-    fontWeight={600}
+    variant="label2"
     color={formatColor(neutral.gray3)}
     whiteSpace="nowrap"
   >
@@ -232,15 +231,20 @@ export const UserStats = () => {
                   [theme.breakpoints.down("lg")]: {
                     width: "100%",
                     marginTop: 3,
+    
+                  },
+                  [theme.breakpoints.down("sm")]: {
+                    gridTemplateColumns: "1fr",
+                    rowGap: 1
                   },
                 }}
               >
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: formatColor(blue.blue8),
+                    backgroundColor: formatColor(neutral.white),
                     boxShadow: 0,
-                    color: formatColor(blue.blue7),
+                    color: formatColor(neutral.black),
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
@@ -248,15 +252,17 @@ export const UserStats = () => {
                   }}
                   onClick={() => setType(ModalType.Borrow)}
                 >
+                  <Typography variant="body3">
                   Borrow
+                  </Typography>
                 </Button>
 
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: formatColor(blue.blue8),
+                    backgroundColor: formatColor(neutral.white),
                     boxShadow: 0,
-                    color: formatColor(blue.blue7),
+                    color: formatColor(neutral.black),
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
@@ -264,7 +270,9 @@ export const UserStats = () => {
                   }}
                   onClick={() => setType(ModalType.Repay)}
                 >
+                  <Typography variant="body3">
                   Repay
+                  </Typography>
                 </Button>
               </Box>
             ) : (
@@ -285,8 +293,8 @@ export const UserStats = () => {
           display: "grid",
           gridTemplateColumns: {
             xs: "1fr",
-            sm: "1fr 1fr",
-            md: "repeat(3, 1fr)",
+            md: "1fr 1fr",
+            lg: "repeat(3, 1fr)",
           },
           columnGap: 3,
           rowGap: 3,
@@ -301,7 +309,6 @@ export const UserStats = () => {
           gridTemplateColumns: "10fr 1fr",
           columnGap: 4,
           marginTop: 2,
-          marginBottom: 5,
         }}
       ></Box>
     </Box>

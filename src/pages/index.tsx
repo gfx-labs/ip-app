@@ -6,8 +6,6 @@ import { useLight } from "../hooks/useLight";
 import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
 import { StatsMeter } from "../components/util/statsMeter";
 import { UserStats } from "../components/util/UserStats";
-import { ConnectWalletButton } from "../components/util/button";
-import { OpenVaultButton } from "../components/util/button/OpenVaultButton";
 import { useRolodexContext } from "../components/libs/rolodex-data-provider/RolodexDataProvider";
 import { useEffect } from "react";
 import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
@@ -15,7 +13,6 @@ import { BigNumber } from "ethers";
 import { useAppGovernanceContext } from "../components/libs/app-governance-provider/AppGovernanceProvider";
 import { Governance } from "./governance";
 import Cookies from "universal-cookie";
-import {useNavigate} from "react-router";
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -71,29 +68,28 @@ const Dashboard = () => {
           color={formatColor(neutral.black)}
           textAlign="left"
           maxWidth="xl"
-          py={{ xs: 7, sm: 0 }}
+          pt={{ xs: 7, sm: 0 }}
+          pb={{ xs: 5, sm: 10 }}
           px={{ xs: 2, md: 10 }}
           margin="auto"
           position="relative"
           sx={{
             [theme.breakpoints.down("md")]: {
               mb: 0,
-              pb: 0,
               marginLeft: "auto",
           },
           }}
         >
           <Typography
-            variant="body1"
+            variant="label"
             paddingLeft={{ xs: 2, md: 6 }}
-            marginBottom={2}
-            fontWeight={600}
-            color={formatColor(neutral.gray10)}
+            color={formatColor(neutral.gray3)}
           >
             Protocol Stats
           </Typography>
           <Box
             sx={{
+              marginTop: 3,
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               columnGap: 2,

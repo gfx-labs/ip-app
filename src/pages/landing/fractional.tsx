@@ -35,12 +35,10 @@ export const Fractional: React.FC = () => {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography
               display="inline"
-              variant="h1"
-              flexBasis="100%"
-              fontSize="200%"
+              variant="h4"
               sx={{
                 color: formatColor(neutral.black),
-                lineHeight: 1.3,
+                
               }}
             >
               Interest Protocol applies fractional reserve banking to
@@ -48,9 +46,8 @@ export const Fractional: React.FC = () => {
             </Typography>
             <Typography
               display="inline"
-              variant="h1"
+              variant="body3"
               sx={{
-                fontSize: "200%",
                 marginLeft: 0,
                 color: formatColor(neutral.gray8),
               }}
