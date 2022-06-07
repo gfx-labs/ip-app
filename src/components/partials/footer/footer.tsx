@@ -82,9 +82,9 @@ const DesktopFooter = () => {
               }}
             >
               <Typography
-                variant="body1"
+                variant="body3"
                 fontWeight={700}
-                color="text.secondary"
+                color="text.primary"
               >
                 {navItem.title}
               </Typography>
@@ -133,7 +133,7 @@ const DesktopFooter = () => {
           },
         }}
       >
-        <Typography variant="body2" color={formatColor(neutral.gray3)}>
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
           Interest Protocol 2022
         </Typography>
         <Box>

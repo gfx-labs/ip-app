@@ -36,7 +36,7 @@ export const GovernanceToolTip = (props: {
   return (
     <GovernanceToolTipContainer title={content}>
       <Box display="flex" alignItems="center">
-        <Typography variant="body1" color="text.secondary" fontWeight={600}>
+        <Typography variant="body3" color="text.secondary" fontWeight={600}>
           {text}
         </Typography>
         <ToolTipInfoIcon
