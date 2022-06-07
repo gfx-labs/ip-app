@@ -33,6 +33,8 @@ declare module "@mui/material/styles" {
   interface TypographyVariants {
     h6_semi: React.CSSProperties;
     subtitle2_semi: React.CSSProperties;
+    subtitle3_semi: React.CSSProperties;
+    subtitle3: React.CSSProperties;
     body2_semi: React.CSSProperties;
     body3: React.CSSProperties;
     body3_medium: React.CSSProperties;
@@ -46,6 +48,8 @@ declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     h6_semi: true;
     subtitle2_semi: true;
+    subtitle3_semi: true;
+    subtitle3: true; 
     body2_semi: true;
     body3: true;
     body3_medium: true;
@@ -96,7 +100,7 @@ const isLight = theme.palette.mode;
 theme.typography.h1 = {
   fontWeight: 800,
   fontSize: pxToRem(88),
-  letterSpacing: -2,
+  letterSpacing: -1,
   lineHeight: fzTolineHeight(90),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(40),
@@ -107,7 +111,7 @@ theme.typography.h1 = {
 theme.typography.h2 = {
   fontWeight: 800,
   fontSize: pxToRem(54),
-  letterSpacing: -2,
+  letterSpacing: -1,
   lineHeight: fzTolineHeight(56),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(28),
@@ -119,7 +123,7 @@ theme.typography.h3 = {
   fontWeight: 700,
   fontSize: pxToRem(48),
   lineHeight: fzTolineHeight(50),
-  letterSpacing: -2,
+  letterSpacing: -1,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(28),
     lineHeight: fzTolineHeight(32),
@@ -129,8 +133,8 @@ theme.typography.h3 = {
 theme.typography.h4 = {
   fontWeight: 700,
   fontSize: pxToRem(40),
-  lineHeight: fzTolineHeight(46),
-  letterSpacing: -2,
+  lineHeight: fzTolineHeight(42),
+  letterSpacing: -1.5,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(24),
     lineHeight: fzTolineHeight(24),
@@ -141,7 +145,7 @@ theme.typography.h5 = {
   fontWeight: 700,
   fontSize: pxToRem(28),
   lineHeight: fzTolineHeight(28),
-  letterSpacing: -2,
+  letterSpacing: -1,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(24),
     lineHeight: fzTolineHeight(24),
@@ -152,7 +156,7 @@ theme.typography.h6 = {
   fontWeight: 800,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
-  letterSpacing: -2,
+  letterSpacing: -1,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),
@@ -163,7 +167,7 @@ theme.typography.h6_semi = {
   fontWeight: 700,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
-  letterSpacing: -2,
+  letterSpacing: -1,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),
@@ -171,6 +175,17 @@ theme.typography.h6_semi = {
 };
 
 theme.typography.subtitle1 = {
+  fontWeight: 700,
+  fontSize: pxToRem(24),
+  lineHeight: fzTolineHeight(24),
+  letterSpacing: 0,
+  [theme.breakpoints.down("md")]: {
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(20),
+  },
+};
+
+theme.typography.subtitle2 = {
   fontWeight: 600,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(24),
@@ -181,7 +196,7 @@ theme.typography.subtitle1 = {
   },
 };
 
-theme.typography.subtitle2 = {
+theme.typography.subtitle3 = {
   fontWeight: 700,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(28),
@@ -192,7 +207,7 @@ theme.typography.subtitle2 = {
   },
 };
 
-theme.typography.subtitle2_semi = {
+theme.typography.subtitle3_semi = {
   fontWeight: 600,
   fontSize: pxToRem(24),
   lineHeight: fzTolineHeight(28),

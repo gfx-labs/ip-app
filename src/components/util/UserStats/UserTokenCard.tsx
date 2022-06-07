@@ -77,12 +77,12 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       sx={{
         backgroundColor: "smallCard.background",
         borderRadius: 4,
-        paddingTop: 5,
-        paddingLeft: 6,
-        paddingRight: 6,
-        paddingBottom: 3,
+        paddingTop: 4,
+        paddingLeft: 4,
+        paddingRight: 4,
+        paddingBottom: 4,
         [theme.breakpoints.down("lg")]: {
-          paddingX: 3,
+          paddingX: 4,
           paddingY: 4,
         },
         ...props.sx,
@@ -95,7 +95,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               {tokenName}
             </Typography>
             <br />
-            <Typography variant="h6_semi" color="text.primary">
+            <Typography variant="subtitle1" color="text.primary">
               {tokenValue}
             </Typography>
           </Box>
@@ -104,7 +104,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               Vault Balance
             </Typography>
             <br />
-            <Typography variant="h6_semi" color="text.primary">
+            <Typography variant="subtitle1" color="text.primary">
               {vaultBalance}
             </Typography>
           </Box>
