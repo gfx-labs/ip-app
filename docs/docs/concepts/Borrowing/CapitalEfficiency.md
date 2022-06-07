@@ -4,7 +4,7 @@ One of Interest Protocol's greatest advantages is its capital efficiency. Rather
 
 To illustrate this, suppose 1 USDC has been supplied to Compound, Aave, and Interest Protocol. How much loans can each protocol generate at a given level of interest rate? In other words, what *utilization rate* can each protocol achieve at a given level of interest rate? The following figure answers this question, using the current parameters of the three protocols.
 
-![wpFigure4.png](./wpFigure4.png)
+![image.png](./image.png)
 
 
 At _any_ level of borrow APR, Interest Protocol has a higher utilization rate than Compound or Aave. In other words, given any borrow APR, Interest Protocol lends out more using the same amount of USDC.
