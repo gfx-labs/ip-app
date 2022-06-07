@@ -40,16 +40,16 @@ export const Votes = ({
       <Box display="flex" alignItems="center" marginX={2}>
         <ArrowUpIcon
           strokecolor={upStrokeColor}
-          sx={{ width: 10, height: 16, mr: 1 }}
+          sx={{ width: 10, height: 12, mr: 1 }}
         />
-        <Typography>{yesVotes.toLocaleString()}</Typography>
+        <Typography variant="label2">{yesVotes.toLocaleString()}</Typography>
       </Box>
       <Box display="flex" alignItems="center" marginX={2}>
         <ArrowDownIcon
           strokecolor={downStrokeColor}
-          sx={{ width: 10, height: 16, mr: 1 }}
+          sx={{ width: 10, height: 12, mr: 1 }}
         />
-        <Typography>{noVotes.toLocaleString()}</Typography>
+        <Typography variant="label2">{noVotes.toLocaleString()}</Typography>
       </Box>
     </Box>
   );

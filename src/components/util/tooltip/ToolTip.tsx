@@ -1,5 +1,5 @@
 import { styled } from "@mui/material/styles";
-import { Box } from "@mui/material";
+import { Box, TypographyPropsVariantOverrides } from "@mui/material";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useLight } from "../../../hooks/useLight";
@@ -29,7 +29,7 @@ const BaseToolTipContainer = styled(
 export const ToolTip = (props: {
   content: TooltipProps["title"];
   text: string;
-  text_variant?: Variant;
+  text_variant?: "body1" | "body2" | "body2_semi";
 }) => {
   const { content, text, text_variant = 'body1' } = props;
   const isLight = useLight();
