@@ -90,18 +90,16 @@ export const ProposalCard = (props: ProposalCardProps) => {
     }
   }, [proposal]);
 
-  // useEffect(() => {
-  //   const bdiff = endBlock - dataBlock;
-  //   const secs = bdiff * 13.5;
-  //   const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100);
-  //   if (bdiff < 0) {
-  //     setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`);
-  //     setStatus("Ended");
-  //     return;
-  //   }
-  //   setTimeLeft(`Active for ${hrdiff} Hour(s)`);
-  //   setStatus("Active");
-  // }, [dataBlock]);
+  useEffect(() => {
+    const bdiff = endBlock - dataBlock;
+    const secs = bdiff * 13.5;
+    const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100);
+    if (bdiff < 0) {
+      setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`);
+      return;
+    }
+    setTimeLeft(`Active for ${hrdiff} Hour(s)`);
+  }, [dataBlock]);
 
   const expandCard = () => {
     setIsExpanded(!isExpanded);
