@@ -6,7 +6,7 @@ import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
 import {ModalContentProvider} from "../../libs/modal-content-provider/ModalContentProvider";
 
 interface VoteButtonProps {
-  status: string;
+  status: number;
   id: string;
   totalVotes: number;
 }
@@ -24,7 +24,7 @@ const VoteButton = (props: VoteButtonProps) => {
         sx={{ color: formatColor(neutral.white), height: 43 }}
         variant="contained"
         onClick={() => setOpen(true)}
-        disabled={status === "Ended"}
+        disabled={status !== 1}
       >
         Vote
       </Button>

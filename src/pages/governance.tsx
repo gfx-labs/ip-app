@@ -14,6 +14,7 @@ import {
   getRecentProposals,
   useProposalCount,
   useProposalInfo,
+  useProposalState,
 } from "../hooks/useGovernance";
 
 export interface Proposal {
