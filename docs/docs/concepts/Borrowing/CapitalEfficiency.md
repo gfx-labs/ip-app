@@ -13,7 +13,7 @@ One might ask if Interest Protocol is simply taking more risk than Compound or A
 are not immediately redeemable for the underlying USDC. For Interest Protocol, this is equal to (USDC in reserve) / (USDi total supply). For Compound and Aave, it is equal to their utilization rate. The figure below compares the liquidity risk for the three protocols at each level of utilization rate.
 
 
-![image.png](./image.png)
+![wpFigure3.png](./wpFigure3.png)
 
 
 We can see that Interest Protocol has a lower liquidity risk at every level of utilization rate, compared to Compound or Aave.
