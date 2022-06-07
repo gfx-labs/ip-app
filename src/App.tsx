@@ -36,6 +36,7 @@ import { AppGovernanceProvider } from "./components/libs/app-governance-provider
 import {WhitepaperPage} from "./pages/whitepaper";
 import { TermsPage } from "./pages/terms";
 import {TestingPage} from "./pages/playground";
+import {VoteModal} from "./components/util/governance/proposal/VoteModal";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,19 +64,23 @@ const DashboardContext = (props :{children:any}) =>{
               <AppGovernanceProvider>
                 <>
                   <WalletModalProvider>
-                    <SwapTokenProvider>{props.children}</SwapTokenProvider>
+                    <>
+                      <SwapTokenProvider>
+                        {props.children}
+                      </SwapTokenProvider>
+                      <DelegateModal />
+                      <DelegateIPTModal />
+                      <DepositWithdrawCollateralModal />
+                      <DepositCollateralConfirmationModal />
+                      <WithdrawCollateralConfirmationModal />
+                      <DepositWithdrawUSDCModal />
+                      <BorrowRepayModal />
+                      <DepositUSDCConfirmationModal />
+                      <WithdrawUSDCConfirmationModal />
+                      <ClaimModal />
+                      <TransactionStatusModal />
+                    </>
                   </WalletModalProvider>
-                  <DelegateModal />
-                  <DelegateIPTModal />
-                  <DepositWithdrawCollateralModal />
-                  <DepositCollateralConfirmationModal />
-                  <WithdrawCollateralConfirmationModal />
-                  <DepositWithdrawUSDCModal />
-                  <BorrowRepayModal />
-                  <DepositUSDCConfirmationModal />
-                  <WithdrawUSDCConfirmationModal />
-                  <ClaimModal />
-                  <TransactionStatusModal />
                 </>
               </AppGovernanceProvider>
             </ModalContentProvider>

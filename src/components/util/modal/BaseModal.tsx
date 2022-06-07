@@ -11,7 +11,7 @@ export interface BaseModalProps {
   contentMaxWidth?: number;
 }
 
-export const BaseModal = ({
+export const BaseModal:React.FC<BaseModalProps> = ({
   open,
   setOpen,
   withCloseButton = true,
@@ -32,7 +32,7 @@ export const BaseModal = ({
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        
+
         ".MuiPaper-root": {
           outline: "none",
         },
@@ -56,7 +56,7 @@ export const BaseModal = ({
       >
         {children}
 
-        
+
           <Box
             sx={{ position: "absolute", top: "24px", right: "42px", zIndex: 5 }}
           >

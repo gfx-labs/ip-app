@@ -92,17 +92,16 @@ export const useCastVote = async (
   vote: number,
   signer: JsonRpcSigner
 ) => {
-  const { updateTransactionState } = useModalContext();
 
   const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
 
   const castVoteTransaction = await contract.castVote(id, vote);
 
-  updateTransactionState(castVoteTransaction);
+//  updateTransactionState(castVoteTransaction);
 
   const voteReceipt = await castVoteTransaction.wait();
 
-  updateTransactionState(voteReceipt);
+//  updateTransactionState(voteReceipt);
 
   return voteReceipt;
 };

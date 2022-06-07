@@ -3,17 +3,19 @@ import { BaseModal } from "../../modal";
 import { formatColor, neutral, pink } from "../../../../theme";
 import { useCastVote } from "../../../../hooks/useGovernance";
 import { useWeb3Context } from "../../../libs/web3-data-provider/Web3Provider";
+import {JsonRpcSigner} from "@ethersproject/providers";
 
 type VoteModalProps = {
   open: boolean;
   id: string;
   totalVotes: number;
   setOpen: (val: boolean) => void;
+  signer: JsonRpcSigner
 };
 
-export const VoteModal = (props: VoteModalProps) => {
-  const { open, setOpen, id, totalVotes } = props;
-  const { currentSigner } = useWeb3Context();
+export const VoteModal:React.FC<VoteModalProps> = (props: VoteModalProps) => {
+  const { open, setOpen, id, totalVotes, signer} = props;
+  const currentSigner = signer
 
   return (
     <BaseModal open={open} withCloseButton setOpen={setOpen}>
