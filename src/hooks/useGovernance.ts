@@ -107,6 +107,12 @@ export const useCastVote = async (
   return voteReceipt;
 };
 
+export const getGovernorContract = (signer: JsonRpcSigner) => {
+  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
+
+  return contract;
+};
+
 export const useProposalState = async (
   id: BigNumberish,
   provider: JsonRpcProvider
@@ -114,7 +120,7 @@ export const useProposalState = async (
   const contract = GovernorCharlieDelegate__factory.connect(governor, provider);
   const status = await contract.state(id);
 
-  return status
+  return status;
 };
 
 export const exampleProposal = `
