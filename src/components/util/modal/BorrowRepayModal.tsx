@@ -66,19 +66,19 @@ export const BorrowRepayModal = () => {
           alt={tokenName}
         ></Box>
         <Box>
-          <Typography variant="body1" color={formatColor(neutral.gray3)}>
+          <Typography variant="label2" color={formatColor(neutral.gray3)}>
             Liability:
           </Typography>
-          <Typography variant="h6" color="text.primary">
+          <Typography variant="subtitle1" color="text.primary">
               ${accountLiability.toFixed(0)}
             </Typography>
         </Box>
           { currType ?
             (borrowAmount ?<Box>
-              <Typography variant="body1" color={formatColor(neutral.gray3)}>
+              <Typography variant="label2" color={formatColor(neutral.gray3)}>
                 {Spacer}
               </Typography>
-              <Typography variant="h3" color="text.primary">
+              <Typography variant="subtitle" color="text.primary">
                 {"->"}
               </Typography></Box>
               :<></>) :
@@ -95,18 +95,18 @@ export const BorrowRepayModal = () => {
         {borrowAmount ?
           ( currType ?
             <Box>
-              <Typography variant="body1" color={formatColor(neutral.gray3)}>
+              <Typography variant="label2" color={formatColor(neutral.gray3)}>
                 New:
               </Typography>
-              <Typography variant="h6" color="text.primary">
+              <Typography variant="subtitle1" color="text.primary">
                 {(Number(accountLiability)+Number(borrowAmount)).toFixed(0)}
               </Typography></Box>
               :
               <Box>
-                <Typography variant="body1" color={formatColor(neutral.gray3)}>
+                <Typography variant="label2" color={formatColor(neutral.gray3)}>
                   New:
                 </Typography>
-                <Typography variant="h6" color="text.primary">
+                <Typography variant="subtitle1" color="text.primary">
                   {(Number(accountLiability)-Number(borrowAmount)).toFixed(0)}
                 </Typography>
               </Box>
