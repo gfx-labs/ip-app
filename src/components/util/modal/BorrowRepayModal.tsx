@@ -78,15 +78,15 @@ export const BorrowRepayModal = () => {
               <Typography variant="label2" color={formatColor(neutral.gray3)}>
                 {Spacer}
               </Typography>
-              <Typography variant="subtitle" color="text.primary">
+              <Typography variant="subtitle1" color="text.primary">
                 {"->"}
               </Typography></Box>
               :<></>) :
                 (borrowAmount ?<Box>
-                  <Typography variant="body1" color={formatColor(neutral.gray3)}>
+                  <Typography variant="label2" color={formatColor(neutral.gray3)}>
                     {Spacer}
                   </Typography>
-                  <Typography variant="h3" color="text.primary">
+                  <Typography variant="subtitle1" color="text.primary">
                     {"->"}
                   </Typography>
                 </Box>
