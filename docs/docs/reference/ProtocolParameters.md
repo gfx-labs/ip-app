@@ -16,7 +16,7 @@
 ### Collateral Assset Parameters
 * wETH: LTV: 85%, oracle address: tbd, liquidation incentive: 5%
 * wBTC: LTV: 80%, oracle address: tbd, liquidation incentive: 5%
-* UNI: LTV: 55%, oracle address: tbd, liquidation incentive: 9%
+* UNI: LTV: 55%, oracle address: tbd, liquidation incentive: 15%
 
 ### wETH Oracle
 * AnchoredViewRelay: widthNumerator: 10
