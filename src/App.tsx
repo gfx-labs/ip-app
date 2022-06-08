@@ -1,7 +1,7 @@
 import { StrictMode, Suspense, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./theme/fonts.css";
-import  WhitelistPage from "../src/pages/whitelist"
+import WhitelistPage from "../src/pages/whitelist";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import { Web3ReactProvider } from "@web3-react/core";
 import { providers } from "ethers";
@@ -33,9 +33,9 @@ import { SwapTokenProvider } from "./components/libs/swap-token-provider/SwapTok
 import { VaultDataProvider } from "./components/libs/vault-data-provider/VaultDataProvider";
 import { StableCoinsProvider } from "./components/libs/stable-coins-provider/StableCoinsProvider";
 import { AppGovernanceProvider } from "./components/libs/app-governance-provider/AppGovernanceProvider";
-import {WhitepaperPage} from "./pages/whitepaper";
+import { WhitepaperPage } from "./pages/whitepaper";
 import { TermsPage } from "./pages/terms";
-import {TestingPage} from "./pages/playground";
+import { TestingPage } from "./pages/playground";
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,12 +48,12 @@ function getWeb3Library(provider: any): providers.Web3Provider {
 const WalletContext = (props: { children: any }) => {
   return (
     <Web3ReactProvider getLibrary={getWeb3Library}>
-        {props.children}
+      {props.children}
     </Web3ReactProvider>
   );
 };
 
-const DashboardContext = (props :{children:any}) =>{
+const DashboardContext = (props: { children: any }) => {
   return (
     <Web3ContextProvider>
       <RolodexContentProvider>
@@ -64,9 +64,7 @@ const DashboardContext = (props :{children:any}) =>{
                 <>
                   <WalletModalProvider>
                     <>
-                      <SwapTokenProvider>
-                        {props.children}
-                      </SwapTokenProvider>
+                      <SwapTokenProvider>{props.children}</SwapTokenProvider>
                       <DelegateModal />
                       <DelegateIPTModal />
                       <DepositWithdrawCollateralModal />
@@ -87,18 +85,23 @@ const DashboardContext = (props :{children:any}) =>{
         </StableCoinsProvider>
       </RolodexContentProvider>
     </Web3ContextProvider>
-  )
-
-}
+  );
+};
 
 const AppRouter = () => {
   return (
     <WalletContext>
       <Routes>
-        <Route path={`/sale`} element={
-          <Web3ContextProvider>
-            <PurchasePage />
-          </Web3ContextProvider>} />
+        <Route
+          path={`/sale`}
+          element={
+            <Web3ContextProvider>
+              <WalletModalProvider>
+                <PurchasePage />
+              </WalletModalProvider>
+            </Web3ContextProvider>
+          }
+        />
         <Route path={`/whitelist`} element={<WhitelistPage />} />
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/whitepaper`} element={<WhitepaperPage />} />

@@ -7,6 +7,7 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { Button, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../theme";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { PDFFullPage } from "../../components/util/pdfViewer/PDFFullPage";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "pdf.worker.min.js";
 
@@ -48,61 +49,8 @@ export const TermsPage: React.FC = () => {
 
   const mw = 1500;
   return (
-    <Box
-      display="flex"
-      sx={{
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-        background: formatColor(neutral.gray1),
-      }}
-    >
-      <Button href="ip_terms.pdf">
-        <Typography
-          sx={{
-            color: formatColor(neutral.white),
-            width: "auto",
-            whiteSpace: "nowrap",
-            px: 3,
-            fontWeight: 600
-          }}
-        >
-          Click Here to Download Document
-        </Typography>
-      </Button>
-      <Box
-        display="flex"
-        sx={{
-          justifyContent: "center",
-          alignItems: "center",
-          maxWidth: mw + "px",
-        }}
-      >
-        <Document
-          renderMode="svg"
-          file="ip_terms.pdf"
-          onLoadSuccess={onDocumentLoadSuccess}
-          onLoadError={console.log}
-        >
-          <Page
-            width={(width > mw ? mw : width) * 0.9}
-            pageNumber={1}
-            renderMode="svg"
-          />
-          <br />
-          {[...Array(pageNumber)].map((x, i) => {
-            return (
-              <>
-                <Page
-                  width={(width > mw ? mw : width) * 0.9}
-                  pageNumber={i + 2}
-                />{" "}
-                <br />
-              </>
-            );
-          })}
-        </Document>
-      </Box>
+    <Box>
+      <PDFFullPage pdf_src="ip_terms.pdf" downloadable={true} />
     </Box>
   );
 };
