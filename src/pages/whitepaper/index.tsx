@@ -6,6 +6,7 @@ import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import { Button, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../theme";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "pdf.worker.min.js";
 
@@ -13,6 +14,7 @@ export const WhitepaperPage: React.FC = () => {
   const [numPages, setNumPages] = useState<number | null>(null);
   const [pageNumber, setPageNumber] = useState(1);
   const { height, width } = useWindowDimensions();
+  
   function onDocumentLoadSuccess({ numPages }: { numPages: any }) {
     setNumPages(numPages);
   }
@@ -102,28 +104,3 @@ export const WhitepaperPage: React.FC = () => {
     </Box>
   );
 };
-
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  return windowDimensions;
-}

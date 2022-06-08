@@ -15,13 +15,17 @@ import { Governance } from "./governance";
 import Cookies from "universal-cookie";
 
 const Dashboard = () => {
-  const cookies = new Cookies()
-  const isFirst = cookies.get("first-visit")
-  if(isFirst) {
-  }else{
-    console.log("detected first login")
-    return <><meta http-equiv="refresh" content="0; url=#/landing" />
-    <a href="#/landing">please click here if you are not redirected</a></>
+  const cookies = new Cookies();
+  const isFirst = cookies.get("first-visit");
+  if (isFirst) {
+  } else {
+    console.log("detected first login");
+    return (
+      <div style={{ minHeight: "80vh" }}>
+        <meta http-equiv="refresh" content="0; url=#/landing" />
+        <a href="#/landing">please click here if you are not redirected</a>
+      </div>
+    );
   }
   const theme = useTheme();
   const { currentAccount, connected } = useWeb3Context();
@@ -77,7 +81,7 @@ const Dashboard = () => {
             [theme.breakpoints.down("md")]: {
               mb: 0,
               marginLeft: "auto",
-          },
+            },
           }}
         >
           <Typography
@@ -96,7 +100,7 @@ const Dashboard = () => {
               [theme.breakpoints.down("lg")]: {
                 gridTemplateColumns: "1fr",
                 rowGap: 5,
-            },
+              },
             }}
           >
             <ProtocolStatsCard />
@@ -104,7 +108,6 @@ const Dashboard = () => {
           </Box>
 
           <Box sx={{ position: "relative" }}>
-
             <Box sx={{ marginY: 4 }}>
               <StatsMeter />
             </Box>

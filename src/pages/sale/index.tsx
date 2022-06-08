@@ -10,7 +10,6 @@ import {
 import { useEffect, useState, ReactNode } from "react";
 import { useNavigate } from "react-router";
 import { keyframes } from "@emotion/react";
-import Cookies from "universal-cookie";
 import { ForwardIcon } from "../../components/icons/misc/ForwardIcon";
 import { formatColor, neutral, blue } from "../../theme";
 import { Terms } from "./terms";
@@ -19,9 +18,19 @@ import { useLight } from "../../hooks/useLight";
 import { DecimalInput } from "../../components/util/textFields";
 import { DisableableModalButton } from "../../components/util/button/DisableableModalButton";
 import { ModalInputContainer } from "../../components/util/modal/ModalContent/ModalInputContainer";
+import Cookies from "universal-cookie";
+import { PDFModal } from "../../components/util/pdfViewer/PDFModal";
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0);
+  const cookie = new Cookies();
+
+  const [open, setOpen] = useState(cookie.get("IP_ACCEPT_TERMS") != "YES");
+  const handleClose = () => {};
+  const handleAgree = () => {
+    cookie.set("IP_ACCEPT_TERMS", "YES");
+    setOpen(false);
+  };
 
   useEffect(() => {
     const onScroll = (e: any) => {
@@ -42,12 +51,19 @@ const PurchasePage: React.FC = () => {
           minHeight: "70vh",
           width: "100%",
           overflow: "hidden",
-          py: {xs: 10},
+          py: { xs: 10 },
           maxWidth: 700,
           paddingX: { xs: 2, sm: 10 },
         }}
       >
-        <Terms />
+        <PDFModal
+          isOpen={open}
+          setIsOpen={setOpen}
+          pdf_src="ip_terms.pdf"
+          must_agree={true}
+          must_agree_handler={handleAgree}
+        />
+
         <PurchaseBox />
       </Box>
     </AppLayout>
@@ -169,7 +185,12 @@ function TabPanel(props: TabPanelProps) {
 
           <Box display="flex" flexWrap="wrap" mt={3} columnGap={4} rowGap={2}>
             <Box display="flex">
-              <Typography variant="body1" fontWeight={600} color="#A3A9BA" mr={1}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color="#A3A9BA"
+                mr={1}
+              >
                 IPT for sale:{" "}
               </Typography>
               <Typography
@@ -186,7 +207,12 @@ function TabPanel(props: TabPanelProps) {
               </Typography>
             </Box>
             <Box display="flex">
-              <Typography variant="body1" fontWeight={600} color="#A3A9BA" mr={1}>
+              <Typography
+                variant="body1"
+                fontWeight={600}
+                color="#A3A9BA"
+                mr={1}
+              >
                 USDC Committed:{" "}
               </Typography>
               <Typography
@@ -220,14 +246,15 @@ function TabPanel(props: TabPanelProps) {
               type="submit"
             />
           </Box>
-          <Box mt={5} display="flex" justifyContent="space-between" flexDirection={{xs: 'column', md: 'row'}}>
-            <Button>
-              Token Sale Rules
-            </Button>
+          <Box
+            mt={5}
+            display="flex"
+            justifyContent="space-between"
+            flexDirection={{ xs: "column", md: "row" }}
+          >
+            <Button>Token Sale Rules</Button>
 
-            <Button>
-              View Sales Contract
-            </Button>
+            <Button>View Sales Contract</Button>
           </Box>
         </Box>
       )}
