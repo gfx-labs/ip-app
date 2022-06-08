@@ -91,11 +91,11 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2.5 }}>
         <Box display="flex" flexDirection="column" rowGap={2}>
           <Box>
-            <Typography variant="label" color="text.secondary">
+            <Typography variant="label2" color="text.secondary">
               {tokenName}
             </Typography>
             <br />
-            <Typography variant="subtitle1" color="text.primary">
+            <Typography variant="subtitle3" color="text.primary">
               {tokenValue}
             </Typography>
           </Box>
@@ -104,7 +104,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               Vault Balance
             </Typography>
             <br />
-            <Typography variant="subtitle1" color="text.primary">
+            <Typography variant="subtitle3" color="text.primary">
               {vaultBalance}
             </Typography>
           </Box>

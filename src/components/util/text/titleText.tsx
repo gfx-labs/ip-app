@@ -10,7 +10,7 @@ export const TitleText = (props: TitleTextProps & BoxProps) => {
   const { title, text } = props;
   return (
     <Box {...props}>
-      <Typography variant="label" color={formatColor(neutral.gray3)} mb={1}>
+      <Typography variant="label2" color={formatColor(neutral.gray3)} mb={1}>
         {title}
       </Typography>
 

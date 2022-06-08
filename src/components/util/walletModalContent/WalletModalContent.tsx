@@ -22,12 +22,12 @@ export const WalletModalContent = () => {
   return (
     <Box>
       <Typography
-        variant="subtitle1"
+        variant="body3"
         position="relative"
         top={-8}
         textAlign="center"
       >
-        Connecting to Wallet
+        Connect Wallet
       </Typography>
 
       {loading ? (
@@ -98,7 +98,7 @@ export const WalletModalContent = () => {
         </Box>
       )}
 
-      <Box mt={2}>
+      <Box mt={1}>
         <Typography variant="label2">
           By connecting to Interest Protocol you agree to GFX Labs{" "}
           <Link href="#/terms" target="_blank">Terms of Service</Link> and acknowledge you have read

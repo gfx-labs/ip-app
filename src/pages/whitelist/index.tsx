@@ -221,7 +221,7 @@ function TabPanel(props: TabPanelProps) {
           <Box mt={5} display="flex" justifyContent="center" flexDirection={{ xs: 'column', md: 'row' }}>
             {(included == true) ? (<Box sx={{ whiteSpace: "pre" }}>
               <Typography
-                variant="h2"
+                variant="subtitle1"
                 textAlign="center"
                 mb="1em"
                 color="#50b543">
@@ -241,7 +241,7 @@ function TabPanel(props: TabPanelProps) {
               (message != "") ? (<>
                 <Typography color={"#fc3903"}> {message} </Typography>
               </>) : (<Box sx={{ whiteSpace: "pre" }}>
-                <Typography color={"#fc3903"} variant="h2" textAlign="center" mb="1em">
+                <Typography color={"#fc3903"} variant="subtitle1" textAlign="center" mb="1em">
                   Too Bad!
                 </Typography>
                 <Box textAlign="center">

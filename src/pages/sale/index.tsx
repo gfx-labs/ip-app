@@ -161,7 +161,7 @@ function TabPanel(props: TabPanelProps) {
               width={80}
               mr={3}
             ></Box>
-            <Typography variant="h6_semi" fontWeight={600}>
+            <Typography variant="subtitle1" fontWeight={600}>
               IPT Sale
             </Typography>
           </Box>

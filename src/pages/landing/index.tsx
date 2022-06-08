@@ -265,23 +265,23 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
             }
           </Box>
 
-          <Box sx={{ gap: 2 }} display="flex" mr={0} ml="auto">
+          <Box sx={{ gap: 0 }} display="absolute" mr={0} ml="auto">
             <Button
               onClick={toApp}
               variant="cta"
               sx={{
-                color: formatColor(blue.blue9),
+                color: formatColor(neutral.white),
                 backgroundColor: formatColor(blue.blue1),
-                padding: 4,
-                paddingLeft: 6,
-                paddingRight: 6,
+                padding: 3,
+                paddingLeft: 3,
+                paddingRight: 3,
                 "&:hover": {
                   backgroundColor: formatColor(blue.blue10),
                   backgroundImage: "none",
                 },
               }}
             >
-              App ➝
+              Launch App ➝
             </Button>
           </Box>
         </Toolbar>
