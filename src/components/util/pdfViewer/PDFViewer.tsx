@@ -48,9 +48,9 @@ export const PDFViewer = (props: PDFViewerProps) => {
     setTimeout(() => {
       if (numPages) {
         setPageNumber(numPages - 1);
-        // automatically download the entire thing after 10 seconds
+        // automatically download the entire thing after 2 seconds
       }
-    }, 1000 * 15);
+    }, 1000 * 2);
   }, [numPages]);
 
   return (
