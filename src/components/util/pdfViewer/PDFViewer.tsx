@@ -60,6 +60,7 @@ export const PDFViewer = (props: PDFViewerProps) => {
         justifyContent: "center",
         alignItems: "center",
         maxWidth: max_width + "px",
+        flexDirection: 'column'
       }}
     >
       { downloadable && 

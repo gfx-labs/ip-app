@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import {FC} from "react";
+import { FC } from "react";
 import { Button, Typography } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
 import { PDFViewer } from "./PDFViewer";
@@ -10,7 +10,7 @@ interface PDFFullPageProps {
 }
 
 export const PDFFullPage = (props: PDFFullPageProps) => {
-  const {pdf_src, downloadable = false} = props;
+  const { pdf_src, downloadable = false } = props;
   const mw = 1500;
 
   return (
@@ -19,11 +19,10 @@ export const PDFFullPage = (props: PDFFullPageProps) => {
       sx={{
         alignItems: "center",
         justifyContent: "center",
-        flexDirection: "column",
         background: formatColor(neutral.gray1),
       }}
     >
-        <PDFViewer max_width={mw} pdf_src={pdf_src} downloadable={downloadable}/>
+      <PDFViewer max_width={mw} pdf_src={pdf_src} downloadable={downloadable} />
     </Box>
   );
 };
