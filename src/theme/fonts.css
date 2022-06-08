@@ -3,24 +3,24 @@
   font-family: "Inter";
   font-style: medium;
   font-weight: 500;
-  src:  url("./fonts/Inter-Medium.woff2") format("woff2"), /* Super Modern Browsers */ 
-        url("./fonts/Inter-Medium.woff") format("woff"); /* Modern Browsers */
+  src:  url("./fonts/inter-v11-latin-regular.woff2") format("woff2"), /* Super Modern Browsers */ 
+        url("./fonts/inter-v11-latin-regular.woff") format("woff"); /* Modern Browsers */
 }
 /* Inter-SemiBold */
 @font-face {
   font-family: "Inter";
   font-style: SemiBold;
   font-weight: 600;
-  src:  url("./fonts/Inter-SemiBold.woff2") format("woff2"), /* Super Modern Browsers */ 
-        url("./fonts/Inter-SemiBold.woff") format("woff"); /* Modern Browsers */
+  src:  url("./fonts/inter-v11-latin-500.woff2") format("woff2"), /* Super Modern Browsers */ 
+        url("./fonts/inter-v11-latin-500.woff") format("woff"); /* Modern Browsers */
 }
 /* Inter-Bold */
 @font-face {
   font-family: "Inter";
   font-style: Bold;
   font-weight: 700;
-  src:  url("./fonts/Inter-Bold.woff2") format("woff2"), /* Super Modern Browsers */ 
-        url("./fonts/Inter-Bold.woff") format("woff"),
+  src:  url("./fonts/inter-v11-latin-600.woff2") format("woff2"), /* Super Modern Browsers */ 
+        url("./fonts/inter-v11-latin-600.woff") format("woff"),
   
 }
 /* Inter-ExtraBold */
@@ -28,6 +28,6 @@
   font-family: "Inter";
   font-style: ExtraBold;
   font-weight: 800;
-  src:  url("./fonts/Inter-ExtraBold.woff2") format("woff2"), /* Super Modern Browsers */ 
-        url("./fonts/Inter-ExtraBold.woff") format("woff"),
+  src:  url("./fonts/inter-v11-latin-700.woff2") format("woff2"), /* Super Modern Browsers */ 
+        url("./fonts/inter-v11-latin-700.woff") format("woff"),
 }
