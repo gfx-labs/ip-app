@@ -103,13 +103,13 @@ export const DelegateModal = () => {
             alt={delegateToken.name}
           ></Box>
           <Box>
-            <Typography variant="h3" color="text.secondary" mb={1}>
+            <Typography variant="subtitle1" color="text.primary" mb={1}>
               ${delegateToken.ticker}
             </Typography>
           </Box>
         </Box>
         <Typography
-          variant="body2"
+          variant="label2"
           color={
             isLight ? formatColor(neutral.black) : formatColor(neutral.white)
           }
@@ -138,7 +138,7 @@ export const DelegateModal = () => {
                   width: "100%",
                   paddingBottom: "4px",
                   ".MuiInputBase-input": {
-                    fontWeight: 700,
+                    fontWeight: 600,
                     color: isLight
                       ? formatColor(neutral.gray1)
                       : formatColor(neutral.white),

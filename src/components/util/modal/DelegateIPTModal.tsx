@@ -86,7 +86,7 @@ export const DelegateIPTModal = () => {
           }}
         >
           <Box>
-            <Typography variant="h6_semi" color="text.primary" mb={1}>
+            <Typography variant="subtitle1" color="text.primary" mb={1}>
               {screen === 0 ? "Delegate your Vote" : "Add Delegate"}
             </Typography>
           </Box>

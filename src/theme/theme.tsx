@@ -120,7 +120,7 @@ theme.typography.h2 = {
 };
 
 theme.typography.h3 = {
-  fontWeight: 700,
+  fontWeight: 800,
   fontSize: pxToRem(48),
   lineHeight: fzTolineHeight(50),
   letterSpacing: -1,
@@ -176,7 +176,7 @@ theme.typography.h6_semi = {
 
 theme.typography.subtitle1 = {
   fontWeight: 700,
-  fontSize: pxToRem(24),
+  fontSize: pxToRem(26),
   lineHeight: fzTolineHeight(24),
   letterSpacing: 0,
   [theme.breakpoints.down("md")]: {
@@ -253,7 +253,7 @@ theme.typography.body2_semi = {
 theme.typography.body3 = {
   fontWeight: 600,
   fontSize: pxToRem(16),
-  lineHeight: fzTolineHeight(20),
+  lineHeight: fzTolineHeight(18),
 };
 
 theme.typography.body3_medium = {
@@ -275,7 +275,7 @@ theme.typography.label = {
 theme.typography.label2 = {
   fontWeight: 600,
   fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(18),
+  lineHeight: fzTolineHeight(14),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
     lineHeight: fzTolineHeight(16),
@@ -285,7 +285,7 @@ theme.typography.label2 = {
 theme.typography.label2_medium = {
   fontWeight: 500,
   fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(18),
+  lineHeight: fzTolineHeight(116),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
     lineHeight: fzTolineHeight(16),

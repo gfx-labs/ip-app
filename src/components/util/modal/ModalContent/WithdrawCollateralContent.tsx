@@ -103,7 +103,7 @@ export const WithdrawCollateralContent = () => {
 
   return (
     <Box>
-      <Box textAlign="right">
+      <Box textAlign="right" mb={1}>
         <Typography variant="label2" color={formatColor(neutral.gray3)}>
           Vault Balance: {collateralToken.vault_amount} {collateralToken.ticker}
         </Typography>
