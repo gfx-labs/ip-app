@@ -99,8 +99,8 @@ const Dashboard = () => {
               columnGap: 2,
               [theme.breakpoints.down("lg")]: {
                 gridTemplateColumns: "1fr",
-                rowGap: 5,
-              },
+                rowGap: 2,
+            },
             }}
           >
             <ProtocolStatsCard />

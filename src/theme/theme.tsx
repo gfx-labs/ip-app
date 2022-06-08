@@ -253,7 +253,7 @@ theme.typography.body2_semi = {
 theme.typography.body3 = {
   fontWeight: 600,
   fontSize: pxToRem(16),
-  lineHeight: fzTolineHeight(18),
+  lineHeight: fzTolineHeight(16),
 };
 
 theme.typography.body3_medium = {

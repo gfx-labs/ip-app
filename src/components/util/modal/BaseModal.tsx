@@ -58,7 +58,7 @@ export const BaseModal:React.FC<BaseModalProps> = ({
 
 
           <Box
-            sx={{ position: "absolute", top: "24px", right: "42px", zIndex: 5 }}
+            sx={{ position: "absolute", top: "24px", right: "38px", zIndex: 5 }}
           >
             <IconButton
               sx={{

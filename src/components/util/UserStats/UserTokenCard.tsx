@@ -80,7 +80,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         paddingTop: 4,
         paddingLeft: 4,
         paddingRight: 4,
-        paddingBottom: 4,
+        paddingBottom: 1,
         [theme.breakpoints.down("lg")]: {
           paddingX: 4,
           paddingY: 4,
@@ -88,8 +88,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         ...props.sx,
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2.5 }}>
-        <Box display="flex" flexDirection="column" rowGap={2}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+        <Box display="flex" flexDirection="column" rowGap={1}>
           <Box>
             <Typography variant="label2" color="text.secondary">
               {tokenName}
@@ -144,7 +144,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             display: "grid",
             justifyContent: "space-between",
             gridTemplateColumns: "1fr 1fr",
-            columnGap: 2.5,
+            columnGap: 1.5,
           }}
         >
           <Button variant="cta" onClick={openDeposit}>

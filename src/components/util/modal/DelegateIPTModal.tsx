@@ -2,7 +2,7 @@ import { Box, Typography, Button, TextField } from "@mui/material";
 import { useState} from "react";
 import { ContractReceipt } from "ethers";
 
-import { formatColor, neutral } from "../../../theme";
+import { blue, formatColor, neutral } from "../../../theme";
 import {
   ModalType,
   useModalContext,
@@ -72,29 +72,29 @@ export const DelegateIPTModal = () => {
       <Box
         sx={{
           alignItems: "center",
-          mt: 4,
-          columnGap: 2,
+          mt: 2,
+          columnGap: 1,
         }}
       >
         <Box
           sx={{
             display: "flex",
             alignItems: "center",
-            mb: 2.5,
-            mt: 4,
-            columnGap: 2,
+            mb: 1,
+            mt: 1,
+            columnGap: 1,
           }}
         >
           <Box>
-            <Typography variant="subtitle1" color="text.primary" mb={1}>
+            <Typography variant="subtitle2" color="text.primary" mb={0}>
               {screen === 0 ? "Delegate your Vote" : "Add Delegate"}
             </Typography>
           </Box>
         </Box>
         <Typography
-          variant="body3"
+          variant="label2"
           color={
-            isLight ? formatColor(neutral.black) : formatColor(neutral.gray3)
+            isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)
           }
           fontWeight={600}
         >
@@ -107,8 +107,8 @@ export const DelegateIPTModal = () => {
             <Button
               variant="contained"
               sx={{
-                backgroundColor: formatColor(neutral.gray12),
-                color: formatColor(neutral.black),
+                backgroundColor: formatColor(blue.blue1),
+                color: formatColor(neutral.white),
                 my: 2,
               }}
               onClick={() => handleDelegateRequest(false)}
