@@ -22,7 +22,7 @@ export const PDFModal = (props: PDFModalProps) => {
     must_agree = false,
     must_agree_handler,
   } = props;
-  const mw = 600;
+  const mw = 900;
   const { height } = useWindowDimensions();
 
   return (
@@ -35,9 +35,8 @@ export const PDFModal = (props: PDFModalProps) => {
       <Paper
         sx={{
           position: "relative",
-          margin: "10px",
           width: "100%",
-          maxWidth: { xs: "359px", sm: `${mw}px` },
+          maxWidth: { xs: '97%', md: `${mw}px` },
           p: 2,
           borderRadius: "10px",
           overflowY: "scroll",
@@ -45,7 +44,7 @@ export const PDFModal = (props: PDFModalProps) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          height: height * 0.58,
+          height: {xs: height * 0.9, md: height * 0.58},
         }}
       >
         {must_agree && must_agree_handler !== undefined && (
