@@ -22,6 +22,7 @@ export const UsdiGraphCard = () => {
   );
 
   const [chart, setChart] = useState<JSX.Element | undefined>(undefined);
+  const [errorFetchingData, setErrorFetchingData] = useState(false)
 
   const [lastRate, setLastRate] = useState(0);
   const [lastPaid, setLastPaid] = useState(0);
@@ -73,6 +74,7 @@ export const UsdiGraphCard = () => {
 
   useEffect(() => {
     const startBlock = queryLimit == 0 ? undefined : dataBlock - queryLimit;
+    
     if (rolodex && rolodex.VC && queryLimit == 0) {
       const getRates = rolodex.VC.queryFilter(
         rolodex.VC.filters.InterestEvent(),
@@ -92,6 +94,7 @@ export const UsdiGraphCard = () => {
           temp.clear();
         })
         .catch((e) => {
+          setErrorFetchingData(true)
           if (e.data && e.data.message) {
             const msg = e.data.message as string;
             if (msg.includes("limited") || msg.includes("large")) {
@@ -101,6 +104,8 @@ export const UsdiGraphCard = () => {
           }
           console.log("error getting data", e);
         });
+    } else {
+      setErrorFetchingData(true)
     }
   }, [rolodex, dataBlock]);
 
@@ -140,6 +145,7 @@ export const UsdiGraphCard = () => {
               return;
             }
           }
+          setErrorFetchingData(true)
           console.log("error getting smaller data with max", e, queryHistory);
         });
     }
@@ -147,6 +153,8 @@ export const UsdiGraphCard = () => {
 
   useEffect(() => {
     if (data.size > 4) {
+      setErrorFetchingData(false)
+
       setChart(
         <MultilineChart
           datamap={data}
@@ -167,73 +175,103 @@ export const UsdiGraphCard = () => {
       sx={{
         paddingX: { xs: 3, md: 6 },
         paddingY: { xs: 6, md: 6 },
-        paddingBottom: { xs: 2, md: 2 },
         backgroundImage: `linear-gradient(${formatGradient(
           isLight ? gradient.gradient1 : gradient.gradient2
         )})`,
         borderRadius: { xs: 5, md: 17 },
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box sx={{ marginTop: -1 }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box
-              sx={{
-                width: 12,
-                height: 12,
-                background: "#6929F0",
-                borderRadius: 0.5,
-                marginRight: 1,
-              }}
-            ></Box>{" "}
-            <GraphTypography text={`Interest Rate (${lastRate}%)`} />
+      {!errorFetchingData ? (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: '100%'
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ marginTop: -1 }}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    background: "#6929F0",
+                    borderRadius: 0.5,
+                    marginRight: 1,
+                  }}
+                ></Box>{" "}
+                <GraphTypography text={`Interest Rate (${lastRate}%)`} />
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    background: "#AFEABC",
+                    borderRadius: 0.5,
+                    marginRight: 1,
+                  }}
+                ></Box>{" "}
+                <GraphTypography text={`Interest Paid ($${lastPaid})`} />
+              </Box>
+            </Box>
+            <Box sx={{ marginTop: -1 }}>
+              <Box
+                display="flex"
+                sx={{
+                  display: "flex",
+                  [theme.breakpoints.down("md")]: {
+                    flexDirection: "column",
+                    rowGap: 1,
+                  },
+                }}
+              >
+                <GraphTypography text={`Block #${lastBlock}`} />
+              </Box>
+              <Box
+                display="flex"
+                sx={{
+                  display: "flex",
+                  [theme.breakpoints.down("md")]: {
+                    flexDirection: "column",
+                    rowGap: 1,
+                  },
+                }}
+              >
+                <GraphTypography text={`${lastTime}`} />
+              </Box>
+            </Box>
           </Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box
-              sx={{
-                width: 12,
-                height: 12,
-                background: "#AFEABC",
-                borderRadius: 0.5,
-                marginRight: 1,
-              }}
-            ></Box>{" "}
-            <GraphTypography text={`Interest Paid ($${lastPaid})`} />
+          <Box>
+            <WithSpinner val={chart} />
           </Box>
         </Box>
-        <Box sx={{ marginTop: -1 }}>
+      ) : (
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          margin="auto"
+        >
           <Box
-            display="flex"
-            sx={{
-              display: "flex",
-              [theme.breakpoints.down("md")]: {
-                flexDirection: "column",
-                rowGap: 1,
-              },
-            }}
+            component="img"
+            width={100}
+            mb={3}
+            src="images/loading_placeholder.svg"
+          ></Box>
+
+          <Typography
+            variant="label2_medium"
+            color={formatColor(neutral.gray3)}
           >
-            <GraphTypography text={`Block #${lastBlock}`} />
-          </Box>
-          <Box
-            display="flex"
-            sx={{
-              display: "flex",
-              [theme.breakpoints.down("md")]: {
-                flexDirection: "column",
-                rowGap: 1,
-              },
-            }}
-          >
-            <GraphTypography text={`${lastTime}`} />
-          </Box>
+            Add archive node RPC to view graph
+          </Typography>
         </Box>
-      </Box>
-      <Box>
-        <WithSpinner val={chart} />
-      </Box>
+      )}
     </Box>
   );
 };
