@@ -178,7 +178,6 @@ theme.typography.subtitle1 = {
   fontWeight: 700,
   fontSize: pxToRem(26),
   lineHeight: fzTolineHeight(24),
-  letterSpacing: 0,
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),

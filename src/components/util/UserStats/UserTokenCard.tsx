@@ -88,7 +88,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         ...props.sx,
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0 }}>
         <Box display="flex" flexDirection="column" rowGap={1}>
           <Box>
             <Typography variant="label2" color="text.secondary">
