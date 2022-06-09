@@ -24,6 +24,11 @@ const sidebars = {
         },
         {
             type: 'doc',
+            label: 'Liquidity Program',
+            id: 'Liquidity Program',
+        },
+        {
+            type: 'doc',
             label: 'IPT Sale',
             id: 'IPTsale',
         },
