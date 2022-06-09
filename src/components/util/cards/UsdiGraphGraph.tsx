@@ -154,7 +154,7 @@ const MultilineChart = (props:MultilineChartProps) => {
       svg.append("path")
       .attr("class","line")
       .style("stroke", interestColor)
-      .style("stroke-width","3")
+      .style("stroke-width","2")
       .style("fill", "none")
       .attr("d", (_) => interestLine(data));
 
@@ -181,7 +181,7 @@ const MultilineChart = (props:MultilineChartProps) => {
       .style("stroke", interestColor)
       .style("fill","none")
       .style("stroke-width", "2px")
-      .style("opacity", "0");
+      .style("opacity", ".5");
 
       mouseLiner.append("text")
       .attr("transform","translate(14,-10)")
