@@ -8,8 +8,14 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import { useEffect, useState, ReactNode } from "react";
-import { formatColor, neutral, blue } from "../../theme";
+import { useEffect, useState, ReactNode, useContext } from "react";
+import {
+  formatColor,
+  formatGradient,
+  gradient,
+  neutral,
+  blue,
+} from "../../theme";
 import { useLight } from "../../hooks/useLight";
 import { DecimalInput } from "../../components/util/textFields";
 import { DisableableModalButton } from "../../components/util/button/DisableableModalButton";
@@ -20,7 +26,7 @@ import { Spacer } from "../../easy/spacer";
 
 const WhitelistPage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0);
-
+  const isLight = useLight();
   useEffect(() => {
     const onScroll = (e: any) => {
       setScrollTop(e.target.documentElement.scrollTop);
@@ -31,21 +37,25 @@ const WhitelistPage: React.FC = () => {
   }, [scrollTop]);
 
   return (
-      <Box
-        sx={{
-          marginX: "auto",
-          position: "relative",
-          height: "100%",
-          minHeight: "70vh",
-          width: "100%",
-          overflow: "hidden",
-          py: {xs: 10},
-          maxWidth: 700,
-          paddingX: { xs: 2, sm: 10 },
-        }}
-      >
-        <PurchaseBox />
-      </Box>
+    <Box
+      sx={{
+        marginX: "auto",
+        position: "relative",
+        height: "100vh",
+        minHeight: "70vh",
+        width: "100vw",
+        overflow: "hidden",
+        py: { xs: 10 },
+        paddingX: { xs: 2, sm: 10 },
+        backgroundImage: `linear-gradient(
+          ${formatGradient(
+            isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
+          )}
+        )`,
+      }}
+    >
+      <PurchaseBox />
+    </Box>
   );
 };
 
@@ -65,7 +75,6 @@ const PurchaseBox: React.FC = () => {
     px: { xs: 1, sm: 5 },
     py: { xs: 0.5, sm: 1.5 },
     minHeight: "auto",
-
     "&.Mui-selected": {
       backgroundColor: isLight
         ? formatColor(neutral.gray7)
@@ -76,7 +85,7 @@ const PurchaseBox: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ maxWidth: 700, margin: "auto" }}>
       <Tabs
         value={value}
         onChange={handleChange}
@@ -119,62 +128,63 @@ function TabPanel(props: TabPanelProps) {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
-  }
-  useEffect(()=>{
-    checkWallet()
-  },[address])
+  };
 
-  let waveStart = ""
-  switch(waveNum) {
+  useEffect(() => {
+    checkWallet();
+  }, [address]);
+
+  let waveStart = "";
+  switch (waveNum) {
     case 1:
-      waveStart = "June 13, 2022 5:00:00 PM UTC"
+      waveStart = "June 13, 2022 5:00:00 PM UTC";
       break;
     case 2:
-      waveStart = "June 15, 2022 5:00:00 PM UTC"
+      waveStart = "June 15, 2022 5:00:00 PM UTC";
       break;
     case 3:
-      waveStart = "June 17, 2022 5:00:00 PM UTC"
-      break
+      waveStart = "June 17, 2022 5:00:00 PM UTC";
+      break;
   }
 
   const checkWallet = () => {
     if (address.length < 10) {
-      setMessage(Spacer)
-      setIncluded(false)
-      return
+      setMessage(Spacer);
+      setIncluded(false);
+      return;
     }
     if (address.length > 42 || !address.startsWith("0x")) {
-      setMessage("malformed address")
-      setIncluded(false)
-      return
+      setMessage("malformed address");
+      setIncluded(false);
+      return;
     }
     switch (waveNum) {
       case 1:
         if (wave1.has(address.toLowerCase())) {
-          setIncluded(true)
+          setIncluded(true);
         } else {
-          setIncluded(false)
+          setIncluded(false);
         }
-        setMessage("")
-        return
+        setMessage("");
+        return;
       case 2:
         if (wave2.has(address.toLowerCase())) {
-          setIncluded(true)
+          setIncluded(true);
         } else {
-          setIncluded(false)
+          setIncluded(false);
         }
-        setMessage("")
-        return
+        setMessage("");
+        return;
       case 3:
-        setIncluded(true)
-        setMessage("")
-        return
+        setIncluded(true);
+        setMessage("");
+        return;
       default:
-        setIncluded(false)
+        setIncluded(false);
     }
-    setIncluded(false)
-    setMessage("")
-  }
+    setIncluded(false);
+    setMessage("");
+  };
   return (
     <Box
       role="tabpanel"
@@ -192,7 +202,11 @@ function TabPanel(props: TabPanelProps) {
               width={80}
               mr={3}
             ></Box>
-            <Typography variant="subtitle2" fontWeight={600}>
+            <Typography
+              variant="subtitle2"
+              fontWeight={600}
+              color="text.primary"
+            >
               IPT Sale Whitelist
             </Typography>
           </Box>
@@ -207,54 +221,63 @@ function TabPanel(props: TabPanelProps) {
                 sx={{
                   width: "100%",
                   height: "100%",
-                  paddingBottom: 1
+                  paddingBottom: 1,
                 }}
               />
             </ModalInputContainer>
             <br />
-            <DisableableModalButton
-              text="Check"
-              type="submit"
-              onClick={checkWallet}
-            />
           </Box>
-          <Box mt={5} display="flex" justifyContent="center" flexDirection={{ xs: 'column', md: 'row' }}>
-            {(included == true) ? (<Box sx={{ whiteSpace: "pre" }}>
-              <Typography
-                variant="subtitle1"
-                textAlign="center"
-                mb="1em"
-                color="#50b543">
-                Congratulations!
-              </Typography>
-              <Box textAlign="center">
-              <Typography variant="label" textAlign="center">
-                Address {address} is included in Wave {waveNum}
-                <br />
-                  <br />
-                  <Typography variant="h6" textAlign="center">
-                Wave {waveNum} Starts At ~ {waveStart} </Typography>
-              </Typography>
+          <Box
+            mt={5}
+            display="flex"
+            justifyContent="center"
+            flexDirection={{ xs: "column", md: "row" }}
+          >
+            {included == true ? (
+              <Box sx={{ whiteSpace: "pre" }}>
+                <Typography
+                  variant="subtitle1"
+                  textAlign="center"
+                  mb="1em"
+                  color="#50b543"
+                >
+                  Congratulations!
+                </Typography>
+                <Box textAlign="center">
+                  <Typography variant="label" textAlign="center">
+                    Address {address} is included in Wave {waveNum}
+                    <br />
+                    <br />
+                    <Typography variant="h6" textAlign="center">
+                      Wave {waveNum} Starts At ~ {waveStart}{" "}
+                    </Typography>
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
-            ) : (
-              (message != "") ? (<>
+            ) : message != "" ? (
+              <>
                 <Typography color={"#fc3903"}> {message} </Typography>
-              </>) : (<Box sx={{ whiteSpace: "pre" }}>
-                <Typography color={"#fc3903"} variant="subtitle1" textAlign="center" mb="1em">
+              </>
+            ) : (
+              <Box sx={{ whiteSpace: "pre" }}>
+                <Typography
+                  color={"#fc3903"}
+                  variant="subtitle1"
+                  textAlign="center"
+                  mb="1em"
+                >
                   Too Bad!
                 </Typography>
                 <Box textAlign="center">
-                <Typography variant="label" sx={{ whiteSpace: "pre" }}>
-                  Address {address} is not in Wave {waveNum}
-                  <br />
-                  <br />
-                  {(waveNum == 1) ? "Try Wave 2!" : ""}
-                </Typography>
+                  <Typography variant="label" sx={{ whiteSpace: "pre" }}>
+                    Address {address} is not in Wave {waveNum}
+                    <br />
+                    <br />
+                    {waveNum == 1 ? "Try Wave 2!" : ""}
+                  </Typography>
                 </Box>
-              </Box>)
+              </Box>
             )}
-
           </Box>
         </Box>
       )}
