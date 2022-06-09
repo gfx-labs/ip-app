@@ -15,6 +15,7 @@ const nav = [
     links: [
       { label: "Whitepaper", href: "/whitepaper" },
       { label: "Docs & Guides", href: "/docs" },
+      { label: "Whitelist", href: "/whitelist" },
     ],
   },
   {
@@ -81,11 +82,7 @@ const DesktopFooter = () => {
                 },
               }}
             >
-              <Typography
-                variant="body3"
-                fontWeight={700}
-                color="text.primary"
-              >
+              <Typography variant="body3" fontWeight={700} color="text.primary">
                 {navItem.title}
               </Typography>
               <Box
@@ -159,9 +156,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`images/twitter_bird_icon_${
-                isLight ? "black" : "grey"
-              }.svg`}
+              src={`images/twitter_bird_icon_${isLight ? "black" : "grey"}.svg`}
               width="25px"
               height="26px"
               marginX={3}
