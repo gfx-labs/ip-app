@@ -21,3 +21,11 @@ export const useCommitUSDC = async (
     proof,
   );
 };
+
+export const useClaimIPT = async (signer: JsonRpcSigner, wave: number) => {
+  return WavePool__factory.connect(
+    "0x0078f8795Ba94FCc90c6553E6Cb4674F48DD3a5A",
+    signer!).redeem(
+    wave
+  );
+}

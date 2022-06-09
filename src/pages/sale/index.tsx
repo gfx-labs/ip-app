@@ -9,7 +9,7 @@ import { ModalInputContainer } from "../../components/util/modal/ModalContent/Mo
 import Cookies from "universal-cookie";
 import { PDFModal } from "../../components/util/pdfViewer/PDFModal";
 import { useRolodexContext } from "../../components/libs/rolodex-data-provider/RolodexDataProvider";
-import { useCommitUSDC } from "../../hooks/useCommitUSDC";
+import { useClaimIPT, useCommitUSDC } from "../../hooks/useSaleUtils";
 import { useWeb3Context } from "../../components/libs/web3-data-provider/Web3Provider";
 import { getSaleMerkleProof } from "./getMerkleProof";
 import { useModalContext } from "../../components/libs/modal-content-provider/ModalContentProvider";
@@ -145,9 +145,10 @@ function TabPanel(props: TabPanelProps) {
   useEffect(() => {
     if (rolodex && usdcAmountToCommit && rolodex.USDC) {
       rolodex
-        .USDC!.allowance(currentAccount,
-                         "0x0078f8795Ba94FCc90c6553E6Cb4674F48DD3a5A"
-                        )
+        .USDC!.allowance(
+          currentAccount,
+          "0x0078f8795Ba94FCc90c6553E6Cb4674F48DD3a5A"
+        )
         .then((initialApproval) => {
           const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
           if (initialApproval.lt(formattedUSDCAmount)) {
@@ -161,7 +162,7 @@ function TabPanel(props: TabPanelProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('handling submit')
+    console.log("handling submit");
     if (needAllowance) {
       handleApprovalRequest();
     } else {
@@ -169,8 +170,22 @@ function TabPanel(props: TabPanelProps) {
     }
   };
 
+  const claimHandler = async () => {
+    try {
+      const claimTransaction = await useClaimIPT(currentSigner!, waveNum);
+
+      updateTransactionState(claimTransaction);
+      const claimReceipt = await claimTransaction.wait();
+
+      updateTransactionState(claimReceipt);
+    } catch (err) {
+      const error = err as TransactionReceipt
+      updateTransactionState(error);
+    }
+  };
+
   const handleApprovalRequest = async () => {
-    console.log(usdcAmountToCommit, rolodex)
+    console.log(usdcAmountToCommit, rolodex);
     if (rolodex && usdcAmountToCommit) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
 
@@ -192,16 +207,19 @@ function TabPanel(props: TabPanelProps) {
   };
 
   const usdcCommitHandler = async () => {
-    console.log('usdc handling', rolodex, usdcAmountToCommit)
+    console.log("usdc handling", rolodex, usdcAmountToCommit);
     if (rolodex !== null && Number(usdcAmountToCommit) > 0) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
-      console.log(formattedCommitAmount)
+      console.log(formattedCommitAmount);
       setLoading(true);
 
       try {
         setLoadmsg(locale("CheckWallet"));
-        const {proof, key} = await getSaleMerkleProof(currentAccount, waveNum);
-        console.log(proof, waveNum, currentAccount)
+        const { proof, key } = await getSaleMerkleProof(
+          currentAccount,
+          waveNum
+        );
+        console.log(proof, waveNum, currentAccount);
 
         const commitTransaction = await useCommitUSDC(
           formattedCommitAmount,
@@ -314,6 +332,8 @@ function TabPanel(props: TabPanelProps) {
               load_text={loadmsg}
               onClick={handleSubmit}
             />
+
+            <Button onClick={claimHandler}>Claim</Button>
           </Box>
           <Box
             mt={5}
