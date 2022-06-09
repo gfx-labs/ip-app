@@ -6,7 +6,7 @@ import { wave2 } from "../whitelist/wave2";
 import {BigNumberish} from "ethers";
 
 //ropsten addresses
-const keyAmount = BN("5e5");
+const keyAmount = BN("1000000e6") //1,000,000 USDC
 let root1: string;
 let merkleTree1: MerkleTree;
 const initMerkle = async (wave: number) => {
@@ -25,6 +25,7 @@ const initMerkle = async (wave: number) => {
   );
   merkleTree1 = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
   root1 = merkleTree1.getHexRoot();
+  console.log("root",root1)
 };
 
 export const getSaleMerkleProof = async (
@@ -38,7 +39,6 @@ export const getSaleMerkleProof = async (
       ["address", "uint256"],
       [currentAccount, keyAmount]
     );
-
     let proof = merkleTree1.getHexProof(leaf);
 
     return {proof, key:keyAmount};
