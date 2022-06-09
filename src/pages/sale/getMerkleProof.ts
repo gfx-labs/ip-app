@@ -3,6 +3,7 @@ import { keccak256, solidityKeccak256 } from "ethers/lib/utils";
 import { BN } from "../../easy/bn";
 import { wave1 } from "../whitelist/wave1";
 import { wave2 } from "../whitelist/wave2";
+import {BigNumberish} from "ethers";
 
 //ropsten addresses
 const keyAmount = BN("5e5");
@@ -29,7 +30,7 @@ const initMerkle = async (wave: number) => {
 export const getSaleMerkleProof = async (
   currentAccount: string,
   wave: number
-) => {
+) :Promise<{proof:string[], key:BigNumberish}>=>{
   try {
     await initMerkle(wave);
 
@@ -39,8 +40,8 @@ export const getSaleMerkleProof = async (
     );
 
     let proof = merkleTree1.getHexProof(leaf);
-    
-    return proof;
+
+    return {proof, key:keyAmount};
   } catch (err) {
     throw new Error("Could not find Proof");
   }
