@@ -14,6 +14,7 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { BN } from "../../../easy/bn";
 import { BigNumberish } from "ethers";
 import { locale } from "../../../locale";
+import { TransactionReceipt } from "@ethersproject/providers";
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext();
@@ -73,8 +74,9 @@ export const DepositUSDCConfirmationModal = () => {
         const response = await txn?.wait();
         updateTransactionState(response);
       } catch (e) {
+        const error = e as TransactionReceipt
         console.log(e);
-        updateTransactionState(e);
+        updateTransactionState(error);
       }
       setLoading(false);
     }
