@@ -9,7 +9,7 @@ export const useCommitUSDC = async (
   wave: number,
   proof: string[]
 ) => {
-  return Wave__factory.connect("0xWaveAddressHERE", signer!).getPoints(
+  return Wave__factory.connect("0x786cb85de17ad952B9b4b888A0e5187a05EF1FD2", signer!).getPoints(
     wave,
     amount,
     proof
