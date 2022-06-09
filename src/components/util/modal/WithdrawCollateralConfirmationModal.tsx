@@ -67,7 +67,6 @@ export const WithdrawCollateralConfirmationModal = () => {
     >
       <Typography
         variant="body1"
-        fontWeight={600}
         color={
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }

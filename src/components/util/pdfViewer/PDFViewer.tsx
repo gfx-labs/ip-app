@@ -71,8 +71,8 @@ export const PDFViewer = (props: PDFViewerProps) => {
               width: "auto",
               whiteSpace: "nowrap",
               px: 3,
-              fontWeight: 600,
             }}
+            variant="body1"
           >
             Click Here to Download Document
           </Typography>

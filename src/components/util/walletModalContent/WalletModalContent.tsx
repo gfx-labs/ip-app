@@ -91,7 +91,7 @@ export const WalletModalContent = () => {
             Wallet Connect
           </Button>
           {errorConnecting && (
-            <Typography color="error" fontWeight={600} variant="body2" textAlign="center">
+            <Typography color="error" variant="body2" textAlign="center">
               Error connecting wallet. Please try another wallet.
             </Typography>
           )}

@@ -113,7 +113,6 @@ export const DelegateModal = () => {
           color={
             isLight ? formatColor(neutral.black) : formatColor(neutral.white)
           }
-          fontWeight={600}
         >
           Enter the address you would like to delegate your vote(s) to
         </Typography>

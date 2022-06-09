@@ -64,7 +64,7 @@ export const TitleTextCard: FC<TitleTextCardContainer> = (props) => {
                 {linkHref && (
                     <MuiLink component={Link} to={linkHref}>
                         <Button size="medium" color="secondary" variant="text">
-                            <Typography variant="subtitle1" fontWeight={700}>
+                            <Typography variant="subtitle1">
                                 {linkTitle}
                             </Typography>
                         </Button>
