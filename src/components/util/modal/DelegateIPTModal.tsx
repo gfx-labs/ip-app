@@ -96,7 +96,6 @@ export const DelegateIPTModal = () => {
           color={
             isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)
           }
-          fontWeight={600}
         >
           {screen === 0
             ? "You can vote on each proposal yourself or add a delegate to share your votes with."

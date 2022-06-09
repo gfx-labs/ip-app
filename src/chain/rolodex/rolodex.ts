@@ -55,10 +55,11 @@ export const NewRolodex = async (ctx: Web3Data) => {
     throw new Error("Must connect to a chain first");
   }
   // *remove or use mainnet 1
-  const token = Chains.getInfo(ctx.chainId || 3);
+  const token = Chains.getInfo(ctx.chainId || 1);
   let rolo: Rolodex;
   let provider = backupProvider;
   rolo = new Rolodex(provider!, token.usdiAddress!);
+  
   try {
     if (!ctx.provider) {
       rolo.addressVC = await rolo.USDI?.getVaultController();

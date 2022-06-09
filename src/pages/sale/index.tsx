@@ -1,18 +1,6 @@
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Tabs,
-  Tab,
-  Button,
-} from "@mui/material";
-import { useEffect, useState, ReactNode } from "react";
-import { useNavigate } from "react-router";
-import { keyframes } from "@emotion/react";
-import { ForwardIcon } from "../../components/icons/misc/ForwardIcon";
-import { formatColor, neutral, blue } from "../../theme";
-import { Terms } from "./terms";
+import { Box, Typography, Tabs, Tab, Button } from "@mui/material";
+import { FormEvent, useEffect, useState } from "react";
+import { formatColor, neutral } from "../../theme";
 import { AppLayout } from "../../components/partials/app-layout";
 import { useLight } from "../../hooks/useLight";
 import { DecimalInput } from "../../components/util/textFields";
@@ -20,13 +8,20 @@ import { DisableableModalButton } from "../../components/util/button/Disableable
 import { ModalInputContainer } from "../../components/util/modal/ModalContent/ModalInputContainer";
 import Cookies from "universal-cookie";
 import { PDFModal } from "../../components/util/pdfViewer/PDFModal";
+import { useRolodexContext } from "../../components/libs/rolodex-data-provider/RolodexDataProvider";
+import { useCommitUSDC } from "../../hooks/useCommitUSDC";
+import { useWeb3Context } from "../../components/libs/web3-data-provider/Web3Provider";
+import { getSaleMerkleProof } from "./getMerkleProof";
+import { useModalContext } from "../../components/libs/modal-content-provider/ModalContentProvider";
+import { TransactionReceipt } from "@ethersproject/providers";
+import { BN } from "../../easy/bn";
+import { locale } from "../../locale";
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0);
   const cookie = new Cookies();
 
   const [open, setOpen] = useState(cookie.get("IP_ACCEPT_TERMS") != "YES");
-  const handleClose = () => {};
   const handleAgree = () => {
     cookie.set("IP_ACCEPT_TERMS", "YES");
     setOpen(false);
@@ -35,7 +30,6 @@ const PurchasePage: React.FC = () => {
   useEffect(() => {
     const onScroll = (e: any) => {
       setScrollTop(e.target.documentElement.scrollTop);
-      console.log(scrollTop, document.body.scrollHeight - window.innerHeight);
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -132,16 +126,98 @@ interface TabPanelProps {
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
   const isLight = useLight();
-  const theme = useTheme();
   const [iptForSale, setIptForSale] = useState(1000000);
   const [usdcCommitted, setUsdcCommitted] = useState(1000000);
   const [usdcAmountToCommit, setUsdcAmountToCommit] = useState("");
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
   const waveNum = index + 1;
+  const rolodex = useRolodexContext();
+  const { currentSigner, currentAccount, dataBlock, chainId } =
+    useWeb3Context();
+  const { updateTransactionState } = useModalContext();
 
-  const usdcCommitHandler = () => {
-    console.log(usdcAmountToCommit);
+  const [loading, setLoading] = useState(false);
+  const [loadmsg, setLoadmsg] = useState("");
+
+  const [needAllowance, setNeedAllowance] = useState(true);
+
+  useEffect(() => {
+    if (rolodex && usdcAmountToCommit && rolodex.USDC) {
+      rolodex
+        .USDC!.allowance(currentAccount, "0xWaveAddressHERE")
+        .then((initialApproval) => {
+          const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
+          if (initialApproval.lt(formattedUSDCAmount)) {
+            setNeedAllowance(true);
+          } else {
+            setNeedAllowance(false);
+          }
+        });
+    }
+  }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log('handling submit')
+    if (needAllowance) {
+      handleApprovalRequest();
+    } else {
+      usdcCommitHandler();
+    }
+  };
+
+  const handleApprovalRequest = async () => {
+    console.log(usdcAmountToCommit, rolodex)
+    if (rolodex && usdcAmountToCommit) {
+      let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
+
+      setLoading(true);
+      try {
+        setLoadmsg(locale("CheckWallet"));
+        const approve = await rolodex.USDC?.connect(currentSigner!).approve(
+          "0xWaveAddressHERE",
+          formattedCommitAmount
+        );
+
+        setLoadmsg(locale("TransactionPending"));
+        await approve?.wait();
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    }
+  };
+
+  const usdcCommitHandler = async () => {
+    if (rolodex !== null && Number(usdcAmountToCommit) > 0) {
+      let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
+
+      setLoading(true);
+
+      try {
+        setLoadmsg(locale("CheckWallet"));
+        const proof = await getSaleMerkleProof(currentAccount, waveNum);
+
+        const commitTransaction = await useCommitUSDC(
+          formattedCommitAmount,
+          currentSigner!,
+          waveNum,
+          proof
+        );
+
+        updateTransactionState(commitTransaction);
+        setLoadmsg(locale("TransactionPending"));
+
+        const commitReceipt = await commitTransaction.wait();
+
+        updateTransactionState(commitReceipt);
+      } catch (err) {
+        const error = err as TransactionReceipt;
+        updateTransactionState(error);
+      }
+      setLoading(false);
+    }
   };
 
   return (
@@ -161,18 +237,15 @@ function TabPanel(props: TabPanelProps) {
               width={80}
               mr={3}
             ></Box>
-            <Typography variant="subtitle1" fontWeight={600}>
-              IPT Sale
-            </Typography>
+            <Typography variant="subtitle1">IPT Sale</Typography>
           </Box>
 
           <Box display="flex" mt={3}>
-            <Typography variant="body3" fontWeight={600} color="#A3A9BA" mr={1}>
+            <Typography variant="body3" color="#A3A9BA" mr={1}>
               Sale Period:{" "}
             </Typography>
             <Typography
               variant="body3"
-              fontWeight={600}
               color={
                 isLight
                   ? formatColor(neutral.gray7)
@@ -185,17 +258,11 @@ function TabPanel(props: TabPanelProps) {
 
           <Box display="flex" flexWrap="wrap" mt={3} columnGap={4} rowGap={2}>
             <Box display="flex">
-              <Typography
-                variant="body1"
-                fontWeight={600}
-                color="#A3A9BA"
-                mr={1}
-              >
+              <Typography variant="body1" color="#A3A9BA" mr={1}>
                 IPT for sale:{" "}
               </Typography>
               <Typography
                 variant="body1"
-                fontWeight={600}
                 color={
                   isLight
                     ? formatColor(neutral.gray7)
@@ -207,17 +274,11 @@ function TabPanel(props: TabPanelProps) {
               </Typography>
             </Box>
             <Box display="flex">
-              <Typography
-                variant="body1"
-                fontWeight={600}
-                color="#A3A9BA"
-                mr={1}
-              >
+              <Typography variant="body1" color="#A3A9BA" mr={1}>
                 USDC Committed:{" "}
               </Typography>
               <Typography
                 variant="body1"
-                fontWeight={600}
                 color={
                   isLight
                     ? formatColor(neutral.gray7)
@@ -229,7 +290,7 @@ function TabPanel(props: TabPanelProps) {
             </Box>
           </Box>
 
-          <Box component="form" onSubmit={usdcCommitHandler} mt={4}>
+          <Box component="form" onSubmit={handleSubmit} mt={4}>
             <ModalInputContainer focus={focus}>
               <DecimalInput
                 onFocus={toggle}
@@ -242,8 +303,11 @@ function TabPanel(props: TabPanelProps) {
             <br />
             <DisableableModalButton
               disabled={Number(usdcAmountToCommit) <= 0}
-              text="Commit"
               type="submit"
+              text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
+              loading={loading}
+              load_text={loadmsg}
+              onClick={handleSubmit}
             />
           </Box>
           <Box

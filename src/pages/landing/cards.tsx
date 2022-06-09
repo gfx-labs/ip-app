@@ -109,11 +109,10 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
       </Box>
       <Box ml="auto">
         <Typography
-          variant="subtitle2_semi"
+          variant="subtitle2"
           sx={{
             color: formatColor(neutral.white),
             textAlign: "right",
-            fontWeight: 600,
           }}
         >
           {right}

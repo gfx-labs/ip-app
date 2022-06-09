@@ -204,7 +204,6 @@ function TabPanel(props: TabPanelProps) {
             ></Box>
             <Typography
               variant="subtitle2"
-              fontWeight={600}
               color="text.primary"
             >
               IPT Sale Whitelist

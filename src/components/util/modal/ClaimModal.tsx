@@ -60,7 +60,6 @@ export const ClaimModal = () => {
       <Box>
         <Typography
           variant="body2"
-          fontWeight={600}
           color={formatColor(neutral.gray10)}
           textAlign="left"
         >

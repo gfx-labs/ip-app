@@ -152,7 +152,7 @@ export const MobileToolBar = () => {
             <ForwardArrowCircleIcon sx={{ width: 18, height: 18 }} />{" "}
             <Typography
               variant="body1"
-              sx={{ fontWeight: 600, color: "text.secondary", marginLeft: 1 }}
+              sx={{ color: "text.secondary", marginLeft: 1 }}
             >
               Your Vault
             </Typography>
@@ -161,7 +161,7 @@ export const MobileToolBar = () => {
           <AccordionDetails>
             <Typography
               variant="body1"
-              sx={{ fontWeight: 600, color: "text.secondary", marginLeft: 1 }}
+              sx={{ color: "text.secondary", marginLeft: 1 }}
             >
               Manage WBTC
             </Typography>
