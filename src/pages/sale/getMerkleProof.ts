@@ -6,7 +6,7 @@ import { wave2 } from "../whitelist/wave2";
 import {BigNumberish} from "ethers";
 
 //ropsten addresses
-const keyAmount = BN("1000000e6") //1,000,000 USDC
+const keyAmounts:BigNumberish[]= [0,BN("1000000e6"),BN("500000e6"),0]
 let root1: string;
 let merkleTree1: MerkleTree;
 const initMerkle = async (wave: number) => {
@@ -21,7 +21,7 @@ const initMerkle = async (wave: number) => {
     "0x0E1456214D8b4FEc597639a475C49c6682D94B09",
     "0x2243b90CCaF4a03F7289502722D8665E3d4f2972"
 ].map((addr) =>
-    solidityKeccak256(["address", "uint256"], [addr, keyAmount])
+    solidityKeccak256(["address", "uint256"], [addr, keyAmounts[wave]])
   );
   merkleTree1 = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
   root1 = merkleTree1.getHexRoot();
@@ -37,11 +37,11 @@ export const getSaleMerkleProof = async (
 
     let leaf = solidityKeccak256(
       ["address", "uint256"],
-      [currentAccount, keyAmount]
+      [currentAccount, keyAmounts[wave]]
     );
     let proof = merkleTree1.getHexProof(leaf);
 
-    return {proof, key:keyAmount};
+    return {proof, key:keyAmounts[wave]};
   } catch (err) {
     throw new Error("Could not find Proof");
   }
