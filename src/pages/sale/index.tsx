@@ -1,5 +1,5 @@
 import { Box, Typography, Tabs, Tab, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { formatColor, neutral } from "../../theme";
 import { AppLayout } from "../../components/partials/app-layout";
 import { useLight } from "../../hooks/useLight";
@@ -157,7 +157,7 @@ function TabPanel(props: TabPanelProps) {
     }
   }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     console.log('handling submit')
     if (needAllowance) {
