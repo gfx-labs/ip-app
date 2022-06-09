@@ -61,7 +61,7 @@ We have compiled a preliminary whitelist for Wave 1 and Wave 2. To check if your
 
 ## Disclaimer
 
-This article is for general information purposes only. It should not be relied upon for accounting, legal, or tax advice.
+This page is for general information purposes only. It should not be relied upon for accounting, legal, or tax advice.
 
 
 
