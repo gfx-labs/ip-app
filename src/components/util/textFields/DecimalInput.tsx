@@ -63,6 +63,7 @@ export const DecimalInput = (props: DecimalInputProps) => {
         },
       }}
       sx={{
+        width: '100%',
         paddingBottom: "4px",
         ".MuiInputBase-input": {
           fontWeight: useLargerFont ? 600 : 700,

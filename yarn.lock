@@ -3582,7 +3582,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bignumber.js@npm:^9.0.0":
+"bignumber.js@npm:^9.0.0, bignumber.js@npm:^9.0.1":
   version: 9.0.2
   resolution: "bignumber.js@npm:9.0.2"
   checksum: 8637b71d0a99104b20413c47578953970006fec6b4df796b9dcfd9835ea9c402ea0e727eba9a5ca9f9a393c1d88b6168c5bbe0887598b708d4f8b4870ad62e1f
@@ -3928,6 +3928,13 @@ __metadata:
   version: 1.1.2
   resolution: "buffer-from@npm:1.1.2"
   checksum: 0448524a562b37d4d7ed9efd91685a5b77a50672c556ea254ac9a6d30e3403a517d8981f10e565db24e8339413b43c97ca2951f10e399c6125a0d8911f5679bb
+  languageName: node
+  linkType: hard
+
+"buffer-reverse@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "buffer-reverse@npm:1.0.1"
+  checksum: e350872a89b17af0a7e1bd7a73239a535164f3f010b0800add44f2e52bd0511548dc5b96c20309effba969868c385023d2d02a0add6155f6a76da7b3073b77bd
   languageName: node
   linkType: hard
 
@@ -4644,6 +4651,13 @@ __metadata:
     randombytes: ^2.0.0
     randomfill: ^1.0.3
   checksum: c1609af82605474262f3eaa07daa0b2140026bd264ab316d4bf1170272570dbe02f0c49e29407fe0d3634f96c507c27a19a6765fb856fed854a625f9d15618e2
+  languageName: node
+  linkType: hard
+
+"crypto-js@npm:^3.1.9-1":
+  version: 3.3.0
+  resolution: "crypto-js@npm:3.3.0"
+  checksum: 193923143a4784b2f974366068d96fe8280168fd3fef2bfea9551a5c3e32096f5a8fa49ff4eeb5bd0b9716d325618d38cfbe6125e359a4ef488fbca93e600824
   languageName: node
   linkType: hard
 
@@ -6324,7 +6338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethereumjs-util@npm:^7.0.2, ethereumjs-util@npm:^7.1.4, ethereumjs-util@npm:^7.1.5":
+"ethereumjs-util@npm:^7.0.2, ethereumjs-util@npm:^7.1.0, ethereumjs-util@npm:^7.1.4, ethereumjs-util@npm:^7.1.5":
   version: 7.1.5
   resolution: "ethereumjs-util@npm:7.1.5"
   dependencies:
@@ -7650,6 +7664,7 @@ __metadata:
     esbuild: ^0.14.42
     ethers: ^5.6.8
     mdast: ^3.0.0
+    merkletreejs: ^0.2.31
     react: ^18.1.0
     react-dom: ^18.1.0
     react-markdown: ^8.0.3
@@ -9115,6 +9130,19 @@ __metadata:
     rlp: ^2.0.0
     semaphore: ">=1.0.1"
   checksum: f6066a16e08190b9e8d3aa28d8e861a3e884ee0be8109c4f5e879965fdfb8181cfc04bae3aaf97c7fb6d07446d94b4f3e1cce502dde4a5699a03acf6df518b12
+  languageName: node
+  linkType: hard
+
+"merkletreejs@npm:^0.2.31":
+  version: 0.2.31
+  resolution: "merkletreejs@npm:0.2.31"
+  dependencies:
+    bignumber.js: ^9.0.1
+    buffer-reverse: ^1.0.1
+    crypto-js: ^3.1.9-1
+    treeify: ^1.1.0
+    web3-utils: ^1.3.4
+  checksum: d84a7d8b07b6ec37f8de8e6b9d1cfb361e49d75e30be1e1e9e269e8847408535265df1bb99be88b8d260362e6513491cdf07a5a5a03d4980faa5f23341ae3909
   languageName: node
   linkType: hard
 
@@ -12466,6 +12494,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"treeify@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "treeify@npm:1.1.0"
+  checksum: aa00dded220c1dd052573bd6fc2c52862f09870851a284f0d3650d72bf913ba9b4f6b824f4f1ab81899bae29375f4266b07fe47cbf82343a1efa13cc09ce87af
+  languageName: node
+  linkType: hard
+
 "trim-right@npm:^1.0.1":
   version: 1.0.1
   resolution: "trim-right@npm:1.0.1"
@@ -13441,6 +13476,21 @@ __metadata:
     underscore: 1.9.1
     utf8: 3.0.0
   checksum: 1e43235963d5176e447b20b201a66fabccbe7bd4ef8bbb2edfa5ea80a41e8202a8e8f3db128b2a1662855a627a52d100e3207b81a739b937b5b3b4f9114c008f
+  languageName: node
+  linkType: hard
+
+"web3-utils@npm:^1.3.4":
+  version: 1.7.3
+  resolution: "web3-utils@npm:1.7.3"
+  dependencies:
+    bn.js: ^4.11.9
+    ethereum-bloom-filters: ^1.0.6
+    ethereumjs-util: ^7.1.0
+    ethjs-unit: 0.1.6
+    number-to-bn: 1.7.0
+    randombytes: ^2.1.0
+    utf8: 3.0.0
+  checksum: 96fd1d7310f4674ddccbd1f2f8e1ff1817b8869a67a1562ef3ce1130ae50dfec8e64fc4ce9f80855d87fa63fb6dd71b4561e5e1925be5b26f3787b0d4e5f89e7
   languageName: node
   linkType: hard
 

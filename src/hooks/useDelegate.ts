@@ -27,11 +27,6 @@ export const useIPTDelegate = async (
       signer
     ).delegate(delegatee);
 
-    // const delegateIPTTransaction = await contract.delegate(delegatee);
-
-    // const delegateIPTReceipt = delegateIPTTransaction.wait();
-
-    // return delegateIPTReceipt;
   } catch (err) {
     throw new Error("Error delegating IPT");
   }

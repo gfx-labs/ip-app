@@ -48,7 +48,7 @@ export const TitleTextCard: FC<TitleTextCardContainer> = (props) => {
             >
                 <Typography
                     variant="h2"
-                    sx={{ fontWeight: "700", mb: 2 }}
+                    sx={{ mb: 2 }}
                     {...titleProps}
                 >
                     {title}

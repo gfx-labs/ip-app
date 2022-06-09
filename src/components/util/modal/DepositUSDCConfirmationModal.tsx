@@ -74,6 +74,7 @@ export const DepositUSDCConfirmationModal = () => {
         updateTransactionState(response);
       } catch (e) {
         console.log(e);
+        updateTransactionState(e);
       }
       setLoading(false);
     }

@@ -7,7 +7,7 @@ export const useReserveRatio = async (rolodex: Rolodex): Promise<string> => {
 
     const formattedReserveRatio = BNtoHexString(reserveRatio)
     
-    const toPercentage = Number(formattedReserveRatio) / 10000000000000000
+    const toPercentage = Number(formattedReserveRatio) / 1e16
 
     return toPercentage.toLocaleString()
 
