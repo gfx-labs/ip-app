@@ -96,9 +96,16 @@ const AppRouter = () => {
           path={`/sale`}
           element={
             <Web3ContextProvider>
-              <WalletModalProvider>
-                <PurchasePage />
-              </WalletModalProvider>
+              <RolodexContentProvider>
+                <ModalContentProvider>
+                  <WalletModalProvider>
+                    <>
+                      <PurchasePage />
+                      <TransactionStatusModal />
+                    </>
+                  </WalletModalProvider>
+                </ModalContentProvider>
+              </RolodexContentProvider>
             </Web3ContextProvider>
           }
         />

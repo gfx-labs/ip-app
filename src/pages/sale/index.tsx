@@ -1,10 +1,4 @@
-import {
-  Box,
-  Typography,
-  Tabs,
-  Tab,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Tabs, Tab, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { formatColor, neutral } from "../../theme";
 import { AppLayout } from "../../components/partials/app-layout";
@@ -163,14 +157,24 @@ function TabPanel(props: TabPanelProps) {
     }
   }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('handling submit')
+    if (needAllowance) {
+      handleApprovalRequest();
+    } else {
+      usdcCommitHandler();
+    }
+  };
+
   const handleApprovalRequest = async () => {
+    console.log(usdcAmountToCommit, rolodex)
     if (rolodex && usdcAmountToCommit) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
 
       setLoading(true);
       try {
         setLoadmsg(locale("CheckWallet"));
-
         const approve = await rolodex.USDC?.connect(currentSigner!).approve(
           "0xWaveAddressHERE",
           formattedCommitAmount
@@ -184,7 +188,6 @@ function TabPanel(props: TabPanelProps) {
       setLoading(false);
     }
   };
-
 
   const usdcCommitHandler = async () => {
     if (rolodex !== null && Number(usdcAmountToCommit) > 0) {
@@ -216,7 +219,6 @@ function TabPanel(props: TabPanelProps) {
       setLoading(false);
     }
   };
-
 
   return (
     <Box
@@ -288,11 +290,7 @@ function TabPanel(props: TabPanelProps) {
             </Box>
           </Box>
 
-          <Box
-            component="form"
-            onSubmit={needAllowance ? handleApprovalRequest : usdcCommitHandler}
-            mt={4}
-          >
+          <Box component="form" onSubmit={handleSubmit} mt={4}>
             <ModalInputContainer focus={focus}>
               <DecimalInput
                 onFocus={toggle}
@@ -309,6 +307,7 @@ function TabPanel(props: TabPanelProps) {
               text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
               loading={loading}
               load_text={loadmsg}
+              onClick={handleSubmit}
             />
           </Box>
           <Box
