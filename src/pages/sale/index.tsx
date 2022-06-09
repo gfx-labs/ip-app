@@ -145,7 +145,7 @@ function TabPanel(props: TabPanelProps) {
   useEffect(() => {
     if (rolodex && usdcAmountToCommit && rolodex.USDC) {
       rolodex
-        .USDC!.allowance(currentAccount, "0xWaveAddressHERE")
+        .USDC!.allowance(currentAccount, "0x786cb85de17ad952B9b4b888A0e5187a05EF1FD2")
         .then((initialApproval) => {
           const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
           if (initialApproval.lt(formattedUSDCAmount)) {
@@ -176,7 +176,7 @@ function TabPanel(props: TabPanelProps) {
       try {
         setLoadmsg(locale("CheckWallet"));
         const approve = await rolodex.USDC?.connect(currentSigner!).approve(
-          "0xWaveAddressHERE",
+          "0x786cb85de17ad952B9b4b888A0e5187a05EF1FD2",
           formattedCommitAmount
         );
 
@@ -190,9 +190,10 @@ function TabPanel(props: TabPanelProps) {
   };
 
   const usdcCommitHandler = async () => {
+    console.log('usdc handling', rolodex, usdcAmountToCommit)
     if (rolodex !== null && Number(usdcAmountToCommit) > 0) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
-
+      console.log(formattedCommitAmount)
       setLoading(true);
 
       try {
