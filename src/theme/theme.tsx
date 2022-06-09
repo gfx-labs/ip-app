@@ -285,7 +285,7 @@ theme.typography.label2 = {
 theme.typography.label2_medium = {
   fontWeight: 500,
   fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(116),
+  lineHeight: fzTolineHeight(16),
   [theme.breakpoints.down("md")]: {
     fontSize: pxToRem(12),
     lineHeight: fzTolineHeight(16),
