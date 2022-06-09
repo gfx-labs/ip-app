@@ -9,13 +9,14 @@ import { ModalInputContainer } from "../../components/util/modal/ModalContent/Mo
 import Cookies from "universal-cookie";
 import { PDFModal } from "../../components/util/pdfViewer/PDFModal";
 import { useRolodexContext } from "../../components/libs/rolodex-data-provider/RolodexDataProvider";
-import { useClaimIPT, useCommitUSDC } from "../../hooks/useSaleUtils";
+import { useClaimIPT, useCommitUSDC, useDisableTime } from "../../hooks/useSaleUtils";
 import { useWeb3Context } from "../../components/libs/web3-data-provider/Web3Provider";
 import { getSaleMerkleProof } from "./getMerkleProof";
 import { useModalContext } from "../../components/libs/modal-content-provider/ModalContentProvider";
 import { TransactionReceipt } from "@ethersproject/providers";
 import { BN } from "../../easy/bn";
 import { locale } from "../../locale";
+import { BNtoHexNumber, BNtoHexString } from "../../components/util/helpers/BNtoHex";
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0);
@@ -141,6 +142,15 @@ function TabPanel(props: TabPanelProps) {
   const [loadmsg, setLoadmsg] = useState("");
 
   const [needAllowance, setNeedAllowance] = useState(true);
+  const [disableTime, setDisableTime] = useState('')
+
+  useEffect(() => {
+    useDisableTime(currentSigner!).then(res => {
+      const time = new Date(BNtoHexNumber(res) * 1000).toDateString()
+      console.log(time, 'timeee')
+      setDisableTime(time)
+    })
+  }, [])
 
   useEffect(() => {
     if (rolodex && usdcAmountToCommit && rolodex.USDC) {
@@ -332,9 +342,13 @@ function TabPanel(props: TabPanelProps) {
               load_text={loadmsg}
               onClick={handleSubmit}
             />
-
+            
             <Button onClick={claimHandler}>Claim</Button>
+
           </Box>
+
+          <Typography>{disableTime}</Typography>
+
           <Box
             mt={5}
             display="flex"
