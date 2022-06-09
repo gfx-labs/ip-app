@@ -10,7 +10,7 @@ To illustrate this, suppose 1 USDC has been supplied to Compound, Aave, and Inte
 At _any_ level of borrow APR, Interest Protocol has a higher utilization rate than Compound or Aave. In other words, given any borrow APR, Interest Protocol lends out more using the same amount of USDC.
 
 One might ask if Interest Protocol is simply taking more risk than Compound or Aave. This is not the case. Let us define *liquidity risk* as the percentage of deposits that
-are not immediately redeemable for the underlying USDC. For Interest Protocol, this is equal to (USDC in reserve) / (USDi total supply). For Compound and Aave, it is equal to their utilization rate. The figure below compares the liquidity risk for the three protocols at each level of utilization rate.
+are not immediately redeemable for the underlying USDC. For Interest Protocol, this is equal to 1 - (USDC in reserve) / (USDi total supply). For Compound and Aave, it is equal to their utilization rate. The figure below compares the liquidity risk for the three protocols at each level of utilization rate.
 
 
 ![wpFigure3.png](./wpFigure3.png)
