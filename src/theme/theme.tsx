@@ -134,10 +134,10 @@ theme.typography.h4 = {
   fontWeight: 700,
   fontSize: pxToRem(40),
   lineHeight: fzTolineHeight(42),
-  letterSpacing: -1.5,
+  letterSpacing: -1,
   [theme.breakpoints.down("md")]: {
-    fontSize: pxToRem(24),
-    lineHeight: fzTolineHeight(24),
+    fontSize: pxToRem(28),
+    lineHeight: fzTolineHeight(28),
   },
 };
 

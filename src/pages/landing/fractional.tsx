@@ -22,9 +22,9 @@ export const Fractional: React.FC = () => {
       >
         <Box
           sx={{
-            paddingTop: { xs: 0, md: 5 },
-            paddingX: { xs: 2, md: 10 },
-            paddingBottom: { xs: 5, md: 5 },
+            paddingTop: { xs: 1, md: 20 },
+            paddingX: { xs: 2, md: 8 },
+            paddingBottom: { xs: 10, md: 20},
             flexWrap: "wrap",
             flexBasis: "50%",
             display: "flex",
@@ -34,7 +34,7 @@ export const Fractional: React.FC = () => {
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography
-              display="inline"
+              display="flex"
               variant="h4"
               sx={{
                 color: formatColor(neutral.black),
@@ -45,7 +45,7 @@ export const Fractional: React.FC = () => {
               decentralized finance
             </Typography>
             <Typography
-              display="inline"
+              display="flex"
               variant="body3"
               sx={{
                 marginLeft: 0,
@@ -71,7 +71,7 @@ export const Fractional: React.FC = () => {
         <Box paddingX={{ xs: 2, md: 4 }} textAlign="center">
           <Box
             sx={{
-              flexBasis: "50%",
+              flexBasis: "60%",
               flex: "1 1 auto",
               objectFit: "contain",
               width: "100%",

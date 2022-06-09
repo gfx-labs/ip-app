@@ -9,15 +9,15 @@ export const Values: React.FC = () => {
       <Box
         sx={{
           maxWidth: "100%",
-          paddingTop: { xs: 5, md: 10 },
-          paddingBottom: 10,
-          backgroundColor: formatColor(neutral.white),
+          paddingTop: { xs: 9, md: 10 },
+          paddingBottom: 16,
+          backgroundColor: formatColor(neutral.gray11),
           display: "flex",
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
-          gap: { xs: 6, md: 10 },
-          paddingX: { xs: 3, md: 10 },
+          gap: { xs: 9, md: 10 },
+          paddingX: { xs: 9, md: 10 },
         }}
       >
         <Box
@@ -34,7 +34,7 @@ export const Values: React.FC = () => {
           <Typography
             display="inline"
             variant="h2"
-            color={formatColor(neutral.black)}
+            color={formatColor(neutral.gray1)}
           >
             Our Values
           </Typography>
@@ -45,7 +45,7 @@ export const Values: React.FC = () => {
             flexWrap: "nowrap",
             flexDirection: { xs: "column", md: "row" },
             display: "flex",
-            gap: 4,
+            gap: 1,
             maxWidth: 1250,
             justifyContent: "center",
             alignItems: "stretch",
@@ -62,7 +62,7 @@ export const Values: React.FC = () => {
             bg={`linear-gradient(${formatGradient(
               gradient.gradientPurpleGrey
             )})`}
-            left="2. Community"
+            left="2. Adaptibility"
             right="Community is the bedrock of Interest Protocol. A keep-it-simple approach to concepts and code encourages participation, leading to a vibrant community and an adaptable protocol."
           />
           <GradientBox
@@ -70,7 +70,7 @@ export const Values: React.FC = () => {
               gradient.gradientPurpleYellow
             )})`}
             left="3. Transparency"
-            right="Anyone can audit Interest Protocol's finances on-chain. Whitepaper and docs explain how Interest Protocol works, risks involved, and governance processes. Nothing is hidden."
+            right="Anyone can audit Interest Protocol's finances on-chain. The whitepaper and docs explain how Interest Protocol works, the risks involved, and governance processes. Nothing is hidden."
           />
         </Box>
       </Box>
@@ -87,22 +87,22 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
         paddingX: { xs: 2, md: 5 },
         display: "flex",
         width: "100%",
-        maxWidth: 400,
+        maxWidth: 600,
         flexWrap: "wrap",
         borderRadius: 5,
         background: bg,
         minHeight: 320,
         marginX: 'auto',
-        rowGap: 2
+        rowGap: 1
       }}
     >
       <Box>
-        <Typography variant="h5" color={formatColor(neutral.black)} mb={3}>
+        <Typography variant="h5" color={formatColor(neutral.gray5)} mb={1}>
           {left}
         </Typography>
       </Box>
       <Box>
-        <Typography variant="subtitle2_semi" color={formatColor(neutral.gray1)}>
+        <Typography variant="body3_medium" color={formatColor(neutral.white)}>
           {right}
         </Typography>
       </Box>

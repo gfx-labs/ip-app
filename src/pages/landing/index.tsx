@@ -154,7 +154,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 >
                   <Typography
                     variant="body3"
-                    color={formatColor(neutral.black)}
+                    color={formatColor(neutral.white)}
                   >
                     App
                   </Typography>
@@ -162,7 +162,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 <Link href="whitepaper.pdf">
                   <Typography
                     variant="body3"
-                    color={formatColor(neutral.black)}
+                    color={formatColor(neutral.white)}
                   >
                     Whitepaper
                   </Typography>
@@ -170,7 +170,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 <Link href="#/docs">
                   <Typography
                     variant="body3"
-                    color={formatColor(neutral.black)}
+                    color={formatColor(neutral.white)}
                   >
                     Docs
                   </Typography>
@@ -178,7 +178,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 <Link href="https://gfx.cafe/ip/contracts" target="_blank">
                   <Typography
                     variant="body3"
-                    color={formatColor(neutral.black)}
+                    color={formatColor(neutral.white)}
                   >
                     Git
                   </Typography>
@@ -187,7 +187,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                   <Typography
                   variant="body3"
                     sx={{
-                      color: formatColor(neutral.black)
+                      color: formatColor(neutral.white)
                     }}
                   >
                     <Link href="#/whitelist" sx={{ color: "inherit" }}>

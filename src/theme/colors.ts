@@ -28,7 +28,7 @@ export const neutral: { [key: string]: [number, number, number] } = {
   gray8: [47, 56, 72], // #2F3848
   gray9: [127, 127, 127], // #7F7F7F
   gray10: [107, 118, 135], // #6B7687
-  gray11: [251, 252, 253], // #FBFCFD
+  gray11: [245, 247, 250], // #FBFCFD
   gray12: [176, 180, 194], // #B0B4C2
   black: [0, 0, 0],
   black1: [47, 45, 45], // #2F2D2D
@@ -153,22 +153,22 @@ export const gradient: { [key: string]: Gradient } = {
   gradientPinkPeach: {
     angle: 90,
     stops: [
-      [[255, 154, 158], 0],
-      [[250, 208, 196], 1],
+      [[139, 170, 170], 0],
+      [[174, 139, 156], 1],
     ],
   },
   gradientPurpleGrey: {
     angle: 90,
     stops: [
-      [[235, 192, 253], 0],
-      [[217, 222, 216], 1],
+      [[217, 175, 217], 0],
+      [[151, 217, 225], 1],
     ],
   },
   gradientPurpleYellow: {
     angle: 90,
     stops: [
-      [[233, 222, 250], 0],
-      [[251, 252, 219], 1],
+      [[186, 200, 224], 0],
+      [[106, 133, 182,], 1],
     ],
   },
 };
