@@ -9,15 +9,15 @@ export const Highlights: React.FC = () => {
       <Box
         sx={{
           maxWidth: "100%",
-          paddingTop: { xs: 10, md: 20 },
+          paddingTop: { xs: 16, md: 30 },
           paddingX: { xs: 2, md: 10 },
-          paddingBottom: { xs: 2, md: 10 },
+          paddingBottom: { xs: 16, md: 30 },
           backgroundColor: formatColor(neutral.white),
           display: "flex",
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
-          gap: 5,
+          gap:26,
         }}
       >
         <Box
@@ -37,7 +37,7 @@ export const Highlights: React.FC = () => {
             variant="h4"
             color={formatColor(neutral.gray2)}
           >
-            The stablecoin USDi
+            IP's stablecoin USDi
           </Typography>
           <Typography
             display={{ xs: "inline-block", md: "inline" }}
@@ -62,7 +62,7 @@ export const Highlights: React.FC = () => {
           <Box sx={{ flexBasis: "33%" }}>
             <HighlightBox
               icon={"stability"}
-              header={"Stability First"}
+              header={"Stable"}
               copy={
                 "USDi maintains peg under adverse conditions, without any intervention."
               }
@@ -80,7 +80,7 @@ export const Highlights: React.FC = () => {
           <Box sx={{ flexBasis: "33%" }}>
             <HighlightBox
               icon={"transparency"}
-              header={"Full Transparency"}
+              header={"Transparent"}
               copy={
                 "Everything from contract to interface is FOSS, and we mean it."
               }
@@ -126,10 +126,10 @@ const HighlightBox = (props: { icon: any; header: string; copy: string }) => {
       </Typography>
 
       <Typography
-        variant="body1"
+        variant="body3"
         sx={{
-          color: formatColor(neutral.black),
-          textAlign: { xs: "center", md: "left" },
+          color: formatColor(neutral.gray2),
+          textAlign: { xs: "center", md: "center" },
           paddingX: { xs: 5 },
         }}
       >

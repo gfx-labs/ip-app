@@ -79,7 +79,7 @@ export const Community: React.FC = () => {
               sx={{
                 mx: 2,
                 textAlign: "center",
-                width: { xs: 36, md: 48 },
+                width: { xs: 36, md: 30 },
               }}
               component="img"
               src="images/medium_icon_black.svg"
