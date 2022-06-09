@@ -1,0 +1,57 @@
+# Liquidity Program
+
+As announced previously, GFX Labs has allocated 10% of the IPT total supply (10,000,000 IPT) towards a liquidity program. The program will act as an additional catalyst to garner liquidity and participation in the nascent protocol.
+
+Two-thirds of the rewards (6,666,667 IPT) will be distributed to USDi borrowers, and the remaining one-third (3,333,333) will go to market makers who provide ETH-USDi liquidity on Uniswap v2.
+
+Borrower incentives will encourage users to borrow USDi from the protocol. The interest paid by these borrowers will in turn incentivize users to deposit USDC to mint USDi, which allows for more borrowing. This virtuous cycle would help the initial growth of Interest Protocol.
+
+Market maker incentives will increase USDi liquidity in DEXs and allow USDi holders to swap USDi directly for other assets without redeeming it for USDC. This provides gas efficiency for USDi holders and helps Interest Protocol manage its USDC reserve.
+
+The liquidity program will last for two years. Approximately 1,833,325 IPT will be distributed during the first quarter (13 weeks) of the program. This amount will decrease by approximately 166,667 IPT every quarter.
+
+The distribution schedule for the first quarter is given by the following tables.
+
+|Type    | Total IPT|IPT per week|
+|--------|----------|------------|
+|**Borrow**| 1,222,221| 94,017|
+|**Uniswap**|611,104|47,008
+		
+| Week | Starting block | Ending block |
+|------|----------------|--------------|
+| 1    | 14,961,830     | 15,006,630   |
+| 2    | 15,006,631     | 15,051,431   |
+| 3    | 15,051,432     | 15,096,232   |
+| 4    | 15,096,233     | 15,141,033   |
+| 5    | 15,141,034     | 15,185,834   |
+| 6    | 15,185,835     | 15,230,635   |
+| 7    | 15,230,636     | 15,275,436   |
+| 8    | 15,275,437     | 15,320,237   |
+| 9    | 15,320,238     | 15,365,038   |
+| 10   | 15,365,039     | 15,409,839   |
+| 11   | 15,409,840     | 15,454,640   |
+| 12   | 15,454,641     | 15,499,441   |
+| 13   | 15,499,442     | 15,544,242   |
+
+
+## Borrower Incentives
+
+6.67% of the IPT total supply will be distributed pro-rata to users who borrow USDi from Interest Protocol. For each borrower, we calculate $\frac{\text{USDi borrowed by borrower}}{\text{total USDi borrowed}}$ at each block. The average of this percentage over the course of a week is the borrower's share of the rewards for that week. 
+
+This means that users earn more rewards if they borrow when the total amount of outstanding USDi loans across the protocol is smaller.
+
+Note that rewarding borrowers also benefits depositors (USDi holders) through higher interest rates. Depositors will reap this benefit without having to spend gas to claim rewards.
+
+## Market Maker Incentives
+
+3.33% of the IPT total supply will be distributed pro-rata to users who provide ETH-USDi liquidity on Uniswap V2. For each liquidity provider, we calculate $\frac{\text{liquidity provided by user}}{\text{total liquidity in pool}}$ at each block. The average of this percentage over the course of a week is the liquidity provider's share of the rewards for that week. 
+
+This means that users earn more rewards if they provide liquidity when the total amount of liquidity in the ETH-USDi pool is smaller.
+
+
+## Merkle Root Implementation
+Interest Protocol utilizes Balancer's merkle root system to distribute rewards. An off-chain open source script will calculate the amount of IPT reward for each IPT borrower and Uniswap v2 liquidity provider. Starting at protocol launch, the script will be run weekly. Users can let their rewards accrue over multiple weeks and claim them at their convenience. The script can be found [here](https://github.com/gfx-labs/ip-contracts/tree/master/scripts/liquidity_mining).
+
+## Updates
+IPT holders can amend the Liquidity Program via a governance vote and by including a new script to calculate the incentives.
+
