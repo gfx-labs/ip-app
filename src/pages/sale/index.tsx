@@ -9,14 +9,22 @@ import { ModalInputContainer } from "../../components/util/modal/ModalContent/Mo
 import Cookies from "universal-cookie";
 import { PDFModal } from "../../components/util/pdfViewer/PDFModal";
 import { useRolodexContext } from "../../components/libs/rolodex-data-provider/RolodexDataProvider";
-import { useClaimIPT, useCommitUSDC, useDisableTime } from "../../hooks/useSaleUtils";
+import {
+  getAccountRedeemedCurrentWave,
+  getTotalClaimed,
+  useClaimIPT,
+  useCommitUSDC,
+  useDisableTime,
+  WAVEPOOL_ADDRESS,
+} from "../../hooks/useSaleUtils";
 import { useWeb3Context } from "../../components/libs/web3-data-provider/Web3Provider";
 import { getSaleMerkleProof } from "./getMerkleProof";
 import { useModalContext } from "../../components/libs/modal-content-provider/ModalContentProvider";
 import { TransactionReceipt } from "@ethersproject/providers";
 import { BN } from "../../easy/bn";
 import { locale } from "../../locale";
-import { BNtoHexNumber, BNtoHexString } from "../../components/util/helpers/BNtoHex";
+import { BNtoHexNumber } from "../../components/util/helpers/BNtoHex";
+import useCurrentTime from "../../hooks/useCurrentTime";
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0);
@@ -47,7 +55,7 @@ const PurchasePage: React.FC = () => {
           width: "100%",
           overflow: "hidden",
           py: { xs: 10 },
-          maxWidth: 700,
+          maxWidth: 800,
           paddingX: { xs: 2, sm: 10 },
         }}
       >
@@ -67,7 +75,7 @@ const PurchasePage: React.FC = () => {
 
 const PurchaseBox: React.FC = () => {
   const isLight = useLight();
-
+  const { currentAccount, connected } = useWeb3Context();
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -108,12 +116,16 @@ const PurchaseBox: React.FC = () => {
         <Tab sx={TabStyle} label="Wave 2" />
         <Tab sx={TabStyle} label="Wave 3" />
       </Tabs>
-
-      <TabPanel value={value} index={0} />
-
-      <TabPanel value={value} index={1} />
-
-      <TabPanel value={value} index={2} />
+      {!connected && !currentAccount && (
+        <Box textAlign="center" mb={2}>
+          <Typography color="error" variant="h6">
+            Please connect your wallet
+          </Typography>
+        </Box>
+      )}
+      <TabPanel value={value} index={0} iptForSale={35000000} limit={1000000} />
+      <TabPanel value={value} index={1} iptForSale={35000000} limit={500000} />
+      <TabPanel value={value} index={2} iptForSale={35000000} />
     </Box>
   );
 };
@@ -122,43 +134,58 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  iptForSale: number;
+  limit?: number;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, iptForSale, limit, ...other } = props;
   const isLight = useLight();
-  const [iptForSale, setIptForSale] = useState(1000000);
-  const [usdcCommitted, setUsdcCommitted] = useState(1000000);
   const [usdcAmountToCommit, setUsdcAmountToCommit] = useState("");
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
   const waveNum = index + 1;
   const rolodex = useRolodexContext();
-  const { currentSigner, currentAccount, dataBlock, chainId } =
+  const { currentSigner, currentAccount, dataBlock, chainId, connected } =
     useWeb3Context();
   const { updateTransactionState } = useModalContext();
+  const currentTime = useCurrentTime();
 
   const [loading, setLoading] = useState(false);
   const [loadmsg, setLoadmsg] = useState("");
 
   const [needAllowance, setNeedAllowance] = useState(true);
-  const [disableTime, setDisableTime] = useState('')
-
+  const [disableTime, setDisableTime] = useState<Date>();
+  const [salePeriodRemaining, setSalePeriodRemaining] = useState<
+    number | undefined
+  >();
+  const [redeemed, setRedeemed] = useState(true);
+  const [totalClaimed, setTotalClaimed] = useState("");
+  const [claimable, setClaimable] = useState(0);
   useEffect(() => {
-    useDisableTime(currentSigner!).then(res => {
-      const time = new Date(BNtoHexNumber(res) * 1000).toDateString()
-      console.log(time, 'timeee')
-      setDisableTime(time)
-    })
-  }, [])
+    useDisableTime(currentSigner!).then((res) => {
+      const time: Date = new Date(BNtoHexNumber(res) * 1000);
+      setDisableTime(time);
+
+      setSalePeriodRemaining(
+        Math.floor(
+          ((time.valueOf() - currentTime.valueOf()) % (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        )
+      );
+    });
+    getAccountRedeemedCurrentWave(currentSigner!, currentAccount, waveNum).then(
+      (res) => {
+        setClaimable(BNtoHexNumber(res[0]));
+        setRedeemed(res[1]);
+      }
+    );
+  }, [connected, currentAccount, chainId, rolodex]);
 
   useEffect(() => {
     if (rolodex && usdcAmountToCommit && rolodex.USDC) {
       rolodex
-        .USDC!.allowance(
-          currentAccount,
-          "0x0078f8795Ba94FCc90c6553E6Cb4674F48DD3a5A"
-        )
+        .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
         .then((initialApproval) => {
           const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
           if (initialApproval.lt(formattedUSDCAmount)) {
@@ -168,11 +195,15 @@ function TabPanel(props: TabPanelProps) {
           }
         });
     }
+
+    getTotalClaimed(currentSigner!).then((res) =>
+      setTotalClaimed(BNtoHexNumber(res).toLocaleString())
+    );
   }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("handling submit");
+
     if (needAllowance) {
       handleApprovalRequest();
     } else {
@@ -189,13 +220,12 @@ function TabPanel(props: TabPanelProps) {
 
       updateTransactionState(claimReceipt);
     } catch (err) {
-      const error = err as TransactionReceipt
+      const error = err as TransactionReceipt;
       updateTransactionState(error);
     }
   };
 
   const handleApprovalRequest = async () => {
-    console.log(usdcAmountToCommit, rolodex);
     if (rolodex && usdcAmountToCommit) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
 
@@ -203,7 +233,7 @@ function TabPanel(props: TabPanelProps) {
       try {
         setLoadmsg(locale("CheckWallet"));
         const approve = await rolodex.USDC?.connect(currentSigner!).approve(
-          "0x0078f8795Ba94FCc90c6553E6Cb4674F48DD3a5A",
+          WAVEPOOL_ADDRESS,
           formattedCommitAmount
         );
 
@@ -217,10 +247,8 @@ function TabPanel(props: TabPanelProps) {
   };
 
   const usdcCommitHandler = async () => {
-    console.log("usdc handling", rolodex, usdcAmountToCommit);
     if (rolodex !== null && Number(usdcAmountToCommit) > 0) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
-      console.log(formattedCommitAmount);
       setLoading(true);
 
       try {
@@ -229,7 +257,6 @@ function TabPanel(props: TabPanelProps) {
           currentAccount,
           waveNum
         );
-        console.log(proof, waveNum, currentAccount);
 
         const commitTransaction = await useCommitUSDC(
           formattedCommitAmount,
@@ -285,11 +312,22 @@ function TabPanel(props: TabPanelProps) {
                   : formatColor(neutral.white)
               }
             >
-              Wave {waveNum} Ending in 48 Hours
+              {salePeriodRemaining !== undefined && salePeriodRemaining > 0
+                ? `Wave ${waveNum} Ending in
+                  ${salePeriodRemaining}
+                  Hours`
+                : "Ended"}
             </Typography>
           </Box>
 
-          <Box display="flex" flexWrap="wrap" mt={3} columnGap={4} rowGap={2}>
+          <Box
+            display="flex"
+            flexDirection={{ xs: "column", md: "row" }}
+            justifyContent="space-between"
+            mt={3}
+            columnGap={4}
+            rowGap={2}
+          >
             <Box display="flex">
               <Typography variant="body1" color="#A3A9BA" mr={1}>
                 IPT for sale:{" "}
@@ -308,7 +346,7 @@ function TabPanel(props: TabPanelProps) {
             </Box>
             <Box display="flex">
               <Typography variant="body1" color="#A3A9BA" mr={1}>
-                USDC Committed:{" "}
+                USDC Committed:
               </Typography>
               <Typography
                 variant="body1"
@@ -318,11 +356,10 @@ function TabPanel(props: TabPanelProps) {
                     : formatColor(neutral.white)
                 }
               >
-                {usdcCommitted.toLocaleString()}
+                {totalClaimed}
               </Typography>
             </Box>
           </Box>
-
           <Box component="form" onSubmit={handleSubmit} mt={4}>
             <ModalInputContainer focus={focus}>
               <DecimalInput
@@ -333,21 +370,49 @@ function TabPanel(props: TabPanelProps) {
                 onChange={setUsdcAmountToCommit}
               />
             </ModalInputContainer>
-            <br />
-            <DisableableModalButton
-              disabled={Number(usdcAmountToCommit) <= 0}
-              type="submit"
-              text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
-              loading={loading}
-              load_text={loadmsg}
-              onClick={handleSubmit}
-            />
-            
-            <Button onClick={claimHandler}>Claim</Button>
+            <Box mt={2}>
+              {limit &&
+              disableTime !== undefined &&
+              disableTime > currentTime ? (
+                <Typography color="error" variant="label2">
+                  Maximum commit allowed: {limit.toLocaleString()}
+                </Typography>
+              ) : (
+                <Box height={28}></Box>
+              )}
+            </Box>
 
+            {disableTime !== undefined && disableTime > currentTime ? (
+              <DisableableModalButton
+                disabled={
+                  Number(usdcAmountToCommit) <= 0 ||
+                  (limit && Number(usdcAmountToCommit) > limit) ||
+                  !connected
+                }
+                type="submit"
+                text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
+                loading={loading}
+                load_text={loadmsg}
+                onClick={handleSubmit}
+              />
+            ) : (
+              <Button
+                variant="contained"
+                onClick={claimHandler}
+                disabled={redeemed || !connected}
+              >
+                <Typography variant="body3" color={formatColor(neutral.white)}>
+                  {!connected
+                    ? `Please connect your wallet`
+                    : redeemed
+                    ? `Already claimed for wave ${waveNum}`
+                    : claimable > 0
+                    ? `Claim IPT for wave ${waveNum}`
+                    : `Nothing to claim`}
+                </Typography>
+              </Button>
+            )}
           </Box>
-
-          <Typography>{disableTime}</Typography>
 
           <Box
             mt={5}
