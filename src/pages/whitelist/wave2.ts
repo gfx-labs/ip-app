@@ -1,4 +1,3 @@
-
 export const wave2 = new Set([
     "0x000000000562872307a4ba7c8c1625f55bdb3a84",
     "0x0000002ae956176bc22c499cdaaa656b399b7391",
@@ -54229,4 +54228,5 @@ export const wave2 = new Set([
     "0xeb47d07a4ef98d1418a0a7fb91a971167f2ddea9",
     "0x3c84feed7a9cac1105695578e4d5b524fac2047c",
     "0x8b59ae6ec3ef31c796600373a0add1d91bd1c00e",
-    "0x25e08c37112d37929a9b481a64fed9fcd1f3bba1"])
+    "0x25e08c37112d37929a9b481a64fed9fcd1f3bba1"
+])
