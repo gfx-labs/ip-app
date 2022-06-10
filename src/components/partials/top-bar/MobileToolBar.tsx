@@ -136,7 +136,7 @@ export const MobileToolBar = () => {
           />
         </Button>
 
-        <ClaimsButton />
+        {/* <ClaimsButton /> */}
         <br />
         <br />
         <Divider variant="middle" />

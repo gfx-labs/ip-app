@@ -175,7 +175,6 @@ export const Web3ContextProvider = ({
           .getBlockNumber()
           .then((n) => {
             setDataBlock(n);
-            console.log("got block", n);
           })
           .catch(() => {
             console.log("failed to fetch block");
