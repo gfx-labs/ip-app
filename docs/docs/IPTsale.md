@@ -57,7 +57,7 @@ Note that the sum of individual caps in Wave 1 or Wave 2 is substantially larger
 
 ## Check Whitelist
 
-We have compiled a preliminary whitelist for Wave 1 and Wave 2. To check if your address has been included in the first two waves, please see visit: https://interestprotocol.io/#/whitelist. If your whitelisted address is a smart contract that doesn’t have the functionality to participate, send an email to whitelist@interestprotocol.io with the whitelisted address, the EOA controlling the smart contract, and any necessary information to prove their on-chain ownership of the account by Friday, June 10th, 2022.
+We have compiled a preliminary whitelist for Wave 1 and Wave 2. To check if your address has been included in the first two waves, please visit: https://interestprotocol.io/#/whitelist. If your whitelisted address is a smart contract that doesn’t have the functionality to participate, send an email to whitelist@interestprotocol.io with the whitelisted address, the EOA controlling the smart contract, and any necessary information to prove their on-chain ownership of the account by Friday, June 10th, 2022.
 
 ## Disclaimer
 
