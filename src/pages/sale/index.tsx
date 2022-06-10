@@ -161,7 +161,7 @@ function TabPanel(props: TabPanelProps) {
   >();
   const [redeemed, setRedeemed] = useState(true);
   const [totalClaimed, setTotalClaimed] = useState("");
-
+  const [claimable, setClaimable] = useState(0);
   useEffect(() => {
     useDisableTime(currentSigner!).then((res) => {
       const time: Date = new Date(BNtoHexNumber(res) * 1000);
@@ -175,7 +175,10 @@ function TabPanel(props: TabPanelProps) {
       );
     });
     getAccountRedeemedCurrentWave(currentSigner!, currentAccount, waveNum).then(
-      (res) => setRedeemed(res)
+      (res) => {
+        setClaimable(BNtoHexNumber(res[0]));
+        setRedeemed(res[1]);
+      }
     );
   }, [connected, currentAccount, chainId, rolodex]);
 
@@ -403,8 +406,9 @@ function TabPanel(props: TabPanelProps) {
                     ? `Please connect your wallet`
                     : redeemed
                     ? `Already claimed for wave ${waveNum}`
-                    : `Claim IPT for wave ${waveNum}
-`}
+                    : claimable > 0
+                    ? `Claim IPT for wave ${waveNum}`
+                    : `Nothing to claim`}
                 </Typography>
               </Button>
             )}

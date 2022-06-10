@@ -29,7 +29,7 @@ export const useDisableTime = async (signer: JsonRpcSigner) => {
 export const getAccountRedeemedCurrentWave = async (signer: JsonRpcSigner, currentAccount: string, wave: number ) => {
   const claimInfo = await getWavePoolContract(signer)._data(wave, currentAccount)
 
-  return claimInfo[1]
+  return claimInfo
 }
 
 export const getTotalClaimed = async (signer: JsonRpcSigner) => {
