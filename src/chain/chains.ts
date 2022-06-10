@@ -11,7 +11,7 @@ const configs: Array<ChainInfo> = [
  //   name: "Ethereum",
     name: "Switch to Polygon",
     ticker: "ETH",
-    usdiAddress: "0x12f4e7c4e7993d724eac73ef99f2fca36f1fa921", // *remove. Using ropsten address for testing
+    usdiAddress: "0x2A54bA2964C8Cd459Dc568853F79813a60761B58",
     scanUrl: 'https://etherscan.io/tx/',
     scanSite: 'Etherscan'
   },
