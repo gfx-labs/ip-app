@@ -1,28 +1,28 @@
 # IPT Sale
 
-GFX Labs will conduct the sale of Interest Protocol Tokens (IPT) from June 13th to June 19th in tandem with the launch of the protocol. This post introduces both IPT and Governor Charlie, along with how the sale of IPT will take place.
+GFX Labs will start the sale of Interest Protocol Tokens (IPT) on June 13th in tandem with the launch of the protocol. The sale will last until June 19th. This post introduces both IPT and Governor Charlie, along with how the sale of IPT will take place.
 
 ## IPT and Governor Charlie
 
-IPT holders collectively control the entire protocol, revenues, and reserves through the governance process. Because IP contracts designate the core governance contract as their owner, IPT holders can propose and vote on changes to IP such as: adding new collateral assets, changing the parameters of existing collateral assets, updating the interest rate curve, and adjusting oracle contract combinations. They can also modify the governance and USDi contracts themselves by adding additional features or updating voting parameters. IPT holders also control protocol fees and how any treasury funds and USDi accrued will be used. In short, IPT enables its holder to manage the entire protocol and its periphery contracts.
+IPT holders collectively control the entire protocol and its revenues through the governance process. Because Interest Protocol (IP)'s contracts designate the core governance contract as their owner, IPT holders can propose and vote on changes to IP such as: adding new collateral assets, changing the parameters of existing collateral assets, updating the interest rate curve, and adjusting oracle contract combinations. They can also modify the governance and USDi contracts themselves to add additional features or update voting parameters. IPT holders also control how protocol fees are accrued and used. In short, IPT enables its holder to manage the entire protocol and its periphery contracts.
 
 IP’s governance contract — aptly named Governor Charlie — is an extension of Compound’s Governor Bravo. Charlie inherits all the functionalities of Bravo but merges the governor and timelock contracts. In addition, Charlie introduces a special process for emergency proposals: IPT holders can make changes to the protocol contract on a faster timeline, albeit with a higher quorum threshold.
 
 ## IPT Sale
 
-We designed the sale to incentivize meaningful participation from the outset. Instead of an airdrop, we chose a targeted approach: historical governance participants and users of existing DeFi protocols will have priority. We believe that quality participation from a broad base of engaged contributors is the best defense against centralization. Those active contributors, rather than VCs, should thus have first access to IPT.
+We designed the sale to incentivize meaningful community participation from the outset. Instead of an airdrop, we chose a targeted approach: historical governance participants and users of existing DeFi protocols will have priority. We believe that quality participation from a broad base of engaged contributors is the best defense against centralization. Those active contributors, rather than VCs, should thus have first access to IPT.
 
-The GFX team will only retain a minority interest in the protocol. After the sale, GFX efforts are not necessary for IP to function properly and the token holders will assume control of the protocol. GFX will continue to be involved in IP, but as community members with the same powers in governance as any token holder.
+The GFX team will only retain a minority interest in the protocol. After the sale, GFX efforts will not be necessary for IP to function properly, and IPT holders will assume control of the protocol. GFX will continue to be involved in IP, but as community members with the same powers in governance as any token holder.
  
 Below is the initial distribution of IPT total supply:
 ![IPTdistribution](./IPTdistribution.png)
 
 
-GFX has allocated 35,000,000 IPT (35% of the total token supply) to the token sale. Each IPT will sell for between 0.25 and 2.00 USDC, depending on demand. The exact price calculations are available in more detail below.
+GFX has allocated 35,000,000 IPT (35% of the total token supply) to the token sale. Each IPT will sell for between 0.25 and 2.00 USDC, depending on demand. The exact price calculations are described below.
 
 There will be three successive waves of eligible IPT buyers: governance participants in major DAOs, DeFi users, and the general public. GFX has compiled a public whitelist of addresses that qualify for the first and second waves. Anyone can purchase in the third wave.
 
-There is a global cap of 70,000,000 USDC. This is the maximum amount of USDC that can be committed to the sales contract. If the global cap is reached during the course of the sale, the contract will no longer accept USDC commitments, even from whitelisted addresses that have not yet participated.
+Once the sale starts, eligible addresses can participate by committing USDC to the sales contract. There is a global cap of 70,000,000 USDC. This is the maximum amount of USDC that can be committed to the sales contract. If the global cap is reached during the course of the sale, the contract will no longer accept USDC commitments, even from whitelisted addresses that have not yet participated.
 
 ## Timing (all times in Central Daylight Time)
 
