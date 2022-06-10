@@ -164,7 +164,7 @@ function TabPanel(props: TabPanelProps) {
 
   useEffect(() => {
     useDisableTime(currentSigner!).then((res) => {
-      const time: Date = new Date(BNtoHexNumber(res) * 100000);
+      const time: Date = new Date(BNtoHexNumber(res) * 1000);
       setDisableTime(time);
 
       setSalePeriodRemaining(
@@ -368,13 +368,15 @@ function TabPanel(props: TabPanelProps) {
               />
             </ModalInputContainer>
             <Box mt={2}>
-            {limit ? (
-              <Typography color="error" variant="label2">
-                Maximum commit allowed: {limit.toLocaleString()}
-              </Typography>
-            ) : (
-              <Box height={28}></Box>
-            )}
+              {limit &&
+              disableTime !== undefined &&
+              disableTime > currentTime ? (
+                <Typography color="error" variant="label2">
+                  Maximum commit allowed: {limit.toLocaleString()}
+                </Typography>
+              ) : (
+                <Box height={28}></Box>
+              )}
             </Box>
 
             {disableTime !== undefined && disableTime > currentTime ? (
