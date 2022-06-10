@@ -367,12 +367,15 @@ function TabPanel(props: TabPanelProps) {
                 onChange={setUsdcAmountToCommit}
               />
             </ModalInputContainer>
-            {limit && (
+            <Box mt={2}>
+            {limit ? (
               <Typography color="error" variant="label2">
                 Maximum commit allowed: {limit.toLocaleString()}
               </Typography>
+            ) : (
+              <Box height={28}></Box>
             )}
-            <br />
+            </Box>
 
             {disableTime !== undefined && disableTime > currentTime ? (
               <DisableableModalButton
