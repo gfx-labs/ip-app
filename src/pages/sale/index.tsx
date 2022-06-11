@@ -14,7 +14,6 @@ import {
   getTotalClaimed,
   useClaimIPT,
   useCommitUSDC,
-  useDisableTime,
   WAVEPOOL_ADDRESS,
 } from "../../hooks/useSaleUtils";
 import { useWeb3Context } from "../../components/libs/web3-data-provider/Web3Provider";
@@ -25,6 +24,7 @@ import { BN } from "../../easy/bn";
 import { locale } from "../../locale";
 import { BNtoHexNumber } from "../../components/util/helpers/BNtoHex";
 import useCurrentTime from "../../hooks/useCurrentTime";
+import { isInWhitelist } from "./getUserIsEligible";
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0);
@@ -123,6 +123,7 @@ const PurchaseBox: React.FC = () => {
           </Typography>
         </Box>
       )}
+
       <TabPanel value={value} index={0} iptForSale={35000000} limit={1000000} />
       <TabPanel value={value} index={1} iptForSale={35000000} limit={500000} />
       <TabPanel value={value} index={2} iptForSale={35000000} />
@@ -174,14 +175,23 @@ function TabPanel(props: TabPanelProps) {
 
   const [needAllowance, setNeedAllowance] = useState(true);
   const [disableTime, setDisableTime] = useState<Date>();
+  const startTime = new Date(saleTimes[waveNum]);
+
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<string>("");
   const [redeemed, setRedeemed] = useState(true);
   const [totalClaimed, setTotalClaimed] = useState("0");
   const [claimable, setClaimable] = useState(0);
+  const [isEligible, setIsEligible] = useState(false);
   useEffect(() => {
+    if (currentAccount && waveNum !== 3) {
+      const isEligible = isInWhitelist(waveNum, currentAccount);
+      setIsEligible(isEligible);
+    } else {
+      setIsEligible(true);
+    }
+
     if (connected && rolodex && currentAccount) {
       const time: Date = new Date(saleTimes[0]);
-      const startTime = new Date(saleTimes[waveNum]);
       setDisableTime(time);
       if (saleTimes[waveNum] > currentTime.valueOf()) {
         let timeleft = (startTime.valueOf() - currentTime.valueOf()) / 1000;
@@ -398,12 +408,15 @@ function TabPanel(props: TabPanelProps) {
               )}
             </Box>
 
-            {disableTime !== undefined && disableTime > currentTime ? (
+            {disableTime !== undefined &&
+            disableTime > currentTime &&
+            isEligible ? (
               <DisableableModalButton
                 disabled={
                   Number(usdcAmountToCommit) <= 0 ||
                   (limit && Number(usdcAmountToCommit) > limit) ||
-                  !connected
+                  !connected ||
+                  startTime > currentTime
                 }
                 type="submit"
                 text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
@@ -429,6 +442,16 @@ function TabPanel(props: TabPanelProps) {
               </Button>
             )}
           </Box>
+
+          {!isEligible ? (
+            <Box textAlign="center" my={2}>
+              <Typography color="error" variant="body1">
+                You are not eligible for this wave
+              </Typography>
+            </Box>
+          ) : (
+            <Box height={46}></Box>
+          )}
 
           <Box
             mt={5}
