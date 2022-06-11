@@ -24,6 +24,7 @@ import { SingleStatCard } from "./SingleStatCard";
 import { UserTokenCard } from "./UserTokenCard";
 import { BN } from "../../../easy/bn";
 import { OpenVaultButton } from "../button/OpenVaultButton";
+import { BNtoHexNumber } from "../helpers/BNtoHex";
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
@@ -41,13 +42,20 @@ export const UserStats = () => {
   const [rewardsClaimed, setRewardsClaimed] = useState(0);
 
   const [borrowAPR, setBorrowAPR] = useState(0);
+  const [totalBaseLiability, setTotalBaseLiability] = useState<number | null>(
+    null
+  );
   const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
     undefined
   );
 
   const theme = useTheme();
-  const { connected, disconnectWallet, error, currentAccount } =
-    useWeb3Context();
+  const {
+    connected,
+    disconnectWallet,
+    error,
+    currentAccount,
+  } = useWeb3Context();
   const rolodex = useRolodexContext();
   const {
     tokens,
@@ -79,6 +87,10 @@ export const UserStats = () => {
         .catch((e) => {
           setBorrowAPR(0);
         });
+
+      rolodex.VC?.totalBaseLiability().then((res) => {
+        setTotalBaseLiability(BNtoHexNumber(res));
+      });
     }
   }, [rolodex]);
 
@@ -162,12 +174,13 @@ export const UserStats = () => {
         sx={{
           display: "grid",
           justifyContent: "space-between",
-          gridTemplateColumns: "2fr 1fr 4fr",
+          gridTemplateColumns: "2fr 1fr 1fr",
           columnGap: 4,
+          rowGap: 4,
           marginBottom: 5,
           [theme.breakpoints.down("lg")]: {
             gridAutoFlow: "column",
-            gridTemplateColumns: "3fr 2fr",
+            gridTemplateColumns: "3fr 2fr 2fr",
             columnGap: 1,
             rowGap: 3,
             marginBottom: 4,
@@ -192,11 +205,23 @@ export const UserStats = () => {
           />
         </SingleStatCard>
 
+        <SingleStatCard>
+          <TitleText
+            title="IPT APY"
+            text={
+              totalBaseLiability !== null
+                ? ((94017 * accountLiability) / totalBaseLiability) * 52.143 +
+                  "%"
+                : null
+            }
+          />
+        </SingleStatCard>
+
         <SingleStatCard
           sx={{
             paddingRight: 3,
+            gridColumn: "1 / -1",
             [theme.breakpoints.down("lg")]: {
-              gridColumn: "1 / -1",
               gridRow: 2,
             },
           }}
