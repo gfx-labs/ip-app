@@ -138,6 +138,24 @@ interface TabPanelProps {
   limit?: number;
 }
 
+const saleTimes = [
+  1655658000000,
+  1655139600000,
+  1655312400000,
+  1655485200000
+]
+
+const formatSecondsTill = (n:number)  => {
+  if(n < 600) {
+    return Math.floor(n) +" second(s)"
+  }
+  if(n < 60*60*4) {
+    return Math.floor(n/60) + " minute(s)"
+  }
+
+  return Math.floor(n/(60*60)) + " hour(s)"
+}
+
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, iptForSale, limit, ...other } = props;
   const isLight = useLight();
@@ -157,48 +175,51 @@ function TabPanel(props: TabPanelProps) {
   const [needAllowance, setNeedAllowance] = useState(true);
   const [disableTime, setDisableTime] = useState<Date>();
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<
-    number | undefined
-  >();
+  string
+  >("");
   const [redeemed, setRedeemed] = useState(true);
-  const [totalClaimed, setTotalClaimed] = useState("");
+  const [totalClaimed, setTotalClaimed] = useState("0");
   const [claimable, setClaimable] = useState(0);
   useEffect(() => {
-    useDisableTime(currentSigner!).then((res) => {
-      const time: Date = new Date(BNtoHexNumber(res) * 1000);
+      const time: Date = new Date(saleTimes[0]);
+      const startTime = new Date(saleTimes[waveNum])
       setDisableTime(time);
-
-      setSalePeriodRemaining(
-        Math.floor(
-          ((time.valueOf() - currentTime.valueOf()) % (1000 * 60 * 60 * 24)) /
-            (1000 * 60 * 60)
-        )
-      );
-    });
-    getAccountRedeemedCurrentWave(currentSigner!, currentAccount, waveNum).then(
-      (res) => {
-        setClaimable(BNtoHexNumber(res[0]));
-        setRedeemed(res[1]);
+      if(saleTimes[waveNum] > currentTime.valueOf()) {
+        let timeleft =
+            (startTime.valueOf() - currentTime.valueOf() )/ 1000
+        setSalePeriodRemaining(
+          "starts in " +
+            formatSecondsTill(timeleft)
+        );
+      }else{
+        setSalePeriodRemaining(
+          "ends in " + formatSecondsTill((time.valueOf() - currentTime.valueOf()) / 1000)
+        );
       }
-    );
-  }, [connected, currentAccount, chainId, rolodex]);
+      getAccountRedeemedCurrentWave(currentSigner!, currentAccount, waveNum).then(
+        (res) => {
+          setClaimable(BNtoHexNumber(res[0]));
+          setRedeemed(res[1]);
+        }
+      );
+  }, [connected, currentAccount, chainId, rolodex, currentTime]);
 
   useEffect(() => {
     if (rolodex && usdcAmountToCommit && rolodex.USDC) {
       rolodex
-        .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
-        .then((initialApproval) => {
-          const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true);
-          } else {
-            setNeedAllowance(false);
-          }
-        });
+      .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
+      .then((initialApproval) => {
+        const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
+        if (initialApproval.lt(formattedUSDCAmount)) {
+          setNeedAllowance(true);
+        } else {
+          setNeedAllowance(false);
+        }
+      });
     }
-
     getTotalClaimed(currentSigner!).then((res) =>
-      setTotalClaimed(BNtoHexNumber(res).toLocaleString())
-    );
+                                         setTotalClaimed(BNtoHexNumber(res).toLocaleString())
+                                        );
   }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
 
   const handleSubmit = (e: FormEvent) => {
@@ -312,10 +333,8 @@ function TabPanel(props: TabPanelProps) {
                   : formatColor(neutral.white)
               }
             >
-              {salePeriodRemaining !== undefined && salePeriodRemaining > 0
-                ? `Wave ${waveNum} Ending in
-                  ${salePeriodRemaining}
-                  Hours`
+              {salePeriodRemaining != ""
+                ? `Wave ${waveNum} ${salePeriodRemaining}`
                 : "Ended"}
             </Typography>
           </Box>
@@ -330,7 +349,7 @@ function TabPanel(props: TabPanelProps) {
           >
             <Box display="flex">
               <Typography variant="body1" color="#A3A9BA" mr={1}>
-                IPT for sale:{" "}
+               Total IPT:{" "}
               </Typography>
               <Typography
                 variant="body1"
@@ -346,7 +365,7 @@ function TabPanel(props: TabPanelProps) {
             </Box>
             <Box display="flex">
               <Typography variant="body1" color="#A3A9BA" mr={1}>
-                USDC Committed:
+                Total USDC:
               </Typography>
               <Typography
                 variant="body1"
@@ -372,11 +391,11 @@ function TabPanel(props: TabPanelProps) {
             </ModalInputContainer>
             <Box mt={2}>
               {limit &&
-              disableTime !== undefined &&
-              disableTime > currentTime ? (
-                <Typography color="error" variant="label2">
-                  Maximum commit allowed: {limit.toLocaleString()}
-                </Typography>
+                disableTime !== undefined &&
+                disableTime > currentTime ? (
+                  <Typography color="error" variant="label2">
+                    Maximum commit allowed: {limit.toLocaleString()}
+                  </Typography>
               ) : (
                 <Box height={28}></Box>
               )}
@@ -405,10 +424,10 @@ function TabPanel(props: TabPanelProps) {
                   {!connected
                     ? `Please connect your wallet`
                     : redeemed
-                    ? `Already claimed for wave ${waveNum}`
-                    : claimable > 0
-                    ? `Claim IPT for wave ${waveNum}`
-                    : `Nothing to claim`}
+                      ? `Already claimed for wave ${waveNum}`
+                      : claimable > 0
+                        ? `Claim IPT for wave ${waveNum}`
+                        : `Nothing to claim`}
                 </Typography>
               </Button>
             )}

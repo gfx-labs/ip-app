@@ -2,7 +2,7 @@ import { JsonRpcSigner } from "@ethersproject/providers";
 import { BigNumber, BigNumberish } from "ethers";
 import { WavePool__factory } from "../chain/contracts/factories/IPTsale/wavepool.sol";
 
-export const WAVEPOOL_ADDRESS = "0x0078f8795Ba94FCc90c6553E6Cb4674F48DD3a5A";
+export const WAVEPOOL_ADDRESS = "0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee"
 
 const getWavePoolContract = (signer: JsonRpcSigner) => {
   return WavePool__factory.connect(WAVEPOOL_ADDRESS, signer);
