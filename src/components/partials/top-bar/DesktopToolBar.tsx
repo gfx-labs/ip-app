@@ -42,21 +42,22 @@ export const DesktopToolBar = () => {
       ) : (
         <></>
       )}
-
-      <Box mx={2} maxWidth={200} width="100%">
-        {/* <Button variant="outlined">
-          <Link href="#/whitelist">
-            <Typography variant="body3">Whitelist</Typography>
-          </Link>
-        </Button> */}
-        <Button variant="outlined">
+      {window.location.hash !== "#/sale" && (
+        <Box mx={2} maxWidth={200} width="100%">
+          {/* <Button variant="outlined">
+                <Link href="#/whitelist">
+                  <Typography variant="body3">Whitelist</Typography>
+                </Link>
+              </Button> */}
           <Link href="#/sale">
-            <Typography variant="body3" color={formatColor(green.green2)}>
-              IPT Sale
-            </Typography>
+            <Button variant="outlined">
+              <Typography variant="body3" color={formatColor(green.green2)}>
+                IPT Sale
+              </Typography>
+            </Button>
           </Link>
-        </Button>
-      </Box>
+        </Box>
+      )}
 
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
         <SelectedChainButton />
