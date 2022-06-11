@@ -181,6 +181,7 @@ function TabPanel(props: TabPanelProps) {
   const [totalClaimed, setTotalClaimed] = useState("0");
   const [claimable, setClaimable] = useState(0);
   useEffect(() => {
+    if(connected && rolodex && currentAccount){
       const time: Date = new Date(saleTimes[0]);
       const startTime = new Date(saleTimes[waveNum])
       setDisableTime(time);
@@ -202,6 +203,7 @@ function TabPanel(props: TabPanelProps) {
           setRedeemed(res[1]);
         }
       );
+    }
   }, [connected, currentAccount, chainId, rolodex, currentTime]);
 
   useEffect(() => {
@@ -224,7 +226,6 @@ function TabPanel(props: TabPanelProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-
     if (needAllowance) {
       handleApprovalRequest();
     } else {
@@ -249,7 +250,6 @@ function TabPanel(props: TabPanelProps) {
   const handleApprovalRequest = async () => {
     if (rolodex && usdcAmountToCommit) {
       let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6);
-
       setLoading(true);
       try {
         setLoadmsg(locale("CheckWallet"));
