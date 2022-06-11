@@ -1,7 +1,6 @@
-import { Box, Toolbar } from "@mui/material";
+import { Box, Toolbar, Typography, Button, Link } from "@mui/material";
 import { useContext } from "react";
 
-import { Link } from "../../util/link";
 import { ConnectWalletButton, SelectedChainButton } from "../../util/button";
 import { BaseSwitch } from "../../util/switch";
 import { LightIcon } from "../../icons/misc/LightIcon";
@@ -10,6 +9,7 @@ import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mod
 import { useLight } from "../../../hooks/useLight";
 import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 import Cookies from "universal-cookie";
+import { formatColor, green } from "../../../theme";
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -22,7 +22,7 @@ export const DesktopToolBar = () => {
   const { setIsApp } = useAppGovernanceContext();
   return (
     <Toolbar>
-      <Link to="/landing" role="heading" aria-level={1}>
+      <Link href="#/landing" role="heading" aria-level={1}>
         <Box
           component="img"
           src="images/ip_green.svg"
@@ -41,6 +41,22 @@ export const DesktopToolBar = () => {
         </Box>
       ) : (
         <></>
+      )}
+      {window.location.hash !== "#/sale" && (
+        <Box mx={2} maxWidth={200} width="100%">
+          {/* <Button variant="outlined">
+                <Link href="#/whitelist">
+                  <Typography variant="body3">Whitelist</Typography>
+                </Link>
+              </Button> */}
+          <Link href="#/sale">
+            <Button variant="outlined">
+              <Typography variant="body3" color={formatColor(green.green2)}>
+                IPT Sale
+              </Typography>
+            </Button>
+          </Link>
+        </Box>
       )}
 
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
