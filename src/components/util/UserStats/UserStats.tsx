@@ -207,10 +207,10 @@ export const UserStats = () => {
 
         <SingleStatCard>
           <TitleText
-            title="IPT APY"
+            title="IPT PER YEAR"
             text={
               totalBaseLiability !== null
-                ? ((94017 * accountLiability) / totalBaseLiability) * 52.143 + " IPT /y"
+                ? ((94017 * accountLiability) / totalBaseLiability) * 52.143 + ""
                 : null
             }
           />
