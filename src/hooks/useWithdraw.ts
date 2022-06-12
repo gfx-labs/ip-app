@@ -1,7 +1,7 @@
 import { JsonRpcSigner } from "@ethersproject/providers";
 import { utils } from "ethers";
 import { Rolodex } from "../chain/rolodex/rolodex";
-import { Vault__factory } from "../chain/contracts";
+import { ERC20Detailed__factory, IERC20__factory, Vault__factory } from "../chain/contracts";
 
 export const useWithdrawUSDC = async (
   usdc_amount: string,
@@ -28,8 +28,13 @@ export const useWithdrawCollateral = async (
   vault_address: string,
   signer: JsonRpcSigner
 ) => {
-  const formattedERC20Amount = utils.parseUnits(amount, 18);
-
+  let decimal = 18
+  try {
+    decimal = await ERC20Detailed__factory.connect(collateral_address, signer).decimals()
+  }catch(e){
+    console.log("failed decimals")
+  }
+  const formattedERC20Amount = utils.parseUnits(amount, decimal);
   try {
     const transferAttempt = await Vault__factory.connect(
       vault_address,
