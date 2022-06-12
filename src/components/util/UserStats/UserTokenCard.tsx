@@ -158,7 +158,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <OpenVaultButton />
       )}
 
-      <a onClick={getTokens}>click to get tokens</a>
       <Box display={canDelegate ? "flex" : "none"} justifyContent="flex-end">
         <Button
           variant="text"

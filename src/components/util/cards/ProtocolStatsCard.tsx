@@ -63,7 +63,6 @@ export const ProtocolStatsCard = () => {
       >
         <TitleText title="USDi Total Supply" text={Math.round(Number(totalSupply)).toLocaleString()} />
         <TitleText title="USDC in Reserve" text={Math.round(Number(totalUSDCDeposited)).toLocaleString()} />
-        <a onClick={mintTestUSDC} href={"#"}>Mint Test USDC</a>
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
