@@ -210,7 +210,7 @@ export const UserStats = () => {
             title="IPT PER YEAR"
             text={
               totalBaseLiability !== null
-                ? ((94017 * accountLiability) / totalBaseLiability) * 52.143 + ""
+                ? Math.round(((94017 * accountLiability) / totalBaseLiability) * 52.143) + ""
                 : null
             }
           />
