@@ -210,7 +210,7 @@ export const UserStats = () => {
             title="IPT APY"
             text={
               totalBaseLiability !== null
-                ? ((94017 * accountLiability) / totalBaseLiability) * 52.143 + "/y"
+                ? ((94017 * accountLiability) / totalBaseLiability) * 52.143 + " IPT /y"
                 : null
             }
           />
