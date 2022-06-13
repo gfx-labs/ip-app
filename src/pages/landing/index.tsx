@@ -190,7 +190,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                       color: formatColor(neutral.white)
                     }}
                   >
-                    <Link href="#/whitelist" sx={{ color: "inherit" }}>
+                    <Link href="#/sale" sx={{ color: "inherit" }}>
                       Sale
                     </Link>
                   </Typography>
@@ -258,8 +258,22 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                   alignItems: "center",
                 }}
               >
-                <Link href="#/whitelist" sx={{ color: "inherit" }}>
+                <Link href="#/sale" sx={{ color: "inherit" }}>
                   Sale
+                </Link>
+              </Typography>
+            }
+            {
+              <Typography
+                sx={{
+                  color: formatColor(neutral.gray2),
+                  display: "flex",
+                  variant: "body3",
+                  alignItems: "center",
+                }}
+              >
+                <Link href="#/whitelist" sx={{ color: "inherit" }}>
+                  Whitelist
                 </Link>
               </Typography>
             }
