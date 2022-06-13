@@ -14,57 +14,57 @@
 
 ## Asset Parameters
 ### Collateral Assset Parameters
-* wETH: LTV: 85%, oracle address: tbd, liquidation incentive: 5%
-* wBTC: LTV: 80%, oracle address: tbd, liquidation incentive: 5%
-* UNI: LTV: 55%, oracle address: tbd, liquidation incentive: 15%
+* wETH: LTV: 85%, oracle address: 0x65dA327b1740D00fF7B366a4fd8F33830a2f03A2, liquidation incentive: 5%
+* wBTC: LTV: 80%, oracle address: 0x8E7d39560b15B2D29E01b2502252C4B5f26f5326, liquidation incentive: 5%
+* UNI: LTV: 55%, oracle address: 0xCE554405b9a257eD00A4e0f114fF12ab832b4e3B, liquidation incentive: 15%
 
 ### wETH Oracle
-* AnchoredViewRelay: widthNumerator: 10
+* AnchoredViewRelay: widthNumerator: 20
 * AnchoredViewRelay: widthDenominator: 100
-* UniswapV3OracleRelay: lookback: 60
-* UniswapV3OracleRelay: _mul: 1e12
+* UniswapV3OracleRelay: lookback: 7200
+* UniswapV3OracleRelay: _mul: 1000000000000
 * UniswapV3OracleRelay: _div: 1
 * UniswapV3OracleRelay: _quoteTokenIsToken0: true
-* UniswapV3OracleRelay: _pool: 0x45dda9cb7c25131df268515131f647d726f50608
-* ChainlinkOracleRelay: feed_address: 0xf9680d99d6c9589e2a93a78a04a279e509205945
-* ChainlinkOracleRelay: mul: 1e10
+* UniswapV3OracleRelay: _pool: 0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8
+* ChainlinkOracleRelay: feed_address: 0x38c5aa75c2e1ecb9750aa2d882adb55742ac967a
+* ChainlinkOracleRelay: mul: 1000000000000
 * ChainlinkOracleRelay: div: 1
 
 ### wBTC Oracle
-* AnchoredViewRelay: widthNumerator: 10
+* AnchoredViewRelay: widthNumerator: 20
 * AnchoredViewRelay: widthDenominator: 100
-* UniswapV3OracleRelay: lookback: 60
-* UniswapV3OracleRelay: _mul: 1e12
+* UniswapV3OracleRelay: lookback: 7200
+* UniswapV3OracleRelay: _mul: 1000000000000
 * UniswapV3OracleRelay: _div: 1
-* UniswapV3OracleRelay: _quoteTokenIsToken0: true
-* UniswapV3OracleRelay: _pool: 0x847b64f9d3a95e977d157866447a5c0a5dfa0ee5
-* ChainlinkOracleRelay: feed_address: 0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6
-* ChainlinkOracleRelay: mul: 1e10
+* UniswapV3OracleRelay: _quoteTokenIsToken0: false
+* UniswapV3OracleRelay: _pool: 0x99ac8ca7087fa4a2a1fb6357269965a2014abc35
+* ChainlinkOracleRelay: feed_address: 0x8790784510829cc6398a75b40668b30e9f3e22ac
+* ChainlinkOracleRelay: mul: 100000000000000000000
 * ChainlinkOracleRelay: div: 1
 
 ### UNI Oracle
-* AnchoredViewRelay: widthNumerator: 30
+* AnchoredViewRelay: widthNumerator: 40
 * AnchoredViewRelay: widthDenominator: 100
-* UniswapV3OracleRelay: lookback: 60
-* UniswapV3OracleRelay: _mul: 1e12
+* UniswapV3OracleRelay: lookback: 14400
+* UniswapV3OracleRelay: _mul: 1000000000000
 * UniswapV3OracleRelay: _div: 1
-* UniswapV3OracleRelay: _quoteTokenIsToken0: true
-* UniswapV3OracleRelay: _pool: 0x74d3c85df4dbd03c7c12f7649faa6457610e7604
-* ChainlinkOracleRelay: feed_address: 0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c
-* ChainlinkOracleRelay: mul: 1e10
+* UniswapV3OracleRelay: _quoteTokenIsToken0: false
+* UniswapV3OracleRelay: _pool: 0xd0fc8ba7e267f2bc56044a7715a489d851dc6d78
+* ChainlinkOracleRelay: feed_address: 0x1Ea3889f3c0Ad7de9Bcc7c5f13a668B0B4874344
+* ChainlinkOracleRelay: mul: 10000000000
 * ChainlinkOracleRelay: div: 1
 
 ## Governance Parameters
-* proposalThreshold: 10000000
+* proposalThreshold: 1,000,000
 
 ### Proposal Parameters
 * votingDelay (blocks): 13140
 * votingPeriod (blocks): 40320
 * proposalTimelockDelay (seconds): 172800
-* quorumVotes: 10000000
+* quorumVotes: 10,000,000
 
 ### Emergency Parameters
 * emergencyVotingPeriod (blocks): 6570
 * emergencyVotingTimelockDelay (seconds): 43200
-* emergencyQuorumVotes: 50000000
+* emergencyQuorumVotes: 40,000,000
 
