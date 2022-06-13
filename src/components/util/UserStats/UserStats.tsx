@@ -205,7 +205,7 @@ export const UserStats = () => {
             text={
               totalBaseLiability !== null
                 ? `${Math.round(
-                    ((94017 * 88) / totalBaseLiability) * 52.143
+                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
                   )}` + ""
                 : null
             }
