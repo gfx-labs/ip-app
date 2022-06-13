@@ -11,6 +11,7 @@ import {
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 import { useLight } from "../../../../hooks/useLight";
+import { useVaultDataContext } from "../../../libs/vault-data-provider/VaultDataProvider";
 
 export const DepositCollateralContent = () => {
   const {
@@ -19,24 +20,41 @@ export const DepositCollateralContent = () => {
     collateralToken,
     collateralDepositAmount,
   } = useModalContext();
+
+  const { borrowingPower, tokens } = useVaultDataContext();
+
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
   const isLight = useLight();
+  const ltv = tokens![collateralToken.ticker].token_LTV || 0;
+  const [newBorrowingPower, setNewBorrowingPower] = useState(0);
 
   const setMax = () => {
-    if (!isMoneyValue) {
-      setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
-    } else {
+    if (isMoneyValue) {
       setCollateralDepositAmount(
         (collateralToken.wallet_amount! * collateralToken.value).toString()
       );
+    } else {
+      setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
     }
   };
-
+  console.log(ltv);
   useEffect(() => {
     setDisabled(Number(collateralDepositAmount) <= 0);
+
+    if (isMoneyValue) {
+      setNewBorrowingPower(
+        (borrowingPower + Number(collateralDepositAmount)) * (ltv / 100)
+      );
+    } else {
+      setNewBorrowingPower(
+        (borrowingPower +
+          Number(collateralDepositAmount) * collateralToken.value) *
+          (ltv / 100)
+      );
+    }
   }, [collateralDepositAmount]);
 
   const swapHandler = () => {
@@ -182,7 +200,7 @@ export const DepositCollateralContent = () => {
           marginX={1}
         />
         <Typography variant="label2" color={formatColor(blue.blue1)}>
-          $0
+          ${newBorrowingPower.toLocaleString()}
         </Typography>
       </Box>
     </Box>
