@@ -140,7 +140,6 @@ const MultilineChart = (props:MultilineChartProps) => {
       svg.selectAll("barline")
       .data(data)
       .enter()
-      .append("rect")
       .attr("x", (d)=>{return xScale(d.timestamp!)-10})
       .attr("y", (d)=>{return yScaleNotional(d.interestPaid!)+5})
       .attr("width", 10)

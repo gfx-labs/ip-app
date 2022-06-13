@@ -83,8 +83,9 @@ export const UserStats = () => {
             "0x0000000000000000000000000000000000000000",
             ratio
           ).then((apr) => {
-            setBorrowAPR(apr.div(BN("1e14")).toNumber() / 100);
-            setDepositAPR(round(borrowAPR*(1 - ratioDec)*(0.9),3))
+            const ba = apr.div(BN("1e14")).toNumber() / 100
+            setBorrowAPR(ba)
+            setDepositAPR(round(ba*(1 - ratioDec)*(0.9),3))
           });
         })
         .catch((e) => {
