@@ -224,7 +224,7 @@ function TabPanel(props: TabPanelProps) {
         });
     }
     getTotalClaimed(currentSigner!).then((res) =>
-      setTotalClaimed(BNtoHexNumber(res).toLocaleString())
+      setTotalClaimed(BNtoHexNumber(res.div(1000000)).toLocaleString())
     );
   }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
 
