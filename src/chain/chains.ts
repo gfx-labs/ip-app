@@ -8,18 +8,16 @@ export enum ChainIDs {
 const configs: Array<ChainInfo> = [
   {
     id: ChainIDs.MAINNET,
- //   name: "Ethereum",
-    name: "Switch to Polygon",
+    name: "Ethereum",
+  //  name: "Switch to Polygon",
     ticker: "ETH",
     usdiAddress: "0x2A54bA2964C8Cd459Dc568853F79813a60761B58",
-  // usdiAddress: "0x12f4e7c4e7993d724eac73ef99f2fca36f1fa921",
     scanUrl: 'https://etherscan.io/tx/',
     scanSite: 'Etherscan'
   },
   {
     id: ChainIDs.ROPSTEN,
-    //name: "Ropsten TESTNET",
-    name: "Switch to Polygon",
+    name: "Switch to Mainnet",
     ticker: "ROP ETH",
     usdiAddress: "0x12f4e7c4e7993d724eac73ef99f2fca36f1fa921",
     scanUrl: 'https://ropsten.etherscan.io/tx/',
@@ -27,8 +25,7 @@ const configs: Array<ChainInfo> = [
   },
   {
     id: ChainIDs.GOERLI,
-    //name: "Goerli TESTNET",
-    name: "Switch to Polygon",
+    name: "Switch to Mainnet",
     ticker: "ETH",
     scanUrl: 'https://goerli.etherscan.io/tx/',
     scanSite: 'Goerli Etherscan'

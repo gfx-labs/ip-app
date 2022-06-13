@@ -459,9 +459,9 @@ function TabPanel(props: TabPanelProps) {
             justifyContent="space-between"
             flexDirection={{ xs: "column", md: "row" }}
           >
-            <Button>Token Sale Rules</Button>
+            <Button href="./book/docs/IPTsale/index.html" target="_blank">Token Sale Rules</Button>
 
-            <Button>View Sales Contract</Button>
+            <Button target="_blank" href="https://etherscan.io/address/0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee">View Sales Contract</Button>
           </Box>
         </Box>
       )}
