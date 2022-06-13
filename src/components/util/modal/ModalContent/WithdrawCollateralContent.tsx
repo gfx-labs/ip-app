@@ -36,19 +36,25 @@ export const WithdrawCollateralContent = () => {
   const ltv = tokens![collateralToken.ticker].token_LTV || 0;
 
   useEffect(() => {
-    setDisabled(Number(inputAmount) <= 0);
+    let newBorrowingPower;
     if (isMoneyValue) {
+      newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100);
       setCollateralWithdrawAmount(
         (Number(inputAmount) / collateralToken.value).toString()
       );
 
-      setNewBorrowingPower(borrowingPower - Number(inputAmount) * (ltv / 100));
+      setNewBorrowingPower(newBorrowingPower);
     } else {
-      setCollateralWithdrawAmount(inputAmount);
-      setNewBorrowingPower(
+      newBorrowingPower =
         borrowingPower -
-          Number(inputAmount) * collateralToken.value * (ltv / 100)
-      );
+        Number(inputAmount) * collateralToken.value * (ltv / 100);
+      setCollateralWithdrawAmount(inputAmount);
+      setNewBorrowingPower(newBorrowingPower);
+    }
+    if (newBorrowingPower < accountLiability || Number(inputAmount) <= 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
     }
   }, [inputAmount]);
 
@@ -65,9 +71,7 @@ export const WithdrawCollateralContent = () => {
     setIsMoneyValue(!isMoneyValue);
   };
 
-  const trySetInputAmount = (amount: string) => {
-    setInputAmount(amount);
-  };
+  const trySetInputAmount = (amount: string) => setInputAmount(amount);
 
   const setMax = () => {
     console.log("click");
