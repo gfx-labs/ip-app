@@ -13,6 +13,7 @@ import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
 import { locale } from "../../../locale";
 import { TransactionReceipt } from "@ethersproject/providers";
+import {round} from "../../../easy/bn";
 
 export const WithdrawCollateralConfirmationModal = () => {
   const {
@@ -37,7 +38,7 @@ export const WithdrawCollateralConfirmationModal = () => {
         collateralWithdrawAmount,
         collateralToken.address,
         vaultAddress!,
-        provider?.getSigner(currentAccount)!
+        provider?.getSigner(currentAccount)!,
       );
 
       updateTransactionState(attempt);
@@ -99,8 +100,8 @@ export const WithdrawCollateralConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="body3" color="text.primary">
-              ${collateralToken.value * Number(collateralWithdrawAmount)} (
-              {collateralWithdrawAmount} {collateralToken.ticker} )
+              ${round(collateralToken.value * Number(collateralWithdrawAmount),2)} (
+              {round(collateralWithdrawAmount,4)} {collateralToken.ticker} )
             </Typography>
           </Box>
         </Box>

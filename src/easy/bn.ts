@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers"
+import { BigNumber, BigNumberish } from "ethers"
 
 
 export const BN = (a: any): BigNumber => {
@@ -12,4 +12,8 @@ export const BN = (a: any): BigNumber => {
         return BigNumber.from(splt[0]).mul(BigNumber.from(10).pow(splt[1]))
     }
     return BigNumber.from(a)
+}
+
+export const round = (a: BigNumberish, n:number):number => {
+    return Math.round((10**n)*Number(a.toString()))/(10**n)
 }
