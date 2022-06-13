@@ -23,16 +23,28 @@ export const DepositCollateralContent = () => {
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
-  const isLight = useLight()
+  const isLight = useLight();
 
-  const setMax = () =>
-    setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
+  const setMax = () => {
+    if (!isMoneyValue) {
+      setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
+    } else {
+      setCollateralDepositAmount(
+        (collateralToken.wallet_amount! * collateralToken.value).toString()
+      );
+    }
+  };
 
   useEffect(() => {
     setDisabled(Number(collateralDepositAmount) <= 0);
   }, [collateralDepositAmount]);
 
   const swapHandler = () => {
+    console.log(
+      collateralDepositAmount,
+      collateralToken.value,
+      collateralToken.ticker
+    );
     if (!isMoneyValue) {
       setCollateralDepositAmount(
         (
@@ -97,7 +109,6 @@ export const DepositCollateralContent = () => {
                   maximumFractionDigits: 2,
                 })}`}
           </Typography>
-
           <Button
             onClick={setMax}
             sx={{
