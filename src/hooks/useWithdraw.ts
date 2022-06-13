@@ -9,10 +9,13 @@ export const useWithdrawUSDC = async (
   signer: JsonRpcSigner
 ) => {
   const formattedUSDCAmount = utils.parseUnits(usdc_amount, 6);
-
   try {
+    const ge = (await rolodex.USDI.connect(signer).estimateGas.withdraw(
+      Number(formattedUSDCAmount),
+    )).mul(100).div(90)
     const withdrawAttempt = await rolodex.USDI.connect(signer).withdraw(
-      Number(formattedUSDCAmount)
+      Number(formattedUSDCAmount),
+      {gasLimit: ge}
     );
     const receipt = await withdrawAttempt?.wait();
     return receipt;
@@ -36,10 +39,14 @@ export const useWithdrawCollateral = async (
   }
   const formattedERC20Amount = utils.parseUnits(amount, decimal);
   try {
+    const ge = (await Vault__factory.connect(
+      vault_address,
+      signer
+    ).estimateGas.withdrawErc20(collateral_address, formattedERC20Amount)).mul(100).div(90)
     const transferAttempt = await Vault__factory.connect(
       vault_address,
       signer
-    ).withdrawErc20(collateral_address, formattedERC20Amount);
+    ).withdrawErc20(collateral_address, formattedERC20Amount, {gasLimit: ge});
 
     return transferAttempt;
   } catch (err) {
