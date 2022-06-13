@@ -525,10 +525,15 @@ theme.components = {
     },
   },
   MuiAccordion: {
+
     styleOverrides: {
       gutters: 2,
       root: {
         borderRadius: 10,
+
+        '&::before': {
+          display: 'none'
+        }
       },
     },
   },

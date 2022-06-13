@@ -26,7 +26,7 @@ import {
 import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { ForwardArrowCircleIcon } from "../../icons/misc/ForwardArrowCircleIcon";
 import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral } from "../../../theme";
+import { formatColor, neutral, green } from "../../../theme";
 
 import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
 import { BaseSwitch } from "../../util/switch";
@@ -137,12 +137,36 @@ export const MobileToolBar = () => {
         </Button>
 
         {/* <ClaimsButton /> */}
+        {window.location.hash !== "#/sale" && (
+        <Box my={1} maxWidth={200} width="100%">
+          {/* <Button variant="outlined">
+                <Link href="#/whitelist">
+                  <Typography variant="body3">Whitelist</Typography>
+                </Link>
+              </Button> */}
+          <MuiLink href="#/sale">
+            <Button variant="outlined">
+              <Typography variant="body3" color={formatColor(green.green2)}>
+                IPT Sale
+              </Typography>
+            </Button>
+          </MuiLink>
+        </Box>
+      )}
+
+      <Box my={1} maxWidth={200} width="100%">
+        <MuiLink href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet" target="_blank">
+          <Button variant="outlined">
+            <Typography variant="label2">ETH-USDi Rewards</Typography>
+          </Button>
+        </MuiLink>
+      </Box>
         <br />
         <br />
         <Divider variant="middle" />
         <br />
 
-        <Accordion sx={{ boxShadow: "none" }} disableGutters={true}>
+        <Accordion sx={{ boxShadow: "none", border: 'none' }} disableGutters={true}>
           <AccordionSummary
             expandIcon={<CaratUpIcon sx={{ transform: "rotate(180deg)" }} />}
             aria-controls="panel1a-content"
@@ -177,11 +201,11 @@ export const MobileToolBar = () => {
           />
         </Box>
 
-        <BaseSwitch
+        {/* <BaseSwitch
           option1="App"
           option2="Governance"
           onOptionChange={setIsApp}
-        />
+        /> */}
       </SwipeableDrawer>
     </Toolbar>
   );
