@@ -179,7 +179,7 @@ export const UserStats = () => {
           marginBottom: 5,
           [theme.breakpoints.down("lg")]: {
             gridAutoFlow: "column",
-            gridTemplateColumns: "3fr 2fr 2fr",
+            gridTemplateColumns: "fr 2fr 2fr",
             columnGap: 1,
             rowGap: 3,
             marginBottom: 4,
