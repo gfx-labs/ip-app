@@ -1,23 +1,20 @@
 # Contract Addresses
-
 The protocol is deployed on Ethereum Mainnet.
 
 ### Token Sale
 *    WavePool: 0x5a4396a2fe5fD36c6528a441D7A97c3B0f3e8aeE
-Why are there 3 wavepool contracts????
 
 ### Core
 *    ProxyAdmin: 0x3D9d8c08dC16Aa104b5B24aBDd1aD857e2c0D8C5
 *    VaultController: 0x4aaE9823Fb4C70490F1d802fC697F3ffF8D5CbE3
 *    USDI: 0x2A54bA2964C8Cd459Dc568853F79813a60761B58
 *    CurveMaster: 0x0029abd74B7B32e6a82Bf9f62CB9Dd4Bf8e39aAf
-*    ThreeLines:
+*    ThreeLines: 0x8Ef82C4C48FaaD513D157a86433cd7D9397eA278
+*    OracleMaster: 0xf4818813045E954f5Dc55a40c9B60Def0ba3D477
 
 ### Governance
 *    Interest Protocol Token (IPT): 0xaF239a6fab6a873c779F3F33dbd34104287b93e1
-
-### Oracle Master
-*    OracleMaster: 0xf4818813045E954f5Dc55a40c9B60Def0ba3D477
+*    Governor: 0x266d1020a84b9e8b0ed320831838152075f8c4ca     
 
 ### wETH Oracle
 *    AnchoredViewRelay: 0x65dA327b1740D00fF7B366a4fd8F33830a2f03A2
@@ -30,7 +27,7 @@ Why are there 3 wavepool contracts????
 *    UniswapV3OracleRelay: 0xDd011f900065Fa6319ba496bA618990D155D4FDA
 
 ### wBTC Oracle
-*    AnchoredViewRelay: 0x65dA327b1740D00fF7B366a4fd8F33830a2f03A2
+*    AnchoredViewRelay: 0x8E7d39560b15B2D29E01b2502252C4B5f26f5326
 *    ChainlinkOracleRelay: 0x8790784510829cc6398A75b40668B30e9F3E22ac
 *    UniswapV3OracleRelay: 0xcE1Cb785fd61153D330cEa24f063d7C61c54Aad0
 
