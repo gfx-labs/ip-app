@@ -41,15 +41,14 @@ export const WithdrawCollateralContent = () => {
       setCollateralWithdrawAmount(
         (Number(inputAmount) / collateralToken.value).toString()
       );
+
+      setNewBorrowingPower(borrowingPower - Number(inputAmount) * (ltv / 100));
     } else {
       setCollateralWithdrawAmount(inputAmount);
-<<<<<<< HEAD
-=======
       setNewBorrowingPower(
         borrowingPower -
           Number(inputAmount) * collateralToken.value * (ltv / 100)
       );
->>>>>>> deposit withdraw
     }
   }, [inputAmount]);
 
