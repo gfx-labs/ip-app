@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import {round} from "../../../../easy/bn"
+import { round } from "../../../../easy/bn";
 
 import { blue, formatColor, neutral } from "../../../../theme";
 import { DecimalInput } from "../../textFields";
@@ -11,10 +11,7 @@ import {
   ModalType,
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
-import {
-  useVaultDataContext,
-  VaultDataProvider,
-} from "../../../libs/vault-data-provider/VaultDataProvider";
+import { useVaultDataContext } from "../../../libs/vault-data-provider/VaultDataProvider";
 import { useLight } from "../../../../hooks/useLight";
 
 export const WithdrawCollateralContent = () => {
@@ -26,65 +23,83 @@ export const WithdrawCollateralContent = () => {
   } = useModalContext();
 
   const isLight = useLight();
-  const { borrowingPower, accountLiability } = useVaultDataContext();
+  const { borrowingPower, accountLiability, tokens } = useVaultDataContext();
 
-  const [inputAmount, setInputAmount] = useState("0")
-
-  const setMax = () => {
-    if (collateralToken && collateralToken.vault_amount) {
-      let a2s = (borrowingPower - accountLiability)
-      if(a2s > 0){
-        const tv = (collateralToken.vault_amount * collateralToken.value)
-        if(tv < a2s) {
-          if(isMoneyValue){
-            setInputAmount(tv.toString());
-          }else{
-            setInputAmount(collateralToken.vault_amount.toString());
-          }
-        }else {
-          if(isMoneyValue){
-            setInputAmount((a2s).toString());
-          }else{
-            setInputAmount(round(a2s/collateralToken.value, 4).toString());
-          }
-
-        }
-      }
-    } else {
-      setInputAmount("0")
-    }
-  };
+  const [inputAmount, setInputAmount] = useState("0");
 
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
 
   const [disabled, setDisabled] = useState(true);
+  const [newBorrowingPower, setNewBorrowingPower] = useState(0);
+  const ltv = tokens![collateralToken.ticker].token_LTV || 0;
 
   useEffect(() => {
     setDisabled(Number(inputAmount) <= 0);
     if (isMoneyValue) {
-      setCollateralWithdrawAmount((Number(inputAmount)/collateralToken.value).toString())
-    }else{
+      setCollateralWithdrawAmount(
+        (Number(inputAmount) / collateralToken.value).toString()
+      );
+
+      setNewBorrowingPower(borrowingPower - Number(inputAmount) * (ltv / 100));
+    } else {
       setCollateralWithdrawAmount(inputAmount);
+      setNewBorrowingPower(
+        borrowingPower -
+          Number(inputAmount) * collateralToken.value * (ltv / 100)
+      );
     }
   }, [inputAmount]);
 
   const swapHandler = () => {
     if (!isMoneyValue) {
       setInputAmount(
-        round(Number(inputAmount) * collateralToken.value,5).toString()
+        round(Number(inputAmount) * collateralToken.value, 5).toString()
       );
     } else {
       setInputAmount(
-        round(Number(inputAmount) / collateralToken.value,2).toString()
+        round(Number(inputAmount) / collateralToken.value, 2).toString()
       );
     }
     setIsMoneyValue(!isMoneyValue);
   };
 
   const trySetInputAmount = (amount: string) => {
-    setInputAmount(amount)
+    setInputAmount(amount);
+  };
+
+  const setMax = () => {
+    console.log("click");
+    if (collateralToken && collateralToken.vault_amount) {
+      //allowed to withdraw
+      let a2s = borrowingPower - accountLiability;
+      console.log(borrowingPower, accountLiability, a2s);
+      if (a2s >= 0) {
+        console.log("> 0");
+
+        const tv = collateralToken.vault_amount * collateralToken.value;
+        console.log(tv, a2s);
+        if (tv < a2s) {
+          if (isMoneyValue) {
+            setInputAmount(tv.toString());
+          } else {
+            setInputAmount(collateralToken.vault_amount.toString());
+          }
+        } else {
+          console.log("< 0");
+          if (isMoneyValue) {
+            setInputAmount((a2s / (ltv / 100)).toString());
+          } else {
+            setInputAmount(
+              round(a2s / collateralToken.value / (ltv / 100), 4).toString()
+            );
+          }
+        }
+      }
+    } else {
+      setInputAmount("0");
+    }
   };
 
   return (
@@ -115,17 +130,16 @@ export const WithdrawCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                inputAmount === "0"
-                  ? "0"
-                  : round(Number(inputAmount)/ collateralToken.value, 6)
-
-              } ${collateralToken.ticker}`
+                  inputAmount === "0"
+                    ? "0"
+                    : round(Number(inputAmount) / collateralToken.value, 6)
+                } ${collateralToken.ticker}`
               : `$${(
-                Number(inputAmount) * collateralToken.value
-              ).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}`}
+                  Number(inputAmount) * collateralToken.value
+                ).toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}`}
           </Typography>
 
           <Button
@@ -140,8 +154,8 @@ export const WithdrawCollateralContent = () => {
                 backgroundColor: "transparent",
                 ".MuiTypography-root.MuiTypography-body1": {
                   color: formatColor(neutral.gray1),
-            },
-            },
+                },
+              },
             }}
           >
             <Typography
@@ -152,7 +166,7 @@ export const WithdrawCollateralContent = () => {
                   color: isLight
                     ? formatColor(neutral.gray1)
                     : formatColor(neutral.white),
-              },
+                },
               }}
             >
               Max
@@ -205,7 +219,7 @@ export const WithdrawCollateralContent = () => {
           }}
         />
         <Typography variant="label2" color={formatColor(blue.blue1)}>
-          $0
+          ${newBorrowingPower.toLocaleString()}
         </Typography>
       </Box>
     </Box>

@@ -10,31 +10,41 @@ import { BaseModal } from "./BaseModal";
 import { useLight } from "../../../hooks/useLight";
 import { BorrowContent } from "./ModalContent/BorrowContent";
 import { RepayContent } from "./ModalContent/RepayContent";
-import {useRolodexContext} from "../../libs/rolodex-data-provider/RolodexDataProvider";
-import {useVaultDataContext} from "../../libs/vault-data-provider/VaultDataProvider";
-import {Spacer} from "../../../easy/spacer";
-import {ForwardIcon} from "../../icons/misc/ForwardIcon";
+import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
+import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
+import { Spacer } from "../../../easy/spacer";
+import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 
 export const BorrowRepayModal = () => {
   const { type, setType } = useModalContext();
 
   const currType = type === ModalType.Borrow;
 
-  const rolodex = useRolodexContext();
+  const isLight = useLight();
 
-  const {tokens, setTokens,  vaultID, hasVault, setVaultID,vaultAddress,  setVaultAddress, borrowingPower, accountLiability  } = useVaultDataContext();
+  const {
+    tokens,
+    setTokens,
+    vaultID,
+    hasVault,
+    setVaultID,
+    vaultAddress,
+    setVaultAddress,
+    borrowingPower,
+    accountLiability,
+  } = useVaultDataContext();
 
   const [tokenName, setTokenName] = useState("USDI");
   const [vaultBorrowPower, setVaultBorrowPower] = useState("0");
   const [borrowAmount, setBorrowAmount] = useState("");
-  useEffect(()=>{
-    if(borrowingPower){
-      setVaultBorrowPower(borrowingPower.toFixed(0))
+  useEffect(() => {
+    if (borrowingPower) {
+      setVaultBorrowPower(borrowingPower.toFixed(0));
     }
-  }, [borrowingPower])
+  }, [borrowingPower]);
   const onSwitch = (val: boolean) => {
     setType(val ? ModalType.Borrow : ModalType.Repay);
-  }
+  };
 
   return (
     <BaseModal
@@ -70,51 +80,65 @@ export const BorrowRepayModal = () => {
             Liability:
           </Typography>
           <Typography variant="subtitle1" color="text.primary">
-              ${accountLiability.toFixed(0)}
-            </Typography>
+            ${accountLiability.toFixed(0)}
+          </Typography>
         </Box>
-          { currType ?
-            (borrowAmount ?<Box>
-              <Typography variant="label2" color={formatColor(neutral.gray3)}>
-                {Spacer}
-              </Typography>
-              <Typography variant="subtitle1" color="text.primary">
-                {"->"}
-              </Typography></Box>
-              :<></>) :
-                (borrowAmount ?<Box>
-                  <Typography variant="label2" color={formatColor(neutral.gray3)}>
-                    {Spacer}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.primary">
-                    {"->"}
-                  </Typography>
-                </Box>
-                :<></>)
-        }
-        {borrowAmount ?
-          ( currType ?
+        {currType ? (
+          borrowAmount ? (
+            <Box>
+              <ForwardIcon
+                sx={{ width: 16, height: 16, mx: 2 }}
+                strokecolor={
+                  isLight
+                    ? formatColor(neutral.black)
+                    : formatColor(neutral.white)
+                }
+              />
+            </Box>
+          ) : (
+            <></>
+          )
+        ) : borrowAmount ? (
+          <Box>
+            <ForwardIcon
+              sx={{ width: 16, height: 16, mx: 2 }}
+              strokecolor={
+                isLight
+                  ? formatColor(neutral.black)
+                  : formatColor(neutral.white)
+              }
+            />
+          </Box>
+        ) : (
+          <></>
+        )}
+        {borrowAmount ? (
+          currType ? (
             <Box>
               <Typography variant="label2" color={formatColor(neutral.gray3)}>
                 New:
               </Typography>
               <Typography variant="subtitle1" color="text.primary">
-                {(Number(accountLiability)+Number(borrowAmount)).toFixed(0)}
-              </Typography></Box>
-              :
-              <Box>
-                <Typography variant="label2" color={formatColor(neutral.gray3)}>
-                  New:
-                </Typography>
-                <Typography variant="subtitle1" color="text.primary">
-                  {(Number(accountLiability)-Number(borrowAmount)).toFixed(0)}
-                </Typography>
-              </Box>
-          ):<></>}
+                {(Number(accountLiability) + Number(borrowAmount)).toFixed(0)}
+              </Typography>
+            </Box>
+          ) : (
+            <Box>
+              <Typography variant="label2" color={formatColor(neutral.gray3)}>
+                New:
+              </Typography>
+              <Typography variant="subtitle1" color="text.primary">
+                {(Number(accountLiability) - Number(borrowAmount)).toFixed(0)}
+              </Typography>
+            </Box>
+          )
+        ) : (
+          <></>
+        )}
       </Box>
 
-      {currType ?
-        (<BorrowContent
+      {currType ? (
+        <BorrowContent
           tokenName={tokenName}
           vaultBorrowPower={vaultBorrowPower}
           vaultID={Number(vaultID)}
@@ -122,16 +146,16 @@ export const BorrowRepayModal = () => {
           setBorrowAmount={setBorrowAmount}
           accountLiability={accountLiability}
         />
-        ) : (
-          <RepayContent
-            tokenName={tokenName}
-            vaultBorrowPower={vaultBorrowPower}
-            vaultID={Number(vaultID)}
-            repayAmount={borrowAmount}
-            setRepayAmount={setBorrowAmount}
-            accountLiability={accountLiability}
-          />
-        )}
+      ) : (
+        <RepayContent
+          tokenName={tokenName}
+          vaultBorrowPower={vaultBorrowPower}
+          vaultID={Number(vaultID)}
+          repayAmount={borrowAmount}
+          setRepayAmount={setBorrowAmount}
+          accountLiability={accountLiability}
+        />
+      )}
     </BaseModal>
   );
 };

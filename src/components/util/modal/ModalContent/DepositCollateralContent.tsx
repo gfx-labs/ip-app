@@ -11,6 +11,7 @@ import {
   useModalContext,
 } from "../../../libs/modal-content-provider/ModalContentProvider";
 import { useLight } from "../../../../hooks/useLight";
+import { useVaultDataContext } from "../../../libs/vault-data-provider/VaultDataProvider";
 
 export const DepositCollateralContent = () => {
   const {
@@ -19,25 +20,55 @@ export const DepositCollateralContent = () => {
     collateralToken,
     collateralDepositAmount,
   } = useModalContext();
+
+  const { borrowingPower, tokens } = useVaultDataContext();
+
   const [disabled, setDisabled] = useState(true);
   const [focus, setFocus] = useState(false);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
   const toggle = () => setFocus(!focus);
   const isLight = useLight();
+  const ltv = tokens![collateralToken.ticker].token_LTV || 0;
+  const [newBorrowingPower, setNewBorrowingPower] = useState(0);
+  const [inputAmount, setInputAmount] = useState("0");
 
-  const setMax = () => {
-    if (!isMoneyValue) {
-      setCollateralDepositAmount(collateralToken.wallet_amount!.toString());
-    } else {
-      setCollateralDepositAmount(
-        (collateralToken.wallet_amount! * collateralToken.value).toString()
-      );
-    }
+  const trySetInputAmount = (amount: string) => {
+    setInputAmount(amount);
   };
 
+  const setMax = () => {
+    console.log(isMoneyValue);
+    if (isMoneyValue) {
+      console.log(
+        collateralToken.value,
+        collateralToken.wallet_amount,
+        collateralToken.wallet_amount! * collateralToken.value
+      );
+      setInputAmount(
+        (collateralToken.wallet_amount! * collateralToken.value).toString()
+      );
+    } else {
+      setInputAmount(collateralToken.wallet_amount!.toString());
+    }
+  };
+  console.log(ltv);
+
   useEffect(() => {
-    setDisabled(Number(collateralDepositAmount) <= 0);
-  }, [collateralDepositAmount]);
+    setDisabled(Number(inputAmount) <= 0);
+
+    if (isMoneyValue) {
+      setCollateralDepositAmount(
+        (Number(inputAmount) / collateralToken.value).toString()
+      );
+      setNewBorrowingPower(borrowingPower + Number(inputAmount) * (ltv / 100));
+    } else {
+      setCollateralDepositAmount(inputAmount);
+      setNewBorrowingPower(
+        borrowingPower +
+          Number(inputAmount) * collateralToken.value * (ltv / 100)
+      );
+    }
+  }, [inputAmount]);
 
   const swapHandler = () => {
     console.log(
@@ -46,19 +77,15 @@ export const DepositCollateralContent = () => {
       collateralToken.ticker
     );
     if (!isMoneyValue) {
-      setCollateralDepositAmount(
+      setInputAmount(
         (
-          Math.round(
-            (Number(collateralDepositAmount) / collateralToken.value) * 100
-          ) / 100
+          Math.round((Number(inputAmount) / collateralToken.value) * 100) / 100
         ).toString()
       );
     } else {
-      setCollateralDepositAmount(
+      setInputAmount(
         (
-          Math.round(
-            (Number(collateralDepositAmount) / collateralToken.value) * 100
-          ) / 100
+          Math.round((Number(inputAmount) / collateralToken.value) * 100) / 100
         ).toString()
       );
     }
@@ -79,9 +106,9 @@ export const DepositCollateralContent = () => {
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(amount) => setCollateralDepositAmount(amount)}
+          onChange={trySetInputAmount}
           placeholder={`0 ${isMoneyValue ? "USD" : collateralToken?.ticker}`}
-          value={collateralDepositAmount}
+          value={inputAmount}
           isMoneyValue={isMoneyValue}
         />
 
@@ -96,14 +123,12 @@ export const DepositCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  collateralDepositAmount === "0"
+                  inputAmount === "0"
                     ? "0"
-                    : (
-                        Number(collateralDepositAmount) / collateralToken?.value
-                      ).toFixed(8)
+                    : (Number(inputAmount) / collateralToken?.value).toFixed(8)
                 } ${collateralToken?.ticker}`
               : `$${(
-                  Number(collateralDepositAmount) * collateralToken?.value
+                  Number(inputAmount) * collateralToken?.value
                 ).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -182,7 +207,7 @@ export const DepositCollateralContent = () => {
           marginX={1}
         />
         <Typography variant="label2" color={formatColor(blue.blue1)}>
-          $0
+          ${newBorrowingPower.toLocaleString()}
         </Typography>
       </Box>
     </Box>
