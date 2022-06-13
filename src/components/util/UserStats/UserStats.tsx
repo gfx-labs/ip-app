@@ -214,11 +214,11 @@ export const UserStats = () => {
           <TitleText
             title="IPT PER YEAR"
             text={
-              totalBaseLiability !== null
+              totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
                   ((94017 * accountLiability) / totalBaseLiability) * 52.143
                 )}` + ""
-                : null
+                : '0'
             }
           />
         </SingleStatCard>
