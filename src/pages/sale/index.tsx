@@ -160,13 +160,8 @@ function TabPanel(props: TabPanelProps) {
   const toggle = () => setFocus(!focus);
   const waveNum = index + 1;
   const rolodex = useRolodexContext();
-  const {
-    currentSigner,
-    currentAccount,
-    dataBlock,
-    chainId,
-    connected,
-  } = useWeb3Context();
+  const { currentSigner, currentAccount, dataBlock, chainId, connected } =
+    useWeb3Context();
   const { updateTransactionState } = useModalContext();
   const currentTime = useCurrentTime();
 
@@ -189,19 +184,21 @@ function TabPanel(props: TabPanelProps) {
     } else {
       setIsEligible(true);
     }
+    const time: Date = new Date(saleTimes[0]);
+
+    if (saleTimes[waveNum] > currentTime.valueOf()) {
+      let timeleft = (startTime.valueOf() - currentTime.valueOf()) / 1000;
+      setSalePeriodRemaining("starts in " + formatSecondsTill(timeleft));
+    } else {
+      setSalePeriodRemaining(
+        "ends in " +
+          formatSecondsTill((time.valueOf() - currentTime.valueOf()) / 1000)
+      );
+    }
 
     if (connected && rolodex && currentAccount) {
-      const time: Date = new Date(saleTimes[0]);
       setDisableTime(time);
-      if (saleTimes[waveNum] > currentTime.valueOf()) {
-        let timeleft = (startTime.valueOf() - currentTime.valueOf()) / 1000;
-        setSalePeriodRemaining("starts in " + formatSecondsTill(timeleft));
-      } else {
-        setSalePeriodRemaining(
-          "ends in " +
-            formatSecondsTill((time.valueOf() - currentTime.valueOf()) / 1000)
-        );
-      }
+
       getAccountRedeemedCurrentWave(
         currentSigner!,
         currentAccount,
@@ -370,21 +367,23 @@ function TabPanel(props: TabPanelProps) {
                 {iptForSale.toLocaleString()}
               </Typography>
             </Box>
-            <Box display="flex">
-              <Typography variant="body1" color="#A3A9BA" mr={1}>
-                Total USDC:
-              </Typography>
-              <Typography
-                variant="body1"
-                color={
-                  isLight
-                    ? formatColor(neutral.gray7)
-                    : formatColor(neutral.white)
-                }
-              >
-                {totalClaimed}
-              </Typography>
-            </Box>
+            {connected && currentAccount && (
+              <Box display="flex">
+                <Typography variant="body1" color="#A3A9BA" mr={1}>
+                  Total USDC:
+                </Typography>
+                <Typography
+                  variant="body1"
+                  color={
+                    isLight
+                      ? formatColor(neutral.gray7)
+                      : formatColor(neutral.white)
+                  }
+                >
+                  {totalClaimed}
+                </Typography>
+              </Box>
+            )}
           </Box>
           <Box component="form" onSubmit={handleSubmit} mt={4}>
             <ModalInputContainer focus={focus}>
@@ -433,6 +432,8 @@ function TabPanel(props: TabPanelProps) {
                 <Typography variant="body3" color={formatColor(neutral.white)}>
                   {!connected
                     ? `Please connect your wallet`
+                    : !isEligible
+                    ? "You are not eligible for this wave"
                     : redeemed
                     ? `Already claimed for wave ${waveNum}`
                     : claimable > 0
@@ -459,9 +460,16 @@ function TabPanel(props: TabPanelProps) {
             justifyContent="space-between"
             flexDirection={{ xs: "column", md: "row" }}
           >
-            <Button href="./book/docs/IPTsale/index.html" target="_blank">Token Sale Rules</Button>
+            <Button href="./book/docs/IPTsale/index.html" target="_blank">
+              Token Sale Rules
+            </Button>
 
-            <Button target="_blank" href="https://etherscan.io/address/0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee">View Sales Contract</Button>
+            <Button
+              target="_blank"
+              href="https://etherscan.io/address/0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee"
+            >
+              View Sales Contract
+            </Button>
           </Box>
         </Box>
       )}
