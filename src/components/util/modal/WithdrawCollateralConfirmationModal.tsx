@@ -99,8 +99,11 @@ export const WithdrawCollateralConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="body3" color="text.primary">
-              ${collateralToken.value * Number(collateralWithdrawAmount)} (
-              {collateralWithdrawAmount} {collateralToken.ticker} )
+              $
+              {(
+                collateralToken.value * Number(collateralWithdrawAmount)
+              ).toFixed(2)}{" "}
+              ({collateralWithdrawAmount} {collateralToken.ticker} )
             </Typography>
           </Box>
         </Box>
