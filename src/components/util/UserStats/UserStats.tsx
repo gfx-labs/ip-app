@@ -174,13 +174,13 @@ export const UserStats = () => {
         sx={{
           display: "grid",
           justifyContent: "space-between",
-          gridTemplateColumns: "2fr 1fr 1fr 1fr",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr",
           columnGap: 4,
           rowGap: 4,
           marginBottom: 5,
           [theme.breakpoints.down("lg")]: {
             gridAutoFlow: "column",
-            gridTemplateColumns: "fr 2fr 2fr",
+            gridTemplateColumns: "1fr 1fr",
             columnGap: 1,
             rowGap: 3,
             marginBottom: 4,
@@ -228,7 +228,7 @@ export const UserStats = () => {
             paddingRight: 3,
             gridColumn: "1 / -1",
             [theme.breakpoints.down("lg")]: {
-              gridRow: 2,
+              gridRow: 3,
           },
           }}
         >
