@@ -207,7 +207,7 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleText
             title="Deposit APR"
-            text={depositAPR !== null ? depositAPR.toString() + "%" : null}
+            text={depositAPR !== null ? depositAPR.toFixed(2) + "%" : null}
           />
         </SingleStatCard>
         <SingleStatCard>
