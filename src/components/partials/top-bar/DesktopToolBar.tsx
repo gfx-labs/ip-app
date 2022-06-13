@@ -9,7 +9,7 @@ import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mod
 import { useLight } from "../../../hooks/useLight";
 import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 import Cookies from "universal-cookie";
-import { formatColor, green } from "../../../theme";
+import { formatColor, green, neutral } from "../../../theme";
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -30,7 +30,7 @@ export const DesktopToolBar = () => {
           height={50}
         ></Box>
       </Link>
-      {setIsApp !== undefined ? (
+      {/* {setIsApp !== undefined ? (
         <Box sx={{ gap: 3 }} display="flex" ml={3}>
           <BaseSwitch
             option1="App"
@@ -41,7 +41,7 @@ export const DesktopToolBar = () => {
         </Box>
       ) : (
         <></>
-      )}
+      )} */}
       {window.location.hash !== "#/sale" && (
         <Box mx={2} maxWidth={200} width="100%">
           {/* <Button variant="outlined">
@@ -58,6 +58,14 @@ export const DesktopToolBar = () => {
           </Link>
         </Box>
       )}
+
+      <Box mx={2} maxWidth={200} width="100%">
+        <Link href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet" target="_blank">
+          <Button variant="outlined">
+            <Typography variant="label2">ETH-USDi Rewards</Typography>
+          </Button>
+        </Link>
+      </Box>
 
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
         <SelectedChainButton />
