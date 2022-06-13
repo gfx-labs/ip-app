@@ -42,9 +42,7 @@ export const UserStats = () => {
   const [rewardsClaimed, setRewardsClaimed] = useState(0);
 
   const [borrowAPR, setBorrowAPR] = useState(0);
-  const [totalBaseLiability, setTotalBaseLiability] = useState<number | null>(
-    null
-  );
+
   const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
     undefined
   );
@@ -70,6 +68,7 @@ export const UserStats = () => {
     borrowingPower,
     setVaultAddress,
     accountLiability,
+    totalBaseLiability,
   } = useVaultDataContext();
   const { setType } = useModalContext();
   useEffect(() => {
@@ -87,10 +86,6 @@ export const UserStats = () => {
         .catch((e) => {
           setBorrowAPR(0);
         });
-
-      rolodex.VC?.totalBaseLiability().then((res) => {
-        setTotalBaseLiability(BNtoHexNumber(res));
-      });
     }
   }, [rolodex]);
 
@@ -204,13 +199,14 @@ export const UserStats = () => {
             text={borrowAPR !== null ? borrowAPR.toString() + "%" : null}
           />
         </SingleStatCard>
-
         <SingleStatCard>
           <TitleText
             title="IPT PER YEAR"
             text={
               totalBaseLiability !== null
-                ? Math.round(((94017 * accountLiability) / totalBaseLiability) * 52.143) + ""
+                ? `${Math.round(
+                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
+                  )}` + ""
                 : null
             }
           />
