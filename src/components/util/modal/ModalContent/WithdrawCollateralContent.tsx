@@ -27,30 +27,6 @@ export const WithdrawCollateralContent = () => {
 
   const [inputAmount, setInputAmount] = useState("0");
 
-  const setMax = () => {
-    if (collateralToken && collateralToken.vault_amount) {
-      let a2s = borrowingPower - accountLiability;
-      if (a2s > 0) {
-        const tv = collateralToken.vault_amount * collateralToken.value;
-        if (tv < a2s) {
-          if (isMoneyValue) {
-            setInputAmount(tv.toString());
-          } else {
-            setInputAmount(collateralToken.vault_amount.toString());
-          }
-        } else {
-          if (isMoneyValue) {
-            setInputAmount(a2s.toString());
-          } else {
-            setInputAmount(round(a2s / collateralToken.value, 4).toString());
-          }
-        }
-      }
-    } else {
-      setInputAmount("0");
-    }
-  };
-
   const [focus, setFocus] = useState(false);
   const toggle = () => setFocus(!focus);
   const [isMoneyValue, setIsMoneyValue] = useState(false);
@@ -67,6 +43,13 @@ export const WithdrawCollateralContent = () => {
       );
     } else {
       setCollateralWithdrawAmount(inputAmount);
+<<<<<<< HEAD
+=======
+      setNewBorrowingPower(
+        borrowingPower -
+          Number(inputAmount) * collateralToken.value * (ltv / 100)
+      );
+>>>>>>> deposit withdraw
     }
   }, [inputAmount]);
 
@@ -85,6 +68,39 @@ export const WithdrawCollateralContent = () => {
 
   const trySetInputAmount = (amount: string) => {
     setInputAmount(amount);
+  };
+
+  const setMax = () => {
+    console.log("click");
+    if (collateralToken && collateralToken.vault_amount) {
+      //allowed to withdraw
+      let a2s = borrowingPower - accountLiability;
+      console.log(borrowingPower, accountLiability, a2s);
+      if (a2s >= 0) {
+        console.log("> 0");
+
+        const tv = collateralToken.vault_amount * collateralToken.value;
+        console.log(tv, a2s);
+        if (tv < a2s) {
+          if (isMoneyValue) {
+            setInputAmount(tv.toString());
+          } else {
+            setInputAmount(collateralToken.vault_amount.toString());
+          }
+        } else {
+          console.log("< 0");
+          if (isMoneyValue) {
+            setInputAmount((a2s / (ltv / 100)).toString());
+          } else {
+            setInputAmount(
+              round(a2s / collateralToken.value / (ltv / 100), 4).toString()
+            );
+          }
+        }
+      }
+    } else {
+      setInputAmount("0");
+    }
   };
 
   return (

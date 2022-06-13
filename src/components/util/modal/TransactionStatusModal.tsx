@@ -87,6 +87,7 @@ export const TransactionStatusModal = () => {
             </Typography>
             <Box my={3}>
               <CircleExclamationIcon
+                sx={{ width: 50 }}
                 strokecolor={
                   isLight
                     ? formatColor(neutral.gray1)
