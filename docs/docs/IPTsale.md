@@ -26,8 +26,8 @@ Once the sale starts, eligible addresses can participate by committing USDC to t
 
 ## Timing (all times in Central Daylight Time)
 
-* Wave 1: Starts at noon on Monday, June 13th, and ends at noon on Wednesday, June 15th.
-* Wave 2: Starts at noon on Wednesday, June 15th, and ends at noon on Friday, June 17th. 
+* Wave 1: Starts at noon on Monday, June 13th, and ends at noon on Sunday, June 19th.
+* Wave 2: Starts at noon on Wednesday, June 15th, and ends at noon on Sunday, June 19th. 
 * Wave 3: Starts at noon on Friday, June 17th, and ends at noon on Sunday, June 19th. 
 * IPT purchasers can claim their IPT starting at noon on Sunday, June 19th.
 
