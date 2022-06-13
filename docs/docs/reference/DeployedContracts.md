@@ -1,6 +1,45 @@
-# Deployed Contracts TESTING
+# Contract Addresses
 
-The protocol is currently deployed for on Polygon Mainnet so we can plug our oracle system into live Chainlink and Uniswap contracts for test. Testnet tokens are available on the app page.
+The protocol is deployed on Ethereum Mainnet.
+
+### Token Sale
+*    WavePool: 0x5a4396a2fe5fD36c6528a441D7A97c3B0f3e8aeE
+Why are there 3 wavepool contracts????
+
+### Core
+*    ProxyAdmin: 0x3D9d8c08dC16Aa104b5B24aBDd1aD857e2c0D8C5
+*    VaultController: 0x4aaE9823Fb4C70490F1d802fC697F3ffF8D5CbE3
+*    USDI: 0x2A54bA2964C8Cd459Dc568853F79813a60761B58
+*    CurveMaster: 0x0029abd74B7B32e6a82Bf9f62CB9Dd4Bf8e39aAf
+*    ThreeLines:
+
+### Governance
+*    Interest Protocol Token (IPT): 0xaF239a6fab6a873c779F3F33dbd34104287b93e1
+
+### Oracle Master
+*    OracleMaster: 0xf4818813045E954f5Dc55a40c9B60Def0ba3D477
+
+### wETH Oracle
+*    AnchoredViewRelay: 0x65dA327b1740D00fF7B366a4fd8F33830a2f03A2
+*    ChainlinkOracleRelay: 0xd38D3b40F5C2a52823AE0932B8D658932FDb9ED1
+*    UniswapV3OracleRelay: 0x38c5AA75c2e1ecb9750aa2D882adB55742aC967A
+    
+### UNI Oracle
+*    AnchoredViewRelay: 0xCE554405b9a257eD00A4e0f114fF12ab832b4e3B
+*    ChainlinkOracleRelay: 0x1Ea3889f3c0Ad7de9Bcc7c5f13a668B0B4874344
+*    UniswapV3OracleRelay: 0xDd011f900065Fa6319ba496bA618990D155D4FDA
+
+### wBTC Oracle
+*    AnchoredViewRelay: 0x65dA327b1740D00fF7B366a4fd8F33830a2f03A2
+*    ChainlinkOracleRelay: 0x8790784510829cc6398A75b40668B30e9F3E22ac
+*    UniswapV3OracleRelay: 0xcE1Cb785fd61153D330cEa24f063d7C61c54Aad0
+
+### Assets
+* USDC: 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+* wETH: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+* UNI: 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984
+* wBTC: 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599
+
 
 ## Polygon Mainnet
 *    USDC_UNI_CL: 0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c
@@ -13,11 +52,7 @@ The protocol is currently deployed for on Polygon Mainnet so we can plug our ora
 *    WETH: 0x8afBfe06dA3D035c82C5bc55C82EB3FF05506a20
 *    WBTC: 0xa8A6d7c39270ddc658DC53ECbd0500a4C64C9Cc9
 *    UNI: 0xBAB395136FaEa31F33f32737218D79E2e92b32C1
-*    ProxyAdmin: 0xafDBA0899A00ca07D36d019eF7649803b70a9c08
-*    VaultController: 0x385E2C6b5777Bc5ED960508E774E4807DDe6618c
-*    USDI: 0x203c05ACb6FC02F5fA31bd7bE371E7B213e59Ff7
-*    Curve: 0x52b2De5e0b5A9B2aF71FF61F1ef2EFB89d2138Af
-*    ThreeLines: 0xBD5dDF72f5eB810e69D15361a06Ee9ACc5152822
+
 *    Oracle: 0x90a972d9b53659150F1412E885E27fb7c2E49110
 *    EthOracle: 0xa2B18457011877dB95eD388E5f1b861bc4bcD741
 *    UniOracle: 0xd8Cd58D478c5BEb57e316F3C5D60D4BC3d921293
