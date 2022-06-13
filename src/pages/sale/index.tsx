@@ -444,16 +444,6 @@ function TabPanel(props: TabPanelProps) {
             )}
           </Box>
 
-          {!isEligible ? (
-            <Box textAlign="center" my={2}>
-              <Typography color="error" variant="body1">
-                You are not eligible for this wave
-              </Typography>
-            </Box>
-          ) : (
-            <Box height={46}></Box>
-          )}
-
           <Box
             mt={5}
             display="flex"
