@@ -72,19 +72,20 @@ export const WithdrawCollateralContent = () => {
     if (!isMoneyValue) {
       newDollarValue = newDollarValue * collateralToken.value;
     }
-    let newResult = borrowingPower - accountLiability - newDollarValue;
-    if (newResult < 0) {
-      newDollarValue = Math.round((newResult + newDollarValue) * 100) / 100;
-      const ltvp =
-        (collateralToken.token_LTV ? collateralToken.token_LTV : 100) / 100;
-      newAmount =
-        Math.round((newDollarValue * 10000) / (collateralToken.value * ltvp)) /
-        10000;
-      console.log(newAmount, collateralToken.vault_amount!);
-    }
-    if (newAmount > collateralToken.vault_amount!) {
-      newAmount = collateralToken.vault_amount!;
-      newDollarValue = collateralToken.vault_balance!;
+    if(!amount.includes(".")) {
+      let newResult = borrowingPower - accountLiability - newDollarValue;
+      if (newResult < 0) {
+        newDollarValue = Math.round((newResult + newDollarValue) * 100) / 100;
+        const ltvp =
+          (collateralToken.token_LTV ? collateralToken.token_LTV : 100) / 100;
+        newAmount =
+          Math.round((newDollarValue * 10000) / (collateralToken.value * ltvp)) /
+          10000;
+      }
+      if (newAmount > collateralToken.vault_amount!) {
+        newAmount = collateralToken.vault_amount!;
+        newDollarValue = collateralToken.vault_balance!;
+      }
     }
     if (!isMoneyValue) {
       if (tryDecimal) {
@@ -129,18 +130,18 @@ export const WithdrawCollateralContent = () => {
           >
             {isMoneyValue
               ? `${
-                  collateralWithdrawAmount === "0"
-                    ? "0"
-                    : Math.floor(
-                        (numAmountToWithdraw * 1000) / collateralToken.value
-                      ) / 1000
-                } ${collateralToken.ticker}`
+                collateralWithdrawAmount === "0"
+                  ? "0"
+                  : Math.floor(
+                    (numAmountToWithdraw * 1000) / collateralToken.value
+                  ) / 1000
+              } ${collateralToken.ticker}`
               : `$${(
-                  numAmountToWithdraw * collateralToken.value
-                ).toLocaleString(undefined, {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                })}`}
+                numAmountToWithdraw * collateralToken.value
+              ).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}`}
           </Typography>
 
           <Button
@@ -155,8 +156,8 @@ export const WithdrawCollateralContent = () => {
                 backgroundColor: "transparent",
                 ".MuiTypography-root.MuiTypography-body1": {
                   color: formatColor(neutral.gray1),
-                },
-              },
+            },
+            },
             }}
           >
             <Typography
@@ -167,7 +168,7 @@ export const WithdrawCollateralContent = () => {
                   color: isLight
                     ? formatColor(neutral.gray1)
                     : formatColor(neutral.white),
-                },
+              },
               }}
             >
               Max

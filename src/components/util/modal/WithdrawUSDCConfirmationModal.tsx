@@ -28,17 +28,19 @@ export const WithdrawUSDCConfirmationModal = () => {
   const handleWithdrawUSDC = async () => {
     let withdrawAmount = BN(USDC.amountToWithdraw);
     const formattedUSDCAmount = withdrawAmount.mul(1e6);
-    if (rolodex) {
+    if (rolodex && currentSigner) {
       setLoading(true);
       try {
         setLoadmsg(locale("CheckWallet"));
-        const txn = await rolodex.USDI.connect(currentSigner!).withdraw(
+        const ge = (await rolodex.USDI.connect(currentSigner).estimateGas.withdraw(
           formattedUSDCAmount
+        )).mul(100).div(90)
+        const txn = await rolodex.USDI.connect(currentSigner).withdraw(
+          formattedUSDCAmount, {gasLimit: ge}
         );
         setLoadmsg(locale("TransactionPending"));
         updateTransactionState(txn);
         const receipt = await txn?.wait();
-
         updateTransactionState(receipt);
       } catch (e) {
         console.log(e);

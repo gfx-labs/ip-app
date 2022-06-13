@@ -23,8 +23,15 @@ export const useDepositUSDC = async (
       );
       await getApproval.wait();
     }
+
+    const ge = (await rolodex.USDI?.
+                connect(signer).
+                estimateGas.
+                deposit(Number(formattedUSDCAmount))
+               ).mul(100).div(90)
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
-      Number(formattedUSDCAmount)
+      Number(formattedUSDCAmount),
+      {gasLimit: ge}
     );
 
     const receipt = await depositAttempt?.wait();
@@ -47,10 +54,14 @@ export const useDepositCollateral = async (
       amount,
       await contract.decimals()
     );
-
-    const transferAttempt = await contract.transfer(
+    const ge = (await contract.estimateGas.transfer(
       vaultAddress!,
       formattedERC20Amount
+    )).mul(100).div(90)
+    const transferAttempt = await contract.transfer(
+      vaultAddress!,
+      formattedERC20Amount,
+      {gasLimit: ge}
     );
 
     return transferAttempt;

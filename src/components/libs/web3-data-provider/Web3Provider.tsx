@@ -161,7 +161,7 @@ export const Web3ContextProvider = ({
         console.error(err);
 
         throw new Error("Error connecting to");
-        
+
       }
     },
     [disconnectWallet]
@@ -170,15 +170,8 @@ export const Web3ContextProvider = ({
   useEffect(() => {
     if (provider) {
       console.log("started auto refresh of blockNumber for", provider);
-      provider.on("block", () => {
-        provider
-          .getBlockNumber()
-          .then((n) => {
+      provider.on("block", (n) => {
             setDataBlock(n);
-          })
-          .catch(() => {
-            console.log("failed to fetch block");
-          });
       });
       return () => {
         console.log("stopped auto refresh of blockNumber for", provider);
