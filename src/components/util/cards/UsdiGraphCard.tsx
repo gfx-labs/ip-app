@@ -34,27 +34,30 @@ export const UsdiGraphCard = () => {
   const [queryHistory, setQueryHistory] = useState(0);
 
   const addData = async (o: Observation) => {
-    if (!o.timestamp) {
-      await provider?.getBlock(o.block).then((b) => {
-        o.timestamp = b.timestamp * 1000;
-      });
-    }
-    if (data.has(o.block)) {
-      let n = data.get(o.block);
-      if (o.interestPaid && n) {
-        n.interestPaid = o.interestPaid;
+    if(o.block > 14936246) {
+      if (!o.timestamp) {
+        await provider?.getBlock(o.block).then((b) => {
+          o.timestamp = b.timestamp * 1000;
+        });
       }
-      if (o.interestRate && n) {
-        n.interestRate = o.interestRate;
+      if (data.has(o.block)) {
+        let n = data.get(o.block);
+        if (o.interestPaid && n) {
+          n.interestPaid = o.interestPaid;
+        }
+        if (o.interestRate && n) {
+          n.interestRate = o.interestRate;
+        }
+        o = n!;
       }
-      o = n!;
+      data.set(o.block, o);
     }
-    data.set(o.block, o);
   };
 
   const temp = new Map<number, Observation>();
   const addInterestEvents = (xs: InterestEventEvent[]) => {
     xs.forEach((event: InterestEventEvent) => {
+      event.args
       if (!temp.has(event.blockNumber)) {
         temp.set(event.blockNumber, { block: event.blockNumber });
       }
@@ -74,7 +77,7 @@ export const UsdiGraphCard = () => {
 
   useEffect(() => {
     const startBlock = queryLimit == 0 ? undefined : dataBlock - queryLimit;
-    
+
     if (rolodex && rolodex.VC && queryLimit == 0) {
       const getRates = rolodex.VC.queryFilter(
         rolodex.VC.filters.InterestEvent(),
@@ -87,23 +90,23 @@ export const UsdiGraphCard = () => {
         dataBlock
       ).then(addDonateEvents);
       Promise.all([getRates, getPays])
-        .then(() => {
-          for (const [k, v] of temp.entries()) {
-            addData(v);
+      .then(() => {
+        for (const [k, v] of temp.entries()) {
+          addData(v);
+        }
+        temp.clear();
+      })
+      .catch((e) => {
+        setErrorFetchingData(true)
+        if (e.data && e.data.message) {
+          const msg = e.data.message as string;
+          if (msg.includes("limited") || msg.includes("large")) {
+            setQueryLimit(3000);
+            return;
           }
-          temp.clear();
-        })
-        .catch((e) => {
-          setErrorFetchingData(true)
-          if (e.data && e.data.message) {
-            const msg = e.data.message as string;
-            if (msg.includes("limited") || msg.includes("large")) {
-              setQueryLimit(3000);
-              return;
-            }
-          }
-          console.log("error getting data", e);
-        });
+        }
+        console.log("error getting data", e);
+      });
     } else {
       setErrorFetchingData(true)
     }
@@ -125,29 +128,29 @@ export const UsdiGraphCard = () => {
         to
       ).then(addDonateEvents);
       Promise.all([getRates, getPays])
-        .then(() => {
-          for (const [k, v] of temp.entries()) {
-            addData(v);
-          }
-          setQueryHistory(queryHistory + 1);
-          temp.clear();
-        })
-        .catch((e) => {
-          setQueryHistory(HISTORY_MAX);
-          if (e.data && e.data.message) {
-            const msg = e.data.message as string;
-            if (msg.includes("limited")) {
-              if (queryLimit > 100) {
-                setQueryLimit(queryLimit / 2);
-              } else {
-                setQueryLimit(-1);
-              }
-              return;
+      .then(() => {
+        for (const [k, v] of temp.entries()) {
+          addData(v);
+        }
+        setQueryHistory(queryHistory + 1);
+        temp.clear();
+      })
+      .catch((e) => {
+        setQueryHistory(HISTORY_MAX);
+        if (e.data && e.data.message) {
+          const msg = e.data.message as string;
+          if (msg.includes("limited")) {
+            if (queryLimit > 100) {
+              setQueryLimit(queryLimit / 2);
+            } else {
+              setQueryLimit(-1);
             }
+            return;
           }
-          setErrorFetchingData(true)
-          console.log("error getting smaller data with max", e, queryHistory);
-        });
+        }
+        setErrorFetchingData(true)
+        console.log("error getting smaller data with max", e, queryHistory);
+      });
     }
   }, [rolodex, dataBlock, queryHistory, queryLimit]);
 
@@ -170,16 +173,33 @@ export const UsdiGraphCard = () => {
     }
   }, [data.size]);
 
+  const [lastDeposit, setLastDeposit] = useState(0)
+  useEffect(()=>{
+    if(lastRate > 0.5){
+      setLastDeposit(lastRate * (1) * (0.9))
+      return
+    }
+    if(lastRate > 10) {
+      setLastDeposit(lastRate * (1) * (0.9))
+      return
+    }
+    if(lastRate > 600) {
+      setLastDeposit(lastRate * (1) * (0.9))
+      return
+    }
+    setLastDeposit(lastRate * 1)
+  }, [lastRate])
+
   return (
     <Box
       sx={{
         paddingX: { xs: 3, md: 6 },
-        paddingY: { xs: 6, md: 6 },
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.gradient1 : gradient.gradient2
-        )})`,
-        borderRadius: { xs: 5, md: 17 },
-        display: "flex",
+      paddingY: { xs: 6, md: 6 },
+      backgroundImage: `linear-gradient(${formatGradient(
+        isLight ? gradient.gradient1 : gradient.gradient2
+      )})`,
+      borderRadius: { xs: 5, md: 17 },
+      display: "flex",
       }}
     >
       {!errorFetchingData ? (
@@ -203,7 +223,7 @@ export const UsdiGraphCard = () => {
                     marginRight: 1,
                   }}
                 ></Box>{" "}
-                <GraphTypography text={`Interest Rate (${lastRate}%)`} />
+                <GraphTypography text={`Borrow APR (${lastRate}%)`} />
               </Box>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <Box
@@ -218,6 +238,7 @@ export const UsdiGraphCard = () => {
                 <GraphTypography text={`Interest Paid ($${lastPaid})`} />
               </Box>
             </Box>
+
             <Box sx={{ marginTop: -1 }}>
               <Box
                 display="flex"
@@ -226,7 +247,7 @@ export const UsdiGraphCard = () => {
                   [theme.breakpoints.down("md")]: {
                     flexDirection: "column",
                     rowGap: 1,
-                  },
+                },
                 }}
               >
                 <GraphTypography text={`Block #${lastBlock}`} />
@@ -238,7 +259,7 @@ export const UsdiGraphCard = () => {
                   [theme.breakpoints.down("md")]: {
                     flexDirection: "column",
                     rowGap: 1,
-                  },
+                },
                 }}
               >
                 <GraphTypography text={`${lastTime}`} />

@@ -22,7 +22,7 @@ import { TitleText } from "../text";
 import { addressShortener } from "../text/";
 import { SingleStatCard } from "./SingleStatCard";
 import { UserTokenCard } from "./UserTokenCard";
-import { BN } from "../../../easy/bn";
+import { BN, round } from "../../../easy/bn";
 import { OpenVaultButton } from "../button/OpenVaultButton";
 import { BNtoHexNumber } from "../helpers/BNtoHex";
 
@@ -42,6 +42,7 @@ export const UserStats = () => {
   const [rewardsClaimed, setRewardsClaimed] = useState(0);
 
   const [borrowAPR, setBorrowAPR] = useState(0);
+  const [depositAPR, setDepositAPR] = useState(0);
 
   const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
     undefined
@@ -53,6 +54,7 @@ export const UserStats = () => {
     disconnectWallet,
     error,
     currentAccount,
+    dataBlock,
   } = useWeb3Context();
   const rolodex = useRolodexContext();
   const {
@@ -76,18 +78,20 @@ export const UserStats = () => {
       rolodex!
         .USDI!.reserveRatio()
         .then((ratio) => {
+          const ratioDec = ratio.div(1e14).toNumber()/(1e4)
           return rolodex!.Curve?.getValueAt(
             "0x0000000000000000000000000000000000000000",
             ratio
           ).then((apr) => {
             setBorrowAPR(apr.div(BN("1e14")).toNumber() / 100);
+            setDepositAPR(round(borrowAPR*(1 - ratioDec)*(0.9),2))
           });
         })
         .catch((e) => {
           setBorrowAPR(0);
         });
     }
-  }, [rolodex]);
+  }, [rolodex, dataBlock]);
 
   useEffect(() => {
     if (tokens) {
@@ -169,7 +173,7 @@ export const UserStats = () => {
         sx={{
           display: "grid",
           justifyContent: "space-between",
-          gridTemplateColumns: "2fr 1fr 1fr",
+          gridTemplateColumns: "2fr 1fr 1fr 1fr",
           columnGap: 4,
           rowGap: 4,
           marginBottom: 5,
@@ -201,12 +205,18 @@ export const UserStats = () => {
         </SingleStatCard>
         <SingleStatCard>
           <TitleText
+            title="Deposit APR"
+            text={depositAPR !== null ? depositAPR.toString() + "%" : null}
+          />
+        </SingleStatCard>
+        <SingleStatCard>
+          <TitleText
             title="IPT PER YEAR"
             text={
               totalBaseLiability !== null
                 ? `${Math.round(
-                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
-                  )}` + ""
+                  ((94017 * accountLiability) / totalBaseLiability) * 52.143
+                )}` + ""
                 : null
             }
           />
@@ -218,7 +228,7 @@ export const UserStats = () => {
             gridColumn: "1 / -1",
             [theme.breakpoints.down("lg")]: {
               gridRow: 2,
-            },
+          },
           }}
         >
           <Box
@@ -229,7 +239,7 @@ export const UserStats = () => {
               justifyContent: "space-between",
               [theme.breakpoints.down("lg")]: {
                 flexWrap: "wrap",
-              },
+            },
             }}
           >
             <TitleText
@@ -251,11 +261,11 @@ export const UserStats = () => {
                   [theme.breakpoints.down("lg")]: {
                     width: "100%",
                     marginTop: 3,
-                  },
-                  [theme.breakpoints.down("sm")]: {
-                    gridTemplateColumns: "1fr",
-                    rowGap: 1,
-                  },
+                },
+                [theme.breakpoints.down("sm")]: {
+                  gridTemplateColumns: "1fr",
+                  rowGap: 1,
+                },
                 }}
               >
                 <Button
@@ -267,7 +277,7 @@ export const UserStats = () => {
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
-                    },
+                  },
                   }}
                   onClick={() => setType(ModalType.Borrow)}
                 >
@@ -283,7 +293,7 @@ export const UserStats = () => {
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
-                    },
+                  },
                   }}
                   onClick={() => setType(ModalType.Repay)}
                 >
@@ -310,9 +320,9 @@ export const UserStats = () => {
             xs: "1fr",
             md: "1fr 1fr",
             lg: "repeat(3, 1fr)",
-          },
-          columnGap: 3,
-          rowGap: 3,
+        },
+        columnGap: 3,
+        rowGap: 3,
         }}
       >
         {connected && currentAccount ? token_cards : <></>}
