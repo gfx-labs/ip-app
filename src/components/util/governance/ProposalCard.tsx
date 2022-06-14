@@ -138,7 +138,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
             <Typography
               display="block"
               variant="subtitle2_semi"
-              color="text.secondary"
             >
               {getTitle(body)}
             </Typography>
@@ -174,7 +173,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         >
           {expandedContent ? (
             <Box>
-              <ProposalDetails id={id} status={status}  votingPower={votingPower} />
+              <ProposalDetails id={id} status={status}  votingPower={votingPower} time={timeLeft} />
               <ReactMarkdown
                 children={expandedContent}
                 components={markdownComponentConfig}

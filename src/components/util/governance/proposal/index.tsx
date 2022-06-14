@@ -14,6 +14,7 @@ export interface ProposalDetailsProps {
   id: string;
   status: number;
   votingPower: number;
+  time: string;
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = (
@@ -21,9 +22,8 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 ) => {
   const theme = useTheme();
   const { provider } = useWeb3Context();
-  const { id, status, votingPower } = props;
+  const { id, status, votingPower, time } = props;
 
-  const time = "Voting ended on March 25, 2020";
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map());
   const [votersFor, setVotersFor] = useState<Array<Voter>>([]);
@@ -93,9 +93,9 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       >
         <VoteButton id={id} status={status} totalVotes={votesTotal} votingPower={votingPower} />
 
-        <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
+        {/* <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
           {time}
-        </Typography>
+        </Typography> */}
       </Box>
       <Box
         display="flex"
