@@ -23,13 +23,16 @@ import { Proposal } from "../../../pages/governance";
 import { BNtoHexNumber, BNtoHexString } from "../helpers/BNtoHex";
 import { useFormatWithDecimals } from "../../../hooks/useTokenInfo";
 import VoteButton from "./VoteButton";
+import { getCurrentVotes } from "../../../hooks/useDelegate";
 
 export interface ProposalCardProps {
   proposal: Proposal;
+  votingPower: number;
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider } = useWeb3Context();
+  const {votingPower} = props;
   const { id, proposer, body, endBlock } = props.proposal;
 
   const isLight = useLight();
@@ -99,6 +102,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
       return;
     }
     setTimeLeft(`Active for ${hrdiff} Hour(s)`);
+
   }, [dataBlock]);
 
   const expandCard = () => {
@@ -134,7 +138,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
             <Typography
               display="block"
               variant="subtitle2_semi"
-              color="text.secondary"
             >
               {getTitle(body)}
             </Typography>
@@ -170,13 +173,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
         >
           {expandedContent ? (
             <Box>
-              <ProposalDetails id={id} status={status} />
+              <ProposalDetails id={id} status={status}  votingPower={votingPower} time={timeLeft} />
               <ReactMarkdown
                 children={expandedContent}
                 components={markdownComponentConfig}
                 remarkPlugins={[remarkGfm]}
               />
-              <VoteButton id={id} status={status} totalVotes={totalVotes} />
+              <VoteButton id={id} status={status} votingPower={votingPower} totalVotes={totalVotes} />
             </Box>
           ) : (
             <Spinner />

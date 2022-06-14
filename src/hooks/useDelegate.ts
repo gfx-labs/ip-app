@@ -31,3 +31,19 @@ export const useIPTDelegate = async (
     throw new Error("Error delegating IPT");
   }
 };
+
+export const getCurrentVotes = async (
+  currentAccount: string,
+  signer: JsonRpcSigner
+) => {
+  try {
+    return InterestProtocolTokenDelegate__factory.connect(
+      iptaddress,
+      signer
+    ).getCurrentVotes(currentAccount)
+
+  } catch (err) {
+    throw new Error("Error getting voting power");
+  }
+};
+

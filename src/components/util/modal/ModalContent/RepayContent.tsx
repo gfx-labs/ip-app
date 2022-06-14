@@ -133,7 +133,7 @@ export const RepayContent = (props: RepayContent) => {
           </Typography>
         </Box>
       </ModalInputContainer>
-      <Box marginTop={2} display="grid" gridTemplateColumns="4fr 2fr" columnGap={0.5}>
+      <Box marginTop={2} display="grid" gridTemplateColumns="2fr 1fr" columnGap={0.5}>
         <DisableableModalButton
           text="Repay"
           onClick={() => handleRepayRequest(repayAmount)}
@@ -149,6 +149,7 @@ export const RepayContent = (props: RepayContent) => {
           loading={loading}
           load_text={loadmsg}
           shaking={shaking}
+          disabled={accountLiability < 0.011} // disable if account liability is lower than 0.01 and rounded up
         />
       </Box>
     </Box>

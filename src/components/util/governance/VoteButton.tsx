@@ -3,16 +3,16 @@ import { Button, Box } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
 import { VoteModal } from "./proposal/VoteModal";
 import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
-import {ModalContentProvider} from "../../libs/modal-content-provider/ModalContentProvider";
 
 interface VoteButtonProps {
   status: number;
   id: string;
   totalVotes: number;
+  votingPower: number;
 }
 
 const VoteButton = (props: VoteButtonProps) => {
-  const { status, id, totalVotes } = props;
+  const { status, id, totalVotes, votingPower } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -24,7 +24,7 @@ const VoteButton = (props: VoteButtonProps) => {
         sx={{ color: formatColor(neutral.white), height: 43 }}
         variant="contained"
         onClick={() => setOpen(true)}
-        disabled={status !== 1}
+        // disabled={status !== 1}
       >
         Vote
       </Button>
@@ -33,6 +33,7 @@ const VoteButton = (props: VoteButtonProps) => {
         setOpen={setOpen}
         id={id}
         totalVotes={totalVotes}
+        votingPower={votingPower}
         signer={currentSigner!}
       />
     </Box>
