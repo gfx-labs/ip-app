@@ -49,13 +49,8 @@ export const UserStats = () => {
   );
 
   const theme = useTheme();
-  const {
-    connected,
-    disconnectWallet,
-    error,
-    currentAccount,
-    dataBlock,
-  } = useWeb3Context();
+  const { connected, disconnectWallet, error, currentAccount, dataBlock } =
+    useWeb3Context();
   const rolodex = useRolodexContext();
   const {
     tokens,
@@ -78,14 +73,14 @@ export const UserStats = () => {
       rolodex!
         .USDI!.reserveRatio()
         .then((ratio) => {
-          const ratioDec = ratio.div(1e14).toNumber()/(1e4)
+          const ratioDec = ratio.div(1e14).toNumber() / 1e4;
           return rolodex!.Curve?.getValueAt(
             "0x0000000000000000000000000000000000000000",
             ratio
           ).then((apr) => {
-            const ba = apr.div(BN("1e14")).toNumber() / 100
-            setBorrowAPR(ba)
-            setDepositAPR(round(ba*(1 - ratioDec)*(0.9),3))
+            const ba = apr.div(BN("1e14")).toNumber() / 100;
+            setBorrowAPR(ba);
+            setDepositAPR(round(ba * (1 - ratioDec) * 0.9, 3));
           });
         })
         .catch((e) => {
@@ -216,9 +211,9 @@ export const UserStats = () => {
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
-                  ((94017 * accountLiability) / totalBaseLiability) * 52.143
-                )}` + ""
-                : '0'
+                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
+                  )}` + ""
+                : "0"
             }
           />
         </SingleStatCard>
@@ -229,7 +224,7 @@ export const UserStats = () => {
             gridColumn: "1 / -1",
             [theme.breakpoints.down("lg")]: {
               gridRow: 3,
-          },
+            },
           }}
         >
           <Box
@@ -240,7 +235,7 @@ export const UserStats = () => {
               justifyContent: "space-between",
               [theme.breakpoints.down("lg")]: {
                 flexWrap: "wrap",
-            },
+              },
             }}
           >
             <TitleText
@@ -262,11 +257,11 @@ export const UserStats = () => {
                   [theme.breakpoints.down("lg")]: {
                     width: "100%",
                     marginTop: 3,
-                },
-                [theme.breakpoints.down("sm")]: {
-                  gridTemplateColumns: "1fr",
-                  rowGap: 1,
-                },
+                  },
+                  [theme.breakpoints.down("sm")]: {
+                    gridTemplateColumns: "1fr",
+                    rowGap: 1,
+                  },
                 }}
               >
                 <Button
@@ -278,7 +273,7 @@ export const UserStats = () => {
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
-                  },
+                    },
                   }}
                   onClick={() => setType(ModalType.Borrow)}
                 >
@@ -294,7 +289,7 @@ export const UserStats = () => {
                     "&:hover": {
                       boxShadow: 0,
                       backgroundColor: formatColor(blue.blue5),
-                  },
+                    },
                   }}
                   onClick={() => setType(ModalType.Repay)}
                 >
@@ -321,9 +316,9 @@ export const UserStats = () => {
             xs: "1fr",
             md: "1fr 1fr",
             lg: "repeat(3, 1fr)",
-        },
-        columnGap: 3,
-        rowGap: 3,
+          },
+          columnGap: 3,
+          rowGap: 3,
         }}
       >
         {connected && currentAccount ? token_cards : <></>}
