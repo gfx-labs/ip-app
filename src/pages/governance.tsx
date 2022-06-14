@@ -8,8 +8,10 @@ import {
 } from "../components/libs/modal-content-provider/ModalContentProvider";
 import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
 import { ProposalCard } from "../components/util/governance/ProposalCard";
+import { BNtoHexNumber } from "../components/util/helpers/BNtoHex";
 import { Spinner } from "../components/util/loading";
 import { ToolTip } from "../components/util/tooltip/ToolTip";
+import { getCurrentVotes } from "../hooks/useDelegate";
 import {
   getRecentProposals,
   useProposalCount,
@@ -26,11 +28,13 @@ export interface Proposal {
 
 export const Governance = () => {
   const theme = useTheme();
-  const { dataBlock, provider, chainId } = useWeb3Context();
+  const { dataBlock, provider, chainId, currentAccount, currentSigner } = useWeb3Context();
   const { setType } = useModalContext();
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])
   );
+
+  const [currentVotes, setCurrentVotes] = useState(0)
 
   const [noProposals, setNoProposals] = useState(false);
 
@@ -52,6 +56,12 @@ export const Governance = () => {
           console.log("failed to load proposal info", e);
           setNoProposals(true);
         });
+    }
+    if(currentAccount && currentSigner) { 
+      getCurrentVotes(currentAccount, currentSigner!).then(res => {
+        console.log(res)
+        setCurrentVotes(BNtoHexNumber(res))
+      })
     }
   }, [provider, dataBlock, chainId]);
 
@@ -127,7 +137,8 @@ export const Governance = () => {
           />
         </Box>
 
-        <Box>
+        <Box display="flex" alignItems="center">
+          <Typography variant="label2" whiteSpace="nowrap" mr={1}>Voting Power: {currentVotes}</Typography>
           <Button
             variant="text"
             sx={{ px: 2 }}
@@ -145,7 +156,7 @@ export const Governance = () => {
           })
           .map((proposal, index) => (
             <Box key={index} mb={2}>
-              <ProposalCard proposal={proposal} />
+              <ProposalCard proposal={proposal} votingPower={currentVotes}/>
             </Box>
           ))
       ) : (

@@ -10,19 +10,22 @@ import { JsonRpcSigner } from "@ethersproject/providers";
 import { useModalContext } from "../../../libs/modal-content-provider/ModalContentProvider";
 import { ContractReceipt } from "ethers";
 import { useState } from "react";
+import { useLight } from "../../../../hooks/useLight";
 
 type VoteModalProps = {
   open: boolean;
   id: string;
   totalVotes: number;
+  votingPower: number;
   setOpen: (val: boolean) => void;
   signer: JsonRpcSigner;
 };
 
 export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
-  const { open, setOpen, id, totalVotes, signer } = props;
+  const { open, setOpen, id, totalVotes, signer, votingPower } = props;
   const { updateTransactionState } = useModalContext();
   const [error, setError] = useState("");
+  const isLight = useLight()
 
   const useCastVote = async (id: string, vote: number) => {
     try {
@@ -47,10 +50,16 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
 
   return (
     <BaseModal open={open} withCloseButton setOpen={setOpen}>
-      <Typography variant="h2">Vote for Proposal {id}</Typography>
+      <Typography variant="h6_semi">Vote for Proposal {id}</Typography>
+      <Box mt={1}>
+        <Typography variant="label2_medium">
+          {totalVotes.toLocaleString()} Votes Submitted
+        </Typography>
+      </Box>
+
       <Box my={2}>
-        <Typography variant="body1">
-          {totalVotes.toLocaleString()} Votes
+        <Typography variant="body3">
+          Your voting power: {votingPower.toLocaleString()}
         </Typography>
       </Box>
       <Button
@@ -64,7 +73,8 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       <Button
         variant="contained"
         sx={{
-          color: formatColor(neutral.white),
+          backgroundColor: isLight ? formatColor(neutral.black) : formatColor(neutral.white),
+          color: isLight ? formatColor(neutral.white) : formatColor(neutral.black),
           my: 2,
         }}
         onClick={() => useCastVote(id, 0)}
@@ -73,8 +83,8 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       </Button>
 
       <Button
-        variant="contained"
-        sx={{ color: formatColor(neutral.white) }}
+        variant="text"
+        sx={{ color: 'text.primary', paddingRight: 0 }}
         onClick={() => useCastVote(id, 2)}
       >
         Abstain

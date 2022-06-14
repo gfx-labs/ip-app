@@ -13,19 +13,17 @@ import VoteButton from "../VoteButton";
 export interface ProposalDetailsProps {
   id: string;
   status: number;
+  votingPower: number;
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = (
   props: ProposalDetailsProps
 ) => {
   const theme = useTheme();
-  const isLight = useLight();
   const { provider } = useWeb3Context();
-  const [open, setOpen] = useState(false);
-  const { id, status } = props;
+  const { id, status, votingPower } = props;
 
   const time = "Voting ended on March 25, 2020";
-  const totalVotes = 23423424234;
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map());
   const [votersFor, setVotersFor] = useState<Array<Voter>>([]);
@@ -33,6 +31,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
   const [votersPeanut, setVotersPeanut] = useState<Array<Voter>>([]);
 
   const [votesTotal, setVotesTotal] = useState(0);
+
   useEffect(() => {
     if (provider) {
       getProposalVoters(id, provider).then((px) => {
@@ -92,7 +91,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
         alignItems={{ xs: "start", md: "center" }}
         rowGap={1}
       >
-        <VoteButton id={id} status={status} totalVotes={votesTotal} />
+        <VoteButton id={id} status={status} totalVotes={votesTotal} votingPower={votingPower} />
 
         <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
           {time}

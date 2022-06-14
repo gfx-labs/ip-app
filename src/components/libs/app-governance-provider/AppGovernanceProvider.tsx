@@ -20,7 +20,7 @@ export const AppGovernanceProvider = ({
 }) => {
   const { chainId } = useWeb3Context();
 
-  const [isApp, setIsApp] = useState<boolean>(true);
+  const [isApp, setIsApp] = useState<boolean>(false);
   const [delegateToken, setDelegateToken] = useState<Token>(
     getTokensListOnCurrentChain(chainId || 1)["UNI"]
   );
