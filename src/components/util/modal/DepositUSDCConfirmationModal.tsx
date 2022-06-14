@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography, Link as MuiLink } from "@mui/material";
 import { formatColor, neutral } from "../../../theme";
 import { useEffect, useState } from "react";
 import {
@@ -12,9 +12,10 @@ import { ForwardIcon } from "../../icons/misc/ForwardIcon";
 import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
 import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
 import { BN } from "../../../easy/bn";
-import { BigNumberish } from "ethers";
+import {  ContractTransaction } from "ethers";
 import { locale } from "../../../locale";
 import { TransactionReceipt } from "@ethersproject/providers";
+import { Chains } from "../../../chain/chains";
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext();
@@ -26,6 +27,9 @@ export const DepositUSDCConfirmationModal = () => {
 
   const [needAllowance, setNeedAllowance] = useState(true);
   const [shiftOn, setShiftOn] = useState(false);
+  const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>();
+
+  const chain = Chains.getInfo(chainId);
 
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
@@ -46,7 +50,6 @@ export const DepositUSDCConfirmationModal = () => {
       rolodex
         .USDC!.allowance(currentAccount, rolodex.addressUSDI)
         .then((initialApproval) => {
-          console.log(initialApproval);
           const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN("1e6"));
           if (initialApproval.lt(formattedUSDCAmount)) {
             setNeedAllowance(true);
@@ -61,7 +64,6 @@ export const DepositUSDCConfirmationModal = () => {
     if (rolodex && USDC.amountToDeposit) {
       let depositAmount = BN(USDC.amountToDeposit);
       const formattedUSDCAmount = depositAmount.mul(1e6);
-      console.log(formattedUSDCAmount);
       setLoading(true);
       try {
         setLoadmsg(locale("CheckWallet"));
@@ -74,10 +76,11 @@ export const DepositUSDCConfirmationModal = () => {
         const response = await txn?.wait();
         updateTransactionState(response);
       } catch (e) {
-        const error = e as TransactionReceipt
-        console.log(e);
+        const error = e as TransactionReceipt;
+        console.error(e);
         updateTransactionState(error);
       }
+      setApprovalTxn(undefined);
       setLoading(false);
     }
   };
@@ -95,6 +98,9 @@ export const DepositUSDCConfirmationModal = () => {
           rolodex.addressUSDI,
           formattedUSDCAmount
         );
+
+        setApprovalTxn(txn);
+
         setLoadmsg(locale("TransactionPending"));
         await txn?.wait();
       } catch (e) {
@@ -215,6 +221,13 @@ export const DepositUSDCConfirmationModal = () => {
         loading={loading}
         load_text={loadmsg}
       />
+      {approvalTxn !== undefined && (
+        <MuiLink mt={1} display="block" target="_blank" href={`${chain.scanUrl}${approvalTxn.hash}`}>
+          <Button variant="text">
+            View approval on {chain.scanSite}
+          </Button>
+        </MuiLink>
+      )}
     </BaseModal>
   );
 };
