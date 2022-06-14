@@ -170,15 +170,13 @@ export const UserStats = () => {
           display: "grid",
           justifyContent: "space-between",
           gridTemplateColumns: "1fr 1fr 1fr 1fr",
-          columnGap: 4,
-          rowGap: 4,
+          gap: 4,
           marginBottom: 5,
           [theme.breakpoints.down("lg")]: {
             gridAutoFlow: "column",
             gridTemplateColumns: "1fr 1fr",
-            columnGap: 1,
-            rowGap: 3,
-            marginBottom: 4,
+            gap: 3,
+            marginBottom: 0,
           },
         }}
       >
@@ -220,7 +218,6 @@ export const UserStats = () => {
 
         <SingleStatCard
           sx={{
-            paddingRight: 3,
             gridColumn: "1 / -1",
             [theme.breakpoints.down("lg")]: {
               gridRow: 3,
@@ -235,6 +232,7 @@ export const UserStats = () => {
               justifyContent: "space-between",
               [theme.breakpoints.down("lg")]: {
                 flexWrap: "wrap",
+                rowGap: 2
               },
             }}
           >
@@ -256,11 +254,10 @@ export const UserStats = () => {
                 sx={{
                   [theme.breakpoints.down("lg")]: {
                     width: "100%",
-                    marginTop: 3,
                   },
                   [theme.breakpoints.down("sm")]: {
                     gridTemplateColumns: "1fr",
-                    rowGap: 1,
+                    rowGap: 2,
                   },
                 }}
               >
@@ -298,10 +295,11 @@ export const UserStats = () => {
               </Box>
             ) : (
               <Box
-                maxWidth={350}
+                maxWidth={{xs: 'auto', md: 350}}
                 width="100%"
                 display="flex"
                 alignItems="center"
+                
               >
                 <OpenVaultButton />
               </Box>
@@ -311,6 +309,7 @@ export const UserStats = () => {
       </Box>
       <Box
         sx={{
+          mt: 3,
           display: "grid",
           gridTemplateColumns: {
             xs: "1fr",

@@ -17,7 +17,7 @@ export const Values: React.FC = () => {
           alignItems: "center",
           justifyContent: "center",
           gap: { xs: 9, md: 10 },
-          paddingX: { xs: 9, md: 10 },
+          paddingX: { xs: 3, md: 10 },
         }}
       >
         <Box
