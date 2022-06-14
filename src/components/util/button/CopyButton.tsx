@@ -69,6 +69,7 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
           sx={{
             p: 2,
           }}
+          variant="label2"
         >
           Copied to Clipboard
         </Typography>

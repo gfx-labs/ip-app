@@ -45,7 +45,7 @@ export const RepayContent = (props: RepayContent) => {
   const toggle = () => setFocus(!focus);
 
   useEffect(() => {
-    setDisabled(Number(repayAmount) <= 0);
+    setDisabled(Number(repayAmount) <= 0 || accountLiability === 0);
   }, [repayAmount]);
 
   const onInputChange = (e:string) => {
@@ -68,7 +68,15 @@ export const RepayContent = (props: RepayContent) => {
     }
   },[repayAmount])
 
-  const handleRepayRequest = async () => {
+  const handleRepayAllRequest = () => {
+    const accountLiabilityString = accountLiability.toString()
+
+    setRepayAmount(accountLiabilityString)
+
+    handleRepayRequest(accountLiabilityString)
+  }
+
+  const handleRepayRequest = async (repayAmount: string) => {
     setLoading(true);
     setLoadmsg(locale("CheckWallet"));
     await useRepay(
@@ -94,8 +102,6 @@ export const RepayContent = (props: RepayContent) => {
       updateTransactionState(e)
     })
   };
-
-
 
   return (
     <Box>
@@ -127,11 +133,19 @@ export const RepayContent = (props: RepayContent) => {
           </Typography>
         </Box>
       </ModalInputContainer>
-      <Box marginTop={2}>
+      <Box marginTop={2} display="grid" gridTemplateColumns="4fr 2fr" columnGap={0.5}>
         <DisableableModalButton
           text="Repay"
-          onClick={handleRepayRequest}
+          onClick={() => handleRepayRequest(repayAmount)}
           disabled={disabled}
+          loading={loading}
+          load_text={loadmsg}
+          shaking={shaking}
+        />
+
+      <DisableableModalButton
+          text="Repay All"
+          onClick={handleRepayAllRequest}
           loading={loading}
           load_text={loadmsg}
           shaking={shaking}
