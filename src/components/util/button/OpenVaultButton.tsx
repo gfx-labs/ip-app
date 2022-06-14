@@ -59,9 +59,8 @@ export const OpenVaultButton = () => {
             : formatColor(neutral.white),
           "&:hover": {
             backgroundColor: !isLight
-              ? formatColor(neutral.gray5)
-              : formatColor(neutral.gray4),
-            border: "none",
+              ? formatColor(neutral.gray1)
+              : formatColor(neutral.gray10),
           },
           ...sx,
         }}

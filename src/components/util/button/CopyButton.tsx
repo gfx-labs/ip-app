@@ -34,10 +34,17 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
             ? {
                 backgroundColor: formatColor(neutral.white),
                 color: formatColor(neutral.black),
+                '&:hover': {
+                  backgroundColor: formatColor(neutral.gray5),
+                }
               }
             : {
                 backgroundColor: formatColor(neutral.gray4),
                 color: formatColor(neutral.white),
+                '&:hover': {
+                                  backgroundColor: formatColor(neutral.gray1),
+
+                }
               }
         }
       >
