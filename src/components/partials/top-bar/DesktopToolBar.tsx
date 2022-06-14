@@ -9,7 +9,7 @@ import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mod
 import { useLight } from "../../../hooks/useLight";
 import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
 import Cookies from "universal-cookie";
-import { formatColor, green, neutral } from "../../../theme";
+import { formatColor, blue, neutral } from "../../../theme";
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -44,14 +44,9 @@ export const DesktopToolBar = () => {
       )} */}
       {window.location.hash !== "#/sale" && (
         <Box mx={2} maxWidth={200} width="100%">
-          {/* <Button variant="outlined">
-                <Link href="#/whitelist">
-                  <Typography variant="body3">Whitelist</Typography>
-                </Link>
-              </Button> */}
           <Link href="#/sale">
-            <Button variant="outlined">
-              <Typography variant="body3" color={formatColor(green.green2)}>
+            <Button variant="contained">
+              <Typography variant="body3" color={formatColor(neutral.white)}>
                 IPT Sale
               </Typography>
             </Button>
@@ -60,7 +55,10 @@ export const DesktopToolBar = () => {
       )}
 
       <Box mx={2} maxWidth={200} width="100%">
-        <Link href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet" target="_blank">
+        <Link
+          href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet"
+          target="_blank"
+        >
           <Button variant="outlined">
             <Typography variant="label2">ETH-USDi Rewards</Typography>
           </Button>

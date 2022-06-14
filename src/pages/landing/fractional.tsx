@@ -15,7 +15,8 @@ export const Fractional: React.FC = () => {
           flexDirection: { xs: "column-reverse", md: "row" },
           height: "100%",
           alignItems: "center",
-          gap: 5,
+          columnGap: 5,
+          rowGap: 3,
           maxWidth: 1250,
           margin: "auto",
         }}
