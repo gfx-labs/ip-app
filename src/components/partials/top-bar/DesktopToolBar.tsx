@@ -1,25 +1,34 @@
-import { Box, Toolbar, Typography, Button, Link } from "@mui/material";
-import { useContext } from "react";
+import {
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  Link,
+} from '@mui/material'
+import { useContext } from 'react'
 
-import { ConnectWalletButton, SelectedChainButton } from "../../util/button";
-import { BaseSwitch } from "../../util/switch";
-import { LightIcon } from "../../icons/misc/LightIcon";
-import { DarkIcon } from "../../icons/misc/DarkIcon";
-import { PaletteModeContext } from "../../libs/palette-mode-provider/palette-mode-provider";
-import { useLight } from "../../../hooks/useLight";
-import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
-import Cookies from "universal-cookie";
-import { formatColor, blue, neutral } from "../../../theme";
+import {
+  ConnectWalletButton,
+  SelectedChainButton,
+} from '../../util/button'
+import { BaseSwitch } from '../../util/switch'
+import { LightIcon } from '../../icons/misc/LightIcon'
+import { DarkIcon } from '../../icons/misc/DarkIcon'
+import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
+import { useLight } from '../../../hooks/useLight'
+import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import Cookies from 'universal-cookie'
+import { formatColor, blue, neutral } from '../../../theme'
 
 export const DesktopToolBar = () => {
   //desktop menu config
 
-  const isLight = useLight();
+  const isLight = useLight()
 
-  const cookies = new Cookies();
-  const { toggleMode } = useContext(PaletteModeContext);
+  const cookies = new Cookies()
+  const { toggleMode } = useContext(PaletteModeContext)
 
-  const { setIsApp } = useAppGovernanceContext();
+  const { setIsApp } = useAppGovernanceContext()
   return (
     <Toolbar>
       <Link href="#/landing" role="heading" aria-level={1}>
@@ -42,11 +51,14 @@ export const DesktopToolBar = () => {
       ) : (
         <></>
       )} */}
-      {window.location.hash !== "#/sale" && (
+      {window.location.hash !== '#/sale' && (
         <Box mx={2} maxWidth={200} width="100%">
           <Link href="#/sale">
             <Button variant="contained">
-              <Typography variant="body3" color={formatColor(neutral.white)}>
+              <Typography
+                variant="body3"
+                color={formatColor(neutral.white)}
+              >
                 IPT Sale
               </Typography>
             </Button>
@@ -60,7 +72,9 @@ export const DesktopToolBar = () => {
           target="_blank"
         >
           <Button variant="outlined">
-            <Typography variant="label2">ETH-USDi Rewards</Typography>
+            <Typography variant="label2">
+              ETH-USDi Rewards
+            </Typography>
           </Button>
         </Link>
       </Box>
@@ -76,5 +90,5 @@ export const DesktopToolBar = () => {
         />
       </Box>
     </Toolbar>
-  );
-};
+  )
+}
