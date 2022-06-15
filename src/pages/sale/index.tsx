@@ -44,6 +44,12 @@ const PurchasePage: React.FC = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, [scrollTop]);
 
+  if(1 == 1) {
+    return (<div style={{ minHeight: "80vh" }}>
+      <meta http-equiv="refresh" content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30" />
+      <a href="#/landing">please click here if you are not redirected</a>
+    </div>);
+  }
   return (
     <AppLayout>
       <Box
@@ -55,8 +61,8 @@ const PurchasePage: React.FC = () => {
           width: "100%",
           overflow: "hidden",
           py: { xs: 10 },
-          maxWidth: 800,
-          paddingX: { xs: 2, sm: 10 },
+        maxWidth: 800,
+        paddingX: { xs: 2, sm: 10 },
         }}
       >
         <PDFModal
@@ -85,18 +91,18 @@ const PurchaseBox: React.FC = () => {
     backgroundColor: isLight
       ? formatColor(neutral.white)
       : formatColor(neutral.gray7),
-    color: "primary.main",
-    px: { xs: 1, sm: 5 },
-    py: { xs: 0.5, sm: 1.5 },
-    minHeight: "auto",
+      color: "primary.main",
+      px: { xs: 1, sm: 5 },
+      py: { xs: 0.5, sm: 1.5 },
+      minHeight: "auto",
 
-    "&.Mui-selected": {
-      backgroundColor: isLight
-        ? formatColor(neutral.gray7)
-        : formatColor(neutral.white),
-      borderRadius: 2,
-      color: isLight ? formatColor(neutral.white) : formatColor(neutral.gray7),
-    },
+      "&.Mui-selected": {
+        backgroundColor: isLight
+          ? formatColor(neutral.gray7)
+          : formatColor(neutral.white),
+          borderRadius: 2,
+          color: isLight ? formatColor(neutral.white) : formatColor(neutral.gray7),
+      },
   };
 
   return (
@@ -109,7 +115,7 @@ const PurchaseBox: React.FC = () => {
           mb: 4,
           "& .MuiTabs-indicator": {
             display: "none",
-          },
+        },
         }}
       >
         <Tab sx={TabStyle} label="Wave 1" />
@@ -213,19 +219,19 @@ function TabPanel(props: TabPanelProps) {
   useEffect(() => {
     if (rolodex && usdcAmountToCommit && rolodex.USDC) {
       rolodex
-        .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
-        .then((initialApproval) => {
-          const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true);
-          } else {
-            setNeedAllowance(false);
-          }
-        });
+      .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
+      .then((initialApproval) => {
+        const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6);
+        if (initialApproval.lt(formattedUSDCAmount)) {
+          setNeedAllowance(true);
+        } else {
+          setNeedAllowance(false);
+        }
+      });
     }
     getTotalClaimed(currentSigner!).then((res) =>
-      setTotalClaimed(BNtoHexNumber(res.div(1000000)).toLocaleString())
-    );
+                                         setTotalClaimed(BNtoHexNumber(res.div(1000000)).toLocaleString())
+                                        );
   }, [rolodex, dataBlock, chainId, usdcAmountToCommit]);
 
   const handleSubmit = (e: FormEvent) => {
@@ -397,32 +403,32 @@ function TabPanel(props: TabPanelProps) {
             </ModalInputContainer>
             <Box mt={2}>
               {limit &&
-              disableTime !== undefined &&
-              disableTime > currentTime ? (
-                <Typography color="error" variant="label2">
-                  Maximum commit allowed: {limit.toLocaleString()}
-                </Typography>
+                disableTime !== undefined &&
+                disableTime > currentTime ? (
+                  <Typography color="error" variant="label2">
+                    Maximum commit allowed: {limit.toLocaleString()}
+                  </Typography>
               ) : (
                 <Box height={28}></Box>
               )}
             </Box>
 
             {disableTime !== undefined &&
-            disableTime > currentTime &&
-            isEligible ? (
-              <DisableableModalButton
-                disabled={
-                  Number(usdcAmountToCommit) <= 0 ||
-                  (limit && Number(usdcAmountToCommit) > limit) ||
-                  !connected ||
-                  startTime > currentTime
-                }
-                type="submit"
-                text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
-                loading={loading}
-                load_text={loadmsg}
-                onClick={handleSubmit}
-              />
+              disableTime > currentTime &&
+              isEligible ? (
+                <DisableableModalButton
+                  disabled={
+                    Number(usdcAmountToCommit) <= 0 ||
+                    (limit && Number(usdcAmountToCommit) > limit) ||
+                    !connected ||
+                    startTime > currentTime
+                  }
+                  type="submit"
+                  text={needAllowance ? "Set Allowance" : "Confirm Deposit"}
+                  loading={loading}
+                  load_text={loadmsg}
+                  onClick={handleSubmit}
+                />
             ) : (
               <Button
                 variant="contained"
@@ -433,12 +439,12 @@ function TabPanel(props: TabPanelProps) {
                   {!connected
                     ? `Please connect your wallet`
                     : !isEligible
-                    ? "You are not eligible for this wave"
-                    : redeemed
-                    ? `Already claimed for wave ${waveNum}`
-                    : claimable > 0
-                    ? `Claim IPT for wave ${waveNum}`
-                    : `Nothing to claim`}
+                      ? "You are not eligible for this wave"
+                      : redeemed
+                        ? `Already claimed for wave ${waveNum}`
+                        : claimable > 0
+                          ? `Claim IPT for wave ${waveNum}`
+                          : `Nothing to claim`}
                 </Typography>
               </Button>
             )}
