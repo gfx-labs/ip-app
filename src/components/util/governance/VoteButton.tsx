@@ -1,30 +1,29 @@
-import { useState } from "react";
-import { Button, Box } from "@mui/material";
-import { formatColor, neutral } from "../../../theme";
-import { VoteModal } from "./proposal/VoteModal";
-import {useWeb3Context} from "../../libs/web3-data-provider/Web3Provider";
+import { useState } from 'react'
+import { Button, Box } from '@mui/material'
+import { VoteModal } from './proposal/VoteModal'
+import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 
 interface VoteButtonProps {
-  status: number;
-  id: string;
-  totalVotes: number;
-  votingPower: number;
+  status: number
+  id: string
+  totalVotes: number
+  votingPower: number
 }
 
 const VoteButton = (props: VoteButtonProps) => {
-  const { status, id, totalVotes, votingPower } = props;
+  const { status, id, totalVotes, votingPower } = props
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  const { currentSigner } = useWeb3Context();
+  const { currentSigner } = useWeb3Context()
   return (
     <Box>
-      {" "}
+      {' '}
       <Button
-        sx={{ color: formatColor(neutral.white), height: 43 }}
+        sx={{ height: 43 }}
         variant="contained"
         onClick={() => setOpen(true)}
-        // disabled={status !== 1}
+        disabled={status !== 1}
       >
         Vote
       </Button>
@@ -37,7 +36,7 @@ const VoteButton = (props: VoteButtonProps) => {
         signer={currentSigner!}
       />
     </Box>
-  );
-};
+  )
+}
 
-export default VoteButton;
+export default VoteButton

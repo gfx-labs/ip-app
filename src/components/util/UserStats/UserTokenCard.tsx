@@ -1,40 +1,39 @@
-import { Box, BoxProps, Button, Typography, useTheme } from "@mui/material";
-import { Contract } from "ethers";
-import { formatColor, neutral, blue } from "../../../theme";
-import { ForwardIcon } from "../../icons/misc/ForwardIcon";
-import { useAppGovernanceContext } from "../../libs/app-governance-provider/AppGovernanceProvider";
+import { Box, BoxProps, Button, Typography, useTheme } from '@mui/material'
+import { formatColor, neutral, blue } from '../../../theme'
+import { ForwardIcon } from '../../icons/misc/ForwardIcon'
+import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import {
   ModalType,
   useModalContext,
-} from "../../libs/modal-content-provider/ModalContentProvider";
-import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
-import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
-import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import { OpenVaultButton } from "../button/OpenVaultButton";
+} from '../../libs/modal-content-provider/ModalContentProvider'
+import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
+import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { OpenVaultButton } from '../button/OpenVaultButton'
 
 interface UserTokenCardProps extends BoxProps {
-  tokenName: string;
-  tokenValue: string;
-  vaultBalance: string;
-  tokenAmount: string;
+  tokenName: string
+  tokenValue: string
+  vaultBalance: string
+  tokenAmount: string
   image: {
-    src: string;
-    alt: string;
-  };
-  LTVPercent: string;
-  penaltyPercent: string;
-  canDelegate: boolean | undefined;
+    src: string
+    alt: string
+  }
+  LTVPercent: string
+  penaltyPercent: string
+  canDelegate: boolean | undefined
 }
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
-  const theme = useTheme();
-  const rolodex = useRolodexContext();
-  const { currentSigner } = useWeb3Context();
+  const theme = useTheme()
+  const rolodex = useRolodexContext()
+  const { currentSigner } = useWeb3Context()
 
-  const { tokens } = useVaultDataContext();
-  const { type, setType, setCollateralToken } = useModalContext();
-  const { hasVault, vaultAddress } = useVaultDataContext();
-  const { setDelegateToken } = useAppGovernanceContext();
+  const { tokens } = useVaultDataContext()
+  const { setType, setCollateralToken } = useModalContext()
+  const { hasVault, vaultAddress } = useVaultDataContext()
+  const { setDelegateToken } = useAppGovernanceContext()
   const {
     tokenName,
     tokenValue,
@@ -44,51 +43,40 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     LTVPercent,
     penaltyPercent,
     canDelegate = false,
-  } = props;
+  } = props
 
   const openDeposit = () => {
-    setCollateralToken((tokens as any)[tokenName]);
-    setType(ModalType.DepositCollateral);
-  };
+    setCollateralToken((tokens as any)[tokenName])
+    setType(ModalType.DepositCollateral)
+  }
 
   const openWithdraw = () => {
-    setCollateralToken((tokens as any)[tokenName]);
-    setType(ModalType.WithdrawCollateral);
-  };
+    setCollateralToken((tokens as any)[tokenName])
+    setType(ModalType.WithdrawCollateral)
+  }
 
   const setAndOpenDelegate = () => {
-    setDelegateToken((tokens as any)[tokenName]);
-    setType(ModalType.Delegate);
-  };
-
-  const getTokens = () => {
-    if (rolodex && rolodex.provider && currentSigner) {
-      const c = new Contract(
-        (tokens as any)[tokenName].address,
-        ["function publicMint() external"],
-        rolodex.provider
-      );
-      c.connect(currentSigner).publicMint();
-    }
-  };
+    setDelegateToken((tokens as any)[tokenName])
+    setType(ModalType.Delegate)
+  }
 
   return (
     <Box
       sx={{
-        backgroundColor: "smallCard.background",
+        backgroundColor: 'smallCard.background',
         borderRadius: 4,
         paddingTop: 4,
         paddingLeft: 4,
         paddingRight: 4,
         paddingBottom: 1,
-        [theme.breakpoints.down("lg")]: {
+        [theme.breakpoints.down('lg')]: {
           paddingX: 4,
           paddingY: 4,
         },
         ...props.sx,
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0 }}>
         <Box display="flex" flexDirection="column" rowGap={1}>
           <Box>
             <Typography variant="label2" color="text.secondary">
@@ -122,11 +110,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         ></Box>
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
-        <Typography
-          variant="label2"
-          color={formatColor(neutral.gray3)}
-        >
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
+        <Typography variant="label2" color={formatColor(neutral.gray3)}>
           LTV: {LTVPercent}%
         </Typography>
         <Typography
@@ -141,16 +126,16 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       {hasVault && vaultAddress !== undefined ? (
         <Box
           sx={{
-            display: "grid",
-            justifyContent: "space-between",
-            gridTemplateColumns: "1fr 1fr",
+            display: 'grid',
+            justifyContent: 'space-between',
+            gridTemplateColumns: '1fr 1fr',
             columnGap: 1.5,
           }}
         >
-          <Button variant="cta" onClick={openDeposit}>
+          <Button variant="contained" onClick={openDeposit}>
             Deposit
           </Button>
-          <Button variant="cta" onClick={openWithdraw}>
+          <Button variant="contained" onClick={openWithdraw}>
             Withdraw
           </Button>
         </Box>
@@ -158,17 +143,17 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <OpenVaultButton />
       )}
 
-      <Box display={canDelegate ? "flex" : "none"} justifyContent="flex-end">
+      <Box display={canDelegate ? 'flex' : 'none'} justifyContent="flex-end">
         <Button
           variant="text"
           sx={{
-            width: "fit-content",
+            width: 'fit-content',
             color: formatColor(blue.blue1),
-            "&:hover": {
-              backgroundColor: "transparent",
+            '&:hover': {
+              backgroundColor: 'transparent',
               color: formatColor(neutral.gray3),
 
-              "& path": {
+              '& path': {
                 stroke: formatColor(neutral.gray3),
               },
             },
@@ -183,9 +168,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               height: 10,
             }}
             strokecolor={formatColor(blue.blue1)}
-          />{" "}
+          />{' '}
         </Button>
       </Box>
     </Box>
-  );
-};
+  )
+}

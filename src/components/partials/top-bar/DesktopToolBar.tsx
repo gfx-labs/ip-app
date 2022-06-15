@@ -1,16 +1,7 @@
-import {
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  Link,
-} from '@mui/material'
+import { Box, Toolbar, Typography, Button, Link } from '@mui/material'
 import { useContext } from 'react'
 
-import {
-  ConnectWalletButton,
-  SelectedChainButton,
-} from '../../util/button'
+import { ConnectWalletButton, SelectedChainButton } from '../../util/button'
 import { BaseSwitch } from '../../util/switch'
 import { LightIcon } from '../../icons/misc/LightIcon'
 import { DarkIcon } from '../../icons/misc/DarkIcon'
@@ -55,12 +46,7 @@ export const DesktopToolBar = () => {
         <Box mx={2} maxWidth={200} width="100%">
           <Link href="#/sale">
             <Button variant="contained">
-              <Typography
-                variant="body3"
-                color={formatColor(neutral.white)}
-              >
-                IPT Sale
-              </Typography>
+              <Typography variant="body3">IPT Sale</Typography>
             </Button>
           </Link>
         </Box>
@@ -72,9 +58,7 @@ export const DesktopToolBar = () => {
           target="_blank"
         >
           <Button variant="outlined">
-            <Typography variant="label2">
-              ETH-USDi Rewards
-            </Typography>
+            <Typography variant="label2">ETH-USDi Rewards</Typography>
           </Button>
         </Link>
       </Box>

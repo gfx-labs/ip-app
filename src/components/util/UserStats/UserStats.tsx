@@ -22,7 +22,11 @@ import {
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { ConnectWalletButton, CopyButton } from '../button'
+import {
+  ConnectWalletButton,
+  CopyButton,
+  InverseButton,
+} from '../button'
 import { TitleText } from '../text'
 import { addressShortener } from '../text/'
 import { SingleStatCard } from './SingleStatCard'
@@ -312,53 +316,21 @@ export const UserStats = () => {
                   },
                 }}
               >
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: isLight
-                      ? formatColor(neutral.gray7)
-                      : formatColor(neutral.white),
-                    boxShadow: 0,
-                    color: isLight
-                      ? formatColor(neutral.white)
-                      : formatColor(neutral.gray4),
-                    '&:hover': {
-                      boxShadow: 0,
-                      backgroundColor: isLight
-                        ? formatColor(neutral.gray10)
-                        : formatColor(neutral.gray3),
-                    },
-                  }}
+                <InverseButton
                   onClick={() => setType(ModalType.Borrow)}
                 >
                   <Typography variant="body3">
                     Borrow
                   </Typography>
-                </Button>
+                </InverseButton>
 
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: isLight
-                      ? formatColor(neutral.gray7)
-                      : formatColor(neutral.white),
-                    boxShadow: 0,
-                    color: isLight
-                      ? formatColor(neutral.white)
-                      : formatColor(neutral.gray4),
-                    '&:hover': {
-                      boxShadow: 0,
-                      backgroundColor: isLight
-                        ? formatColor(neutral.gray10)
-                        : formatColor(neutral.gray3),
-                    },
-                  }}
+                <InverseButton
                   onClick={() => setType(ModalType.Repay)}
                 >
                   <Typography variant="body3">
                     Repay
                   </Typography>
-                </Button>
+                </InverseButton>
               </Box>
             ) : (
               <Box
