@@ -1,42 +1,36 @@
-import { Box, Typography, useTheme, Button } from "@mui/material";
-import { BigNumber } from "ethers";
-import { useEffect, useState } from "react";
-import {GovernorCharlieDelegate__factory} from "../chain/contracts";
+import { Box, Typography, useTheme, Button } from '@mui/material'
+import { useEffect, useState } from 'react'
 import {
   useModalContext,
   ModalType,
-} from "../components/libs/modal-content-provider/ModalContentProvider";
-import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
-import { ProposalCard } from "../components/util/governance/ProposalCard";
-import { BNtoHexNumber } from "../components/util/helpers/BNtoHex";
-import { Spinner } from "../components/util/loading";
-import { ToolTip } from "../components/util/tooltip/ToolTip";
-import { getCurrentVotes } from "../hooks/useDelegate";
-import {
-  getRecentProposals,
-  useProposalCount,
-  useProposalInfo,
-  useProposalState,
-} from "../hooks/useGovernance";
+} from '../components/libs/modal-content-provider/ModalContentProvider'
+import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
+import { ProposalCard } from '../components/util/governance/ProposalCard'
+import { BNtoHexNumber } from '../components/util/helpers/BNtoHex'
+import { Spinner } from '../components/util/loading'
+import { ToolTip } from '../components/util/tooltip/ToolTip'
+import { getUserVotingPower } from '../contracts/IPTDelegate'
+import { getRecentProposals } from '../hooks/useGovernance'
 
 export interface Proposal {
-  body: string;
-  id: string;
-  proposer: string;
-  endBlock: number;
+  body: string
+  id: string
+  proposer: string
+  endBlock: number
 }
 
 export const Governance = () => {
-  const theme = useTheme();
-  const { dataBlock, provider, chainId, currentAccount, currentSigner } = useWeb3Context();
-  const { setType } = useModalContext();
+  const theme = useTheme()
+  const { dataBlock, provider, chainId, currentAccount, currentSigner } =
+    useWeb3Context()
+  const { setType } = useModalContext()
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])
-  );
+  )
 
   const [currentVotes, setCurrentVotes] = useState(0)
 
-  const [noProposals, setNoProposals] = useState(false);
+  const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
     if (provider) {
@@ -48,22 +42,22 @@ export const Governance = () => {
               proposer: val.args.proposer,
               body: val.args.description,
               endBlock: val.args.endBlock.toNumber(),
-            });
-          });
-          setProposals(new Map(proposals));
+            })
+          })
+          setProposals(new Map(proposals))
         })
         .catch((e) => {
-          console.log("failed to load proposal info", e);
-          setNoProposals(true);
-        });
+          console.log('failed to load proposal info', e)
+          setNoProposals(true)
+        })
     }
-    if(currentAccount && currentSigner) { 
-      getCurrentVotes(currentAccount, currentSigner!).then(res => {
+    if (currentAccount && currentSigner) {
+      getUserVotingPower(currentAccount, currentSigner!).then((res) => {
         console.log(res)
         setCurrentVotes(BNtoHexNumber(res))
       })
     }
-  }, [provider, dataBlock, chainId]);
+  }, [provider, dataBlock, chainId])
 
   return (
     <Box
@@ -74,10 +68,10 @@ export const Governance = () => {
       margin="auto"
       position="relative"
       sx={{
-        [theme.breakpoints.down("md")]: {
+        [theme.breakpoints.down('md')]: {
           mb: 0,
           pb: 0,
-          marginLeft: "auto",
+          marginLeft: 'auto',
         },
       }}
     >
@@ -87,23 +81,26 @@ export const Governance = () => {
           mb={1}
           columnGap={2}
           rowGap={1}
-          flexDirection={{ xs: "column", md: "row" }}
+          flexDirection={{ xs: 'column', md: 'row' }}
         >
           <ToolTip
             content={
               <>
-                <Typography variant="subtitle1" color="text.primary">Voting</Typography> <br />
+                <Typography variant="subtitle1" color="text.primary">
+                  Voting
+                </Typography>{' '}
+                <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Threshold: 40,000,000
-                </Typography>{" "}
+                </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Qurourum Threshold: 20,000,000
-                </Typography>{" "}
+                </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Voting Period: 5 days
-                </Typography>{" "}
+                </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Timelock Period: 15 seconds
@@ -117,14 +114,17 @@ export const Governance = () => {
           <ToolTip
             content={
               <>
-                <Typography variant="subtitle1" color="text.primary" >Emergency Voting</Typography> <br />
+                <Typography variant="subtitle1" color="text.primary">
+                  Emergency Voting
+                </Typography>{' '}
+                <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Voting Period: 1 day
-                </Typography>{" "}
+                </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Qurourum Threshold: 20,000,000
-                </Typography>{" "}
+                </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
                   Timelock Period: 15 seconds
@@ -133,12 +133,13 @@ export const Governance = () => {
             }
             text="Emergency Voting"
             text_variant="body2_semi"
-
           />
         </Box>
 
         <Box display="flex" alignItems="center">
-          <Typography variant="label2" whiteSpace="nowrap" mr={1}>Voting Power: {currentVotes}</Typography>
+          <Typography variant="label2" whiteSpace="nowrap" mr={1}>
+            Voting Power: {currentVotes}
+          </Typography>
           <Button
             variant="text"
             sx={{ px: 2 }}
@@ -152,11 +153,11 @@ export const Governance = () => {
       {proposals.size != 0 ? (
         Array.from(proposals.values())
           .sort((a, b) => {
-            return Number(a.id) < Number(b.id) ? 1 : -1;
+            return Number(a.id) < Number(b.id) ? 1 : -1
           })
           .map((proposal, index) => (
             <Box key={index} mb={2}>
-              <ProposalCard proposal={proposal} votingPower={currentVotes}/>
+              <ProposalCard proposal={proposal} votingPower={currentVotes} />
             </Box>
           ))
       ) : (
@@ -169,5 +170,5 @@ export const Governance = () => {
         </Box>
       )}
     </Box>
-  );
-};
+  )
+}
