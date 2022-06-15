@@ -15,7 +15,6 @@ import { ModalInputContainer } from './ModalContent/ModalInputContainer'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { delegateVaultVotingPower } from '../../../contracts/Vault/delegateVaultVotingPower'
 
 export const DelegateModal = () => {
