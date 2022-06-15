@@ -1,28 +1,28 @@
-import { Box, Button, Popover, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral } from "../../../theme";
+import { Box, Button, Popover, Typography } from '@mui/material'
+import React, { useState } from 'react'
+import { useLight } from '../../../hooks/useLight'
+import { formatColor, neutral } from '../../../theme'
 
-import { CopyIcon } from "../../icons/misc/CopyIcon";
+import { CopyIcon } from '../../icons/misc/CopyIcon'
 
 export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
-  const isLight = useLight();
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const isLight = useLight()
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const copyText = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget)
     if (copy) {
-      navigator.clipboard.writeText(copy);
+      navigator.clipboard.writeText(copy)
     } else {
-      navigator.clipboard.writeText(text);
+      navigator.clipboard.writeText(text)
     }
-    setOpen(true);
+    setOpen(true)
     setTimeout(() => {
-      setOpen(false);
-    }, 1000);
-  };
+      setOpen(false)
+    }, 1000)
+  }
 
   return (
     <>
@@ -36,28 +36,23 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
                 color: formatColor(neutral.black),
                 '&:hover': {
                   backgroundColor: formatColor(neutral.gray5),
-                }
+                },
               }
             : {
                 backgroundColor: formatColor(neutral.gray4),
                 color: formatColor(neutral.white),
                 '&:hover': {
-                                  backgroundColor: formatColor(neutral.gray1),
-
-                }
+                  backgroundColor: formatColor(neutral.gray1),
+                },
               }
         }
       >
-        <Typography
-          variant="label"
-          color="text.primary"
-          sx={{ position: "relative", top: 1 }}
-        >
+        <Typography variant="label" color="text.primary" sx={{ position: 'relative', top: 1 }}>
           {text}
-        </Typography>{" "}
+        </Typography>{' '}
         <CopyIcon
           sx={{
-            width: "19px",
+            width: '19px',
             marginLeft: 1,
           }}
           islight={isLight.toString()}
@@ -68,8 +63,8 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
         anchorEl={anchorEl}
         onClose={() => {}}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
       >
         <Typography
@@ -82,5 +77,5 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
         </Typography>
       </Popover>
     </>
-  );
-};
+  )
+}
