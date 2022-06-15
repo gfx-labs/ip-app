@@ -128,9 +128,8 @@ export const UserStats = () => {
           {vaultID ? <StatsBodyTypography text={`Vault #${vaultID}`} /> : <></>}
         </Box>
 
-        <Box display="flex" alignItems="center">
-          <StatsBodyTypography text="Vault Address" />{' '}
-          <Box marginRight={2}></Box>
+        <Box display="flex" alignItems="center" columnGap={2}>
+          <StatsBodyTypography text="Vault Address" />
           {connected ? (
             vaultAddress ? (
               <CopyButton
