@@ -8,41 +8,41 @@ import {
   useTheme,
   SwipeableDrawer,
   Link,
-} from "@mui/material";
-import { Box } from "@mui/system";
-import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router";
-import { keyframes } from "@emotion/react";
-import Cookies from "universal-cookie";
-import { ForwardIcon } from "../../components/icons/misc/ForwardIcon";
-import { formatColor, neutral, blue } from "../../theme";
-import { Cards } from "./cards";
-import { Community } from "./community";
-import { Fractional } from "./fractional";
-import { Highlights } from "./highlights";
-import { Splash } from "./splash";
-import { Values } from "./values";
-import { Footer } from "../../components/partials/footer";
-import { MenuIcon } from "../../components/icons/misc/menuIcon";
+} from '@mui/material'
+import { Box } from '@mui/system'
+import { useEffect, useState, useRef } from 'react'
+import { useNavigate } from 'react-router'
+import { keyframes } from '@emotion/react'
+import Cookies from 'universal-cookie'
+import { ForwardIcon } from '../../components/icons/misc/ForwardIcon'
+import { formatColor, neutral, blue } from '../../theme'
+import { Cards } from './cards'
+import { Community } from './community'
+import { Fractional } from './fractional'
+import { Highlights } from './highlights'
+import { Splash } from './splash'
+import { Values } from './values'
+import { Footer } from '../../components/partials/footer'
+import { MenuIcon } from '../../components/icons/misc/menuIcon'
 
 const iOS =
-  typeof navigator !== "undefined" &&
-  /iPad|iPhone|iPod/.test(navigator.userAgent);
+  typeof navigator !== 'undefined' &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent)
 
 const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
-  const [navMenuOpen, setNavMenuOpen] = useState(false);
-  const navMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const [navMenuOpen, setNavMenuOpen] = useState(false)
+  const navMenuButtonRef = useRef<HTMLButtonElement>(null)
 
-  let isLight = theme.palette.mode === "light";
-  const cookies = new Cookies();
-  let nav = useNavigate();
+  let isLight = theme.palette.mode === 'light'
+  const cookies = new Cookies()
+  let nav = useNavigate()
   const toApp = () => {
-    cookies.set("first-visit", "not");
-    nav("/", { replace: true });
-  };
+    cookies.set('first-visit', 'not')
+    nav('/', { replace: true })
+  }
   return (
     <AppBar
       position="fixed"
@@ -50,8 +50,8 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
       sx={{
         paddingTop: { xs: 1, md: 5 },
         paddingX: isMobile ? 1 : 2,
-        width: "100%",
-        margin: "auto",
+        width: '100%',
+        margin: 'auto',
         paddingBottom: 5,
         left: 0,
         right: 0,
@@ -65,7 +65,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               marginTop: 3,
 
               justifyContent: {
-                xs: "space-between",
+                xs: 'space-between',
               },
             }}
           >
@@ -83,8 +83,8 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 ref={navMenuButtonRef}
                 sx={{
                   p: 1,
-                  display: "flex",
-                  minWidth: "auto",
+                  display: 'flex',
+                  minWidth: 'auto',
                 }}
                 variant="text"
                 color="secondary"
@@ -98,22 +98,22 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               open={navMenuOpen}
               anchor="right"
               onClose={() => {
-                setNavMenuOpen(false);
+                setNavMenuOpen(false)
               }}
               onOpen={() => {
-                setNavMenuOpen(true);
+                setNavMenuOpen(true)
               }}
               PaperProps={{
                 elevation: 12,
                 sx: {
                   py: 8,
                   px: 4,
-                  height: "100%",
-                  width: "100%",
-                  backgroundColor: "mobileToolBar.background",
-                  backgroundImage: "none",
-                  display: "flex",
-                  justifyContent: "start",
+                  height: '100%',
+                  width: '100%',
+                  backgroundColor: 'mobileToolBar.background',
+                  backgroundImage: 'none',
+                  display: 'flex',
+                  justifyContent: 'start',
                 },
               }}
               sx={{}}
@@ -123,17 +123,17 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
             >
               <Button
                 onClick={() => {
-                  setNavMenuOpen(false);
+                  setNavMenuOpen(false)
                 }}
                 sx={{
-                  display: "flex",
-                  alignSelf: "start",
+                  display: 'flex',
+                  alignSelf: 'start',
                   height: 23,
-                  width: "auto",
+                  width: 'auto',
                   marginBottom: 5,
                   minWidth: 14,
                   padding: 0,
-                  alignItems: "start",
+                  alignItems: 'start',
                 }}
               >
                 <ForwardIcon
@@ -149,7 +149,7 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 <Button
                   variant="text"
                   onClick={toApp}
-                  sx={{ color: "inherit", justifyContent: "start", mb: -1 }}
+                  sx={{ color: 'inherit', justifyContent: 'start', mb: -1 }}
                   disableRipple
                 >
                   <Typography
@@ -185,12 +185,12 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
                 </Link>
                 {
                   <Typography
-                  variant="body3"
+                    variant="body3"
                     sx={{
-                      color: formatColor(neutral.white)
+                      color: formatColor(neutral.white),
                     }}
                   >
-                    <Link href="#/sale" sx={{ color: "inherit" }}>
+                    <Link href="#/sale" sx={{ color: 'inherit' }}>
                       Sale
                     </Link>
                   </Typography>
@@ -211,40 +211,40 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
             <Typography
               sx={{
                 color: formatColor(neutral.gray2),
-                display: "flex",
+                display: 'flex',
                 zIndex: 10,
-                variant: "body3",
-                alignItems: "center",
+                variant: 'body3',
+                alignItems: 'center',
               }}
             >
-              <Link href="#/whitepaper" sx={{ color: "inherit" }}>
+              <Link href="#/whitepaper" sx={{ color: 'inherit' }}>
                 Whitepaper
               </Link>
             </Typography>
             <Typography
               sx={{
                 color: formatColor(neutral.gray2),
-                display: "flex",
-                variant: "body3",
-                alignItems: "center",
+                display: 'flex',
+                variant: 'body3',
+                alignItems: 'center',
               }}
             >
-              <Link href="#/docs" sx={{ color: "inherit" }}>
+              <Link href="#/docs" sx={{ color: 'inherit' }}>
                 Docs
               </Link>
             </Typography>
             <Typography
               sx={{
                 color: formatColor(neutral.gray2),
-                display: "flex",
-                variant: "body3",
-                alignItems: "center",
+                display: 'flex',
+                variant: 'body3',
+                alignItems: 'center',
               }}
             >
               <Link
                 href="https://gfx.cafe/ip/contracts"
                 target="_blank"
-                sx={{ color: "inherit" }}
+                sx={{ color: 'inherit' }}
               >
                 Git
               </Link>
@@ -253,12 +253,12 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               <Typography
                 sx={{
                   color: formatColor(neutral.gray2),
-                  display: "flex",
-                  variant: "body3",
-                  alignItems: "center",
+                  display: 'flex',
+                  variant: 'body3',
+                  alignItems: 'center',
                 }}
               >
-                <Link href="#/sale" sx={{ color: "inherit" }}>
+                <Link href="#/sale" sx={{ color: 'inherit' }}>
                   Sale
                 </Link>
               </Typography>
@@ -267,31 +267,25 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
               <Typography
                 sx={{
                   color: formatColor(neutral.gray2),
-                  display: "flex",
-                  variant: "body3",
-                  alignItems: "center",
+                  display: 'flex',
+                  variant: 'body3',
+                  alignItems: 'center',
                 }}
               >
-                <Link href="#/whitelist" sx={{ color: "inherit" }}>
+                <Link href="#/whitelist" sx={{ color: 'inherit' }}>
                   Whitelist
                 </Link>
               </Typography>
             }
           </Box>
 
-          <Box sx={{ gap: 0 }} display="absolute" mr={0} ml="auto">
+          <Box ml="auto">
             <Button
               onClick={toApp}
-              variant="cta"
+              variant="contained"
               sx={{
-                color: formatColor(neutral.white),
-                backgroundColor: formatColor(blue.blue1),
-                padding: 3,
-                paddingLeft: 3,
-                paddingRight: 3,
-                "&:hover": {
+                '&:hover': {
                   backgroundColor: formatColor(blue.blue10),
-                  backgroundImage: "none",
                 },
               }}
             >
@@ -301,41 +295,41 @@ const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
         </Toolbar>
       )}
     </AppBar>
-  );
-};
+  )
+}
 
 const LandingPage: React.FC = () => {
-  const [scrollTop, setScrollTop] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0)
 
   useEffect(() => {
     const onScroll = (e: any) => {
-      setScrollTop(e.target.documentElement.scrollTop);
-      console.log(scrollTop, document.body.scrollHeight - window.innerHeight);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [scrollTop]);
+      setScrollTop(e.target.documentElement.scrollTop)
+      console.log(scrollTop, document.body.scrollHeight - window.innerHeight)
+    }
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [scrollTop])
 
   return (
     <>
       <Box
         sx={{
-          marginX: "auto",
-          position: "relative",
-          overflow: "hidden",
+          marginX: 'auto',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
         <TopBar
           sx={{
-            transition: "top 0.6s",
+            transition: 'top 0.6s',
             top:
               scrollTop < 30 ||
               scrollTop >
                 document.documentElement.scrollHeight - window.innerHeight - 30
-                ? "0"
+                ? '0'
                 : -160,
             backgroundColor:
-              scrollTop < 50 ? "transparent" : formatColor(neutral.white),
+              scrollTop < 50 ? 'transparent' : formatColor(neutral.white),
           }}
         />
 
@@ -348,7 +342,7 @@ const LandingPage: React.FC = () => {
         <Footer />
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage

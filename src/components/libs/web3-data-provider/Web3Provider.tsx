@@ -1,67 +1,67 @@
-import React, { useCallback, useContext, useState, useEffect } from "react";
-import { useWeb3React } from "@web3-react/core";
+import React, { useCallback, useContext, useState, useEffect } from 'react'
+import { useWeb3React } from '@web3-react/core'
 
-import { getWallet, WalletType } from "./WalletOptions";
+import { getWallet, WalletType } from './WalletOptions'
 import {
   JsonRpcProvider,
   JsonRpcSigner,
   TransactionResponse,
-} from "@ethersproject/providers";
-import { BigNumber, providers } from "ethers";
+} from '@ethersproject/providers'
+import { BigNumber, providers } from 'ethers'
 
-import { SignatureLike } from "@ethersproject/bytes";
-import { AbstractConnector } from "@web3-react/abstract-connector";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
-import { WalletLinkConnector } from "@web3-react/walletlink-connector";
+import { SignatureLike } from '@ethersproject/bytes'
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 //import { TorusConnector } from '@web3-react/torus-connector';
 
 type transactionType = {
-  value?: string | undefined;
-  from?: string | undefined;
-  to?: string | undefined;
-  nonce?: number | undefined;
-  gasLimit?: BigNumber | undefined;
-  gasPrice?: BigNumber | undefined;
-  data?: string | undefined;
-  chainId?: number | undefined;
-};
+  value?: string | undefined
+  from?: string | undefined
+  to?: string | undefined
+  nonce?: number | undefined
+  gasLimit?: BigNumber | undefined
+  gasPrice?: BigNumber | undefined
+  data?: string | undefined
+  chainId?: number | undefined
+}
 
 export type ERC20TokenType = {
-  address: string;
-  symbol: string;
-  decimals: number;
-  image?: string;
-  aToken?: boolean;
-};
+  address: string
+  symbol: string
+  decimals: number
+  image?: string
+  aToken?: boolean
+}
 
 export type Web3Data = {
-  connectWallet: (wallet: WalletType) => Promise<boolean>;
-  disconnectWallet: () => void;
-  currentAccount: string;
-  currentSigner: JsonRpcSigner | undefined;
-  connected: boolean;
-  loading: boolean;
-  provider: JsonRpcProvider | undefined;
-  chainId: number;
-  dataBlock: number;
-  getTxError: (txHash: string) => Promise<string>;
-  sendTx: (txData: transactionType) => Promise<TransactionResponse>;
+  connectWallet: (wallet: WalletType) => Promise<boolean>
+  disconnectWallet: () => void
+  currentAccount: string
+  currentSigner: JsonRpcSigner | undefined
+  connected: boolean
+  loading: boolean
+  provider: JsonRpcProvider | undefined
+  chainId: number
+  dataBlock: number
+  getTxError: (txHash: string) => Promise<string>
+  sendTx: (txData: transactionType) => Promise<TransactionResponse>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  signTxData: (unsignedData: string) => Promise<SignatureLike>;
-  error: Error | undefined;
-};
+  signTxData: (unsignedData: string) => Promise<SignatureLike>
+  error: Error | undefined
+}
 
 export type Web3ContextData = {
-  web3ProviderData: Web3Data;
-};
+  web3ProviderData: Web3Data
+}
 
-export const Web3Context = React.createContext({} as Web3ContextData);
+export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({
   children,
 }: {
-  children: React.ReactElement;
+  children: React.ReactElement
 }) => {
   const {
     account,
@@ -72,125 +72,117 @@ export const Web3ContextProvider = ({
     error,
     deactivate,
     setError,
-  } = useWeb3React<providers.Web3Provider>();
+  } = useWeb3React<providers.Web3Provider>()
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [connector, setConnector] = useState<AbstractConnector>();
-  const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>();
+  const [loading, setLoading] = useState<boolean>(false)
+  const [connector, setConnector] = useState<AbstractConnector>()
+  const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
 
-  const [deactivated, setDeactivated] = useState<boolean>(false);
-  const [tried, setTried] = useState<boolean>(false);
+  const [deactivated, setDeactivated] = useState<boolean>(false)
+  const [tried, setTried] = useState<boolean>(false)
 
-  const [dataBlock, setDataBlock] = useState(0);
+  const [dataBlock, setDataBlock] = useState(0)
 
   // Wallet connection and disconnection
   // clean local storage
   const cleanConnectorStorage = useCallback((): void => {
     if (connector instanceof WalletConnectConnector) {
-      localStorage.removeItem("walletconnect");
+      localStorage.removeItem('walletconnect')
     }
     if (connector instanceof WalletLinkConnector) {
-      localStorage.removeItem("-walletlink:https://www.walletlink.org:version");
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:version')
       localStorage.removeItem(
-        "-walletlink:https://www.walletlink.org:session:id"
-      );
+        '-walletlink:https://www.walletlink.org:session:id'
+      )
       localStorage.removeItem(
-        "-walletlink:https://www.walletlink.org:session:secret"
-      );
+        '-walletlink:https://www.walletlink.org:session:secret'
+      )
       localStorage.removeItem(
-        "-walletlink:https://www.walletlink.org:session:linked"
-      );
+        '-walletlink:https://www.walletlink.org:session:linked'
+      )
       localStorage.removeItem(
-        "-walletlink:https://www.walletlink.org:AppVersion"
-      );
+        '-walletlink:https://www.walletlink.org:AppVersion'
+      )
       localStorage.removeItem(
-        "-walletlink:https://www.walletlink.org:Addresses"
-      );
+        '-walletlink:https://www.walletlink.org:Addresses'
+      )
       localStorage.removeItem(
-        "-walletlink:https://www.walletlink.org:walletUsername"
-      );
+        '-walletlink:https://www.walletlink.org:walletUsername'
+      )
     }
-    // if (connector instanceof TorusConnector) {
-    //     localStorage.removeItem('loglevel:torus.js');
-    //     localStorage.removeItem('loglevel:torus-embed');
-    //     localStorage.removeItem('loglevel:http-helpers');
-    // }
-  }, [connector]);
+  }, [connector])
 
   const disconnectWallet = useCallback(async () => {
-    cleanConnectorStorage();
+    cleanConnectorStorage()
 
-    localStorage.removeItem("walletProvider");
-    deactivate();
+    localStorage.removeItem('walletProvider')
+    deactivate()
 
     // @ts-expect-error close can be returned by wallet
     if (connector && connector.close) {
       // @ts-expect-error
-      await connector.close();
+      await connector.close()
     }
 
-    setDeactivated(true);
+    setDeactivated(true)
 
-    setLoading(false);
+    setLoading(false)
 
-    window.location.reload();
-  }, [provider, connector]);
+    window.location.reload()
+  }, [provider, connector])
 
   const connectWallet = useCallback(
     async (wallet: WalletType) => {
-      setLoading(false);
+      setLoading(false)
       try {
-        const connector: AbstractConnector = getWallet(wallet, chainId);
+        const connector: AbstractConnector = getWallet(wallet, chainId)
 
         if (connector instanceof WalletConnectConnector) {
-          connector.walletConnectProvider = undefined;
+          connector.walletConnectProvider = undefined
         }
 
-        console.log("activating...");
-        await activate(connector, undefined, true);
-        console.log("activated");
-        setConnector(connector);
-        localStorage.setItem("walletProvider", wallet.toString());
-        setDeactivated(false);
-        setLoading(false);
+        await activate(connector, undefined, true)
+        setConnector(connector)
+        localStorage.setItem('walletProvider', wallet.toString())
+        setDeactivated(false)
+        setLoading(false)
         return true
       } catch (e) {
-        const err = e as Error;
-        setError(err);
-        setLoading(false);
-        console.error(err);
+        const err = e as Error
+        setError(err)
+        setLoading(false)
+        console.error(err)
 
-        throw new Error("Error connecting to");
-
+        throw new Error('Error connecting to')
       }
     },
     [disconnectWallet]
-  );
+  )
 
   useEffect(() => {
     if (provider) {
-      console.log("started auto refresh of blockNumber for", provider);
-      provider.on("block", (n) => {
-            setDataBlock(n);
-      });
+      console.log('started auto refresh of blockNumber for', provider)
+      provider.on('block', (n) => {
+        setDataBlock(n)
+      })
       return () => {
-        console.log("stopped auto refresh of blockNumber for", provider);
-        provider.on("block", () => {});
-      };
+        console.log('stopped auto refresh of blockNumber for', provider)
+        provider.on('block', () => {})
+      }
     }
-  }, [provider]);
+  }, [provider])
 
   // handle logic to eagerly connect to the injected ethereum provider,
   // if it exists and has granted access already
   useEffect(() => {
-    const lastWalletProvider = localStorage.getItem("walletProvider");
+    const lastWalletProvider = localStorage.getItem('walletProvider')
     if (!active && !deactivated) {
       if (!!lastWalletProvider) {
         connectWallet(lastWalletProvider as WalletType).catch(() => {
-          setTried(true);
-        });
+          setTried(true)
+        })
       } else {
-        setTried(true);
+        setTried(true)
         // For now we will not eagerly connect to injected provider
         // const injected = getWallet(WalletType.INJECTED);
         // // @ts-expect-error isAuthorized not in AbstractConnector type. But method is there for
@@ -206,92 +198,92 @@ export const Web3ContextProvider = ({
         // });
       }
     }
-  }, [activate, setTried, active, connectWallet, deactivated]);
+  }, [activate, setTried, active, connectWallet, deactivated])
 
   useEffect(() => {
     if (window && window.ethereum) {
-      window.ethereum.on("chainChanged", () => {
-        window.location.reload();
-      });
-      window.ethereum.on("accountsChanged", () => {
-        window.location.reload();
-      });
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload()
+      })
+      window.ethereum.on('accountsChanged', () => {
+        window.location.reload()
+      })
     }
-  }, []);
+  }, [])
 
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
     if (!tried && active) {
-      setTried(true);
+      setTried(true)
     }
-  }, [tried, active]);
+  }, [tried, active])
 
   const hexToAscii = (_hex: string): string => {
-    const hex = _hex.toString();
-    let str = "";
+    const hex = _hex.toString()
+    let str = ''
     for (let n = 0; n < hex.length; n += 2) {
-      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16))
     }
-    return str;
-  };
+    return str
+  }
 
   const getTxError = async (txHash: string): Promise<string> => {
     try {
-      const tx = await provider?.getTransaction(txHash);
+      const tx = await provider?.getTransaction(txHash)
       // @ts-expect-error TODO: need think about "tx" type
-      const code = await provider.call(tx, tx?.blockNumber);
-      const txError = hexToAscii(code.substr(138));
+      const code = await provider.call(tx, tx?.blockNumber)
+      const txError = hexToAscii(code.substr(138))
 
-      return txError;
+      return txError
     } catch (err) {
-      const error = err as Error;
+      const error = err as Error
 
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
-  };
+  }
 
   const sendTx = async (
     txData: transactionType
   ): Promise<TransactionResponse> => {
-    const { from, value } = txData;
+    const { from, value } = txData
 
-    const bigNumValue = value ? BigNumber.from(value) : undefined;
+    const bigNumValue = value ? BigNumber.from(value) : undefined
     try {
-      const signer = provider?.getSigner(from);
+      const signer = provider?.getSigner(from)
 
       // @ts-expect-error
       const txResponse: TransactionResponse = await signer.sendTransaction({
         ...txData,
         value: bigNumValue,
-      });
+      })
 
-      return txResponse;
+      return txResponse
     } catch (err) {
-      const error = err as Error;
+      const error = err as Error
 
-      throw new Error(error.message);
+      throw new Error(error.message)
     }
-  };
+  }
 
   const signTxData = async (unsignedData: string): Promise<SignatureLike> => {
     try {
       const signature: SignatureLike = await provider?.send(
-        "eth_signTypedData_v4",
+        'eth_signTypedData_v4',
         [account, unsignedData]
-      );
+      )
 
-      return signature;
+      return signature
     } catch (err) {
-      const error = err as Error;
-      throw new Error(error.message);
+      const error = err as Error
+      throw new Error(error.message)
     }
-  };
+  }
 
   useEffect(() => {
     if (provider && account) {
-      setCurrentSigner(provider?.getSigner(account?.toLowerCase() || ""));
+      setCurrentSigner(provider?.getSigner(account?.toLowerCase() || ''))
     }
-  }, [provider, account]);
+  }, [provider, account])
 
   return (
     <Web3Context.Provider
@@ -309,23 +301,23 @@ export const Web3ContextProvider = ({
           dataBlock,
           signTxData,
           error,
-          currentAccount: account?.toLowerCase() || "",
+          currentAccount: account?.toLowerCase() || '',
         },
       }}
     >
       {children}
     </Web3Context.Provider>
-  );
-};
+  )
+}
 
 export const useWeb3Context = () => {
-  const { web3ProviderData } = useContext(Web3Context);
+  const { web3ProviderData } = useContext(Web3Context)
   if (Object.keys(web3ProviderData).length === 0) {
     throw new Error(
-      "useWeb3Context() can only be used inside of <Web3ContextProvider />, " +
-        "please declare it at a higher level."
-    );
+      'useWeb3Context() can only be used inside of <Web3ContextProvider />, ' +
+        'please declare it at a higher level.'
+    )
   }
 
-  return web3ProviderData;
-};
+  return web3ProviderData
+}

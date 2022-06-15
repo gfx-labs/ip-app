@@ -1,20 +1,7 @@
-import {
-  Box,
-  Typography,
-  Button,
-  useTheme,
-} from '@mui/material'
-import { BigNumber } from 'ethers'
-import { Spinner, WithSpinner } from '../loading'
-import { useState, useEffect, Suspense } from 'react'
+import { Box, Typography, useTheme } from '@mui/material'
+import { useState, useEffect } from 'react'
 import { useLight } from '../../../hooks/useLight'
-import {
-  formatColor,
-  formatGradient,
-  gradient,
-  neutral,
-  blue,
-} from '../../../theme'
+import { formatColor, formatGradient, gradient, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
@@ -22,20 +9,15 @@ import {
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { ConnectWalletButton, CopyButton } from '../button'
+import { ConnectWalletButton, CopyButton, InverseButton } from '../button'
 import { TitleText } from '../text'
 import { addressShortener } from '../text/'
 import { SingleStatCard } from './SingleStatCard'
 import { UserTokenCard } from './UserTokenCard'
 import { BN, round } from '../../../easy/bn'
 import { OpenVaultButton } from '../button/OpenVaultButton'
-import { BNtoHexNumber } from '../helpers/BNtoHex'
 
-const StatsBodyTypography = ({
-  text,
-}: {
-  text: string
-}) => (
+const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
     variant="label2"
     color={formatColor(neutral.gray3)}
@@ -47,41 +29,28 @@ const StatsBodyTypography = ({
 
 export const UserStats = () => {
   const isLight = useLight()
-  const [rewards, setRewards] = useState(0)
-  const [rewardsClaimed, setRewardsClaimed] = useState(0)
-
   const [borrowAPR, setBorrowAPR] = useState(0)
   const [depositAPR, setDepositAPR] = useState(0)
 
-  const [token_cards, setTokenCards] = useState<
-    JSX.Element | undefined
-  >(undefined)
+  const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
+    undefined
+  )
 
   const theme = useTheme()
-  const {
-    connected,
-    disconnectWallet,
-    error,
-    currentAccount,
-    dataBlock,
-  } = useWeb3Context()
+  const { connected, currentAccount, dataBlock } = useWeb3Context()
   const rolodex = useRolodexContext()
   const {
     tokens,
-    refresh,
-    setTokens,
     vaultID,
     redraw,
-    setRedraw,
     hasVault,
-    setVaultID,
     vaultAddress,
     borrowingPower,
-    setVaultAddress,
     accountLiability,
     totalBaseLiability,
   } = useVaultDataContext()
   const { setType } = useModalContext()
+
   useEffect(() => {
     if (rolodex) {
       rolodex!
@@ -94,9 +63,7 @@ export const UserStats = () => {
           ).then((apr) => {
             const ba = apr.div(BN('1e14')).toNumber() / 100
             setBorrowAPR(ba)
-            setDepositAPR(
-              round(ba * (1 - ratioDec) * 0.9, 3)
-            )
+            setDepositAPR(round(ba * (1 - ratioDec) * 0.9, 3))
           })
         })
         .catch((e) => {
@@ -114,12 +81,8 @@ export const UserStats = () => {
             key={key}
             tokenName={val.ticker}
             tokenValue={'$' + val.value?.toLocaleString()!}
-            vaultBalance={
-              '$' + val.vault_balance?.toLocaleString()!
-            }
-            tokenAmount={
-              val.vault_amount?.toLocaleString()!
-            }
+            vaultBalance={'$' + val.vault_balance?.toLocaleString()!}
+            tokenAmount={val.vault_amount?.toLocaleString()!}
             image={{
               src: val.ticker,
               alt: val.ticker,
@@ -138,9 +101,7 @@ export const UserStats = () => {
     <Box
       sx={{
         backgroundImage: `linear-gradient(${formatGradient(
-          isLight
-            ? gradient.statDefaultLight
-            : gradient.statDefaultDark
+          isLight ? gradient.statDefaultLight : gradient.statDefaultDark
         )})`,
         paddingX: 6,
         paddingY: 7,
@@ -164,18 +125,11 @@ export const UserStats = () => {
         }}
       >
         <Box display={{ xs: 'none', md: 'flex' }}>
-          {vaultID ? (
-            <StatsBodyTypography
-              text={`Vault #${vaultID}`}
-            />
-          ) : (
-            <></>
-          )}
+          {vaultID ? <StatsBodyTypography text={`Vault #${vaultID}`} /> : <></>}
         </Box>
 
-        <Box display="flex" alignItems="center">
-          <StatsBodyTypography text="Vault Address" />{' '}
-          <Box marginRight={2}></Box>
+        <Box display="flex" alignItems="center" columnGap={2}>
+          <StatsBodyTypography text="Vault Address" />
           {connected ? (
             vaultAddress ? (
               <CopyButton
@@ -200,7 +154,7 @@ export const UserStats = () => {
         sx={{
           display: 'grid',
           justifyContent: 'space-between',
-          gridTemplateColumns: '1fr 1fr 1fr 1fr',
+          gridTemplateColumns: 'repeat(4, 1fr)',
           gap: 4,
           marginBottom: 4,
           [theme.breakpoints.down('lg')]: {
@@ -219,10 +173,7 @@ export const UserStats = () => {
             title="Borrowing Power"
             text={
               borrowingPower !== null
-                ? '$' +
-                  Math.round(
-                    borrowingPower
-                  ).toLocaleString()
+                ? '$' + Math.round(borrowingPower).toLocaleString()
                 : null
             }
           />
@@ -231,33 +182,22 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleText
             title="Borrow APR"
-            text={
-              borrowAPR !== null
-                ? borrowAPR.toString() + '%'
-                : null
-            }
+            text={borrowAPR !== null ? borrowAPR.toString() + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
           <TitleText
             title="Deposit APR"
-            text={
-              depositAPR !== null
-                ? depositAPR.toFixed(2) + '%'
-                : null
-            }
+            text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
           <TitleText
             title="IPT PER YEAR"
             text={
-              totalBaseLiability !== null &&
-              accountLiability !== 0
+              totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
-                    ((94017 * accountLiability) /
-                      totalBaseLiability) *
-                      52.143
+                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
                   )}` + ''
                 : '0'
             }
@@ -288,10 +228,7 @@ export const UserStats = () => {
               title="USDi Borrowed"
               text={
                 accountLiability !== null
-                  ? '$' +
-                    Math.round(
-                      accountLiability
-                    ).toLocaleString()
+                  ? '$' + Math.round(accountLiability).toLocaleString()
                   : null
               }
             />
@@ -312,53 +249,13 @@ export const UserStats = () => {
                   },
                 }}
               >
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: isLight
-                      ? formatColor(neutral.gray7)
-                      : formatColor(neutral.white),
-                    boxShadow: 0,
-                    color: isLight
-                      ? formatColor(neutral.white)
-                      : formatColor(neutral.gray4),
-                    '&:hover': {
-                      boxShadow: 0,
-                      backgroundColor: isLight
-                        ? formatColor(neutral.gray10)
-                        : formatColor(neutral.gray3),
-                    },
-                  }}
-                  onClick={() => setType(ModalType.Borrow)}
-                >
-                  <Typography variant="body3">
-                    Borrow
-                  </Typography>
-                </Button>
+                <InverseButton onClick={() => setType(ModalType.Borrow)}>
+                  <Typography variant="body3">Borrow</Typography>
+                </InverseButton>
 
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: isLight
-                      ? formatColor(neutral.gray7)
-                      : formatColor(neutral.white),
-                    boxShadow: 0,
-                    color: isLight
-                      ? formatColor(neutral.white)
-                      : formatColor(neutral.gray4),
-                    '&:hover': {
-                      boxShadow: 0,
-                      backgroundColor: isLight
-                        ? formatColor(neutral.gray10)
-                        : formatColor(neutral.gray3),
-                    },
-                  }}
-                  onClick={() => setType(ModalType.Repay)}
-                >
-                  <Typography variant="body3">
-                    Repay
-                  </Typography>
-                </Button>
+                <InverseButton onClick={() => setType(ModalType.Repay)}>
+                  <Typography variant="body3">Repay</Typography>
+                </InverseButton>
               </Box>
             ) : (
               <Box
@@ -388,15 +285,6 @@ export const UserStats = () => {
       >
         {connected && currentAccount ? token_cards : <></>}
       </Box>
-      <Box
-        sx={{
-          display: 'grid',
-          justifyContent: 'space-between',
-          gridTemplateColumns: '10fr 1fr',
-          columnGap: 4,
-          marginTop: 2,
-        }}
-      ></Box>
     </Box>
   )
 }
