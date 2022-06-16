@@ -1,13 +1,13 @@
-import { Typography, Box, BoxProps, Skeleton } from "@mui/material";
-import { formatColor, neutral } from "../../../theme";
+import { Typography, Box, BoxProps, Skeleton } from '@mui/material'
+import { formatColor, neutral } from '../../../theme'
 
-type TitleTextProps = {
-  title: string;
-  text: string | null;
-};
+interface TitleTextProps extends BoxProps {
+  title: string
+  text: string | null
+}
 
-export const TitleText = (props: TitleTextProps & BoxProps) => {
-  const { title, text } = props;
+export const TitleText = (props: TitleTextProps) => {
+  const { title, text } = props
   return (
     <Box {...props}>
       <Typography variant="label2" color={formatColor(neutral.gray3)} mb={1}>
@@ -22,5 +22,5 @@ export const TitleText = (props: TitleTextProps & BoxProps) => {
         <Skeleton variant="rectangular" height="28px" animation="wave" />
       )}
     </Box>
-  );
-};
+  )
+}
