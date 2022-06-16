@@ -1,69 +1,69 @@
-import { formatColor, neutral } from "../theme";
-import { Box, Typography, useTheme } from "@mui/material";
-import { useWeb3Context } from "../components/libs/web3-data-provider/Web3Provider";
-import { ProtocolStatsCard } from "../components/util/cards";
-import { useLight } from "../hooks/useLight";
-import { UsdiGraphCard } from "../components/util/cards/UsdiGraphCard";
-import { StatsMeter } from "../components/util/statsMeter";
-import { UserStats } from "../components/util/UserStats";
-import { useRolodexContext } from "../components/libs/rolodex-data-provider/RolodexDataProvider";
-import { useEffect } from "react";
-import { useVaultDataContext } from "../components/libs/vault-data-provider/VaultDataProvider";
-import { BigNumber } from "ethers";
-import { useAppGovernanceContext } from "../components/libs/app-governance-provider/AppGovernanceProvider";
-import { Governance } from "./governance";
-import Cookies from "universal-cookie";
+import { formatColor, neutral } from '../theme'
+import { Box, Typography, useTheme } from '@mui/material'
+import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
+import { ProtocolStatsCard } from '../components/util/cards'
+import { useLight } from '../hooks/useLight'
+import { UsdiGraphCard } from '../components/util/cards/UsdiGraphCard'
+import { StatsMeter } from '../components/util/statsMeter'
+import { UserStats } from '../components/util/UserStats'
+import { useRolodexContext } from '../components/libs/rolodex-data-provider/RolodexDataProvider'
+import { useEffect } from 'react'
+import { useVaultDataContext } from '../components/libs/vault-data-provider/VaultDataProvider'
+import { BigNumber } from 'ethers'
+import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
+import { Governance } from './governance'
+import Cookies from 'universal-cookie'
 
 const Dashboard = () => {
-  const cookies = new Cookies();
-  const isFirst = cookies.get("first-visit");
+  const cookies = new Cookies()
+  const isFirst = cookies.get('first-visit')
   if (isFirst) {
   } else {
-    console.log("detected first login");
+    console.log('detected first login')
     return (
-      <div style={{ minHeight: "80vh" }}>
+      <div style={{ minHeight: '80vh' }}>
         <meta http-equiv="refresh" content="0; url=#/landing" />
         <a href="#/landing">please click here if you are not redirected</a>
       </div>
-    );
+    )
   }
-  const theme = useTheme();
-  const { currentAccount, connected } = useWeb3Context();
-  const rolodex = useRolodexContext();
-  const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext();
-  const isLight = useLight();
-  const { isApp } = useAppGovernanceContext();
+  const theme = useTheme()
+  const { currentAccount, connected } = useWeb3Context()
+  const rolodex = useRolodexContext()
+  const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext()
+  const isLight = useLight()
+  const { isApp } = useAppGovernanceContext()
 
   useEffect(() => {
     if (currentAccount && rolodex) {
       const fetchVault = async (): Promise<void> => {
         try {
-          const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount);
+          const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount)
           if (vaultIDs && vaultIDs?.length > 0) {
-            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString();
-            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID);
-            setVaultID(vaultID);
-            setVaultAddress(vaultAddress);
+            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString()
+            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID)
+            setVaultID(vaultID)
+            setVaultAddress(vaultAddress)
           } else {
-            setVaultID(null);
+            setVaultID(null)
           }
         } catch (err) {
-          setVaultID(null);
+          setVaultID(null)
 
-          throw new Error("cannot get vault");
+          throw new Error('cannot get vault')
         }
-      };
+      }
 
-      fetchVault();
+      fetchVault()
     }
-  }, [currentAccount, rolodex]);
+  }, [currentAccount, rolodex])
 
   return (
     <Box
       sx={{
-        marginX: "auto",
-        position: "relative",
-        overflow: "hidden",
+        marginX: 'auto',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
       {isApp ? (
@@ -77,9 +77,9 @@ const Dashboard = () => {
           margin="auto"
           position="relative"
           sx={{
-            [theme.breakpoints.down("md")]: {
+            [theme.breakpoints.down('md')]: {
               mb: 0,
-              marginLeft: "auto",
+              marginLeft: 'auto',
             },
           }}
         >
@@ -93,21 +93,21 @@ const Dashboard = () => {
           <Box
             sx={{
               marginTop: 3,
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
               columnGap: 2,
-              [theme.breakpoints.down("lg")]: {
-                gridTemplateColumns: "1fr",
+              [theme.breakpoints.down('lg')]: {
+                gridTemplateColumns: '1fr',
                 rowGap: 2,
-            },
+              },
             }}
           >
             <ProtocolStatsCard />
             <UsdiGraphCard />
           </Box>
 
-          <Box sx={{ position: "relative" }}>
-            <Box sx={{ marginY: 4 }}>
+          <Box sx={{ position: 'relative' }}>
+            <Box sx={{ marginY: 4, px: { xs: 2, md: 6 } }}>
               <StatsMeter />
             </Box>
             <UserStats />
@@ -117,7 +117,7 @@ const Dashboard = () => {
         <Governance />
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

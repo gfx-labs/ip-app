@@ -1,14 +1,13 @@
 import { Box, Link, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
-import { blue, formatColor, green, neutral, pink, theme } from '../../../theme'
+import { blue, formatColor, neutral, pink, theme } from '../../../theme'
 import { Votes } from './Votes'
 import { Status } from './Status'
-import { Spinner, WithDots } from '../loading'
+import { Spinner } from '../loading'
 
 import ReactMarkdown from 'react-markdown'
 import {
-  exampleProposal,
   ProposalInfo,
   useProposalInfo,
   useProposalState,
@@ -18,10 +17,8 @@ import { SpecialComponents } from 'react-markdown/lib/ast-to-react'
 import remarkGfm from 'remark-gfm'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import ProposalDetails from './proposal'
-import { Logp } from '../../../logger'
 import { Proposal } from '../../../pages/governance'
-import { BNtoHexNumber, BNtoHexString } from '../helpers/BNtoHex'
-import { useFormatWithDecimals } from '../../../hooks/useTokenInfo'
+import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 import VoteButton from './VoteButton'
 
 export interface ProposalCardProps {
@@ -80,9 +77,18 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   useEffect(() => {
     if (proposal) {
-      const abstainVotes = useFormatWithDecimals(proposal?.abstainVotes, 18)
-      const forVotes = useFormatWithDecimals(proposal?.forVotes, 18)
-      const againstVotes = useFormatWithDecimals(proposal?.againstVotes, 18)
+      const abstainVotes = useMemo(
+        () => useFormatBNWithDecimals(proposal?.abstainVotes, 18),
+        [proposal?.abstainVotes]
+      )
+      const forVotes = useMemo(
+        () => useFormatBNWithDecimals(proposal?.forVotes, 18),
+        [proposal?.forVotes]
+      )
+      const againstVotes = useMemo(
+        () => useFormatBNWithDecimals(proposal?.againstVotes, 18),
+        [proposal?.againstVotes]
+      )
       const totalVotes = abstainVotes + forVotes + againstVotes
       setAbstainVotes(abstainVotes)
       setAgainstVotes(againstVotes)
@@ -104,9 +110,9 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const expandCard = () => {
     setIsExpanded(!isExpanded)
-    console.log(body)
     setExpandedContent(body)
   }
+
   return (
     <Box
       sx={{

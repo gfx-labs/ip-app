@@ -1,18 +1,18 @@
-import { Box, Typography } from "@mui/material";
-import { formatColor, neutral } from "../../../theme";
-import { useState } from "react";
+import { Box, Typography } from '@mui/material'
+import { formatColor, neutral } from '../../../theme'
+import { useState } from 'react'
 import {
   ModalType,
   useModalContext,
-} from "../../libs/modal-content-provider/ModalContentProvider";
-import { BaseModal } from "./BaseModal";
-import { useLight } from "../../../hooks/useLight";
-import { DisableableModalButton } from "../button/DisableableModalButton";
-import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import { useDepositCollateral } from "../../../hooks/useDeposit";
-import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
-import { locale } from "../../../locale";
-import { ContractReceipt } from "ethers";
+} from '../../libs/modal-content-provider/ModalContentProvider'
+import { BaseModal } from './BaseModal'
+import { useLight } from '../../../hooks/useLight'
+import { DisableableModalButton } from '../button/DisableableModalButton'
+import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { locale } from '../../../locale'
+import { ContractReceipt } from 'ethers'
+import { depositCollateral } from '../../../contracts/ERC20'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -22,46 +22,46 @@ export const DepositCollateralConfirmationModal = () => {
     collateralDepositAmount,
     updateTransactionState,
     setCollateralDepositAmount,
-  } = useModalContext();
-  const { provider, currentAccount } = useWeb3Context();
-  const [loading, setLoading] = useState(false);
-  const [loadmsg, setLoadmsg] = useState("");
-  const { vaultAddress } = useVaultDataContext();
+  } = useModalContext()
+  const { provider, currentAccount } = useWeb3Context()
+  const [loading, setLoading] = useState(false)
+  const [loadmsg, setLoadmsg] = useState('')
+  const { vaultAddress } = useVaultDataContext()
   const handleDepositConfirmationRequest = async () => {
-    setLoading(true);
-    setLoadmsg(locale("CheckWallet"));
+    setLoading(true)
+    setLoadmsg(locale('CheckWallet'))
     try {
-      const attempt = await useDepositCollateral(
+      const attempt = await depositCollateral(
         collateralDepositAmount,
         collateralToken.address,
         provider?.getSigner(currentAccount)!,
         vaultAddress!
-      );
+      )
 
-      updateTransactionState(attempt);
+      updateTransactionState(attempt)
 
-      setCollateralDepositAmount("");
-      setLoadmsg(locale("TransactionPending"));
-      const receipt = await attempt.wait();
+      setCollateralDepositAmount('')
+      setLoadmsg(locale('TransactionPending'))
+      const receipt = await attempt.wait()
 
-      updateTransactionState(receipt);
+      updateTransactionState(receipt)
     } catch (err) {
-      const error = err as ContractReceipt;
+      const error = err as ContractReceipt
 
-      updateTransactionState(error);
+      updateTransactionState(error)
     }
 
-    setLoadmsg("");
-    setLoading(false);
-  };
+    setLoadmsg('')
+    setLoading(false)
+  }
 
-  const isLight = useLight();
+  const isLight = useLight()
 
   return (
     <BaseModal
       open={type === ModalType.DepositCollateralConfirmation}
       setOpen={() => {
-        setType(ModalType.DepositCollateral);
+        setType(ModalType.DepositCollateral)
       }}
     >
       <Typography
@@ -74,13 +74,13 @@ export const DepositCollateralConfirmationModal = () => {
       </Typography>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           mb: 2,
           mt: 3,
           py: 2,
-          borderRadius: "10px",
+          borderRadius: '10px',
           columnGap: 4,
           backgroundColor: isLight
             ? formatColor(neutral.gray5)
@@ -101,7 +101,7 @@ export const DepositCollateralConfirmationModal = () => {
               $
               {(
                 collateralToken.value * Number(collateralDepositAmount)
-              ).toFixed(2)}{" "}
+              ).toFixed(2)}{' '}
               ({collateralDepositAmount} {collateralToken.ticker})
             </Typography>
           </Box>
@@ -116,5 +116,5 @@ export const DepositCollateralConfirmationModal = () => {
         load_text={loadmsg}
       />
     </BaseModal>
-  );
-};
+  )
+}

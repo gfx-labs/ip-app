@@ -6,10 +6,9 @@ import { blue, formatGradient, gradient, formatColor } from '../../../theme'
 import { SwapContainer } from '../swap'
 import { TitleText } from '../text'
 import { useRolodexContext } from '../../../components/libs/rolodex-data-provider/RolodexDataProvider'
-import { getTotalSupply } from '../../../contracts/USDI/getTotalSupply'
+import { getTotalSupply, getReserveRatio } from '../../../contracts/USDI'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { BN } from '../../../easy/bn'
-import { getReserveRatio } from '../../../contracts/USDI/getReserveRatio'
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight()

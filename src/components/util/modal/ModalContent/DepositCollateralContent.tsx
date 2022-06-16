@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
-import { Box, Typography, Button } from "@mui/material";
-import { formatColor, neutral, blue } from "../../../../theme";
-import { DecimalInput } from "../../textFields";
-import { DisableableModalButton } from "../../button/DisableableModalButton";
-import { ModalInputContainer } from "./ModalInputContainer";
-import { SwapIcon } from "../../../icons/misc/SwapIcon";
+import { Box, Typography, Button } from '@mui/material'
+import { formatColor, neutral, blue } from '../../../../theme'
+import { DecimalInput } from '../../textFields'
+import { DisableableModalButton } from '../../button/DisableableModalButton'
+import { ModalInputContainer } from './ModalInputContainer'
+import { SwapIcon } from '../../../icons/misc/SwapIcon'
 import {
   ModalType,
   useModalContext,
-} from "../../../libs/modal-content-provider/ModalContentProvider";
-import { useLight } from "../../../../hooks/useLight";
-import { useVaultDataContext } from "../../../libs/vault-data-provider/VaultDataProvider";
+} from '../../../libs/modal-content-provider/ModalContentProvider'
+import { useLight } from '../../../../hooks/useLight'
+import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
 
 export const DepositCollateralContent = () => {
   const {
@@ -19,85 +19,84 @@ export const DepositCollateralContent = () => {
     setCollateralDepositAmount,
     collateralToken,
     collateralDepositAmount,
-  } = useModalContext();
+  } = useModalContext()
 
-  const { borrowingPower, tokens } = useVaultDataContext();
+  const { borrowingPower, tokens } = useVaultDataContext()
 
-  const [disabled, setDisabled] = useState(true);
-  const [focus, setFocus] = useState(false);
-  const [isMoneyValue, setIsMoneyValue] = useState(false);
-  const toggle = () => setFocus(!focus);
-  const isLight = useLight();
-  const ltv = tokens![collateralToken.ticker].token_LTV || 0;
-  const [newBorrowingPower, setNewBorrowingPower] = useState(0);
-  const [inputAmount, setInputAmount] = useState("0");
+  const [disabled, setDisabled] = useState(true)
+  const [focus, setFocus] = useState(false)
+  const [isMoneyValue, setIsMoneyValue] = useState(false)
+  const toggle = () => setFocus(!focus)
+  const isLight = useLight()
+  const ltv = tokens![collateralToken.ticker].token_LTV || 0
+  const [newBorrowingPower, setNewBorrowingPower] = useState(0)
+  const [inputAmount, setInputAmount] = useState('')
 
   const trySetInputAmount = (amount: string) => {
-    setInputAmount(amount);
-  };
+    setInputAmount(amount)
+  }
 
   const setMax = () => {
-    console.log(isMoneyValue);
+    console.log(isMoneyValue)
     if (isMoneyValue) {
       console.log(
         collateralToken.value,
         collateralToken.wallet_amount,
         collateralToken.wallet_amount! * collateralToken.value
-      );
+      )
       setInputAmount(
         (collateralToken.wallet_amount! * collateralToken.value).toString()
-      );
+      )
     } else {
-      setInputAmount(collateralToken.wallet_amount!.toString());
+      setInputAmount(collateralToken.wallet_amount!.toString())
     }
-  };
-  console.log(ltv);
+  }
 
   useEffect(() => {
-    setDisabled(Number(inputAmount) <= 0);
+    setDisabled(Number(inputAmount) <= 0)
 
     if (isMoneyValue) {
       setCollateralDepositAmount(
         (Number(inputAmount) / collateralToken.value).toString()
-      );
-      setNewBorrowingPower(borrowingPower + Number(inputAmount) * (ltv / 100));
+      )
+      setNewBorrowingPower(borrowingPower + Number(inputAmount) * (ltv / 100))
     } else {
-      setCollateralDepositAmount(inputAmount);
+      setCollateralDepositAmount(inputAmount)
       setNewBorrowingPower(
         borrowingPower +
           Number(inputAmount) * collateralToken.value * (ltv / 100)
-      );
+      )
     }
-  }, [inputAmount]);
+  }, [inputAmount])
 
   const swapHandler = () => {
     console.log(
       collateralDepositAmount,
       collateralToken.value,
       collateralToken.ticker
-    );
+    )
     if (!isMoneyValue) {
       setInputAmount(
         (
           Math.round((Number(inputAmount) / collateralToken.value) * 100) / 100
         ).toString()
-      );
+      )
     } else {
       setInputAmount(
         (
           Math.round((Number(inputAmount) / collateralToken.value) * 100) / 100
         ).toString()
-      );
+      )
     }
-    setIsMoneyValue(!isMoneyValue);
-  };
+    setIsMoneyValue(!isMoneyValue)
+  }
 
   return (
     <Box>
       <Box textAlign="right" mb={1}>
         <Typography variant="label2" color={formatColor(neutral.gray3)}>
-          {" "}
-          Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)}{" "}
+          {' '}
+          Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)}{' '}
           {collateralToken?.ticker}
         </Typography>
       </Box>
@@ -107,24 +106,24 @@ export const DepositCollateralContent = () => {
           onFocus={toggle}
           onBlur={toggle}
           onChange={trySetInputAmount}
-          placeholder={`0 ${isMoneyValue ? "USD" : collateralToken?.ticker}`}
+          placeholder={`0 ${isMoneyValue ? 'USD' : collateralToken?.ticker}`}
           value={inputAmount}
           isMoneyValue={isMoneyValue}
         />
 
-        <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
+        <Box sx={{ display: 'flex', paddingBottom: 0.5, alignItems: 'center' }}>
           <Typography
             variant="body3"
             sx={{
               color: formatColor(neutral.gray3),
               marginLeft: 1,
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
             }}
           >
             {isMoneyValue
               ? `${
-                  inputAmount === "0"
-                    ? "0"
+                  inputAmount === '0'
+                    ? '0'
                     : (Number(inputAmount) / collateralToken?.value).toFixed(8)
                 } ${collateralToken?.ticker}`
               : `$${(
@@ -137,13 +136,13 @@ export const DepositCollateralContent = () => {
           <Button
             onClick={setMax}
             sx={{
-              minWidth: "auto",
+              minWidth: 'auto',
               height: 30,
               paddingY: 2,
               paddingX: 1,
-              "&:hover": {
-                backgroundColor: "transparent",
-                ".MuiTypography-root.MuiTypography-body1": {
+              '&:hover': {
+                backgroundColor: 'transparent',
+                '.MuiTypography-root.MuiTypography-body1': {
                   color: formatColor(neutral.gray1),
                 },
               },
@@ -153,7 +152,7 @@ export const DepositCollateralContent = () => {
               variant="body3"
               color={formatColor(neutral.gray3)}
               sx={{
-                "&:hover": {
+                '&:hover': {
                   color: isLight
                     ? formatColor(neutral.gray1)
                     : formatColor(neutral.white),
@@ -166,8 +165,8 @@ export const DepositCollateralContent = () => {
 
           <Button
             sx={{
-              minWidth: "auto",
-              borderRadius: "50%",
+              minWidth: 'auto',
+              borderRadius: '50%',
               width: 30,
               height: 30,
               paddingY: 0,
@@ -190,9 +189,9 @@ export const DepositCollateralContent = () => {
 
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
           marginTop: 2,
         }}
       >
@@ -211,5 +210,5 @@ export const DepositCollateralContent = () => {
         </Typography>
       </Box>
     </Box>
-  );
-};
+  )
+}

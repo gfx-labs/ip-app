@@ -1,18 +1,18 @@
-import { useState, useEffect } from "react";
-import { Box, Typography, Button } from "@mui/material";
-import { round } from "../../../../easy/bn";
+import { useState, useEffect } from 'react'
+import { Box, Typography, Button } from '@mui/material'
+import { round } from '../../../../easy/bn'
 
-import { blue, formatColor, neutral } from "../../../../theme";
-import { DecimalInput } from "../../textFields";
-import { DisableableModalButton } from "../../button/DisableableModalButton";
-import { ModalInputContainer } from "./ModalInputContainer";
-import { SwapIcon } from "../../../icons/misc/SwapIcon";
+import { blue, formatColor, neutral } from '../../../../theme'
+import { DecimalInput } from '../../textFields'
+import { DisableableModalButton } from '../../button/DisableableModalButton'
+import { ModalInputContainer } from './ModalInputContainer'
+import { SwapIcon } from '../../../icons/misc/SwapIcon'
 import {
   ModalType,
   useModalContext,
-} from "../../../libs/modal-content-provider/ModalContentProvider";
-import { useVaultDataContext } from "../../../libs/vault-data-provider/VaultDataProvider";
-import { useLight } from "../../../../hooks/useLight";
+} from '../../../libs/modal-content-provider/ModalContentProvider'
+import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
+import { useLight } from '../../../../hooks/useLight'
 
 export const WithdrawCollateralContent = () => {
   const {
@@ -20,91 +20,91 @@ export const WithdrawCollateralContent = () => {
     collateralToken,
     setCollateralWithdrawAmount,
     collateralWithdrawAmount,
-  } = useModalContext();
+  } = useModalContext()
 
-  const isLight = useLight();
-  const { borrowingPower, accountLiability, tokens } = useVaultDataContext();
+  const isLight = useLight()
+  const { borrowingPower, accountLiability, tokens } = useVaultDataContext()
 
-  const [inputAmount, setInputAmount] = useState("0");
+  const [inputAmount, setInputAmount] = useState('')
 
-  const [focus, setFocus] = useState(false);
-  const toggle = () => setFocus(!focus);
-  const [isMoneyValue, setIsMoneyValue] = useState(false);
+  const [focus, setFocus] = useState(false)
+  const toggle = () => setFocus(!focus)
+  const [isMoneyValue, setIsMoneyValue] = useState(false)
 
-  const [disabled, setDisabled] = useState(true);
-  const [newBorrowingPower, setNewBorrowingPower] = useState(0);
-  const ltv = tokens![collateralToken.ticker].token_LTV || 0;
+  const [disabled, setDisabled] = useState(true)
+  const [newBorrowingPower, setNewBorrowingPower] = useState(0)
+  const ltv = tokens![collateralToken.ticker].token_LTV || 0
 
   useEffect(() => {
-    let newBorrowingPower;
+    let newBorrowingPower
     if (isMoneyValue) {
-      newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100);
+      newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100)
       setCollateralWithdrawAmount(
         (Number(inputAmount) / collateralToken.value).toString()
-      );
+      )
 
-      setNewBorrowingPower(newBorrowingPower);
+      setNewBorrowingPower(newBorrowingPower)
     } else {
       newBorrowingPower =
         borrowingPower -
-        Number(inputAmount) * collateralToken.value * (ltv / 100);
-      setCollateralWithdrawAmount(inputAmount);
-      setNewBorrowingPower(newBorrowingPower);
+        Number(inputAmount) * collateralToken.value * (ltv / 100)
+      setCollateralWithdrawAmount(inputAmount)
+      setNewBorrowingPower(newBorrowingPower)
     }
     if (newBorrowingPower < accountLiability || Number(inputAmount) <= 0) {
-      setDisabled(true);
+      setDisabled(true)
     } else {
-      setDisabled(false);
+      setDisabled(false)
     }
-  }, [inputAmount]);
+  }, [inputAmount])
 
   const swapHandler = () => {
     if (!isMoneyValue) {
       setInputAmount(
         round(Number(inputAmount) * collateralToken.value, 5).toString()
-      );
+      )
     } else {
       setInputAmount(
         round(Number(inputAmount) / collateralToken.value, 2).toString()
-      );
+      )
     }
-    setIsMoneyValue(!isMoneyValue);
-  };
+    setIsMoneyValue(!isMoneyValue)
+  }
 
-  const trySetInputAmount = (amount: string) => setInputAmount(amount);
+  const trySetInputAmount = (amount: string) => setInputAmount(amount)
 
   const setMax = () => {
-    console.log("click");
+    console.log('click')
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
-      let a2s = borrowingPower - accountLiability;
-      console.log(borrowingPower, accountLiability, a2s);
+      let a2s = borrowingPower - accountLiability
+      console.log(borrowingPower, accountLiability, a2s)
       if (a2s >= 0) {
-        console.log("> 0");
+        console.log('> 0')
 
-        const tv = collateralToken.vault_amount * collateralToken.value;
-        console.log(tv, a2s);
+        const tv = collateralToken.vault_amount * collateralToken.value
+        console.log(tv, a2s)
         if (tv < a2s) {
           if (isMoneyValue) {
-            setInputAmount(tv.toString());
+            setInputAmount(tv.toString())
           } else {
-            setInputAmount(collateralToken.vault_amount.toString());
+            setInputAmount(collateralToken.vault_amount.toString())
           }
         } else {
-          console.log("< 0");
+          console.log('< 0')
           if (isMoneyValue) {
-            setInputAmount((a2s / (ltv / 100)).toString());
+            setInputAmount((a2s / (ltv / 100)).toString())
           } else {
             setInputAmount(
               round(a2s / collateralToken.value / (ltv / 100), 4).toString()
-            );
+            )
           }
         }
       }
     } else {
-      setInputAmount("0");
+      setInputAmount('0')
     }
-  };
+  }
 
   return (
     <Box>
@@ -119,23 +119,23 @@ export const WithdrawCollateralContent = () => {
           onBlur={toggle}
           onFocus={toggle}
           onChange={trySetInputAmount}
-          placeholder={`0 ${isMoneyValue ? "USD" : collateralToken.ticker}`}
+          placeholder={`0 ${isMoneyValue ? 'USD' : collateralToken.ticker}`}
           value={inputAmount}
           isMoneyValue={isMoneyValue}
         />
-        <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
+        <Box sx={{ display: 'flex', paddingBottom: 0.5, alignItems: 'center' }}>
           <Typography
             variant="body3"
             sx={{
               color: formatColor(neutral.gray3),
               marginLeft: 1,
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
             }}
           >
             {isMoneyValue
               ? `${
-                  inputAmount === "0"
-                    ? "0"
+                  inputAmount === '0'
+                    ? '0'
                     : round(Number(inputAmount) / collateralToken.value, 6)
                 } ${collateralToken.ticker}`
               : `$${(
@@ -149,14 +149,14 @@ export const WithdrawCollateralContent = () => {
           <Button
             onClick={setMax}
             sx={{
-              minWidth: "auto",
+              minWidth: 'auto',
 
               height: 30,
               paddingY: 2,
               paddingX: 1,
-              "&:hover": {
-                backgroundColor: "transparent",
-                ".MuiTypography-root.MuiTypography-body1": {
+              '&:hover': {
+                backgroundColor: 'transparent',
+                '.MuiTypography-root.MuiTypography-body1': {
                   color: formatColor(neutral.gray1),
                 },
               },
@@ -166,7 +166,7 @@ export const WithdrawCollateralContent = () => {
               variant="body3"
               color={formatColor(neutral.gray3)}
               sx={{
-                "&:hover": {
+                '&:hover': {
                   color: isLight
                     ? formatColor(neutral.gray1)
                     : formatColor(neutral.white),
@@ -179,8 +179,8 @@ export const WithdrawCollateralContent = () => {
 
           <Button
             sx={{
-              minWidth: "auto",
-              borderRadius: "50%",
+              minWidth: 'auto',
+              borderRadius: '50%',
               width: 30,
               height: 30,
               paddingY: 0,
@@ -203,9 +203,9 @@ export const WithdrawCollateralContent = () => {
 
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
           marginTop: 2,
         }}
       >
@@ -219,7 +219,7 @@ export const WithdrawCollateralContent = () => {
           height={12}
           marginX={1}
           sx={{
-            transform: "rotate(180deg)",
+            transform: 'rotate(180deg)',
           }}
         />
         <Typography variant="label2" color={formatColor(blue.blue1)}>
@@ -227,5 +227,5 @@ export const WithdrawCollateralContent = () => {
         </Typography>
       </Box>
     </Box>
-  );
-};
+  )
+}
