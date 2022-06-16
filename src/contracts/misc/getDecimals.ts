@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { Contract } from 'ethers'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 

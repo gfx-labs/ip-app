@@ -50,6 +50,7 @@ export type Web3Data = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   signTxData: (unsignedData: string) => Promise<SignatureLike>
   error: Error | undefined
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider | undefined
 }
 
 export type Web3ContextData = {
@@ -77,6 +78,9 @@ export const Web3ContextProvider = ({
   const [loading, setLoading] = useState<boolean>(false)
   const [connector, setConnector] = useState<AbstractConnector>()
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
+  const [signerOrProvider, setSignerOrProvider] = useState<
+    JsonRpcSigner | JsonRpcProvider | undefined
+  >()
 
   const [deactivated, setDeactivated] = useState<boolean>(false)
   const [tried, setTried] = useState<boolean>(false)
@@ -171,6 +175,14 @@ export const Web3ContextProvider = ({
       }
     }
   }, [provider])
+
+  useEffect(() => {
+    if (currentSigner) {
+      setSignerOrProvider(currentSigner)
+    } else {
+      setSignerOrProvider(provider)
+    }
+  }, [provider, currentSigner])
 
   // handle logic to eagerly connect to the injected ethereum provider,
   // if it exists and has granted access already
@@ -281,7 +293,7 @@ export const Web3ContextProvider = ({
 
   useEffect(() => {
     if (provider && account) {
-      setCurrentSigner(provider?.getSigner(account?.toLowerCase() || ''))
+      setCurrentSigner(provider?.getSigner(account?.toLowerCase()))
     }
   }, [provider, account])
 
@@ -302,6 +314,7 @@ export const Web3ContextProvider = ({
           signTxData,
           error,
           currentAccount: account?.toLowerCase() || '',
+          signerOrProvider,
         },
       }}
     >

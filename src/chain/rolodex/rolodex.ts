@@ -1,6 +1,6 @@
-import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { Web3Data } from "../../components/libs/web3-data-provider/Web3Provider";
-import { Chains } from "../chains";
+import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { Web3Data } from '../../components/libs/web3-data-provider/Web3Provider'
+import { Chains } from '../chains'
 import {
   IUSDI,
   USDI__factory,
@@ -13,84 +13,83 @@ import {
   ERC20Detailed,
   ERC20Detailed__factory,
   GovernorCharlieDelegate,
-} from "../contracts";
+} from '../contracts'
 
 export const backupProvider = new JsonRpcProvider(
-  "https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw"
-);
+  'https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw'
+)
 
 export class Rolodex {
-  provider: JsonRpcProvider;
+  provider: JsonRpcProvider
 
-  charlie?: GovernorCharlieDelegate;
+  charlie?: GovernorCharlieDelegate
 
-  addressUSDI: string;
-  USDI: IUSDI;
+  addressUSDI: string
+  USDI: IUSDI
 
-  addressVC?: string;
-  VC?: VaultController;
+  addressVC?: string
+  VC?: VaultController
 
-  addressOracle?: string;
-  Oracle?: IOracleMaster;
+  addressOracle?: string
+  Oracle?: IOracleMaster
 
-  addressCurve?: string;
-  Curve?: ICurveMaster;
+  addressCurve?: string
+  Curve?: ICurveMaster
 
-  addressUSDC?: string;
-  USDC?: ERC20Detailed;
+  addressUSDC?: string
+  USDC?: ERC20Detailed
 
   constructor(signerOrProvider: JsonRpcSigner | JsonRpcProvider, usdi: string) {
     if (signerOrProvider instanceof JsonRpcSigner) {
-      this.provider = signerOrProvider.provider;
+      this.provider = signerOrProvider.provider
     } else {
-      this.provider = signerOrProvider;
+      this.provider = signerOrProvider
     }
-    this.addressUSDI = usdi;
-    this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider);
+    this.addressUSDI = usdi
+    this.USDI = USDI__factory.connect(this.addressUSDI, signerOrProvider)
   }
 }
 
 export const NewRolodex = async (ctx: Web3Data) => {
   if (!ctx.chainId) {
-    throw new Error("Must connect to a chain first");
+    throw new Error('Must connect to a chain first')
   }
   // *remove or use mainnet 1
-  const token = Chains.getInfo(ctx.chainId || 1);
-  let rolo: Rolodex;
-  let provider = backupProvider;
-  rolo = new Rolodex(provider!, token.usdiAddress!);
-  
+  const token = Chains.getInfo(ctx.chainId || 1)
+  let rolo: Rolodex
+  let provider = backupProvider
+  rolo = new Rolodex(provider!, token.usdiAddress!)
   try {
     if (!ctx.provider) {
-      rolo.addressVC = await rolo.USDI?.getVaultController();
-      rolo.VC = VaultController__factory.connect(rolo.addressVC, provider);
+      rolo.addressVC = await rolo.USDI?.getVaultController()
+      rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     } else {
-      const signer = ctx.provider.getSigner(ctx.currentAccount);
-      provider = ctx.provider;
-      rolo = new Rolodex(signer!, token.usdiAddress!);
-      rolo.addressVC = await rolo.USDI?.getVaultController();
-      rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!);
+      const signer = ctx.provider.getSigner(ctx.currentAccount)
+      provider = ctx.provider
+      rolo = new Rolodex(signer!, token.usdiAddress!)
+      rolo.addressVC = await rolo.USDI?.getVaultController()
+      rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!)
     }
     // connect
     if (!rolo.addressUSDC) {
-      rolo.addressUSDC = await rolo.USDI.reserveAddress();
-      rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!);
+      rolo.addressUSDC = await rolo.USDI.reserveAddress()
+      rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider!)
     }
 
     if (!rolo.addressOracle) {
-      rolo.addressOracle = await rolo.VC?.getOracleMaster();
+      rolo.addressOracle = await rolo.VC?.getOracleMaster()
       rolo.Oracle = OracleMaster__factory.connect(
         rolo.addressOracle!,
         provider!
-      );
+      )
     }
 
     if (!rolo.addressCurve) {
-      rolo.addressCurve = await rolo.VC?.getCurveMaster();
-      rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!);
+      rolo.addressCurve = await rolo.VC?.getCurveMaster()
+      rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!)
     }
   } catch (e) {
-    return rolo;
+    return rolo
   }
-  return rolo;
-};
+  return rolo
+}

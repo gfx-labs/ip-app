@@ -1,5 +1,5 @@
 import { Box, Link, Typography } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { blue, formatColor, neutral, pink, theme } from '../../../theme'
 import { Votes } from './Votes'
@@ -7,11 +7,6 @@ import { Status } from './Status'
 import { Spinner } from '../loading'
 
 import ReactMarkdown from 'react-markdown'
-import {
-  ProposalInfo,
-  useProposalInfo,
-  useProposalState,
-} from '../../../hooks/useGovernance'
 import { NormalComponents } from 'react-markdown/lib/complex-types'
 import { SpecialComponents } from 'react-markdown/lib/ast-to-react'
 import remarkGfm from 'remark-gfm'
@@ -20,6 +15,11 @@ import ProposalDetails from './proposal'
 import { Proposal } from '../../../pages/governance'
 import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 import VoteButton from './VoteButton'
+import {
+  getProposalInfo,
+  ProposalInfo,
+  getProposalState,
+} from '../../../contracts/GovernorCharlieDelegate'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -27,9 +27,9 @@ export interface ProposalCardProps {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider } = useWeb3Context()
+  const { dataBlock, provider, currentSigner } = useWeb3Context()
   const { votingPower } = props
-  const { id, proposer, body, endBlock } = props.proposal
+  const { id, body, endBlock } = props.proposal
 
   const isLight = useLight()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -58,37 +58,23 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   useEffect(() => {
-    const getProposalInfo = async () => {
-      return await useProposalInfo(id, provider!)
-    }
+    const signerOrProvider = currentSigner ? currentSigner : provider
 
-    const getProposalStatus = async () => {
-      return await useProposalState(id, provider!)
-    }
-
-    getProposalInfo().then((res) => {
+    getProposalInfo(id, signerOrProvider!).then((res) => {
       setProposal(res)
     })
 
-    getProposalStatus().then((res) => {
+    getProposalState(id, signerOrProvider!).then((res) => {
       setStatus(res)
     })
   }, [id])
 
   useEffect(() => {
     if (proposal) {
-      const abstainVotes = useMemo(
-        () => useFormatBNWithDecimals(proposal?.abstainVotes, 18),
-        [proposal?.abstainVotes]
-      )
-      const forVotes = useMemo(
-        () => useFormatBNWithDecimals(proposal?.forVotes, 18),
-        [proposal?.forVotes]
-      )
-      const againstVotes = useMemo(
-        () => useFormatBNWithDecimals(proposal?.againstVotes, 18),
-        [proposal?.againstVotes]
-      )
+      const abstainVotes = useFormatBNWithDecimals(proposal?.abstainVotes, 18)
+      const forVotes = useFormatBNWithDecimals(proposal?.forVotes, 18)
+      const againstVotes = useFormatBNWithDecimals(proposal?.againstVotes, 18)
+
       const totalVotes = abstainVotes + forVotes + againstVotes
       setAbstainVotes(abstainVotes)
       setAgainstVotes(againstVotes)

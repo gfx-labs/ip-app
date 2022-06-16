@@ -1,127 +1,19 @@
-import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, BigNumberish } from "ethers";
-import { GovernorCharlieDelegate__factory } from "../chain/contracts";
-import { VoteCastEventObject } from "../chain/contracts/_external/openzeppelin/GovernorBravoInterfaces.sol/GovernorBravoEvents";
-import { useModalContext } from "../components/libs/modal-content-provider/ModalContentProvider";
-export interface ProposalInfo {
-  id: BigNumber;
-  proposer: string;
-  eta: BigNumber;
-  startBlock: BigNumber;
-  endBlock: BigNumber;
-  forVotes: BigNumber;
-  againstVotes: BigNumber;
-  abstainVotes: BigNumber;
-  canceled: boolean;
-  executed: boolean;
-  emergency: boolean;
-  quorumVotes: BigNumber;
-  delay: BigNumber;
-}
-
-export const governor = "0x3389d29e457345e4f22731292d9c10ddfc78088f";
-
+import { BigNumber } from 'ethers'
 interface rawProposalInfo {
-  id: BigNumber;
-  proposer: string;
-  eta: BigNumber;
-  startBlock: BigNumber;
-  endBlock: BigNumber;
-  forVotes: BigNumber;
-  againstVotes: BigNumber;
-  abstainVotes: BigNumber;
-  canceled: boolean;
-  executed: boolean;
-  emergency: boolean;
-  quorumVotes: BigNumber;
-  delay: BigNumber;
+  id: BigNumber
+  proposer: string
+  eta: BigNumber
+  startBlock: BigNumber
+  endBlock: BigNumber
+  forVotes: BigNumber
+  againstVotes: BigNumber
+  abstainVotes: BigNumber
+  canceled: boolean
+  executed: boolean
+  emergency: boolean
+  quorumVotes: BigNumber
+  delay: BigNumber
 }
-
-export const getRecentProposals = async (
-  signer: JsonRpcProvider,
-  headBlock?: number
-) => {
-  try {
-    const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-    const filters = contract.filters.ProposalCreated();
-    const logs = await contract.queryFilter(filters, undefined, headBlock);
-    console.log(logs[0]);
-    return logs;
-  } catch (err) {
-    throw new Error("error getting proposals");
-  }
-};
-
-export const useProposalInfo = async (
-  id: BigNumberish,
-  signer: JsonRpcProvider
-): Promise<ProposalInfo> => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-  return contract.proposals(id);
-};
-
-export const getProposalVoters = async (
-  id: BigNumberish,
-  signer: JsonRpcProvider
-): Promise<VoteCastEventObject[]> => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-  const log = await contract.queryFilter(
-    contract.filters.VoteCast(undefined),
-    undefined,
-    undefined
-  );
-  return log
-    .filter((x) => {
-      return x.args.proposalId.eq(id);
-    })
-    .map((x) => {
-      return {
-        ...x.args,
-      };
-    });
-};
-
-export const useProposalCount = async (signer: JsonRpcProvider) => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-  const info = await contract.proposalCount();
-  return info.toNumber();
-};
-
-export const useCastVote = async (
-  id: string,
-  vote: number,
-  signer: JsonRpcSigner
-) => {
-  const { updateTransactionState } = useModalContext();
-
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-
-  const castVoteTransaction = await contract.castVote(id, vote);
-
-  updateTransactionState(castVoteTransaction);
-
-  const voteReceipt = await castVoteTransaction.wait();
-
-  updateTransactionState(voteReceipt);
-
-  return voteReceipt;
-};
-
-export const getGovernorContract = (signer: JsonRpcSigner) => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, signer);
-
-  return contract;
-};
-
-export const useProposalState = async (
-  id: BigNumberish,
-  provider: JsonRpcProvider
-): Promise<number> => {
-  const contract = GovernorCharlieDelegate__factory.connect(governor, provider);
-  const status = await contract.state(id);
-
-  return status;
-};
 
 export const exampleProposal = `
 ---
@@ -359,4 +251,4 @@ Term 2
   ::: warning
 *here be dragons*
   :::
-  `;
+  `

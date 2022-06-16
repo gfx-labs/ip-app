@@ -8,15 +8,12 @@ import { DarkIcon } from '../../icons/misc/DarkIcon'
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
-import Cookies from 'universal-cookie'
-import { formatColor, blue, neutral } from '../../../theme'
 
 export const DesktopToolBar = () => {
   //desktop menu config
 
   const isLight = useLight()
 
-  const cookies = new Cookies()
   const { toggleMode } = useContext(PaletteModeContext)
 
   const { setIsApp } = useAppGovernanceContext()
