@@ -1,2 +1,2 @@
-export * from './TitleText'
 export * from './AddressShortener'
+export * from './TitleText'
