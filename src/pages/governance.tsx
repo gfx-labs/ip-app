@@ -9,8 +9,8 @@ import { ProposalCard } from '../components/util/governance/ProposalCard'
 import { BNtoHexNumber } from '../components/util/helpers/BNtoHex'
 import { Spinner } from '../components/util/loading'
 import { ToolTip } from '../components/util/tooltip/ToolTip'
+import { getRecentProposals } from '../contracts/GovernorCharlieDelegate/getRecentProposals'
 import { getUserVotingPower } from '../contracts/IPTDelegate'
-import { getRecentProposals } from '../hooks/useGovernance'
 
 export interface Proposal {
   body: string
@@ -21,8 +21,14 @@ export interface Proposal {
 
 export const Governance = () => {
   const theme = useTheme()
-  const { dataBlock, provider, chainId, currentAccount, currentSigner } =
-    useWeb3Context()
+  const {
+    dataBlock,
+    provider,
+    chainId,
+    currentAccount,
+    currentSigner,
+    signerOrProvider,
+  } = useWeb3Context()
   const { setType } = useModalContext()
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])
@@ -33,8 +39,8 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
-    if (provider) {
-      getRecentProposals(provider)
+    if (signerOrProvider) {
+      getRecentProposals(signerOrProvider)
         .then((pl) => {
           pl.forEach((val) => {
             proposals.set(val.args.id.toNumber(), {

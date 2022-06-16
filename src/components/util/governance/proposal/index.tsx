@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { Box, useTheme } from '@mui/material'
 import { formatColor, neutral } from '../../../../theme'
 import { VoteCount, Voter } from './VoteCount'
-import { getProposalVoters } from '../../../../hooks/useGovernance'
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
 import { BN } from '../../../../easy/bn'
 import VoteButton from '../VoteButton'
+import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate/getProposalVoters'
 
 export interface ProposalDetailsProps {
   id: string
@@ -18,7 +18,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
   props: ProposalDetailsProps
 ) => {
   const theme = useTheme()
-  const { provider } = useWeb3Context()
+  const { provider, currentSigner } = useWeb3Context()
   const { id, status, votingPower } = props
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
@@ -28,8 +28,10 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
   const [votesTotal, setVotesTotal] = useState(0)
 
   useEffect(() => {
-    if (provider) {
-      getProposalVoters(id, provider).then((px) => {
+    const signerOrProvider = currentSigner ? currentSigner : provider
+
+    if (signerOrProvider) {
+      getProposalVoters(id, signerOrProvider!).then((px) => {
         px.map((p) => {
           voters.set(p.voter, {
             address: p.voter,
