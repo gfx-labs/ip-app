@@ -1,5 +1,5 @@
 import { Box, Link, Typography } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { blue, formatColor, neutral, pink, theme } from '../../../theme'
 import { Votes } from './Votes'
@@ -29,7 +29,7 @@ export interface ProposalCardProps {
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider, currentSigner } = useWeb3Context()
   const { votingPower } = props
-  const { id, proposer, body, endBlock } = props.proposal
+  const { id, body, endBlock } = props.proposal
 
   const isLight = useLight()
   const [isExpanded, setIsExpanded] = useState(false)
@@ -71,18 +71,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   useEffect(() => {
     if (proposal) {
-      const abstainVotes = useMemo(
-        () => useFormatBNWithDecimals(proposal?.abstainVotes, 18),
-        [proposal?.abstainVotes]
-      )
-      const forVotes = useMemo(
-        () => useFormatBNWithDecimals(proposal?.forVotes, 18),
-        [proposal?.forVotes]
-      )
-      const againstVotes = useMemo(
-        () => useFormatBNWithDecimals(proposal?.againstVotes, 18),
-        [proposal?.againstVotes]
-      )
+      const abstainVotes = useFormatBNWithDecimals(proposal?.abstainVotes, 18)
+      const forVotes = useFormatBNWithDecimals(proposal?.forVotes, 18)
+      const againstVotes = useFormatBNWithDecimals(proposal?.againstVotes, 18)
+
       const totalVotes = abstainVotes + forVotes + againstVotes
       setAbstainVotes(abstainVotes)
       setAgainstVotes(againstVotes)
