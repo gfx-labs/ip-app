@@ -11,11 +11,11 @@ import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataPro
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { ConnectWalletButton, CopyButton, InverseButton } from '../button'
 import { addressShortener } from '../text'
-import { TitleText } from '../text/TitleText'
 import { SingleStatCard } from './SingleStatCard'
 import { UserTokenCard } from './UserTokenCard'
 import { BN, round } from '../../../easy/bn'
 import { OpenVaultButton } from '../button/OpenVaultButton'
+import { TitleText } from '../text/TitleText'
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
@@ -26,7 +26,6 @@ const StatsBodyTypography = ({ text }: { text: string }) => (
     {text}
   </Typography>
 )
-
 export const UserStats = () => {
   const isLight = useLight()
   const [borrowAPR, setBorrowAPR] = useState(0)
