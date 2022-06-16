@@ -10,12 +10,11 @@ import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataP
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { ConnectWalletButton, CopyButton, InverseButton } from '../button'
-import { addressShortener } from '../text'
+import { addressShortener, TitleText } from '../text'
 import { SingleStatCard } from './SingleStatCard'
 import { UserTokenCard } from './UserTokenCard'
 import { BN, round } from '../../../easy/bn'
 import { OpenVaultButton } from '../button/OpenVaultButton'
-import { TitleText } from '../text/TitleText'
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
