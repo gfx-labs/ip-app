@@ -1,122 +1,106 @@
-import { Box, Button, Typography, Link as MuiLink } from "@mui/material";
-import { formatColor, neutral } from "../../../theme";
-import { useEffect, useState } from "react";
+import { Box, Button, Typography, Link as MuiLink } from '@mui/material'
+import { formatColor, neutral } from '../../../theme'
+import { useEffect, useState } from 'react'
 import {
   ModalType,
   useModalContext,
-} from "../../libs/modal-content-provider/ModalContentProvider";
-import { BaseModal } from "./BaseModal";
-import { useLight } from "../../../hooks/useLight";
-import { DisableableModalButton } from "../button/DisableableModalButton";
-import { ForwardIcon } from "../../icons/misc/ForwardIcon";
-import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
-import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
-import { BN } from "../../../easy/bn";
-import {  ContractTransaction } from "ethers";
-import { locale } from "../../../locale";
-import { TransactionReceipt } from "@ethersproject/providers";
-import { Chains } from "../../../chain/chains";
+} from '../../libs/modal-content-provider/ModalContentProvider'
+import { BaseModal } from './BaseModal'
+import { useLight } from '../../../hooks/useLight'
+import { DisableableModalButton } from '../button/DisableableModalButton'
+import { ForwardIcon } from '../../icons/misc/ForwardIcon'
+import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
+import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { BN } from '../../../easy/bn'
+import { ContractTransaction } from 'ethers'
+import { locale } from '../../../locale'
+import { TransactionReceipt } from '@ethersproject/providers'
+import { Chains } from '../../../chain/chains'
+import { depositUSDC } from '../../../contracts/USDI/depositUSDC'
 
 export const DepositUSDCConfirmationModal = () => {
-  const { type, setType, USDC, updateTransactionState } = useModalContext();
-  const { provider, currentAccount, dataBlock, currentSigner, chainId } =
-    useWeb3Context();
-  const [loading, setLoading] = useState(false);
-  const [loadmsg, setLoadmsg] = useState("");
-  const rolodex = useRolodexContext();
+  const { type, setType, USDC, updateTransactionState } = useModalContext()
+  const { currentAccount, dataBlock, currentSigner, chainId } = useWeb3Context()
+  const [loading, setLoading] = useState(false)
+  const [loadmsg, setLoadmsg] = useState('')
+  const rolodex = useRolodexContext()
 
-  const [needAllowance, setNeedAllowance] = useState(true);
-  const [shiftOn, setShiftOn] = useState(false);
-  const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>();
+  const [needAllowance, setNeedAllowance] = useState(true)
+  const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
 
-  const chain = Chains.getInfo(chainId);
-
-  useEffect(() => {
-    document.addEventListener("keydown", (e) => {
-      if (e.shiftKey) {
-        setShiftOn(true);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("keyup", (e) => {
-      setShiftOn(false);
-    });
-  }, []);
+  const chain = Chains.getInfo(chainId)
 
   useEffect(() => {
     if (rolodex && USDC.amountToDeposit && rolodex.USDC) {
       rolodex
         .USDC!.allowance(currentAccount, rolodex.addressUSDI)
         .then((initialApproval) => {
-          const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN("1e6"));
+          const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN('1e6'))
           if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true);
+            setNeedAllowance(true)
           } else {
-            setNeedAllowance(false);
+            setNeedAllowance(false)
           }
-        });
+        })
     }
-  }, [rolodex, dataBlock, chainId, USDC.amountToDeposit]);
+  }, [rolodex, dataBlock, chainId, USDC.amountToDeposit])
 
   const handleDepositConfirmationRequest = async () => {
-    if (rolodex && USDC.amountToDeposit) {
-      let depositAmount = BN(USDC.amountToDeposit);
-      const formattedUSDCAmount = depositAmount.mul(1e6);
-      setLoading(true);
+    if (rolodex && USDC.amountToDeposit && currentSigner) {
+      setLoading(true)
+      setLoadmsg(locale('CheckWallet'))
       try {
-        setLoadmsg(locale("CheckWallet"));
-        const txn = await rolodex.USDI.connect(currentSigner!).deposit(
-          formattedUSDCAmount
-        );
-        updateTransactionState(txn);
+        const depositTransaction = await depositUSDC(
+          USDC.amountToDeposit,
+          rolodex,
+          currentSigner!
+        )
 
-        setLoadmsg(locale("TransactionPending"));
-        const response = await txn?.wait();
-        updateTransactionState(response);
+        updateTransactionState(depositTransaction)
+        setLoadmsg(locale('TransactionPending'))
+
+        const depositReceipt = await depositTransaction.wait()
+        updateTransactionState(depositReceipt)
       } catch (e) {
-        const error = e as TransactionReceipt;
-        console.error(e);
-        updateTransactionState(error);
+        const error = e as TransactionReceipt
+
+        updateTransactionState(error)
       }
-      setApprovalTxn(undefined);
-      setLoading(false);
+      setApprovalTxn(undefined)
+      setLoading(false)
     }
-  };
+  }
   const handleApprovalRequest = async () => {
     if (rolodex && USDC.amountToDeposit) {
-      let depositAmount = BN(USDC.amountToDeposit);
-      if (shiftOn) {
-        depositAmount = BN("1e18");
-      }
-      const formattedUSDCAmount = depositAmount.mul(BN("1e6"));
-      setLoading(true);
+      let depositAmount = BN(USDC.amountToDeposit)
+
+      const formattedUSDCAmount = depositAmount.mul(BN('1e6'))
+      setLoading(true)
       try {
-        setLoadmsg(locale("CheckWallet"));
+        setLoadmsg(locale('CheckWallet'))
         const txn = await rolodex.USDC?.connect(currentSigner!).approve(
           rolodex.addressUSDI,
           formattedUSDCAmount
-        );
+        )
 
-        setApprovalTxn(txn);
+        setApprovalTxn(txn)
 
-        setLoadmsg(locale("TransactionPending"));
-        await txn?.wait();
+        setLoadmsg(locale('TransactionPending'))
+        await txn?.wait()
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  const isLight = useLight();
+  const isLight = useLight()
 
   return (
     <BaseModal
       open={type === ModalType.DepositUSDCConfirmation}
       setOpen={() => {
-        setType(null);
+        setType(null)
       }}
     >
       <Typography
@@ -129,13 +113,13 @@ export const DepositUSDCConfirmationModal = () => {
       </Typography>
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           mb: 2,
           mt: 3,
           py: 2,
-          borderRadius: "10px",
+          borderRadius: '10px',
           columnGap: 4,
           backgroundColor: isLight
             ? formatColor(neutral.gray5)
@@ -153,7 +137,7 @@ export const DepositUSDCConfirmationModal = () => {
           ></Box>
           <Box>
             <Typography variant="body3" color="text.primary">
-              {"$" +
+              {'$' +
                 Number(USDC.amountToDeposit).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -170,7 +154,7 @@ export const DepositUSDCConfirmationModal = () => {
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="body3" color="text.primary">
-              {"$" +
+              {'$' +
                 Number(USDC.amountToDeposit).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
@@ -189,29 +173,18 @@ export const DepositUSDCConfirmationModal = () => {
         </Box>
       </Box>
 
-      <Box textAlign="center">
+      <Box textAlign="center" mb={5}>
         <Typography
           variant="body3_medium"
           color={formatColor(neutral.gray3)}
           fontStyle="italic"
         >
-          1 USDC = 1 USDi ($1){" "}
+          1 USDC = 1 USDi ($1)
         </Typography>
       </Box>
 
-      <Box
-        my={5}
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      ></Box>
-
       <DisableableModalButton
-        text={
-          needAllowance
-            ? "Set" + (shiftOn ? " Max" : "") + " Allowance"
-            : "Confirm Deposit"
-        }
+        text={needAllowance ? 'Set Allowance' : 'Confirm Deposit'}
         disabled={false}
         onClick={
           needAllowance
@@ -222,12 +195,15 @@ export const DepositUSDCConfirmationModal = () => {
         load_text={loadmsg}
       />
       {approvalTxn !== undefined && (
-        <MuiLink mt={1} display="block" target="_blank" href={`${chain.scanUrl}${approvalTxn.hash}`}>
-          <Button variant="text">
-            View approval on {chain.scanSite}
-          </Button>
+        <MuiLink
+          mt={1}
+          display="block"
+          target="_blank"
+          href={`${chain.scanUrl}${approvalTxn.hash}`}
+        >
+          <Button variant="text">View approval on {chain.scanSite}</Button>
         </MuiLink>
       )}
     </BaseModal>
-  );
-};
+  )
+}
