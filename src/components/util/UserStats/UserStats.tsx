@@ -15,6 +15,8 @@ import { SingleStatCard } from './SingleStatCard'
 import { UserTokenCard } from './UserTokenCard'
 import { BN, round } from '../../../easy/bn'
 import { OpenVaultButton } from '../button/OpenVaultButton'
+import { ToolTip } from '../tooltip/ToolTip'
+import { TitleTextToolTip } from '../text/TitleTextToolTip'
 
 const StatsBodyTypography = ({ text }: { text: string }) => (
   <Typography
@@ -126,8 +128,24 @@ export const UserStats = () => {
           {vaultID ? <StatsBodyTypography text={`Vault #${vaultID}`} /> : <></>}
         </Box>
 
-        <Box display="flex" alignItems="center" columnGap={2}>
-          <StatsBodyTypography text="Vault Address" />
+        <Box
+          display="flex"
+          alignItems="center"
+          columnGap={2}
+          width="fit-content"
+        >
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                Each vault is a unique smart contract. Users can transfer
+                collateral directly to their vault to increase the vault's
+                borrowing power
+              </Typography>
+            }
+            text={`Vault Address`}
+            text_variant="label2"
+          />
+
           {connected ? (
             vaultAddress ? (
               <CopyButton
@@ -167,8 +185,9 @@ export const UserStats = () => {
         }}
       >
         <SingleStatCard>
-          <TitleText
-            title="Borrowing Power"
+          <TitleTextToolTip
+            title={`Borrowing Power`}
+            tooltipContent="The sum of the vault's collateral discounted by the LTV"
             text={
               borrowingPower !== null
                 ? '$' + Math.round(borrowingPower).toLocaleString()
@@ -178,20 +197,23 @@ export const UserStats = () => {
         </SingleStatCard>
 
         <SingleStatCard>
-          <TitleText
-            title="Borrow APR"
-            text={borrowAPR !== null ? borrowAPR.toString() + '%' : null}
+          <TitleTextToolTip
+            title={`Borrow APR`}
+            tooltipContent="The estimated annualized rate to borrow USDi from the protocol"
+            text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
-          <TitleText
-            title="Deposit APR"
+          <TitleTextToolTip
+            title={`Deposit APR`}
+            tooltipContent="The estimated annualized rate to hold USDi"
             text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
-          <TitleText
-            title="IPT PER YEAR"
+          <TitleTextToolTip
+            title={`IPT PER YEAR`}
+            tooltipContent="The estimated number of IPT earned by borrowing annualized at the current rate"
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
@@ -214,6 +236,7 @@ export const UserStats = () => {
             display="flex"
             justifyContent="space-between"
             sx={{
+              width: '100%',
               display: 'flex',
               justifyContent: 'space-between',
               [theme.breakpoints.down('lg')]: {
@@ -222,8 +245,9 @@ export const UserStats = () => {
               },
             }}
           >
-            <TitleText
-              title="USDi Borrowed"
+            <TitleTextToolTip
+              tooltipContent="The number of USDi the vault is borrowing. This number increases as interest is charged"
+              title={`USDi Borrowed`}
               text={
                 accountLiability !== null
                   ? '$' + Math.round(accountLiability).toLocaleString()

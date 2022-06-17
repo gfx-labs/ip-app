@@ -10,6 +10,8 @@ import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataP
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { OpenVaultButton } from '../button/OpenVaultButton'
+import { TitleTextToolTip } from '../text/TitleTextToolTip'
+import { ToolTip } from '../tooltip/ToolTip'
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
@@ -106,16 +108,24 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
-        <Typography variant="label2" color={formatColor(neutral.gray3)}>
-          LTV: {LTVPercent}%
-        </Typography>
-        <Typography
-          variant="label2"
-          color={formatColor(neutral.gray3)}
-          marginLeft={2}
-        >
-          Penalty: {penaltyPercent}%
-        </Typography>
+        <ToolTip
+          content={<Typography variant="body3">Loan-To-Value</Typography>}
+          text={`LTV: ${LTVPercent}%
+          `}
+          text_variant="label2"
+        />
+        <Box mx={1}> </Box>
+        <ToolTip
+          content={
+            <Typography variant="body3">
+              The liquidation penalty paid to liquidators for performing a
+              liquidation
+            </Typography>
+          }
+          text={`Penalty: ${penaltyPercent}%
+          `}
+          text_variant="label2"
+        />
       </Box>
 
       {hasVault && vaultAddress !== undefined ? (
