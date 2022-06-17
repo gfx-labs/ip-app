@@ -1,52 +1,58 @@
-import { styled } from "@mui/material/styles";
-import { Box, TypographyPropsVariantOverrides } from "@mui/material";
-import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
-import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral } from "../../../theme";
-import { ToolTipInfoIcon } from "../../icons/misc/ToolTipInfoIcon";
-import { Variant } from "@mui/material/styles/createTypography";
+import { styled } from '@mui/material/styles'
+import { Box } from '@mui/material'
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
+import { formatColor, neutral } from '../../../theme'
+import { ToolTipInfoIcon } from '../../icons/misc/ToolTipInfoIcon'
 
-const BaseToolTipContainer = styled(
-  ({ className, ...props }: TooltipProps) => {
-    return <Tooltip {...props} classes={{ popper: className }} />;
-  }
-)(({ theme }) => {
-  const isLight = useLight();
-
+const BaseToolTipContainer = styled(({ className, ...props }: TooltipProps) => {
+  return (
+    <Tooltip
+      arrow
+      sx={{ cursor: 'pointer' }}
+      {...props}
+      classes={{ popper: className }}
+    />
+  )
+})(({ theme }) => {
+  const isLight = theme.palette.mode === 'light'
   return {
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: isLight
-        ? formatColor(neutral.gray5)
+        ? formatColor(neutral.white)
         : formatColor(neutral.black5),
       color: isLight ? formatColor(neutral.black5) : formatColor(neutral.white),
       borderRadius: '20px',
-      padding: '12px',
+      padding: '16px',
     },
-  };
-});
+    [`& .${tooltipClasses.arrow}`]: {
+      color: isLight ? formatColor(neutral.white) : formatColor(neutral.black5),
+    },
+  }
+})
 
 export const ToolTip = (props: {
-  content: TooltipProps["title"];
-  text: string;
-  text_variant?: "body1" | "body2" | "body2_semi";
+  content: TooltipProps['title']
+  text: string
+  text_variant?: 'body1' | 'body2' | 'body2_semi' | 'label2'
 }) => {
-  const { content, text, text_variant = 'body1' } = props;
-  const isLight = useLight();
+  const { content, text, text_variant = 'body1' } = props
 
   return (
     <BaseToolTipContainer title={content}>
       <Box display="flex" alignItems="center">
-        <Typography variant={text_variant} color="text.secondary">
+        <Typography
+          variant={text_variant}
+          color="text.secondary"
+          whiteSpace="nowrap"
+        >
           {text}
         </Typography>
         <ToolTipInfoIcon
-          sx={{ width: 18, ml: 1 }}
-          strokecolor={
-            isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-          }
+          sx={{ width: 14, ml: 0.5 }}
+          strokecolor={formatColor(neutral.gray3)}
         />
       </Box>
     </BaseToolTipContainer>
-  );
-};
+  )
+}

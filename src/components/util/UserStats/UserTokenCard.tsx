@@ -10,6 +10,8 @@ import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataP
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { OpenVaultButton } from '../button/OpenVaultButton'
+import { TitleTextToolTip } from '../text/TitleTextToolTip'
+import { ToolTip } from '../tooltip/ToolTip'
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
@@ -65,14 +67,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       sx={{
         backgroundColor: 'smallCard.background',
         borderRadius: 4,
-        paddingTop: 4,
-        paddingLeft: 4,
-        paddingRight: 4,
-        paddingBottom: 1,
-        [theme.breakpoints.down('lg')]: {
-          paddingX: 4,
-          paddingY: 4,
-        },
+        padding: 4,
+        paddingBottom: 0,
+        [theme.breakpoints.down('lg')]: {},
         ...props.sx,
       }}
     >
@@ -111,16 +108,24 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
-        <Typography variant="label2" color={formatColor(neutral.gray3)}>
-          LTV: {LTVPercent}%
-        </Typography>
-        <Typography
-          variant="label2"
-          color={formatColor(neutral.gray3)}
-          marginLeft={2}
-        >
-          Penalty: {penaltyPercent}%
-        </Typography>
+        <ToolTip
+          content={<Typography variant="body3">Loan-To-Value</Typography>}
+          text={`LTV: ${LTVPercent}%
+          `}
+          text_variant="label2"
+        />
+        <Box mx={1}> </Box>
+        <ToolTip
+          content={
+            <Typography variant="body3">
+              The liquidation penalty paid to liquidators for performing a
+              liquidation
+            </Typography>
+          }
+          text={`Penalty: ${penaltyPercent}%
+          `}
+          text_variant="label2"
+        />
       </Box>
 
       {hasVault && vaultAddress !== undefined ? (
@@ -143,34 +148,38 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <OpenVaultButton />
       )}
 
-      <Box display={canDelegate ? 'flex' : 'none'} justifyContent="flex-end">
-        <Button
-          variant="text"
-          sx={{
-            width: 'fit-content',
-            color: formatColor(blue.blue1),
-            '&:hover': {
-              backgroundColor: 'transparent',
-              color: formatColor(neutral.gray3),
-
-              '& path': {
-                stroke: formatColor(neutral.gray3),
-              },
-            },
-          }}
-          onClick={setAndOpenDelegate}
-        >
-          Delegate
-          <ForwardIcon
+      {canDelegate ? (
+        <Box display={canDelegate ? 'flex' : 'none'} justifyContent="flex-end">
+          <Button
+            variant="text"
             sx={{
-              marginLeft: 1,
-              width: 12,
-              height: 10,
+              width: 'fit-content',
+              color: formatColor(blue.blue1),
+              '&:hover': {
+                backgroundColor: 'transparent',
+                color: formatColor(neutral.gray3),
+
+                '& path': {
+                  stroke: formatColor(neutral.gray3),
+                },
+              },
             }}
-            strokecolor={formatColor(blue.blue1)}
-          />{' '}
-        </Button>
-      </Box>
+            onClick={setAndOpenDelegate}
+          >
+            Delegate
+            <ForwardIcon
+              sx={{
+                marginLeft: 1,
+                width: 12,
+                height: 10,
+              }}
+              strokecolor={formatColor(blue.blue1)}
+            />{' '}
+          </Button>
+        </Box>
+      ) : (
+        <Box height={42}></Box>
+      )}
     </Box>
   )
 }

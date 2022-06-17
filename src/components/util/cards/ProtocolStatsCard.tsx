@@ -9,6 +9,7 @@ import { useRolodexContext } from '../../../components/libs/rolodex-data-provide
 import { getTotalSupply, getReserveRatio } from '../../../contracts/USDI'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { BN } from '../../../easy/bn'
+import { ToolTip } from '../tooltip/ToolTip'
 
 export const ProtocolStatsCard = () => {
   const isLight = useLight()
@@ -70,9 +71,28 @@ export const ProtocolStatsCard = () => {
           height={18}
           marginRight={1}
         />
-        <Typography variant="label2" color={formatColor(blue.blue1)}>
-          Reserve Ratio: {reserveRatio}%
-        </Typography>
+
+        <Box
+          sx={{
+            '& span.MuiTypography-root': {
+              color: formatColor(blue.blue1),
+            },
+            '& svg.MuiSvgIcon-root path': {
+              stroke: formatColor(blue.blue1),
+            },
+          }}
+        >
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                The USDC reserve over the total USDi supply
+              </Typography>
+            }
+            text={`Reserve Ratio: ${reserveRatio}%
+          `}
+            text_variant="label2"
+          />
+        </Box>
       </Box>
 
       <SwapContainer />
