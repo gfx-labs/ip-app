@@ -1,15 +1,15 @@
 # Liquidity Program
 
-As announced previously, GFX Labs has allocated 10% of the IPT total supply (10,000,000 IPT) towards a liquidity program. The program will act as an additional catalyst to garner liquidity and participation in the nascent protocol.
+**Note (2022. 6. 17.)** The liquidity program is currently running, and rewards are accruing to USDi borrowers and Uniswap LPs. Users will be able to claim their accrued rewards once the IPT sale takes place in July.
 
-Two-thirds of the rewards (6,666,667 IPT) will be distributed to USDi borrowers, and the remaining one-third (3,333,333) will go to market makers who provide ETH-USDi liquidity on Uniswap v2.
 
-Borrower incentives will encourage users to borrow USDi from the protocol. The interest paid by these borrowers will in turn incentivize users to deposit USDC to mint USDi, which allows for more borrowing. This virtuous cycle would help the initial growth of Interest Protocol.
+GFX Labs has allocated 10% of the IPT total supply (10,000,000 IPT) towards a liquidity program. The program acts as an additional catalyst to garner liquidity and participation in the nascent protocol. 
+Two-thirds of the rewards (6,666,667 IPT) are being distributed to USDi borrowers, and the remaining one-third (3,333,333) is going to market makers who provide ETH-USDi liquidity on Uniswap v2.
 
-Market maker incentives will increase USDi liquidity in DEXs and allow USDi holders to swap USDi directly for other assets without redeeming it for USDC. This provides gas efficiency for USDi holders and helps Interest Protocol manage its USDC reserve.
+Borrower incentives encourage users to borrow USDi from the protocol. The interest paid by these borrowers in turn incentivizes users to deposit USDC to mint USDi, which allows for more borrowing. This virtuous cycle helps the initial growth of Interest Protocol.
+Market maker incentives increase USDi liquidity in DEXs and allow USDi holders to swap USDi directly for other assets without redeeming it for USDC. This provides gas efficiency for USDi holders and helps Interest Protocol manage its USDC reserve.
 
-The liquidity program will last for two years. Approximately 1,833,325 IPT will be distributed during the first quarter (13 weeks) of the program. This amount will decrease by approximately 166,667 IPT every quarter.
-
+The liquidity program will last for two years. Approximately 1,833,325 IPT is being distributed in the first quarter of the program, which started on June 14th and will last until September. The quarterly reward will decrease by approximately 166,667 IPT every quarter.
 The distribution schedule for the first quarter is given by the following tables.
 
 |Type    | Total IPT|IPT per week|
@@ -36,22 +36,22 @@ The distribution schedule for the first quarter is given by the following tables
 
 ## Borrower Incentives
 
-6.67% of the IPT total supply will be distributed pro-rata to users who borrow USDi from Interest Protocol. For each borrower, we calculate $\frac{\text{USDi borrowed by borrower}}{\text{total USDi borrowed}}$ at each block. The average of this percentage over the course of a week is the borrower's share of the rewards for that week. 
+6.67% of the IPT total supply is being distributed pro-rata to users who borrow USDi from Interest Protocol. For each borrower, we calculate $\frac{\text{USDi borrowed by borrower}}{\text{total USDi borrowed}}$ at each block. The average of this percentage over the course of a week is the borrower's share of the rewards for that week. 
 
 This means that users earn more rewards if they borrow when the total amount of outstanding USDi loans across the protocol is smaller.
 
-Note that rewarding borrowers also benefits depositors (USDi holders) through higher interest rates. Depositors will reap this benefit without having to spend gas to claim rewards.
+Note that rewarding borrowers also benefits depositors (USDi holders) through higher interest rates. Depositors reap this benefit without having to spend gas to claim rewards.
 
 ## Market Maker Incentives
 
-3.33% of the IPT total supply will be distributed pro-rata to users who provide ETH-USDi liquidity on Uniswap V2. For each liquidity provider, we calculate $\frac{\text{liquidity provided by user}}{\text{total liquidity in pool}}$ at each block. The average of this percentage over the course of a week is the liquidity provider's share of the rewards for that week. 
+3.33% of the IPT total supply is being distributed pro-rata to users who provide ETH-USDi liquidity on Uniswap V2. For each liquidity provider, we calculate $\frac{\text{liquidity provided by user}}{\text{total liquidity in pool}}$ at each block. The average of this percentage over the course of a week is the liquidity provider's share of the rewards for that week. 
 
 This means that users earn more rewards if they provide liquidity when the total amount of liquidity in the ETH-USDi pool is smaller.
 
 
 ## Merkle Root Implementation
-Interest Protocol utilizes Balancer's merkle root system to distribute rewards. An off-chain open source script will calculate the amount of IPT reward for each IPT borrower and Uniswap v2 liquidity provider. Starting at protocol launch, the script will be run weekly. Users can let their rewards accrue over multiple weeks and claim them at their convenience. The script can be found [here](https://github.com/gfx-labs/ip-contracts/tree/master/scripts/liquidity_mining).
+Interest Protocol utilizes Balancer's merkle root system to distribute rewards. An off-chain open source script calculates the amount of IPT reward for each IPT borrower and Uniswap v2 liquidity provider. All rewards that accrue between June 14th and the IPT sale (planned for July) will be available to claim at the time of the IPT sale. After the IPT sale, the claimable amount for each user will be updated weekly. Users can let their rewards accrue over multiple weeks and claim them at their convenience. The script can be found [here](https://github.com/gfx-labs/ip-contracts/tree/master/scripts/liquidity_mining).
 
-## Updates
+## Governance
 IPT holders can amend the Liquidity Program via a governance vote and by including a new script to calculate the incentives.
 
