@@ -1,39 +1,39 @@
-import { Box, Typography, Button } from "@mui/material";
-import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral } from "../../../theme";
-import { DecimalInput } from "../textFields";
-import { Token } from "../../../chain/tokens";
-import { WithDots } from "../loading";
+import { Box, Typography, Button } from '@mui/material'
+import { useLight } from '../../../hooks/useLight'
+import { formatColor, neutral } from '../../../theme'
+import { DecimalInput } from '../textFields'
+import { Token } from '../../../chain/tokens'
+import { WithDots } from '../loading'
 
 interface TokenSelectProps {
-  token: Token;
-  tokenAmount: string;
-  setTokenAmount: (amount: string) => void;
+  token: Token
+  tokenAmount: string
+  setTokenAmount: (amount: string) => void
 }
 
 export const TokenSelect = (props: TokenSelectProps) => {
-  const { token, tokenAmount, setTokenAmount } = props;
-  const isLight = useLight();
+  const { token, tokenAmount, setTokenAmount } = props
+  const isLight = useLight()
 
   const setBalance = () => {
     if (token.wallet_balance != undefined) {
-      setTokenAmount(token.wallet_balance.toFixed(2).toString());
+      setTokenAmount(token.wallet_balance.toString())
     }
-  };
+  }
 
   return (
     <Box
       sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "space-between",
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
         backgroundColor: isLight
           ? formatColor(neutral.gray5)
           : formatColor(neutral.gray4),
         paddingX: 4,
         paddingY: 2,
         borderRadius: 5,
-        boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
+        boxShadow: '0px 4px 4px 0px rgba(0,0,0, 0.05)',
       }}
     >
       <DecimalInput
@@ -44,9 +44,9 @@ export const TokenSelect = (props: TokenSelectProps) => {
       <Box>
         <Box
           sx={{
-            display: "flex",
-            alignItems: " center",
-            justifyContent: "flex-end",
+            display: 'flex',
+            alignItems: ' center',
+            justifyContent: 'flex-end',
           }}
         >
           <Box
@@ -71,7 +71,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
             variant="label2"
             sx={{
               color: formatColor(neutral.gray3),
-              textAlign: "right",
+              textAlign: 'right',
               mt: 1,
             }}
           >
@@ -82,11 +82,11 @@ export const TokenSelect = (props: TokenSelectProps) => {
                 paddingY: 0,
                 paddingX: 1,
                 marginRight: -1,
-                height: "auto",
-                width: "auto",
-                minWidth: "auto",
-                justifyContent: "end",
-                "&.Mui-disabled": {
+                height: 'auto',
+                width: 'auto',
+                minWidth: 'auto',
+                justifyContent: 'end',
+                '&.Mui-disabled': {
                   color: formatColor(neutral.gray3),
                 },
               }}
@@ -104,5 +104,5 @@ export const TokenSelect = (props: TokenSelectProps) => {
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}

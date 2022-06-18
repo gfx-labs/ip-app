@@ -1,30 +1,27 @@
-import {
-  TextField,
-  InputAdornment,
-} from "@mui/material";
-import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral } from "../../../theme";
+import { TextField, InputAdornment } from '@mui/material'
+import { useLight } from '../../../hooks/useLight'
+import { formatColor, neutral } from '../../../theme'
 
-const decimalRegexp = /^\d*(?:[.])?\d*$/;
+const decimalRegexp = /^\d*(?:[.])?\d*$/
 const decimalEnforcer = (nextUserInput: string) => {
-  if (nextUserInput === "" || nextUserInput === "0") {
-    return "";
-  } else if (nextUserInput === ".") {
-    return "0.";
+  if (nextUserInput === '' || nextUserInput === '0') {
+    return ''
+  } else if (nextUserInput === '.') {
+    return '0.'
   } else if (decimalRegexp.test(nextUserInput)) {
-    return nextUserInput;
+    return nextUserInput
   }
-  return nextUserInput.slice(0, -1);
-};
+  return nextUserInput.slice(0, -1)
+}
 
 interface DecimalInputProps {
-  onChange: (val: string) => void;
-  placeholder?: string;
-  value: string;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  isMoneyValue?: boolean;
-  useLargerFont?: boolean;
+  onChange: (val: string) => void
+  placeholder?: string
+  value: string
+  onFocus?: () => void
+  onBlur?: () => void
+  isMoneyValue?: boolean
+  useLargerFont?: boolean
 }
 
 export const DecimalInput = (props: DecimalInputProps) => {
@@ -36,9 +33,9 @@ export const DecimalInput = (props: DecimalInputProps) => {
     onBlur,
     isMoneyValue = false,
     useLargerFont = false,
-  } = props;
+  } = props
 
-  const isLight = useLight();
+  const isLight = useLight()
 
   return (
     <TextField
@@ -46,26 +43,31 @@ export const DecimalInput = (props: DecimalInputProps) => {
       onBlur={onBlur}
       variant="standard"
       value={value}
-      placeholder={placeholder || "0.0"}
+      placeholder={placeholder || '0.0'}
       onChange={(e) => {
-        onChange(decimalEnforcer(e.target.value));
+        onChange(decimalEnforcer(e.target.value))
       }}
       InputProps={{
         startAdornment: isMoneyValue ? (
-          <InputAdornment position="start">$</InputAdornment>
+          <InputAdornment
+            sx={{ marginBottom: { xs: 0, md: 0.5 } }}
+            position="start"
+          >
+            $
+          </InputAdornment>
         ) : (
           false
         ),
         sx: {
-          "&:before, &:after": {
-            borderBottom: "none !important",
+          '&:before, &:after': {
+            borderBottom: 'none !important',
           },
         },
       }}
       sx={{
         width: '100%',
-        paddingBottom: "4px",
-        ".MuiInputBase-input": {
+        paddingBottom: '4px',
+        '.MuiInputBase-input': {
           fontWeight: useLargerFont ? 600 : 700,
           color: isLight
             ? formatColor(neutral.gray1)
@@ -75,5 +77,5 @@ export const DecimalInput = (props: DecimalInputProps) => {
         },
       }}
     />
-  );
-};
+  )
+}
