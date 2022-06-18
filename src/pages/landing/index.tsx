@@ -304,7 +304,6 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     const onScroll = (e: any) => {
       setScrollTop(e.target.documentElement.scrollTop)
-      console.log(scrollTop, document.body.scrollHeight - window.innerHeight)
     }
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)

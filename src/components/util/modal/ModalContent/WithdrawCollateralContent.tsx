@@ -15,12 +15,8 @@ import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultData
 import { useLight } from '../../../../hooks/useLight'
 
 export const WithdrawCollateralContent = () => {
-  const {
-    setType,
-    collateralToken,
-    setCollateralWithdrawAmount,
-    collateralWithdrawAmount,
-  } = useModalContext()
+  const { setType, collateralToken, setCollateralWithdrawAmount } =
+    useModalContext()
 
   const isLight = useLight()
   const { borrowingPower, accountLiability, tokens } = useVaultDataContext()
@@ -60,13 +56,9 @@ export const WithdrawCollateralContent = () => {
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setInputAmount(
-        round(Number(inputAmount) * collateralToken.value, 5).toString()
-      )
+      setInputAmount((Number(inputAmount) * collateralToken.value).toString())
     } else {
-      setInputAmount(
-        round(Number(inputAmount) / collateralToken.value, 2).toString()
-      )
+      setInputAmount((Number(inputAmount) / collateralToken.value).toString())
     }
     setIsMoneyValue(!isMoneyValue)
   }
@@ -74,16 +66,12 @@ export const WithdrawCollateralContent = () => {
   const trySetInputAmount = (amount: string) => setInputAmount(amount)
 
   const setMax = () => {
-    console.log('click')
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
       let a2s = borrowingPower - accountLiability
       console.log(borrowingPower, accountLiability, a2s)
       if (a2s >= 0) {
-        console.log('> 0')
-
         const tv = collateralToken.vault_amount * collateralToken.value
-        console.log(tv, a2s)
         if (tv < a2s) {
           if (isMoneyValue) {
             setInputAmount(tv.toString())
@@ -91,12 +79,11 @@ export const WithdrawCollateralContent = () => {
             setInputAmount(collateralToken.vault_amount.toString())
           }
         } else {
-          console.log('< 0')
           if (isMoneyValue) {
             setInputAmount((a2s / (ltv / 100)).toString())
           } else {
             setInputAmount(
-              round(a2s / collateralToken.value / (ltv / 100), 4).toString()
+              (a2s / collateralToken.value / (ltv / 100)).toString()
             )
           }
         }
@@ -110,7 +97,8 @@ export const WithdrawCollateralContent = () => {
     <Box>
       <Box textAlign="right" mb={1}>
         <Typography variant="label2" color={formatColor(neutral.gray3)}>
-          Vault Balance: {collateralToken.vault_amount} {collateralToken.ticker}
+          Vault Balance: {round(collateralToken.vault_amount || 0, 4)}{' '}
+          {collateralToken.ticker}
         </Typography>
       </Box>
 

@@ -1,37 +1,38 @@
-import { useState, useEffect } from "react";
-import { Box, Typography, Button } from "@mui/material";
-import { formatColor, neutral } from "../../../../theme";
-import { DecimalInput } from "../../textFields";
-import { DisableableModalButton } from "../../button/DisableableModalButton";
-import { ModalInputContainer } from "./ModalInputContainer";
+import { useState, useEffect } from 'react'
+import { Box, Typography, Button } from '@mui/material'
+import { formatColor, neutral } from '../../../../theme'
+import { DecimalInput } from '../../textFields'
+import { DisableableModalButton } from '../../button/DisableableModalButton'
+import { ModalInputContainer } from './ModalInputContainer'
 import {
   ModalType,
   useModalContext,
-} from "../../../libs/modal-content-provider/ModalContentProvider";
-import { useStableCoinsContext } from "../../../libs/stable-coins-provider/StableCoinsProvider";
-import { useLight } from "../../../../hooks/useLight";
+} from '../../../libs/modal-content-provider/ModalContentProvider'
+import { useStableCoinsContext } from '../../../libs/stable-coins-provider/StableCoinsProvider'
+import { useLight } from '../../../../hooks/useLight'
+import { round } from '../../../../easy/bn'
 
 export const DepositUSDCContent = () => {
-  const { USDC: USDCToken } = useStableCoinsContext();
-  const { setType, updateUSDC, USDC } = useModalContext();
-  const [disabled, setDisabled] = useState(true);
-  const [focus, setFocus] = useState(false);
-  const [isMoneyValue, setIsMoneyValue] = useState(false);
-  const toggle = () => setFocus(!focus);
+  const { USDC: USDCToken } = useStableCoinsContext()
+  const { setType, updateUSDC, USDC } = useModalContext()
+  const [disabled, setDisabled] = useState(true)
+  const [focus, setFocus] = useState(false)
+  const [isMoneyValue, setIsMoneyValue] = useState(false)
+  const toggle = () => setFocus(!focus)
   const setMax = () =>
-    updateUSDC("amountToDeposit", USDCToken.wallet_amount!.toString());
-  const numAmountToDeposit = Number(USDC.amountToDeposit);
-  const isLight = useLight();
+    updateUSDC('amountToDeposit', USDCToken.wallet_amount!.toString())
+  const numAmountToDeposit = Number(USDC.amountToDeposit)
+  const isLight = useLight()
   useEffect(() => {
-    setDisabled(numAmountToDeposit <= 0);
-  }, [USDC.amountToDeposit]);
+    setDisabled(numAmountToDeposit <= 0)
+  }, [USDC.amountToDeposit])
 
   return (
     <Box>
       <Box textAlign="right" mb={2}>
         <Typography variant="label2" color={formatColor(neutral.gray3)}>
-          {" "}
-          Wallet Balance: {USDCToken.wallet_balance} USDC
+          {' '}
+          Wallet Balance: {round(USDCToken.wallet_balance || 0, 2)} USDC
         </Typography>
       </Box>
 
@@ -39,23 +40,23 @@ export const DepositUSDCContent = () => {
         <DecimalInput
           onFocus={toggle}
           onBlur={toggle}
-          onChange={(amount) => updateUSDC("amountToDeposit", amount)}
-          placeholder={`0 ${isMoneyValue ? "USD" : USDCToken.ticker}`}
+          onChange={(amount) => updateUSDC('amountToDeposit', amount)}
+          placeholder={`0 ${isMoneyValue ? 'USD' : USDCToken.ticker}`}
           value={USDC.amountToDeposit}
           isMoneyValue={isMoneyValue}
         />
 
-        <Box sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}>
+        <Box sx={{ display: 'flex', paddingBottom: 0.5, alignItems: 'center' }}>
           <Button
             onClick={setMax}
             sx={{
-              minWidth: "auto",
+              minWidth: 'auto',
               height: 30,
               paddingY: 2,
               paddingX: 1,
-              "&:hover": {
-                backgroundColor: "transparent",
-                ".MuiTypography-root.MuiTypography-body1": {
+              '&:hover': {
+                backgroundColor: 'transparent',
+                '.MuiTypography-root.MuiTypography-body1': {
                   color: formatColor(neutral.gray1),
                 },
               },
@@ -65,7 +66,7 @@ export const DepositUSDCContent = () => {
               variant="body3"
               color={formatColor(neutral.gray3)}
               sx={{
-                "&:hover": {
+                '&:hover': {
                   color: isLight
                     ? formatColor(neutral.gray1)
                     : formatColor(neutral.white),
@@ -88,9 +89,9 @@ export const DepositUSDCContent = () => {
 
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
           marginTop: 2,
         }}
       >
@@ -105,5 +106,5 @@ export const DepositUSDCContent = () => {
         <Typography variant="caption">$0</Typography>
       </Box>
     </Box>
-  );
-};
+  )
+}

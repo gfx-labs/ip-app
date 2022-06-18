@@ -37,7 +37,6 @@ export const DepositCollateralContent = () => {
   }
 
   const setMax = () => {
-    console.log(isMoneyValue)
     if (isMoneyValue) {
       console.log(
         collateralToken.value,
@@ -45,10 +44,17 @@ export const DepositCollateralContent = () => {
         collateralToken.wallet_amount! * collateralToken.value
       )
       setInputAmount(
-        (collateralToken.wallet_amount! * collateralToken.value).toString()
+        (collateralToken.wallet_amount! * collateralToken.value).toLocaleString(
+          'fullwide',
+          { useGrouping: false }
+        )
       )
     } else {
-      setInputAmount(collateralToken.wallet_amount!.toString())
+      setInputAmount(
+        collateralToken.wallet_amount!.toLocaleString('fullwide', {
+          useGrouping: false,
+        })
+      )
     }
   }
 
@@ -76,17 +82,9 @@ export const DepositCollateralContent = () => {
       collateralToken.ticker
     )
     if (!isMoneyValue) {
-      setInputAmount(
-        (
-          Math.round((Number(inputAmount) / collateralToken.value) * 100) / 100
-        ).toString()
-      )
+      setInputAmount((Number(inputAmount) * collateralToken.value).toString())
     } else {
-      setInputAmount(
-        (
-          Math.round((Number(inputAmount) / collateralToken.value) * 100) / 100
-        ).toString()
-      )
+      setInputAmount((Number(inputAmount) / collateralToken.value).toString())
     }
     setIsMoneyValue(!isMoneyValue)
   }
