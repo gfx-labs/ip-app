@@ -305,7 +305,7 @@ export const UserStats = () => {
           rowGap: 3,
         }}
       >
-        {connected && currentAccount ? token_cards : <></>}
+        {token_cards}
       </Box>
     </Box>
   )

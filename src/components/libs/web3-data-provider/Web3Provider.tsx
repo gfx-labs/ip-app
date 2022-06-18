@@ -180,7 +180,9 @@ export const Web3ContextProvider = ({
     if (currentSigner) {
       setSignerOrProvider(currentSigner)
     } else {
-      setSignerOrProvider(provider)
+      const backupProvider = new JsonRpcProvider('https://cloudflare-eth.com')
+
+      setSignerOrProvider(backupProvider)
     }
   }, [provider, currentSigner])
 
