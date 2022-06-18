@@ -120,7 +120,7 @@ export const DepositCollateralContent = () => {
               ? `${
                   inputAmount === '0'
                     ? '0'
-                    : (Number(inputAmount) / collateralToken?.value).toFixed(8)
+                    : (Number(inputAmount) / collateralToken?.value).toFixed(2)
                 } ${collateralToken?.ticker}`
               : `$${(
                   Number(inputAmount) * collateralToken?.value
