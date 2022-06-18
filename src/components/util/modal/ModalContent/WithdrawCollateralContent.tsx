@@ -124,7 +124,7 @@ export const WithdrawCollateralContent = () => {
               ? `${
                   inputAmount === '0'
                     ? '0'
-                    : round(Number(inputAmount) / collateralToken.value, 6)
+                    : round(Number(inputAmount) / collateralToken.value, 4)
                 } ${collateralToken.ticker}`
               : `$${(
                   Number(inputAmount) * collateralToken.value
