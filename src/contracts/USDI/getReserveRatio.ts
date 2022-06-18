@@ -9,7 +9,10 @@ export const getReserveRatio = async (rolodex: Rolodex): Promise<string> => {
 
     const toPercentage = formattedReserveRatio / 1e16
 
-    return toPercentage.toLocaleString()
+    return toPercentage.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
   } catch (err) {
     throw new Error('Could not retrieve reserve ratio')
   }
