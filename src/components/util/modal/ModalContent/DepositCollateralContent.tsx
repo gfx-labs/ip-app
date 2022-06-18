@@ -37,6 +37,11 @@ export const DepositCollateralContent = () => {
   }
 
   const setMax = () => {
+    console.log(
+      collateralToken.value,
+      collateralToken.wallet_amount,
+      collateralToken.wallet_amount! * collateralToken.value
+    )
     if (isMoneyValue) {
       console.log(
         collateralToken.value,
@@ -44,17 +49,10 @@ export const DepositCollateralContent = () => {
         collateralToken.wallet_amount! * collateralToken.value
       )
       setInputAmount(
-        (collateralToken.wallet_amount! * collateralToken.value).toLocaleString(
-          'fullwide',
-          { useGrouping: false }
-        )
+        (collateralToken.wallet_amount! * collateralToken.value).toString()
       )
     } else {
-      setInputAmount(
-        collateralToken.wallet_amount!.toLocaleString('fullwide', {
-          useGrouping: false,
-        })
-      )
+      setInputAmount(collateralToken.wallet_amount!.toString())
     }
   }
 
