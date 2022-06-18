@@ -20,6 +20,7 @@ import { BN } from '../../../easy/bn'
 import { BigNumber } from 'ethers'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
+import { connected } from 'process'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -45,7 +46,8 @@ export const VaultDataProvider = ({
 }: {
   children: React.ReactElement
 }) => {
-  const { dataBlock, provider, currentAccount, chainId } = useWeb3Context()
+  const { dataBlock, currentAccount, chainId, signerOrProvider } =
+    useWeb3Context()
   const rolodex = useRolodexContext()
   const [redraw, setRedraw] = useState(false)
   const [hasVault, setHasVault] = useState(false)
@@ -62,31 +64,33 @@ export const VaultDataProvider = ({
   const update = async () => {
     const px: Array<Promise<any>> = []
     if (rolodex && rolodex.VC) {
-      rolodex
-        .VC!.vaultLiability(vaultID!)
-        .then((val) => {
-          const vl = val.div(BN('1e16')).toNumber() / 100
-          setAccountLiability(vl)
-        })
-        .catch((e) => {
-          console.log('could not get account liability', e)
-        })
+      if (vaultID) {
+        rolodex
+          .VC!.vaultLiability(vaultID!)
+          .then((val) => {
+            const vl = val.div(BN('1e16')).toNumber() / 100
+            setAccountLiability(vl)
+          })
+          .catch((e) => {
+            console.log('could not get account liability', e)
+          })
+
+        getVaultBorrowingPower(vaultID, rolodex)
+          .then((res) => {
+            if (res != undefined) {
+              setBorrowingPower(res)
+            }
+          })
+          .catch((e) => {
+            console.log('could not get borrowing power ', e)
+          })
+      }
 
       rolodex.VC?.totalBaseLiability().then((res) => {
         const bl = res.div(BN('1e16')).toNumber() / 100
 
         setTotalBaseLiability(bl)
       })
-
-      getVaultBorrowingPower(vaultID!, rolodex!)
-        .then((res) => {
-          if (res != undefined) {
-            setBorrowingPower(res)
-          }
-        })
-        .catch((e) => {
-          console.log('could not get borrowing power ', e)
-        })
       for (const [key, token] of Object.entries(tokens!)) {
         let p1 = getVaultTokenMetadata(token.address, rolodex!)
           .then((res) => {
@@ -98,9 +102,10 @@ export const VaultDataProvider = ({
           px.push(p1)
         }
         let p2 = getVaultTokenBalanceAndPrice(
-          vaultAddress!,
+          vaultAddress,
           token.address,
-          rolodex!
+          rolodex!,
+          signerOrProvider!
         )
           .then((res) => {
             if (res.livePrice) {
@@ -115,27 +120,33 @@ export const VaultDataProvider = ({
             console.log('failed vault balance & price', e)
           })
         px.push(p2)
-        let p3 = getBalanceOf(currentAccount, token.address, rolodex!.provider)
-          .then((val) => {
-            token.wallet_amount = val
-          })
-          .catch((e) => {
-            console.log('failed to get token balances')
-          })
-        px.push(p3)
+
+        if (currentAccount && connected && vaultAddress) {
+          let p3 = getBalanceOf(
+            currentAccount,
+            token.address,
+            signerOrProvider!
+          )
+            .then((val) => {
+              token.wallet_amount = val
+            })
+            .catch((e) => {
+              console.log('failed to get token balances')
+            })
+          px.push(p3)
+        }
       }
     }
     return Promise.all(px)
   }
   useEffect(() => {
     if (redraw) {
-      console.log('redraw called', tokens)
       setRedraw(false)
     }
   }, [redraw])
 
   useEffect(() => {
-    if (vaultAddress && vaultID && rolodex && tokens) {
+    if (rolodex && tokens) {
       console.log('update called @ block', dataBlock)
       update()
         .then(() => {
@@ -147,7 +158,7 @@ export const VaultDataProvider = ({
         })
     }
     setRefresh(false)
-  }, [tokens, vaultAddress, rolodex, refresh, dataBlock])
+  }, [tokens, vaultAddress, rolodex, refresh, dataBlock, currentAccount])
 
   useEffect(() => {
     setTokens(getTokensListOnCurrentChain(chainId))

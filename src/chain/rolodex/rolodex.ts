@@ -15,9 +15,7 @@ import {
   GovernorCharlieDelegate,
 } from '../contracts'
 
-export const backupProvider = new JsonRpcProvider(
-  'https://polygon-mainnet.g.alchemy.com/v2/HPdWsXQOC9Q38jDvxPo8v2R5R3FpCnNw'
-)
+export const backupProvider = new JsonRpcProvider('https://cloudflare-eth.com')
 
 export class Rolodex {
   provider: JsonRpcProvider
@@ -51,24 +49,22 @@ export class Rolodex {
 }
 
 export const NewRolodex = async (ctx: Web3Data) => {
-  if (!ctx.chainId) {
-    throw new Error('Must connect to a chain first')
-  }
-  // *remove or use mainnet 1
+  // default to ethereum mainnet 1
   const token = Chains.getInfo(ctx.chainId || 1)
   let rolo: Rolodex
   let provider = backupProvider
-  rolo = new Rolodex(provider!, token.usdiAddress!)
+
   try {
-    if (!ctx.provider) {
-      rolo.addressVC = await rolo.USDI?.getVaultController()
-      rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
-    } else {
-      const signer = ctx.provider.getSigner(ctx.currentAccount)
-      provider = ctx.provider
-      rolo = new Rolodex(signer!, token.usdiAddress!)
+    if (ctx.currentAccount) {
+      const signer = await ctx.provider!.getSigner(ctx.currentAccount)
+      provider = ctx.provider!
+      rolo = await new Rolodex(signer!, token.usdiAddress!)
       rolo.addressVC = await rolo.USDI?.getVaultController()
       rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!)
+    } else {
+      rolo = new Rolodex(provider!, token.usdiAddress!)
+      rolo.addressVC = await rolo.USDI?.getVaultController()
+      rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     }
     // connect
     if (!rolo.addressUSDC) {
@@ -89,7 +85,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
       rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!)
     }
   } catch (e) {
-    return rolo
+    throw new Error('Error creating rolodex')
   }
   return rolo
 }

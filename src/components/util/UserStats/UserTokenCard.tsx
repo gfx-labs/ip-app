@@ -8,11 +8,10 @@ import {
 } from '../../libs/modal-content-provider/ModalContentProvider'
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { OpenVaultButton } from '../button/OpenVaultButton'
-import { TitleTextToolTip } from '../text/TitleTextToolTip'
+import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
-
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
   tokenValue: string
@@ -30,10 +29,11 @@ interface UserTokenCardProps extends BoxProps {
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme()
   const rolodex = useRolodexContext()
-  const { currentSigner } = useWeb3Context()
-
+  const { currentSigner, connected, currentAccount } = useWeb3Context()
+  const { setIsWalletModalOpen } = useWalletModalContext()
   const { tokens } = useVaultDataContext()
-  const { setType, setCollateralToken } = useModalContext()
+  const { setType, setCollateralToken, updateTransactionState } =
+    useModalContext()
   const { hasVault, vaultAddress } = useVaultDataContext()
   const { setDelegateToken } = useAppGovernanceContext()
   const {
@@ -47,14 +47,28 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     canDelegate = false,
   } = props
 
-  const openDeposit = () => {
-    setCollateralToken((tokens as any)[tokenName])
-    setType(ModalType.DepositCollateral)
+  const openVault = async () => {
+    try {
+      const mintVaultRes = await rolodex!.VC!.mintVault()
+      updateTransactionState(mintVaultRes)
+      const mintVaultReceipt = await mintVaultRes.wait()
+      updateTransactionState(mintVaultReceipt)
+      return mintVaultRes
+    } catch (err) {
+      updateTransactionState(err as ContractReceipt)
+      throw new Error('Error creating vault')
+    }
   }
 
-  const openWithdraw = () => {
-    setCollateralToken((tokens as any)[tokenName])
-    setType(ModalType.WithdrawCollateral)
+  const handleDWClick = (modalType: ModalType) => {
+    if (!connected) {
+      setIsWalletModalOpen(true)
+    } else if (!hasVault && !vaultAddress) {
+      openVault()
+    } else {
+      setCollateralToken((tokens as any)[tokenName])
+      setType(modalType)
+    }
   }
 
   const setAndOpenDelegate = () => {
@@ -128,25 +142,27 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         />
       </Box>
 
-      {hasVault && vaultAddress !== undefined ? (
-        <Box
-          sx={{
-            display: 'grid',
-            justifyContent: 'space-between',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: 1.5,
-          }}
+      <Box
+        sx={{
+          display: 'grid',
+          justifyContent: 'space-between',
+          gridTemplateColumns: '1fr 1fr',
+          columnGap: 1.5,
+        }}
+      >
+        <Button
+          variant="contained"
+          onClick={() => handleDWClick(ModalType.DepositCollateral)}
         >
-          <Button variant="contained" onClick={openDeposit}>
-            Deposit
-          </Button>
-          <Button variant="contained" onClick={openWithdraw}>
-            Withdraw
-          </Button>
-        </Box>
-      ) : (
-        <OpenVaultButton />
-      )}
+          Deposit
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
+        >
+          Withdraw
+        </Button>
+      </Box>
 
       {canDelegate ? (
         <Box display={canDelegate ? 'flex' : 'none'} justifyContent="flex-end">
