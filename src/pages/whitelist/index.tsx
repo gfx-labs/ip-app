@@ -1,24 +1,7 @@
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Tabs,
-  Tab,
-  Button,
-  TextField,
-} from '@mui/material'
-import { useEffect, useState, ReactNode, useContext } from 'react'
-import {
-  formatColor,
-  formatGradient,
-  gradient,
-  neutral,
-  blue,
-} from '../../theme'
+import { Box, Typography, Tabs, Tab, TextField } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { formatColor, formatGradient, gradient, neutral } from '../../theme'
 import { useLight } from '../../hooks/useLight'
-import { DecimalInput } from '../../components/util/textFields'
-import { DisableableModalButton } from '../../components/util/button/DisableableModalButton'
 import { ModalInputContainer } from '../../components/util/modal/ModalContent/ModalInputContainer'
 import { wave1 } from './wave1'
 import { wave2 } from './wave2'
@@ -116,13 +99,10 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
-  const isLight = useLight()
-  const theme = useTheme()
   const [address, setAddress] = useState('')
   const [message, setMessage] = useState('')
   const [included, setIncluded] = useState(false)
   const [focus, setFocus] = useState(false)
-  const toggle = () => setFocus(!focus)
   const waveNum = index + 1
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
