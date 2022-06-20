@@ -37,17 +37,7 @@ export const DepositCollateralContent = () => {
   }
 
   const setMax = () => {
-    console.log(
-      collateralToken.value,
-      collateralToken.wallet_amount,
-      collateralToken.wallet_amount! * collateralToken.value
-    )
     if (isMoneyValue) {
-      console.log(
-        collateralToken.value,
-        collateralToken.wallet_amount,
-        collateralToken.wallet_amount! * collateralToken.value
-      )
       setInputAmount(
         (collateralToken.wallet_amount! * collateralToken.value).toString()
       )
@@ -74,11 +64,6 @@ export const DepositCollateralContent = () => {
   }, [inputAmount])
 
   const swapHandler = () => {
-    console.log(
-      collateralDepositAmount,
-      collateralToken.value,
-      collateralToken.ticker
-    )
     if (!isMoneyValue) {
       setInputAmount((Number(inputAmount) * collateralToken.value).toString())
     } else {
