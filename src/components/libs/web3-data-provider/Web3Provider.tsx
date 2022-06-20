@@ -16,8 +16,6 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { BACKUP_PROVIDER } from '../../../constants'
 import hexToAscii from '../../util/helpers/hexToAscii'
 
-//import { TorusConnector } from '@web3-react/torus-connector';
-
 type transactionType = {
   value?: string | undefined
   from?: string | undefined
