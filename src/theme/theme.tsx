@@ -84,8 +84,6 @@ export const theme = createTheme({
   },
 })
 
-const isLight = theme.palette.mode
-
 // Responsive typography
 theme.typography.h1 = {
   fontWeight: 800,
@@ -350,7 +348,6 @@ theme.components = {
         props: { variant: 'cta' },
         style: {
           backgroundColor: formatColor(blue.blue1),
-
           '&:hover': {
             backgroundColor: formatColor(blue.blue14),
           },
@@ -501,7 +498,6 @@ theme.components = {
       gutters: 2,
       root: {
         borderRadius: 10,
-
         '&::before': {
           display: 'none',
         },

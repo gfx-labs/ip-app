@@ -116,13 +116,10 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
-  const isLight = useLight()
-  const theme = useTheme()
   const [address, setAddress] = useState('')
   const [message, setMessage] = useState('')
   const [included, setIncluded] = useState(false)
   const [focus, setFocus] = useState(false)
-  const toggle = () => setFocus(!focus)
   const waveNum = index + 1
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

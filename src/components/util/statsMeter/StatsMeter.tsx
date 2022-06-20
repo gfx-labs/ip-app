@@ -1,7 +1,6 @@
 import { Box, LinearProgress, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { formatColor, neutral } from '../../../theme'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { ToolTip } from '../tooltip/ToolTip'
 
@@ -31,6 +30,7 @@ export const StatsMeter = () => {
       setBarColor('error')
     }
   }, [percentBorrowed])
+
   return (
     <Box>
       <Typography variant="label" color={formatColor(neutral.gray3)}>
