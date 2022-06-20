@@ -69,7 +69,6 @@ export const WithdrawCollateralContent = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
       let a2s = borrowingPower - accountLiability
-      console.log(borrowingPower, accountLiability, a2s)
       if (a2s >= 0) {
         const tv = collateralToken.vault_amount * collateralToken.value
         if (tv < a2s) {
