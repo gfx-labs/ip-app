@@ -1,24 +1,7 @@
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Tabs,
-  Tab,
-  Button,
-  TextField,
-} from '@mui/material'
-import { useEffect, useState, ReactNode, useContext } from 'react'
-import {
-  formatColor,
-  formatGradient,
-  gradient,
-  neutral,
-  blue,
-} from '../../theme'
+import { Box, Typography, Tabs, Tab, TextField } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { formatColor, formatGradient, gradient, neutral } from '../../theme'
 import { useLight } from '../../hooks/useLight'
-import { DecimalInput } from '../../components/util/textFields'
-import { DisableableModalButton } from '../../components/util/button/DisableableModalButton'
 import { ModalInputContainer } from '../../components/util/modal/ModalContent/ModalInputContainer'
 import { wave1 } from './wave1'
 import { wave2 } from './wave2'

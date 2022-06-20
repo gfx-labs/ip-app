@@ -1,4 +1,4 @@
-import { Box, Button, Popover, Typography } from '@mui/material'
+import { Button, Popover, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
@@ -47,7 +47,11 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
               }
         }
       >
-        <Typography variant="label" color="text.primary" sx={{ position: 'relative', top: 1 }}>
+        <Typography
+          variant="label"
+          color="text.primary"
+          sx={{ position: 'relative', top: 1 }}
+        >
           {text}
         </Typography>{' '}
         <CopyIcon
