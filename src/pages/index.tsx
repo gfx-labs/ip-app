@@ -2,7 +2,6 @@ import { formatColor, neutral } from '../theme'
 import { Box, Typography, useTheme } from '@mui/material'
 import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
 import { ProtocolStatsCard } from '../components/util/cards'
-import { useLight } from '../hooks/useLight'
 import { UsdiGraphCard } from '../components/util/cards/UsdiGraphCard'
 import { StatsMeter } from '../components/util/statsMeter'
 import { UserStats } from '../components/util/UserStats'
@@ -13,12 +12,12 @@ import { BigNumber } from 'ethers'
 import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
 import { Governance } from './governance'
 import Cookies from 'universal-cookie'
+import fetchVaultOf from '../contracts/Vault/fetchVaultOf'
 
 const Dashboard = () => {
   const cookies = new Cookies()
-  const isFirst = cookies.get('first-visit')
-  if (isFirst) {
-  } else {
+  const firstVisitExists = cookies.get('first-visit')
+  if (!firstVisitExists) {
     console.log('detected first login')
     return (
       <div style={{ minHeight: '80vh' }}>
@@ -27,34 +26,21 @@ const Dashboard = () => {
       </div>
     )
   }
+
   const theme = useTheme()
-  const { currentAccount, connected } = useWeb3Context()
+  const { currentAccount } = useWeb3Context()
   const rolodex = useRolodexContext()
-  const { hasVault, setVaultID, setVaultAddress } = useVaultDataContext()
-  const isLight = useLight()
+  const { setVaultID, setVaultAddress } = useVaultDataContext()
   const { isApp } = useAppGovernanceContext()
 
   useEffect(() => {
     if (currentAccount && rolodex) {
-      const fetchVault = async (): Promise<void> => {
-        try {
-          const vaultIDs = await rolodex?.VC?.vaultIDs(currentAccount)
-          if (vaultIDs && vaultIDs?.length > 0) {
-            const vaultID = BigNumber.from(vaultIDs[0]._hex).toString()
-            const vaultAddress = await rolodex?.VC?.vaultAddress(vaultID)
-            setVaultID(vaultID)
-            setVaultAddress(vaultAddress)
-          } else {
-            setVaultID(null)
-          }
-        } catch (err) {
-          setVaultID(null)
-
-          throw new Error('cannot get vault')
+      fetchVaultOf(currentAccount, rolodex).then((res) => {
+        if (res !== null) {
+          setVaultID(res.vaultID)
+          setVaultAddress(res.vaultAddress)
         }
-      }
-
-      fetchVault()
+      })
     }
   }, [currentAccount, rolodex])
 

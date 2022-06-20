@@ -19,7 +19,6 @@ export const getVaultTokenBalanceAndPrice = async (
   if (vault_address !== undefined) {
     balance = await getBalanceOf(vault_address, token_address, SOP)
   }
-
   const price = await rolodex?.Oracle?.getLivePrice(token_address)
   const decimals = await getDecimals(token_address, SOP)
   const livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))

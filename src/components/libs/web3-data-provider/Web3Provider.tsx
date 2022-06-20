@@ -13,6 +13,8 @@ import { SignatureLike } from '@ethersproject/bytes'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
+import { BACKUP_PROVIDER } from '../../../constants'
+import hexToAscii from '../../util/helpers/hexToAscii'
 
 //import { TorusConnector } from '@web3-react/torus-connector';
 
@@ -180,7 +182,7 @@ export const Web3ContextProvider = ({
     if (currentSigner) {
       setSignerOrProvider(currentSigner)
     } else {
-      const backupProvider = new JsonRpcProvider('https://cloudflare-eth.com')
+      const backupProvider = new JsonRpcProvider(BACKUP_PROVIDER)
 
       setSignerOrProvider(backupProvider)
     }
@@ -197,19 +199,6 @@ export const Web3ContextProvider = ({
         })
       } else {
         setTried(true)
-        // For now we will not eagerly connect to injected provider
-        // const injected = getWallet(WalletType.INJECTED);
-        // // @ts-expect-error isAuthorized not in AbstractConnector type. But method is there for
-        // // injected provider
-        // injected.isAuthorized().then((isAuthorized: boolean) => {
-        //   if (isAuthorized) {
-        //     connectWallet(WalletType.INJECTED).catch(() => {
-        //       setTried(true);
-        //     });
-        //   } else {
-        //     setTried(true);
-        //   }
-        // });
       }
     }
   }, [activate, setTried, active, connectWallet, deactivated])
@@ -231,15 +220,6 @@ export const Web3ContextProvider = ({
       setTried(true)
     }
   }, [tried, active])
-
-  const hexToAscii = (_hex: string): string => {
-    const hex = _hex.toString()
-    let str = ''
-    for (let n = 0; n < hex.length; n += 2) {
-      str += String.fromCharCode(parseInt(hex.substr(n, 2), 16))
-    }
-    return str
-  }
 
   const getTxError = async (txHash: string): Promise<string> => {
     try {
