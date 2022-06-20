@@ -1,5 +1,6 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Web3Data } from '../../components/libs/web3-data-provider/Web3Provider'
+import { BACKUP_PROVIDER } from '../../constants'
 import { Chains } from '../chains'
 import {
   IUSDI,
@@ -15,7 +16,7 @@ import {
   GovernorCharlieDelegate,
 } from '../contracts'
 
-export const backupProvider = new JsonRpcProvider('https://cloudflare-eth.com')
+export const backupProvider = new JsonRpcProvider(BACKUP_PROVIDER)
 
 export class Rolodex {
   provider: JsonRpcProvider

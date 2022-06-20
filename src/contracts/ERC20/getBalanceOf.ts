@@ -12,7 +12,6 @@ export const getBalanceOf = async (
     contract_address,
     providerOrSigner
   )
-
   const balance = await contract.balanceOf(wallet_address)
   const decimals = await getDecimals(contract, providerOrSigner)
 

@@ -20,7 +20,6 @@ import { BN } from '../../../easy/bn'
 import { BigNumber } from 'ethers'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
-import { connected } from 'process'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -46,7 +45,7 @@ export const VaultDataProvider = ({
 }: {
   children: React.ReactElement
 }) => {
-  const { dataBlock, currentAccount, chainId, signerOrProvider } =
+  const { dataBlock, currentAccount, chainId, signerOrProvider, connected } =
     useWeb3Context()
   const rolodex = useRolodexContext()
   const [redraw, setRedraw] = useState(false)
@@ -120,8 +119,7 @@ export const VaultDataProvider = ({
             console.log('failed vault balance & price', e)
           })
         px.push(p2)
-
-        if (currentAccount && connected && vaultAddress) {
+        if (currentAccount && connected) {
           let p3 = getBalanceOf(
             currentAccount,
             token.address,
