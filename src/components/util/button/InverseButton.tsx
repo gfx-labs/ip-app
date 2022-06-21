@@ -10,9 +10,7 @@ export const InverseButton = (props: ButtonProps) => {
     <Button
       variant="contained"
       sx={{
-        background: isLight
-          ? formatColor(neutral.gray7)
-          : formatColor(neutral.white),
+        backgroundColor: 'primary.dark',
         boxShadow: 0,
         color: isLight
           ? formatColor(neutral.white)

@@ -50,19 +50,15 @@ const PurchaseBox: React.FC = () => {
   }
 
   const TabStyle = {
-    backgroundColor: isLight
-      ? formatColor(neutral.white)
-      : formatColor(neutral.gray7),
+    backgroundColor: 'primary.light',
     color: 'primary.main',
     px: { xs: 1, sm: 5 },
     py: { xs: 0.5, sm: 1.5 },
     minHeight: 'auto',
     '&.Mui-selected': {
-      backgroundColor: isLight
-        ? formatColor(neutral.gray7)
-        : formatColor(neutral.white),
+      backgroundColor: 'primary.dark',
       borderRadius: 2,
-      color: isLight ? formatColor(neutral.white) : formatColor(neutral.gray7),
+      color: 'primary.light',
     },
   }
 

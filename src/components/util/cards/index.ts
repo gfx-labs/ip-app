@@ -1,2 +1,2 @@
-export * from "./titleTextCard";
-export * from './ProtocolStatsCard';
+export * from './TitleTextCard'
+export * from './ProtocolStatsCard'
