@@ -32,6 +32,10 @@ declare module '@mui/material/styles' {
     label2: React.CSSProperties
     label2_medium: React.CSSProperties
   }
+
+  interface BreakpointOverrides {
+    xsm: true
+  }
 }
 
 declare module '@mui/material/Typography' {
@@ -76,6 +80,7 @@ export const theme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
+      xsm: 640,
       sm: 768,
       md: 800,
       lg: 1280,

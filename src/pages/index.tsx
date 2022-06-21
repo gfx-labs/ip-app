@@ -90,8 +90,7 @@ const Dashboard = () => {
             <ProtocolStatsCard />
             <UsdiGraphCard />
           </Box>
-
-          <Box sx={{ position: 'relative' }}>
+          <Box>
             <Box sx={{ marginY: 4, px: { xs: 2, md: 6 } }}>
               <StatsMeter />
             </Box>
