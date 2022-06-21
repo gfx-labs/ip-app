@@ -65,7 +65,6 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
       <Popover
         open={open}
         anchorEl={anchorEl}
-        onClose={() => {}}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',

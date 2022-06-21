@@ -28,16 +28,18 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-export const getDesignTokens = (
-  mode: PaletteMode
-): ThemeOptions => ({
+export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
   ...theme,
   palette: {
     mode,
     ...(mode === 'light'
       ? {
           // palette values for light mode
-          primary: { main: formatColor(blue.blue1) },
+          primary: {
+            main: formatColor(blue.blue1),
+            light: formatColor(neutral.white),
+            dark: formatColor(neutral.gray7),
+          },
           secondary: { main: formatColor(blue.blue2) },
           success: { main: formatColor(green.green1) },
           text: {
@@ -63,15 +65,17 @@ export const getDesignTokens = (
             text: formatColor(neutral.gray1),
           },
           action: {
-            disabledBackground: formatColor(
-              disabled.disabled1
-            ),
+            disabledBackground: formatColor(disabled.disabled1),
             disabled: formatColor(neutral.white),
           },
         }
       : {
           // palette values for dark mode
-          primary: { main: formatColor(blue.blue1) },
+          primary: {
+            main: formatColor(blue.blue1),
+            light: formatColor(neutral.gray7),
+            dark: formatColor(neutral.white),
+          },
           secondary: { main: formatColor(blue.blue2) },
           success: { main: formatColor(green.green1) },
           text: {
@@ -97,9 +101,7 @@ export const getDesignTokens = (
             text: formatColor(neutral.white),
           },
           action: {
-            disabledBackground: formatColor(
-              disabled.disabled1
-            ),
+            disabledBackground: formatColor(disabled.disabled1),
             disabled: formatColor(neutral.black),
           },
         }),
