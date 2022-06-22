@@ -85,7 +85,7 @@ export const ProtocolStatsCard = () => {
           <ToolTip
             content={
               <Typography variant="body3">
-                The USDC reserve over the total USDi supply
+                USDC in Reserve / USDi Total Supply
               </Typography>
             }
             text={`Reserve Ratio: ${reserveRatio}%

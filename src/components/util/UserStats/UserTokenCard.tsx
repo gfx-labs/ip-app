@@ -123,7 +123,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
         <ToolTip
-          content={<Typography variant="body3">Loan-To-Value</Typography>}
+          content={<Typography variant="body3">Maximum Loan-To-Value for this asset</Typography>}
           text={`LTV: ${LTVPercent}%
           `}
           text_variant="label2"
@@ -132,8 +132,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <ToolTip
           content={
             <Typography variant="body3">
-              The liquidation penalty paid to liquidators for performing a
-              liquidation
+              Liquidation penalty paid by vault to the liquidator for liquidating this asset
             </Typography>
           }
           text={`Penalty: ${penaltyPercent}%

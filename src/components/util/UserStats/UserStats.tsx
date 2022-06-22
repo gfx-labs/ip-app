@@ -137,9 +137,9 @@ export const UserStats = () => {
           <ToolTip
             content={
               <Typography variant="body3">
-                Each vault is a unique smart contract. Users can transfer
-                collateral directly to their vault to increase the vault's
-                borrowing power
+                Each vault is a unique smart contract. You can transfer
+                ERC20 collateral directly to your vault to increase the vault's
+                borrowing power. (Do NOT transfer unwrapped ETH to your vault; it may not be recoverable.)
               </Typography>
             }
             text={`Vault Address`}
@@ -187,7 +187,7 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleTextToolTip
             title={`Borrowing Power`}
-            tooltipContent="The sum of the vault's collateral discounted by the LTV"
+            tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
             text={
               borrowingPower !== null
                 ? '$' + Math.round(borrowingPower).toLocaleString()
@@ -199,21 +199,21 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleTextToolTip
             title={`Borrow APR`}
-            tooltipContent="The estimated annualized rate to borrow USDi from the protocol"
+            tooltipContent="Current annualized rate paid by USDi borrowers"
             text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
           <TitleTextToolTip
             title={`Deposit APR`}
-            tooltipContent="The estimated annualized rate to hold USDi"
+            tooltipContent="Current annualized rate paid to USDi holders. All interest paid by borrowers, net of a 15% protocol fee, is distributed to USDi holders."
             text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
           <TitleTextToolTip
-            title={`IPT PER YEAR`}
-            tooltipContent="The estimated number of IPT earned by borrowing annualized at the current rate"
+            title={`IPT per year`}
+            tooltipContent="Current annualized amount of IPT being earned by your vault for borrowing USDi"
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
@@ -246,7 +246,7 @@ export const UserStats = () => {
             }}
           >
             <TitleTextToolTip
-              tooltipContent="The number of USDi the vault is borrowing. This number increases as interest is charged"
+              tooltipContent="Amount of USDi your vault is currently borrowing. This increases as interest accrues."
               title={`USDi Borrowed`}
               text={
                 accountLiability !== null

@@ -50,7 +50,7 @@ export const StatsMeter = () => {
         <ToolTip
           content={
             <Typography variant="body3">
-              The sum of the vault's collateral discounted by the LTV
+              Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV
             </Typography>
           }
           text={`Borrowing Power: ${Math.round(
@@ -63,10 +63,10 @@ export const StatsMeter = () => {
         <ToolTip
           content={
             <Typography variant="body3">
-              The percentage of the vault's borrowing power currently in use
+              USDi Borrowed / Borrowing Power
             </Typography>
           }
-          text={`USDi Borrowed:  ${percentBorrowed}%`}
+          text={`Percentage Used:  ${percentBorrowed}%`}
           text_variant="label2"
         />
       </Box>
