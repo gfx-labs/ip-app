@@ -199,21 +199,21 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleTextToolTip
             title={`Borrow APR`}
-            tooltipContent="The estimated annualized rate to borrow USDi from the protocol"
+            tooltipContent="Current annualized rate paid by USDi borrowers"
             text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
           <TitleTextToolTip
             title={`Deposit APR`}
-            tooltipContent="The estimated annualized rate to hold USDi"
+            tooltipContent="Current annualized rate paid to USDi holders. All interest paid by borrowers, net of a 15% protocol fee, is distributed to USDi holders."
             text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
           />
         </SingleStatCard>
         <SingleStatCard>
           <TitleTextToolTip
-            title={`IPT PER YEAR`}
-            tooltipContent="The estimated number of IPT earned by borrowing annualized at the current rate"
+            title={`IPT per year`}
+            tooltipContent="Current annualized amount of IPT being earned by your vault for borrowing USDi"
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
@@ -246,7 +246,7 @@ export const UserStats = () => {
             }}
           >
             <TitleTextToolTip
-              tooltipContent="The number of USDi the vault is borrowing. This number increases as interest is charged"
+              tooltipContent="Amount of USDi your vault is currently borrowing. This increases as interest accrues."
               title={`USDi Borrowed`}
               text={
                 accountLiability !== null
