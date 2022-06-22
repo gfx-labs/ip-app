@@ -1,6 +1,6 @@
 # Oracle system
 
-Price oracles play a crucial role in every protocol that lends assets against collateral. An accurate, reliable, and safe oracle for asset prices allows loans and liquidations to occur quickly without errors. Interest Protocol uses a read-based oracle system that calls for live prices at each instance a price is needed. While this method could be inefficient at times, it provides the highest level of accuracy and safety for borrowers and lenders. 
+An accurate and reliable oracle for asset prices allows loans and liquidations to occur quickly without errors. Interest Protocol uses a read-based oracle system that calls for live prices at each instance a price is needed. While this method could be inefficient at times, it provides the highest level of accuracy and safety for borrowers and lenders. 
 
 All asset prices are aggregated into the `OracleMaster,` which maintains a list of asset-specific oracle contracts called the `AnchorViewRelay.` Each `AnchorViewRelay` has two sub-oracles and a configurable buffer. One sub-oracle is specified as the main oracle and the other as the anchor. Currently, the `ChainlinkOracleRelay` is the main, and `UniswapV3OracleRelay` is the anchor. Whenever a price is utilized in a transaction, the protocol reads the main oracle price and the anchor oracle and certifies that the main oracle price is within the specified deviation of the anchor oracle price. 
 
