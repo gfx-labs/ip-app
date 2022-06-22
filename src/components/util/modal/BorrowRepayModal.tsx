@@ -1,56 +1,44 @@
-import { Box, Typography, Button } from "@mui/material";
-import { useState, useEffect } from "react";
-import { formatColor, neutral } from "../../../theme";
+import { Box, Typography } from '@mui/material'
+import { useState, useEffect } from 'react'
+import { formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from "../../libs/modal-content-provider/ModalContentProvider";
-import { BaseSwitch } from "../switch";
-import { BaseModal } from "./BaseModal";
-import { useLight } from "../../../hooks/useLight";
-import { BorrowContent } from "./ModalContent/BorrowContent";
-import { RepayContent } from "./ModalContent/RepayContent";
-import { useRolodexContext } from "../../libs/rolodex-data-provider/RolodexDataProvider";
-import { useVaultDataContext } from "../../libs/vault-data-provider/VaultDataProvider";
-import { Spacer } from "../../../easy/spacer";
-import { ForwardIcon } from "../../icons/misc/ForwardIcon";
+} from '../../libs/modal-content-provider/ModalContentProvider'
+import { BaseSwitch } from '../switch'
+import { BaseModal } from './BaseModal'
+import { useLight } from '../../../hooks/useLight'
+import { BorrowContent } from './ModalContent/BorrowContent'
+import { RepayContent } from './ModalContent/RepayContent'
+import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 
 export const BorrowRepayModal = () => {
-  const { type, setType } = useModalContext();
+  const { type, setType } = useModalContext()
 
-  const currType = type === ModalType.Borrow;
+  const currType = type === ModalType.Borrow
 
-  const isLight = useLight();
+  const isLight = useLight()
 
-  const {
-    tokens,
-    setTokens,
-    vaultID,
-    hasVault,
-    setVaultID,
-    vaultAddress,
-    setVaultAddress,
-    borrowingPower,
-    accountLiability,
-  } = useVaultDataContext();
+  const { vaultID, borrowingPower, accountLiability } = useVaultDataContext()
 
-  const [tokenName, setTokenName] = useState("USDI");
-  const [vaultBorrowPower, setVaultBorrowPower] = useState("0");
-  const [borrowAmount, setBorrowAmount] = useState("");
+  const [tokenName, setTokenName] = useState('USDI')
+  const [vaultBorrowPower, setVaultBorrowPower] = useState('0')
+  const [borrowAmount, setBorrowAmount] = useState('')
   useEffect(() => {
     if (borrowingPower) {
-      setVaultBorrowPower(borrowingPower.toFixed(0));
+      setVaultBorrowPower(borrowingPower.toFixed(0))
     }
-  }, [borrowingPower]);
+  }, [borrowingPower])
   const onSwitch = (val: boolean) => {
-    setType(val ? ModalType.Borrow : ModalType.Repay);
-  };
+    setType(val ? ModalType.Borrow : ModalType.Repay)
+  }
 
   return (
     <BaseModal
       open={type === ModalType.Borrow || type === ModalType.Repay}
       setOpen={() => {
-        setType(null);
+        setType(null)
       }}
     >
       <BaseSwitch
@@ -61,8 +49,8 @@ export const BorrowRepayModal = () => {
       />
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           mb: 2.5,
           mt: 4,
           columnGap: 2,
@@ -157,5 +145,5 @@ export const BorrowRepayModal = () => {
         />
       )}
     </BaseModal>
-  );
-};
+  )
+}

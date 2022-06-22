@@ -5,7 +5,6 @@ import { JsonRpcSigner } from '@ethersproject/providers'
 import { useModalContext } from '../../../libs/modal-content-provider/ModalContentProvider'
 import { ContractReceipt } from 'ethers'
 import { useState } from 'react'
-import { useLight } from '../../../../hooks/useLight'
 import { castVote } from '../../../../contracts/GovernorCharlieDelegate'
 
 type VoteModalProps = {
@@ -21,7 +20,6 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
   const { open, setOpen, id, totalVotes, signer, votingPower } = props
   const { updateTransactionState } = useModalContext()
   const [error, setError] = useState('')
-  const isLight = useLight()
 
   const castVoteHandler = async (vote: number) => {
     try {
@@ -67,12 +65,8 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       <Button
         variant="contained"
         sx={{
-          backgroundColor: isLight
-            ? formatColor(neutral.black)
-            : formatColor(neutral.white),
-          color: isLight
-            ? formatColor(neutral.white)
-            : formatColor(neutral.black),
+          backgroundColor: 'misc.blackWhite',
+          color: 'misc.whiteBlack',
           my: 2,
         }}
         onClick={() => castVoteHandler(0)}
