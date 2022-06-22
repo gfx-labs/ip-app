@@ -225,7 +225,6 @@ theme.typography.body2 = {
   fontWeight: 700,
   fontSize: pxToRem(18),
   lineHeight: fzTolineHeight(18),
-
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(14),
     lineHeight: fzTolineHeight(14),
@@ -297,7 +296,6 @@ const MuiTextFieldVariants: ComponentsVariants['MuiTextField'] = [
       label: {
         transform: 'translate(0, -8px)', // remove 0.75 scaling
       },
-
       input: {
         textDecorationLine: 'none',
         backgroundColor: formatColor(neutral.white),
@@ -313,7 +311,6 @@ const MuiTextFieldVariants: ComponentsVariants['MuiTextField'] = [
         '&:focus': {
           borderColor: formatColor(neutral.white),
         },
-
         [theme.breakpoints.down('md')]: {
           fontSize: pxToRem(16),
           lineHeight: pxToRem(28.51),
@@ -395,18 +392,15 @@ theme.components = {
     styleOverrides: {
       root: {
         borderRadius: 8,
-
         '&:hover': {
           borderColor: formatColor(neutral.white),
           backgroundColor: formatColor(neutral.white),
         },
-
         '&.Mui-focused': {
           backgroundColor: formatColor(neutral.white),
         },
         '&:before': {
           borderBottom: 'none !important',
-
           '&:hover': {
             borderBottom: 'none',
           },
