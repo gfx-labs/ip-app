@@ -6,7 +6,6 @@ import {
   useModalContext,
 } from '../../libs/modal-content-provider/ModalContentProvider'
 import { BaseModal } from './BaseModal'
-import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
@@ -94,8 +93,6 @@ export const DepositUSDCConfirmationModal = () => {
     }
   }
 
-  const isLight = useLight()
-
   return (
     <BaseModal
       open={type === ModalType.DepositUSDCConfirmation}
@@ -103,12 +100,7 @@ export const DepositUSDCConfirmationModal = () => {
         setType(null)
       }}
     >
-      <Typography
-        variant="body3"
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      >
+      <Typography variant="body3" color="text.primary">
         Confirm Deposit
       </Typography>
       <Box
@@ -121,9 +113,7 @@ export const DepositUSDCConfirmationModal = () => {
           py: 2,
           borderRadius: '10px',
           columnGap: 4,
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray7),
+          backgroundColor: 'background.overview',
         }}
       >
         <Box display="flex" alignItems="center">
