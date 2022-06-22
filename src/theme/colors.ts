@@ -117,8 +117,8 @@ export const gradient: { [key: string]: Gradient } = {
   bgDefaultDark: {
     angle: 180,
     stops: [
-      [[53, 57, 71], 0],
-      [[53, 57, 71], 1],
+      [[28, 29, 33], 0],
+      [[28, 29, 33], 1],
     ],
   },
   cardDefaultLight: {
