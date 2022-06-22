@@ -89,6 +89,16 @@ export const getDesignTokens = (mode: PaletteMode) => {
           formatColor(neutral.black)
         ),
       },
+      misc: {
+        whiteBlack: getColor(
+          formatColor(neutral.white),
+          formatColor(neutral.black)
+        ),
+        blackWhite: getColor(
+          formatColor(neutral.black),
+          formatColor(neutral.white)
+        ),
+      },
     },
   } as ThemeOptions
 }

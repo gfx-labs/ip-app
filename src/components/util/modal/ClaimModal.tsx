@@ -1,40 +1,38 @@
-import { Box, Typography, Button } from "@mui/material";
-import { useState } from "react";
-import { formatColor, neutral } from "../../../theme";
+import { Box, Typography, Button } from '@mui/material'
+import { useState } from 'react'
+import { formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from "../../libs/modal-content-provider/ModalContentProvider";
-import { BaseModal } from "./BaseModal";
-import { useLight } from "../../../hooks/useLight";
-import { DecimalInput } from "../textFields";
+} from '../../libs/modal-content-provider/ModalContentProvider'
+import { BaseModal } from './BaseModal'
+import { DecimalInput } from '../textFields'
 
 export const ClaimModal = () => {
-  const { type, setType } = useModalContext();
-  const isLight = useLight();
+  const { type, setType } = useModalContext()
 
-  const [tokenName, setTokenName] = useState("IPT");
-  const [iptBalance, setIPTBalance] = useState("0");
+  const [tokenName, setTokenName] = useState('IPT')
+  const [iptBalance, setIPTBalance] = useState('0')
 
-  const [claimAmount, setClaimAmount] = useState("");
+  const [claimAmount, setClaimAmount] = useState('')
 
   const setMax = () => {
-    setClaimAmount(iptBalance);
-  };
+    setClaimAmount(iptBalance)
+  }
 
-  const handleClaimRequest = () => {};
+  const handleClaimRequest = () => {}
 
   return (
     <BaseModal
       open={type === ModalType.Claim}
       setOpen={() => {
-        setType(null);
+        setType(null)
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
+          display: 'flex',
+          alignItems: 'center',
           mb: 2.5,
           mt: 4,
           columnGap: 2,
@@ -63,24 +61,22 @@ export const ClaimModal = () => {
           color={formatColor(neutral.gray10)}
           textAlign="left"
         >
-          {" "}
+          {' '}
           Amount you wish to claim:
         </Typography>
 
         <Box
           sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            backgroundColor: isLight
-              ? formatColor(neutral.gray5)
-              : formatColor(neutral.gray4),
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: 'smallCard.background',
             paddingTop: 1,
             paddingBottom: 0,
             paddingX: 2,
             borderRadius: 2,
-            boxShadow: "0px 4px 4px 0px rgba(0,0,0, 0.05)",
+            boxShadow: '0px 4px 4px 0px rgba(0,0,0, 0.05)',
             marginTop: 1,
           }}
         >
@@ -90,7 +86,7 @@ export const ClaimModal = () => {
             value={claimAmount}
           />
           <Box
-            sx={{ display: "flex", paddingBottom: 0.5, alignItems: "center" }}
+            sx={{ display: 'flex', paddingBottom: 0.5, alignItems: 'center' }}
           >
             <Button onClick={setMax}>
               <Typography
@@ -115,5 +111,5 @@ export const ClaimModal = () => {
         </Button>
       </Box>
     </BaseModal>
-  );
-};
+  )
+}
