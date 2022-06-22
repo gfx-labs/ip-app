@@ -137,9 +137,9 @@ export const UserStats = () => {
           <ToolTip
             content={
               <Typography variant="body3">
-                Each vault is a unique smart contract. Users can transfer
-                collateral directly to their vault to increase the vault's
-                borrowing power
+                Each vault is a unique smart contract. You can transfer
+                ERC20 collateral directly to your vault to increase the vault's
+                borrowing power. (Do NOT transfer unwrapped ETH to your vault; it may not be recoverable.)
               </Typography>
             }
             text={`Vault Address`}
