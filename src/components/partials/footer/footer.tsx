@@ -47,10 +47,8 @@ const FooterContent = () => {
   return (
     <Box
       sx={{
-        justifyContent: 'space-between',
         maxWidth: 1300,
         margin: 'auto',
-        backgroundColor: 'footer.background',
       }}
     >
       <Box
