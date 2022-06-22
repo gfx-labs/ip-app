@@ -93,7 +93,7 @@ export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
           divider: formatColor(neutral.gray6),
           footer: {
             background: formatColor(neutral.gray7),
-            color: formatColor(neutral.white),
+            color: formatColor(neutral.gray3),
           },
           smallCard: {
             background: formatColor(neutral.gray4),
