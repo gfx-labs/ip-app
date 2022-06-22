@@ -1,5 +1,7 @@
 # IPT Sale
 
+**Note:** IPT sale has been deferred to July.
+
 GFX Labs will start the sale of Interest Protocol Tokens (IPT) on June 13th in tandem with the launch of the protocol. The sale will last until June 19th. This post introduces both IPT and Governor Charlie, along with how the sale of IPT will take place.
 
 ## IPT and Governor Charlie
