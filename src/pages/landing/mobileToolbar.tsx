@@ -32,8 +32,6 @@ export const LandingMobileToolbar = () => {
     nav('/', { replace: true })
   }
 
-  let isLight = theme.palette.mode === 'light'
-
   return (
     <Toolbar
       sx={{
