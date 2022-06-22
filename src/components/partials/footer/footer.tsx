@@ -6,10 +6,10 @@ const footerLinks = [
   {
     title: 'Protocol',
     links: [
-      { label: 'Whitepaper', href: '/whitepaper' },
-      { label: 'Docs & Guides', href: '/docs' },
-      { label: 'Whitelist', href: '/whitelist' },
-      { label: 'Sale', href: '/sale' },
+      { label: 'Whitepaper', href: '#/whitepaper' },
+      { label: 'Docs & Guides', href: '#/docs' },
+      { label: 'Whitelist', href: '#/whitelist' },
+      { label: 'Sale', href: '#/sale' },
       {
         label: 'Audit',
         href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
@@ -21,7 +21,7 @@ const footerLinks = [
     links: [
       { label: 'Developer', href: 'https://github.com/gfx-labs/ip-contracts' },
       { label: 'Contact', href: 'https://discord.gg/s9Wja2tb6k' },
-      { label: 'Terms of Use', href: '/terms' },
+      { label: 'Terms of Use', href: '#/terms' },
     ],
   },
 ]
