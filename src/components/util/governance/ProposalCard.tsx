@@ -1,6 +1,5 @@
 import { Box, Link, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useLight } from '../../../hooks/useLight'
 import { blue, formatColor, neutral, pink, theme } from '../../../theme'
 import { Votes } from './Votes'
 import { Status } from './Status'
@@ -31,7 +30,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { votingPower } = props
   const { id, body, endBlock } = props.proposal
 
-  const isLight = useLight()
   const [isExpanded, setIsExpanded] = useState(false)
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
@@ -48,10 +46,9 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
     return title
   }
+
   const [proposal, setProposal] = useState<ProposalInfo>()
-
   const [status, setStatus] = useState(0)
-
   const [timeLeft, setTimeLeft] = useState('')
   const [forVotes, setForVotes] = useState(0)
   const [abstainVotes, setAbstainVotes] = useState(0)
@@ -102,9 +99,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: isLight
-          ? formatColor(neutral.white)
-          : formatColor(neutral.gray7),
+        backgroundColor: 'primary.light',
         borderRadius: 2,
         paddingX: { xs: 1, md: 4 },
         paddingY: 3,

@@ -55,6 +55,10 @@ export const getDesignTokens = (mode: PaletteMode) => {
           `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
           `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`
         ),
+        overview: getColor(
+          formatColor(neutral.gray5),
+          formatColor(neutral.gray7)
+        ),
       },
       mobileToolBar: {
         background: getColor(

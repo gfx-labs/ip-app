@@ -1,36 +1,26 @@
-import { Box } from "@mui/system";
-import { ReactNode } from "react";
-import { useLight } from "../../../hooks/useLight";
-import { formatGradient, gradient } from "../../../theme";
+import { Box } from '@mui/system'
+import { ReactNode } from 'react'
 
-import { Footer } from "../footer";
-import { TopBar } from "../top-bar";
+import { Footer } from '../footer'
+import { TopBar } from '../top-bar'
 export interface AppLayoutProps {
-  children?: ReactNode;
+  children?: ReactNode
 }
 
 export const AppLayout = (props: AppLayoutProps) => {
-  const { children } = props;
-
-  const isLight = useLight();
-
+  const { children } = props
   return (
     <Box>
       <TopBar />
       <Box
-        sx={{
-          backgroundImage: `linear-gradient(
-            ${formatGradient(
-              isLight ? gradient.bgDefaultLight : gradient.bgDefaultDark
-            )}
-          )`,
+        sx={(theme) => ({
+          background: theme.palette.background.default,
           pt: { xs: 10, sm: 18 },
-        }}
+        })}
       >
         {children}
       </Box>
-
       <Footer />
     </Box>
-  );
-};
+  )
+}
