@@ -1,15 +1,8 @@
-import {
-  Box,
-  Button,
-  Grid,
-  Typography,
-  useMediaQuery,
-  useTheme,
-  Link as MuiLink,
-} from '@mui/material'
+import { Box, Typography, useTheme, Link as MuiLink } from '@mui/material'
 import { Link } from '../../util/link'
+import { useLight } from '../../../hooks/useLight'
 
-const nav = [
+const footerLinks = [
   {
     title: 'Protocol',
     links: [
@@ -33,12 +26,7 @@ const nav = [
   },
 ]
 
-import { formatColor, neutral } from '../../../theme'
-import { useLight } from '../../../hooks/useLight'
-
 export const Footer = () => {
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   return (
     <Box
       paddingTop={{ xs: 13, sm: 5 }}
@@ -46,15 +34,14 @@ export const Footer = () => {
       px={{ xs: 4, md: 4 }}
       sx={{
         backgroundColor: 'footer.background',
-        color: 'footer.color',
       }}
     >
-      <DesktopFooter />
+      <FooterContent />
     </Box>
   )
 }
 
-const DesktopFooter = () => {
+const FooterContent = () => {
   const isLight = useLight()
   const theme = useTheme()
   return (
@@ -77,17 +64,10 @@ const DesktopFooter = () => {
           },
         }}
       >
-        {nav.map((navItem, index) => {
+        {footerLinks.map((navItem, index) => {
           return (
-            <Box
-              key={index}
-              sx={{
-                [theme.breakpoints.down('md')]: {
-                  display: navItem.title === 'Community' ? 'none' : 'block',
-                },
-              }}
-            >
-              <Typography variant="body3" fontWeight={700} color="text.primary">
+            <Box key={index}>
+              <Typography variant="body3" fontWeight={700}>
                 {navItem.title}
               </Typography>
               <Box
@@ -98,19 +78,18 @@ const DesktopFooter = () => {
                   marginTop: 2,
                 }}
               >
-                {navItem.links.map((link, index) => {
+                {navItem.links.map((link) => {
                   return (
                     <MuiLink
-                      component={Link}
                       target="_blank"
                       key={link.label}
-                      to={link.href}
+                      href={link.href}
                       variant="body3"
-                      color={formatColor(neutral.gray3)}
+                      color="footer.color"
                       paddingBottom={1}
                       sx={{
                         '&:hover': {
-                          color: 'text.tertiary',
+                          color: 'text.primary',
                         },
                       }}
                     >
@@ -135,7 +114,7 @@ const DesktopFooter = () => {
           },
         }}
       >
-        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+        <Typography color="footer.color" variant="label2">
           Interest Protocol 2022
         </Typography>
         <Box>
