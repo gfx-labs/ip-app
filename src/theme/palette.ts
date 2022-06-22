@@ -28,82 +28,63 @@ declare module '@mui/material/styles/createPalette' {
   }
 }
 
-export const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
-  ...theme,
-  palette: {
-    mode,
-    ...(mode === 'light'
-      ? {
-          // palette values for light mode
-          primary: {
-            main: formatColor(blue.blue1),
-            light: formatColor(neutral.white),
-            dark: formatColor(neutral.gray7),
-          },
-          secondary: { main: formatColor(blue.blue2) },
-          success: { main: formatColor(green.green1) },
-          text: {
-            primary: '#374252',
-            secondary: '#A3A9BA',
-          },
-          background: {
-            default: `linear-gradient(${formatGradient(
-              gradient.bgDefaultLight
-            )})`,
-          },
-          mobileToolBar: {
-            background: formatColor(neutral.white),
-          },
-          divider: formatColor(neutral.gray6),
-          footer: {
-            background: formatColor(neutral.white),
-            color: formatColor(neutral.gray3),
-          },
-          smallCard: {
-            background: formatColor(neutral.gray5),
-            title: formatColor(neutral.gray3),
-            text: formatColor(neutral.gray1),
-          },
-          action: {
-            disabledBackground: formatColor(disabled.disabled1),
-            disabled: formatColor(neutral.white),
-          },
-        }
-      : {
-          // palette values for dark mode
-          primary: {
-            main: formatColor(blue.blue1),
-            light: formatColor(neutral.gray7),
-            dark: formatColor(neutral.white),
-          },
-          secondary: { main: formatColor(blue.blue2) },
-          success: { main: formatColor(green.green1) },
-          text: {
-            primary: formatColor(neutral.white),
-            secondary: formatColor(neutral.gray3),
-          },
-          background: {
-            default: `linear-gradient(${formatGradient(
-              gradient.bgDefaultDark
-            )})`,
-          },
-          mobileToolBar: {
-            background: formatColor(neutral.black5),
-          },
-          divider: formatColor(neutral.gray6),
-          footer: {
-            background: formatColor(neutral.gray7),
-            color: formatColor(neutral.gray3),
-          },
-          smallCard: {
-            background: formatColor(neutral.gray4),
-            title: formatColor(neutral.gray3),
-            text: formatColor(neutral.white),
-          },
-          action: {
-            disabledBackground: formatColor(disabled.disabled1),
-            disabled: formatColor(neutral.black),
-          },
-        }),
-  },
-})
+export const getDesignTokens = (mode: PaletteMode) => {
+  const getColor = (lightColor: string, darkColor?: string) =>
+    mode === 'light' || darkColor === undefined ? lightColor : darkColor
+
+  return {
+    ...theme,
+    palette: {
+      mode,
+      primary: {
+        main: getColor(formatColor(blue.blue1)),
+        light: getColor(formatColor(neutral.white), formatColor(neutral.gray7)),
+        dark: getColor(formatColor(neutral.gray7), formatColor(neutral.white)),
+      },
+      secondary: { main: getColor(formatColor(blue.blue2)) },
+      success: { main: getColor(formatColor(green.green1)) },
+      text: {
+        primary: getColor(
+          formatColor(neutral.gray1),
+          formatColor(neutral.white)
+        ),
+        secondary: getColor(formatColor(neutral.gray3)),
+      },
+      background: {
+        default: getColor(
+          `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
+          `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`
+        ),
+      },
+      mobileToolBar: {
+        background: getColor(
+          formatColor(neutral.white),
+          formatColor(neutral.black5)
+        ),
+      },
+      divider: getColor(formatColor(neutral.gray6)),
+      footer: {
+        background: getColor(
+          formatColor(neutral.white),
+          formatColor(neutral.gray7)
+        ),
+        color: getColor(formatColor(neutral.gray3)),
+      },
+      smallCard: {
+        background: getColor(
+          formatColor(neutral.gray5),
+          formatColor(neutral.gray4)
+        ),
+        title: getColor(formatColor(neutral.gray3)),
+        text: getColor(formatColor(neutral.gray1), formatColor(neutral.white)),
+      },
+      action: {
+        disabledBackground: getColor(formatColor(disabled.disabled1)),
+        disabled: getColor(
+          formatColor(neutral.white),
+          formatColor(neutral.black)
+        ),
+      },
+    },
+  } as ThemeOptions
+}
