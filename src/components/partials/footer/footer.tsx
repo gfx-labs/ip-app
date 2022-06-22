@@ -6,69 +6,73 @@ import {
   useMediaQuery,
   useTheme,
   Link as MuiLink,
-} from "@mui/material";
-import { Link } from "../../util/link";
+} from '@mui/material'
+import { Link } from '../../util/link'
 
 const nav = [
   {
-    title: "Protocol",
+    title: 'Protocol',
     links: [
-      { label: "Whitepaper", href: "/whitepaper" },
-      { label: "Docs & Guides", href: "/docs" },
-      { label: "Whitelist", href: "/whitelist" },
-      { label: "Sale", href: "/sale" },
+      { label: 'Whitepaper', href: '/whitepaper' },
+      { label: 'Docs & Guides', href: '/docs' },
+      { label: 'Whitelist', href: '/whitelist' },
+      { label: 'Sale', href: '/sale' },
+      {
+        label: 'Audit',
+        href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
+      },
     ],
   },
   {
-    title: "Company",
+    title: 'Company',
     links: [
-      { label: "Developer", href: "https://github.com/gfx-labs/ip-contracts" },
-      { label: "Contact", href: "https://discord.gg/s9Wja2tb6k" },
-      { label: "Terms of Use", href: "/terms" },
+      { label: 'Developer', href: 'https://github.com/gfx-labs/ip-contracts' },
+      { label: 'Contact', href: 'https://discord.gg/s9Wja2tb6k' },
+      { label: 'Terms of Use', href: '/terms' },
     ],
   },
-];
+]
 
-import { formatColor, neutral } from "../../../theme";
-import { useLight } from "../../../hooks/useLight";
+import { formatColor, neutral } from '../../../theme'
+import { useLight } from '../../../hooks/useLight'
 
 export const Footer = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   return (
     <Box
       paddingTop={{ xs: 13, sm: 5 }}
       paddingBottom={{ xs: 7, sm: 3 }}
       px={{ xs: 4, md: 4 }}
       sx={{
-        backgroundColor: "footer.background",
-        color: "footer.color",
+        backgroundColor: 'footer.background',
+        color: 'footer.color',
       }}
     >
       <DesktopFooter />
     </Box>
-  );
-};
+  )
+}
 
 const DesktopFooter = () => {
-  const isLight = useLight();
-  const theme = useTheme();
+  const isLight = useLight()
+  const theme = useTheme()
   return (
     <Box
       sx={{
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
         maxWidth: 1300,
-        margin: "auto",
-        backgroundColor: "footer.background",
+        margin: 'auto',
+        backgroundColor: 'footer.background',
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          justifyContent: { xs: "space-evenly", md: "space-evenly" },
+          display: 'flex',
+          justifyContent: { xs: 'space-evenly', md: 'space-evenly' },
           maxWidth: 900,
-          margin: "auto",
-          [theme.breakpoints.down("md")]: {
+          margin: 'auto',
+          [theme.breakpoints.down('md')]: {
             marginBottom: 12,
           },
         }}
@@ -78,8 +82,8 @@ const DesktopFooter = () => {
             <Box
               key={index}
               sx={{
-                [theme.breakpoints.down("md")]: {
-                  display: navItem.title === "Community" ? "none" : "block",
+                [theme.breakpoints.down('md')]: {
+                  display: navItem.title === 'Community' ? 'none' : 'block',
                 },
               }}
             >
@@ -88,9 +92,9 @@ const DesktopFooter = () => {
               </Typography>
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "start",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'start',
                   marginTop: 2,
                 }}
               >
@@ -105,29 +109,29 @@ const DesktopFooter = () => {
                       color={formatColor(neutral.gray3)}
                       paddingBottom={1}
                       sx={{
-                        "&:hover": {
-                          color: "text.tertiary",
+                        '&:hover': {
+                          color: 'text.tertiary',
                         },
                       }}
                     >
                       {link.label}
                     </MuiLink>
-                  );
+                  )
                 })}
               </Box>
             </Box>
-          );
+          )
         })}
       </Box>
       <Box
         sx={{
           mt: 4,
-          display: "flex",
-          justifyContent: "space-between",
-          [theme.breakpoints.down("md")]: {
-            flexDirection: "column-reverse",
+          display: 'flex',
+          justifyContent: 'space-between',
+          [theme.breakpoints.down('md')]: {
+            flexDirection: 'column-reverse',
             rowGap: 2,
-            alignItems: "center",
+            alignItems: 'center',
           },
         }}
       >
@@ -143,7 +147,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`images/discord_icon_${isLight ? "black" : "grey"}.svg`}
+              src={`images/discord_icon_${isLight ? 'black' : 'grey'}.svg`}
               width="24px"
               height="24px"
               marginX={3}
@@ -157,7 +161,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`images/twitter_bird_icon_${isLight ? "black" : "grey"}.svg`}
+              src={`images/twitter_bird_icon_${isLight ? 'black' : 'grey'}.svg`}
               width="25px"
               height="26px"
               marginX={3}
@@ -171,7 +175,7 @@ const DesktopFooter = () => {
           >
             <Box
               component="img"
-              src={`images/medium_icon_${isLight ? "black" : "grey"}.svg`}
+              src={`images/medium_icon_${isLight ? 'black' : 'grey'}.svg`}
               width="24px"
               height="24px"
               marginX={3}
@@ -180,5 +184,5 @@ const DesktopFooter = () => {
         </Box>
       </Box>
     </Box>
-  );
-};
+  )
+}
