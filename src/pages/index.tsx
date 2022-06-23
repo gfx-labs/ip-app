@@ -110,12 +110,12 @@ const Dashboard = () => {
           justifyContent="flex-end"
         >
           <Box>
-            <Typography variant="label2">gwei: </Typography>
+            <Typography variant="label2">Gwei: </Typography>
             <Typography variant="label2_medium">{gasPrice}</Typography>
           </Box>
 
           <Box>
-            <Typography variant="label2">block: </Typography>
+            <Typography variant="label2">Block: </Typography>
             <Typography variant="label2_medium">{dataBlock}</Typography>
           </Box>
         </Box>
