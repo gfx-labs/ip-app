@@ -1,7 +1,7 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Contract } from 'ethers'
 import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
-import { BN } from '../../easy/bn'
+import { LINK_FAST_GAS_GWEI } from '../../constants'
 
 const CHAIN_DATA_ABI = [
   {
@@ -17,7 +17,7 @@ const getGasPrice = async (
   signerOrProvider: JsonRpcSigner | JsonRpcProvider
 ) => {
   const gasContract = new Contract(
-    '0x169e633a2d1e6c10dd91238ba11c4a708dfef37c',
+    LINK_FAST_GAS_GWEI,
     CHAIN_DATA_ABI,
     signerOrProvider
   )
