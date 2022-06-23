@@ -27,7 +27,7 @@ const Dashboard = () => {
   }
 
   const theme = useTheme()
-  const { currentAccount } = useWeb3Context()
+  const { currentAccount, dataBlock, gasPrice } = useWeb3Context()
   const rolodex = useRolodexContext()
   const { setVaultID, setVaultAddress } = useVaultDataContext()
   const { isApp } = useAppGovernanceContext()
@@ -100,6 +100,26 @@ const Dashboard = () => {
       ) : (
         <Governance />
       )}
+
+      <Box maxWidth={1300}>
+        <Box
+          px={{ xs: 3, md: 10 }}
+          mb={2}
+          display="flex"
+          columnGap={2}
+          justifyContent="flex-end"
+        >
+          <Box>
+            <Typography variant="label2">gwei: </Typography>
+            <Typography variant="label2_medium">{gasPrice}</Typography>
+          </Box>
+
+          <Box>
+            <Typography variant="label2">block: </Typography>
+            <Typography variant="label2_medium">{dataBlock}</Typography>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   )
 }

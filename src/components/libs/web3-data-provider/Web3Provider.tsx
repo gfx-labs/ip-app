@@ -15,6 +15,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { BACKUP_PROVIDER } from '../../../constants'
 import hexToAscii from '../../util/helpers/hexToAscii'
+import getGasPrice from '../../../contracts/misc/getGasPrice'
 
 type transactionType = {
   value?: string | undefined
@@ -45,6 +46,7 @@ export type Web3Data = {
   provider: JsonRpcProvider | undefined
   chainId: number
   dataBlock: number
+  gasPrice: number
   getTxError: (txHash: string) => Promise<string>
   sendTx: (txData: transactionType) => Promise<TransactionResponse>
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -86,6 +88,7 @@ export const Web3ContextProvider = ({
   const [tried, setTried] = useState<boolean>(false)
 
   const [dataBlock, setDataBlock] = useState(0)
+  const [gasPrice, setGasPrice] = useState(0)
 
   // Wallet connection and disconnection
   // clean local storage
@@ -164,14 +167,26 @@ export const Web3ContextProvider = ({
   )
 
   useEffect(() => {
-    if (provider) {
-      console.log('started auto refresh of blockNumber for', provider)
-      provider.on('block', (n) => {
+    const tempProvider = provider
+      ? provider
+      : new JsonRpcProvider(BACKUP_PROVIDER)
+
+    if (tempProvider) {
+      console.log('started auto refresh of blockNumber for', tempProvider)
+      tempProvider.on('block', (n: number) => {
+        const tempSignerOrProvider = signerOrProvider
+          ? signerOrProvider
+          : tempProvider
+
+        getGasPrice(tempSignerOrProvider!).then((gas) => {
+          setGasPrice(Number(gas))
+        })
+
         setDataBlock(n)
       })
       return () => {
         console.log('stopped auto refresh of blockNumber for', provider)
-        provider.on('block', () => {})
+        tempProvider.on('block', () => {})
       }
     }
   }, [provider])
@@ -291,6 +306,7 @@ export const Web3ContextProvider = ({
           getTxError,
           sendTx,
           dataBlock,
+          gasPrice,
           signTxData,
           error,
           currentAccount: account?.toLowerCase() || '',
