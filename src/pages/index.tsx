@@ -101,9 +101,9 @@ const Dashboard = () => {
         <Governance />
       )}
 
-      <Box maxWidth={1300}>
+      <Box maxWidth="xl" margin="auto">
         <Box
-          px={{ xs: 3, md: 10 }}
+          px={{ xs: 3, md: 12 }}
           mb={2}
           display="flex"
           columnGap={2}
