@@ -17,17 +17,16 @@ Every lending protocol has four key components:
 3. Maintaining the peg with an interest rate system.
 4. Preventing a depeg with a liquidation system.
 
-Interest Protocol improves upon each component to make the most efficent credit market in DeFi.
+Interest Protocol improves upon each component to create an efficent and decentralized credit market.
 
-* With Interest Protocol **depositors** can deposit capital (USDC) and receive a liquidity provider (LP) token (USDi) representing their loan to the protocol. USDi is a stablecoin that is redeemable one-to-one for the reserve asset (USDC). While holding USDi, interest automatically accrues to the holder through a continuously increasing rebasing system. This innovation eliminates the depositor's need to stake capital and sacrifice liquidity. 
+* **Depositors** can deposit capital (USDC) and receive a liquidity provider (LP) token (USDi) representing their loan to the protocol. USDi is a stablecoin that is redeemable one-to-one for the reserve asset (USDC). While holding USDi, interest automatically accrues to the holder through a positive rebasing system. This innovation eliminates the depositor's need to stake capital and sacrifice liquidity. 
 
-* **Borrowers** can post collateral assets by opening a vault. Each borrower has their own vault to deposit their collateral in. The collateral is used to cross-margin the user and increase their borrowing power. When a vault holds governance tokens as collateral, the vault owner can delegate the votes to another wallet so they can continue participating in protocol governance while borrowing against the governance tokens.
+* **Borrowers** can post collateral assets after opening a vault. Each borrower has their own vault to deposit their collateral in. The collateral is used to cross-margin the user and increase their borrowing power. When a vault holds governance tokens as collateral, the vault owner can delegate the votes to another wallet. This allows the borrower to continue participating in protocol governance while borrowing against the governance tokens.
 
-* Interest Protocol's **interest rate system** ensures that USDi holders can redeem their USDi for USDC and is thus critical to maintaining the peg. When the protocol has a low reserve of USDC, both the borrow rate and the deposit rate of USDi automatically increase. This induces users to repay their USDi loans or deposit USDC to mint USDi, increasing the reserve ratio.
+* Interest Protocol's **interest rate system** ensures that USDi holders can redeem their USDi for USDC and thus maintains USDi's peg. When the protocol has a low reserve of USDC, both the borrow rate and the deposit rate of USDi automatically increase. This induces users to repay their USDi loans or deposit USDC to mint USDi, increasing the reserve ratio.
 
-* The **liquidation system** allows Interest Protocol to extend loans to borrowers while protecting depositors. Liquidations occur whenever a vault's borrowing power drops below its debt. Liquidators are incentivized through a discount on the price of collateral assets to purchase those assets. Governance can configure the discount for each asset. Unlike most protocols, Interest Protocol's liquidation system protects the borrower from unnecessary liquidations: liquidators can only liquidate a vault so that the vault's borrowing power is equal to the vault's debt. To efficiently process large liquidations, liquidators are allowed to liquidate any amount as long as it does not exceed the maximum amount. Additionally, liquidators can be partially filled if they attempt to liquidate more than is allowed.
+* The **liquidation system** allows Interest Protocol to extend loans to borrowers while protecting depositors. Liquidations occur whenever a vault's borrowing power drops below its liability. Liquidators are incentivized through a discount on the price of collateral assets to purchase those assets. Governance configures the discount for each asset. Unlike most protocols, Interest Protocol's liquidation system protects the borrower from unnecessary liquidations: liquidators can only liquidate a vault until the vault's liability is equal to its borrowing power. To efficiently process large liquidations, the protocol allows liquidators to liquidate any amount as long as it does not exceed the maximum amount.
 
-The combination of capital-efficient lending, a robust interest rate system, and a simple yet efficient liquidation system makes for a strong foundation to become the best lending platform in DeFi.
 
 ## Why did we build Interest Protocol? 
 1. *To increase access to financial services.* IP offers fair and transparent access to a lending market to anyone with an internet connection—increasing worldwide access to capital and thus economic opportunity. IP's gas efficiency allows small users to participate in yield farming on Ethereum without sacrificing liquidity.
@@ -38,7 +37,7 @@ The combination of capital-efficient lending, a robust interest rate system, and
 
 ## Protocol Audit
 
-GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol. No high or medium severity issues were found. Their audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf)
+GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol. No critical, high, or medium severity issues were found. The audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf)
 
 
 

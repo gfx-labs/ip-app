@@ -3,7 +3,7 @@
 ## Overview
 The Chainlink oracle relay contract returns a price for a specified Chainlink oracle. At launch, this contract is used as the main relay for the AnchorViewRelay. 
 
-More information on governance available [here](../../../concepts/Borrowing/OracleSystem).
+More information on the oracle system is available in [Concepts](../../../concepts/Borrowing/OracleSystem).
 
 ## Constructor
 ```

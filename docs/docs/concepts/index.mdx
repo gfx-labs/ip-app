@@ -6,13 +6,20 @@ import {useCurrentSidebarCategory} from '@docusaurus/theme-common';
 
 # Concepts 
 
+## Borrowing
+
+Users can borrow USDi from Interest Protocol by posting ERC20 assets as collateral in their vault.
+
 ## Governance
 
+Interest Protocol is owned and managed by holders of its governance token, called Interest Protocol Token (IPT). Governance is the processes and mechanisms used by IPT holders to institute changes to the protocol. IPT holders can create and vote on proposals to update Interest Protocol.
 
-Interest Protocol's governance token is the Interest Protocol Token (IPT). IPT holders can create and vote on proposals to influence the development of the protocol after launch. While governance can be thought of as the processes and mechanisms available to institute protocol changes, IPT grants its holder the right to use those mechanisms and processes.
+## Risks
+
+Interest Protocol manages two types of market risks - liquidity risk and credit risk.
 
 ## USDi
 
-USDi is a scalable stablecoin that is pegged to $1. Users can exchange USDi with USDC at a 1:1 exchange rate because USDi is over-collateralized by a combination of USDC and borrowers’ collateral. Furthermore, USDi scales flexibly in response to demand because anyone can mint USDi by depositing USDC or borrowing USDi against thier collateral.
+USDi is a stablecoin pegged to $1. Users can exchange USDi with USDC at a 1:1 exchange rate. USDi is over-collateralized by a combination of USDC and borrowers’ collateral. USDi scales flexibly in response to demand because anyone can mint USDi by depositing USDC or borrowing USDi against thier collateral.
 
 <DocCardList items={useCurrentSidebarCategory().items}/>
