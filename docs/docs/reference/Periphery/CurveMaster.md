@@ -3,7 +3,7 @@
 ## Overview
 The CurveMaster manages the various interest rate curves utilized in Interest Protocol. Curve master keeps a record of CurveSlave contracts and links it with an address. All numbers should be scaled to 1e18. For instance, number 5e17 represents 50%. 
 
-More information on governance available [here](../../../concepts/Borrowing/InterestRates).
+More information on the interest rate is available in [Concepts](../../../concepts/Borrowing/InterestRates).
 
 ## Secondary contracts
 * Ownable so the owner can manage the contract as needed.

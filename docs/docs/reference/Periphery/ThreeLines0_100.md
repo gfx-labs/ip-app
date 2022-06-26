@@ -4,7 +4,7 @@
 
 The interest rate curve math for USDi is a piecewise linear function which returns the borrow rate from the input of the reserve ratio. To learn more about the interest rate curve and the math involved please see the whitepaper. 
 
-More information on governance available [here](../../../concepts/Borrowing/InterestRates).
+More information on the interest rate is available in [Concepts](../../../concepts/Borrowing/InterestRates).
 
 ## Constructor
 The variables: r for rate and s for reserve ratio

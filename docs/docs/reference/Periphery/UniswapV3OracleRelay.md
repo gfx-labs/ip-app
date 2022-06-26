@@ -3,7 +3,7 @@
 ## Overview
 The Uniswap v3 oracle relay contract returns a price for a specified pool. At launch, this contract is used as the anchor relay for the AnchorViewRelay. 
 
-More information on governance available [here](../../../concepts/Borrowing/OracleSystem).
+More information on the oracle system is available in [Concepts](../../../concepts/Borrowing/OracleSystem).
 
 ## Secondary contracts
 * IUniswapV3PoolDerivedState & TickMath to get pool info and handle the math involved.

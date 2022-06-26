@@ -3,7 +3,7 @@
 ## Overview
 The anchor view relay uses a main relay and anchor relay to return an asset price. The main relay price is checked against the anchor relay on each call to certify the main relay price is within bounds of the anchor relay.
 
-More information on oracle system available [here](../../../concepts/Borrowing/OracleSystem).
+More information on the oracle system is available in [Concepts](../../../concepts/Borrowing/OracleSystem).
 
 ## Constructor
 ```
