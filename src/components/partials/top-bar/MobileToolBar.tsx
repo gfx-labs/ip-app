@@ -161,7 +161,7 @@ export const MobileToolBar = () => {
         <br />
         <Divider variant="middle" />
         <br />
-
+        {/*
         <Accordion
           sx={{ boxShadow: 'none', border: 'none' }}
           disableGutters={true}
@@ -180,7 +180,6 @@ export const MobileToolBar = () => {
               Your Vault
             </Typography>
           </AccordionSummary>
-          {/* loop through user's assets */}
           <AccordionDetails>
             <Typography
               variant="body1"
@@ -190,7 +189,7 @@ export const MobileToolBar = () => {
             </Typography>
           </AccordionDetails>
         </Accordion>
-
+  */}
         <Box marginBottom={12} marginTop={5}>
           <BaseSwitch
             option1={<LightIcon />}

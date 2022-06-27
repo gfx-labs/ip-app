@@ -341,9 +341,7 @@ theme.components = {
       {
         props: { variant: 'text' },
         style: {
-          paddingLeft: 0,
           width: '100%',
-          fontSize: 14,
         },
       },
       {

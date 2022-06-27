@@ -16,3 +16,15 @@ export const repayUsdi = (
     throw new Error('Could not repay:' + err)
   }
 }
+
+export const repayAllUsdi = (
+  vaultID: number,
+  rolodex: Rolodex,
+  signer: JsonRpcSigner
+): Promise<ContractTransaction> => {
+  try {
+    return rolodex.VC!.connect(signer).repayAllUSDi(vaultID)
+  } catch (err) {
+    throw new Error('Could not repay:' + err)
+  }
+}

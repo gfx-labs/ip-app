@@ -9,7 +9,7 @@ import { useRolodexContext } from '../../../libs/rolodex-data-provider/RolodexDa
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../../locale'
 import { useModalContext } from '../../../libs/modal-content-provider/ModalContentProvider'
-import { repayUsdi } from '../../../../contracts/VaultController'
+import { repayAllUsdi, repayUsdi } from '../../../../contracts/VaultController'
 import { TransactionReceipt } from '@ethersproject/providers'
 
 interface RepayContent {
@@ -70,12 +70,32 @@ export const RepayContent = (props: RepayContent) => {
     }
   }, [repayAmount])
 
-  const handleRepayAllRequest = () => {
+  const handleRepayAllRequest = async () => {
     const accountLiabilityString = accountLiability.toString()
 
     setRepayAmount(accountLiabilityString)
 
-    handleRepayRequest(accountLiabilityString)
+    try {
+      const repayAllTransaction = await repayAllUsdi(
+        vaultID,
+        rolodex!,
+        currentSigner!
+      )
+
+      updateTransactionState(repayAllTransaction)
+
+      const repayAllReceipt = await repayAllTransaction.wait()
+
+      updateTransactionState(repayAllReceipt)
+
+      setLoadmsg('')
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      setShaking(true)
+      setTimeout(() => setShaking(false), 400)
+      updateTransactionState(err as TransactionReceipt)
+    }
   }
 
   const handleRepayRequest = async (repayAmount: string) => {
