@@ -22,17 +22,23 @@ export const DepositCollateralConfirmationModal = () => {
     collateralDepositAmount,
     updateTransactionState,
     setCollateralDepositAmount,
+    collateralDepositAmountMax,
+    setCollateralDepositAmountMax,
   } = useModalContext()
   const { provider, currentAccount } = useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const { vaultAddress } = useVaultDataContext()
   const handleDepositConfirmationRequest = async () => {
+    const amount = collateralDepositAmountMax
+      ? collateralToken.wallet_amount?.toString()
+      : collateralDepositAmount
+
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
       const attempt = await depositCollateral(
-        collateralDepositAmount,
+        amount!,
         collateralToken.address,
         provider?.getSigner(currentAccount)!,
         vaultAddress!
@@ -40,9 +46,11 @@ export const DepositCollateralConfirmationModal = () => {
 
       updateTransactionState(attempt)
 
-      setCollateralDepositAmount('')
       setLoadmsg(locale('TransactionPending'))
       const receipt = await attempt.wait()
+
+      setCollateralDepositAmount('')
+      setCollateralDepositAmountMax(false)
 
       updateTransactionState(receipt)
     } catch (err) {

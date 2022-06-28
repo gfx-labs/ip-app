@@ -14,8 +14,12 @@ import { useLight } from '../../../../hooks/useLight'
 import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
 
 export const DepositCollateralContent = () => {
-  const { setType, setCollateralDepositAmount, collateralToken } =
-    useModalContext()
+  const {
+    setType,
+    setCollateralDepositAmount,
+    collateralToken,
+    setCollateralDepositAmountMax,
+  } = useModalContext()
 
   const { borrowingPower, tokens } = useVaultDataContext()
 
@@ -27,9 +31,9 @@ export const DepositCollateralContent = () => {
   const ltv = tokens![collateralToken.ticker].token_LTV || 0
   const [newBorrowingPower, setNewBorrowingPower] = useState(0)
   const [inputAmount, setInputAmount] = useState('')
-
   const trySetInputAmount = (amount: string) => {
     setInputAmount(amount)
+    setCollateralDepositAmountMax(false)
   }
 
   const setMax = () => {
@@ -38,6 +42,7 @@ export const DepositCollateralContent = () => {
       : collateralToken.wallet_amount!
 
     setInputAmount(inputAmount.toString())
+    setCollateralDepositAmountMax(true)
   }
 
   useEffect(() => {

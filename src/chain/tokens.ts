@@ -11,6 +11,7 @@ export interface Token {
 
   vault_balance?: number
   vault_amount?: number
+  vault_unformatted_amount?: string
 
   token_LTV?: number
   token_penalty?: number
@@ -53,6 +54,7 @@ export const getStablecoins = (
       value: 1,
       wallet_balance: undefined,
       wallet_amount: undefined,
+      vault_unformatted_amount: '0',
     },
     USDC: {
       name: 'USDC',
@@ -61,6 +63,7 @@ export const getStablecoins = (
       value: 1,
       wallet_balance: undefined,
       wallet_amount: undefined,
+      vault_unformatted_amount: '0',
     },
   }
 }
@@ -86,6 +89,7 @@ export const getTokensListOnCurrentChain = (
       wallet_amount: 0,
       token_LTV: 0,
       token_penalty: 0,
+      vault_unformatted_amount: '0',
     },
     UNI: {
       name: 'Uniswap',
@@ -99,6 +103,7 @@ export const getTokensListOnCurrentChain = (
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: true,
+      vault_unformatted_amount: '0',
     },
 
     WBTC: {
@@ -112,6 +117,7 @@ export const getTokensListOnCurrentChain = (
       wallet_amount: 0,
       token_LTV: 0,
       token_penalty: 0,
+      vault_unformatted_amount: '0',
     },
   }
 }

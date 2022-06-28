@@ -42,7 +42,7 @@ export const DepositUSDCConfirmationModal = () => {
           }
         })
     }
-  }, [rolodex, dataBlock, chainId, USDC.amountToDeposit])
+  }, [rolodex, dataBlock, chainId, USDC.amountToDeposit, loadmsg])
 
   const handleDepositConfirmationRequest = async () => {
     if (rolodex && USDC.amountToDeposit && currentSigner) {
@@ -86,6 +86,8 @@ export const DepositUSDCConfirmationModal = () => {
 
         setLoadmsg(locale('TransactionPending'))
         await txn?.wait()
+
+        setLoadmsg('')
       } catch (e) {
         console.log(e)
       }

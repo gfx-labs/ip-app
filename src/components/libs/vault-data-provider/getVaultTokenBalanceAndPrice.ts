@@ -10,19 +10,29 @@ export const getVaultTokenBalanceAndPrice = async (
   token_address: string,
   rolodex: Rolodex,
   signerOrProvider: JsonRpcProvider | JsonRpcSigner
-): Promise<{ balance: number; livePrice: number }> => {
+): Promise<{
+  balance: number
+  livePrice: number
+  unformattedBalance: string
+}> => {
   // get vault balance
   let balance = 0
-
+  let unformattedBalance = '0'
   const SOP = signerOrProvider ? signerOrProvider : rolodex.provider
 
   if (vault_address !== undefined) {
-    balance = await getBalanceOf(vault_address, token_address, SOP)
+    const balanceOf = await getBalanceOf(vault_address, token_address, SOP)
+
+    balance = balanceOf.num
+    unformattedBalance = balanceOf.str
   }
+
   const price = await rolodex?.Oracle?.getLivePrice(token_address)
+
   const decimals = await getDecimals(token_address, SOP)
   const livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))
-  return { balance, livePrice }
+
+  return { balance, livePrice, unformattedBalance }
 }
 
 export const getVaultTokenMetadata = async (

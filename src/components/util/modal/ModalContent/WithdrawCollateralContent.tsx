@@ -15,8 +15,13 @@ import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultData
 import { useLight } from '../../../../hooks/useLight'
 
 export const WithdrawCollateralContent = () => {
-  const { setType, collateralToken, setCollateralWithdrawAmount } =
-    useModalContext()
+  const {
+    setType,
+    collateralToken,
+    setCollateralWithdrawAmount,
+    setCollateralWithdrawAmountMax,
+    collateralWithdrawAmountMax,
+  } = useModalContext()
 
   const isLight = useLight()
   const { borrowingPower, accountLiability, tokens } = useVaultDataContext()
@@ -47,7 +52,15 @@ export const WithdrawCollateralContent = () => {
       setCollateralWithdrawAmount(inputAmount)
       setNewBorrowingPower(newBorrowingPower)
     }
-    if (newBorrowingPower < accountLiability || Number(inputAmount) <= 0) {
+
+    if (collateralWithdrawAmountMax) {
+      setNewBorrowingPower(0)
+    }
+
+    if (
+      !collateralWithdrawAmountMax &&
+      (newBorrowingPower < accountLiability || Number(inputAmount) <= 0)
+    ) {
       setDisabled(true)
     } else {
       setDisabled(false)
@@ -63,19 +76,31 @@ export const WithdrawCollateralContent = () => {
     setIsMoneyValue(!isMoneyValue)
   }
 
-  const trySetInputAmount = (amount: string) => setInputAmount(amount)
+  const trySetInputAmount = (amount: string) => {
+    setCollateralWithdrawAmountMax(false)
+    setInputAmount(amount)
+  }
 
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
       let a2s = borrowingPower - accountLiability
-      if (a2s >= 0) {
-        const tv = collateralToken.vault_amount * collateralToken.value
-        if (tv < a2s) {
+      const tv = collateralToken.vault_amount * collateralToken.value
+
+      if (accountLiability == 0) {
+        if (isMoneyValue) {
+          setInputAmount(tv.toString())
+        } else {
+          setInputAmount(collateralToken.vault_unformatted_amount!)
+          setCollateralWithdrawAmountMax(true)
+        }
+      } else if (a2s >= 0) {
+        if (tv <= a2s) {
           if (isMoneyValue) {
             setInputAmount(tv.toString())
           } else {
-            setInputAmount(collateralToken.vault_amount.toString())
+            setInputAmount(collateralToken.vault_unformatted_amount!)
+            setCollateralWithdrawAmountMax(true)
           }
         } else {
           if (isMoneyValue) {
@@ -87,6 +112,7 @@ export const WithdrawCollateralContent = () => {
           }
         }
       }
+      setDisabled(false)
     } else {
       setInputAmount('0')
     }

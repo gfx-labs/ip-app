@@ -109,9 +109,10 @@ export const VaultDataProvider = ({
           .then((res) => {
             if (res.livePrice) {
               token.value = Math.round(100 * Number(res.livePrice)) / 100
-              token.vault_amount = Number(res.balance)
+              token.vault_amount = res.balance
+              token.vault_unformatted_amount = res.unformattedBalance
               token.vault_balance = Number(
-                (token.vault_amount * token.value).toFixed(0)
+                (token.vault_amount * token.value).toFixed(2)
               )
             }
           })
@@ -126,7 +127,7 @@ export const VaultDataProvider = ({
             signerOrProvider!
           )
             .then((val) => {
-              token.wallet_amount = val
+              token.wallet_amount = val.num
             })
             .catch((e) => {
               console.log('failed to get token balances')

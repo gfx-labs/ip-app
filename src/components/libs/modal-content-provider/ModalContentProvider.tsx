@@ -46,7 +46,10 @@ export type ModalContextType = {
   setCollateralDepositAmount: (val: string) => void
   collateralWithdrawAmount: string
   setCollateralWithdrawAmount: (val: string) => void
-
+  collateralDepositAmountMax: boolean
+  collateralWithdrawAmountMax: boolean
+  setCollateralDepositAmountMax: (val: boolean) => void
+  setCollateralWithdrawAmountMax: (val: boolean) => void
   // Control USDC
   USDC: DepositWithdrawUSDC
   updateUSDC: (prop: string, val: string) => void
@@ -81,6 +84,10 @@ export const ModalContentProvider = ({
   )
   const [collateralDepositAmount, setCollateralDepositAmount] = useState('')
   const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState('')
+  const [collateralDepositAmountMax, setCollateralDepositAmountMax] =
+    useState(false)
+  const [collateralWithdrawAmountMax, setCollateralWithdrawAmountMax] =
+    useState(false)
 
   const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
     createDepositWithdrawUSDC()
@@ -130,9 +137,13 @@ export const ModalContentProvider = ({
         collateralToken,
         setCollateralToken,
         collateralDepositAmount,
+        collateralDepositAmountMax,
+        setCollateralDepositAmountMax,
         setCollateralDepositAmount,
         collateralWithdrawAmount,
+        collateralWithdrawAmountMax,
         setCollateralWithdrawAmount,
+        setCollateralWithdrawAmountMax,
         USDC,
         updateUSDC,
 
