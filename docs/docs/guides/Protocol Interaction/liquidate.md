@@ -19,5 +19,6 @@ A liquidator can call the function `tokensToLiquidate(vault id, asset addres)` t
 
 The function `liquidateVault(vault ID, asset address, tokens_to_liquidate)` liquidates a vault. The liquidator can liquidate any amount up to the maximum amount given by `tokensToLiquidate()`. If `tokens_to_liquidate` passed by the liquidator is greater than `tokensToLiquidate()`, the vault is liquidated up to `tokensToLiquidate()`. If a vault has multiple collateral assets, each asset must be liquidated in a separate call.
 
-More information on liquidations available [here](../../../concepts/Borrowing/LiquidationSystem).
+More information on the liquidation system is available [here](../../concepts/Borrowing/LiquidationSystem.md).
 
+Information on using flash loans for liquidation is available [here](../../reference/Periphery/Liquidator.md).
