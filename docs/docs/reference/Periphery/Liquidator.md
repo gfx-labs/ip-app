@@ -3,7 +3,7 @@
 ## Overview
 [Liquidations](../../guides/Protocol Interaction/liquidate.md) are an important part of Interest Protocol, as they keep the protocol solvent and profitable for all USDi holders. 
  
-Liquidations cost USDi to perform. In effect, a liquidator is using USDi to purchase a borrower's collateral at a discounted rate. 
+Liquidations cost [USDi](../../concepts/USDi/USDi.md) to perform. In effect, a liquidator is using USDi to purchase a borrower's collateral at a discounted rate. 
 The liquidator is then free to sell those assets at current market rates, thus yielding a profit. 
  
 However, this requires a liquidator to both possess enough USDi to return a vault to solvency, and to be willing to spend it to do so. 
@@ -16,8 +16,8 @@ All Ethereum transactions are *atomic*. This means that every aspect of the tran
  
 This makes flash loans an effective tool for arbitrage, as well as liquidations on Interest Protocol. 
  
-### Sequence of events for borrowing USDC
-Due to the atomic nature of EVM transactions, all of these steps happen in the same transaction
+### Overview of a flash loan liquidation
+Due to the atomic nature of EVM transactions, all of these steps happen in the same transaction:
  
 1. USDC is borrowed from the Flash Loan lender (Aave, Uniswap V3 or V2)
 2. The USDC is deposited into the USDI contract for USDi, as it costs USDi to perform the liquidation
@@ -30,25 +30,25 @@ Due to the atomic nature of EVM transactions, all of these steps happen in the s
 ## Borrowing USDC
 The Liquidator contract can procure a USDC flash loan in three distinct ways:
  
-* Uniswap V3 Flash Swap 
+* [Uniswap V3 Flash Swap](https://docs.uniswap.org/protocol/guides/flash-integrations/inheritance-constructors)
     * Fee: 0.01% 
     * Gas: ~663k
-* Aave flash loan
+* [Aave flash loan](https://docs.aave.com/developers/guides/flash-loans)
     * Fee: 0.09%
     * Gas: ~835k
-* Uniswap V2 Flash Swap
+* [Uniswap V2 Flash Swap](https://docs.uniswap.org/protocol/V2/guides/smart-contract-integration/using-flash-swaps)
     * Fee: 0.3% 
     * Gas: ~655k when borrowing USDi, ~710k when borrowing USDC
  
 Having multiple ways to utilize flash loans allows for flexability in terms of liquidity and gas cost. 
 
-However, it is clear that at the current time, utilizing Uniswap V3 Flash Loans is the most efficient way to use the Liquidator contract. 
+However, it is clear that at the current time, utilizing Uniswap V3 Flash Loans to borrow USDC is the most efficient way to use the Liquidator contract. 
  
  
 ## Borrowing USDi 
 The Liquidator contract is also capable of borrowing USDi directly from the USDi/USDC pair on Uniswap V2 (so long as liquidity is sufficient). The advantage here is a more efficient transaction, and profit is paid in USDi as opposed to USDC. Additionally, the fee for the flash loan will be paid to IP community acting as liquidity providers in this pool. 
  
-### Sequence of events for borrowing USDi 
+### Overview of a flash loan liquidation using USDi liquidity 
  
 1. USDi is borrowed from the Uniswap V2 pair
 2. The USDi is spent on the liquidation, the resulting collateral is sent to the Liquidator contract
@@ -62,12 +62,9 @@ The Liquidator contract is also capable of borrowing USDi directly from the USDi
     * For example, once the Liquidator contract initiates a flash loan on Uniswap V3 by calling *flash* on the pool contract, the pool will then call *uniswapV3FlashCallback*
         * This function must be implemented and overridden by the Liquidator contract. Here is where the logic for the liquidation takes place, followed by repaying the loan. 
         * Flash loans on Aave and Uniswap V2 work in a similar fashion. 
-        * These callback functions must be external so the lending protocol can reach them, but should never be called erroneously by any other address. 
-        * Doing so will result in a reverted transaction 
+        * These callback functions must be external so the lending protocol can reach them, but should never be called erroneously by any other address.  
 * Due to the complex nature of these transactions that utilize flash loans, the gas usage is quite high. If liquidations become competitive, a high priority fee may be needed to make sure your transaction goes through. 
-    * All liquidations on the Liquidator contract can perform an optional check to ensure the gas cost does not exceed the revenue from the liquidation
- 
- 
+    * All liquidations on the Liquidator contract can perform an optional check to ensure the gas cost does not exceed the revenue from the liquidation 
  
 ## Functions
 * function calculateCost(uint96 vault, address asset) external view returns (uint256 amount)
