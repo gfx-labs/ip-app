@@ -49,13 +49,13 @@ The Liquidator contract can procure a USDC flash loan in three distinct ways:
   * Fee: 0.3%
   * Gas: ~655k when borrowing USDi, ~710k when borrowing USDC
 
-Having multiple ways to utilize flash loans allows for flexability in terms of liquidity and gas cost.
+Having multiple ways to utilize flash loans allows for flexibility  in terms of liquidity and gas cost.
 
 However, it is clear that at the current time, utilizing Uniswap V3 Flash Loans to borrow USDC is the most efficient way to use the Liquidator contract.
 
 ## Borrowing USDi
 
-The Liquidator contract is also capable of borrowing USDi directly from the USDi/USDC pair on Uniswap V2 (so long as liquidity is sufficient). The advantage here is the lowest possible gas cost, and profit is paid in USDi as opposed to USDC. Additionally, the fee for the flash loan will be paid to IP community acting as liquidity providers in this pool.
+The Liquidator contract is also capable of borrowing USDi directly from the USDi/USDC pair on Uniswap V2 (so long as liquidity is sufficient). The advantage here is the lowest possible gas cost, and profit is paid in USDi as opposed to USDC. Additionally, the fee for the flash loan will be paid to the IP community acting as liquidity providers in this pool.
 
 ### Overview of a flash loan liquidation using USDi liquidity  
 
