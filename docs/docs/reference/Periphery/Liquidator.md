@@ -1,6 +1,6 @@
 # Liquidator Contract
 
-The [Liquidator contract](https://etherscan.io/address/0x0f131c38a552142d5753363090f6f7c4e01ab0e4) is a smart contract that allows for simple and easy liquiations on Interest Protocol.
+The [Liquidator contract](https://etherscan.io/address/0x0f131c38a552142d5753363090f6f7c4e01ab0e4) is a smart contract that allows for simple and easy liquiations on Interest Protocol. We welcome and encourage people to fork the contract and build more sophisticated liquidators. 
 
 ## Overview
 
@@ -27,13 +27,13 @@ This makes flash loans an effective tool for liquidations on Interest Protocol.
 
 Due to the atomic nature of EVM transactions, all of these steps happen in the same transaction, and if any one fails, the entire transaction will revert
 
-1. USDC is borrowed from the Flash Loan lender (Aave, Uniswap V3 or V2)
-2. The USDC is deposited into the USDI contract for USDi, as it costs USDi to perform the liquidation
-3. The liquidation is performed, and the resulting collateral is sent to the Liquidator contract
-4. The collateral is immediately sold on Uniswap V3 for USDC, which is sent back to the Liquidator contract
-5. The Liquidator swaps any remaining USDi not spent on liquidation back to USDC, Liquidator contract should now only hold USDC
-6. The USDC loan is repaid + the fee (Uniswap V3 has the lowest fee)
-7. All remaining USDC is sent to the caller of the function
+1. USDC is borrowed from the Flash Loan lender (Aave, Uniswap V3 or V2).
+2. The USDC is deposited into the USDI contract for USDi, because USDi is required to perform the liquidation since debt is in USDi terms.
+3. The liquidation is performed, and the resulting collateral is sent to the Liquidator contract.
+4. The collateral is immediately sold on Uniswap V3 for USDC, which is sent back to the Liquidator contract.
+5. The Liquidator swaps any remaining USDi not spent on liquidation back to USDC, Liquidator contract should now only hold USDC.
+6. The USDC loan is repaid + the fee (Uniswap V3 has the lowest fee).
+7. All remaining USDC is sent to the caller of the function.
 
 ## Borrowing USDC
 
@@ -59,12 +59,12 @@ The Liquidator contract is also capable of borrowing USDi directly from the USDi
 
 ### Overview of a flash loan liquidation using USDi liquidity  
 
-1. USDi is borrowed from the Uniswap V2 pair
-2. The USDi is spent on the liquidation, the resulting collateral is sent to the Liquidator contract
-3. The collateral is immediately sold on Uniswap V3 for USDC, which is sent back to the Liquidator contract
-4. All USDC on the Liquidator contract is deposited into the Interest Protocol reserve, and an equivalent amount of USDi is returned to the Liquidator contract
-5. The USDi loan is repaid to the Uniswap V2 pool + the fee
-6. All remaining USDi is sent to the caller of the function
+1. USDi is borrowed from the Uniswap V2 pair.
+2. The USDi is spent on the liquidation, the resulting collateral is sent to the Liquidator contract.
+3. The collateral is immediately sold on Uniswap V3 for USDC, which is sent back to the Liquidator contract.
+4. All USDC on the Liquidator contract is deposited into the Interest Protocol reserve, and an equivalent amount of USDi is returned to the Liquidator contract.
+5. The USDi loan is repaid to the Uniswap V2 pool + the fee.
+6. All remaining USDi is sent to the caller of the function.
 
 ## Important Technical Information  
 
