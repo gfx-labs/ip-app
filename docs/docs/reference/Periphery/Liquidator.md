@@ -84,7 +84,6 @@ The Liquidator contract is also capable of borrowing USDi directly from the USDi
   * [Uniswap V3 DAI/USDC Pool at Fee: 100](https://etherscan.io/address/0x5777d92f208679DB4b9778590Fa3CAB3aC9e2168)
   * [USDC contract](https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48)
   * [wETH contract](https://etherscan.io/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
-
 * The [source code](https://gfx.cafe/ip/liquidator) for this contract has been made public, anyone is welcome to modify or improve it for their own use.
 * Deployment address: [0x0f131c38a552142d5753363090f6f7c4e01ab0e4](https://etherscan.io/address/0x0f131c38a552142d5753363090f6f7c4e01ab0e4)
 
