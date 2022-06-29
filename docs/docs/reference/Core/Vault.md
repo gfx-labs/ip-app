@@ -6,7 +6,7 @@ Interest Protocol vaults are multi-collateral. Each borrower must create a vault
 
 Governance participants will be excited to know they can use their governance tokens as collateral on Interest Protocol and retain voting power by delegating votes from their vault to their regular voting address. 
 
-Learn more about borrowing [here](../../../concepts/Borrowing/InterestRates).
+Learn more about borrowing [here](../../concepts/Borrowing/InterestRates.mdx).
 
 
 ## Constructor

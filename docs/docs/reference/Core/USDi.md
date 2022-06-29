@@ -3,7 +3,7 @@
 ## Overview
 USDi is the stablecoin issued by Interest Protocol. Borrowers can post collateral into their vault and borrow USDi. Anyone who holds USDi is a depositor and earns interest through positive rebasing.
 
-Learn more about USDi [here](../../../concepts/USDi).
+Learn more about USDi [here](../../concepts/USDi/USDi.md).
 
 
 ## Secondary contracts
