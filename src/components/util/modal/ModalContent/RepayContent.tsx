@@ -87,7 +87,7 @@ export const RepayContent = (props: RepayContent) => {
       const repayAllReceipt = await repayAllTransaction.wait()
 
       updateTransactionState(repayAllReceipt)
-
+      setRepayAmount('')
       setLoadmsg('')
       setLoading(false)
     } catch (err) {
@@ -114,7 +114,7 @@ export const RepayContent = (props: RepayContent) => {
       const repayReceipt = await repayTransaction.wait()
 
       updateTransactionState(repayReceipt)
-
+      setRepayAmount('')
       setLoadmsg('')
       setLoading(false)
     } catch (err) {
@@ -168,7 +168,7 @@ export const RepayContent = (props: RepayContent) => {
           loading={loading}
           load_text={loadmsg}
           shaking={shaking}
-          disabled={accountLiability < 0.011} // disable if account liability is lower than 0.01 and rounded up
+          disabled={accountLiability <= 0} // disable if account liability is lower than 0.01 and rounded up
         />
       </Box>
     </Box>
