@@ -13,7 +13,7 @@ The protocol is deployed on Ethereum Mainnet.
 *    OracleMaster: 0xf4818813045E954f5Dc55a40c9B60Def0ba3D477
 
 ### Governance
-*    Interest Protocol Token (IPT): 0xaF239a6fab6a873c779F3F33dbd34104287b93e1
+*    Interest Protocol Token (IPT): 0xd909c5862cdb164adb949d92622082f0092efc3d
 *    Governor: 0x266d1020a84b9e8b0ed320831838152075f8c4ca     
 
 ### wETH Oracle
