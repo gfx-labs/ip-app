@@ -12,1200 +12,2486 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
+} from 'ethers'
 import type {
   FunctionFragment,
   Result,
   EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from '@ethersproject/abi'
+import type { Listener, Provider } from '@ethersproject/providers'
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../../common";
+  PromiseOrValue,
+} from '../../common'
+
+export declare namespace IVaultController {
+  export type VaultSummaryStruct = {
+    id: PromiseOrValue<BigNumberish>
+    borrowingPower: PromiseOrValue<BigNumberish>
+    vaultLiability: PromiseOrValue<BigNumberish>
+    tokenAddresses: PromiseOrValue<string>[]
+    tokenBalances: PromiseOrValue<BigNumberish>[]
+  }
+
+  export type VaultSummaryStructOutput = [
+    BigNumber,
+    BigNumber,
+    BigNumber,
+    string[],
+    BigNumber[]
+  ] & {
+    id: BigNumber
+    borrowingPower: BigNumber
+    vaultLiability: BigNumber
+    tokenAddresses: string[]
+    tokenBalances: BigNumber[]
+  }
+}
 
 export interface IVaultControllerInterface extends utils.Interface {
   functions: {
-    "accountBorrowingPower(uint96)": FunctionFragment;
-    "accountLiability(uint96)": FunctionFragment;
-    "amountToSolvency(uint96)": FunctionFragment;
-    "borrowUsdi(uint96,uint192)": FunctionFragment;
-    "calculateInterest()": FunctionFragment;
-    "changeProtocolFee(uint192)": FunctionFragment;
-    "checkAccount(uint96)": FunctionFragment;
-    "getCurveMaster()": FunctionFragment;
-    "getOracleMaster()": FunctionFragment;
-    "initialize()": FunctionFragment;
-    "interestFactor()": FunctionFragment;
-    "lastInterestTime()": FunctionFragment;
-    "liquidateAccount(uint96,address,uint256)": FunctionFragment;
-    "mintVault()": FunctionFragment;
-    "pause()": FunctionFragment;
-    "protocolFee()": FunctionFragment;
-    "registerCurveMaster(address)": FunctionFragment;
-    "registerErc20(address,uint256,address,uint256)": FunctionFragment;
-    "registerOracleMaster(address)": FunctionFragment;
-    "registerUSDi(address)": FunctionFragment;
-    "repayAllUSDi(uint96)": FunctionFragment;
-    "repayUSDi(uint96,uint192)": FunctionFragment;
-    "tokensRegistered()": FunctionFragment;
-    "tokensToLiquidate(uint96,address)": FunctionFragment;
-    "totalBaseLiability()": FunctionFragment;
-    "unpause()": FunctionFragment;
-    "updateRegisteredErc20(address,uint256,address,uint256)": FunctionFragment;
-    "vaultAddress(uint96)": FunctionFragment;
-    "vaultIDs(address)": FunctionFragment;
-    "vaultsMinted()": FunctionFragment;
-  };
+    'amountToSolvency(uint96)': FunctionFragment
+    'borrowUSDCto(uint96,uint192,address)': FunctionFragment
+    'borrowUSDIto(uint96,uint192,address)': FunctionFragment
+    'borrowUsdi(uint96,uint192)': FunctionFragment
+    'calculateInterest()': FunctionFragment
+    'changeProtocolFee(uint192)': FunctionFragment
+    'checkVault(uint96)': FunctionFragment
+    'getCurveMaster()': FunctionFragment
+    'getOracleMaster()': FunctionFragment
+    'initialize()': FunctionFragment
+    'interestFactor()': FunctionFragment
+    'lastInterestTime()': FunctionFragment
+    'liquidateVault(uint96,address,uint256)': FunctionFragment
+    'mintVault()': FunctionFragment
+    'pause()': FunctionFragment
+    'protocolFee()': FunctionFragment
+    'registerCurveMaster(address)': FunctionFragment
+    'registerErc20(address,uint256,address,uint256)': FunctionFragment
+    'registerOracleMaster(address)': FunctionFragment
+    'registerUSDi(address)': FunctionFragment
+    'repayAllUSDi(uint96)': FunctionFragment
+    'repayUSDi(uint96,uint192)': FunctionFragment
+    'tokensRegistered()': FunctionFragment
+    'tokensToLiquidate(uint96,address)': FunctionFragment
+    'totalBaseLiability()': FunctionFragment
+    'unpause()': FunctionFragment
+    'updateRegisteredErc20(address,uint256,address,uint256)': FunctionFragment
+    'vaultAddress(uint96)': FunctionFragment
+    'vaultBorrowingPower(uint96)': FunctionFragment
+    'vaultIDs(address)': FunctionFragment
+    'vaultLiability(uint96)': FunctionFragment
+    'vaultSummaries(uint96,uint96)': FunctionFragment
+    'vaultsMinted()': FunctionFragment
+  }
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "accountBorrowingPower"
-      | "accountLiability"
-      | "amountToSolvency"
-      | "borrowUsdi"
-      | "calculateInterest"
-      | "changeProtocolFee"
-      | "checkAccount"
-      | "getCurveMaster"
-      | "getOracleMaster"
-      | "initialize"
-      | "interestFactor"
-      | "lastInterestTime"
-      | "liquidateAccount"
-      | "mintVault"
-      | "pause"
-      | "protocolFee"
-      | "registerCurveMaster"
-      | "registerErc20"
-      | "registerOracleMaster"
-      | "registerUSDi"
-      | "repayAllUSDi"
-      | "repayUSDi"
-      | "tokensRegistered"
-      | "tokensToLiquidate"
-      | "totalBaseLiability"
-      | "unpause"
-      | "updateRegisteredErc20"
-      | "vaultAddress"
-      | "vaultIDs"
-      | "vaultsMinted"
-  ): FunctionFragment;
+      | 'amountToSolvency'
+      | 'amountToSolvency(uint96)'
+      | 'borrowUSDCto'
+      | 'borrowUSDCto(uint96,uint192,address)'
+      | 'borrowUSDIto'
+      | 'borrowUSDIto(uint96,uint192,address)'
+      | 'borrowUsdi'
+      | 'borrowUsdi(uint96,uint192)'
+      | 'calculateInterest'
+      | 'calculateInterest()'
+      | 'changeProtocolFee'
+      | 'changeProtocolFee(uint192)'
+      | 'checkVault'
+      | 'checkVault(uint96)'
+      | 'getCurveMaster'
+      | 'getCurveMaster()'
+      | 'getOracleMaster'
+      | 'getOracleMaster()'
+      | 'initialize'
+      | 'initialize()'
+      | 'interestFactor'
+      | 'interestFactor()'
+      | 'lastInterestTime'
+      | 'lastInterestTime()'
+      | 'liquidateVault'
+      | 'liquidateVault(uint96,address,uint256)'
+      | 'mintVault'
+      | 'mintVault()'
+      | 'pause'
+      | 'pause()'
+      | 'protocolFee'
+      | 'protocolFee()'
+      | 'registerCurveMaster'
+      | 'registerCurveMaster(address)'
+      | 'registerErc20'
+      | 'registerErc20(address,uint256,address,uint256)'
+      | 'registerOracleMaster'
+      | 'registerOracleMaster(address)'
+      | 'registerUSDi'
+      | 'registerUSDi(address)'
+      | 'repayAllUSDi'
+      | 'repayAllUSDi(uint96)'
+      | 'repayUSDi'
+      | 'repayUSDi(uint96,uint192)'
+      | 'tokensRegistered'
+      | 'tokensRegistered()'
+      | 'tokensToLiquidate'
+      | 'tokensToLiquidate(uint96,address)'
+      | 'totalBaseLiability'
+      | 'totalBaseLiability()'
+      | 'unpause'
+      | 'unpause()'
+      | 'updateRegisteredErc20'
+      | 'updateRegisteredErc20(address,uint256,address,uint256)'
+      | 'vaultAddress'
+      | 'vaultAddress(uint96)'
+      | 'vaultBorrowingPower'
+      | 'vaultBorrowingPower(uint96)'
+      | 'vaultIDs'
+      | 'vaultIDs(address)'
+      | 'vaultLiability'
+      | 'vaultLiability(uint96)'
+      | 'vaultSummaries'
+      | 'vaultSummaries(uint96,uint96)'
+      | 'vaultsMinted'
+      | 'vaultsMinted()'
+  ): FunctionFragment
 
   encodeFunctionData(
-    functionFragment: "accountBorrowingPower",
-    values: [BigNumberish]
-  ): string;
+    functionFragment: 'amountToSolvency',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
   encodeFunctionData(
-    functionFragment: "accountLiability",
-    values: [BigNumberish]
-  ): string;
+    functionFragment: 'amountToSolvency(uint96)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
   encodeFunctionData(
-    functionFragment: "amountToSolvency",
-    values: [BigNumberish]
-  ): string;
+    functionFragment: 'borrowUSDCto',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string
   encodeFunctionData(
-    functionFragment: "borrowUsdi",
-    values: [BigNumberish, BigNumberish]
-  ): string;
+    functionFragment: 'borrowUSDCto(uint96,uint192,address)',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string
   encodeFunctionData(
-    functionFragment: "calculateInterest",
+    functionFragment: 'borrowUSDIto',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'borrowUSDIto(uint96,uint192,address)',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'borrowUsdi',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'borrowUsdi(uint96,uint192)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'calculateInterest',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "changeProtocolFee",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "checkAccount",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getCurveMaster",
+    functionFragment: 'calculateInterest()',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "getOracleMaster",
+    functionFragment: 'changeProtocolFee',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'changeProtocolFee(uint192)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'checkVault',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'checkVault(uint96)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'getCurveMaster',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: 'getCurveMaster()',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "interestFactor",
+    functionFragment: 'getOracleMaster',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "lastInterestTime",
+    functionFragment: 'getOracleMaster()',
     values?: undefined
-  ): string;
+  ): string
+  encodeFunctionData(functionFragment: 'initialize', values?: undefined): string
   encodeFunctionData(
-    functionFragment: "liquidateAccount",
-    values: [BigNumberish, string, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "mintVault", values?: undefined): string;
-  encodeFunctionData(functionFragment: "pause", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "protocolFee",
+    functionFragment: 'initialize()',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "registerCurveMaster",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "registerErc20",
-    values: [string, BigNumberish, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "registerOracleMaster",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "registerUSDi",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "repayAllUSDi",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "repayUSDi",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "tokensRegistered",
+    functionFragment: 'interestFactor',
     values?: undefined
-  ): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "tokensToLiquidate",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalBaseLiability",
+    functionFragment: 'interestFactor()',
     values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
+  ): string
   encodeFunctionData(
-    functionFragment: "updateRegisteredErc20",
-    values: [string, BigNumberish, string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "vaultAddress",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "vaultIDs", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "vaultsMinted",
+    functionFragment: 'lastInterestTime',
     values?: undefined
-  ): string;
+  ): string
+  encodeFunctionData(
+    functionFragment: 'lastInterestTime()',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'liquidateVault',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'liquidateVault(uint96,address,uint256)',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(functionFragment: 'mintVault', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'mintVault()',
+    values?: undefined
+  ): string
+  encodeFunctionData(functionFragment: 'pause', values?: undefined): string
+  encodeFunctionData(functionFragment: 'pause()', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'protocolFee',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'protocolFee()',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerCurveMaster',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerCurveMaster(address)',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerErc20',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerErc20(address,uint256,address,uint256)',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerOracleMaster',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerOracleMaster(address)',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerUSDi',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'registerUSDi(address)',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'repayAllUSDi',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'repayAllUSDi(uint96)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'repayUSDi',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'repayUSDi(uint96,uint192)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'tokensRegistered',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'tokensRegistered()',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'tokensToLiquidate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'tokensToLiquidate(uint96,address)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'totalBaseLiability',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'totalBaseLiability()',
+    values?: undefined
+  ): string
+  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string
+  encodeFunctionData(functionFragment: 'unpause()', values?: undefined): string
+  encodeFunctionData(
+    functionFragment: 'updateRegisteredErc20',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'updateRegisteredErc20(address,uint256,address,uint256)',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultAddress',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultAddress(uint96)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultBorrowingPower',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultBorrowingPower(uint96)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultIDs',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultIDs(address)',
+    values: [PromiseOrValue<string>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultLiability',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultLiability(uint96)',
+    values: [PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultSummaries',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultSummaries(uint96,uint96)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultsMinted',
+    values?: undefined
+  ): string
+  encodeFunctionData(
+    functionFragment: 'vaultsMinted()',
+    values?: undefined
+  ): string
 
   decodeFunctionResult(
-    functionFragment: "accountBorrowingPower",
+    functionFragment: 'amountToSolvency',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "accountLiability",
+    functionFragment: 'amountToSolvency(uint96)',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "amountToSolvency",
+    functionFragment: 'borrowUSDCto',
     data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "borrowUsdi", data: BytesLike): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "calculateInterest",
+    functionFragment: 'borrowUSDCto(uint96,uint192,address)',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "changeProtocolFee",
+    functionFragment: 'borrowUSDIto',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "checkAccount",
+    functionFragment: 'borrowUSDIto(uint96,uint192,address)',
     data: BytesLike
-  ): Result;
+  ): Result
+  decodeFunctionResult(functionFragment: 'borrowUsdi', data: BytesLike): Result
   decodeFunctionResult(
-    functionFragment: "getCurveMaster",
+    functionFragment: 'borrowUsdi(uint96,uint192)',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "getOracleMaster",
+    functionFragment: 'calculateInterest',
     data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "interestFactor",
+    functionFragment: 'calculateInterest()',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "lastInterestTime",
+    functionFragment: 'changeProtocolFee',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "liquidateAccount",
+    functionFragment: 'changeProtocolFee(uint192)',
     data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mintVault", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
+  ): Result
+  decodeFunctionResult(functionFragment: 'checkVault', data: BytesLike): Result
   decodeFunctionResult(
-    functionFragment: "protocolFee",
+    functionFragment: 'checkVault(uint96)',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "registerCurveMaster",
+    functionFragment: 'getCurveMaster',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "registerErc20",
+    functionFragment: 'getCurveMaster()',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "registerOracleMaster",
+    functionFragment: 'getOracleMaster',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "registerUSDi",
+    functionFragment: 'getOracleMaster()',
     data: BytesLike
-  ): Result;
+  ): Result
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result
   decodeFunctionResult(
-    functionFragment: "repayAllUSDi",
+    functionFragment: 'initialize()',
     data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "repayUSDi", data: BytesLike): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "tokensRegistered",
+    functionFragment: 'interestFactor',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "tokensToLiquidate",
+    functionFragment: 'interestFactor()',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "totalBaseLiability",
+    functionFragment: 'lastInterestTime',
     data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "updateRegisteredErc20",
+    functionFragment: 'lastInterestTime()',
     data: BytesLike
-  ): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "vaultAddress",
+    functionFragment: 'liquidateVault',
     data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "vaultIDs", data: BytesLike): Result;
+  ): Result
   decodeFunctionResult(
-    functionFragment: "vaultsMinted",
+    functionFragment: 'liquidateVault(uint96,address,uint256)',
     data: BytesLike
-  ): Result;
+  ): Result
+  decodeFunctionResult(functionFragment: 'mintVault', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'mintVault()', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'pause()', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'protocolFee', data: BytesLike): Result
+  decodeFunctionResult(
+    functionFragment: 'protocolFee()',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerCurveMaster',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerCurveMaster(address)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerErc20',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerErc20(address,uint256,address,uint256)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerOracleMaster',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerOracleMaster(address)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerUSDi',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'registerUSDi(address)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'repayAllUSDi',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'repayAllUSDi(uint96)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(functionFragment: 'repayUSDi', data: BytesLike): Result
+  decodeFunctionResult(
+    functionFragment: 'repayUSDi(uint96,uint192)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'tokensRegistered',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'tokensRegistered()',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'tokensToLiquidate',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'tokensToLiquidate(uint96,address)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'totalBaseLiability',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'totalBaseLiability()',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result
+  decodeFunctionResult(functionFragment: 'unpause()', data: BytesLike): Result
+  decodeFunctionResult(
+    functionFragment: 'updateRegisteredErc20',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'updateRegisteredErc20(address,uint256,address,uint256)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultAddress',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultAddress(uint96)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultBorrowingPower',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultBorrowingPower(uint96)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(functionFragment: 'vaultIDs', data: BytesLike): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultIDs(address)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultLiability',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultLiability(uint96)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultSummaries',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultSummaries(uint96,uint96)',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultsMinted',
+    data: BytesLike
+  ): Result
+  decodeFunctionResult(
+    functionFragment: 'vaultsMinted()',
+    data: BytesLike
+  ): Result
 
   events: {
-    "BorrowUSDi(uint256,address,uint256)": EventFragment;
-    "InterestEvent(uint64,uint192,uint256)": EventFragment;
-    "Liquidate(uint256,address,uint256,uint256)": EventFragment;
-    "NewProtocolFee(uint256)": EventFragment;
-    "NewVault(address,uint256,address)": EventFragment;
-    "RegisterCurveMaster(address)": EventFragment;
-    "RegisterOracleMaster(address)": EventFragment;
-    "RegisteredErc20(address,uint256,address,uint256)": EventFragment;
-    "RepayUSDi(uint256,address,uint256)": EventFragment;
-    "UpdateRegisteredErc20(address,uint256,address,uint256)": EventFragment;
-  };
+    'BorrowUSDi(uint256,address,uint256)': EventFragment
+    'InterestEvent(uint64,uint192,uint256)': EventFragment
+    'Liquidate(uint256,address,uint256,uint256)': EventFragment
+    'NewProtocolFee(uint256)': EventFragment
+    'NewVault(address,uint256,address)': EventFragment
+    'RegisterCurveMaster(address)': EventFragment
+    'RegisterOracleMaster(address)': EventFragment
+    'RegisteredErc20(address,uint256,address,uint256)': EventFragment
+    'RepayUSDi(uint256,address,uint256)': EventFragment
+    'UpdateRegisteredErc20(address,uint256,address,uint256)': EventFragment
+  }
 
-  getEvent(nameOrSignatureOrTopic: "BorrowUSDi"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "InterestEvent"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Liquidate"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewProtocolFee"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "NewVault"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RegisterCurveMaster"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RegisterOracleMaster"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RegisteredErc20"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RepayUSDi"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateRegisteredErc20"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BorrowUSDi'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'BorrowUSDi(uint256,address,uint256)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'InterestEvent'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'InterestEvent(uint64,uint192,uint256)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'Liquidate'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'Liquidate(uint256,address,uint256,uint256)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'NewProtocolFee'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'NewProtocolFee(uint256)'): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'NewVault'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'NewVault(address,uint256,address)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'RegisterCurveMaster'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'RegisterCurveMaster(address)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'RegisterOracleMaster'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'RegisterOracleMaster(address)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'RegisteredErc20'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'RegisteredErc20(address,uint256,address,uint256)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'RepayUSDi'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'RepayUSDi(uint256,address,uint256)'
+  ): EventFragment
+  getEvent(nameOrSignatureOrTopic: 'UpdateRegisteredErc20'): EventFragment
+  getEvent(
+    nameOrSignatureOrTopic: 'UpdateRegisteredErc20(address,uint256,address,uint256)'
+  ): EventFragment
 }
 
 export interface BorrowUSDiEventObject {
-  vaultId: BigNumber;
-  vaultAddress: string;
-  borrowAmount: BigNumber;
+  vaultId: BigNumber
+  vaultAddress: string
+  borrowAmount: BigNumber
 }
 export type BorrowUSDiEvent = TypedEvent<
   [BigNumber, string, BigNumber],
   BorrowUSDiEventObject
->;
+>
 
-export type BorrowUSDiEventFilter = TypedEventFilter<BorrowUSDiEvent>;
+export type BorrowUSDiEventFilter = TypedEventFilter<BorrowUSDiEvent>
 
 export interface InterestEventEventObject {
-  epoch: BigNumber;
-  amount: BigNumber;
-  curve_val: BigNumber;
+  epoch: BigNumber
+  amount: BigNumber
+  curve_val: BigNumber
 }
 export type InterestEventEvent = TypedEvent<
   [BigNumber, BigNumber, BigNumber],
   InterestEventEventObject
->;
+>
 
-export type InterestEventEventFilter = TypedEventFilter<InterestEventEvent>;
+export type InterestEventEventFilter = TypedEventFilter<InterestEventEvent>
 
 export interface LiquidateEventObject {
-  vaultId: BigNumber;
-  asset_address: string;
-  usdi_to_repurchase: BigNumber;
-  tokens_to_liquidate: BigNumber;
+  vaultId: BigNumber
+  asset_address: string
+  usdi_to_repurchase: BigNumber
+  tokens_to_liquidate: BigNumber
 }
 export type LiquidateEvent = TypedEvent<
   [BigNumber, string, BigNumber, BigNumber],
   LiquidateEventObject
->;
+>
 
-export type LiquidateEventFilter = TypedEventFilter<LiquidateEvent>;
+export type LiquidateEventFilter = TypedEventFilter<LiquidateEvent>
 
 export interface NewProtocolFeeEventObject {
-  protocol_fee: BigNumber;
+  protocol_fee: BigNumber
 }
 export type NewProtocolFeeEvent = TypedEvent<
   [BigNumber],
   NewProtocolFeeEventObject
->;
+>
 
-export type NewProtocolFeeEventFilter = TypedEventFilter<NewProtocolFeeEvent>;
+export type NewProtocolFeeEventFilter = TypedEventFilter<NewProtocolFeeEvent>
 
 export interface NewVaultEventObject {
-  vault_address: string;
-  vaultId: BigNumber;
-  vaultOwner: string;
+  vault_address: string
+  vaultId: BigNumber
+  vaultOwner: string
 }
 export type NewVaultEvent = TypedEvent<
   [string, BigNumber, string],
   NewVaultEventObject
->;
+>
 
-export type NewVaultEventFilter = TypedEventFilter<NewVaultEvent>;
+export type NewVaultEventFilter = TypedEventFilter<NewVaultEvent>
 
 export interface RegisterCurveMasterEventObject {
-  curveMasterAddress: string;
+  curveMasterAddress: string
 }
 export type RegisterCurveMasterEvent = TypedEvent<
   [string],
   RegisterCurveMasterEventObject
->;
+>
 
 export type RegisterCurveMasterEventFilter =
-  TypedEventFilter<RegisterCurveMasterEvent>;
+  TypedEventFilter<RegisterCurveMasterEvent>
 
 export interface RegisterOracleMasterEventObject {
-  oracleMasterAddress: string;
+  oracleMasterAddress: string
 }
 export type RegisterOracleMasterEvent = TypedEvent<
   [string],
   RegisterOracleMasterEventObject
->;
+>
 
 export type RegisterOracleMasterEventFilter =
-  TypedEventFilter<RegisterOracleMasterEvent>;
+  TypedEventFilter<RegisterOracleMasterEvent>
 
 export interface RegisteredErc20EventObject {
-  token_address: string;
-  LTVe4: BigNumber;
-  oracle_address: string;
-  liquidationIncentivee4: BigNumber;
+  token_address: string
+  LTVe4: BigNumber
+  oracle_address: string
+  liquidationIncentivee4: BigNumber
 }
 export type RegisteredErc20Event = TypedEvent<
   [string, BigNumber, string, BigNumber],
   RegisteredErc20EventObject
->;
+>
 
-export type RegisteredErc20EventFilter = TypedEventFilter<RegisteredErc20Event>;
+export type RegisteredErc20EventFilter = TypedEventFilter<RegisteredErc20Event>
 
 export interface RepayUSDiEventObject {
-  vaultId: BigNumber;
-  vaultAddress: string;
-  repayAmount: BigNumber;
+  vaultId: BigNumber
+  vaultAddress: string
+  repayAmount: BigNumber
 }
 export type RepayUSDiEvent = TypedEvent<
   [BigNumber, string, BigNumber],
   RepayUSDiEventObject
->;
+>
 
-export type RepayUSDiEventFilter = TypedEventFilter<RepayUSDiEvent>;
+export type RepayUSDiEventFilter = TypedEventFilter<RepayUSDiEvent>
 
 export interface UpdateRegisteredErc20EventObject {
-  token_address: string;
-  LTVe4: BigNumber;
-  oracle_address: string;
-  liquidationIncentivee4: BigNumber;
+  token_address: string
+  LTVe4: BigNumber
+  oracle_address: string
+  liquidationIncentivee4: BigNumber
 }
 export type UpdateRegisteredErc20Event = TypedEvent<
   [string, BigNumber, string, BigNumber],
   UpdateRegisteredErc20EventObject
->;
+>
 
 export type UpdateRegisteredErc20EventFilter =
-  TypedEventFilter<UpdateRegisteredErc20Event>;
+  TypedEventFilter<UpdateRegisteredErc20Event>
 
 export interface IVaultController extends BaseContract {
-  connect(signerOrProvider: Signer | Provider | string): this;
-  attach(addressOrName: string): this;
-  deployed(): Promise<this>;
+  connect(signerOrProvider: Signer | Provider | string): this
+  attach(addressOrName: string): this
+  deployed(): Promise<this>
 
-  interface: IVaultControllerInterface;
+  interface: IVaultControllerInterface
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
     toBlock?: string | number | undefined
-  ): Promise<Array<TEvent>>;
+  ): Promise<Array<TEvent>>
 
   listeners<TEvent extends TypedEvent>(
     eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
-  listeners(eventName?: string): Array<Listener>;
+  ): Array<TypedListener<TEvent>>
+  listeners(eventName?: string): Array<Listener>
   removeAllListeners<TEvent extends TypedEvent>(
     eventFilter: TypedEventFilter<TEvent>
-  ): this;
-  removeAllListeners(eventName?: string): this;
-  off: OnEvent<this>;
-  on: OnEvent<this>;
-  once: OnEvent<this>;
-  removeListener: OnEvent<this>;
+  ): this
+  removeAllListeners(eventName?: string): this
+  off: OnEvent<this>
+  on: OnEvent<this>
+  once: OnEvent<this>
+  removeListener: OnEvent<this>
 
   functions: {
-    accountBorrowingPower(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    accountLiability(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     amountToSolvency(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber]>
+
+    'amountToSolvency(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
+
+    borrowUSDCto(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'borrowUSDCto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    borrowUSDIto(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'borrowUSDIto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     borrowUsdi(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'borrowUsdi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     calculateInterest(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'calculateInterest()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     changeProtocolFee(
-      new_protocol_fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
-    checkAccount(
-      id: BigNumberish,
+    'changeProtocolFee(uint192)'(
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    checkVault(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    ): Promise<[boolean]>
 
-    getCurveMaster(overrides?: CallOverrides): Promise<[string]>;
+    'checkVault(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>
 
-    getOracleMaster(overrides?: CallOverrides): Promise<[string]>;
+    getCurveMaster(overrides?: CallOverrides): Promise<[string]>
+
+    'getCurveMaster()'(overrides?: CallOverrides): Promise<[string]>
+
+    getOracleMaster(overrides?: CallOverrides): Promise<[string]>
+
+    'getOracleMaster()'(overrides?: CallOverrides): Promise<[string]>
 
     initialize(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
-    interestFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'initialize()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
-    lastInterestTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+    interestFactor(overrides?: CallOverrides): Promise<[BigNumber]>
 
-    liquidateAccount(
-      id: BigNumberish,
-      asset_address: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    'interestFactor()'(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    lastInterestTime(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'lastInterestTime()'(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    liquidateVault(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'liquidateVault(uint96,address,uint256)'(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     mintVault(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'mintVault()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     pause(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
-    protocolFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'pause()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    protocolFee(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'protocolFee()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
     registerCurveMaster(
-      master_curve_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'registerCurveMaster(address)'(
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     registerErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'registerErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     registerOracleMaster(
-      master_oracle_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'registerOracleMaster(address)'(
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     registerUSDi(
-      usdi_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      usdi_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'registerUSDi(address)'(
+      usdi_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     repayAllUSDi(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'repayAllUSDi(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     repayUSDi(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
-    tokensRegistered(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'repayUSDi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    tokensRegistered(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'tokensRegistered()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
     tokensToLiquidate(
-      id: BigNumberish,
-      token: string,
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber]>
 
-    totalBaseLiability(overrides?: CallOverrides): Promise<[BigNumber]>;
+    'tokensToLiquidate(uint96,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
+
+    totalBaseLiability(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'totalBaseLiability()'(overrides?: CallOverrides): Promise<[BigNumber]>
 
     unpause(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'unpause()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     updateRegisteredErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
+
+    'updateRegisteredErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>
 
     vaultAddress(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[string]>
 
-    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    'vaultAddress(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>
 
-    vaultsMinted(overrides?: CallOverrides): Promise<[BigNumber]>;
-  };
+    vaultBorrowingPower(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
 
-  accountBorrowingPower(
-    id: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+    'vaultBorrowingPower(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
 
-  accountLiability(
-    id: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+    vaultIDs(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>
+
+    'vaultIDs(address)'(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>
+
+    vaultLiability(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
+
+    'vaultLiability(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>
+
+    vaultSummaries(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[IVaultController.VaultSummaryStructOutput[]]>
+
+    'vaultSummaries(uint96,uint96)'(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[IVaultController.VaultSummaryStructOutput[]]>
+
+    vaultsMinted(overrides?: CallOverrides): Promise<[BigNumber]>
+
+    'vaultsMinted()'(overrides?: CallOverrides): Promise<[BigNumber]>
+  }
 
   amountToSolvency(
-    id: BigNumberish,
+    id: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<BigNumber>
+
+  'amountToSolvency(uint96)'(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  borrowUSDCto(
+    id: PromiseOrValue<BigNumberish>,
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'borrowUSDCto(uint96,uint192,address)'(
+    id: PromiseOrValue<BigNumberish>,
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  borrowUSDIto(
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'borrowUSDIto(uint96,uint192,address)'(
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   borrowUsdi(
-    id: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'borrowUsdi(uint96,uint192)'(
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   calculateInterest(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'calculateInterest()'(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   changeProtocolFee(
-    new_protocol_fee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    new_protocol_fee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  checkAccount(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  'changeProtocolFee(uint192)'(
+    new_protocol_fee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  getCurveMaster(overrides?: CallOverrides): Promise<string>;
+  checkVault(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>
 
-  getOracleMaster(overrides?: CallOverrides): Promise<string>;
+  'checkVault(uint96)'(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>
+
+  getCurveMaster(overrides?: CallOverrides): Promise<string>
+
+  'getCurveMaster()'(overrides?: CallOverrides): Promise<string>
+
+  getOracleMaster(overrides?: CallOverrides): Promise<string>
+
+  'getOracleMaster()'(overrides?: CallOverrides): Promise<string>
 
   initialize(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  interestFactor(overrides?: CallOverrides): Promise<BigNumber>;
+  'initialize()'(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  lastInterestTime(overrides?: CallOverrides): Promise<BigNumber>;
+  interestFactor(overrides?: CallOverrides): Promise<BigNumber>
 
-  liquidateAccount(
-    id: BigNumberish,
-    asset_address: string,
-    tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  'interestFactor()'(overrides?: CallOverrides): Promise<BigNumber>
+
+  lastInterestTime(overrides?: CallOverrides): Promise<BigNumber>
+
+  'lastInterestTime()'(overrides?: CallOverrides): Promise<BigNumber>
+
+  liquidateVault(
+    id: PromiseOrValue<BigNumberish>,
+    asset_address: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'liquidateVault(uint96,address,uint256)'(
+    id: PromiseOrValue<BigNumberish>,
+    asset_address: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   mintVault(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'mintVault()'(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   pause(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  protocolFee(overrides?: CallOverrides): Promise<BigNumber>;
+  'pause()'(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  protocolFee(overrides?: CallOverrides): Promise<BigNumber>
+
+  'protocolFee()'(overrides?: CallOverrides): Promise<BigNumber>
 
   registerCurveMaster(
-    master_curve_address: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    master_curve_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'registerCurveMaster(address)'(
+    master_curve_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   registerErc20(
-    token_address: string,
-    LTV: BigNumberish,
-    oracle_address: string,
-    liquidationIncentive: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    token_address: PromiseOrValue<string>,
+    LTV: PromiseOrValue<BigNumberish>,
+    oracle_address: PromiseOrValue<string>,
+    liquidationIncentive: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'registerErc20(address,uint256,address,uint256)'(
+    token_address: PromiseOrValue<string>,
+    LTV: PromiseOrValue<BigNumberish>,
+    oracle_address: PromiseOrValue<string>,
+    liquidationIncentive: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   registerOracleMaster(
-    master_oracle_address: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    master_oracle_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'registerOracleMaster(address)'(
+    master_oracle_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   registerUSDi(
-    usdi_address: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    usdi_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'registerUSDi(address)'(
+    usdi_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   repayAllUSDi(
-    id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'repayAllUSDi(uint96)'(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   repayUSDi(
-    id: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>;
+  'repayUSDi(uint96,uint192)'(
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>
+
+  'tokensRegistered()'(overrides?: CallOverrides): Promise<BigNumber>
 
   tokensToLiquidate(
-    id: BigNumberish,
-    token: string,
+    id: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<BigNumber>
 
-  totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>;
+  'tokensToLiquidate(uint96,address)'(
+    id: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>
+
+  'totalBaseLiability()'(overrides?: CallOverrides): Promise<BigNumber>
 
   unpause(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
+
+  'unpause()'(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
   updateRegisteredErc20(
-    token_address: string,
-    LTV: BigNumberish,
-    oracle_address: string,
-    liquidationIncentive: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+    token_address: PromiseOrValue<string>,
+    LTV: PromiseOrValue<BigNumberish>,
+    oracle_address: PromiseOrValue<string>,
+    liquidationIncentive: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  vaultAddress(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  'updateRegisteredErc20(address,uint256,address,uint256)'(
+    token_address: PromiseOrValue<string>,
+    LTV: PromiseOrValue<BigNumberish>,
+    oracle_address: PromiseOrValue<string>,
+    liquidationIncentive: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>
 
-  vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+  vaultAddress(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>
 
-  vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
+  'vaultAddress(uint96)'(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>
+
+  vaultBorrowingPower(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  'vaultBorrowingPower(uint96)'(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  vaultIDs(
+    wallet: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>
+
+  'vaultIDs(address)'(
+    wallet: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>
+
+  vaultLiability(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  'vaultLiability(uint96)'(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>
+
+  vaultSummaries(
+    start: PromiseOrValue<BigNumberish>,
+    stop: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<IVaultController.VaultSummaryStructOutput[]>
+
+  'vaultSummaries(uint96,uint96)'(
+    start: PromiseOrValue<BigNumberish>,
+    stop: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<IVaultController.VaultSummaryStructOutput[]>
+
+  vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>
+
+  'vaultsMinted()'(overrides?: CallOverrides): Promise<BigNumber>
 
   callStatic: {
-    accountBorrowingPower(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    accountLiability(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     amountToSolvency(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
+
+    'amountToSolvency(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    borrowUSDCto(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    'borrowUSDCto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    borrowUSDIto(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    'borrowUSDIto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
     borrowUsdi(
-      id: BigNumberish,
-      amount: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
 
-    calculateInterest(overrides?: CallOverrides): Promise<BigNumber>;
+    'borrowUsdi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    calculateInterest(overrides?: CallOverrides): Promise<BigNumber>
+
+    'calculateInterest()'(overrides?: CallOverrides): Promise<BigNumber>
 
     changeProtocolFee(
-      new_protocol_fee: BigNumberish,
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
 
-    checkAccount(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    getCurveMaster(overrides?: CallOverrides): Promise<string>;
-
-    getOracleMaster(overrides?: CallOverrides): Promise<string>;
-
-    initialize(overrides?: CallOverrides): Promise<void>;
-
-    interestFactor(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastInterestTime(overrides?: CallOverrides): Promise<BigNumber>;
-
-    liquidateAccount(
-      id: BigNumberish,
-      asset_address: string,
-      tokenAmount: BigNumberish,
+    'changeProtocolFee(uint192)'(
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<void>
 
-    mintVault(overrides?: CallOverrides): Promise<string>;
+    checkVault(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>
 
-    pause(overrides?: CallOverrides): Promise<void>;
+    'checkVault(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>
 
-    protocolFee(overrides?: CallOverrides): Promise<BigNumber>;
+    getCurveMaster(overrides?: CallOverrides): Promise<string>
+
+    'getCurveMaster()'(overrides?: CallOverrides): Promise<string>
+
+    getOracleMaster(overrides?: CallOverrides): Promise<string>
+
+    'getOracleMaster()'(overrides?: CallOverrides): Promise<string>
+
+    initialize(overrides?: CallOverrides): Promise<void>
+
+    'initialize()'(overrides?: CallOverrides): Promise<void>
+
+    interestFactor(overrides?: CallOverrides): Promise<BigNumber>
+
+    'interestFactor()'(overrides?: CallOverrides): Promise<BigNumber>
+
+    lastInterestTime(overrides?: CallOverrides): Promise<BigNumber>
+
+    'lastInterestTime()'(overrides?: CallOverrides): Promise<BigNumber>
+
+    liquidateVault(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    'liquidateVault(uint96,address,uint256)'(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    mintVault(overrides?: CallOverrides): Promise<string>
+
+    'mintVault()'(overrides?: CallOverrides): Promise<string>
+
+    pause(overrides?: CallOverrides): Promise<void>
+
+    'pause()'(overrides?: CallOverrides): Promise<void>
+
+    protocolFee(overrides?: CallOverrides): Promise<BigNumber>
+
+    'protocolFee()'(overrides?: CallOverrides): Promise<BigNumber>
 
     registerCurveMaster(
-      master_curve_address: string,
+      master_curve_address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
+
+    'registerCurveMaster(address)'(
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
     registerErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
+
+    'registerErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
     registerOracleMaster(
-      master_oracle_address: string,
+      master_oracle_address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
+
+    'registerOracleMaster(address)'(
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
     registerUSDi(
-      usdi_address: string,
+      usdi_address: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
 
-    repayAllUSDi(id: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'registerUSDi(address)'(
+      usdi_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    repayAllUSDi(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    'repayAllUSDi(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
     repayUSDi(
-      id: BigNumberish,
-      amount: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
 
-    tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>;
+    'repayUSDi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
+
+    tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>
+
+    'tokensRegistered()'(overrides?: CallOverrides): Promise<BigNumber>
 
     tokensToLiquidate(
-      id: BigNumberish,
-      token: string,
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
-    totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>;
+    'tokensToLiquidate(uint96,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
-    unpause(overrides?: CallOverrides): Promise<void>;
+    totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalBaseLiability()'(overrides?: CallOverrides): Promise<BigNumber>
+
+    unpause(overrides?: CallOverrides): Promise<void>
+
+    'unpause()'(overrides?: CallOverrides): Promise<void>
 
     updateRegisteredErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<void>
 
-    vaultAddress(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    'updateRegisteredErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>
 
-    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    vaultAddress(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>
 
-    vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
-  };
+    'vaultAddress(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>
+
+    vaultBorrowingPower(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    'vaultBorrowingPower(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    vaultIDs(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>
+
+    'vaultIDs(address)'(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>
+
+    vaultLiability(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    'vaultLiability(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    vaultSummaries(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<IVaultController.VaultSummaryStructOutput[]>
+
+    'vaultSummaries(uint96,uint96)'(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<IVaultController.VaultSummaryStructOutput[]>
+
+    vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>
+
+    'vaultsMinted()'(overrides?: CallOverrides): Promise<BigNumber>
+  }
 
   filters: {
-    "BorrowUSDi(uint256,address,uint256)"(
+    'BorrowUSDi(uint256,address,uint256)'(
       vaultId?: null,
       vaultAddress?: null,
       borrowAmount?: null
-    ): BorrowUSDiEventFilter;
+    ): BorrowUSDiEventFilter
     BorrowUSDi(
       vaultId?: null,
       vaultAddress?: null,
       borrowAmount?: null
-    ): BorrowUSDiEventFilter;
+    ): BorrowUSDiEventFilter
 
-    "InterestEvent(uint64,uint192,uint256)"(
+    'InterestEvent(uint64,uint192,uint256)'(
       epoch?: null,
       amount?: null,
       curve_val?: null
-    ): InterestEventEventFilter;
+    ): InterestEventEventFilter
     InterestEvent(
       epoch?: null,
       amount?: null,
       curve_val?: null
-    ): InterestEventEventFilter;
+    ): InterestEventEventFilter
 
-    "Liquidate(uint256,address,uint256,uint256)"(
+    'Liquidate(uint256,address,uint256,uint256)'(
       vaultId?: null,
       asset_address?: null,
       usdi_to_repurchase?: null,
       tokens_to_liquidate?: null
-    ): LiquidateEventFilter;
+    ): LiquidateEventFilter
     Liquidate(
       vaultId?: null,
       asset_address?: null,
       usdi_to_repurchase?: null,
       tokens_to_liquidate?: null
-    ): LiquidateEventFilter;
+    ): LiquidateEventFilter
 
-    "NewProtocolFee(uint256)"(protocol_fee?: null): NewProtocolFeeEventFilter;
-    NewProtocolFee(protocol_fee?: null): NewProtocolFeeEventFilter;
+    'NewProtocolFee(uint256)'(protocol_fee?: null): NewProtocolFeeEventFilter
+    NewProtocolFee(protocol_fee?: null): NewProtocolFeeEventFilter
 
-    "NewVault(address,uint256,address)"(
+    'NewVault(address,uint256,address)'(
       vault_address?: null,
       vaultId?: null,
       vaultOwner?: null
-    ): NewVaultEventFilter;
+    ): NewVaultEventFilter
     NewVault(
       vault_address?: null,
       vaultId?: null,
       vaultOwner?: null
-    ): NewVaultEventFilter;
+    ): NewVaultEventFilter
 
-    "RegisterCurveMaster(address)"(
+    'RegisterCurveMaster(address)'(
       curveMasterAddress?: null
-    ): RegisterCurveMasterEventFilter;
+    ): RegisterCurveMasterEventFilter
     RegisterCurveMaster(
       curveMasterAddress?: null
-    ): RegisterCurveMasterEventFilter;
+    ): RegisterCurveMasterEventFilter
 
-    "RegisterOracleMaster(address)"(
+    'RegisterOracleMaster(address)'(
       oracleMasterAddress?: null
-    ): RegisterOracleMasterEventFilter;
+    ): RegisterOracleMasterEventFilter
     RegisterOracleMaster(
       oracleMasterAddress?: null
-    ): RegisterOracleMasterEventFilter;
+    ): RegisterOracleMasterEventFilter
 
-    "RegisteredErc20(address,uint256,address,uint256)"(
+    'RegisteredErc20(address,uint256,address,uint256)'(
       token_address?: null,
       LTVe4?: null,
       oracle_address?: null,
       liquidationIncentivee4?: null
-    ): RegisteredErc20EventFilter;
+    ): RegisteredErc20EventFilter
     RegisteredErc20(
       token_address?: null,
       LTVe4?: null,
       oracle_address?: null,
       liquidationIncentivee4?: null
-    ): RegisteredErc20EventFilter;
+    ): RegisteredErc20EventFilter
 
-    "RepayUSDi(uint256,address,uint256)"(
+    'RepayUSDi(uint256,address,uint256)'(
       vaultId?: null,
       vaultAddress?: null,
       repayAmount?: null
-    ): RepayUSDiEventFilter;
+    ): RepayUSDiEventFilter
     RepayUSDi(
       vaultId?: null,
       vaultAddress?: null,
       repayAmount?: null
-    ): RepayUSDiEventFilter;
+    ): RepayUSDiEventFilter
 
-    "UpdateRegisteredErc20(address,uint256,address,uint256)"(
+    'UpdateRegisteredErc20(address,uint256,address,uint256)'(
       token_address?: null,
       LTVe4?: null,
       oracle_address?: null,
       liquidationIncentivee4?: null
-    ): UpdateRegisteredErc20EventFilter;
+    ): UpdateRegisteredErc20EventFilter
     UpdateRegisteredErc20(
       token_address?: null,
       LTVe4?: null,
       oracle_address?: null,
       liquidationIncentivee4?: null
-    ): UpdateRegisteredErc20EventFilter;
-  };
+    ): UpdateRegisteredErc20EventFilter
+  }
 
   estimateGas: {
-    accountBorrowingPower(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    accountLiability(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     amountToSolvency(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
+
+    'amountToSolvency(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    borrowUSDCto(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'borrowUSDCto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    borrowUSDIto(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'borrowUSDIto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     borrowUsdi(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'borrowUsdi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     calculateInterest(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'calculateInterest()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     changeProtocolFee(
-      new_protocol_fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
-    checkAccount(
-      id: BigNumberish,
+    'changeProtocolFee(uint192)'(
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    checkVault(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber>
 
-    getCurveMaster(overrides?: CallOverrides): Promise<BigNumber>;
+    'checkVault(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
-    getOracleMaster(overrides?: CallOverrides): Promise<BigNumber>;
+    getCurveMaster(overrides?: CallOverrides): Promise<BigNumber>
+
+    'getCurveMaster()'(overrides?: CallOverrides): Promise<BigNumber>
+
+    getOracleMaster(overrides?: CallOverrides): Promise<BigNumber>
+
+    'getOracleMaster()'(overrides?: CallOverrides): Promise<BigNumber>
 
     initialize(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
-    interestFactor(overrides?: CallOverrides): Promise<BigNumber>;
+    'initialize()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
-    lastInterestTime(overrides?: CallOverrides): Promise<BigNumber>;
+    interestFactor(overrides?: CallOverrides): Promise<BigNumber>
 
-    liquidateAccount(
-      id: BigNumberish,
-      asset_address: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    'interestFactor()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    mintVault(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    lastInterestTime(overrides?: CallOverrides): Promise<BigNumber>
 
-    pause(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    'lastInterestTime()'(overrides?: CallOverrides): Promise<BigNumber>
 
-    protocolFee(overrides?: CallOverrides): Promise<BigNumber>;
+    liquidateVault(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
-    registerCurveMaster(
-      master_curve_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    registerErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    registerOracleMaster(
-      master_oracle_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    registerUSDi(
-      usdi_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    repayAllUSDi(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    repayUSDi(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>;
-
-    tokensToLiquidate(
-      id: BigNumberish,
-      token: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>;
-
-    unpause(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    updateRegisteredErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    vaultAddress(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    vaultIDs(wallet: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>;
-  };
-
-  populateTransaction: {
-    accountBorrowingPower(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    accountLiability(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    amountToSolvency(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    borrowUsdi(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    calculateInterest(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    changeProtocolFee(
-      new_protocol_fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    checkAccount(
-      id: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    getCurveMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getOracleMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initialize(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    interestFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lastInterestTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    liquidateAccount(
-      id: BigNumberish,
-      asset_address: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    'liquidateVault(uint96,address,uint256)'(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     mintVault(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'mintVault()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     pause(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
-    protocolFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'pause()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    protocolFee(overrides?: CallOverrides): Promise<BigNumber>
+
+    'protocolFee()'(overrides?: CallOverrides): Promise<BigNumber>
 
     registerCurveMaster(
-      master_curve_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'registerCurveMaster(address)'(
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     registerErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'registerErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     registerOracleMaster(
-      master_oracle_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'registerOracleMaster(address)'(
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     registerUSDi(
-      usdi_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      usdi_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'registerUSDi(address)'(
+      usdi_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     repayAllUSDi(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'repayAllUSDi(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     repayUSDi(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
-    tokensRegistered(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'repayUSDi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    tokensRegistered(overrides?: CallOverrides): Promise<BigNumber>
+
+    'tokensRegistered()'(overrides?: CallOverrides): Promise<BigNumber>
 
     tokensToLiquidate(
-      id: BigNumberish,
-      token: string,
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    ): Promise<BigNumber>
 
-    totalBaseLiability(
+    'tokensToLiquidate(uint96,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    ): Promise<BigNumber>
+
+    totalBaseLiability(overrides?: CallOverrides): Promise<BigNumber>
+
+    'totalBaseLiability()'(overrides?: CallOverrides): Promise<BigNumber>
 
     unpause(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'unpause()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     updateRegisteredErc20(
-      token_address: string,
-      LTV: BigNumberish,
-      oracle_address: string,
-      liquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
+
+    'updateRegisteredErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>
 
     vaultAddress(
-      id: BigNumberish,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    ): Promise<BigNumber>
+
+    'vaultAddress(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    vaultBorrowingPower(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    'vaultBorrowingPower(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
 
     vaultIDs(
-      wallet: string,
+      wallet: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    ): Promise<BigNumber>
 
-    vaultsMinted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-  };
+    'vaultIDs(address)'(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    vaultLiability(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    'vaultLiability(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    vaultSummaries(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    'vaultSummaries(uint96,uint96)'(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>
+
+    vaultsMinted(overrides?: CallOverrides): Promise<BigNumber>
+
+    'vaultsMinted()'(overrides?: CallOverrides): Promise<BigNumber>
+  }
+
+  populateTransaction: {
+    amountToSolvency(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'amountToSolvency(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    borrowUSDCto(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'borrowUSDCto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    borrowUSDIto(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'borrowUSDIto(uint96,uint192,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    borrowUsdi(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'borrowUsdi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    calculateInterest(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'calculateInterest()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    changeProtocolFee(
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'changeProtocolFee(uint192)'(
+      new_protocol_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    checkVault(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'checkVault(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    getCurveMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'getCurveMaster()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    getOracleMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'getOracleMaster()'(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    initialize(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'initialize()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    interestFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'interestFactor()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    lastInterestTime(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'lastInterestTime()'(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    liquidateVault(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'liquidateVault(uint96,address,uint256)'(
+      id: PromiseOrValue<BigNumberish>,
+      asset_address: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    mintVault(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'mintVault()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'pause()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    protocolFee(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'protocolFee()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    registerCurveMaster(
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'registerCurveMaster(address)'(
+      master_curve_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    registerErc20(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'registerErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    registerOracleMaster(
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'registerOracleMaster(address)'(
+      master_oracle_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    registerUSDi(
+      usdi_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'registerUSDi(address)'(
+      usdi_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    repayAllUSDi(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'repayAllUSDi(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    repayUSDi(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'repayUSDi(uint96,uint192)'(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    tokensRegistered(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'tokensRegistered()'(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    tokensToLiquidate(
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'tokensToLiquidate(uint96,address)'(
+      id: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    totalBaseLiability(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'totalBaseLiability()'(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    unpause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'unpause()'(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    updateRegisteredErc20(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    'updateRegisteredErc20(address,uint256,address,uint256)'(
+      token_address: PromiseOrValue<string>,
+      LTV: PromiseOrValue<BigNumberish>,
+      oracle_address: PromiseOrValue<string>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>
+
+    vaultAddress(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'vaultAddress(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    vaultBorrowingPower(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'vaultBorrowingPower(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    vaultIDs(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'vaultIDs(address)'(
+      wallet: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    vaultLiability(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'vaultLiability(uint96)'(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    vaultSummaries(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    'vaultSummaries(uint96,uint96)'(
+      start: PromiseOrValue<BigNumberish>,
+      stop: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>
+
+    vaultsMinted(overrides?: CallOverrides): Promise<PopulatedTransaction>
+
+    'vaultsMinted()'(overrides?: CallOverrides): Promise<PopulatedTransaction>
+  }
 }
