@@ -32,6 +32,12 @@ export const chainsToTokens = {
     [ChainIDs.GOERLI]: '0xc778417E063141139Fce010982780140Aa0cD5Ab',
     [ChainIDs.POLYGON]: '0x8afBfe06dA3D035c82C5bc55C82EB3FF05506a20',
   },
+  STETH: {
+    [ChainIDs.MAINNET]: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
+    [ChainIDs.ROPSTEN]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.GOERLI]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.POLYGON]: '0x0000000000000000000000000000000000000000',
+  },
   UNI: {
     [ChainIDs.MAINNET]: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
     [ChainIDs.ROPSTEN]: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
@@ -72,6 +78,7 @@ export interface CollateralTokens {
   WETH: Token
   UNI: Token
   WBTC: Token
+  STETH: Token
   [key: string]: Token
 }
 export const getTokensListOnCurrentChain = (
@@ -82,6 +89,19 @@ export const getTokensListOnCurrentChain = (
       name: 'Wrapped ETH',
       address: chainsToTokens.WETH[chain_id],
       ticker: 'WETH',
+      value: 0,
+      vault_balance: 0,
+      vault_amount: 0,
+      wallet_balance: 0,
+      wallet_amount: 0,
+      token_LTV: 0,
+      token_penalty: 0,
+      vault_unformatted_amount: '0',
+    },
+    STETH: {
+      name: 'Lido Staked ETH',
+      address: chainsToTokens.STETH[chain_id],
+      ticker: 'stETH',
       value: 0,
       vault_balance: 0,
       vault_amount: 0,
@@ -105,7 +125,6 @@ export const getTokensListOnCurrentChain = (
       can_delegate: true,
       vault_unformatted_amount: '0',
     },
-
     WBTC: {
       name: 'Wrapped BTC',
       address: chainsToTokens.WBTC[chain_id],
