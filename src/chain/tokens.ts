@@ -32,7 +32,7 @@ export const chainsToTokens = {
     [ChainIDs.GOERLI]: '0xc778417E063141139Fce010982780140Aa0cD5Ab',
     [ChainIDs.POLYGON]: '0x8afBfe06dA3D035c82C5bc55C82EB3FF05506a20',
   },
-  STETH: {
+  stETH: {
     [ChainIDs.MAINNET]: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
     [ChainIDs.ROPSTEN]: '0x0000000000000000000000000000000000000000',
     [ChainIDs.GOERLI]: '0x0000000000000000000000000000000000000000',
@@ -78,7 +78,7 @@ export interface CollateralTokens {
   WETH: Token
   UNI: Token
   WBTC: Token
-  STETH: Token
+  stETH: Token
   [key: string]: Token
 }
 export const getTokensListOnCurrentChain = (
@@ -98,9 +98,9 @@ export const getTokensListOnCurrentChain = (
       token_penalty: 0,
       vault_unformatted_amount: '0',
     },
-    STETH: {
+    stETH: {
       name: 'Lido Staked ETH',
-      address: chainsToTokens.STETH[chain_id],
+      address: chainsToTokens.stETH[chain_id],
       ticker: 'stETH',
       value: 0,
       vault_balance: 0,
