@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import {
-  SwitchProps,
-  Box,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { SwitchProps, Box, Typography, useTheme } from '@mui/material'
 
 import { formatColor, neutral, blue } from '../../../theme'
 interface BaseSwitchProps extends SwitchProps {
@@ -15,12 +10,7 @@ interface BaseSwitchProps extends SwitchProps {
 }
 
 export const BaseSwitch = (props: BaseSwitchProps) => {
-  const {
-    option1,
-    option2,
-    onOptionChange,
-    defaultIsOption1 = true,
-  } = props
+  const { option1, option2, onOptionChange, defaultIsOption1 = true } = props
   const [option, setOption] = useState(() => {
     if (defaultIsOption1) {
       return option1
@@ -28,14 +18,11 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
     return option2
   })
 
-  const [isOption1, setIsOption1] = useState(
-    defaultIsOption1
-  )
+  const [isOption1, setIsOption1] = useState(defaultIsOption1)
   const theme = useTheme()
 
   const longerLength =
-    typeof option1 === 'string' &&
-    typeof option2 === 'string'
+    typeof option1 === 'string' && typeof option2 === 'string'
       ? option1.length > option2.length
         ? option1.length
         : option2.length
@@ -43,8 +30,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
 
   const calculateWidth = () => `${longerLength * 12}px`
 
-  const calculateContainerWidth = () =>
-    `${longerLength * 24 + 12}px`
+  const calculateContainerWidth = () => `${longerLength * 24 + 12}px`
 
   const OptionBox = ({
     option,
@@ -80,6 +66,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
           sx={{
             display: 'flex',
             maxHeight: 15,
+            maxWidth: 15,
             position: 'relative',
             zIndex: 10,
           }}
