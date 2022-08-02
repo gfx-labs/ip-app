@@ -11,7 +11,9 @@ export const borrowUsdi = (
 ): Promise<ContractTransaction> => {
   const formattedUSDIAmount = utils.parseUnits(amount, USDI_DECIMALS)
   try {
-    return rolodex.VC!.connect(signer).borrowUsdi(vaultID, formattedUSDIAmount)
+    return rolodex
+      .VC!.connect(signer)
+      .borrowUsdi(vaultID, formattedUSDIAmount, { gasLimit: 700000 })
   } catch (err) {
     throw new Error('Could not borrow')
   }
