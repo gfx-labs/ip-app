@@ -1,4 +1,4 @@
-import { Box, Typography, Tabs, Tab, Button } from '@mui/material'
+import { Box, Typography, Button } from '@mui/material'
 import { FormEvent, useEffect, useState } from 'react'
 import { formatColor, neutral } from '../../theme'
 import { AppLayout } from '../../components/partials/app-layout'
@@ -10,7 +10,6 @@ import Cookies from 'universal-cookie'
 import { PDFModal } from '../../components/util/pdfViewer/PDFModal'
 import { useRolodexContext } from '../../components/libs/rolodex-data-provider/RolodexDataProvider'
 import {
-  getAccountRedeemedCurrentWave,
   getTotalClaimed,
   useClaimIPT,
   useCommitUSDC,
@@ -25,6 +24,8 @@ import { locale } from '../../locale'
 import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
 import useCurrentTime from '../../hooks/useCurrentTime'
 import { isInWhitelist } from './getUserIsEligible'
+import { ClockIcon } from '../../components/icons/misc/ClockIcon'
+import { SwapIcon } from '../../components/icons/misc/SwapIcon'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
@@ -67,7 +68,7 @@ const PurchasePage: React.FC = () => {
           minHeight: '70vh',
           width: '100%',
           overflow: 'hidden',
-          py: { xs: 10 },
+          py: { xs: 4 },
           maxWidth: 800,
           paddingX: { xs: 2, sm: 10 },
         }}
@@ -80,74 +81,11 @@ const PurchasePage: React.FC = () => {
           must_agree_handler={handleAgree}
         />
 
-        <PurchaseBox />
+        <PurchaseBox setOpenTerms={setOpen} />
       </Box>
     </AppLayout>
   )
 }
-
-const PurchaseBox: React.FC = () => {
-  const { currentAccount, connected } = useWeb3Context()
-  const [value, setValue] = useState(0)
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
-
-  const TabStyle = {
-    backgroundColor: 'primary.light',
-    color: 'primary.main',
-    px: { xs: 1, sm: 5 },
-    py: { xs: 0.5, sm: 1.5 },
-    minHeight: 'auto',
-
-    '&.Mui-selected': {
-      backgroundColor: 'primary.dark',
-      borderRadius: 2,
-      color: 'primary.light',
-    },
-  }
-
-  return (
-    <Box>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        centered
-        sx={{
-          mb: 4,
-          '& .MuiTabs-indicator': {
-            display: 'none',
-          },
-        }}
-      >
-        <Tab sx={TabStyle} label="Wave 1" />
-        <Tab sx={TabStyle} label="Wave 2" />
-        <Tab sx={TabStyle} label="Wave 3" />
-      </Tabs>
-      {!connected && !currentAccount && (
-        <Box textAlign="center" mb={2}>
-          <Typography color="error" variant="h6">
-            Please connect your wallet
-          </Typography>
-        </Box>
-      )}
-
-      <TabPanel value={value} index={0} iptForSale={35000000} limit={1000000} />
-      <TabPanel value={value} index={1} iptForSale={35000000} limit={500000} />
-      <TabPanel value={value} index={2} iptForSale={35000000} />
-    </Box>
-  )
-}
-
-interface TabPanelProps {
-  children?: React.ReactNode
-  index: number
-  value: number
-  iptForSale: number
-  limit?: number
-}
-
-const saleTimes = [1655658000000, 1655139600000, 1655312400000, 1655485200000]
 
 const formatSecondsTill = (n: number) => {
   if (n < 600) {
@@ -160,70 +98,96 @@ const formatSecondsTill = (n: number) => {
   return Math.floor(n / (60 * 60)) + ' hour(s)'
 }
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, iptForSale, limit, ...other } = props
+const PurchaseBox = ({
+  setOpenTerms,
+}: {
+  setOpenTerms: (val: boolean) => void
+}) => {
   const isLight = useLight()
-  const [usdcAmountToCommit, setUsdcAmountToCommit] = useState('')
+  const [amountToCommit, setAmountToCommit] = useState('')
+  const [isIPTValue, setIsIPTValue] = useState(true)
   const [focus, setFocus] = useState(false)
   const toggle = () => setFocus(!focus)
-  const waveNum = index + 1
   const rolodex = useRolodexContext()
   const { currentSigner, currentAccount, dataBlock, chainId, connected } =
     useWeb3Context()
   const { updateTransactionState } = useModalContext()
   const currentTime = useCurrentTime()
-
+  const [iptForSale, setIptForSale] = useState(1000000)
+  const [usdcCommitted, setUsdcCommitted] = useState(23000)
+  const [salePrice, setSalePrice] = useState(0.25)
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
 
   const [needAllowance, setNeedAllowance] = useState(true)
-  const [disableTime, setDisableTime] = useState<Date>()
-  const startTime = new Date(saleTimes[waveNum])
+  const startTime = new Date()
 
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<string>('')
-  const [redeemed, setRedeemed] = useState(true)
   const [totalClaimed, setTotalClaimed] = useState('0')
-  const [claimable, setClaimable] = useState(0)
-  const [isEligible, setIsEligible] = useState(false)
-  useEffect(() => {
-    if (currentAccount && waveNum !== 3) {
-      const isEligible = isInWhitelist(waveNum, currentAccount)
-      setIsEligible(isEligible)
-    } else {
-      setIsEligible(true)
-    }
-    const time: Date = new Date(saleTimes[0])
+  const [secondaryValue, setSecondaryValue] = useState<string>('USDC')
 
-    if (saleTimes[waveNum] > currentTime.valueOf()) {
+  useEffect(() => {
+    if (isIPTValue) {
+      if (amountToCommit === '') {
+        setSecondaryValue('USDC')
+      } else {
+        setSecondaryValue((Number(amountToCommit) * salePrice).toString())
+      }
+    } else {
+      if (amountToCommit === '') {
+        setSecondaryValue('IPT')
+      } else {
+        setSecondaryValue((Number(amountToCommit) / salePrice).toString())
+      }
+    }
+  }, [amountToCommit])
+
+  useEffect(() => {
+    const val = Number(secondaryValue)
+
+    let secVal
+
+    if (isNaN(val)) {
+      secVal = ''
+    } else {
+      secVal = secondaryValue
+    }
+
+    setAmountToCommit(secVal)
+  }, [isIPTValue])
+
+  useEffect(() => {
+    const time: Date = new Date()
+
+    if (time.valueOf() > currentTime.valueOf()) {
       let timeleft = (startTime.valueOf() - currentTime.valueOf()) / 1000
-      setSalePeriodRemaining('starts in ' + formatSecondsTill(timeleft))
+      setSalePeriodRemaining(formatSecondsTill(timeleft))
     } else {
       setSalePeriodRemaining(
-        'ends in ' +
-          formatSecondsTill((time.valueOf() - currentTime.valueOf()) / 1000)
+        formatSecondsTill((time.valueOf() - currentTime.valueOf()) / 1000)
       )
     }
 
-    if (connected && rolodex && currentAccount) {
-      setDisableTime(time)
+    // if (connected && rolodex && currentAccount) {
+    //   setDisableTime(time)
 
-      getAccountRedeemedCurrentWave(
-        currentSigner!,
-        currentAccount,
-        waveNum
-      ).then((res) => {
-        setClaimable(BNtoHexNumber(res[0]))
-        setRedeemed(res[1])
-      })
-    }
+    //   getAccountRedeemedCurrentWave(
+    //     currentSigner!,
+    //     currentAccount,
+    //     waveNum
+    //   ).then((res) => {
+    //     setClaimable(BNtoHexNumber(res[0]))
+    //     setRedeemed(res[1])
+    //   })
+    // }
   }, [connected, currentAccount, chainId, rolodex, currentTime])
 
   useEffect(() => {
-    if (rolodex && usdcAmountToCommit && rolodex.USDC) {
+    if (rolodex && amountToCommit && rolodex.USDC) {
       rolodex
         .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
         .then((initialApproval) => {
-          const formattedUSDCAmount = BN(usdcAmountToCommit).mul(1e6)
+          const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
           if (initialApproval.lt(formattedUSDCAmount)) {
             setNeedAllowance(true)
           } else {
@@ -234,7 +198,7 @@ function TabPanel(props: TabPanelProps) {
     getTotalClaimed(currentSigner!).then((res) =>
       setTotalClaimed(BNtoHexNumber(res.div(1000000)).toLocaleString())
     )
-  }, [rolodex, dataBlock, chainId, usdcAmountToCommit])
+  }, [rolodex, dataBlock, chainId, amountToCommit])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -247,12 +211,10 @@ function TabPanel(props: TabPanelProps) {
 
   const claimHandler = async () => {
     try {
-      const claimTransaction = await useClaimIPT(currentSigner!, waveNum)
-
-      updateTransactionState(claimTransaction)
-      const claimReceipt = await claimTransaction.wait()
-
-      updateTransactionState(claimReceipt)
+      // const claimTransaction = await useClaimIPT(currentSigner!, waveNum)
+      // updateTransactionState(claimTransaction)
+      // const claimReceipt = await claimTransaction.wait()
+      // updateTransactionState(claimReceipt)
     } catch (err) {
       const error = err as TransactionReceipt
       updateTransactionState(error)
@@ -260,8 +222,8 @@ function TabPanel(props: TabPanelProps) {
   }
 
   const handleApprovalRequest = async () => {
-    if (rolodex && usdcAmountToCommit) {
-      let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6)
+    if (rolodex && amountToCommit) {
+      let formattedCommitAmount = BN(amountToCommit).mul(1e6)
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
@@ -280,28 +242,28 @@ function TabPanel(props: TabPanelProps) {
   }
 
   const usdcCommitHandler = async () => {
-    if (rolodex !== null && Number(usdcAmountToCommit) > 0) {
-      let formattedCommitAmount = BN(usdcAmountToCommit).mul(1e6)
+    if (rolodex !== null && Number(amountToCommit) > 0) {
+      let formattedCommitAmount = BN(amountToCommit).mul(1e6)
       setLoading(true)
 
       try {
         setLoadmsg(locale('CheckWallet'))
-        const { proof, key } = await getSaleMerkleProof(currentAccount, waveNum)
+        // const { proof, key } = await getSaleMerkleProof(currentAccount, waveNum)
 
-        const commitTransaction = await useCommitUSDC(
-          formattedCommitAmount,
-          currentSigner!,
-          waveNum,
-          key,
-          proof
-        )
+        // const commitTransaction = await useCommitUSDC(
+        //   formattedCommitAmount,
+        //   currentSigner!,
+        //   waveNum,
+        //   key,
+        //   proof
+        // )
 
-        updateTransactionState(commitTransaction)
-        setLoadmsg(locale('TransactionPending'))
+        // updateTransactionState(commitTransaction)
+        // setLoadmsg(locale('TransactionPending'))
 
-        const commitReceipt = await commitTransaction.wait()
+        // const commitReceipt = await commitTransaction.wait()
 
-        updateTransactionState(commitReceipt)
+        // updateTransactionState(commitReceipt)
       } catch (err) {
         const error = err as TransactionReceipt
         updateTransactionState(error)
@@ -311,142 +273,204 @@ function TabPanel(props: TabPanelProps) {
   }
 
   return (
-    <Box
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box>
+    <Box>
+      <Box>
+        <Box display="flex" justifyContent="space-between">
           <Box display="flex" alignItems="center">
             <Box
               component="img"
-              src="images/ipt_blue.svg"
-              width={80}
-              mr={3}
+              src="images/ipt_white.svg"
+              width={32}
+              height={32}
+              mr={2}
             ></Box>
             <Typography variant="subtitle1">IPT Sale</Typography>
           </Box>
 
-          <Box display="flex" mt={3}>
-            <Typography variant="body3" color="#A3A9BA" mr={1}>
-              Sale Period:{' '}
-            </Typography>
+          <Box display="flex" alignItems="center">
+            <ClockIcon sx={{ width: 14, height: 14, mr: 1, mb: 0.5 }} />
             <Typography variant="body3" color="primary.dark">
-              {salePeriodRemaining != ''
-                ? `Wave ${waveNum} ${salePeriodRemaining}`
-                : 'Ended'}
+              Sale Renews in {salePeriodRemaining}
             </Typography>
           </Box>
+        </Box>
 
+        <Box display="flex" justifyContent="space-between" mt={3}>
           <Box
-            display="flex"
+            display=""
             flexDirection={{ xs: 'column', md: 'row' }}
             justifyContent="space-between"
-            mt={3}
             columnGap={4}
             rowGap={2}
           >
-            <Box display="flex">
-              <Typography variant="body1" color="#A3A9BA" mr={1}>
-                Total IPT:{' '}
+            <Box display="flex" mb={2}>
+              <Typography
+                variant="body3"
+                fontWeight={400}
+                color="#A3A9BA"
+                mr={1}
+              >
+                IPT for sale:{' '}
               </Typography>
-              <Typography variant="body1" color="primary.dark">
+              <Typography variant="body3" fontWeight={400} color="primary.dark">
                 {' '}
                 {iptForSale.toLocaleString()}
               </Typography>
             </Box>
             {connected && currentAccount && (
               <Box display="flex">
-                <Typography variant="body1" color="#A3A9BA" mr={1}>
-                  Total USDC:
+                <Typography
+                  variant="body3"
+                  fontWeight={400}
+                  color="#A3A9BA"
+                  mr={1}
+                >
+                  Sale Price:
                 </Typography>
-                <Typography variant="body1" color="primary.dark">
-                  {totalClaimed}
+                <Typography
+                  variant="body3"
+                  fontWeight={400}
+                  color="primary.dark"
+                >
+                  ${salePrice}
                 </Typography>
               </Box>
             )}
           </Box>
-          <Box component="form" onSubmit={handleSubmit} mt={4}>
-            <ModalInputContainer focus={focus}>
-              <DecimalInput
-                onFocus={toggle}
-                onBlur={toggle}
-                placeholder="USDC Amount"
-                value={usdcAmountToCommit}
-                onChange={setUsdcAmountToCommit}
-              />
-            </ModalInputContainer>
-            <Box mt={2}>
-              {limit &&
-              disableTime !== undefined &&
-              disableTime > currentTime ? (
-                <Typography color="error" variant="label2">
-                  Maximum commit allowed: {limit.toLocaleString()}
-                </Typography>
-              ) : (
-                <Box height={28}></Box>
-              )}
-            </Box>
-
-            {disableTime !== undefined &&
-            disableTime > currentTime &&
-            isEligible ? (
-              <DisableableModalButton
-                disabled={
-                  Number(usdcAmountToCommit) <= 0 ||
-                  (limit && Number(usdcAmountToCommit) > limit) ||
-                  !connected ||
-                  startTime > currentTime
-                }
-                type="submit"
-                text={needAllowance ? 'Set Allowance' : 'Confirm Deposit'}
-                loading={loading}
-                load_text={loadmsg}
-                onClick={handleSubmit}
-              />
-            ) : (
-              <Button
-                variant="contained"
-                onClick={claimHandler}
-                disabled={redeemed || !connected}
-              >
-                <Typography variant="body3" color={formatColor(neutral.white)}>
-                  {!connected
-                    ? `Please connect your wallet`
-                    : !isEligible
-                    ? 'You are not eligible for this wave'
-                    : redeemed
-                    ? `Already claimed for wave ${waveNum}`
-                    : claimable > 0
-                    ? `Claim IPT for wave ${waveNum}`
-                    : `Nothing to claim`}
-                </Typography>
-              </Button>
-            )}
-          </Box>
-
-          <Box
-            mt={5}
-            display="flex"
-            justifyContent="space-between"
-            flexDirection={{ xs: 'column', md: 'row' }}
-          >
-            <Button href="./book/docs/IPTsale/index.html" target="_blank">
-              Token Sale Rules
-            </Button>
-
-            <Button
-              target="_blank"
-              href="https://etherscan.io/address/0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee"
-            >
-              View Sales Contract
-            </Button>
+          <Box display="flex">
+            <Typography variant="body3" fontWeight={400} color="#A3A9BA" mr={1}>
+              USDC Committed:{' '}
+            </Typography>
+            <Typography variant="body3" fontWeight={400} color="primary.dark">
+              {' '}
+              {usdcCommitted.toLocaleString()}
+            </Typography>
           </Box>
         </Box>
-      )}
+        <Box component="form" onSubmit={handleSubmit} mt={4}>
+          <ModalInputContainer focus={focus}>
+            <Box position="relative">
+              <Button
+                sx={{
+                  minWidth: 'auto',
+                  borderRadius: '50%',
+                  width: 30,
+                  height: 30,
+                  paddingY: 0,
+                  paddingX: 2,
+                  top: -3,
+                  mr: 1,
+                }}
+                onClick={() => setIsIPTValue(!isIPTValue)}
+              >
+                <SwapIcon sx={{ width: 30, height: 30 }} />
+              </Button>
+            </Box>
+            <DecimalInput
+              onFocus={toggle}
+              onBlur={toggle}
+              placeholder={isIPTValue ? 'IPT Amount' : 'USDC Amount'}
+              value={amountToCommit}
+              onChange={setAmountToCommit}
+            />
+
+            <Typography>{secondaryValue}</Typography>
+          </ModalInputContainer>
+          <Box height={8} />
+          <DisableableModalButton
+            disabled={
+              Number(amountToCommit) <= 0 ||
+              !connected ||
+              startTime > currentTime
+            }
+            type="submit"
+            text={needAllowance ? 'Set Allowance' : 'Commit'}
+            loading={loading}
+            load_text={loadmsg}
+            onClick={handleSubmit}
+          />
+        </Box>
+
+        <Box
+          mt={4}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
+          <Button
+            href="./book/docs/IPTsale/index.html"
+            target="_blank"
+            sx={{ width: 'fit-content', p: 0 }}
+          >
+            Token Sale Rules{' '}
+            <Box
+              component="img"
+              src="images/up_arrow_blue.png"
+              width={10}
+              height={12}
+              marginX={1}
+              sx={{
+                transform: 'rotate(90deg)',
+              }}
+            />
+          </Button>
+
+          <Button
+            target="_blank"
+            href="https://etherscan.io/address/0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee"
+            sx={{ width: 'fit-content', p: 0 }}
+          >
+            View Sales Contract{' '}
+            <Box
+              component="img"
+              src="images/up_arrow_blue.png"
+              width={10}
+              height={12}
+              marginX={1}
+              sx={{
+                transform: 'rotate(90deg)',
+              }}
+            />
+          </Button>
+        </Box>
+
+        <Box mt={3}>
+          <Typography
+            variant="body3"
+            sx={{
+              mb: 1,
+              position: 'relative',
+              display: 'block',
+              lineHeight: 1.25,
+              fontWeight: 400,
+            }}
+          >
+            The new mechanism offers one million (1%) tokens daily at a starting
+            price of $0.25 and a maximum price of $0.50. The sale has a minimum
+            duration of 35 days to sell a total of 35 million tokens (35% of the
+            total supply) but will continue until the allocated supply is
+            exhausted.
+          </Typography>
+          <br />
+          <Typography
+            variant="body3"
+            sx={{
+              mb: 1,
+              position: 'relative',
+              display: 'block',
+              lineHeight: 1.25,
+              fontWeight: 400,
+            }}
+          >
+            Each day, the sale parameters will reset to the base price ($0.25)
+            and tokens offered (1m). Bidders all get the same price regardless
+            of the number of tokens purchased, but the price updates after each
+            sale based on how many tokens have been purchased.
+          </Typography>
+        </Box>
+
+        <Button onClick={() => setOpenTerms(true)}>View User Agreement</Button>
+      </Box>
     </Box>
   )
 }

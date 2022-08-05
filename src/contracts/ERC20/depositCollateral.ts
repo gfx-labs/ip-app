@@ -18,7 +18,7 @@ export const depositCollateral = async (
       await contract.estimateGas.transfer(vaultAddress!, formattedERC20Amount)
     )
       .mul(100)
-      .div(90)
+      .div(85)
     const transferAttempt = await contract.transfer(
       vaultAddress!,
       formattedERC20Amount,
