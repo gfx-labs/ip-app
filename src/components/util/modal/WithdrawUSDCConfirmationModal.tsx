@@ -38,7 +38,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           )
         )
           .mul(100)
-          .div(90)
+          .div(85)
         const txn = await rolodex.USDI.connect(currentSigner).withdraw(
           formattedUSDCAmount,
           { gasLimit: ge }

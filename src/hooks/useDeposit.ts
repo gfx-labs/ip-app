@@ -29,7 +29,7 @@ export const useDepositUSDC = async (
       )
     )
       .mul(100)
-      .div(90)
+      .div(85)
     const depositAttempt = await rolodex.USDI?.connect(signer).deposit(
       Number(formattedUSDCAmount),
       { gasLimit: ge }
