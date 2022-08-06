@@ -24,6 +24,11 @@ const sidebars = {
     },
     {
       type: 'doc',
+      label: 'Resources',
+      id: 'Resources',
+    },
+    {
+      type: 'doc',
       label: 'Liquidity Program',
       id: 'Liquidity Program',
     },

@@ -57,7 +57,6 @@ export const LandingDesktopToolbar = () => {
           newTarget
         />
         <DesktopLinkTo url="#/sale" label="Sale" />
-        <DesktopLinkTo url="#/whitelist" label="Whitelist" />
       </Box>
 
       <Box ml="auto">

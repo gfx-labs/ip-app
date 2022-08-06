@@ -186,10 +186,10 @@ export default function Home(): JSX.Element {
                 }
               />
               <CardLayout
-                href="docs/concepts/Risks/RiskManagement"
-                icon={'🔗'}
-                title="Risk Management"
-                description={'How IP manages Risk'}
+                href="docs/Resources"
+                icon={'📋'}
+                title="Resources"
+                description={'Collection of IP & IP related resources'}
               />
               <CardLayout
                 href="docs/guides/Protocol Interaction/How To Borrow"
