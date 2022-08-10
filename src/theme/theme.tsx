@@ -480,13 +480,14 @@ theme.components = {
       },
     },
   },
-  MuiLinearProgress: {
+  MuiCircularProgress: {
     styleOverrides: {
       determinate: {
-        backgroundColor: formatColor(neutral.white),
-        height: 16,
-        borderRadius: 8,
-        '.MuiLinearProgress-bar': {},
+        borderRadius: 16,
+        height: 80,
+        '.MuiCircularProgress-circle': {
+          backgroundColor: 'white',
+        },
       },
     },
   },

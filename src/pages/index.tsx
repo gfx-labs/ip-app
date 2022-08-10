@@ -68,13 +68,6 @@ const Dashboard = () => {
             },
           }}
         >
-          <Typography
-            variant="label"
-            paddingLeft={{ xs: 2, md: 6 }}
-            color={formatColor(neutral.gray3)}
-          >
-            Protocol Stats
-          </Typography>
           <Box
             sx={{
               marginTop: 3,
@@ -88,14 +81,13 @@ const Dashboard = () => {
             }}
           >
             <ProtocolStatsCard />
-            <UsdiGraphCard />
+            <StatsMeter />
           </Box>
           <Box>
-            <Box sx={{ marginY: 4, px: { xs: 2, md: 6 } }}>
-              <StatsMeter />
-            </Box>
             <UserStats />
           </Box>
+
+          <UsdiGraphCard />
         </Box>
       ) : (
         <Governance />

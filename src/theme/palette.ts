@@ -53,7 +53,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       background: {
         default: getColor(
           `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
-          `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`
+          getColor(formatColor(neutral.gray4))
         ),
         overview: getColor(
           formatColor(neutral.gray5),

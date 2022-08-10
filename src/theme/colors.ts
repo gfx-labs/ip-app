@@ -37,6 +37,7 @@ export const neutral: { [key: string]: [number, number, number] } = {
   black4: [26, 26, 26], // #1B1A1A
   black5: [10, 11, 12], // #0A0B0C
   black6: [29, 35, 46], // #1D232E
+  black7: [28, 29, 33], // #1C1D21
 }
 
 export const blue: { [key: string]: [number, number, number] } = {
