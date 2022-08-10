@@ -40,15 +40,13 @@ export const StatsMeter = () => {
   return (
     <Box
       sx={{
-        paddingX: { xs: 3, md: 6 },
-        paddingY: { xs: 6, md: 4 },
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.gradient1 : gradient.gradient2
-        )})`,
-        borderRadius: { xs: 5, md: 17 },
+        paddingX: { xs: 2, md: 3 },
+        paddingY: { xs: 2, md: 3 },
+        backgroundColor: 'smallCard.background',
+        borderRadius: 2.5,
       }}
     >
-      <Box>
+      <Box lineHeight={0}>
         <Typography variant="label" color={formatColor(neutral.gray3)}>
           Borrowing Power
         </Typography>
@@ -71,14 +69,14 @@ export const StatsMeter = () => {
             position: 'relative',
             zIndex: 2,
           }}
-          size={200}
+          size={190}
         />
 
         <CircularProgress
           variant="determinate"
           value={100}
           thickness={5}
-          size={200}
+          size={190}
           sx={{
             position: 'absolute',
 
@@ -110,7 +108,7 @@ export const StatsMeter = () => {
               USDi Borrowed / Borrowing Power
             </Typography>
           }
-          text={`Percentage Used:  ${percentBorrowed}%`}
+          text={`USDi Borrowed:  ${percentBorrowed}%`}
           text_variant="label2"
         />
       </Box>

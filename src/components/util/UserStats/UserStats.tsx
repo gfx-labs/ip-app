@@ -100,16 +100,13 @@ export const UserStats = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.statDefaultLight : gradient.statDefaultDark
-        )})`,
-        paddingX: 6,
-        paddingY: 7,
-        borderRadius: 16,
+        backgroundColor: 'smallCard.background',
+        paddingX: 4,
+        paddingY: 4,
+        borderRadius: 2.5,
         [theme.breakpoints.down('md')]: {
           paddingX: 2,
-          paddingY: 6,
-          borderRadius: 5,
+          paddingY: 2,
         },
       }}
     >
@@ -167,7 +164,7 @@ export const UserStats = () => {
         </Box>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           display: 'grid',
           justifyContent: 'space-between',
@@ -292,7 +289,7 @@ export const UserStats = () => {
             )}
           </Box>
         </SingleStatCard>
-      </Box>
+      </Box> */}
       <Box
         sx={{
           mt: { xs: 2, md: 3 },
