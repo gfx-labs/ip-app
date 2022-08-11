@@ -235,6 +235,9 @@ const Dashboard = () => {
               justifyContent: 'space-between',
               gap: 2,
               my: 3,
+              [theme.breakpoints.down('xs')]: {
+                flexDirection: 'column',
+              },
             }}
           >
             <SingleStatCard>

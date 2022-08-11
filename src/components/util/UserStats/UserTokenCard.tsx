@@ -12,6 +12,7 @@ import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletMo
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
+import { useLight } from '../../../hooks/useLight'
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
   tokenValue: string
@@ -28,6 +29,7 @@ interface UserTokenCardProps extends BoxProps {
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme()
+  const isLight = useLight()
   const rolodex = useRolodexContext()
   const { currentSigner, connected, currentAccount } = useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
@@ -79,7 +81,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: 'smallCard.background',
+        backgroundColor: isLight
+          ? formatColor(neutral.gray5)
+          : formatColor(neutral.gray4),
         borderRadius: 4,
         padding: 4,
         paddingBottom: 0,
@@ -87,43 +91,44 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         ...props.sx,
       }}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0 }}>
-        <Box display="flex" flexDirection="column" rowGap={1}>
-          <Box>
-            <Typography variant="label2" color="text.secondary">
-              {tokenName}
-            </Typography>
-            <br />
-            <Typography variant="subtitle3" color="text.primary">
-              {tokenValue}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="label2" color="text.secondary">
-              Vault Balance
-            </Typography>
-            <br />
-            <Typography variant="subtitle3" color="text.primary">
-              {vaultBalance}
-            </Typography>
-          </Box>
-
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          mb: 0,
+          alignItems: 'center',
+        }}
+      >
+        <Box>
+          <Box
+            component="img"
+            width={40}
+            height={40}
+            src={`images/${image.src}.svg`}
+            alt={image.alt}
+          ></Box>
           <Typography variant="label2" color="text.secondary">
-            {tokenAmount} {tokenName}
+            {tokenName}
           </Typography>
         </Box>
-        <Box
-          component="img"
-          width={80}
-          height={80}
-          src={`images/${image.src}.svg`}
-          alt={image.alt}
-        ></Box>
-      </Box>
+        <Typography variant="subtitle3" color="text.primary">
+          {tokenValue}
+        </Typography>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
+        <Typography variant="subtitle3" color="text.primary">
+          {vaultBalance}
+        </Typography>
+
+        <Typography variant="label2" color="text.secondary">
+          {tokenAmount} {tokenName}
+        </Typography>
+
         <ToolTip
-          content={<Typography variant="body3">Maximum Loan-To-Value for this asset</Typography>}
+          content={
+            <Typography variant="body3">
+              Maximum Loan-To-Value for this asset
+            </Typography>
+          }
           text={`LTV: ${LTVPercent}%
           `}
           text_variant="label2"
@@ -132,35 +137,48 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <ToolTip
           content={
             <Typography variant="body3">
-              Liquidation penalty paid by vault to the liquidator for liquidating this asset
+              Liquidation penalty paid by vault to the liquidator for
+              liquidating this asset
             </Typography>
           }
           text={`Penalty: ${penaltyPercent}%
           `}
           text_variant="label2"
         />
-      </Box>
 
-      <Box
-        sx={{
-          display: 'grid',
-          justifyContent: 'space-between',
-          gridTemplateColumns: '1fr 1fr',
-          columnGap: 1.5,
-        }}
-      >
-        <Button
-          variant="contained"
-          onClick={() => handleDWClick(ModalType.DepositCollateral)}
+        <Box
+          sx={{
+            display: 'grid',
+            justifyContent: 'space-between',
+            gridTemplateColumns: '1fr 1fr',
+            columnGap: 1.5,
+          }}
         >
-          Deposit
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
-        >
-          Withdraw
-        </Button>
+          <Button
+            variant="contained"
+            onClick={() => handleDWClick(ModalType.DepositCollateral)}
+            sx={{
+              borderRadius: 20,
+              width: 40,
+              height: 40,
+              minWidth: 40,
+            }}
+          >
+            +
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
+            sx={{
+              borderRadius: 20,
+              width: 40,
+              height: 40,
+              minWidth: 40,
+            }}
+          >
+            -
+          </Button>
+        </Box>
       </Box>
 
       {canDelegate ? (
