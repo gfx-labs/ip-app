@@ -10,18 +10,23 @@ import Cookies from 'universal-cookie'
 import { PDFModal } from '../../components/util/pdfViewer/PDFModal'
 import { useRolodexContext } from '../../components/libs/rolodex-data-provider/RolodexDataProvider'
 import {
-  getTotalClaimed,
+  getCurrentPrice,
+  getAmountIPTForSale,
+  SLOWROLL_ADDRESS,
   useClaimIPT,
   useCommitUSDC,
-  WAVEPOOL_ADDRESS,
+  getWaveDuration,
 } from '../../hooks/useSaleUtils'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
 import { getSaleMerkleProof } from './getMerkleProof'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
-import { TransactionReceipt } from '@ethersproject/providers'
+import { JsonRpcSigner, TransactionReceipt } from '@ethersproject/providers'
 import { BN } from '../../easy/bn'
 import { locale } from '../../locale'
-import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
+import {
+  BNtoHexNumber,
+  BNtoHexString,
+} from '../../components/util/helpers/BNtoHex'
 import useCurrentTime from '../../hooks/useCurrentTime'
 import { isInWhitelist } from './getUserIsEligible'
 import { ClockIcon } from '../../components/icons/misc/ClockIcon'
@@ -37,6 +42,8 @@ const PurchasePage: React.FC = () => {
     setOpen(false)
   }
 
+  const isLight = useLight()
+
   useEffect(() => {
     const onScroll = (e: any) => {
       setScrollTop(e.target.documentElement.scrollTop)
@@ -45,7 +52,7 @@ const PurchasePage: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [scrollTop])
 
-  if (1 == 1) {
+  if (1 == 0) {
     return (
       <div style={{ minHeight: '80vh' }}>
         <meta
@@ -60,28 +67,31 @@ const PurchasePage: React.FC = () => {
   }
   return (
     <AppLayout>
-      <Box
-        sx={{
-          marginX: 'auto',
-          position: 'relative',
-          height: '100%',
-          minHeight: '70vh',
-          width: '100%',
-          overflow: 'hidden',
-          py: { xs: 4 },
-          maxWidth: 800,
-          paddingX: { xs: 2, sm: 10 },
-        }}
-      >
-        <PDFModal
-          isOpen={open}
-          setIsOpen={setOpen}
-          pdf_src="ip_terms.pdf"
-          must_agree={true}
-          must_agree_handler={handleAgree}
-        />
+      <Box sx={{ py: 5 }}>
+        <Box
+          sx={{
+            marginX: 'auto',
+            position: 'relative',
+            height: '100%',
+            width: '100%',
+            overflow: 'hidden',
+            py: { xs: 4 },
+            maxWidth: 800,
+            paddingX: { xs: 2, sm: 10 },
+            backgroundColor: isLight ? '#FFFFFF' : '#25262C',
+            borderRadius: 2.5,
+          }}
+        >
+          <PDFModal
+            isOpen={open}
+            setIsOpen={setOpen}
+            pdf_src="ip_terms.pdf"
+            must_agree={true}
+            must_agree_handler={handleAgree}
+          />
 
-        <PurchaseBox setOpenTerms={setOpen} />
+          <PurchaseBox setOpenTerms={setOpen} />
+        </Box>
       </Box>
     </AppLayout>
   )
@@ -109,21 +119,25 @@ const PurchaseBox = ({
   const [focus, setFocus] = useState(false)
   const toggle = () => setFocus(!focus)
   const rolodex = useRolodexContext()
-  const { currentSigner, currentAccount, dataBlock, chainId, connected } =
-    useWeb3Context()
+  const {
+    currentSigner,
+    currentAccount,
+    dataBlock,
+    chainId,
+    connected,
+    signerOrProvider,
+  } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
   const currentTime = useCurrentTime()
-  const [iptForSale, setIptForSale] = useState(1000000)
-  const [usdcCommitted, setUsdcCommitted] = useState(23000)
+  const [iptForSale, setIptForSale] = useState(0)
+  const [iptSold, setIptSold] = useState(0)
   const [salePrice, setSalePrice] = useState(0.25)
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
 
   const [needAllowance, setNeedAllowance] = useState(true)
-  const startTime = new Date()
 
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<string>('')
-  const [totalClaimed, setTotalClaimed] = useState('0')
   const [secondaryValue, setSecondaryValue] = useState<string>('USDC')
 
   useEffect(() => {
@@ -157,35 +171,15 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    const time: Date = new Date()
-
-    if (time.valueOf() > currentTime.valueOf()) {
-      let timeleft = (startTime.valueOf() - currentTime.valueOf()) / 1000
-      setSalePeriodRemaining(formatSecondsTill(timeleft))
-    } else {
-      setSalePeriodRemaining(
-        formatSecondsTill((time.valueOf() - currentTime.valueOf()) / 1000)
-      )
-    }
-
-    // if (connected && rolodex && currentAccount) {
-    //   setDisableTime(time)
-
-    //   getAccountRedeemedCurrentWave(
-    //     currentSigner!,
-    //     currentAccount,
-    //     waveNum
-    //   ).then((res) => {
-    //     setClaimable(BNtoHexNumber(res[0]))
-    //     setRedeemed(res[1])
-    //   })
-    // }
+    getWaveDuration(signerOrProvider as JsonRpcSigner).then((res) => {
+      setSalePeriodRemaining(formatSecondsTill(res.toNumber()))
+    })
   }, [connected, currentAccount, chainId, rolodex, currentTime])
 
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
       rolodex
-        .USDC!.allowance(currentAccount, WAVEPOOL_ADDRESS)
+        .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
         .then((initialApproval) => {
           const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
           if (initialApproval.lt(formattedUSDCAmount)) {
@@ -195,10 +189,19 @@ const PurchaseBox = ({
           }
         })
     }
-    getTotalClaimed(currentSigner!).then((res) =>
-      setTotalClaimed(BNtoHexNumber(res.div(1000000)).toLocaleString())
-    )
   }, [rolodex, dataBlock, chainId, amountToCommit])
+
+  useEffect(() => {
+    getAmountIPTForSale(currentSigner!).then((res) => {
+      setIptForSale(BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4)))
+
+      setIptSold(BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4)))
+    })
+
+    getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+      setSalePrice(res.toNumber() / 1e6)
+    })
+  }, [rolodex, dataBlock])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -209,26 +212,16 @@ const PurchaseBox = ({
     }
   }
 
-  const claimHandler = async () => {
-    try {
-      // const claimTransaction = await useClaimIPT(currentSigner!, waveNum)
-      // updateTransactionState(claimTransaction)
-      // const claimReceipt = await claimTransaction.wait()
-      // updateTransactionState(claimReceipt)
-    } catch (err) {
-      const error = err as TransactionReceipt
-      updateTransactionState(error)
-    }
-  }
-
   const handleApprovalRequest = async () => {
     if (rolodex && amountToCommit) {
-      let formattedCommitAmount = BN(amountToCommit).mul(1e6)
+      const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
+
+      let formattedCommitAmount = BN(usdcAmount).mul(1e6)
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
         const approve = await rolodex.USDC?.connect(currentSigner!).approve(
-          WAVEPOOL_ADDRESS,
+          SLOWROLL_ADDRESS,
           formattedCommitAmount
         )
 
@@ -243,27 +236,25 @@ const PurchaseBox = ({
 
   const usdcCommitHandler = async () => {
     if (rolodex !== null && Number(amountToCommit) > 0) {
-      let formattedCommitAmount = BN(amountToCommit).mul(1e6)
+      const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
+
+      let formattedCommitAmount = BN(usdcAmount).mul(1e6)
       setLoading(true)
 
       try {
         setLoadmsg(locale('CheckWallet'))
-        // const { proof, key } = await getSaleMerkleProof(currentAccount, waveNum)
 
-        // const commitTransaction = await useCommitUSDC(
-        //   formattedCommitAmount,
-        //   currentSigner!,
-        //   waveNum,
-        //   key,
-        //   proof
-        // )
+        const commitTransaction = await useCommitUSDC(
+          formattedCommitAmount,
+          currentSigner!
+        )
 
-        // updateTransactionState(commitTransaction)
-        // setLoadmsg(locale('TransactionPending'))
+        updateTransactionState(commitTransaction)
+        setLoadmsg(locale('TransactionPending'))
 
-        // const commitReceipt = await commitTransaction.wait()
+        const commitReceipt = await commitTransaction.wait()
 
-        // updateTransactionState(commitReceipt)
+        updateTransactionState(commitReceipt)
       } catch (err) {
         const error = err as TransactionReceipt
         updateTransactionState(error)
@@ -310,7 +301,7 @@ const PurchaseBox = ({
                 color="#A3A9BA"
                 mr={1}
               >
-                IPT for sale:{' '}
+                Max IPT for sale:{' '}
               </Typography>
               <Typography variant="body3" fontWeight={400} color="primary.dark">
                 {' '}
@@ -339,11 +330,11 @@ const PurchaseBox = ({
           </Box>
           <Box display="flex">
             <Typography variant="body3" fontWeight={400} color="#A3A9BA" mr={1}>
-              USDC Committed:{' '}
+              IPT sold:{' '}
             </Typography>
             <Typography variant="body3" fontWeight={400} color="primary.dark">
               {' '}
-              {usdcCommitted.toLocaleString()}
+              {iptSold.toLocaleString()}
             </Typography>
           </Box>
         </Box>
@@ -378,11 +369,7 @@ const PurchaseBox = ({
           </ModalInputContainer>
           <Box height={8} />
           <DisableableModalButton
-            disabled={
-              Number(amountToCommit) <= 0 ||
-              !connected ||
-              startTime > currentTime
-            }
+            disabled={Number(amountToCommit) <= 0 || !connected}
             type="submit"
             text={needAllowance ? 'Set Allowance' : 'Commit'}
             loading={loading}
@@ -400,7 +387,7 @@ const PurchaseBox = ({
           <Button
             href="./book/docs/IPTsale/index.html"
             target="_blank"
-            sx={{ width: 'fit-content', p: 0 }}
+            sx={{ width: 'fit-content', left: -8 }}
           >
             Token Sale Rules{' '}
             <Box
@@ -417,8 +404,8 @@ const PurchaseBox = ({
 
           <Button
             target="_blank"
-            href="https://etherscan.io/address/0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee"
-            sx={{ width: 'fit-content', p: 0 }}
+            href="https://etherscan.io/address/0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d"
+            sx={{ width: 'fit-content', right: -8 }}
           >
             View Sales Contract{' '}
             <Box

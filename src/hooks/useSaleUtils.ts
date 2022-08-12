@@ -1,37 +1,52 @@
-import { JsonRpcSigner } from "@ethersproject/providers";
-import { BigNumber, BigNumberish } from "ethers";
-import { WavePool__factory } from "../chain/contracts/factories/IPTsale/wavepool.sol";
+import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { BigNumber, BigNumberish } from 'ethers'
+import { WavePool__factory } from '../chain/contracts/factories/IPTsale/wavepool.sol'
+import { SlowRoll__factory } from '../chain/contracts/factories/IPTsale/slowroll.sol'
 
-export const WAVEPOOL_ADDRESS = "0x5a4396a2fe5fd36c6528a441d7a97c3b0f3e8aee"
+export const SLOWROLL_ADDRESS = '0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d'
 
-const getWavePoolContract = (signer: JsonRpcSigner) => {
-  return WavePool__factory.connect(WAVEPOOL_ADDRESS, signer);
-};
+const getSlowRollContract = (signer: JsonRpcSigner) => {
+  return SlowRoll__factory.connect(SLOWROLL_ADDRESS, signer)
+}
 
 export const useCommitUSDC = async (
   amount: BigNumber,
-  signer: JsonRpcSigner,
-  wave: number,
-  key: BigNumberish,
-  proof: string[]
+  signer: JsonRpcSigner
 ) => {
-  return getWavePoolContract(signer).getPoints(wave, amount, key, proof);
-};
+  return getSlowRollContract(signer).getPoints(amount)
+}
 
 export const useClaimIPT = async (signer: JsonRpcSigner, wave: number) => {
-  return getWavePoolContract(signer).redeem(wave);
-};
+  return getSlowRollContract(signer).redeem(wave)
+}
 
-export const useDisableTime = async (signer: JsonRpcSigner) => {
-  return await getWavePoolContract(signer)._claimTime();
-};
+export const getWaveDuration = async (signer: JsonRpcSigner) => {
+  return await getSlowRollContract(signer)._waveDuration()
+}
 
-export const getAccountRedeemedCurrentWave = async (signer: JsonRpcSigner, currentAccount: string, wave: number ) => {
-  const claimInfo = await getWavePoolContract(signer)._data(wave, currentAccount)
+export const getAccountRedeemedCurrentWave = async (
+  signer: JsonRpcSigner,
+  currentAccount: string,
+  wave: number
+) => {
+  const claimInfo = await getSlowRollContract(signer)._data(
+    wave,
+    currentAccount
+  )
 
   return claimInfo
 }
 
-export const getTotalClaimed = async (signer: JsonRpcSigner) => {
-  return await getWavePoolContract(signer)._totalClaimed();
-};
+export const getAmountIPTForSale = async (signer: JsonRpcSigner) => {
+  const soldQuantity = await getSlowRollContract(signer)._soldQuantity()
+
+  const maxQuantity = await getSlowRollContract(signer)._maxQuantity()
+
+  return { maxQuantity, soldQuantity }
+}
+
+export const getCurrentPrice = async (signer: JsonRpcSigner) => {
+  const currentPrice = await getSlowRollContract(signer).getCurrentPrice()
+
+  return currentPrice
+}
