@@ -1,6 +1,5 @@
 import { Box, Typography, Button } from '@mui/material'
 import { FormEvent, useEffect, useState } from 'react'
-import { formatColor, neutral } from '../../theme'
 import { AppLayout } from '../../components/partials/app-layout'
 import { useLight } from '../../hooks/useLight'
 import { DecimalInput } from '../../components/util/textFields'
@@ -13,22 +12,16 @@ import {
   getCurrentPrice,
   getAmountIPTForSale,
   SLOWROLL_ADDRESS,
-  useClaimIPT,
   useCommitUSDC,
   getWaveDuration,
 } from '../../hooks/useSaleUtils'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
-import { getSaleMerkleProof } from './getMerkleProof'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
 import { JsonRpcSigner, TransactionReceipt } from '@ethersproject/providers'
 import { BN } from '../../easy/bn'
 import { locale } from '../../locale'
-import {
-  BNtoHexNumber,
-  BNtoHexString,
-} from '../../components/util/helpers/BNtoHex'
+import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
 import useCurrentTime from '../../hooks/useCurrentTime'
-import { isInWhitelist } from './getUserIsEligible'
 import { ClockIcon } from '../../components/icons/misc/ClockIcon'
 import { SwapIcon } from '../../components/icons/misc/SwapIcon'
 
