@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography, Button, InputAdornment } from '@mui/material'
 import { FormEvent, useEffect, useState } from 'react'
 import { AppLayout } from '../../components/partials/app-layout'
 import { useLight } from '../../hooks/useLight'
@@ -137,21 +137,16 @@ const PurchaseBox = ({
   const [needAllowance, setNeedAllowance] = useState(true)
 
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<string>('')
-  const [secondaryValue, setSecondaryValue] = useState<string>('USDC')
+  const [secondaryValue, setSecondaryValue] = useState<string>('')
+  const [secondaryValueUnit, setSecondaryValueUnit] = useState<string>('USDC')
 
   useEffect(() => {
-    if (isIPTValue) {
-      if (amountToCommit === '') {
-        setSecondaryValue('USDC')
-      } else {
-        setSecondaryValue((Number(amountToCommit) * salePrice).toString())
-      }
+    if (amountToCommit === '') {
+      setSecondaryValue('')
+    } else if (isIPTValue) {
+      setSecondaryValue((Number(amountToCommit) * salePrice).toString())
     } else {
-      if (amountToCommit === '') {
-        setSecondaryValue('IPT')
-      } else {
-        setSecondaryValue((Number(amountToCommit) / salePrice).toString())
-      }
+      setSecondaryValue((Number(amountToCommit) / salePrice).toString())
     }
   }, [amountToCommit])
 
@@ -167,6 +162,8 @@ const PurchaseBox = ({
     }
 
     setAmountToCommit(secVal)
+
+    isIPTValue ? setSecondaryValueUnit('USDC') : setSecondaryValueUnit('IPT')
   }, [isIPTValue])
 
   useEffect(() => {
@@ -196,7 +193,9 @@ const PurchaseBox = ({
       rolodex
         .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
         .then((initialApproval) => {
-          const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
+          const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
+
+          const formattedUSDCAmount = BN(usdcAmount).mul(1e6)
           if (initialApproval.lt(formattedUSDCAmount)) {
             setNeedAllowance(true)
           } else {
@@ -230,6 +229,8 @@ const PurchaseBox = ({
 
         setLoadmsg(locale('TransactionPending'))
         await approve?.wait()
+
+        setNeedAllowance(false)
       } catch (e) {
         console.log(e)
       }
@@ -358,12 +359,20 @@ const PurchaseBox = ({
             <DecimalInput
               onFocus={toggle}
               onBlur={toggle}
-              placeholder={isIPTValue ? 'IPT Amount' : 'USDC Amount'}
               value={amountToCommit}
               onChange={setAmountToCommit}
+              startAdornment={
+                <InputAdornment position="start">
+                  <Typography variant="label">
+                    {isIPTValue ? 'IPT' : 'USDC'}
+                  </Typography>
+                </InputAdornment>
+              }
             />
 
-            <Typography>{secondaryValue}</Typography>
+            <Typography whiteSpace="nowrap" variant="label">
+              {secondaryValue} {secondaryValueUnit}
+            </Typography>
           </ModalInputContainer>
           <Box height={8} />
           <DisableableModalButton
