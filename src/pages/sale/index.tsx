@@ -14,6 +14,7 @@ import {
   SLOWROLL_ADDRESS,
   useCommitUSDC,
   getWaveDuration,
+  getEndTime,
 } from '../../hooks/useSaleUtils'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
@@ -164,8 +165,9 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    getWaveDuration(signerOrProvider as JsonRpcSigner).then((res) => {
-      setSalePeriodRemaining(formatSecondsTill(res.toNumber()))
+    getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
+      let remaining = (res.toNumber() - ((new Date()).valueOf()/1000))
+      setSalePeriodRemaining(formatSecondsTill(remaining))
     })
   }, [connected, currentAccount, chainId, rolodex, currentTime])
 

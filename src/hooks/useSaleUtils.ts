@@ -20,6 +20,9 @@ export const useCommitUSDC = async (
 export const getWaveDuration = async (signer: JsonRpcSigner) => {
   return await getSlowRollContract(signer)._waveDuration()
 }
+export const getEndTime = async (signer: JsonRpcSigner) => {
+  return await getSlowRollContract(signer)._endTime()
+}
 
 export const getAmountIPTForSale = async (signer: JsonRpcSigner) => {
   const soldQuantity = await getSlowRollContract(signer)._soldQuantity()
