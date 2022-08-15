@@ -15,6 +15,7 @@ import {
   useCommitUSDC,
   getWaveDuration,
   getEndTime,
+  getBasePrice,
 } from '../../hooks/useSaleUtils'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
@@ -125,7 +126,9 @@ const PurchaseBox = ({
   const currentTime = useCurrentTime()
   const [iptForSale, setIptForSale] = useState(0)
   const [iptSold, setIptSold] = useState(0)
-  const [salePrice, setSalePrice] = useState(0.25)
+
+  const [basePrice, setBasePrice] = useState(0.25)
+  const [salePrice, setSalePrice] = useState(basePrice)
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
 
@@ -164,11 +167,20 @@ const PurchaseBox = ({
     setAmountToCommit(secVal)
   }, [isIPTValue])
 
+  useEffect(()=>{
+    if(rolodex && dataBlock){
+    getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+      setBasePrice(res)
+    })
+    }
+  },[])
   useEffect(() => {
+    if(rolodex && dataBlock){
     getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
       let remaining = (res.toNumber() - ((new Date()).valueOf()/1000))
       setSalePeriodRemaining(formatSecondsTill(remaining))
     })
+    }
   }, [connected, currentAccount, chainId, rolodex, currentTime])
 
   useEffect(() => {
@@ -187,15 +199,18 @@ const PurchaseBox = ({
   }, [rolodex, dataBlock, chainId, amountToCommit])
 
   useEffect(() => {
-    getAmountIPTForSale(currentSigner!).then((res) => {
-      setIptForSale(BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4)))
+    if(rolodex && dataBlock){
+      getAmountIPTForSale(signerOrProvider!).then((res) => {
+        let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
+        setIptSold(sold)
+        let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
+        setIptForSale(max - sold)
+      })
 
-      setIptSold(BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4)))
-    })
-
-    getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
-      setSalePrice(res.toNumber() / 1e6)
-    })
+      getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+        setSalePrice(res.toNumber() / 1e6)
+      })
+    }
   }, [rolodex, dataBlock])
 
   const handleSubmit = (e: FormEvent) => {
@@ -296,7 +311,7 @@ const PurchaseBox = ({
                 color="#A3A9BA"
                 mr={1}
               >
-                Max IPT for sale:{' '}
+                Remaining IPT for cycle:{' '}
               </Typography>
               <Typography variant="body3" fontWeight={400} color="primary.dark">
                 {' '}
@@ -428,7 +443,7 @@ const PurchaseBox = ({
             }}
           >
             The new mechanism offers one million (1%) tokens daily at a starting
-            price of $0.25 and a maximum price of $0.50. The sale has a minimum
+            price of ${basePrice.toFixed(2)} and a maximum price of ${(basePrice*2).toFixed(2)}. The sale has a minimum
             duration of 35 days to sell a total of 35 million tokens (35% of the
             total supply) but will continue until the allocated supply is
             exhausted.
@@ -444,7 +459,7 @@ const PurchaseBox = ({
               fontWeight: 400,
             }}
           >
-            Each day, the sale parameters will reset to the base price ($0.25)
+            Each day, the sale parameters will reset to the base price (${basePrice.toFixed(2)})
             and tokens offered (1m). Bidders all get the same price regardless
             of the number of tokens purchased, but the price updates after each
             sale based on how many tokens have been purchased.
