@@ -181,7 +181,7 @@ const PurchaseBox = ({
       setSalePeriodRemaining(formatSecondsTill(remaining))
     })
     }
-  }, [connected, currentAccount, chainId, rolodex, currentTime])
+  }, [connected, currentAccount, chainId, rolodex])
 
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
