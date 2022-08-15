@@ -1,4 +1,4 @@
-## Capped Collateral Tokens
+# Capped Collateral Tokens
 
 Interest Protocol prioritizes risk management. In an ideal world, the protocol would support a wide array of collateral assets for users to borrow against. Interest Protocol already has a flexible oracle system to support a wide variety of assets, voting for governance tokens, and a totally new liquidation system.
 
