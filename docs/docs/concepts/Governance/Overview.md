@@ -51,6 +51,15 @@ In order to initiate an Emergency Proposal, a proposer must have (or have been d
 
 In order for an Emergency Proposal to be successful, it must have more Yes votes than No, and meet a quorum of 50% of IPT supply.
 
+## Optimistic Proposals
+
+A whitelisted address, as designated by governance or the whitelist guardian (currently unlisted) can propose without voting power, and doesn’t require affirmative approval by IPT voters. Instead, if votes in opposition to the proposal exceed the optimistic quorum, the proposal will fail.
+
+In addition to the optimistic quorum parameter, we have included a configurable optimistic voting delay. The delay, often referred to as the review period, is the time between a proposal’s creation and voting. Generally, we believe that the review period for optimistic proposals should be longer than the standard review period, but the standard voting period and timelock are sufficient. The proposer, once whitelisted, can make proposals without voting power, and the community doesn’t need to mobilize IPT votes, except in the event of opposition.
+
+Optimistic governance privileges are ideal for frequent proposers who are making uncontroversial proposals. IPT holders who don’t qualify for a regular proposal but are regularly making improvements to the protocol or parameter adjustments would be clear examples. In the event a controversial optimistic proposal is made, 2 million IPT opposing the proposal will successfully reject the proposal.
+
+Optimistic governance is currently implemented in our Governor Charlie contract, and GFX Labs’ governance address is a whitelisted proposer.
 
 ## Voting Parameters
 The following, parameters are governed by the token holders:

@@ -61,6 +61,15 @@ In order for an Emergency Proposal to be successful, it must have more Yes votes
 
 Emergency Proposals occur on [Tally](https://www.tally.xyz).
 
+### Optimistic Proposals
+Frequent proposers making low-risk proposals may find Optimistic Proposals helpful in improving the protocol while not requiring the significant strategic lift of a standard proposal.
+ 
+Before making an Optimistic Proposal, the proposer must be whitelisted/approved by governance to become an optimistic proposer. In addition to providing an address to be whitelisted, the proposal must provide an expiration time. Proposers have an expiry, so the protocol has an automatic method to delist old pariticpants. 
+ 
+Optimistic Proposals have the same voting period and timelock period as a standard governance proposal but have their configurable review period and negative quorum threshold.
+ 
+Note: a proposal may not be both Optimistic and an Emergency. 
+
 ## Info
 More information on governance available [here](../../../concepts/Governance/Overview).
 
