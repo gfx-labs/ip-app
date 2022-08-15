@@ -170,20 +170,26 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    if (rolodex && dataBlock) {
-      getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
-        setBasePrice(res)
-      })
-    }
-  }, [])
-  useEffect(() => {
-    if (rolodex && dataBlock) {
-      getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
-        let remaining = res.toNumber() - new Date().valueOf() / 1000
-        setSalePeriodRemaining(formatSecondsTill(remaining))
-      })
-    }
-  }, [connected, currentAccount, chainId, rolodex, currentTime])
+    getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
+      let remaining = res.toNumber() - new Date().valueOf() / 1000
+      setSalePeriodRemaining(formatSecondsTill(remaining))
+    })
+
+    getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+      setBasePrice(res)
+    })
+
+    getAmountIPTForSale(signerOrProvider!).then((res) => {
+      let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
+      setIptSold(sold)
+      let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
+      setIptForSale(max - sold)
+    })
+
+    getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+      setSalePrice(res.toNumber() / 1e6)
+    })
+  }, [chainId, rolodex, dataBlock, loadmsg])
 
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
@@ -199,21 +205,6 @@ const PurchaseBox = ({
         })
     }
   }, [rolodex, dataBlock, chainId, amountToCommit])
-
-  useEffect(() => {
-    if (rolodex && dataBlock) {
-      getAmountIPTForSale(signerOrProvider!).then((res) => {
-        let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
-        setIptSold(sold)
-        let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
-        setIptForSale(max - sold)
-      })
-
-      getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
-        setSalePrice(res.toNumber() / 1e6)
-      })
-    }
-  }, [rolodex, dataBlock])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -439,11 +430,12 @@ const PurchaseBox = ({
               fontWeight: 400,
             }}
           >
-            The new mechanism offers one million (1%) tokens daily at a starting
-            price of ${basePrice.toFixed(2)} and a maximum price of $
+            The new mechanism offers one million (1%) tokens per period at a
+            starting price of ${basePrice.toFixed(2)} and a maximum price of $
             {(basePrice * 2).toFixed(2)}. The sale has a minimum duration of 35
-            days to sell a total of 35 million tokens (35% of the total supply)
-            but will continue until the allocated supply is exhausted.
+            periods, a total of 32 days, to sell 35 million tokens (35% of the
+            total supply) but will continue until the allocated supply is
+            exhausted.
           </Typography>
           <br />
           <Typography
@@ -456,11 +448,27 @@ const PurchaseBox = ({
               fontWeight: 400,
             }}
           >
-            Each day, the sale parameters will reset to the base price ($
-            {basePrice.toFixed(2)}) and tokens offered (1m). Bidders all get the
-            same price regardless of the number of tokens purchased, but the
-            price updates after each sale based on how many tokens have been
+            Each period, the sale parameters will reset to the base price ($
+            {basePrice.toFixed(2)}) and tokens offered (1m). The purchaser gets
+            the same price regardless of the number of tokens purchased, but the
+            price updates after each sale based on the number of total tokens
             purchased.
+          </Typography>
+          <br />
+          <Typography
+            variant="body3"
+            sx={{
+              mb: 2,
+              position: 'relative',
+              display: 'block',
+              lineHeight: 1.25,
+              fontWeight: 400,
+            }}
+          >
+            Rather than doing a traditional 24 hours per period, we've chosen 22
+            hours. By selecting 22 hours, the start time will progressively
+            change by two hours to make the sale more accessible across all time
+            zones.
           </Typography>
         </Box>
 
