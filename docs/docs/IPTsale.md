@@ -1,69 +1,39 @@
 # IPT Sale
 
-**Note:** IPT sale has been deferred to July.
-
-GFX Labs will start the sale of Interest Protocol Tokens (IPT) on June 13th in tandem with the launch of the protocol. The sale will last until June 19th. This post introduces both IPT and Governor Charlie, along with how the sale of IPT will take place.
+GFX Labs will start the sale of Interest Protocol Tokens (IPT) on August 15th. The sale will last until the allocated IPT for public distribution has been distributed. This post introduces both IPT and Governor Charlie, along with how the sale of IPT will take place.
 
 ## IPT and Governor Charlie
 
 IPT holders collectively control the entire protocol and its revenues through the governance process. Because Interest Protocol (IP)'s contracts designate the core governance contract as their owner, IPT holders can propose and vote on changes to IP such as: adding new collateral assets, changing the parameters of existing collateral assets, updating the interest rate curve, and adjusting oracle contract combinations. They can also modify the governance and USDi contracts themselves to add additional features or update voting parameters. IPT holders also control how protocol fees are accrued and used. In short, IPT enables its holder to manage the entire protocol and its periphery contracts.
 
-IP’s governance contract — aptly named Governor Charlie — is an extension of Compound’s Governor Bravo. Charlie inherits all the functionalities of Bravo but merges the governor and timelock contracts. In addition, Charlie introduces a special process for emergency proposals: IPT holders can make changes to the protocol contract on a faster timeline, albeit with a higher quorum threshold.
+IP’s governance contract — aptly named Governor Charlie — is an extension of Compound’s Governor Bravo. Charlie inherits all the functionalities of Bravo but merges the governor and timelock contracts. In addition, Charlie introduces two new proposal types: emergency proposals and optimistic proposals. Emergency proposals are so IPT holders can make changes to the protocol contract on a faster timeline, albeit with a higher quorum threshold. Optimistic proposals will automatically pass and only require a low negative quorum to fail. 
 
 ## IPT Sale
 
-We designed the sale to incentivize meaningful community participation from the outset. Instead of an airdrop, we chose a targeted approach: historical governance participants and users of existing DeFi protocols will have priority. We believe that quality participation from a broad base of engaged contributors is the best defense against centralization. Those active contributors, rather than VCs, should thus have first access to IPT.
-
+We designed the sale to incentivize meaningful community participation from the outset. Instead of an airdrop, we chose to offer a small portion of IPT for sale daily for an extended period. By spreading out the sale period, the protocol can mature and garner more exposure to maximally distribute ownership of the protocol.
+ 
 The GFX team will only retain a minority interest in the protocol. After the sale, GFX efforts will not be necessary for IP to function properly, and IPT holders will assume control of the protocol. GFX will continue to be involved in IP, but as community members with the same powers in governance as any token holder.
  
 Below is the initial distribution of IPT total supply:
 ![IPTdistribution](./IPTdistribution.png)
+ 
+ 
+GFX has allocated 35,000,000 IPT (35% of the total token supply) to the token sale. Each IPT will sell for between 0.25 and 0.50 USDC, depending on demand. The exact price calculations are described below.
+ 
+The new mechanism offers one million (1%) tokens per period at a starting price of $0.25 and a maximum price of $0.50. The sale has a minimum duration of 35 periods, a total of 32 days, to sell 35 million tokens (35% of the total supply) but will continue until the allocated supply is exhausted.
+ 
+Each period, the sale parameters will reset to the base price ($0.25) and tokens offered (1m). The purchaser gets the same price regardless of the number of tokens purchased, but the price updates after each sale based on the number of total tokens purchased.
+ 
+For example, at the beginning of a new day, a bidder could pay $250k (USDC) and receive 1m IPT; however, if the bidder instead paid $50k and received 200k IPT, then the next price would be $0.30. The next price is calculated by (tokens purchased / maximum offered)*(ceiling price - floor price) + floor price. Adjusting the price after a purchase encourages bidders to purchase while the remaining daily supply is high.
+ 
+While the minimum duration of the sale is 35 days, which assumes maximum constant participation, we’re targeting closer to 2-3 months to complete the sale. By stretching out the sale over an extended period of time, the platform has more time to mature. From the distribution, during the sale, and thereafter the protocol is controlled by IPT holders.
+ 
+GFX Labs will retain the right to change the maximum number of tokens offered, the duration of each period, the floor price, and the ceiling price. Since the IPT token will be in circulation outside our sale contract, the secondary market may independently develop. To reduce the arbitrage opportunity for MEV bots, we may increase the minimum price to align closer with the secondary market and favor people over bots.
+ 
+Rather than doing a traditional 24 hours per period, we've chosen 22 hours. By selecting 22 hours, the start time will progressively change by two hours to make the sale more accessible across all time zones. 
 
-
-GFX has allocated 35,000,000 IPT (35% of the total token supply) to the token sale. Each IPT will sell for between 0.25 and 2.00 USDC, depending on demand. The exact price calculations are described below.
-
-There will be three successive waves of eligible IPT buyers: governance participants in major DAOs, DeFi users, and the general public. GFX has compiled a public whitelist of addresses that qualify for the first and second waves. Anyone can purchase in the third wave.
-
-Once the sale starts, eligible addresses can participate by committing USDC to the sales contract. There is a global cap of 70,000,000 USDC. This is the maximum amount of USDC that can be committed to the sales contract. If the global cap is reached during the course of the sale, the contract will no longer accept USDC commitments, even from whitelisted addresses that have not yet participated.
-
-## Timing (all times in Central Daylight Time)
-
-* Wave 1: Starts at noon on Monday, June 13th, and ends at noon on Sunday, June 19th.
-* Wave 2: Starts at noon on Wednesday, June 15th, and ends at noon on Sunday, June 19th. 
-* Wave 3: Starts at noon on Friday, June 17th, and ends at noon on Sunday, June 19th. 
-* IPT purchasers can claim their IPT starting at noon on Sunday, June 19th.
-
-## Wave Eligibility
-
-The Wave 1 whitelist consists of historical voters on MakerDao, Compound, Aave, Uniswap, dYdX, Balancer (snapshot), Fei (onchain & snapshot), and Curve (non-gauge). The preliminary number of eligible Wave 1 participants is 8,654. Each address can commit up to an individual cap of 1,000,000 USDC.
-
-The Wave 1 whitelist will be updated to also include early community members - details will be announced in the coming days. Join our Discord for more information.
-
-The Wave 2 whitelist consists of historical users of MakerDao, Compound, and Aave. In the preliminary whitelist, the total number of eligible participants is 54,231. Each address can commit up to an individual cap of 500,000 USDC.
-
-Wave 3 has no whitelist and no individual cap; anyone can participate. 
-
-Note that the sum of individual caps in Wave 1 or Wave 2 is substantially larger than the total number of tokens offered. This decision was based on the assumption that not all whitelisted addresses would participate.
-
-## Rule Details
-* No address has been whitelisted for both Wave 1 and Wave 2. Any address that qualifies for both whitelists has only been whitelisted for Wave 1.
-* During each wave, an address may commit USDC to the Wave contract subject to the following constraints:
-    * Each address may commit up to its individual cap. They may commit multiple times over the course of the sale, as long as their total commitment remains below their cap.
-    * The total amount of USDC committed to the contract cannot exceed the global cap of 70,000,000 USDC. Once the global cap is reached, the contract will no longer accept USDC commitments.
-* Commitment is final. Once committed, USDC cannot be withdrawn.
-* USDC committed to the contract are sent to GFX Labs.
-* After the sale ends, each participating address can claim its share of IPT tokens. Suppose X USDC has been committed during the sale. The amount of IPT tokens claimable by an address that has committed y USDC is determined as follows:
-    * If X is less than 8,750,000 USDC, then the address receives 4y IPT. The price of IPT is 0.25 USDC.
-    * If X is greater than 8,750,000, then the address receives (35,000,000/X)y IPT. The price of IPT is X/35,000,000.
-    * All participants pay the same price. Since the global cap is 70,000,000 USDC, the maximum price that participants can pay is 2 USDC per IPT.
-
-## Check Whitelist
-
-We have compiled a preliminary whitelist for Wave 1 and Wave 2. To check if your address has been included in the first two waves, please visit: https://interestprotocol.io/#/whitelist. If your whitelisted address is a smart contract that doesn’t have the functionality to participate, send an email to whitelist@interestprotocol.io with the whitelisted address, the EOA controlling the smart contract, and any necessary information to prove their on-chain ownership of the account by Friday, June 10th, 2022.
-
-## Disclaimer
-
+## Participate
+ 
+To participate, visit the [sale page](https://interestprotocol.io/#/sale). Review the User Agreement and [Token Sale Contract](https://etherscan.io/address/0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d#code). Purchasers need to set an allowance for their USDC to the sale contract. All purchases are immediately deliverable. 
+ 
 This page is for general information purposes only. It should not be relied upon for accounting, legal, or tax advice.
-
-
-
