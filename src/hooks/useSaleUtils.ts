@@ -34,7 +34,6 @@ export const getAmountIPTForSale = async (signer: sop) => {
 
   const maxQuantity = await getSlowRollContract(signer)._maxQuantity()
 
-  console.log(maxQuantity, soldQuantity)
   return { maxQuantity, soldQuantity }
 }
 
