@@ -45,20 +45,20 @@ const PurchasePage: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [scrollTop])
 
-  if (1 == 0) {
-    return (
-      <div style={{ minHeight: '80vh' }}>
-        <meta
-          http-equiv="refresh"
-          content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
-        />
-        <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
-          please click here if you are not redirected
-        </a>
-      </div>
-    )
-  }
-  return (
+//if (1 == 0) {
+//  return (
+//    <div style={{ minHeight: '80vh' }}>
+//      <meta
+//        http-equiv="refresh"
+//        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
+//      />
+//      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
+//        please click here if you are not redirected
+//      </a>
+//    </div>
+//  )
+//}
+ return (
     <AppLayout>
       <Box sx={{ py: 5 }}>
         <Box
