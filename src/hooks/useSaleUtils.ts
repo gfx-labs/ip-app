@@ -16,25 +16,9 @@ export const useCommitUSDC = async (
   return getSlowRollContract(signer).getPoints(amount)
 }
 
-export const useClaimIPT = async (signer: JsonRpcSigner, wave: number) => {
-  return getSlowRollContract(signer).redeem(wave)
-}
 
 export const getWaveDuration = async (signer: JsonRpcSigner) => {
   return await getSlowRollContract(signer)._waveDuration()
-}
-
-export const getAccountRedeemedCurrentWave = async (
-  signer: JsonRpcSigner,
-  currentAccount: string,
-  wave: number
-) => {
-  const claimInfo = await getSlowRollContract(signer)._data(
-    wave,
-    currentAccount
-  )
-
-  return claimInfo
 }
 
 export const getAmountIPTForSale = async (signer: JsonRpcSigner) => {
