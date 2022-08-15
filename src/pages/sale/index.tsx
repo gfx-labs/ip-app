@@ -47,22 +47,24 @@ const PurchasePage: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [scrollTop])
 
-//if (1 == 0) {
-//  return (
-//    <div style={{ minHeight: '80vh' }}>
-//      <meta
-//        http-equiv="refresh"
-//        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
-//      />
-//      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
-//        please click here if you are not redirected
-//      </a>
-//    </div>
-//  )
-//}
- return (
+  //if (1 == 0) {
+  //  return (
+  //    <div style={{ minHeight: '80vh' }}>
+  //      <meta
+  //        http-equiv="refresh"
+  //        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
+  //      />
+  //      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
+  //        please click here if you are not redirected
+  //      </a>
+  //    </div>
+  //  )
+  //}
+  return (
     <AppLayout>
-      <Box sx={{ py: 5 }}>
+      <Box
+        sx={{ py: 5, minHeight: '70vh', display: 'flex', alignItems: 'center' }}
+      >
         <Box
           sx={{
             marginX: 'auto',
@@ -167,19 +169,19 @@ const PurchaseBox = ({
     setAmountToCommit(secVal)
   }, [isIPTValue])
 
-  useEffect(()=>{
-    if(rolodex && dataBlock){
-    getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
-      setBasePrice(res)
-    })
-    }
-  },[])
   useEffect(() => {
-    if(rolodex && dataBlock){
-    getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
-      let remaining = (res.toNumber() - ((new Date()).valueOf()/1000))
-      setSalePeriodRemaining(formatSecondsTill(remaining))
-    })
+    if (rolodex && dataBlock) {
+      getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+        setBasePrice(res)
+      })
+    }
+  }, [])
+  useEffect(() => {
+    if (rolodex && dataBlock) {
+      getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
+        let remaining = res.toNumber() - new Date().valueOf() / 1000
+        setSalePeriodRemaining(formatSecondsTill(remaining))
+      })
     }
   }, [connected, currentAccount, chainId, rolodex, currentTime])
 
@@ -199,7 +201,7 @@ const PurchaseBox = ({
   }, [rolodex, dataBlock, chainId, amountToCommit])
 
   useEffect(() => {
-    if(rolodex && dataBlock){
+    if (rolodex && dataBlock) {
       getAmountIPTForSale(signerOrProvider!).then((res) => {
         let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
         setIptSold(sold)
@@ -280,7 +282,7 @@ const PurchaseBox = ({
           <Box display="flex" alignItems="center">
             <Box
               component="img"
-              src="images/ipt_white.svg"
+              src={`images/ipt_${isLight ? 'blue' : 'white'}.svg`}
               width={32}
               height={32}
               mr={2}
@@ -318,25 +320,20 @@ const PurchaseBox = ({
                 {iptForSale.toLocaleString()}
               </Typography>
             </Box>
-            {connected && currentAccount && (
-              <Box display="flex">
-                <Typography
-                  variant="body3"
-                  fontWeight={400}
-                  color="#A3A9BA"
-                  mr={1}
-                >
-                  Sale Price:
-                </Typography>
-                <Typography
-                  variant="body3"
-                  fontWeight={400}
-                  color="primary.dark"
-                >
-                  ${salePrice}
-                </Typography>
-              </Box>
-            )}
+
+            <Box display="flex">
+              <Typography
+                variant="body3"
+                fontWeight={400}
+                color="#A3A9BA"
+                mr={1}
+              >
+                Sale Price:
+              </Typography>
+              <Typography variant="body3" fontWeight={400} color="primary.dark">
+                ${salePrice}
+              </Typography>
+            </Box>
           </Box>
           <Box display="flex">
             <Typography variant="body3" fontWeight={400} color="#A3A9BA" mr={1}>
@@ -397,7 +394,7 @@ const PurchaseBox = ({
           <Button
             href="./book/docs/IPTsale/index.html"
             target="_blank"
-            sx={{ width: 'fit-content', left: -8 }}
+            sx={{ width: 'fit-content', left: { xs: 0, lg: -8 } }}
           >
             Token Sale Rules{' '}
             <Box
@@ -415,7 +412,7 @@ const PurchaseBox = ({
           <Button
             target="_blank"
             href="https://etherscan.io/address/0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d"
-            sx={{ width: 'fit-content', right: -8 }}
+            sx={{ width: 'fit-content', right: { xs: 0, lg: -8 } }}
           >
             View Sales Contract{' '}
             <Box
@@ -443,10 +440,10 @@ const PurchaseBox = ({
             }}
           >
             The new mechanism offers one million (1%) tokens daily at a starting
-            price of ${basePrice.toFixed(2)} and a maximum price of ${(basePrice*2).toFixed(2)}. The sale has a minimum
-            duration of 35 days to sell a total of 35 million tokens (35% of the
-            total supply) but will continue until the allocated supply is
-            exhausted.
+            price of ${basePrice.toFixed(2)} and a maximum price of $
+            {(basePrice * 2).toFixed(2)}. The sale has a minimum duration of 35
+            days to sell a total of 35 million tokens (35% of the total supply)
+            but will continue until the allocated supply is exhausted.
           </Typography>
           <br />
           <Typography
@@ -459,10 +456,11 @@ const PurchaseBox = ({
               fontWeight: 400,
             }}
           >
-            Each day, the sale parameters will reset to the base price (${basePrice.toFixed(2)})
-            and tokens offered (1m). Bidders all get the same price regardless
-            of the number of tokens purchased, but the price updates after each
-            sale based on how many tokens have been purchased.
+            Each day, the sale parameters will reset to the base price ($
+            {basePrice.toFixed(2)}) and tokens offered (1m). Bidders all get the
+            same price regardless of the number of tokens purchased, but the
+            price updates after each sale based on how many tokens have been
+            purchased.
           </Typography>
         </Box>
 
