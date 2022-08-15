@@ -112,7 +112,7 @@ const PurchaseBox = ({
 }) => {
   const isLight = useLight()
   const [amountToCommit, setAmountToCommit] = useState('')
-  const [isIPTValue, setIsIPTValue] = useState(true)
+  const [isIPTValue, setIsIPTValue] = useState(false)
   const [focus, setFocus] = useState(false)
   const toggle = () => setFocus(!focus)
   const rolodex = useRolodexContext()
@@ -125,7 +125,6 @@ const PurchaseBox = ({
     signerOrProvider,
   } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
-  const currentTime = useCurrentTime()
   const [iptForSale, setIptForSale] = useState(0)
   const [iptSold, setIptSold] = useState(0)
 
@@ -190,20 +189,30 @@ const PurchaseBox = ({
 
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
-      rolodex
-        .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
-        .then((initialApproval) => {
-          const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
+      const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
 
-          const formattedUSDCAmount = BN(usdcAmount).mul(1e6)
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true)
-          } else {
-            setNeedAllowance(false)
-          }
-        })
+      checkUSDCAllowance(currentAccount, SLOWROLL_ADDRESS, usdcAmount).then(
+        (needsAllowance) => setNeedAllowance(needsAllowance)
+      )
     }
-  }, [rolodex, dataBlock, chainId, amountToCommit])
+  }, [rolodex, amountToCommit])
+
+  const checkUSDCAllowance = async (
+    owner: string,
+    spender: string,
+    usdcAmount: string
+  ): Promise<boolean> => {
+    if (rolodex) {
+      setLoading(true)
+      const initialApproval = await rolodex.USDC!.allowance(owner, spender)
+
+      const formattedUSDCAmount = BN(usdcAmount).mul(1e6)
+      setLoading(false)
+      return initialApproval.lt(formattedUSDCAmount)
+    }
+    setLoading(false)
+    return true
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -230,7 +239,9 @@ const PurchaseBox = ({
         setLoadmsg(locale('TransactionPending'))
         await approve?.wait()
 
-        setNeedAllowance(false)
+        checkUSDCAllowance(currentAccount, SLOWROLL_ADDRESS, usdcAmount).then(
+          (needsAllowance) => setNeedAllowance(needsAllowance)
+        )
       } catch (e) {
         console.log(e)
       }
@@ -264,6 +275,7 @@ const PurchaseBox = ({
         updateTransactionState(error)
       }
       setLoading(false)
+      setLoadmsg('')
     }
   }
 
@@ -344,6 +356,7 @@ const PurchaseBox = ({
                 sx={{
                   minWidth: 'auto',
                   borderRadius: '50%',
+
                   width: 30,
                   height: 30,
                   paddingY: 0,
