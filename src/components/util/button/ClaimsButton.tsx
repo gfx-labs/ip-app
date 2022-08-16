@@ -33,6 +33,7 @@ export const ClaimsButton = () => {
       variant="cta"
       sx={{
         width: '50%',
+        maxWidth: 150,
         backgroundColor: isLight
           ? formatColor(blue.blue9)
           : formatColor(blue.blue13),
@@ -47,7 +48,7 @@ export const ClaimsButton = () => {
       }}
     >
       <ClaimIcon islight={isLight.toString()} sx={{ width: 18, mr: 1 }} />
-      <Typography variant="label" whiteSpace="nowrap">
+      <Typography variant="label2" whiteSpace="nowrap">
         {formattedAmount.toLocaleString()} IPT
       </Typography>
     </Button>
