@@ -85,7 +85,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           ? formatColor(neutral.gray5)
           : formatColor(neutral.gray4),
         borderRadius: 4,
-        padding: 4,
+        padding: 2,
         paddingBottom: 0,
         [theme.breakpoints.down('lg')]: {},
         ...props.sx,
@@ -99,7 +99,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           alignItems: 'center',
         }}
       >
-        <Box>
+        <Box display="flex" alignItems="center">
           <Box
             component="img"
             width={40}
@@ -113,14 +113,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         </Box>
         <Typography variant="subtitle3" color="text.primary">
           {tokenValue}
-        </Typography>
-
-        <Typography variant="subtitle3" color="text.primary">
-          {vaultBalance}
-        </Typography>
-
-        <Typography variant="label2" color="text.secondary">
-          {tokenAmount} {tokenName}
         </Typography>
 
         <ToolTip
@@ -145,6 +137,14 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           `}
           text_variant="label2"
         />
+
+        <Typography variant="subtitle3" color="text.primary">
+          {vaultBalance}
+        </Typography>
+
+        <Typography variant="label2" color="text.secondary">
+          {tokenAmount} {tokenName}
+        </Typography>
 
         <Box
           sx={{

@@ -29,7 +29,7 @@ export const ModalInputContainer = (props: ModalInputContainerProps) => {
           ? `1px solid ${formatColor(blue.blue1)}`
           : isLight
           ? `1px solid ${formatColor(blue.blue11)}`
-          : `1px solid transparent`,
+          : `1px solid ${formatColor(neutral.gray4)}`,
         outline: focus ? `1px solid ${formatColor(blue.blue1)}` : 'none',
         '&:hover': {
           backgroundColor: isLight
