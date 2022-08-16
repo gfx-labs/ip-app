@@ -123,7 +123,6 @@ const PurchaseBox = ({
     signerOrProvider,
   } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
-  const currentTime = useCurrentTime()
   const [iptForSale, setIptForSale] = useState(0)
   const [iptSold, setIptSold] = useState(0)
 
@@ -174,39 +173,49 @@ const PurchaseBox = ({
     })
     }
   },[])
+
+
+  useEffect(() => {
+    if (rolodex && amountToCommit && rolodex.USDC) {
+      rolodex
+      .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
+      .then((initialApproval) => {
+        const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
+        if (initialApproval.lt(formattedUSDCAmount)) {
+          setNeedAllowance(true)
+        } else {
+          setNeedAllowance(false)
+        }
+      })
+    }
+  }, [rolodex, dataBlock, chainId, amountToCommit])
   useEffect(() => {
     if(rolodex && dataBlock){
     getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
       let remaining = (res.toNumber() - ((new Date()).valueOf()/1000))
-      setSalePeriodRemaining(formatSecondsTill(remaining))
+      if(remaining <= 0) {
+        setSalePeriodRemaining("Now!")
+      }else {
+        setSalePeriodRemaining(formatSecondsTill(remaining))
+      }
     })
     }
   }, [connected, currentAccount, chainId, rolodex])
 
   useEffect(() => {
-    if (rolodex && amountToCommit && rolodex.USDC) {
-      rolodex
-        .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
-        .then((initialApproval) => {
-          const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true)
-          } else {
-            setNeedAllowance(false)
-          }
-        })
-    }
-  }, [rolodex, dataBlock, chainId, amountToCommit])
-
-  useEffect(() => {
     if(rolodex && dataBlock){
+      if(salePeriodRemaining == "Now!") {
+        setSalePrice(basePrice)
+        setIptSold(0)
+        setIptForSale(1000000)
+        return
+      }
       getAmountIPTForSale(signerOrProvider!).then((res) => {
         let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
         setIptSold(sold)
         let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
         setIptForSale(max - sold)
       })
-
       getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
         setSalePrice(res.toNumber() / 1e6)
       })

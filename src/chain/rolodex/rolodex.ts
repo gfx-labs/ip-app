@@ -86,7 +86,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
       rolo.Curve = CurveMaster__factory.connect(rolo.addressCurve!, provider!)
     }
   } catch (e) {
-    throw new Error('Error creating rolodex')
+    throw new Error(`Error creating rolodex: ${e}`)
   }
   return rolo
 }

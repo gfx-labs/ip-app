@@ -181,8 +181,9 @@ export const Web3ContextProvider = ({
         getGasPrice(tempSignerOrProvider!).then((gas) => {
           setGasPrice(Number(gas))
         })
-
-        setDataBlock(n)
+        if(n > dataBlock) {
+          setDataBlock(n)
+        }
       })
       return () => {
         console.log('stopped auto refresh of blockNumber for', provider)
