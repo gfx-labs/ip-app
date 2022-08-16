@@ -19,9 +19,7 @@ export const ModalInputContainer = (props: ModalInputContainerProps) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: isLight
-          ? formatColor(neutral.gray5)
-          : formatColor(neutral.gray7),
+        backgroundColor: isLight ? formatColor(neutral.gray5) : '#1C1d21',
         paddingTop: 1,
         paddingBottom: 0,
         paddingX: 2,

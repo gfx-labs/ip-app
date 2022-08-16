@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography, Button, InputAdornment } from '@mui/material'
 import { FormEvent, useEffect, useState } from 'react'
 import { AppLayout } from '../../components/partials/app-layout'
 import { useLight } from '../../hooks/useLight'
@@ -47,22 +47,23 @@ const PurchasePage: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [scrollTop])
 
-//if (1 == 0) {
-//  return (
-//    <div style={{ minHeight: '80vh' }}>
-//      <meta
-//        http-equiv="refresh"
-//        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
-//      />
-//      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
-//        please click here if you are not redirected
-//      </a>
-//    </div>
-//  )
-//}
- return (
+  //if (1 == 0) {
+  //  return (
+  //    <div style={{ minHeight: '80vh' }}>
+  //      <meta
+  //        http-equiv="refresh"
+  //        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
+  //      />.round  //      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
+  //        please click here if you are not redirected
+  //      </a>
+  //    </div>
+  //  )
+  //}
+  return (
     <AppLayout>
-      <Box sx={{ py: 5 }}>
+      <Box
+        sx={{ py: 5, minHeight: '70vh', display: 'flex', alignItems: 'center' }}
+      >
         <Box
           sx={{
             marginX: 'auto',
@@ -100,7 +101,7 @@ const formatSecondsTill = (n: number) => {
     return Math.floor(n / 60) + ' minute(s)'
   }
 
-  return Math.floor(n / (60 * 60)) + ' hour(s)'
+  return Math.round(n / (60 * 60)) + ' hour(s)'
 }
 
 const PurchaseBox = ({
@@ -110,7 +111,7 @@ const PurchaseBox = ({
 }) => {
   const isLight = useLight()
   const [amountToCommit, setAmountToCommit] = useState('')
-  const [isIPTValue, setIsIPTValue] = useState(true)
+  const [isIPTValue, setIsIPTValue] = useState(false)
   const [focus, setFocus] = useState(false)
   const toggle = () => setFocus(!focus)
   const rolodex = useRolodexContext()
@@ -134,21 +135,16 @@ const PurchaseBox = ({
   const [needAllowance, setNeedAllowance] = useState(true)
 
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<string>('')
-  const [secondaryValue, setSecondaryValue] = useState<string>('USDC')
+  const [secondaryValue, setSecondaryValue] = useState<string>('')
+  const [secondaryValueUnit, setSecondaryValueUnit] = useState<string>('USDC')
 
   useEffect(() => {
-    if (isIPTValue) {
-      if (amountToCommit === '') {
-        setSecondaryValue('USDC')
-      } else {
-        setSecondaryValue((Number(amountToCommit) * salePrice).toString())
-      }
+    if (amountToCommit === '') {
+      setSecondaryValue('')
+    } else if (isIPTValue) {
+      setSecondaryValue((Number(amountToCommit) * salePrice).toString())
     } else {
-      if (amountToCommit === '') {
-        setSecondaryValue('IPT')
-      } else {
-        setSecondaryValue((Number(amountToCommit) / salePrice).toString())
-      }
+      setSecondaryValue((Number(amountToCommit) / salePrice).toString())
     }
   }, [amountToCommit])
 
@@ -164,16 +160,54 @@ const PurchaseBox = ({
     }
 
     setAmountToCommit(secVal)
+
+    isIPTValue ? setSecondaryValueUnit('USDC') : setSecondaryValueUnit('IPT')
   }, [isIPTValue])
 
-  useEffect(()=>{
+  useEffect(() => {
     if(rolodex && dataBlock){
-    getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
-      setBasePrice(res)
-    })
+      getEndTime(signerOrProvider as JsonRpcSigner).then((x) => {
+        let remaining = (x.toNumber() - ((new Date()).valueOf()/1000))
+        let isNewDay = false
+        let srt = ""
+        if(remaining <= 0) {
+          isNewDay = true
+          srt = formatSecondsTill(remaining+22*60*60)
+        }else {
+          srt = formatSecondsTill(remaining)
+        }
+        setSalePeriodRemaining(srt)
+        if(isNewDay) {
+          setSalePrice(basePrice)
+          setIptSold(0)
+          setIptForSale(1000000)
+          return
+        }
+        getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+          setBasePrice(res)
+        })
+        getAmountIPTForSale(signerOrProvider!).then((res) => {
+          let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
+          setIptSold(sold)
+          let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
+          setIptForSale(max - sold)
+        })
+        getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+          setSalePrice(res.toNumber() / 1e6)
+        })
+      })
     }
-  },[])
+  }, [chainId, rolodex, dataBlock, loadmsg])
 
+  useEffect(() => {
+    if (rolodex && amountToCommit && rolodex.USDC) {
+      const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
+
+      checkUSDCAllowance(currentAccount, SLOWROLL_ADDRESS, usdcAmount).then(
+        (needsAllowance) => setNeedAllowance(needsAllowance)
+      )
+    }
+  }, [rolodex, amountToCommit])
 
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
@@ -189,38 +223,23 @@ const PurchaseBox = ({
       })
     }
   }, [rolodex, dataBlock, chainId, amountToCommit])
-  useEffect(() => {
-    if(rolodex && dataBlock){
-    getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
-      let remaining = (res.toNumber() - ((new Date()).valueOf()/1000))
-      if(remaining <= 0) {
-        setSalePeriodRemaining("Now!")
-      }else {
-        setSalePeriodRemaining(formatSecondsTill(remaining))
-      }
-    })
-    }
-  }, [connected, currentAccount, chainId, rolodex])
 
-  useEffect(() => {
-    if(rolodex && dataBlock){
-      if(salePeriodRemaining == "Now!") {
-        setSalePrice(basePrice)
-        setIptSold(0)
-        setIptForSale(1000000)
-        return
-      }
-      getAmountIPTForSale(signerOrProvider!).then((res) => {
-        let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
-        setIptSold(sold)
-        let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
-        setIptForSale(max - sold)
-      })
-      getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
-        setSalePrice(res.toNumber() / 1e6)
-      })
+  const checkUSDCAllowance = async (
+    owner: string,
+    spender: string,
+    usdcAmount: string
+  ): Promise<boolean> => {
+    if (rolodex) {
+      setLoading(true)
+      const initialApproval = await rolodex.USDC!.allowance(owner, spender)
+
+      const formattedUSDCAmount = BN(usdcAmount).mul(1e6)
+      setLoading(false)
+      return initialApproval.lt(formattedUSDCAmount)
     }
-  }, [rolodex, dataBlock])
+    setLoading(false)
+    return true
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -246,6 +265,10 @@ const PurchaseBox = ({
 
         setLoadmsg(locale('TransactionPending'))
         await approve?.wait()
+
+        checkUSDCAllowance(currentAccount, SLOWROLL_ADDRESS, usdcAmount).then(
+          (needsAllowance) => setNeedAllowance(needsAllowance)
+        )
       } catch (e) {
         console.log(e)
       }
@@ -279,6 +302,7 @@ const PurchaseBox = ({
         updateTransactionState(error)
       }
       setLoading(false)
+      setLoadmsg('')
     }
   }
 
@@ -289,7 +313,7 @@ const PurchaseBox = ({
           <Box display="flex" alignItems="center">
             <Box
               component="img"
-              src="images/ipt_white.svg"
+              src={`images/ipt_${isLight ? 'blue' : 'white'}.svg`}
               width={32}
               height={32}
               mr={2}
@@ -327,25 +351,20 @@ const PurchaseBox = ({
                 {iptForSale.toLocaleString()}
               </Typography>
             </Box>
-            {connected && currentAccount && (
-              <Box display="flex">
-                <Typography
-                  variant="body3"
-                  fontWeight={400}
-                  color="#A3A9BA"
-                  mr={1}
-                >
-                  Sale Price:
-                </Typography>
-                <Typography
-                  variant="body3"
-                  fontWeight={400}
-                  color="primary.dark"
-                >
-                  ${salePrice}
-                </Typography>
-              </Box>
-            )}
+
+            <Box display="flex">
+              <Typography
+                variant="body3"
+                fontWeight={400}
+                color="#A3A9BA"
+                mr={1}
+              >
+                Sale Price:
+              </Typography>
+              <Typography variant="body3" fontWeight={400} color="primary.dark">
+                ${salePrice}
+              </Typography>
+            </Box>
           </Box>
           <Box display="flex">
             <Typography variant="body3" fontWeight={400} color="#A3A9BA" mr={1}>
@@ -364,6 +383,7 @@ const PurchaseBox = ({
                 sx={{
                   minWidth: 'auto',
                   borderRadius: '50%',
+
                   width: 30,
                   height: 30,
                   paddingY: 0,
@@ -379,12 +399,20 @@ const PurchaseBox = ({
             <DecimalInput
               onFocus={toggle}
               onBlur={toggle}
-              placeholder={isIPTValue ? 'IPT Amount' : 'USDC Amount'}
               value={amountToCommit}
               onChange={setAmountToCommit}
+              startAdornment={
+                <InputAdornment position="start">
+                  <Typography variant="label">
+                    {isIPTValue ? 'IPT' : 'USDC'}
+                  </Typography>
+                </InputAdornment>
+              }
             />
 
-            <Typography>{secondaryValue}</Typography>
+            <Typography whiteSpace="nowrap" variant="label">
+              {secondaryValue} {secondaryValueUnit}
+            </Typography>
           </ModalInputContainer>
           <Box height={8} />
           <DisableableModalButton
@@ -406,7 +434,7 @@ const PurchaseBox = ({
           <Button
             href="./book/docs/IPTsale/index.html"
             target="_blank"
-            sx={{ width: 'fit-content', left: -8 }}
+            sx={{ width: 'fit-content', left: { xs: 0, lg: -8 } }}
           >
             Token Sale Rules{' '}
             <Box
@@ -424,7 +452,7 @@ const PurchaseBox = ({
           <Button
             target="_blank"
             href="https://etherscan.io/address/0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d"
-            sx={{ width: 'fit-content', right: -8 }}
+            sx={{ width: 'fit-content', right: { xs: 0, lg: -8 } }}
           >
             View Sales Contract{' '}
             <Box
@@ -451,9 +479,10 @@ const PurchaseBox = ({
               fontWeight: 400,
             }}
           >
-            The new mechanism offers one million (1%) tokens daily at a starting
-            price of ${basePrice.toFixed(2)} and a maximum price of ${(basePrice*2).toFixed(2)}. The sale has a minimum
-            duration of 35 days to sell a total of 35 million tokens (35% of the
+            The new mechanism offers one million (1%) tokens per period at a
+            starting price of ${basePrice.toFixed(2)} and a maximum price of $
+            {(basePrice * 2).toFixed(2)}. The sale has a minimum duration of 35
+            periods, a total of 32 days, to sell 35 million tokens (35% of the
             total supply) but will continue until the allocated supply is
             exhausted.
           </Typography>
@@ -468,10 +497,27 @@ const PurchaseBox = ({
               fontWeight: 400,
             }}
           >
-            Each day, the sale parameters will reset to the base price (${basePrice.toFixed(2)})
-            and tokens offered (1m). Bidders all get the same price regardless
-            of the number of tokens purchased, but the price updates after each
-            sale based on how many tokens have been purchased.
+            Each period, the sale parameters will reset to the base price ($
+            {basePrice.toFixed(2)}) and tokens offered (1m). The purchaser gets
+            the same price regardless of the number of tokens purchased, but the
+            price updates after each sale based on the number of total tokens
+            purchased.
+          </Typography>
+          <br />
+          <Typography
+            variant="body3"
+            sx={{
+              mb: 2,
+              position: 'relative',
+              display: 'block',
+              lineHeight: 1.25,
+              fontWeight: 400,
+            }}
+          >
+            Rather than doing a traditional 24 hours per period, we've chosen 22
+            hours. By selecting 22 hours, the start time will progressively
+            change by two hours to make the sale more accessible across all time
+            zones.
           </Typography>
         </Box>
 

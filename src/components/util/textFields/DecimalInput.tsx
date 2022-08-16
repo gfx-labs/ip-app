@@ -1,4 +1,5 @@
 import { TextField, InputAdornment } from '@mui/material'
+import { ReactElement, ReactNode } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 
@@ -22,6 +23,7 @@ interface DecimalInputProps {
   onBlur?: () => void
   isMoneyValue?: boolean
   useLargerFont?: boolean
+  startAdornment?: ReactNode
 }
 
 export const DecimalInput = (props: DecimalInputProps) => {
@@ -33,6 +35,7 @@ export const DecimalInput = (props: DecimalInputProps) => {
     onBlur,
     isMoneyValue = false,
     useLargerFont = false,
+    startAdornment,
   } = props
 
   const isLight = useLight()
@@ -48,7 +51,9 @@ export const DecimalInput = (props: DecimalInputProps) => {
         onChange(decimalEnforcer(e.target.value))
       }}
       InputProps={{
-        startAdornment: isMoneyValue ? (
+        startAdornment: startAdornment ? (
+          startAdornment
+        ) : isMoneyValue ? (
           <InputAdornment
             sx={{ marginBottom: { xs: 0, md: 0.5 } }}
             position="start"
