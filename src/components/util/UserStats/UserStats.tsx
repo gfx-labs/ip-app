@@ -128,11 +128,9 @@ export const UserStats = () => {
           marginBottom: 3,
         }}
       >
-        <ClaimsButton />
 
-        <Box display={{ xs: 'none', md: 'flex' }}>
-          {vaultID ? <StatsBodyTypography text={`Vault #${vaultID}`} /> : <></>}
-        </Box>
+          <ClaimsButton />
+
 
         <Box
           display="flex"
@@ -149,7 +147,7 @@ export const UserStats = () => {
                 it may not be recoverable.)
               </Typography>
             }
-            text={`Vault Address`}
+            text={`Vault #${vaultID}`}
             text_variant="label2"
           />
 
@@ -224,8 +222,8 @@ export const UserStats = () => {
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
-                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
-                  )}` + ''
+                  ((94017 * accountLiability) / totalBaseLiability) * 52.143
+                )}` + ''
                 : '0'
             }
           />
@@ -314,6 +312,7 @@ export const UserStats = () => {
       >
         {token_cards}
       </Box>
+
     </Box>
   )
 }
