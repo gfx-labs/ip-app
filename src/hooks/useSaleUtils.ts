@@ -1,6 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, BigNumberish } from 'ethers'
-import { WavePool__factory } from '../chain/contracts/factories/IPTsale/wavepool.sol'
 import { SlowRoll__factory } from '../chain/contracts/factories/IPTsale/slowroll.sol'
 
 export const SLOWROLL_ADDRESS = '0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d'
@@ -17,13 +16,12 @@ export const useCommitUSDC = async (
   return getSlowRollContract(signer).getPoints(amount)
 }
 
-
 export const getWaveDuration = async (signer: sop) => {
   return await getSlowRollContract(signer)._waveDuration()
 }
 
-export const getBasePrice = async (signer: sop):Promise<number> => {
-  return (await getSlowRollContract(signer)._startPrice()).toNumber()/(1000000)
+export const getBasePrice = async (signer: sop): Promise<number> => {
+  return (await getSlowRollContract(signer)._startPrice()).toNumber() / 1000000
 }
 export const getEndTime = async (signer: sop) => {
   return await getSlowRollContract(signer)._endTime()
