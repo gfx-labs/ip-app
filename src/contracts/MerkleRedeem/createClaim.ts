@@ -3,13 +3,14 @@ import { getMerkleProof } from './getMerkleProof'
 
 export interface Claim {
   week: number
-  balance: BigNumber
+  balance: string
   merkleProof: string[]
 }
 
 const createClaimOf = (account: string, claimStatus: boolean[]) => {
   // @ts-ignore
-  const claims: Claim[] = claimStatus.reduce((acc, claim, week) => {
+  const claims: Claim[] = claimStatus.reduce((acc, claim, index) => {
+    const week = index + 7
     if (claim) {
       return acc
     }
@@ -19,14 +20,13 @@ const createClaimOf = (account: string, claimStatus: boolean[]) => {
     if (!proofResult) {
       return acc
     }
-
-    return {
+    acc.push({
       week,
-      balance: utils.parseEther(
-        proofResult.minter.amount.toFixed(18).toString()
-      ),
-      proof: proofResult.proof,
-    }
+      balance: proofResult.minter.amount,
+      merkleProof: proofResult.proof,
+    })
+
+    return acc
   }, [] as Claim[])
 
   return claims

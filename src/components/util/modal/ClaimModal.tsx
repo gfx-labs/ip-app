@@ -13,6 +13,7 @@ import { useMerkleRedeemContext } from '../../libs/merkle-redeem-provider/Merkle
 import { BNtoHexNumber } from '../helpers/BNtoHex'
 import claimWeeks from '../../../contracts/MerkleRedeem/claimWeeks'
 import { TransactionReceipt } from '@ethersproject/providers'
+import { utils } from 'ethers'
 
 export const ClaimModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
@@ -23,7 +24,7 @@ export const ClaimModal = () => {
   const [formattedAmount, setFormattedAmount] = useState(0)
 
   useEffect(() => {
-    setFormattedAmount(BNtoHexNumber(claimAmount))
+    setFormattedAmount(Number(utils.formatEther(claimAmount)))
   }, [claimAmount])
 
   const handleClaimRequest = async () => {
@@ -74,7 +75,11 @@ export const ClaimModal = () => {
             Unclaimed Rewards
           </Typography>
           <Typography variant="h5" color="text.primary" mb={1}>
-            {formattedAmount.toLocaleString()}
+            {formattedAmount.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}{' '}
+            IPT
           </Typography>
         </Box>
       </Box>

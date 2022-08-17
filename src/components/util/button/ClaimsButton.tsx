@@ -10,6 +10,7 @@ import {
 import { BN } from '../../../easy/bn'
 import { useMerkleRedeemContext } from '../../libs/merkle-redeem-provider/MerkleRedeemProvider'
 import { BNtoHexNumber } from '../helpers/BNtoHex'
+import { utils } from 'ethers'
 
 export const ClaimsButton = () => {
   const { setType } = useModalContext()
@@ -24,7 +25,7 @@ export const ClaimsButton = () => {
   const [formattedAmount, setFormattedAmount] = useState(0)
 
   useEffect(() => {
-    setFormattedAmount(BNtoHexNumber(claimAmount))
+    setFormattedAmount(Number(utils.formatEther(claimAmount)))
   }, [claimAmount])
 
   return (
@@ -49,7 +50,11 @@ export const ClaimsButton = () => {
     >
       <ClaimIcon islight={isLight.toString()} sx={{ width: 18, mr: 1 }} />
       <Typography variant="label2" whiteSpace="nowrap">
-        {formattedAmount.toLocaleString()} IPT
+        {formattedAmount.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}{' '}
+        IPT
       </Typography>
     </Button>
   )

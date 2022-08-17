@@ -8,14 +8,19 @@ const claimWeeks = async (
   claims: Claim[],
   providerOrSigner: JsonRpcProvider | JsonRpcSigner
 ) => {
-  const merkleContract = MerkleRedeem__factory.connect(
-    MERKLE_REDEEM_ADDRESS,
-    providerOrSigner
-  )
+  try {
+    const merkleContract = MerkleRedeem__factory.connect(
+      MERKLE_REDEEM_ADDRESS,
+      providerOrSigner
+    )
 
-  const claimAttempt = await merkleContract.claimWeeks(address, claims)
+    const claimAttempt = await merkleContract.claimWeeks(address, claims)
 
-  return claimAttempt
+    return claimAttempt
+  } catch (err) {
+    console.error(err)
+    throw new Error('Error claiming weeks')
+  }
 }
 
 export default claimWeeks

@@ -24,7 +24,7 @@ export const MerkleRedeemContextProvider = ({
 }) => {
   const { currentAccount, signerOrProvider, chainId } = useWeb3Context()
   const [claimStatus, setClaimStatus] = useState([true])
-  const [claimAmount, setClaimAmount] = useState(BN(0))
+  const [claimAmount, setClaimAmount] = useState(BN('0'))
   const [claims, setClaims] = useState<Claim[]>([])
 
   useEffect(() => {
