@@ -1,4 +1,4 @@
-import week7 from './week7.json'
+import week7 from '../../../pages/whitelist/week7'
 
 const weeks = {
   7: week7,
