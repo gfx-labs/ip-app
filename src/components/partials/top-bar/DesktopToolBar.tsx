@@ -64,8 +64,6 @@ export const DesktopToolBar = () => {
         </Link>
       </Box>
 
-      <ClaimsButton />
-
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
         <SelectedChainButton />
         <ConnectWalletButton />

@@ -9,7 +9,12 @@ import {
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { ConnectWalletButton, CopyButton, InverseButton } from '../button'
+import {
+  ClaimsButton,
+  ConnectWalletButton,
+  CopyButton,
+  InverseButton,
+} from '../button'
 import { addressShortener, TitleText } from '../text'
 import { SingleStatCard } from './SingleStatCard'
 import { UserTokenCard } from './UserTokenCard'
@@ -117,13 +122,14 @@ export const UserStats = () => {
         sx={{
           display: 'flex',
           justifyContent: {
-            xs: 'flex-end',
-            md: 'space-between',
+            xs: 'space-between',
           },
           alignItems: 'center',
           marginBottom: 3,
         }}
       >
+        <ClaimsButton />
+
         <Box display={{ xs: 'none', md: 'flex' }}>
           {vaultID ? <StatsBodyTypography text={`Vault #${vaultID}`} /> : <></>}
         </Box>
