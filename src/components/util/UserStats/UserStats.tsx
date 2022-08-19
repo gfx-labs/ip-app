@@ -95,6 +95,7 @@ export const UserStats = () => {
             LTVPercent={val.token_LTV!.toLocaleString()}
             penaltyPercent={val.token_penalty!.toLocaleString()}
             canDelegate={val.can_delegate ? true : false}
+            isCapToken={val.capped_token}
           />
         )
       }
@@ -128,9 +129,7 @@ export const UserStats = () => {
           marginBottom: 3,
         }}
       >
-
-          <ClaimsButton />
-
+        <ClaimsButton />
 
         <Box
           display="flex"
@@ -222,8 +221,8 @@ export const UserStats = () => {
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
-                  ((94017 * accountLiability) / totalBaseLiability) * 52.143
-                )}` + ''
+                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
+                  )}` + ''
                 : '0'
             }
           />
@@ -312,7 +311,6 @@ export const UserStats = () => {
       >
         {token_cards}
       </Box>
-
     </Box>
   )
 }
