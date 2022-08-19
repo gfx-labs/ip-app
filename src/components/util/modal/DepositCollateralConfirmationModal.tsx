@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ModalType,
   useModalContext,
@@ -11,8 +11,20 @@ import { DisableableModalButton } from '../button/DisableableModalButton'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { locale } from '../../../locale'
-import { ContractReceipt } from 'ethers'
+import { ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
+import hasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
+import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
+import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
+import { JsonRpcSigner } from '@ethersproject/providers'
+import { ERC20Detailed__factory } from '../../../chain/contracts'
+
+const mintBeforeDeposit = async (
+  vaultID: string,
+  currentSigner: JsonRpcSigner
+) => {
+  await mintVotingVaultID(vaultID, currentSigner!)
+}
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -25,10 +37,14 @@ export const DepositCollateralConfirmationModal = () => {
     collateralDepositAmountMax,
     setCollateralDepositAmountMax,
   } = useModalContext()
-  const { provider, currentAccount } = useWeb3Context()
+  const { provider, currentAccount, currentSigner, dataBlock } =
+    useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const { vaultAddress } = useVaultDataContext()
+  const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
+
+  const { vaultAddress, vaultID } = useVaultDataContext()
+
   const handleDepositConfirmationRequest = async () => {
     const amount = collateralDepositAmountMax
       ? collateralToken.wallet_amount?.toString()
@@ -36,18 +52,53 @@ export const DepositCollateralConfirmationModal = () => {
 
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
-    try {
-      const attempt = await depositCollateral(
-        amount!,
-        collateralToken.address,
-        provider?.getSigner(currentAccount)!,
-        vaultAddress!
-      )
 
-      updateTransactionState(attempt)
+    try {
+      let attempt: ContractTransaction
+
+      if (collateralToken.capped_token) {
+        const hasVault = await hasVotingVault(vaultID!, currentSigner!)
+
+        if (!hasVault) {
+          await mintBeforeDeposit(vaultID!, currentSigner!)
+        }
+
+        const contract = await ERC20Detailed__factory.connect(
+          collateralToken.address,
+          currentSigner!
+        )
+
+        const decimals = await contract.decimals()
+
+        const txn = await contract.approve(
+          collateralToken.capped_address!,
+          utils.parseUnits(amount!, decimals)
+        )
+
+        setApprovalTxn(txn)
+
+        setLoadmsg(locale('TransactionPending'))
+        await txn?.wait()
+
+        attempt = await depositToVotingVault(
+          vaultID!,
+          currentSigner!,
+          collateralToken,
+          amount!
+        )
+      } else {
+        attempt = await depositCollateral(
+          amount!,
+          collateralToken.address,
+          provider?.getSigner(currentAccount)!,
+          vaultAddress!
+        )
+      }
+      console.log(attempt, 'THIS IS ATTEMPT')
+      updateTransactionState(attempt!)
 
       setLoadmsg(locale('TransactionPending'))
-      const receipt = await attempt.wait()
+      const receipt = await attempt!.wait()
 
       setCollateralDepositAmount('')
       setCollateralDepositAmountMax(false)

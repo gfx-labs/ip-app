@@ -12,7 +12,6 @@ const initMerkle = (week: number) => {
   const selectedWeek: { [address: string]: string } = weeks[week]
   const leafNodes = []
   for (let addr in selectedWeek) {
-  console.log(addr, selectedWeek[addr])
     leafNodes.push(
       solidityKeccak256(['address', 'uint256'], [addr, selectedWeek[addr]])
     )

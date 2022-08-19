@@ -1,5 +1,6 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Rolodex } from '../../../chain/rolodex/rolodex'
+import { Token } from '../../../chain/tokens'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import getDecimals from '../../../contracts/misc/getDecimals'
 import { BN } from '../../../easy/bn'
@@ -7,7 +8,7 @@ import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 
 export const getVaultTokenBalanceAndPrice = async (
   vault_address: string | undefined,
-  token_address: string,
+  token: Token,
   rolodex: Rolodex,
   signerOrProvider: JsonRpcProvider | JsonRpcSigner
 ): Promise<{
@@ -19,6 +20,11 @@ export const getVaultTokenBalanceAndPrice = async (
   let balance = 0
   let unformattedBalance = '0'
   const SOP = signerOrProvider ? signerOrProvider : rolodex.provider
+
+  const token_address =
+    token.capped_token && token.capped_address
+      ? token.capped_address
+      : token.address
 
   if (vault_address !== undefined) {
     const balanceOf = await getBalanceOf(vault_address, token_address, SOP)

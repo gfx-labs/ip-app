@@ -53,7 +53,7 @@ export const useWithdrawCollateral = async (
       ).estimateGas.withdrawErc20(collateral_address, formattedERC20Amount)
     )
       .mul(100)
-      .div(85)
+      .div(90)
     const transferAttempt = await Vault__factory.connect(
       vault_address,
       signer

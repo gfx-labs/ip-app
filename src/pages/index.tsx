@@ -31,7 +31,6 @@ const Dashboard = () => {
   const rolodex = useRolodexContext()
   const { setVaultID, setVaultAddress } = useVaultDataContext()
   const { isApp } = useAppGovernanceContext()
-
   useEffect(() => {
     if (currentAccount && rolodex) {
       fetchVaultOf(currentAccount, rolodex).then((res) => {

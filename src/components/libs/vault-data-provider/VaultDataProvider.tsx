@@ -102,7 +102,7 @@ export const VaultDataProvider = ({
         }
         let p2 = getVaultTokenBalanceAndPrice(
           vaultAddress,
-          token.address,
+          token,
           rolodex!,
           signerOrProvider!
         )
@@ -116,9 +116,7 @@ export const VaultDataProvider = ({
               )
             }
           })
-          .catch((e) => {
-            console.log('failed vault balance & price', e)
-          })
+          .catch((e) => {})
         px.push(p2)
         if (currentAccount && connected) {
           let p3 = getBalanceOf(

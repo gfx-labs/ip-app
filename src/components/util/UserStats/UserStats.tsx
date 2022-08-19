@@ -128,9 +128,7 @@ export const UserStats = () => {
           marginBottom: 3,
         }}
       >
-
-          <ClaimsButton />
-
+        <ClaimsButton />
 
         <Box
           display="flex"
@@ -222,8 +220,8 @@ export const UserStats = () => {
             text={
               totalBaseLiability !== null && accountLiability !== 0
                 ? `${Math.round(
-                  ((94017 * accountLiability) / totalBaseLiability) * 52.143
-                )}` + ''
+                    ((94017 * accountLiability) / totalBaseLiability) * 52.143
+                  )}` + ''
                 : '0'
             }
           />
@@ -312,7 +310,6 @@ export const UserStats = () => {
       >
         {token_cards}
       </Box>
-
     </Box>
   )
 }
