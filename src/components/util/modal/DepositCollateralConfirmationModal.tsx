@@ -18,6 +18,7 @@ import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
+import { Token } from '../../../chain/tokens'
 
 const mintBeforeDeposit = async (
   vaultID: string,
@@ -43,12 +44,39 @@ export const DepositCollateralConfirmationModal = () => {
   const [loadmsg, setLoadmsg] = useState('')
   const [modalTitle, setModalTitle] = useState('Confirm Deposit')
   const { vaultAddress, vaultID } = useVaultDataContext()
+  const [needAllowance, setNeedAllowance] = useState(true)
+  const [decimals, setDecimals] = useState(18)
+
+  const amount = collateralDepositAmountMax
+    ? collateralToken.wallet_amount?.toString()
+    : collateralDepositAmount
+
+  const contract = ERC20Detailed__factory.connect(
+    collateralToken.address,
+    currentSigner!
+  )
+
+  const needsAllowance = async (amount: string, token: Token) => {
+    const initialApproval = await contract.allowance(
+      currentAccount,
+      token.capped_address!
+    )
+    const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
+
+    return initialApproval.lt(formattedUSDCAmount)
+  }
+
+  useEffect(() => {
+    contract.decimals().then(setDecimals)
+  }, [])
+
+  useEffect(() => {
+    if (collateralToken.capped_address && amount) {
+      needsAllowance(amount!, collateralToken).then(setNeedAllowance)
+    }
+  }, [])
 
   const handleDepositConfirmationRequest = async () => {
-    const amount = collateralDepositAmountMax
-      ? collateralToken.wallet_amount?.toString()
-      : collateralDepositAmount
-
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
 
@@ -58,36 +86,34 @@ export const DepositCollateralConfirmationModal = () => {
       if (collateralToken.capped_token && collateralToken.capped_address) {
         const hasVault = await hasVotingVault(vaultID!, currentSigner!)
 
+        const na = await needsAllowance(amount!, collateralToken)
+
+        setNeedAllowance(na)
+
         if (!hasVault) {
           setModalTitle('Enabling Capped Tokens')
           await mintBeforeDeposit(vaultID!, currentSigner!)
+          setLoading(false)
+          setLoadmsg('')
+          setModalTitle('Confirm Deposit')
+
+          return
         }
 
-        setModalTitle('Confirm Deposit')
-
-        const contract = await ERC20Detailed__factory.connect(
-          collateralToken.address,
-          currentSigner!
-        )
-
-        const decimals = await contract.decimals()
-
-        const initialApproval = await contract.allowance(
-          currentAccount,
-          collateralToken.capped_address
-        )
-
-        const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
-
-        setLoadmsg(locale('TransactionPending'))
-
-        if (initialApproval.lt(formattedUSDCAmount)) {
+        if (na) {
           const txn = await contract.approve(
             collateralToken.capped_address!,
             utils.parseUnits(amount!, decimals)
           )
+          setLoadmsg(locale('TransactionPending'))
 
           await txn?.wait()
+
+          setLoading(false)
+          setLoadmsg('')
+          setNeedAllowance(false)
+
+          return
         }
 
         attempt = await depositToVotingVault(
@@ -177,7 +203,7 @@ export const DepositCollateralConfirmationModal = () => {
       </Box>
 
       <DisableableModalButton
-        text="Confirm Deposit"
+        text={needAllowance ? 'Set Allowance' : 'Confirm Deposit'}
         disabled={false}
         onClick={handleDepositConfirmationRequest}
         loading={loading}
