@@ -145,7 +145,7 @@ export const UserStats = () => {
                 it may not be recoverable.)
               </Typography>
             }
-            text={`Vault #${vaultID}`}
+            text={`Vault #${vaultID || ''}`}
             text_variant="label2"
           />
 

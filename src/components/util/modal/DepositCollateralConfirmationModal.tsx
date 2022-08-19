@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, Link as MuiLink, Button } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import { useState, useEffect } from 'react'
 import {
@@ -23,7 +23,7 @@ const mintBeforeDeposit = async (
   vaultID: string,
   currentSigner: JsonRpcSigner
 ) => {
-  await mintVotingVaultID(vaultID, currentSigner!)
+  return await mintVotingVaultID(vaultID, currentSigner!)
 }
 
 export const DepositCollateralConfirmationModal = () => {
@@ -41,8 +41,7 @@ export const DepositCollateralConfirmationModal = () => {
     useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
-
+  const [modalTitle, setModalTitle] = useState('Confirm Deposit')
   const { vaultAddress, vaultID } = useVaultDataContext()
 
   const handleDepositConfirmationRequest = async () => {
@@ -60,8 +59,11 @@ export const DepositCollateralConfirmationModal = () => {
         const hasVault = await hasVotingVault(vaultID!, currentSigner!)
 
         if (!hasVault) {
+          setModalTitle('Enabling Capped Tokens')
           await mintBeforeDeposit(vaultID!, currentSigner!)
         }
+
+        setModalTitle('Confirm Deposit')
 
         const contract = await ERC20Detailed__factory.connect(
           collateralToken.address,
@@ -84,8 +86,6 @@ export const DepositCollateralConfirmationModal = () => {
             collateralToken.capped_address!,
             utils.parseUnits(amount!, decimals)
           )
-
-          setApprovalTxn(txn)
 
           await txn?.wait()
         }
@@ -138,7 +138,7 @@ export const DepositCollateralConfirmationModal = () => {
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
       >
-        Confirm Deposit
+        {modalTitle}
       </Typography>
       <Box
         sx={{
