@@ -43,7 +43,8 @@ export const DepositCollateralConfirmationModal = () => {
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const [modalTitle, setModalTitle] = useState('Confirm Deposit')
-  const { vaultAddress, vaultID } = useVaultDataContext()
+  const { vaultAddress, vaultID, hasVotingVault, setHasVotingVault } =
+    useVaultDataContext()
   const [needAllowance, setNeedAllowance] = useState(true)
   const [decimals, setDecimals] = useState(18)
 
@@ -67,14 +68,14 @@ export const DepositCollateralConfirmationModal = () => {
   }
 
   useEffect(() => {
-    contract.decimals().then(setDecimals)
+    contract.decimals().then((decimals) => setDecimals(decimals))
   }, [])
 
   useEffect(() => {
     if (collateralToken.capped_address && amount) {
       needsAllowance(amount!, collateralToken).then(setNeedAllowance)
     }
-  }, [])
+  }, [amount])
 
   const handleDepositConfirmationRequest = async () => {
     setLoading(true)
@@ -84,21 +85,20 @@ export const DepositCollateralConfirmationModal = () => {
       let attempt: ContractTransaction
 
       if (collateralToken.capped_token && collateralToken.capped_address) {
-        const hasVault = await hasVotingVault(vaultID!, currentSigner!)
-
-        const na = await needsAllowance(amount!, collateralToken)
-
-        setNeedAllowance(na)
-
-        if (!hasVault) {
+        if (!hasVotingVault) {
           setModalTitle('Enabling Capped Tokens')
+
           await mintBeforeDeposit(vaultID!, currentSigner!)
           setLoading(false)
           setLoadmsg('')
           setModalTitle('Confirm Deposit')
-
+          setHasVotingVault(true)
           return
         }
+
+        const na = await needsAllowance(amount!, collateralToken)
+        console.log(na, 'THIS IS NA')
+        setNeedAllowance(na)
 
         if (na) {
           const txn = await contract.approve(
@@ -203,7 +203,9 @@ export const DepositCollateralConfirmationModal = () => {
       </Box>
 
       <DisableableModalButton
-        text={needAllowance ? 'Set Allowance' : 'Confirm Deposit'}
+        text={
+          needAllowance && hasVotingVault ? 'Set Allowance' : 'Confirm Deposit'
+        }
         disabled={false}
         onClick={handleDepositConfirmationRequest}
         loading={loading}
