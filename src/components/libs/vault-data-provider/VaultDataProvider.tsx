@@ -91,7 +91,10 @@ export const VaultDataProvider = ({
         setTotalBaseLiability(bl)
       })
       for (const [key, token] of Object.entries(tokens!)) {
-        let p1 = getVaultTokenMetadata(token.address, rolodex!)
+        const tokenAddress = token.capped_address
+          ? token.capped_address
+          : token.address
+        let p1 = getVaultTokenMetadata(tokenAddress, rolodex!)
           .then((res) => {
             token.token_penalty = res.penalty
             token.token_LTV = res.ltv
