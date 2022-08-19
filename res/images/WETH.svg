@@ -1,14 +1,10 @@
-<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="40" cy="40" r="40" fill="url(#paint0_linear_392_157)"/>
-<path d="M39.9937 33.3519V14L23 40.6517L39.9937 33.3519Z" fill="white"/>
-<path d="M39.9937 50.1476V33.3519L23 40.6517L39.9937 50.1476ZM39.9937 33.3519L56.9906 40.6517L39.9937 14V33.3519Z" fill="#C7C8C9"/>
-<path d="M39.9935 33.3521V50.1477L56.9904 40.6518L39.9935 33.3521Z" fill="#D5D5D5"/>
-<path d="M39.9937 53.1887L23 43.6987L39.9937 66.333V53.1887Z" fill="white"/>
-<path d="M56.9998 43.6987L39.9935 53.1887V66.333L56.9998 43.6987Z" fill="#DFDFDF"/>
-<defs>
-<linearGradient id="paint0_linear_392_157" x1="73" y1="61.5" x2="23.5" y2="5.5" gradientUnits="userSpaceOnUse">
-<stop stop-color="#314273"/>
-<stop offset="1" stop-color="#CDE1FF"/>
-</linearGradient>
-</defs>
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path
+    d="M50 100C77.6141 100 100 77.6141 100 50C100 22.3859 77.6141 0 50 0C22.3859 0 0 22.3855 0 50C0 77.6141 22.3855 100 50 100Z"
+    fill="white" />
+  <path d="M51 65.425V81L72 53.875L51 65.425ZM71.2367 48.7992L51 18V40.3994L71.2367 48.7992Z" fill="#3B3735" />
+  <path d="M51 42V61L71 50.3668L51 42V42Z" fill="#1F1D19" />
+  <path d="M29 49L49 18V40.5455L29 49V49Z" fill="#959190" />
+  <path d="M49 42V61L29 50.3668L49 42V42Z" fill="#403C3A" />
+  <path d="M49 65.4968V81L28 54L49 65.4968Z" fill="#959190" />
 </svg>

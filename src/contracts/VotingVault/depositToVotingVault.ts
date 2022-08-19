@@ -26,11 +26,12 @@ const depositToVotingVault = async (
     //   )
     // )
     //   .mul(100)
-    //   .div(85)
+    //   .div(80)
 
     const depositCapped = await cappedTokenContract.deposit(
       formattedAmount,
       Number(id)
+      // { gasLimit: ge }
     )
 
     return depositCapped
