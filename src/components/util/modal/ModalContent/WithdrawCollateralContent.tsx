@@ -43,18 +43,17 @@ export const WithdrawCollateralContent = () => {
       setCollateralWithdrawAmount(
         (Number(inputAmount) / collateralToken.value).toString()
       )
-
-      setNewBorrowingPower(newBorrowingPower)
     } else {
       newBorrowingPower =
         borrowingPower -
         Number(inputAmount) * collateralToken.value * (ltv / 100)
       setCollateralWithdrawAmount(inputAmount)
-      setNewBorrowingPower(newBorrowingPower)
     }
 
-    if (collateralWithdrawAmountMax) {
+    if (newBorrowingPower <= 0) {
       setNewBorrowingPower(0)
+    } else {
+      setNewBorrowingPower(newBorrowingPower)
     }
 
     if (
