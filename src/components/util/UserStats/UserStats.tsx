@@ -95,7 +95,6 @@ export const UserStats = () => {
             LTVPercent={val.token_LTV!.toLocaleString()}
             penaltyPercent={val.token_penalty!.toLocaleString()}
             canDelegate={val.can_delegate ? true : false}
-            isCapToken={val.capped_token}
           />
         )
       }
