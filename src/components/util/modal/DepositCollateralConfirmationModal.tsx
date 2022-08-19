@@ -56,7 +56,7 @@ export const DepositCollateralConfirmationModal = () => {
     try {
       let attempt: ContractTransaction
 
-      if (collateralToken.capped_token) {
+      if (collateralToken.capped_token && collateralToken.capped_address) {
         const hasVault = await hasVotingVault(vaultID!, currentSigner!)
 
         if (!hasVault) {
@@ -70,15 +70,25 @@ export const DepositCollateralConfirmationModal = () => {
 
         const decimals = await contract.decimals()
 
-        const txn = await contract.approve(
-          collateralToken.capped_address!,
-          utils.parseUnits(amount!, decimals)
+        const initialApproval = await contract.allowance(
+          currentAccount,
+          collateralToken.capped_address
         )
 
-        setApprovalTxn(txn)
+        const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
 
         setLoadmsg(locale('TransactionPending'))
-        await txn?.wait()
+
+        if (initialApproval.lt(formattedUSDCAmount)) {
+          const txn = await contract.approve(
+            collateralToken.capped_address!,
+            utils.parseUnits(amount!, decimals)
+          )
+
+          setApprovalTxn(txn)
+
+          await txn?.wait()
+        }
 
         attempt = await depositToVotingVault(
           vaultID!,
@@ -94,7 +104,6 @@ export const DepositCollateralConfirmationModal = () => {
           vaultAddress!
         )
       }
-      console.log(attempt, 'THIS IS ATTEMPT')
       updateTransactionState(attempt!)
 
       setLoadmsg(locale('TransactionPending'))
