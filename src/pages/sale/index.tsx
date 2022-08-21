@@ -165,19 +165,19 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    if(rolodex && dataBlock){
+    if (rolodex && dataBlock) {
       getEndTime(signerOrProvider as JsonRpcSigner).then((x) => {
-        let remaining = (x.toNumber() - ((new Date()).valueOf()/1000))
+        let remaining = x.toNumber() - new Date().valueOf() / 1000
         let isNewDay = false
-        let srt = ""
-        if(remaining <= 0) {
+        let srt = ''
+        if (remaining <= 0) {
           isNewDay = true
-          srt = formatSecondsTill(remaining+22*60*60)
-        }else {
+          srt = formatSecondsTill(22 * 60 * 60)
+        } else {
           srt = formatSecondsTill(remaining)
         }
         setSalePeriodRemaining(srt)
-        if(isNewDay) {
+        if (isNewDay) {
           setSalePrice(basePrice)
           setIptSold(0)
           setIptForSale(1000000)
@@ -212,15 +212,15 @@ const PurchaseBox = ({
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
       rolodex
-      .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
-      .then((initialApproval) => {
-        const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
-        if (initialApproval.lt(formattedUSDCAmount)) {
-          setNeedAllowance(true)
-        } else {
-          setNeedAllowance(false)
-        }
-      })
+        .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
+        .then((initialApproval) => {
+          const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
+          if (initialApproval.lt(formattedUSDCAmount)) {
+            setNeedAllowance(true)
+          } else {
+            setNeedAllowance(false)
+          }
+        })
     }
   }, [rolodex, dataBlock, chainId, amountToCommit])
 
