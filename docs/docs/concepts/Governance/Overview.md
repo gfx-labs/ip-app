@@ -65,15 +65,20 @@ Optimistic governance is currently implemented in our Governor Charlie contract,
 The following, parameters are governed by the token holders:
 
 ### Governance Parameters
-* proposalThreshold: 10000000
+* proposalThreshold: 1,000,000
 
 #### Proposal Parameters
 * votingDelay (blocks): 13140
 * votingPeriod (blocks): 40320
 * proposalTimelockDelay (seconds): 172800
-* quorumVotes: 10000000
+* quorumVotes: 10,000,000
 
 #### Emergency Parameters
 * emergencyVotingPeriod (blocks): 6570
 * emergencyVotingTimelockDelay (seconds): 43200
-* emergencyQuorumVotes: 50000000
+* emergencyQuorumVotes: 50,000,000
+
+### Optimistic Parameters
+* optimisticVotingDelay (blocks): 25600  
+* optimisticQuorum: 2,000,000
+* whitelist guardian: not set (can be set by governance)
