@@ -14,11 +14,23 @@ DeFi is best when open collaborations with other protocols are possible. With IP
 
 ## Implementation
 
-Capped Collateral Tokens have two key contracts. The Voting Vault Controller (VVC) & the Capped Token. The VVC mints voting vaults and handles the registration of underlying assets. To register a new Capped Token, the Capped Token contract must already be deployed along with the requisite oracle contracts. A governance proposal can call the registerUnderlying() on the VVC and then call the registerERC20() on the main vault controller. 
+Capped Collateral Tokens have two key contracts. The Voting Vault Controller (VVC) & the Capped Token. The VVC mints a sub-vault (voting vault) and handles the registration of underlying assets. To register a new Capped Token, the Capped Token contract must already be deployed along with the requisite oracle contracts. A governance proposal can call the registerUnderlying() on the VVC and then call the registerERC20() on the main vault controller. 
  
 Deposits of capped tokens are made at the capped token contract, and withdrawals occur at the vault. Any capped token withdrawal from a vault will deliver the underlying token, including for liquidations. Capped tokens are only accessible in Intrest Protocol.
  
 Governance can manage the loan to token value and liquidation penalty like any collateral asset. The only additional parameter to manage is the cap. The cap is set by governance on the Capped Token contract. The cap may be lowered below the current total supply to limit additional deposits without immediately affecting existing deposits. 
+
+## Usage
+On the Interest Protocol site, the user experience for Capped Collaterals is almost identical to regular collaterals. The exception is that Capped Collaterals require a new sub-vault (to support the additional functionality) and approval by the vault owner for the capped token contract to transfer the underlying tokens from their wallet. Every Interest Protocol user must have a vault. Users depositing Capped Collaterals, such as MATIC, also need to create a sub-vault (voting vault) that manages the underlying assets of the capped tokens. Deposits of underlying assets are held in the sub-vault (voting vault) and can be withdrawn like any other collateral asset in the protocol. The Capped Collateral system is compatible with governance tokens. Governance tokens in the sub-vault (voting vault) can delegate their voting power to any address.
+
+An example of Capped Collaterals with MATIC (assuming you already have a vault)
+
+1. Have a balance of MATIC in your wallet. 
+2. Deposit MATIC
+3. Assuming it is your first time using a Capped Collateral, the interface will prompt you to approve a transaction to create the sub-vault. Note: this is a one-time cost for all Capped Collaterals.
+4. Once the sub-vault is created, you'll be prompted to approve the cMATIC contract to transfer your MATIC from your wallet. Note: this is a one-time cost for MATIC. 
+5. After the approval, you'll be able to deposit MATIC. The MATIC will transfer from your wallet to your sub-vault. cMATIC (capped MATIC) will be minted and transferred to your main vault. Once the cMATIC makes it to your main vault, your vault borrowing power will increase. 
+6. You can withdraw MATIC at any time. One transaction will burn the cMATIC in the sub-vault and return MATIC to the vault owner.
 
 ## Links
 [Voting Vault Controller](https://etherscan.io/address/0xae49ddca05fe891c6a5492ed52d739ec1328cbe2#readProxyContract)
