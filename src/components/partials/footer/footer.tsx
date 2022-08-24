@@ -8,7 +8,6 @@ const footerLinks = [
     links: [
       { label: 'Whitepaper', href: '#/whitepaper' },
       { label: 'Docs & Guides', href: '#/docs' },
-      { label: 'Whitelist', href: '#/whitelist' },
       { label: 'Sale', href: '#/sale' },
       {
         label: 'Audit',
