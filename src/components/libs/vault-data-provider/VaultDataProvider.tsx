@@ -20,6 +20,7 @@ import { BN } from '../../../easy/bn'
 import { BigNumber } from 'ethers'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
+import checkHasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -36,6 +37,9 @@ export type VaultDataContextType = {
   totalBaseLiability: number
   tokens: CollateralTokens | undefined
   setTokens: Dispatch<SetStateAction<CollateralTokens | undefined>>
+
+  hasVotingVault: boolean
+  setHasVotingVault: Dispatch<SetStateAction<boolean>>
 }
 
 export const VaultDataContext = React.createContext({} as VaultDataContextType)
@@ -59,6 +63,7 @@ export const VaultDataProvider = ({
   const [tokens, setTokens] =
     useState<VaultDataContextType['tokens']>(undefined)
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
+  const [hasVotingVault, setHasVotingVault] = useState(false)
 
   const update = async () => {
     const px: Array<Promise<any>> = []
@@ -91,7 +96,10 @@ export const VaultDataProvider = ({
         setTotalBaseLiability(bl)
       })
       for (const [key, token] of Object.entries(tokens!)) {
-        let p1 = getVaultTokenMetadata(token.address, rolodex!)
+        const tokenAddress = token.capped_address
+          ? token.capped_address
+          : token.address
+        let p1 = getVaultTokenMetadata(tokenAddress, rolodex!)
           .then((res) => {
             token.token_penalty = res.penalty
             token.token_LTV = res.ltv
@@ -102,7 +110,7 @@ export const VaultDataProvider = ({
         }
         let p2 = getVaultTokenBalanceAndPrice(
           vaultAddress,
-          token.address,
+          token,
           rolodex!,
           signerOrProvider!
         )
@@ -116,9 +124,7 @@ export const VaultDataProvider = ({
               )
             }
           })
-          .catch((e) => {
-            console.log('failed vault balance & price', e)
-          })
+          .catch((e) => {})
         px.push(p2)
         if (currentAccount && connected) {
           let p3 = getBalanceOf(
@@ -169,6 +175,8 @@ export const VaultDataProvider = ({
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = BigNumber.from(vaultIDs[0]._hex).toString()
           setVaultID(id)
+
+          checkHasVotingVault(id, signerOrProvider!).then(setHasVotingVault)
         } else {
           setVaultID(null)
         }
@@ -206,6 +214,8 @@ export const VaultDataProvider = ({
         setTokens,
         accountLiability,
         totalBaseLiability,
+        hasVotingVault,
+        setHasVotingVault,
       }}
     >
       {children}

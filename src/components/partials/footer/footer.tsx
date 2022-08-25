@@ -8,11 +8,14 @@ const footerLinks = [
     links: [
       { label: 'Whitepaper', href: '#/whitepaper' },
       { label: 'Docs & Guides', href: '#/docs' },
-      { label: 'Whitelist', href: '#/whitelist' },
       { label: 'Sale', href: '#/sale' },
       {
         label: 'Audit',
         href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
+      },
+      {
+        label: 'Forum',
+        href: 'https://forums.interestprotocol.io/',
       },
     ],
   },

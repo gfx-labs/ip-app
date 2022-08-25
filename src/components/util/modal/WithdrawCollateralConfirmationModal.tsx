@@ -42,7 +42,9 @@ export const WithdrawCollateralConfirmationModal = () => {
     try {
       const attempt = await useWithdrawCollateral(
         amount!,
-        collateralToken.address,
+        collateralToken.capped_address
+          ? collateralToken.capped_address
+          : collateralToken.address,
         vaultAddress!,
         provider?.getSigner(currentAccount)!
       )
