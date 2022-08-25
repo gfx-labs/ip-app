@@ -2,41 +2,70 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
+	"strings"
 	"time"
 
-	"github.com/valyala/fasthttp"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 func main() {
-	fs := &fasthttp.FS{
-		// Path to directory to serve.
-		Root:          "dist",
-		IndexNames:    []string{"index.html"},
-		CacheDuration: 24 * time.Hour,
-		// Enable transparent compression to save network traffic.
-		Compress: true,
-	}
-	if os.Getenv("ROOTDIR") != "" {
-		fs.Root = os.Getenv("ROOTDIR")
-	}
-
-	if len(os.Args) > 1 {
-		if os.Args[1] != "" {
-			fs.Root = os.Args[1]
-		}
-	}
-
-	// Create request handler for serving static files.
-	h := fs.NewRequestHandler()
-
+	root := "dist"
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
+	if os.Getenv("ROOTDIR") != "" {
+		root = os.Getenv("ROOTDIR")
+	}
+	if len(os.Args) > 1 {
+		if os.Args[1] != "" {
+			root = os.Args[1]
+		}
+	}
+	filesDir := http.Dir(root)
+
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+
+	FileServer(r, "/", filesDir)
+
+	s := http.Server{
+		Addr:    ":" + port,
+		Handler: r,
+	}
+	s.SetKeepAlivesEnabled(false)
+	s.ReadHeaderTimeout = 250 * time.Millisecond
+	s.MaxHeaderBytes = 8192
+
 	log.Println("starting to listen on " + port)
 	// Start the server.
-	if err := fasthttp.ListenAndServe(":"+port, h); err != nil {
+	if err := s.ListenAndServe(); err != nil {
 		log.Fatalf("error in ListenAndServe: %v", err)
 	}
+}
+
+// FileServer conveniently sets up a http.FileServer handler to serve
+// static files from a http.FileSystem.
+func FileServer(r chi.Router, path string, root http.FileSystem) {
+	if strings.ContainsAny(path, "{}*") {
+		panic("FileServer does not permit any URL parameters.")
+	}
+
+	if path != "/" && path[len(path)-1] != '/' {
+		r.Get(path, http.RedirectHandler(path+"/", 301).ServeHTTP)
+		path += "/"
+	}
+	path += "*"
+
+	r.Get(path, func(w http.ResponseWriter, r *http.Request) {
+
+		rctx := chi.RouteContext(r.Context())
+		pathPrefix := strings.TrimSuffix(rctx.RoutePattern(), "/*")
+		fs := http.StripPrefix(pathPrefix, http.FileServer(root))
+		fs.ServeHTTP(w, r)
+	})
 }
