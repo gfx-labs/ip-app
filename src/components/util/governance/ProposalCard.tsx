@@ -93,6 +93,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const expandCard = () => {
     setIsExpanded(!isExpanded)
+    console.log(body)
     setExpandedContent(body)
   }
 
@@ -160,11 +161,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 votingPower={votingPower}
                 time={timeLeft}
               />
-              <ReactMarkdown
-                children={expandedContent}
-                components={markdownComponentConfig}
-                remarkPlugins={[remarkGfm]}
-              />
+              <Box fontWeight={400}>
+                <ReactMarkdown
+                  children={expandedContent}
+                  components={markdownComponentConfig}
+                  remarkPlugins={[remarkGfm]}
+                />
+              </Box>
               <VoteButton
                 id={id}
                 status={status}
@@ -205,14 +208,29 @@ const markdownComponentConfig: Partial<
         style={{
           borderRadius: 10,
           backgroundColor: '#fcfcfc',
+
           color: '#303030',
           border: '1px solid black',
           borderCollapse: 'collapse',
+          padding: 8,
           ...style,
         }}
       >
         {children}
       </table>
+    )
+  },
+  th: ({ node, style, children, ...props }) => {
+    return (
+      <th
+        style={{
+          border: '1px solid black',
+          padding: 12,
+          ...style,
+        }}
+      >
+        {children}
+      </th>
     )
   },
   td: ({ node, style, children, isHeader, ...props }) => {
@@ -221,9 +239,8 @@ const markdownComponentConfig: Partial<
         <th
           style={{
             border: '1px solid black',
-            padding: '2px',
-            paddingRight: '4px',
-            paddingLeft: '4px',
+            padding: '12px',
+
             ...style,
           }}
         >
@@ -235,9 +252,9 @@ const markdownComponentConfig: Partial<
       <td
         style={{
           border: '1px solid black',
-          padding: '2px',
-          paddingRight: '4px',
-          paddingLeft: '4px',
+          padding: 12,
+          paddingTop: 8,
+          paddingBottom: 8,
           ...style,
         }}
       >
@@ -251,6 +268,7 @@ const markdownComponentConfig: Partial<
         {...props}
         style={{
           border: '1px solid black',
+          padding: 8,
           ...style,
         }}
       >

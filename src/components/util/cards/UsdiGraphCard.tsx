@@ -194,10 +194,8 @@ export const UsdiGraphCard = () => {
       sx={{
         paddingX: { xs: 3, md: 6 },
         paddingY: { xs: 6, md: 6 },
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.gradient1 : gradient.gradient2
-        )})`,
-        borderRadius: { xs: 5, md: 17 },
+        backgroundColor: 'smallCard.background',
+        borderRadius: 2.5,
         display: 'flex',
       }}
     >

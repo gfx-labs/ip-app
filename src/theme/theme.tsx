@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
     label: React.CSSProperties
     label2: React.CSSProperties
     label2_medium: React.CSSProperties
+    label2_light: React.CSSProperties
   }
 
   interface BreakpointOverrides {
@@ -50,6 +51,7 @@ declare module '@mui/material/Typography' {
     label: true
     label2: true
     label2_medium: true
+    label2_light: React.CSSProperties
   }
 }
 
@@ -275,6 +277,16 @@ theme.typography.label2 = {
 
 theme.typography.label2_medium = {
   fontWeight: 500,
+  fontSize: pxToRem(14),
+  lineHeight: fzTolineHeight(16),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(16),
+  },
+}
+
+theme.typography.label2_light = {
+  fontWeight: 400,
   fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(16),
   [theme.breakpoints.down('md')]: {

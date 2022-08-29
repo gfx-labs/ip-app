@@ -295,13 +295,37 @@ export const UserStats = () => {
       </Box> */}
       <Box
         sx={{
-          mt: { xs: 2, md: 3 },
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr 1fr 1fr',
+            lg: '2fr 1fr 2fr 1fr 1fr 1fr',
+          },
+          mb: 0,
+          columnGap: 2,
+          color: 'text.secondary',
+          px: 2,
+        }}
+      >
+        <Typography variant="label2">Assets</Typography>
+        <Typography display={{ xs: 'none', lg: 'block' }} variant="label2">
+          Price
+        </Typography>
+        <Typography display={{ xs: 'none', lg: 'block' }} variant="label2">
+          LTV and Penalty
+        </Typography>
+        <Typography variant="label2">Balance</Typography>
+        <Box></Box>
+        <Box display={{ xs: 'none', lg: 'block' }}></Box>
+      </Box>
+      <Box
+        sx={{
+          mt: { xs: 2 },
           display: 'grid',
           gridTemplateColumns: {
             sm: '1fr',
           },
           columnGap: 3,
-          rowGap: 3,
+          rowGap: 2,
         }}
       >
         {token_cards}

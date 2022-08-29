@@ -96,7 +96,10 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr 2fr 1fr 1fr 1fr',
+          gridTemplateColumns: {
+            xs: '1fr 1fr 1fr',
+            lg: '2fr 1fr 2fr 1fr 1fr 1fr',
+          },
           mb: 0,
           columnGap: 2,
           alignItems: 'center',
@@ -105,13 +108,17 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <Box display="flex" alignItems="center" columnGap={2}>
           <Box
             component="img"
-            width={40}
-            height={40}
+            width={{ xs: 24, lg: 40 }}
+            height={{ xs: 24, lg: 40 }}
             src={`images/${image.src}.svg`}
             alt={image.alt}
           ></Box>
           <Box display="flex" flexDirection="column">
-            <Typography variant="body3" color="text.primary">
+            <Typography
+              variant="body3"
+              color="text.primary"
+              display={{ xs: 'none', lg: 'block' }}
+            >
               {tokenName}
             </Typography>
             <Typography
@@ -123,11 +130,15 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             </Typography>
           </Box>
         </Box>
-        <Typography variant="body2" color="text.primary">
+        <Typography
+          display={{ xs: 'none', lg: 'block' }}
+          variant="body2"
+          color="text.primary"
+        >
           {tokenValue}
         </Typography>
 
-        <Box display="flex">
+        <Box display={{ xs: 'none', lg: 'flex' }}>
           <ToolTip
             content={
               <Typography variant="body3">
@@ -156,16 +167,14 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             {vaultBalance}
           </Typography>
 
-          <Typography variant="label2" color="text.secondary">
+          <Typography variant="label2_light" color="text.secondary">
             {tokenAmount} {tokenTicker}
           </Typography>
         </Box>
 
         <Box
           sx={{
-            display: 'grid',
-            justifyContent: 'space-between',
-            gridTemplateColumns: '1fr 1fr',
+            display: 'flex',
             columnGap: 1.5,
           }}
         >
@@ -174,34 +183,44 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             onClick={() => handleDWClick(ModalType.DepositCollateral)}
             sx={{
               borderRadius: 20,
-              width: 40,
-              height: 40,
-              minWidth: 40,
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
             }}
           >
-            +
+            <Box
+              component="img"
+              src={`images/plus.svg`}
+              width="12px"
+              height="12px"
+            ></Box>
           </Button>
           <Button
             variant="contained"
             onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
             sx={{
               borderRadius: 20,
-              width: 40,
-              height: 40,
-              minWidth: 40,
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
             }}
           >
-            -
+            <Box
+              component="img"
+              src={`images/minus.svg`}
+              width="12px"
+              height="12px"
+            ></Box>
           </Button>
         </Box>
 
-        <Box>
+        <Box display={{ xs: 'none', lg: 'block' }}>
           {canDelegate && (
             <Button
               variant="text"
               sx={{
                 width: 'fit-content',
-                color: formatColor(blue.blue1),
+                color: 'text.primary',
                 '&:hover': {
                   backgroundColor: 'transparent',
                   color: formatColor(neutral.gray3),
@@ -220,7 +239,11 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
                   width: 12,
                   height: 10,
                 }}
-                strokecolor={formatColor(blue.blue1)}
+                strokecolor={
+                  isLight
+                    ? formatColor(neutral.black)
+                    : formatColor(neutral.white)
+                }
               />{' '}
             </Button>
           )}
