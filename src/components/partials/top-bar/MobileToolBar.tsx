@@ -199,11 +199,11 @@ export const MobileToolBar = () => {
           />
         </Box>
 
-        {/* <BaseSwitch
+        <BaseSwitch
           option1="App"
           option2="Governance"
           onOptionChange={setIsApp}
-        /> */}
+        />
       </SwipeableDrawer>
     </Toolbar>
   )
