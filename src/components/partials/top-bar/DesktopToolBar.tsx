@@ -22,7 +22,7 @@ export const DesktopToolBar = () => {
 
   const { setIsApp } = useAppGovernanceContext()
   return (
-    <Toolbar sx={{ padding: 0 }}>
+    <Toolbar sx={{ padding: 0 }} disableGutters>
       <Link href="#/landing" role="heading" aria-level={1}>
         <Box
           component="img"

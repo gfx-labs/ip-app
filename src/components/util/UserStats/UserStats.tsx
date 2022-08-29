@@ -84,7 +84,8 @@ export const UserStats = () => {
         el.push(
           <UserTokenCard
             key={key}
-            tokenName={val.ticker}
+            tokenName={val.name}
+            tokenTicker={val.ticker}
             tokenValue={'$' + val.value?.toLocaleString()!}
             vaultBalance={'$' + val.vault_balance?.toLocaleString()!}
             tokenAmount={val.vault_amount?.toLocaleString()!}
@@ -298,8 +299,6 @@ export const UserStats = () => {
           display: 'grid',
           gridTemplateColumns: {
             sm: '1fr',
-            lg: 'repeat(2, 1fr)',
-            xl: 'repeat(3, 1fr)',
           },
           columnGap: 3,
           rowGap: 3,

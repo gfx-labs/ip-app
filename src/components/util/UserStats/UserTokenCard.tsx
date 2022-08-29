@@ -15,6 +15,7 @@ import { ToolTip } from '../tooltip/ToolTip'
 import { useLight } from '../../../hooks/useLight'
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
+  tokenTicker: string
   tokenValue: string
   vaultBalance: string
   tokenAmount: string
@@ -40,6 +41,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const { setDelegateToken } = useAppGovernanceContext()
   const {
     tokenName,
+    tokenTicker,
     tokenValue,
     vaultBalance,
     tokenAmount,
@@ -84,22 +86,23 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         backgroundColor: isLight
           ? formatColor(neutral.gray5)
           : formatColor(neutral.gray4),
-        borderRadius: 4,
+        borderRadius: 2,
         padding: 2,
-        paddingBottom: 0,
+
         [theme.breakpoints.down('lg')]: {},
         ...props.sx,
       }}
     >
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr 2fr 1fr 1fr 1fr',
           mb: 0,
+          columnGap: 2,
           alignItems: 'center',
         }}
       >
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" columnGap={2}>
           <Box
             component="img"
             width={40}
@@ -107,44 +110,56 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             src={`images/${image.src}.svg`}
             alt={image.alt}
           ></Box>
-          <Typography variant="label2" color="text.secondary">
-            {tokenName}
-          </Typography>
+          <Box display="flex" flexDirection="column">
+            <Typography variant="body3" color="text.primary">
+              {tokenName}
+            </Typography>
+            <Typography
+              variant="label2"
+              fontWeight={400}
+              color="text.secondary"
+            >
+              {tokenTicker}
+            </Typography>
+          </Box>
         </Box>
-        <Typography variant="subtitle3" color="text.primary">
+        <Typography variant="body2" color="text.primary">
           {tokenValue}
         </Typography>
 
-        <ToolTip
-          content={
-            <Typography variant="body3">
-              Maximum Loan-To-Value for this asset
-            </Typography>
-          }
-          text={`LTV: ${LTVPercent}%
+        <Box display="flex">
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                Maximum Loan-To-Value for this asset
+              </Typography>
+            }
+            text={`LTV: ${LTVPercent}%
           `}
-          text_variant="label2"
-        />
-        <Box mx={1}> </Box>
-        <ToolTip
-          content={
-            <Typography variant="body3">
-              Liquidation penalty paid by vault to the liquidator for
-              liquidating this asset
-            </Typography>
-          }
-          text={`Penalty: ${penaltyPercent}%
+            text_variant="label2"
+          />
+          <Box mx={1}> </Box>
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                Liquidation penalty paid by vault to the liquidator for
+                liquidating this asset
+              </Typography>
+            }
+            text={`Penalty: ${penaltyPercent}%
           `}
-          text_variant="label2"
-        />
+            text_variant="label2"
+          />
+        </Box>
+        <Box display="flex" flexDirection="column">
+          <Typography variant="body3" color="text.primary">
+            {vaultBalance}
+          </Typography>
 
-        <Typography variant="subtitle3" color="text.primary">
-          {vaultBalance}
-        </Typography>
-
-        <Typography variant="label2" color="text.secondary">
-          {tokenAmount} {tokenName}
-        </Typography>
+          <Typography variant="label2" color="text.secondary">
+            {tokenAmount} {tokenTicker}
+          </Typography>
+        </Box>
 
         <Box
           sx={{
@@ -179,40 +194,38 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             -
           </Button>
         </Box>
-      </Box>
 
-      {canDelegate ? (
-        <Box display={canDelegate ? 'flex' : 'none'} justifyContent="flex-end">
-          <Button
-            variant="text"
-            sx={{
-              width: 'fit-content',
-              color: formatColor(blue.blue1),
-              '&:hover': {
-                backgroundColor: 'transparent',
-                color: formatColor(neutral.gray3),
-
-                '& path': {
-                  stroke: formatColor(neutral.gray3),
-                },
-              },
-            }}
-            onClick={setAndOpenDelegate}
-          >
-            Delegate
-            <ForwardIcon
+        <Box>
+          {canDelegate && (
+            <Button
+              variant="text"
               sx={{
-                marginLeft: 1,
-                width: 12,
-                height: 10,
+                width: 'fit-content',
+                color: formatColor(blue.blue1),
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: formatColor(neutral.gray3),
+
+                  '& path': {
+                    stroke: formatColor(neutral.gray3),
+                  },
+                },
               }}
-              strokecolor={formatColor(blue.blue1)}
-            />{' '}
-          </Button>
+              onClick={setAndOpenDelegate}
+            >
+              Delegate
+              <ForwardIcon
+                sx={{
+                  marginLeft: 1,
+                  width: 12,
+                  height: 10,
+                }}
+                strokecolor={formatColor(blue.blue1)}
+              />{' '}
+            </Button>
+          )}
         </Box>
-      ) : (
-        <Box height={42}></Box>
-      )}
+      </Box>
     </Box>
   )
 }
