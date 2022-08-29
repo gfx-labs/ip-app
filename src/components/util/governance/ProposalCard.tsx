@@ -85,7 +85,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
     const secs = bdiff * 13.5
     const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100)
     if (bdiff < 0) {
-      setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`)
+      if (hrdiff >= 24) {
+        setTimeLeft(`Voting Ended ${Math.floor(hrdiff / 24)} Days ago`)
+      } else if (hrdiff > 1)
+        setTimeLeft(`Voting Ended ${Math.floor(hrdiff)} Hour(s) ago`)
+      else {
+        setTimeLeft(`Voting Ended ${Math.floor(hrdiff * 60)} Minute(s) ago`)
+      }
       return
     }
     if (hrdiff >= 24) {
