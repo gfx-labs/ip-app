@@ -88,12 +88,17 @@ export const ProposalCard = (props: ProposalCardProps) => {
       setTimeLeft(`Voting Ended ${hrdiff} Hour(s) ago`)
       return
     }
-    setTimeLeft(`Active for ${hrdiff} Hour(s)`)
+    if (hrdiff >= 24) {
+      setTimeLeft(`Active for ${Math.floor(hrdiff / 24)} Days`)
+    } else if (hrdiff > 1)
+      setTimeLeft(`Active for ${Math.floor(hrdiff)} Hour(s)`)
+    else {
+      setTimeLeft(`Active for ${Math.floor(hrdiff * 60)} Minute(s)`)
+    }
   }, [dataBlock])
 
   const expandCard = () => {
     setIsExpanded(!isExpanded)
-    console.log(body)
     setExpandedContent(body)
   }
 
