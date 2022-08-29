@@ -19,6 +19,21 @@ export interface Proposal {
   endBlock: number
 }
 
+const TooltipValue = ({
+  text,
+  mleft = true,
+}: {
+  text: string
+  mleft?: boolean
+}) => (
+  <Box
+    component="span"
+    sx={{ ml: mleft ? 1 : 0, fontWeight: 400, color: 'text.secondary' }}
+  >
+    {text}
+  </Box>
+)
+
 export const Governance = () => {
   const theme = useTheme()
   const {
@@ -97,23 +112,28 @@ export const Governance = () => {
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Proposal Threshold: 1,000,000
+                  Proposal Threshold:
+                  <TooltipValue text="1,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 10,000,000
+                  Quorum Threshold:
+                  <TooltipValue text="10,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Review Period: 13140 blocks
+                  Review Period:
+                  <TooltipValue text="13140 blocks" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 40320 blocks
+                  Voting Period:
+                  <TooltipValue text="40320 blocks" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 2 days
+                  Timelock Period:
+                  <TooltipValue text="2 days " />
                 </Typography>
               </>
             }
@@ -129,23 +149,26 @@ export const Governance = () => {
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Proposal Threshold: <br /> Governance Whitelist
+                  Proposal Threshold: <br />
+                  <TooltipValue mleft={false} text="Governance Whitelist" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 2,000,000
+                  Quorum Threshold:
+                  <TooltipValue text="2,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Review Period: 25600 blocks
+                  Review Period:
+                  <TooltipValue text="25600 blocks" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 40320 blocks
+                  Voting Period: <TooltipValue text="40320 blocks" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 2 days
+                  Timelock Period: <TooltipValue text="2 days " />
                 </Typography>
               </>
             }
@@ -161,19 +184,19 @@ export const Governance = () => {
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Proposal threshold: 1,000,000
+                  Proposal Threshold: <TooltipValue text="1,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 50,000,000
+                  Quorum Threshold: <TooltipValue text="50,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 6570 blocks
+                  Voting Period: <TooltipValue text="6570 blocks" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 2 days
+                  Timelock Period: <TooltipValue text="2 days " />
                 </Typography>
               </>
             }
