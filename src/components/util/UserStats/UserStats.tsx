@@ -84,7 +84,8 @@ export const UserStats = () => {
         el.push(
           <UserTokenCard
             key={key}
-            tokenName={val.ticker}
+            tokenName={val.name}
+            tokenTicker={val.ticker}
             tokenValue={'$' + val.value?.toLocaleString()!}
             vaultBalance={'$' + val.vault_balance?.toLocaleString()!}
             tokenAmount={val.vault_amount?.toLocaleString()!}
@@ -105,16 +106,13 @@ export const UserStats = () => {
   return (
     <Box
       sx={{
-        backgroundImage: `linear-gradient(${formatGradient(
-          isLight ? gradient.statDefaultLight : gradient.statDefaultDark
-        )})`,
-        paddingX: 6,
-        paddingY: 7,
-        borderRadius: 16,
+        backgroundColor: 'smallCard.background',
+        paddingX: 4,
+        paddingY: 4,
+        borderRadius: 2.5,
         [theme.breakpoints.down('md')]: {
           paddingX: 2,
-          paddingY: 6,
-          borderRadius: 5,
+          paddingY: 2,
         },
       }}
     >
@@ -169,7 +167,7 @@ export const UserStats = () => {
         </Box>
       </Box>
 
-      <Box
+      {/* <Box
         sx={{
           display: 'grid',
           justifyContent: 'space-between',
@@ -294,18 +292,40 @@ export const UserStats = () => {
             )}
           </Box>
         </SingleStatCard>
+      </Box> */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr 1fr 1fr',
+            lg: '2fr 1fr 2fr 1fr 1fr 1fr',
+          },
+          mb: 0,
+          columnGap: 2,
+          color: 'text.secondary',
+          px: 2,
+        }}
+      >
+        <Typography variant="label2">Assets</Typography>
+        <Typography display={{ xs: 'none', lg: 'block' }} variant="label2">
+          Price
+        </Typography>
+        <Typography display={{ xs: 'none', lg: 'block' }} variant="label2">
+          LTV and Penalty
+        </Typography>
+        <Typography variant="label2">Balance</Typography>
+        <Box></Box>
+        <Box display={{ xs: 'none', lg: 'block' }}></Box>
       </Box>
       <Box
         sx={{
-          mt: { xs: 2, md: 3 },
+          mt: { xs: 2 },
           display: 'grid',
           gridTemplateColumns: {
             sm: '1fr',
-            lg: 'repeat(2, 1fr)',
-            xl: 'repeat(3, 1fr)',
           },
           columnGap: 3,
-          rowGap: 3,
+          rowGap: 2,
         }}
       >
         {token_cards}

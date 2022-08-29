@@ -12,8 +12,10 @@ import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletMo
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
+import { useLight } from '../../../hooks/useLight'
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
+  tokenTicker: string
   tokenValue: string
   vaultBalance: string
   tokenAmount: string
@@ -28,6 +30,7 @@ interface UserTokenCardProps extends BoxProps {
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme()
+  const isLight = useLight()
   const rolodex = useRolodexContext()
   const { currentSigner, connected, currentAccount } = useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
@@ -38,6 +41,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const { setDelegateToken } = useAppGovernanceContext()
   const {
     tokenName,
+    tokenTicker,
     tokenValue,
     vaultBalance,
     tokenAmount,
@@ -79,127 +83,172 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: 'smallCard.background',
-        borderRadius: 4,
-        padding: 4,
-        paddingBottom: 0,
+        backgroundColor: isLight
+          ? formatColor(neutral.gray5)
+          : formatColor(neutral.gray4),
+        borderRadius: 2,
+        padding: 2,
+
         [theme.breakpoints.down('lg')]: {},
         ...props.sx,
       }}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0 }}>
-        <Box display="flex" flexDirection="column" rowGap={1}>
-          <Box>
-            <Typography variant="label2" color="text.secondary">
-              {tokenName}
-            </Typography>
-            <br />
-            <Typography variant="subtitle3" color="text.primary">
-              {tokenValue}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography variant="label2" color="text.secondary">
-              Vault Balance
-            </Typography>
-            <br />
-            <Typography variant="subtitle3" color="text.primary">
-              {vaultBalance}
-            </Typography>
-          </Box>
-
-          <Typography variant="label2" color="text.secondary">
-            {tokenAmount} {tokenName}
-          </Typography>
-        </Box>
-        <Box
-          component="img"
-          width={80}
-          height={80}
-          src={`images/${image.src}.svg`}
-          alt={image.alt}
-        ></Box>
-      </Box>
-
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
-        <ToolTip
-          content={
-            <Typography variant="body3">
-              Maximum Loan-To-Value for this asset
-            </Typography>
-          }
-          text={`LTV: ${LTVPercent}%
-          `}
-          text_variant="label2"
-        />
-        <Box mx={1}> </Box>
-        <ToolTip
-          content={
-            <Typography variant="body3">
-              Liquidation penalty paid by vault to the liquidator for
-              liquidating this asset
-            </Typography>
-          }
-          text={`Penalty: ${penaltyPercent}%
-          `}
-          text_variant="label2"
-        />
-      </Box>
-
       <Box
         sx={{
           display: 'grid',
-          justifyContent: 'space-between',
-          gridTemplateColumns: '1fr 1fr',
-          columnGap: 1.5,
+          gridTemplateColumns: {
+            xs: '1fr 1fr 1fr',
+            lg: '2fr 1fr 2fr 1fr 1fr 1fr',
+          },
+          mb: 0,
+          columnGap: 2,
+          alignItems: 'center',
         }}
       >
-        <Button
-          variant="contained"
-          onClick={() => handleDWClick(ModalType.DepositCollateral)}
+        <Box display="flex" alignItems="center" columnGap={2}>
+          <Box
+            component="img"
+            width={{ xs: 24, lg: 40 }}
+            height={{ xs: 24, lg: 40 }}
+            src={`images/${image.src}.svg`}
+            alt={image.alt}
+          ></Box>
+          <Box display="flex" flexDirection="column">
+            <Typography
+              variant="body3"
+              color="text.primary"
+              display={{ xs: 'none', lg: 'block' }}
+            >
+              {tokenName}
+            </Typography>
+            <Typography
+              variant="label2"
+              fontWeight={400}
+              color="text.secondary"
+            >
+              {tokenTicker}
+            </Typography>
+          </Box>
+        </Box>
+        <Typography
+          display={{ xs: 'none', lg: 'block' }}
+          variant="body2"
+          color="text.primary"
         >
-          Deposit
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
-        >
-          Withdraw
-        </Button>
-      </Box>
+          {tokenValue}
+        </Typography>
 
-      {canDelegate ? (
-        <Box display={canDelegate ? 'flex' : 'none'} justifyContent="flex-end">
+        <Box display={{ xs: 'none', lg: 'flex' }}>
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                Maximum Loan-To-Value for this asset
+              </Typography>
+            }
+            text={`LTV: ${LTVPercent}%
+          `}
+            text_variant="label2"
+          />
+          <Box mx={1}> </Box>
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                Liquidation penalty paid by vault to the liquidator for
+                liquidating this asset
+              </Typography>
+            }
+            text={`Penalty: ${penaltyPercent}%
+          `}
+            text_variant="label2"
+          />
+        </Box>
+        <Box display="flex" flexDirection="column">
+          <Typography variant="body3" color="text.primary">
+            {vaultBalance}
+          </Typography>
+
+          <Typography variant="label2_light" color="text.secondary">
+            {tokenAmount} {tokenTicker}
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            columnGap: 1.5,
+          }}
+        >
           <Button
-            variant="text"
+            variant="contained"
+            onClick={() => handleDWClick(ModalType.DepositCollateral)}
             sx={{
-              width: 'fit-content',
-              color: formatColor(blue.blue1),
-              '&:hover': {
-                backgroundColor: 'transparent',
-                color: formatColor(neutral.gray3),
-
-                '& path': {
-                  stroke: formatColor(neutral.gray3),
-                },
-              },
+              borderRadius: 20,
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
             }}
-            onClick={setAndOpenDelegate}
           >
-            Delegate
-            <ForwardIcon
-              sx={{
-                marginLeft: 1,
-                width: 12,
-                height: 10,
-              }}
-              strokecolor={formatColor(blue.blue1)}
-            />{' '}
+            <Box
+              component="img"
+              src={`images/plus.svg`}
+              width="12px"
+              height="12px"
+            ></Box>
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
+            sx={{
+              borderRadius: 20,
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
+            }}
+          >
+            <Box
+              component="img"
+              src={`images/minus.svg`}
+              width="12px"
+              height="12px"
+            ></Box>
           </Button>
         </Box>
-      ) : (
-        <Box height={42}></Box>
-      )}
+
+        <Box display={{ xs: 'none', lg: 'block' }}>
+          {canDelegate && (
+            <Button
+              variant="text"
+              sx={{
+                width: 'fit-content',
+                color: 'text.primary',
+                '&:hover': {
+                  backgroundColor: 'transparent',
+                  color: formatColor(neutral.gray3),
+
+                  '& path': {
+                    stroke: formatColor(neutral.gray3),
+                  },
+                },
+              }}
+              onClick={setAndOpenDelegate}
+            >
+              Delegate
+              <ForwardIcon
+                sx={{
+                  marginLeft: 1,
+                  width: 12,
+                  height: 10,
+                }}
+                strokecolor={
+                  isLight
+                    ? formatColor(neutral.black)
+                    : formatColor(neutral.white)
+                }
+              />{' '}
+            </Button>
+          )}
+        </Box>
+      </Box>
     </Box>
   )
 }

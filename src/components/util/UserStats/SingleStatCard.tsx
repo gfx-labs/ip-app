@@ -16,7 +16,7 @@ export const SingleStatCard = ({
         display: 'flex',
         alignItems: 'center',
         backgroundColor: 'smallCard.background',
-        borderRadius: 3,
+        borderRadius: 2.5,
         paddingY: 2,
         paddingLeft: { xs: 2, md: 3 },
         paddingRight: { xs: 2, md: 3 },

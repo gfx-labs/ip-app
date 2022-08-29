@@ -52,14 +52,14 @@ export const SwapContainer = () => {
   }, [token1Amount])
 
   return (
-    <Box>
+    <>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
           columnGap: 2,
           rowGap: 1,
-          mb: 2,
+          mb: 3,
           borderRadius: 2,
           position: 'relative',
           [theme.breakpoints.down('md')]: {
@@ -152,6 +152,6 @@ export const SwapContainer = () => {
           Connect Wallet
         </Button>
       )}
-    </Box>
+    </>
   )
 }

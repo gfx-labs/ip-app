@@ -31,6 +31,7 @@ declare module '@mui/material/styles' {
     label: React.CSSProperties
     label2: React.CSSProperties
     label2_medium: React.CSSProperties
+    label2_light: React.CSSProperties
   }
 
   interface BreakpointOverrides {
@@ -50,6 +51,7 @@ declare module '@mui/material/Typography' {
     label: true
     label2: true
     label2_medium: true
+    label2_light: true
   }
 }
 
@@ -283,6 +285,16 @@ theme.typography.label2_medium = {
   },
 }
 
+theme.typography.label2_light = {
+  fontWeight: 400,
+  fontSize: pxToRem(14),
+  lineHeight: fzTolineHeight(16),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(16),
+  },
+}
+
 theme.typography.button = {
   fontWeight: 600,
   fontSize: pxToRem(16),
@@ -480,13 +492,14 @@ theme.components = {
       },
     },
   },
-  MuiLinearProgress: {
+  MuiCircularProgress: {
     styleOverrides: {
       determinate: {
-        backgroundColor: formatColor(neutral.white),
-        height: 16,
-        borderRadius: 8,
-        '.MuiLinearProgress-bar': {},
+        borderRadius: 16,
+        height: 80,
+        '.MuiCircularProgress-circle': {
+          backgroundColor: 'white',
+        },
       },
     },
   },

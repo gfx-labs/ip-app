@@ -58,7 +58,7 @@ export const MobileToolBar = () => {
       <MuiLink component={Link} to="/landing" aria-level={1}>
         <Box
           component="img"
-          src="images/ip_green.svg"
+          src={`images/ip_${isLight ? 'black' : 'white'}.svg`}
           width={40}
           height={40}
         ></Box>

@@ -53,7 +53,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       background: {
         default: getColor(
           `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
-          `linear-gradient(${formatGradient(gradient.bgDefaultDark)})`
+          getColor(formatColor(neutral.gray4))
         ),
         overview: getColor(
           formatColor(neutral.gray5),
@@ -76,8 +76,8 @@ export const getDesignTokens = (mode: PaletteMode) => {
       },
       smallCard: {
         background: getColor(
-          formatColor(neutral.gray5),
-          formatColor(neutral.gray4)
+          formatColor(neutral.white),
+          formatColor(neutral.black7)
         ),
         title: getColor(formatColor(neutral.gray3)),
         text: getColor(formatColor(neutral.gray1), formatColor(neutral.white)),

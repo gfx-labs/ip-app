@@ -30,6 +30,7 @@ export const neutral: { [key: string]: [number, number, number] } = {
   gray10: [107, 118, 135], // #6B7687
   gray11: [245, 247, 250], // #FBFCFD
   gray12: [176, 180, 194], // #B0B4C2
+  gray13: [176, 180, 194], // #B0B4C2
   black: [0, 0, 0],
   black1: [47, 45, 45], // #2F2D2D
   black2: [22, 22, 22], // #161616,
@@ -37,6 +38,7 @@ export const neutral: { [key: string]: [number, number, number] } = {
   black4: [26, 26, 26], // #1B1A1A
   black5: [10, 11, 12], // #0A0B0C
   black6: [29, 35, 46], // #1D232E
+  black7: [28, 29, 33], // #1C1D21
 }
 
 export const blue: { [key: string]: [number, number, number] } = {

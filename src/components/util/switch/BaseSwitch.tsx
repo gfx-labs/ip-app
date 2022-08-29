@@ -97,7 +97,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         width: calculateContainerWidth(),
         backgroundColor: isLight
           ? formatColor(neutral.gray5)
-          : formatColor(neutral.gray4),
+          : formatColor(neutral.black7),
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'row',

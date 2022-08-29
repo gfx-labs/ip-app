@@ -46,11 +46,11 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
           justifyContent: 'space-between',
           backgroundColor: isLight
             ? formatColor(neutral.white)
-            : formatColor(neutral.gray4),
+            : formatColor(neutral.black7),
           '&:hover': {
             backgroundColor: isLight
               ? formatColor(neutral.gray5)
-              : formatColor(blue.blue1),
+              : formatColor(neutral.gray2),
             border: 'none',
           },
           ...sx,
