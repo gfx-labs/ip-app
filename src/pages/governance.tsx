@@ -93,27 +93,63 @@ export const Governance = () => {
             content={
               <>
                 <Typography variant="subtitle1" color="text.primary">
-                  Voting
+                  Standard Voting
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Threshold: 40,000,000
+                  Proposal Threshold: 1,000,000
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 20,000,000
+                  Qurourum Threshold: 10,000,000
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 5 days
+                  Review Period: 13140 blocks
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 15 seconds
+                  Voting Period: 40320 blocks
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Timelock Period: 2 days
                 </Typography>
               </>
             }
-            text="Proposal Voting"
+            text="Standard"
+            text_variant="body2_semi"
+          />
+
+          <ToolTip
+            content={
+              <>
+                <Typography variant="subtitle1" color="text.primary">
+                  Optimistic Voting
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Proposal Threshold: <br /> Governance Whitelist
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Qurourum Threshold: 2,000,000
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Review Period: 25600 blocks
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Voting Period: 40320 blocks
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Timelock Period: 2 days
+                </Typography>
+              </>
+            }
+            text="Optimistic"
             text_variant="body2_semi"
           />
 
@@ -125,19 +161,23 @@ export const Governance = () => {
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 1 day
+                  Proposal threshold: 1,000,000
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 20,000,000
+                  Qurourum Threshold: 50,000,000
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 15 seconds
+                  Voting Period: 6570 blocks
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Timelock Period: 2 days
                 </Typography>
               </>
             }
-            text="Emergency Voting"
+            text="Emergency"
             text_variant="body2_semi"
           />
         </Box>
