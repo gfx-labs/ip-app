@@ -19,6 +19,21 @@ export interface Proposal {
   endBlock: number
 }
 
+const TooltipValue = ({
+  text,
+  mleft = true,
+}: {
+  text: string
+  mleft?: boolean
+}) => (
+  <Box
+    component="span"
+    sx={{ ml: mleft ? 1 : 0, fontWeight: 400, color: 'text.secondary' }}
+  >
+    {text}
+  </Box>
+)
+
 export const Governance = () => {
   const theme = useTheme()
   const {
@@ -93,27 +108,71 @@ export const Governance = () => {
             content={
               <>
                 <Typography variant="subtitle1" color="text.primary">
-                  Voting
+                  Standard Voting
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Threshold: 40,000,000
+                  Proposal Threshold:
+                  <TooltipValue text="1,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 20,000,000
+                  Quorum Threshold:
+                  <TooltipValue text="10,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 5 days
+                  Review Period:
+                  <TooltipValue text="13140 blocks" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 15 seconds
+                  Voting Period:
+                  <TooltipValue text="40320 blocks" />
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Timelock Period:
+                  <TooltipValue text="2 days " />
                 </Typography>
               </>
             }
-            text="Proposal Voting"
+            text="Standard"
+            text_variant="body2_semi"
+          />
+
+          <ToolTip
+            content={
+              <>
+                <Typography variant="subtitle1" color="text.primary">
+                  Optimistic Voting
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Proposal Threshold: <br />
+                  <TooltipValue mleft={false} text="Governance Whitelist" />
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Quorum Threshold:
+                  <TooltipValue text="2,000,000" />
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Review Period:
+                  <TooltipValue text="25600 blocks" />
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Voting Period: <TooltipValue text="40320 blocks" />
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Timelock Period: <TooltipValue text="2 days " />
+                </Typography>
+              </>
+            }
+            text="Optimistic"
             text_variant="body2_semi"
           />
 
@@ -125,19 +184,23 @@ export const Governance = () => {
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Voting Period: 1 day
+                  Proposal Threshold: <TooltipValue text="1,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Qurourum Threshold: 20,000,000
+                  Quorum Threshold: <TooltipValue text="50,000,000" />
                 </Typography>{' '}
                 <br />
                 <Typography variant="body3" whiteSpace="nowrap">
-                  Timelock Period: 15 seconds
+                  Voting Period: <TooltipValue text="6570 blocks" />
+                </Typography>{' '}
+                <br />
+                <Typography variant="body3" whiteSpace="nowrap">
+                  Timelock Period: <TooltipValue text="2 days " />
                 </Typography>
               </>
             }
-            text="Emergency Voting"
+            text="Emergency"
             text_variant="body2_semi"
           />
         </Box>

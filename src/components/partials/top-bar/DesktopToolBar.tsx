@@ -53,7 +53,7 @@ export const DesktopToolBar = () => {
         </Box>
       )}
 
-      {/* <Box mx={2} maxWidth={200} width="100%">
+      <Box mx={2} maxWidth={200} width="100%">
         <Link
           href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet"
           target="_blank"
@@ -62,7 +62,7 @@ export const DesktopToolBar = () => {
             <Typography variant="label2">ETH-USDi Rewards</Typography>
           </Button>
         </Link>
-      </Box> */}
+      </Box>
 
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
         <SelectedChainButton />
