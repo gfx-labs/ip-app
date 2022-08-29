@@ -1,7 +1,11 @@
 import { Box, Toolbar, Typography, Button, Link } from '@mui/material'
 import { useContext } from 'react'
 
-import { ConnectWalletButton, SelectedChainButton } from '../../util/button'
+import {
+  ClaimsButton,
+  ConnectWalletButton,
+  SelectedChainButton,
+} from '../../util/button'
 import { BaseSwitch } from '../../util/switch'
 import { LightIcon } from '../../icons/misc/LightIcon'
 import { DarkIcon } from '../../icons/misc/DarkIcon'

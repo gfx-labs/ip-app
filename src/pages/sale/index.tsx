@@ -53,8 +53,7 @@ const PurchasePage: React.FC = () => {
   //      <meta
   //        http-equiv="refresh"
   //        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
-  //      />
-  //      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
+  //      />.round  //      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
   //        please click here if you are not redirected
   //      </a>
   //    </div>
@@ -102,7 +101,7 @@ const formatSecondsTill = (n: number) => {
     return Math.floor(n / 60) + ' minute(s)'
   }
 
-  return Math.floor(n / (60 * 60)) + ' hour(s)'
+  return Math.round(n / (60 * 60)) + ' hour(s)'
 }
 
 const PurchaseBox = ({
@@ -166,25 +165,38 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    getEndTime(signerOrProvider as JsonRpcSigner).then((res) => {
-      let remaining = res.toNumber() - new Date().valueOf() / 1000
-      setSalePeriodRemaining(formatSecondsTill(remaining))
-    })
-
-    getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
-      setBasePrice(res)
-    })
-
-    getAmountIPTForSale(signerOrProvider!).then((res) => {
-      let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
-      setIptSold(sold)
-      let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
-      setIptForSale(max - sold)
-    })
-
-    getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
-      setSalePrice(res.toNumber() / 1e6)
-    })
+    if (rolodex && dataBlock) {
+      getEndTime(signerOrProvider as JsonRpcSigner).then((x) => {
+        let remaining = x.toNumber() - new Date().valueOf() / 1000
+        let isNewDay = false
+        let srt = ''
+        if (remaining <= 0) {
+          isNewDay = true
+          srt = formatSecondsTill(22 * 60 * 60)
+        } else {
+          srt = formatSecondsTill(remaining)
+        }
+        setSalePeriodRemaining(srt)
+        if (isNewDay) {
+          setSalePrice(basePrice)
+          setIptSold(0)
+          setIptForSale(1000000)
+          return
+        }
+        getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+          setBasePrice(res)
+        })
+        getAmountIPTForSale(signerOrProvider!).then((res) => {
+          let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
+          setIptSold(sold)
+          let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
+          setIptForSale(max - sold)
+        })
+        getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+          setSalePrice(res.toNumber() / 1e6)
+        })
+      })
+    }
   }, [chainId, rolodex, dataBlock, loadmsg])
 
   useEffect(() => {
@@ -196,6 +208,21 @@ const PurchaseBox = ({
       )
     }
   }, [rolodex, amountToCommit])
+
+  useEffect(() => {
+    if (rolodex && amountToCommit && rolodex.USDC) {
+      rolodex
+        .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
+        .then((initialApproval) => {
+          const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
+          if (initialApproval.lt(formattedUSDCAmount)) {
+            setNeedAllowance(true)
+          } else {
+            setNeedAllowance(false)
+          }
+        })
+    }
+  }, [rolodex, dataBlock, chainId, amountToCommit])
 
   const checkUSDCAllowance = async (
     owner: string,

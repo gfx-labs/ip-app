@@ -181,8 +181,9 @@ export const Web3ContextProvider = ({
         getGasPrice(tempSignerOrProvider!).then((gas) => {
           setGasPrice(Number(gas))
         })
-
-        setDataBlock(n)
+        if (n > dataBlock) {
+          setDataBlock(n)
+        }
       })
       return () => {
         console.log('stopped auto refresh of blockNumber for', provider)
@@ -192,13 +193,9 @@ export const Web3ContextProvider = ({
   }, [provider])
 
   useEffect(() => {
-    if (currentSigner) {
-      setSignerOrProvider(currentSigner)
-    } else {
-      const backupProvider = new JsonRpcProvider(BACKUP_PROVIDER)
-
-      setSignerOrProvider(backupProvider)
-    }
+    setSignerOrProvider(
+      currentSigner ? currentSigner : new JsonRpcProvider(BACKUP_PROVIDER)
+    )
   }, [provider, currentSigner])
 
   // handle logic to eagerly connect to the injected ethereum provider,

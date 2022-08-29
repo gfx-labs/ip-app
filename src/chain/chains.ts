@@ -3,6 +3,7 @@ export enum ChainIDs {
   ROPSTEN = 3,
   GOERLI = 5,
   POLYGON = 137,
+  LOCAL = 31337,
 }
 
 const configs: Array<ChainInfo> = [
@@ -36,6 +37,14 @@ const configs: Array<ChainInfo> = [
     usdiAddress: '0xf61275F2358EEd209cc2C0efcCEcC1E542277aED',
     scanUrl: 'https://polygonscan.com/tx/',
     scanSite: 'PolygonScan',
+  },
+  {
+    id: ChainIDs.LOCAL,
+    name: 'Ethereum Local',
+    ticker: 'ETH Local',
+    usdiAddress: '0x2A54bA2964C8Cd459Dc568853F79813a60761B58',
+    scanUrl: 'https://etherscan.io/tx/',
+    scanSite: 'Etherscan',
   },
 ]
 
