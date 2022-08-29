@@ -54,6 +54,27 @@
 * ChainlinkOracleRelay: mul: 10000000000
 * ChainlinkOracleRelay: div: 1
 
+### stETH Oracle
+* AnchoredViewRelay: widthNumerator: 10
+* AnchoredViewRelay: widthDenominator: 100
+* stETHOrcleRelay: _mul: 1
+* stETHOrcleRelay: _div: 1
+* ChainlinkOracleRelay: feed_address: 0xa9dd6fb60c84cc4788b02c45b6b3f59f8444674f
+* ChainlinkOracleRelay: mul: 10000000000
+* ChainlinkOracleRelay: div: 1
+
+### MATIC Oracle
+* AnchoredViewRelay: widthNumerator: 10
+* AnchoredViewRelay: widthDenominator: 100
+* UniswapV3OracleRelay: lookback: 14400
+* UniswapV3OracleRelay: _mul: 1000000000000
+* UniswapV3OracleRelay: _div: 1
+* UniswapV3OracleRelay: _quoteTokenIsToken0: false
+* UniswapV3OracleRelay: _pool: 0xfe1cb3221f13a9c2aa67d29a2b7198e59de2f3b2
+* ChainlinkOracleRelay: feed_address: 0xFC6b554818466A53806Bb7eb319621D97b851D94
+* ChainlinkOracleRelay: mul: 10000000000
+* ChainlinkOracleRelay: div: 1
+
 ## Governance Parameters
 * proposalThreshold: 1,000,000
 
@@ -67,4 +88,9 @@
 * emergencyVotingPeriod (blocks): 6570
 * emergencyVotingTimelockDelay (seconds): 43200
 * emergencyQuorumVotes: 40,000,000
+
+### Optimistic Parameters
+* optimisticVotingDelay (blocks): 25600  
+* optimisticQuorum: 2,000,000
+* whitelist guardian: not set (can be set by governance)
 

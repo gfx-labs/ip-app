@@ -11,6 +11,7 @@ The protocol is deployed on Ethereum Mainnet.
 *    CurveMaster: 0x0029abd74B7B32e6a82Bf9f62CB9Dd4Bf8e39aAf
 *    ThreeLines: 0x8Ef82C4C48FaaD513D157a86433cd7D9397eA278
 *    OracleMaster: 0xf4818813045E954f5Dc55a40c9B60Def0ba3D477
+*    VotingVaultController: 0xae49ddca05fe891c6a5492ed52d739ec1328cbe2
 
 ### Governance
 *    Interest Protocol Token (IPT): 0xd909c5862cdb164adb949d92622082f0092efc3d
@@ -31,11 +32,23 @@ The protocol is deployed on Ethereum Mainnet.
 *    ChainlinkOracleRelay: 0x8790784510829cc6398A75b40668B30e9F3E22ac
 *    UniswapV3OracleRelay: 0xcE1Cb785fd61153D330cEa24f063d7C61c54Aad0
 
+### stETH Oracle
+*    AnchoredViewRelay: 0x73052741d8bE063b086c4B7eFe084B0CEE50677A
+*    ChainlinkOracleRelay: 0xa9dd6fb60c84cc4788b02c45b6b3f59f8444674f
+*    StEthOracleRelay: 0xaa2639c9dcf71547e585439e8744128ed9832fe8
+
+### MATIC Oracle
+*    AnchoredViewRelay: 0x8BfE7aE486250dBf2901843Cc73B91843c2879de
+*    ChainlinkOracleRelay: 0xfe1cb3221f13a9c2aa67d29a2b7198e59de2f3b2
+*    StEthOracleRelay: 0xfc6b554818466a53806bb7eb319621d97b851d94
+
 ### Assets
 * USDC: 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
 * wETH: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
 * UNI: 0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984
 * wBTC: 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599
+* stETH: 0xae7ab96520de3a18e5e111b5eaab095312d7fe84
+* MATIC (capped): 0x5AC39ED42E14CF330A864D7D1B82690B4D1B9E61
 
 
 ## Polygon Mainnet
