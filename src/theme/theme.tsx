@@ -51,7 +51,7 @@ declare module '@mui/material/Typography' {
     label: true
     label2: true
     label2_medium: true
-    label2_light: React.CSSProperties
+    label2_light: true
   }
 }
 

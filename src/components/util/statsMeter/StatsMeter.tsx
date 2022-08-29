@@ -81,7 +81,7 @@ export const StatsMeter = () => {
             position: 'absolute',
 
             '& svg': {
-              color: 'white',
+              color: formatColor(neutral.gray5),
             },
           }}
         />
