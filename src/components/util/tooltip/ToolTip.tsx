@@ -23,7 +23,7 @@ const BaseToolTipContainer = styled(({ className, ...props }: TooltipProps) => {
         : formatColor(neutral.black5),
       color: isLight ? formatColor(neutral.black5) : formatColor(neutral.white),
       borderRadius: '20px',
-      padding: '16px',
+      padding: '24px',
     },
     [`& .${tooltipClasses.arrow}`]: {
       color: isLight ? formatColor(neutral.white) : formatColor(neutral.black5),
