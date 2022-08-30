@@ -62,7 +62,7 @@ upload-image:
     - master
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t ip/$IMAGENAME:$CI_JOB_ID .
-    - docker push ip/$IMAGENAME:$CI_JOB_ID
-    - docker tag ip/$IMAGENAME:$CI_JOB_ID ip/$IMAGENAME:latest
-    - docker push ip/$IMAGENAME:latest
+    - docker build -t ip/app:$CI_JOB_ID .
+    - docker push ip/app:$CI_JOB_ID
+    - docker tag ip/app:$CI_JOB_ID ip/app:latest
+    - docker push ip/app:latest
