@@ -2,7 +2,7 @@
 The protocol is deployed on Ethereum Mainnet.
 
 ### Token Sale
-*    WavePool: 0x5a4396a2fe5fD36c6528a441D7A97c3B0f3e8aeE
+*    SlowRoll: 0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d
 
 ### Core
 *    ProxyAdmin: 0x3D9d8c08dC16Aa104b5B24aBDd1aD857e2c0D8C5
