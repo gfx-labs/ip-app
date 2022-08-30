@@ -1,4 +1,4 @@
-import { StrictMode, Suspense, useContext } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './theme/fonts.css'
 import WhitelistPage from '../src/pages/whitelist'
@@ -37,6 +37,7 @@ import { WhitepaperPage } from './pages/whitepaper'
 import { TermsPage } from './pages/terms'
 import { TestingPage } from './pages/playground'
 import { MerkleRedeemContextProvider } from './components/libs/merkle-redeem-provider/MerkleRedeemProvider'
+import { Governance } from './pages/governance'
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -122,12 +123,35 @@ const AppRouter = () => {
         <Route path={`/book`} element={<RedirectBook />} />
         <Route path={`/testing`} element={<TestingPage />} />
         <Route path={`*`} element={<NotFound404Page />} />
+
         <Route
           path={`/`}
           element={
             <DashboardContext>
               <AppLayout>
                 <Dashboard />
+              </AppLayout>
+            </DashboardContext>
+          }
+        />
+
+        <Route
+          path={`/proposal`}
+          element={
+            <DashboardContext>
+              <AppLayout>
+                <Governance />
+              </AppLayout>
+            </DashboardContext>
+          }
+        />
+
+        <Route
+          path={`/proposal/:id`}
+          element={
+            <DashboardContext>
+              <AppLayout>
+                <Governance />
               </AppLayout>
             </DashboardContext>
           }

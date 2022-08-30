@@ -17,6 +17,7 @@ export interface Proposal {
   id: string
   proposer: string
   endBlock: number
+  transactionHash: string
 }
 
 const TooltipValue = ({
@@ -57,12 +58,14 @@ export const Governance = () => {
     if (signerOrProvider) {
       getRecentProposals(signerOrProvider)
         .then((pl) => {
+          console.log(pl)
           pl.forEach((val) => {
             proposals.set(val.args.id.toNumber(), {
               id: val.args.id.toString(),
               proposer: val.args.proposer,
               body: val.args.description,
               endBlock: val.args.endBlock.toNumber(),
+              transactionHash: val.transactionHash,
             })
           })
           setProposals(new Map(proposals))
