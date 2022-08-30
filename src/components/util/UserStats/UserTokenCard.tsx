@@ -70,13 +70,13 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     } else if (!hasVault && !vaultAddress) {
       openVault()
     } else {
-      setCollateralToken((tokens as any)[tokenName])
+      setCollateralToken((tokens as any)[tokenTicker])
       setType(modalType)
     }
   }
 
   const setAndOpenDelegate = () => {
-    setDelegateToken((tokens as any)[tokenName])
+    setDelegateToken((tokens as any)[tokenTicker])
     setType(ModalType.Delegate)
   }
 
