@@ -35,4 +35,4 @@ local param_job(image,tag_var, merge = {}) = std.mergePatch({
 } + {
   [job.name]:  param_job(job.name,"${CI_COMMIT_SHORT_SHA}",job.merge)
   for job in jobs
-
+}
