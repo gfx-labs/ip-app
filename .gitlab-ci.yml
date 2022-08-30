@@ -51,3 +51,19 @@ pages-github:
       - public
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+upload-image:
+  stage: build
+  image: docker:20.10.2
+  dependencies:
+    - site
+    - pages
+    - pages-github
+  only:
+    - master
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t ip/$IMAGENAME:$CI_JOB_ID .
+    - docker push ip/$IMAGENAME:$CI_JOB_ID
+    - docker tag ip/$IMAGENAME:$CI_JOB_ID ip/$IMAGENAME:latest
+    - docker push ip/$IMAGENAME:latest
