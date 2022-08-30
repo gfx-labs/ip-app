@@ -8,8 +8,6 @@ import { UserStats } from '../components/util/UserStats'
 import { useRolodexContext } from '../components/libs/rolodex-data-provider/RolodexDataProvider'
 import { useEffect, useState } from 'react'
 import { useVaultDataContext } from '../components/libs/vault-data-provider/VaultDataProvider'
-import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
-import { Governance } from './governance'
 import Cookies from 'universal-cookie'
 import fetchVaultOf from '../contracts/Vault/fetchVaultOf'
 import { getTotalSupply, getReserveRatio } from '../contracts/USDI'
@@ -42,7 +40,6 @@ const Dashboard = () => {
   const rolodex = useRolodexContext()
   const { setVaultID, setVaultAddress, accountLiability, hasVault } =
     useVaultDataContext()
-  const { isApp } = useAppGovernanceContext()
 
   const [totalSupply, setTotalSupply] = useState<string>('')
   const [totalUSDCDeposited, setTotalUSDCDeposited] = useState<string>('')
@@ -105,166 +102,160 @@ const Dashboard = () => {
         overflow: 'hidden',
       }}
     >
-      {isApp ? (
+      <Box
+        color={formatColor(neutral.black)}
+        textAlign="left"
+        maxWidth="xl"
+        pt={{ xs: 7, sm: 0 }}
+        pb={{ xs: 5, sm: 10 }}
+        px={{ xs: 2, md: 10 }}
+        margin="auto"
+        position="relative"
+        sx={{
+          [theme.breakpoints.down('md')]: {
+            mb: 0,
+            marginLeft: 'auto',
+          },
+        }}
+      >
         <Box
-          color={formatColor(neutral.black)}
-          textAlign="left"
-          maxWidth="xl"
-          pt={{ xs: 7, sm: 0 }}
-          pb={{ xs: 5, sm: 10 }}
-          px={{ xs: 2, md: 10 }}
-          margin="auto"
-          position="relative"
           sx={{
-            [theme.breakpoints.down('md')]: {
-              mb: 0,
-              marginLeft: 'auto',
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 2,
+            [theme.breakpoints.down('lg')]: {
+              gridTemplateColumns: '1fr',
             },
           }}
         >
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 2,
-              [theme.breakpoints.down('lg')]: {
-                gridTemplateColumns: '1fr',
-              },
-            }}
-          >
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <SingleStatCard>
-                <TitleTextToolTip
-                  title={`Deposit APR`}
-                  tooltipContent="Current annualized rate paid to USDi holders"
-                  text={
-                    depositAPR !== null ? depositAPR.toFixed(2) + '%' : null
-                  }
-                />
-              </SingleStatCard>
-              <SingleStatCard>
-                <TitleTextToolTip
-                  title={`Borrow APR`}
-                  tooltipContent="Current annualized rate paid by USDi borrowers"
-                  text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
-                />
-              </SingleStatCard>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <SingleStatCard>
+              <TitleTextToolTip
+                title={`Deposit APR`}
+                tooltipContent="Current annualized rate paid to USDi holders"
+                text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
+              />
+            </SingleStatCard>
+            <SingleStatCard>
+              <TitleTextToolTip
+                title={`Borrow APR`}
+                tooltipContent="Current annualized rate paid by USDi borrowers"
+                text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
+              />
+            </SingleStatCard>
+          </Box>
+
+          <SingleStatCard>
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              sx={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                [theme.breakpoints.down('lg')]: {
+                  flexWrap: 'wrap',
+                  rowGap: 2,
+                },
+              }}
+            >
+              <TitleTextToolTip
+                tooltipContent="Amount of USDi your vault is currently borrowing. This increases as interest accrues."
+                title={`USDi Borrowed`}
+                text={
+                  accountLiability !== null
+                    ? '$' + Math.round(accountLiability).toLocaleString()
+                    : null
+                }
+              />
+
+              {hasVault ? (
+                <Box
+                  display="grid"
+                  alignItems="center"
+                  columnGap={2}
+                  gridTemplateColumns="1fr 1fr"
+                  sx={{
+                    [theme.breakpoints.down('lg')]: {
+                      width: '100%',
+                    },
+                    [theme.breakpoints.down('sm')]: {
+                      gridTemplateColumns: '1fr',
+                      rowGap: 2,
+                    },
+                  }}
+                >
+                  <InverseButton onClick={() => setType(ModalType.Borrow)}>
+                    <Typography variant="body3">Borrow</Typography>
+                  </InverseButton>
+
+                  <InverseButton onClick={() => setType(ModalType.Repay)}>
+                    <Typography variant="body3">Repay</Typography>
+                  </InverseButton>
+                </Box>
+              ) : (
+                <Box
+                  maxWidth={{ xs: 'auto', md: 350 }}
+                  width="100%"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <OpenVaultButton />
+                </Box>
+              )}
             </Box>
-
-            <SingleStatCard>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                sx={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  [theme.breakpoints.down('lg')]: {
-                    flexWrap: 'wrap',
-                    rowGap: 2,
-                  },
-                }}
-              >
-                <TitleTextToolTip
-                  tooltipContent="Amount of USDi your vault is currently borrowing. This increases as interest accrues."
-                  title={`USDi Borrowed`}
-                  text={
-                    accountLiability !== null
-                      ? '$' + Math.round(accountLiability).toLocaleString()
-                      : null
-                  }
-                />
-
-                {hasVault ? (
-                  <Box
-                    display="grid"
-                    alignItems="center"
-                    columnGap={2}
-                    gridTemplateColumns="1fr 1fr"
-                    sx={{
-                      [theme.breakpoints.down('lg')]: {
-                        width: '100%',
-                      },
-                      [theme.breakpoints.down('sm')]: {
-                        gridTemplateColumns: '1fr',
-                        rowGap: 2,
-                      },
-                    }}
-                  >
-                    <InverseButton onClick={() => setType(ModalType.Borrow)}>
-                      <Typography variant="body3">Borrow</Typography>
-                    </InverseButton>
-
-                    <InverseButton onClick={() => setType(ModalType.Repay)}>
-                      <Typography variant="body3">Repay</Typography>
-                    </InverseButton>
-                  </Box>
-                ) : (
-                  <Box
-                    maxWidth={{ xs: 'auto', md: 350 }}
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <OpenVaultButton />
-                  </Box>
-                )}
-              </Box>
-            </SingleStatCard>
-          </Box>
-          <Box
-            sx={{
-              marginY: 3,
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              columnGap: 2,
-              [theme.breakpoints.down('lg')]: {
-                gridTemplateColumns: '1fr',
-                rowGap: 2,
-              },
-            }}
-          >
-            <ProtocolStatsCard />
-            <StatsMeter />
-          </Box>
-          <Box>
-            <UserStats />
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              gap: 2,
-              my: 3,
-              [theme.breakpoints.down('xs')]: {
-                flexDirection: 'column',
-              },
-            }}
-          >
-            <SingleStatCard>
-              <TitleText
-                title="USDi in Circulation"
-                text={Math.round(Number(totalSupply)).toLocaleString()}
-              />
-            </SingleStatCard>
-
-            <SingleStatCard>
-              <TitleText
-                title="USDC in Reserve"
-                text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
-              />
-            </SingleStatCard>
-            <SingleStatCard>
-              <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
-            </SingleStatCard>
-          </Box>
-
-          <UsdiGraphCard />
+          </SingleStatCard>
         </Box>
-      ) : (
-        <Governance />
-      )}
+        <Box
+          sx={{
+            marginY: 3,
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            columnGap: 2,
+            [theme.breakpoints.down('lg')]: {
+              gridTemplateColumns: '1fr',
+              rowGap: 2,
+            },
+          }}
+        >
+          <ProtocolStatsCard />
+          <StatsMeter />
+        </Box>
+        <Box>
+          <UserStats />
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: 2,
+            my: 3,
+            [theme.breakpoints.down('xs')]: {
+              flexDirection: 'column',
+            },
+          }}
+        >
+          <SingleStatCard>
+            <TitleText
+              title="USDi in Circulation"
+              text={Math.round(Number(totalSupply)).toLocaleString()}
+            />
+          </SingleStatCard>
+
+          <SingleStatCard>
+            <TitleText
+              title="USDC in Reserve"
+              text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
+            />
+          </SingleStatCard>
+          <SingleStatCard>
+            <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
+          </SingleStatCard>
+        </Box>
+
+        <UsdiGraphCard />
+      </Box>
 
       <Box maxWidth="xl" margin="auto">
         <Box

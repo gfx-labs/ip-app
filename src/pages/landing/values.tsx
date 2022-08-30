@@ -57,7 +57,7 @@ export const Values: React.FC = () => {
         />
         <GradientBox
           bg={`linear-gradient(${formatGradient(gradient.gradientPurpleGrey)})`}
-          left="2. Adaptibility"
+          left="2. Adaptability"
           right="Community is the bedrock of Interest Protocol. A keep-it-simple approach to concepts and code encourages participation, leading to a vibrant community and an adaptable protocol."
         />
         <GradientBox

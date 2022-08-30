@@ -30,6 +30,7 @@ import { formatColor, neutral, green } from '../../../theme'
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { BaseSwitch } from '../../util/switch'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { useLocation, useNavigate } from 'react-router'
 
 const iOS =
   typeof navigator !== 'undefined' &&
@@ -41,9 +42,18 @@ export const MobileToolBar = () => {
   const navMenuButtonRef = useRef<HTMLButtonElement>(null)
 
   const { toggleMode } = useContext(PaletteModeContext)
-  const { setIsApp } = useAppGovernanceContext()
 
+  const location = useLocation()
+  const navigate = useNavigate()
   const isLight = useLight()
+
+  const appGovSwitchHandler = () => {
+    if (location.pathname.includes('proposal')) {
+      navigate('/')
+    } else {
+      navigate('/proposal')
+    }
+  }
 
   return (
     <Toolbar
@@ -202,7 +212,8 @@ export const MobileToolBar = () => {
         <BaseSwitch
           option1="App"
           option2="Governance"
-          onOptionChange={setIsApp}
+          onOptionChange={appGovSwitchHandler}
+          defaultIsOption1={!location.pathname.includes('proposal')}
         />
       </SwipeableDrawer>
     </Toolbar>

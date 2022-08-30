@@ -1,6 +1,6 @@
 import { Box, Link, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { blue, formatColor, neutral, pink, theme } from '../../../theme'
+import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
 import { Status } from './Status'
 import { Spinner } from '../loading'
@@ -19,6 +19,9 @@ import {
   ProposalInfo,
   getProposalState,
 } from '../../../contracts/GovernorCharlieDelegate'
+import { useLight } from '../../../hooks/useLight'
+import { useParams } from 'react-router'
+import { useRef } from 'react'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -28,13 +31,15 @@ export interface ProposalCardProps {
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider, currentSigner } = useWeb3Context()
   const { votingPower } = props
-  const { id, body, endBlock } = props.proposal
-
-  const [isExpanded, setIsExpanded] = useState(false)
+  const { id, body, endBlock, transactionHash } = props.proposal
+  const isLight = useLight()
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   )
+  const param = useParams()
+  const ref = useRef<HTMLDivElement>(null)
 
+  const [isExpanded, setIsExpanded] = useState(false)
   const getTitle = (body: string) => {
     const splitBody = body.split('\n')
     let title = splitBody.find((n) => n[0] === '#')
@@ -103,6 +108,21 @@ export const ProposalCard = (props: ProposalCardProps) => {
     }
   }, [dataBlock])
 
+  useEffect(() => {
+    if (param.id === id) {
+      setExpandedContent(body)
+      setIsExpanded(true)
+
+      setTimeout(() => {
+        if (ref && ref.current) {
+          ref.current.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 500)
+      return
+    }
+    setIsExpanded(false)
+  }, [param.id])
+
   const expandCard = () => {
     setIsExpanded(!isExpanded)
     setExpandedContent(body)
@@ -120,6 +140,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         borderWidth: 2,
         borderStyle: proposal?.emergency ? 'solid' : 'none',
       }}
+      ref={ref}
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
@@ -131,20 +152,37 @@ export const ProposalCard = (props: ProposalCardProps) => {
             {id}
           </Typography>
           <Box position="relative">
-            <Typography display="block" variant="subtitle2_semi">
-              {getTitle(body)}
-            </Typography>
+            <Box>
+              <Typography variant="subtitle2_semi" mr={2}>
+                {getTitle(body)}
+              </Typography>
+            </Box>
+            <Link
+              href={`https://etherscan.io/tx/${transactionHash}`}
+              target="_blank"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Box
+                component="img"
+                src={`images/etherscan-logo-${isLight ? 'dark' : 'light'}.svg`}
+                width="12px"
+                height="12px"
+                position="relative"
+                top={-4}
+                mr={1}
+              ></Box>
+            </Link>
             {timeLeft ? (
               <Typography
                 variant="label2_medium"
                 color={formatColor(neutral.gray3)}
                 position="relative"
-                top={-10}
+                top={-6}
               >
                 {timeLeft}
               </Typography>
             ) : (
-              <Box height="8px"></Box>
+              <Box></Box>
             )}
           </Box>
         </Box>
