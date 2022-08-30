@@ -1,4 +1,4 @@
-# VaultController
+# Vault Controller
 
 ## Overview
 
