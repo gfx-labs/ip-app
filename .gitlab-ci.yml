@@ -87,7 +87,7 @@ trigger-deploy:
     IMAGE_NAME: "app"
   only:
     variables:
-      - $CI_COMMIT_BRANCH == "master"
+      - $CI_COMMIT_BRANCH == "devel"
   script:
     - kubectl config get-contexts
     - kubectl config use-context ip/gitlab-agents:gfxlabs-dev
