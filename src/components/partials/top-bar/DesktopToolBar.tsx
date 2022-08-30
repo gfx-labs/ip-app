@@ -8,7 +8,7 @@ import { DarkIcon } from '../../icons/misc/DarkIcon'
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
-import { useLocation, useNavigate } from 'react-router'
+import { AppGovSwitch } from '../../util/switch/AppGovSwitch'
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -18,17 +18,6 @@ export const DesktopToolBar = () => {
   const { toggleMode } = useContext(PaletteModeContext)
 
   const { setIsApp } = useAppGovernanceContext()
-
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  const appGovSwitchHandler = () => {
-    if (location.pathname.includes('proposal')) {
-      navigate('/')
-    } else {
-      navigate('/proposal')
-    }
-  }
 
   return (
     <Toolbar sx={{ padding: 0 }} disableGutters>
@@ -42,12 +31,7 @@ export const DesktopToolBar = () => {
       </Link>
       {setIsApp !== undefined ? (
         <Box sx={{ gap: 3 }} display="flex" ml={3}>
-          <BaseSwitch
-            option1="App"
-            option2="Governance"
-            onOptionChange={appGovSwitchHandler}
-            defaultIsOption1={!location.pathname.includes('proposal')}
-          />
+          <AppGovSwitch />
           <Box display="flex" alignItems="center"></Box>
         </Box>
       ) : (
