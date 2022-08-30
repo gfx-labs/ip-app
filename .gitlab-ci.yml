@@ -53,10 +53,11 @@ pages-github:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 upload-image:
-  stage: build
+  stage: deploy
   image: docker:20.10.2
   dependencies:
-    - site
+    - pages
+    - pages-github
   only:
     - master
   script:
