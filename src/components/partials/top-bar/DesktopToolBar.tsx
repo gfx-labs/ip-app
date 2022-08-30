@@ -1,17 +1,14 @@
 import { Box, Toolbar, Typography, Button, Link } from '@mui/material'
 import { useContext } from 'react'
 
-import {
-  ClaimsButton,
-  ConnectWalletButton,
-  SelectedChainButton,
-} from '../../util/button'
+import { ConnectWalletButton, SelectedChainButton } from '../../util/button'
 import { BaseSwitch } from '../../util/switch'
 import { LightIcon } from '../../icons/misc/LightIcon'
 import { DarkIcon } from '../../icons/misc/DarkIcon'
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { useLocation, useNavigate } from 'react-router'
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -21,6 +18,18 @@ export const DesktopToolBar = () => {
   const { toggleMode } = useContext(PaletteModeContext)
 
   const { setIsApp } = useAppGovernanceContext()
+
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const appGovSwitchHandler = () => {
+    if (location.pathname.includes('proposal')) {
+      navigate('/')
+    } else {
+      navigate('/proposal')
+    }
+  }
+
   return (
     <Toolbar sx={{ padding: 0 }} disableGutters>
       <Link href="#/landing" role="heading" aria-level={1}>
@@ -36,7 +45,8 @@ export const DesktopToolBar = () => {
           <BaseSwitch
             option1="App"
             option2="Governance"
-            onOptionChange={setIsApp}
+            onOptionChange={appGovSwitchHandler}
+            defaultIsOption1={!location.pathname.includes('proposal')}
           />
           <Box display="flex" alignItems="center"></Box>
         </Box>

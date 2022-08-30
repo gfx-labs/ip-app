@@ -1,6 +1,6 @@
 import { Box, Link, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { blue, formatColor, neutral, pink, theme } from '../../../theme'
+import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
 import { Status } from './Status'
 import { Spinner } from '../loading'
@@ -20,6 +20,8 @@ import {
   getProposalState,
 } from '../../../contracts/GovernorCharlieDelegate'
 import { useLight } from '../../../hooks/useLight'
+import { useParams } from 'react-router'
+import { useRef } from 'react'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -31,11 +33,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { votingPower } = props
   const { id, body, endBlock, transactionHash } = props.proposal
   const isLight = useLight()
-  const [isExpanded, setIsExpanded] = useState(false)
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   )
+  const param = useParams()
+  const ref = useRef<HTMLDivElement>(null)
 
+  const [isExpanded, setIsExpanded] = useState(false)
   const getTitle = (body: string) => {
     const splitBody = body.split('\n')
     let title = splitBody.find((n) => n[0] === '#')
@@ -104,6 +108,21 @@ export const ProposalCard = (props: ProposalCardProps) => {
     }
   }, [dataBlock])
 
+  useEffect(() => {
+    if (param.id === id) {
+      setExpandedContent(body)
+      setIsExpanded(true)
+
+      setTimeout(() => {
+        if (ref && ref.current) {
+          ref.current.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 500)
+      return
+    }
+    setIsExpanded(false)
+  }, [param.id])
+
   const expandCard = () => {
     setIsExpanded(!isExpanded)
     setExpandedContent(body)
@@ -121,6 +140,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         borderWidth: 2,
         borderStyle: proposal?.emergency ? 'solid' : 'none',
       }}
+      ref={ref}
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
