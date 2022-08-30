@@ -52,17 +52,25 @@ pages-github:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
-upload-image:
-  stage: deploy
-  image: docker:20.10.2
-  dependencies:
-    - pages
-    - pages-github
-  only:
-    - master
+jsonnet:
+  stage: build
+  image: alpine:latest
+  needs:
+    - site
   script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t ip/app:$CI_JOB_ID .
-    - docker push ip/app:$CI_JOB_ID
-    - docker tag ip/app:$CI_JOB_ID ip/app:latest
-    - docker push ip/app:latest
+    - apk add -U jsonnet
+    - jsonnet .gitlab-ci.jsonnet > generated-config.yml
+  artifacts:
+    paths:
+      - generated-config.yml
+
+trigger-builds:
+  stage: build
+  needs:
+    - jsonnet
+    - site
+  trigger:
+    include:
+      - artifact: generated-config.yml
+        job: jsonnet
+    strategy: depend
