@@ -38,7 +38,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   )
   const param = useParams()
   const ref = useRef<HTMLDivElement>(null)
-
+  console.log(body)
   const [isExpanded, setIsExpanded] = useState(false)
   const getTitle = (body: string) => {
     const splitBody = body.split('\n')
@@ -281,6 +281,9 @@ const markdownComponentConfig: Partial<
         {children}
       </th>
     )
+  },
+  p: ({ node, style, children, ...props }) => {
+    return <p style={{ ...style, whiteSpace: 'pre-wrap' }}>{children}</p>
   },
   td: ({ node, style, children, isHeader, ...props }) => {
     if (isHeader) {
