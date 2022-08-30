@@ -135,9 +135,11 @@ const Dashboard = () => {
             <Box sx={{ display: 'flex', gap: 2 }}>
               <SingleStatCard>
                 <TitleTextToolTip
-                  title={`Collateral Deposited`}
-                  tooltipContent="Total value of collateral "
-                  text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
+                  title={`Deposit APR`}
+                  tooltipContent="Current annualized rate paid to USDi holders"
+                  text={
+                    depositAPR !== null ? depositAPR.toFixed(2) + '%' : null
+                  }
                 />
               </SingleStatCard>
               <SingleStatCard>
