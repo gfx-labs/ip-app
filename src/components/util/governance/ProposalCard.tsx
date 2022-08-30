@@ -38,7 +38,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   )
   const param = useParams()
   const ref = useRef<HTMLDivElement>(null)
-  console.log(body)
   const [isExpanded, setIsExpanded] = useState(false)
   const getTitle = (body: string) => {
     const splitBody = body.split('\n')
