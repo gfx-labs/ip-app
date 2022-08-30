@@ -5,6 +5,7 @@ import week9 from '../../../pages/whitelist/week9'
 const weeks = {
   7: week7,
   8: week8,
+  9: week9,
 }
 
 export default weeks
