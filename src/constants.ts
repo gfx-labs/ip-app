@@ -11,3 +11,6 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export const USDI_DECIMALS = 18
 export const BACKUP_PROVIDER = 'https://cloudflare-eth.com'
+export const DEFAULT_BASE_URL = 'https://ip-stats-api.staging.gfx.town'
+
+export const CHART_INTEREST_RATE_OVERTIME = '/charts/interest_rates_overtime'
