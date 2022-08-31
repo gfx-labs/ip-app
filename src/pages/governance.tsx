@@ -77,7 +77,6 @@ export const Governance = () => {
     }
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-        console.log(res)
         setCurrentVotes(BNtoHexNumber(res))
       })
     }
@@ -210,7 +209,11 @@ export const Governance = () => {
 
         <Box display="flex" alignItems="center">
           <Typography variant="label2" whiteSpace="nowrap" mr={1}>
-            Voting Power: {currentVotes}
+            Voting Power:{' '}
+            {currentVotes.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}
           </Typography>
           <Button
             variant="text"
