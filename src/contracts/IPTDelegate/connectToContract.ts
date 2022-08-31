@@ -1,7 +1,6 @@
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { InterestProtocolTokenDelegate__factory } from '../../chain/contracts'
-
-const IPT_DELEGATE_ADDRESS = '0xe8504e3b854940818c8f3d61dc155fa9919dd10f'
+import { IPT_DELEGATE_ADDRESS } from '../../constants'
 
 const connectIPTDelegateContract = (signer: JsonRpcSigner) => {
   try {
