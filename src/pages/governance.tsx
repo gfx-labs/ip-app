@@ -1,4 +1,5 @@
 import { Box, Typography, useTheme, Button } from '@mui/material'
+import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
 import {
   useModalContext,
@@ -11,6 +12,7 @@ import { Spinner } from '../components/util/loading'
 import { ToolTip } from '../components/util/tooltip/ToolTip'
 import { getRecentProposals } from '../contracts/GovernorCharlieDelegate/getRecentProposals'
 import { getUserVotingPower } from '../contracts/IPTDelegate'
+import { BN } from '../easy/bn'
 
 export interface Proposal {
   body: string
@@ -58,7 +60,6 @@ export const Governance = () => {
     if (signerOrProvider) {
       getRecentProposals(signerOrProvider)
         .then((pl) => {
-          console.log(pl)
           pl.forEach((val) => {
             proposals.set(val.args.id.toNumber(), {
               id: val.args.id.toString(),
@@ -77,7 +78,8 @@ export const Governance = () => {
     }
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-        setCurrentVotes(BNtoHexNumber(res))
+        const currentVotes = res.div(BN('1e16')).toNumber() / 100
+        setCurrentVotes(currentVotes)
       })
     }
   }, [provider, dataBlock, chainId])
