@@ -21,6 +21,7 @@ import {
   ModalType,
 } from '../components/libs/modal-content-provider/ModalContentProvider'
 import { OpenVaultButton } from '../components/util/button/OpenVaultButton'
+import { InterestRateGraphCard } from '../components/util/cards/InterestRateGraphCard'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -253,8 +254,7 @@ const Dashboard = () => {
             <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
           </SingleStatCard>
         </Box>
-
-        <UsdiGraphCard />
+        <InterestRateGraphCard />
       </Box>
 
       <Box maxWidth="xl" margin="auto">
