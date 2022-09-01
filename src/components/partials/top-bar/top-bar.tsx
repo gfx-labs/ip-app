@@ -8,7 +8,7 @@ export interface TopBarProps extends AppBarProps {}
 
 export const TopBar = (props: TopBarProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   return (
     <AppBar
       position="absolute"

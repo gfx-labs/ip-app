@@ -1,4 +1,5 @@
 import { Box, Typography, useTheme, Button } from '@mui/material'
+import { connect } from 'http2'
 import { useEffect, useState } from 'react'
 import {
   useModalContext,
@@ -41,6 +42,7 @@ export const Governance = () => {
     dataBlock,
     provider,
     chainId,
+    connected,
     currentAccount,
     currentSigner,
     signerOrProvider,
@@ -56,6 +58,7 @@ export const Governance = () => {
 
   useEffect(() => {
     if (signerOrProvider) {
+      console.log({signerOrProvider})
       getRecentProposals(signerOrProvider)
         .then((pl) => {
           console.log(pl)
@@ -75,13 +78,19 @@ export const Governance = () => {
           setNoProposals(true)
         })
     }
+    console.log({currentAccount} , {currentSigner})
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-        console.log(res)
+        console.log(res, 'res')
         setCurrentVotes(BNtoHexNumber(res))
       })
     }
-  }, [provider, dataBlock, chainId])
+  }, [provider, dataBlock, chainId, connected])
+
+
+  useEffect(()=>{
+    console.log('Hello',{connected}, {provider}, {proposals}, {noProposals}, {signerOrProvider})
+  },[connected])
 
   return (
     <Box
@@ -221,24 +230,29 @@ export const Governance = () => {
           </Button>
         </Box>
       </Box>
-
-      {proposals.size != 0 ? (
-        Array.from(proposals.values())
-          .sort((a, b) => {
-            return Number(a.id) < Number(b.id) ? 1 : -1
-          })
-          .map((proposal, index) => (
-            <Box key={index} mb={2}>
-              <ProposalCard proposal={proposal} votingPower={currentVotes} />
-            </Box>
-          ))
+      {connected?(
+        proposals.size != 0 ? (
+          Array.from(proposals.values())
+            .sort((a, b) => {
+              return Number(a.id) < Number(b.id) ? 1 : -1
+            })
+            .map((proposal, index) => (
+              <Box key={index} mb={2}>
+                <ProposalCard proposal={proposal} votingPower={currentVotes} />
+              </Box>
+            ))
+        ) : (
+          <Box display="flex" justifyContent="center" mt="30vh">
+            {noProposals ? (
+              <Box>No Proposals available to show</Box>
+            ) : (
+              <Spinner />
+            )}
+          </Box>
+        )
       ) : (
         <Box display="flex" justifyContent="center" mt="30vh">
-          {noProposals ? (
-            <Box>No Proposals available to show</Box>
-          ) : (
-            <Spinner />
-          )}
+          <Box>Please Connect a Wallet</Box>
         </Box>
       )}
     </Box>
