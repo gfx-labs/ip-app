@@ -58,7 +58,6 @@ export const Governance = () => {
 
   useEffect(() => {
     if (signerOrProvider) {
-      console.log({signerOrProvider})
       getRecentProposals(signerOrProvider)
         .then((pl) => {
           console.log(pl)
@@ -78,19 +77,14 @@ export const Governance = () => {
           setNoProposals(true)
         })
     }
-    console.log({currentAccount} , {currentSigner})
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-        console.log(res, 'res')
+        console.log(res)
         setCurrentVotes(BNtoHexNumber(res))
       })
     }
-  }, [provider, dataBlock, chainId, connected])
+  }, [provider, dataBlock, chainId])
 
-
-  useEffect(()=>{
-    console.log('Hello',{connected}, {provider}, {proposals}, {noProposals}, {signerOrProvider})
-  },[connected])
 
   return (
     <Box
