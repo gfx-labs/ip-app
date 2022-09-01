@@ -22,16 +22,27 @@ import {
 import { useLight } from '../../../hooks/useLight'
 import { useParams } from 'react-router'
 import { useRef } from 'react'
+import { COMMON_CONTRACT_NAMES } from '../../../constants'
+import { getAddress } from 'ethers/lib/utils'
 
 export interface ProposalCardProps {
   proposal: Proposal
   votingPower: number
 }
 
+// returns the checksummed address if the address is valid, otherwise returns false
+const isAddress = (value: any): string | false => {
+  try {
+    return getAddress(value)
+  } catch {
+    return false
+  }
+}
+
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider, currentSigner } = useWeb3Context()
   const { votingPower } = props
-  const { id, body, endBlock, transactionHash } = props.proposal
+  const { id, body, endBlock, transactionHash, details } = props.proposal
   const isLight = useLight()
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
@@ -39,6 +50,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const param = useParams()
   const ref = useRef<HTMLDivElement>(null)
   const [isExpanded, setIsExpanded] = useState(false)
+
   const getTitle = (body: string) => {
     const splitBody = body.split('\n')
     let title = splitBody.find((n) => n[0] === '#')
@@ -49,6 +61,21 @@ export const ProposalCard = (props: ProposalCardProps) => {
     }
 
     return title
+  }
+
+  const linkIfAddress = (content: string) => {
+    if (isAddress(content.trim())) {
+      const commonName = COMMON_CONTRACT_NAMES[content] ?? content
+      return (
+        <Link
+          href={`https://etherscan.io/address/${content.trim()}`}
+          target="_blank"
+        >
+          {commonName}
+        </Link>
+      )
+    }
+    return <span>{content}</span>
   }
 
   const [proposal, setProposal] = useState<ProposalInfo>()
@@ -203,6 +230,23 @@ export const ProposalCard = (props: ProposalCardProps) => {
         >
           {expandedContent ? (
             <Box>
+              <Box>
+                {details.map((d, i) => (
+                  <Box sx={{ wordBreak: 'break-all', mb: 1 }} key={i}>
+                    {i + 1}: {linkIfAddress(d.target)}.{d.functionSig}(
+                    {d.callData.split(',').map((content, i) => {
+                      return (
+                        <span key={i}>
+                          {linkIfAddress(content)}
+                          {d.callData.split(',').length - 1 === i ? '' : ','}
+                        </span>
+                      )
+                    })}
+                    )
+                  </Box>
+                ))}
+              </Box>
+
               <ProposalDetails
                 id={id}
                 status={status}
