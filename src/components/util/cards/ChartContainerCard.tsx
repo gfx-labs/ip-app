@@ -127,7 +127,7 @@ const prepareChartOptions = (
       to.dataZoom = [
         {
           type: 'inside',
-          start: 0,
+          start: 50,
           end: 100,
         },
         {
