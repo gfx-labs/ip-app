@@ -14,3 +14,10 @@ export const BACKUP_PROVIDER = 'https://cloudflare-eth.com'
 export const DEFAULT_BASE_URL = 'https://ip-stats-api.staging.gfx.town'
 
 export const CHART_INTEREST_RATE_OVERTIME = '/charts/interest_rates_overtime'
+
+export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
+  [GOVERNOR_ADDRESS]: 'Governance',
+  '0x4aaE9823Fb4C70490F1d802fC697F3ffF8D5CbE3': 'Vault Controller',
+  '0xf4818813045E954f5Dc55a40c9B60Def0ba3D477': 'Oracle Master',
+  '0x0029abd74B7B32e6a82Bf9f62CB9Dd4Bf8e39aAf': 'Curve Master',
+}

@@ -1,3 +1,4 @@
+import { defaultAbiCoder } from '@ethersproject/abi'
 import { Box, Typography, useTheme, Button } from '@mui/material'
 import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
@@ -20,6 +21,48 @@ export interface Proposal {
   proposer: string
   endBlock: number
   transactionHash: string
+  details: ProposalDetails[]
+}
+
+export interface ProposalDetails {
+  target: string
+  functionSig: string
+  callData: string
+}
+const FOUR_BYTES_DIR: { [sig: string]: string } = {
+  '0x5ef2c7f0': 'setSubnodeRecord(bytes32,bytes32,address,address,uint64)',
+  '0x10f13a8c': 'setText(bytes32,string,string)',
+  '0xb4720477': 'sendMessageToChild(address,bytes)',
+}
+
+const getProposalDetails = (details: any): ProposalDetails[] => {
+  const proposalDetails = []
+
+  for (let i = 0; i < details.targets.length; i++) {
+    const signature = details.signatures[i]
+    let calldata = details.calldatas[i]
+    let name: string
+    let types: string
+
+    if (signature === '') {
+      const fourbyte = calldata.slice(0, 10)
+      const sig = FOUR_BYTES_DIR[fourbyte] ?? 'UNKNOWN()'
+      if (!sig) throw new Error('Missing four byte sig')
+      ;[name, types] = sig.substring(0, sig.length - 1).split('(')
+      calldata = `0x${calldata.slice(10)}`
+    } else {
+      ;[name, types] = signature.substring(0, signature.length - 1).split('(')
+    }
+    const decoded = defaultAbiCoder.decode(types.split(','), calldata)
+
+    proposalDetails.push({
+      target: details.targets[i],
+      functionSig: name,
+      callData: decoded.join(', '),
+    })
+  }
+
+  return proposalDetails
 }
 
 const TooltipValue = ({
@@ -67,6 +110,7 @@ export const Governance = () => {
               body: val.args.description,
               endBlock: val.args.endBlock.toNumber(),
               transactionHash: val.transactionHash,
+              details: getProposalDetails(val.args),
             })
           })
           setProposals(new Map(proposals))
