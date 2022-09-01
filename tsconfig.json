@@ -4,7 +4,7 @@
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -15,8 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "composite": true,
-    "jsx": "react-jsx",
-    "types": ["vite/client"]
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*", "vite.config.ts", "types.d.ts"]
 }
