@@ -1,4 +1,10 @@
-import { Box, Typography, Button, InputAdornment } from '@mui/material'
+import {
+  Box,
+  Typography,
+  Button,
+  InputAdornment,
+  Skeleton,
+} from '@mui/material'
 import { FormEvent, useEffect, useState } from 'react'
 import { AppLayout } from '../../components/partials/app-layout'
 import { useLight } from '../../hooks/useLight'
@@ -124,17 +130,19 @@ const PurchaseBox = ({
     signerOrProvider,
   } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
-  const [iptForSale, setIptForSale] = useState(0)
-  const [iptSold, setIptSold] = useState(0)
+  const [iptForSale, setIptForSale] = useState<number | undefined>()
+  const [iptSold, setIptSold] = useState<number | undefined>(0)
 
   const [basePrice, setBasePrice] = useState(0.25)
-  const [salePrice, setSalePrice] = useState(basePrice)
+  const [salePrice, setSalePrice] = useState<number | undefined>()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
 
   const [needAllowance, setNeedAllowance] = useState(true)
 
-  const [salePeriodRemaining, setSalePeriodRemaining] = useState<string>('')
+  const [salePeriodRemaining, setSalePeriodRemaining] = useState<
+    string | undefined
+  >()
   const [secondaryValue, setSecondaryValue] = useState<string>('')
   const [secondaryValueUnit, setSecondaryValueUnit] = useState<string>('USDC')
 
@@ -324,7 +332,20 @@ const PurchaseBox = ({
           <Box display="flex" alignItems="center">
             <ClockIcon sx={{ width: 14, height: 14, mr: 1, mb: 0.5 }} />
             <Typography variant="body3" color="primary.dark">
-              Sale Renews in {salePeriodRemaining}
+              Sale Renews in{' '}
+              {salePeriodRemaining ? (
+                salePeriodRemaining
+              ) : (
+                <Skeleton
+                  variant="rectangular"
+                  height="16px"
+                  width="80px"
+                  animation="wave"
+                  sx={{
+                    display: 'inline-block',
+                  }}
+                />
+              )}
             </Typography>
           </Box>
         </Box>
@@ -348,7 +369,19 @@ const PurchaseBox = ({
               </Typography>
               <Typography variant="body3" fontWeight={400} color="primary.dark">
                 {' '}
-                {iptForSale.toLocaleString()}
+                {iptForSale ? (
+                  iptForSale.toLocaleString()
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    height="16px"
+                    width="50px"
+                    animation="wave"
+                    sx={{
+                      display: 'inline-block',
+                    }}
+                  />
+                )}
               </Typography>
             </Box>
 
@@ -362,7 +395,19 @@ const PurchaseBox = ({
                 Sale Price:
               </Typography>
               <Typography variant="body3" fontWeight={400} color="primary.dark">
-                ${salePrice}
+                {salePrice ? (
+                  `${salePrice}`
+                ) : (
+                  <Skeleton
+                    variant="rectangular"
+                    height="16px"
+                    width="50px"
+                    animation="wave"
+                    sx={{
+                      display: 'inline-block',
+                    }}
+                  />
+                )}
               </Typography>
             </Box>
           </Box>
@@ -372,7 +417,19 @@ const PurchaseBox = ({
             </Typography>
             <Typography variant="body3" fontWeight={400} color="primary.dark">
               {' '}
-              {iptSold.toLocaleString()}
+              {iptSold ? (
+                iptSold.toLocaleString()
+              ) : (
+                <Skeleton
+                  variant="rectangular"
+                  height="16px"
+                  width="50px"
+                  animation="wave"
+                  sx={{
+                    display: 'inline-block',
+                  }}
+                />
+              )}
             </Typography>
           </Box>
         </Box>
