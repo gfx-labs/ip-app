@@ -49,6 +49,7 @@ export const MobileToolBar = () => {
       sx={{
         marginTop: 3,
         marginBottom: 3,
+        paddingX: {xs: 0},
         justifyContent: {
           xs: 'space-between',
         },

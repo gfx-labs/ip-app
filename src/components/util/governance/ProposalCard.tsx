@@ -85,6 +85,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [abstainVotes, setAbstainVotes] = useState(0)
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
+  const [isActive, setIsActive] = useState(false)
+
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
 
@@ -114,6 +116,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   useEffect(() => {
     const bdiff = endBlock - dataBlock
     const secs = bdiff * 13.5
+    setIsActive(secs > 0)
     const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100)
     if (bdiff < 0) {
       if (hrdiff >= 24) {
@@ -164,7 +167,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         cursor: 'pointer',
         borderColor: formatColor(pink.pink1),
         borderWidth: 2,
-        borderStyle: proposal?.emergency ? 'solid' : 'none',
+        borderStyle: proposal?.emergency && isActive ? 'solid' : 'none',
       }}
       ref={ref}
     >
@@ -232,7 +235,15 @@ export const ProposalCard = (props: ProposalCardProps) => {
             <Box>
               <Box>
                 {details.map((d, i) => (
-                  <Box sx={{ wordBreak: 'break-all', mb: 1 }} key={i}>
+                  <Box
+                    sx={{
+                      wordBreak: 'break-all',
+                      mb: 1,
+                      fontSize: 16,
+                      fontWeight: 400,
+                    }}
+                    key={i}
+                  >
                     {i + 1}: {linkIfAddress(d.target)}.{d.functionSig}(
                     {d.callData.split(',').map((content, i) => {
                       return (

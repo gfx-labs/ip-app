@@ -86,6 +86,7 @@ export const Governance = () => {
     dataBlock,
     provider,
     chainId,
+    connected,
     currentAccount,
     currentSigner,
     signerOrProvider,
@@ -127,6 +128,7 @@ export const Governance = () => {
       })
     }
   }, [provider, dataBlock, chainId])
+
 
   return (
     <Box
@@ -270,24 +272,29 @@ export const Governance = () => {
           </Button>
         </Box>
       </Box>
-
-      {proposals.size != 0 ? (
-        Array.from(proposals.values())
-          .sort((a, b) => {
-            return Number(a.id) < Number(b.id) ? 1 : -1
-          })
-          .map((proposal, index) => (
-            <Box key={index} mb={2}>
-              <ProposalCard proposal={proposal} votingPower={currentVotes} />
-            </Box>
-          ))
+      {connected?(
+        proposals.size != 0 ? (
+          Array.from(proposals.values())
+            .sort((a, b) => {
+              return Number(a.id) < Number(b.id) ? 1 : -1
+            })
+            .map((proposal, index) => (
+              <Box key={index} mb={2}>
+                <ProposalCard proposal={proposal} votingPower={currentVotes} />
+              </Box>
+            ))
+        ) : (
+          <Box display="flex" justifyContent="center" mt="30vh">
+            {noProposals ? (
+              <Box>No Proposals available to show</Box>
+            ) : (
+              <Spinner />
+            )}
+          </Box>
+        )
       ) : (
         <Box display="flex" justifyContent="center" mt="30vh">
-          {noProposals ? (
-            <Box>No Proposals available to show</Box>
-          ) : (
-            <Spinner />
-          )}
+          <Box>Please Connect a Wallet</Box>
         </Box>
       )}
     </Box>

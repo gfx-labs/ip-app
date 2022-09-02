@@ -7,12 +7,11 @@ export const getRecentProposals = async (
 ) => {
   try {
     const contract = connectToGovernorContract(signerOrProvider)
-
     const filters = contract.filters.ProposalCreated()
     const logs = await contract.queryFilter(filters, undefined, headBlock)
 
     return logs
-  } catch (err) {
+  } catch (err) { 
     throw new Error('error getting proposals')
   }
 }

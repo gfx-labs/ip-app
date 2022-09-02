@@ -74,6 +74,7 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
         ref={ref}
         style={{
           ...style,
+          height: 300,
         }}
       ></div>
     </>
@@ -124,17 +125,17 @@ const prepareChartOptions = (
       // @ts-ignore
       to.title.textStyle!.color = isLight ? '#6B7687' : '#FFFFFF'
 
-      to.dataZoom = [
-        {
-          type: 'inside',
-          start: 50,
-          end: 100,
-        },
-        {
-          start: 0,
-          end: 100,
-        },
-      ]
+      // to.dataZoom = [
+      //   {
+      //     type: 'inside',
+      //     start: 50,
+      //     end: 100,
+      //   },
+      //   {
+      //     start: 0,
+      //     end: 100,
+      //   },
+      // ]
       break
     case 'nogrid':
       const x = to.yAxis as any
