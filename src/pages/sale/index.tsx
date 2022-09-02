@@ -150,9 +150,9 @@ const PurchaseBox = ({
     if (amountToCommit === '') {
       setSecondaryValue('')
     } else if (isIPTValue) {
-      setSecondaryValue((Number(amountToCommit) * salePrice).toString())
+      setSecondaryValue((Number(amountToCommit) * salePrice!).toString())
     } else {
-      setSecondaryValue((Number(amountToCommit) / salePrice).toString())
+      setSecondaryValue((Number(amountToCommit) / salePrice!).toString())
     }
   }, [amountToCommit])
 
