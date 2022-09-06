@@ -24,6 +24,7 @@ import { useParams } from 'react-router'
 import { useRef } from 'react'
 import { COMMON_CONTRACT_NAMES } from '../../../constants'
 import { getAddress } from 'ethers/lib/utils'
+import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -86,12 +87,21 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
+  const [proposalType, setProposalType] = useState('')
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
 
     getProposalInfo(id, signerOrProvider!).then((res) => {
+        getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(isWhitelisted => {
+          
+          const pType = isWhitelisted ? 'Optimistic' : res.emergency ? 'Emergency' : 'Standard'
+
+          setProposalType(pType)
+        })
+
       setProposal(res)
+
     })
 
     getProposalState(id, signerOrProvider!).then((res) => {
@@ -163,7 +173,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
         backgroundColor: 'primary.light',
         borderRadius: 2,
         paddingX: { xs: 1, md: 4 },
-        paddingY: 3,
+        paddingTop: 3,
+        paddingBottom: 1,
         cursor: 'pointer',
         borderColor: formatColor(pink.pink1),
         borderWidth: 2,
@@ -220,7 +231,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
           <Box display={{ xs: 'none', md: 'flex' }}>
             <Votes noVotes={againstVotes} yesVotes={forVotes} />
           </Box>
+          <Box textAlign="center">
+
           <Status status={status} />
+          <Typography color="text.secondary"                 variant="label2_medium"
+ >{proposalType}</Typography>
+          </Box>
+          
         </Box>
       </Box>
 
