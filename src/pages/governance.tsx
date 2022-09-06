@@ -20,6 +20,7 @@ export interface Proposal {
   id: string
   proposer: string
   endBlock: number
+  startBlock: number
   transactionHash: string
   details: ProposalDetails[]
 }
@@ -110,6 +111,7 @@ export const Governance = () => {
               proposer: val.args.proposer,
               body: val.args.description,
               endBlock: val.args.endBlock.toNumber(),
+              startBlock: val.args.startBlock.toNumber(),
               transactionHash: val.transactionHash,
               details: getProposalDetails(val.args),
             })
@@ -128,7 +130,6 @@ export const Governance = () => {
       })
     }
   }, [provider, dataBlock, chainId])
-
 
   return (
     <Box
@@ -272,7 +273,7 @@ export const Governance = () => {
           </Button>
         </Box>
       </Box>
-      {connected?(
+      {connected ? (
         proposals.size != 0 ? (
           Array.from(proposals.values())
             .sort((a, b) => {

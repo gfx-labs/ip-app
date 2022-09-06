@@ -1,4 +1,4 @@
-import { LIVE_DELTAS } from '../../../constants'
+import { DEFAULT_BASE_URL, LIVE_DELTAS } from '../../../constants'
 import getAPIBaseUrl from '../helpers/getAPIBaseUrl'
 import axios from 'axios'
 
@@ -31,7 +31,7 @@ export interface Deltas {
 
 const getDeltas = async () => {
   try {
-    const deltaURL = `${getAPIBaseUrl()}${LIVE_DELTAS}`
+    const deltaURL = `${DEFAULT_BASE_URL}${LIVE_DELTAS}`
 
     const response = await axios.get(deltaURL)
 

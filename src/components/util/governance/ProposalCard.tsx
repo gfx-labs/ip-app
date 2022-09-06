@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material'
+import { Box, Link, Skeleton, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
@@ -25,11 +25,14 @@ import { useRef } from 'react'
 import { COMMON_CONTRACT_NAMES } from '../../../constants'
 import { getAddress } from 'ethers/lib/utils'
 import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
+import { proposalTimeRemaining } from './proposalTimeRemaining'
 
 export interface ProposalCardProps {
   proposal: Proposal
   votingPower: number
 }
+
+export type IProposalType = '' | 'Standard' | 'Optimistic' | 'Emergency'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 const isAddress = (value: any): string | false => {
@@ -43,7 +46,8 @@ const isAddress = (value: any): string | false => {
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider, currentSigner } = useWeb3Context()
   const { votingPower } = props
-  const { id, body, endBlock, transactionHash, details } = props.proposal
+  const { id, body, endBlock, transactionHash, details, startBlock } =
+    props.proposal
   const isLight = useLight()
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
@@ -87,21 +91,25 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
-  const [proposalType, setProposalType] = useState('')
+  const [proposalType, setProposalType] = useState<IProposalType>('')
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
 
     getProposalInfo(id, signerOrProvider!).then((res) => {
-        getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(isWhitelisted => {
-          
-          const pType = isWhitelisted ? 'Optimistic' : res.emergency ? 'Emergency' : 'Standard'
+      getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(
+        (isWhitelisted) => {
+          const pType = isWhitelisted
+            ? 'Optimistic'
+            : res.emergency
+            ? 'Emergency'
+            : 'Standard'
 
           setProposalType(pType)
-        })
+        }
+      )
 
       setProposal(res)
-
     })
 
     getProposalState(id, signerOrProvider!).then((res) => {
@@ -127,25 +135,21 @@ export const ProposalCard = (props: ProposalCardProps) => {
     const bdiff = endBlock - dataBlock
     const secs = bdiff * 13.5
     setIsActive(secs > 0)
-    const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100)
+
     if (bdiff < 0) {
-      if (hrdiff >= 24) {
-        setTimeLeft(`Voting Ended ${Math.floor(hrdiff / 24)} Days ago`)
-      } else if (hrdiff > 1)
-        setTimeLeft(`Voting Ended ${Math.floor(hrdiff)} Hour(s) ago`)
-      else {
-        setTimeLeft(`Voting Ended ${Math.floor(hrdiff * 60)} Minute(s) ago`)
-      }
+      provider?.getBlock(endBlock).then((res) => {
+        const endDate = new Date(res.timestamp * 1000)
+        setTimeLeft(`Voting Ended on ${endDate.toLocaleDateString()}`)
+      })
       return
     }
-    if (hrdiff >= 24) {
-      setTimeLeft(`Active for ${Math.floor(hrdiff / 24)} Days`)
-    } else if (hrdiff > 1)
-      setTimeLeft(`Active for ${Math.floor(hrdiff)} Hour(s)`)
-    else {
-      setTimeLeft(`Active for ${Math.floor(hrdiff * 60)} Minute(s)`)
+
+    if (proposalType !== '') {
+      setTimeLeft(
+        proposalTimeRemaining(proposalType, startBlock, endBlock, dataBlock)
+      )
     }
-  }, [dataBlock])
+  }, [dataBlock, proposalType])
 
   useEffect(() => {
     if (param.id === id) {
@@ -222,7 +226,17 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 {timeLeft}
               </Typography>
             ) : (
-              <Box></Box>
+              <Skeleton
+                variant="rectangular"
+                width={200}
+                height="14px"
+                animation="wave"
+                sx={{
+                  top: -6,
+                  position: 'relative',
+                  display: 'inline-block',
+                }}
+              />
             )}
           </Box>
         </Box>
@@ -232,12 +246,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
             <Votes noVotes={againstVotes} yesVotes={forVotes} />
           </Box>
           <Box textAlign="center">
-
-          <Status status={status} />
-          <Typography color="text.secondary"                 variant="label2_medium"
- >{proposalType}</Typography>
+            <Status status={status} />
+            <Typography color="text.secondary" variant="label2_medium">
+              {proposalType}
+            </Typography>
           </Box>
-          
         </Box>
       </Box>
 
@@ -328,7 +341,6 @@ const markdownComponentConfig: Partial<
         style={{
           borderRadius: 10,
           backgroundColor: '#fcfcfc',
-
           color: '#303030',
           border: '1px solid black',
           borderCollapse: 'collapse',
