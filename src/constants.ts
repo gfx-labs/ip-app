@@ -14,6 +14,7 @@ export const BACKUP_PROVIDER = 'https://cloudflare-eth.com'
 export const DEFAULT_BASE_URL = 'https://ip-stats-api.staging.gfx.town'
 
 export const CHART_INTEREST_RATE_OVERTIME = '/charts/interest_rates_overtime'
+export const LIVE_DELTAS = '/live/deltas'
 
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   [GOVERNOR_ADDRESS]: 'Governance',
