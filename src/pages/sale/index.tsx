@@ -131,7 +131,7 @@ const PurchaseBox = ({
   } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
   const [iptForSale, setIptForSale] = useState<number | undefined>()
-  const [iptSold, setIptSold] = useState<number | undefined>(0)
+  const [iptSold, setIptSold] = useState<string | undefined>()
 
   const [basePrice, setBasePrice] = useState(0.25)
   const [salePrice, setSalePrice] = useState<number | undefined>()
@@ -187,7 +187,7 @@ const PurchaseBox = ({
         setSalePeriodRemaining(srt)
         if (isNewDay) {
           setSalePrice(basePrice)
-          setIptSold(0)
+          setIptSold('0')
           setIptForSale(1000000)
           return
         }
@@ -196,7 +196,7 @@ const PurchaseBox = ({
         })
         getAmountIPTForSale(signerOrProvider!).then((res) => {
           let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
-          setIptSold(sold)
+          setIptSold(sold.toLocaleString())
           let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
           setIptForSale(max - sold)
         })
@@ -418,7 +418,7 @@ const PurchaseBox = ({
             <Typography variant="body3" fontWeight={400} color="primary.dark">
               {' '}
               {iptSold ? (
-                iptSold.toLocaleString()
+                iptSold
               ) : (
                 <Skeleton
                   variant="rectangular"

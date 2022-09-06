@@ -22,6 +22,8 @@ import {
 } from '../components/libs/modal-content-provider/ModalContentProvider'
 import { OpenVaultButton } from '../components/util/button/OpenVaultButton'
 import { InterestRateGraphCard } from '../components/util/cards/InterestRateGraphCard'
+import getDeltas, { Deltas } from '../components/util/api/getDeltas'
+import { Substat } from '../components/util/text/Substat'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -47,6 +49,7 @@ const Dashboard = () => {
   const [reserveRatio, setReserveRatio] = useState('0')
   const [borrowAPR, setBorrowAPR] = useState(0)
   const [depositAPR, setDepositAPR] = useState(0)
+  const [deltas, setDeltas] = useState<Deltas | undefined>()
 
   useEffect(() => {
     if (currentAccount && rolodex) {
@@ -93,6 +96,10 @@ const Dashboard = () => {
           setBorrowAPR(0)
         })
     }
+
+    getDeltas().then((deltas) => {
+      setDeltas(deltas)
+    })
   }, [rolodex, dataBlock])
 
   return (
@@ -135,6 +142,13 @@ const Dashboard = () => {
                 title={`Deposit APR`}
                 tooltipContent="Current annualized rate paid to USDi holders"
                 text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
+                substat={
+                  <Substat
+                    days={7}
+                    stat={Number(deltas?.DepositRate.Week.Percent)}
+                    suffix="%"
+                  />
+                }
               />
             </SingleStatCard>
             <SingleStatCard>
@@ -142,6 +156,13 @@ const Dashboard = () => {
                 title={`Borrow APR`}
                 tooltipContent="Current annualized rate paid by USDi borrowers"
                 text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
+                substat={
+                  <Substat
+                    days={7}
+                    stat={Number(deltas?.BorrowRate.Week.Percent)}
+                    suffix="%"
+                  />
+                }
               />
             </SingleStatCard>
           </Box>

@@ -74,7 +74,7 @@ export const disabled: { [key: string]: [number, number, number] } = {
 }
 
 export const pink: { [key: string]: Color } = {
-  pink1: [231, 66, 161], // E742A1
+  pink1: [231, 66, 161], // #E742A1
   pink2: [251, 223, 239], // #FBDFEF
   pink3: [73, 65, 74], // #49414A
 }
