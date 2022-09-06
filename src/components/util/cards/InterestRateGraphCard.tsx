@@ -1,18 +1,7 @@
 import { Box } from '@mui/material'
-import {
-  CHART_INTEREST_RATE_OVERTIME,
-  DEFAULT_BASE_URL,
-} from '../../../constants'
+import { CHART_INTEREST_RATE_OVERTIME } from '../../../constants'
+import getAPIBaseUrl from '../helpers/getAPIBaseUrl'
 import { ChartContainerCard } from './ChartContainerCard'
-
-const getAPIBaseUrl = () => {
-  const envURL: string | undefined = import.meta.env.VITE_ANALYTICS_URL
-
-  if (envURL === '' || envURL === undefined) {
-    return DEFAULT_BASE_URL
-  }
-  return envURL
-}
 
 export const InterestRateGraphCard = () => {
   return (
