@@ -35,7 +35,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
     } catch (err) {
       const error = err as ContractReceipt
 
-      setError(JSON.parse(JSON.stringify(error)).reason)
+      setError(JSON.parse(JSON.stringify(error)).message)
       updateTransactionState(error)
     }
   }

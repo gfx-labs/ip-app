@@ -188,7 +188,7 @@ export const UserStats = () => {
         <SingleStatCard>
           <TitleTextToolTip
             title={`Borrowing Power`}
-            tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
+            tooltipContent="The maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV."
             text={
               borrowingPower !== null
                 ? '$' + Math.round(borrowingPower).toLocaleString()
@@ -247,7 +247,7 @@ export const UserStats = () => {
             }}
           >
             <TitleTextToolTip
-              tooltipContent="Amount of USDi your vault is currently borrowing. This increases as interest accrues."
+              tooltipContent="The amount of USDi your vault is currently borrowing. This increases as interest accrue."
               title={`USDi Borrowed`}
               text={
                 accountLiability !== null
