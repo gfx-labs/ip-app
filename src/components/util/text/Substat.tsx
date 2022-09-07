@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material'
-import { formatColor, green, pink } from '../../../theme'
+import { blue, formatColor, green, pink } from '../../../theme'
 import { ArrowDownIcon } from '../../icons/misc/ArrowDownIcon'
 import { ArrowUpIcon } from '../../icons/misc/ArrowUpIcon'
 
@@ -8,7 +8,7 @@ export const Substat = ({
   suffix,
   days,
 }: {
-  stat: number
+  stat: number | string
   suffix: string
   days: number
 }) => {
@@ -30,10 +30,10 @@ export const Substat = ({
     <Typography
       ml={2}
       variant="label2_light"
-      color={stat >= 0 ? formatColor(green.green3) : formatColor(pink.pink1)}
+      color={formatColor(blue.blue1)}
       sx={{ display: 'flex', alignItems: 'center' }}
     >
-      ({days} D) {getArrow(stat)} {stat}
+      {days}D avg: {stat || '-'}
       {suffix}
     </Typography>
   )
