@@ -180,7 +180,7 @@ const Dashboard = () => {
               }}
             >
               <TitleTextToolTip
-                tooltipContent="Amount of USDi your vault is currently borrowing. This increases as interest accrues."
+                tooltipContent="The amount of USDi your vault is currently borrowing. This increases as interest accrue."
                 title={`USDi Borrowed`}
                 text={
                   accountLiability !== null

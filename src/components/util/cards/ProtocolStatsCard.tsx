@@ -17,7 +17,7 @@ export const ProtocolStatsCard = () => {
     >
       <Box lineHeight={0} mb={3}>
         <Typography variant="label" color={formatColor(neutral.gray3)}>
-          Deposit USDC and USDi
+          Mint or Redeem USDi
         </Typography>
       </Box>
       <SwapContainer />

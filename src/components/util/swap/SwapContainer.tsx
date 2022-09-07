@@ -131,7 +131,7 @@ export const SwapContainer = () => {
               }
             }}
           >
-            Deposit
+            Mint USDi
           </Button>
         ) : (
           <Button
@@ -140,7 +140,7 @@ export const SwapContainer = () => {
             disabled={!token1.wallet_balance || Number(token1Amount) <= 0}
             onClick={() => setType(ModalType.WithdrawUSDCConfirmation)}
           >
-            Withdraw
+            Redeem USDi
           </Button>
         )
       ) : (
