@@ -1,7 +1,7 @@
 import { StrictMode, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './theme/fonts.css'
-import WhitelistPage from '../src/pages/whitelist'
+
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { Web3ReactProvider } from '@web3-react/core'
 import { providers } from 'ethers'
@@ -115,7 +115,6 @@ const AppRouter = () => {
             </Web3ContextProvider>
           }
         />
-        <Route path={`/whitelist`} element={<WhitelistPage />} />
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/whitepaper`} element={<WhitepaperPage />} />
         <Route path={`/terms`} element={<TermsPage />} />

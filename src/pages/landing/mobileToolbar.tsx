@@ -114,7 +114,7 @@ export const LandingMobileToolbar = () => {
           <Button
             variant="text"
             onClick={toApp}
-            sx={{ color: 'inherit', justifyContent: 'start', mb: -1 }}
+            sx={{ color: 'inherit', justifyContent: 'start', mb: -1, pl: 0 }}
           >
             <Typography variant="body3" color={formatColor(neutral.black)}>
               App
