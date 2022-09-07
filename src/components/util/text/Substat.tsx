@@ -33,7 +33,7 @@ export const Substat = ({
       color={stat >= 0 ? formatColor(green.green3) : formatColor(pink.pink1)}
       sx={{ display: 'flex', alignItems: 'center' }}
     >
-      ({days} D) {getArrow(stat)} {stat}
+      ({days} D) {getArrow(stat)} {stat || '-'}
       {suffix}
     </Typography>
   )
