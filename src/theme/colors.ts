@@ -111,7 +111,7 @@ export const gradient: { [key: string]: Gradient } = {
   bgDefaultLight: {
     angle: 180,
     stops: [
-      [[248, 248, 248], 0],
+      [[255, 255, 255], 0],
       [[238, 236, 242], 1],
     ],
   },

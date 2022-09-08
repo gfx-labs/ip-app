@@ -194,7 +194,7 @@ export const UsdiGraphCard = () => {
       sx={{
         paddingX: { xs: 3, md: 6 },
         paddingY: { xs: 6, md: 6 },
-        backgroundColor: 'smallCard.background',
+        backgroundColor: 'card.background',
         borderRadius: 2.5,
         display: 'flex',
       }}

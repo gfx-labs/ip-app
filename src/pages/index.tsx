@@ -13,7 +13,7 @@ import fetchVaultOf from '../contracts/Vault/fetchVaultOf'
 import { getTotalSupply, getReserveRatio } from '../contracts/USDI'
 import { BN, round } from '../easy/bn'
 import { TitleText } from '../components/util/text'
-import { SingleStatCard } from '../components/util/UserStats/SingleStatCard'
+import { SingleStatCard } from '../components/util/cards/SingleStatCard'
 import { InverseButton } from '../components/util/button'
 import { TitleTextToolTip } from '../components/util/text/TitleTextToolTip'
 import {

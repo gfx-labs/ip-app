@@ -44,21 +44,76 @@ export const getDesignTokens = (mode: PaletteMode) => {
       secondary: { main: getColor(formatColor(blue.blue2)) },
       success: { main: getColor(formatColor(green.green1)) },
       text: {
-        primary: getColor(
-          formatColor(neutral.gray1),
-          formatColor(neutral.white)
-        ),
-        secondary: getColor(formatColor(neutral.gray3)),
+        primary: getColor('#374252', formatColor(neutral.white)),
+        secondary: '#A3A9BA',
+        tertiary: '#748FF1',
+      },
+      accordion: {
+        background: getColor(formatColor(neutral.white), '#1A1A1E'),
+        border: getColor('#EBEBEB', '#242424'),
+      },
+      accordionCard: {
+        background: getColor('#F3F3F3', '#151515'),
+        border: getColor('#EBEBEB', '#242424'),
       },
       background: {
         default: getColor(
           `linear-gradient(${formatGradient(gradient.bgDefaultLight)})`,
-          getColor(formatColor(neutral.gray4))
+          '#121316'
         ),
         overview: getColor(
           formatColor(neutral.gray5),
           formatColor(neutral.gray7)
         ),
+      },
+      banner: {
+        general: ' #CDE1FF',
+      },
+      button: {
+        disabled: '#B0B4C2',
+        active: getColor(
+          formatColor(neutral.black),
+          formatColor(neutral.white)
+        ),
+        status: getColor(
+          formatColor(neutral.black),
+          formatColor(neutral.white)
+        ),
+        sale: getColor('#374252', formatColor(neutral.white)),
+        header: getColor(formatColor(neutral.white), '#202020'),
+        borrowRepay: getColor(
+          formatColor(neutral.black),
+          formatColor(neutral.white)
+        ),
+        claim: '#5E64F4',
+        depositWithdraw: '#A3A9BA',
+        link: '#748FF1',
+        app: '#5E64F4',
+        vote: '#5E64F4',
+        start: '#5E64F4',
+        skip: '#374252',
+      },
+      card: {
+        background: getColor(formatColor(neutral.white), '#1A1A1E'),
+        border: getColor('#EBEBEB', '#242424'),
+      },
+      input: {
+        background: getColor('#F3F3F3', '#2C2D32'),
+        border: {
+          active: getColor('#748FF1', '#5E64F4'),
+          inactive: getColor('#EBEBEB', '#242424'),
+        },
+      },
+      modal: {
+        background: getColor(formatColor(neutral.white), '#121316'),
+      },
+      slider: {
+        background: getColor('#F3F3F3', '#202020'),
+        button: formatColor(neutral.white),
+        text: {
+          active: '#374252',
+          inactive: '#A3A9BA',
+        },
       },
       mobileToolBar: {
         background: getColor(
@@ -68,10 +123,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       },
       divider: getColor(formatColor(neutral.gray6)),
       footer: {
-        background: getColor(
-          formatColor(neutral.white),
-          formatColor(neutral.gray7)
-        ),
+        background: getColor(formatColor(neutral.white), '#1A1A1E'),
         color: getColor(formatColor(neutral.gray3)),
       },
       smallCard: {

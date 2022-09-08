@@ -5,7 +5,7 @@ import { ChartContainerCard } from './ChartContainerCard'
 
 export const InterestRateGraphCard = () => {
   return (
-    <Box sx={{ backgroundColor: 'smallCard.background', borderRadius: 2.5 }}>
+    <Box sx={{ backgroundColor: 'card.background', borderRadius: 2.5 }}>
       <ChartContainerCard
         style={{
           position: 'relative',
