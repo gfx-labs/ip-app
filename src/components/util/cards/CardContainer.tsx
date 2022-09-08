@@ -9,6 +9,7 @@ export const CardContainer = ({ children }: BoxProps) => {
         width: '100%',
         backgroundColor: 'card.background',
         borderRadius: 2.5,
+        border: `1px solid ${isLight ? '#F3F3F3' : '#242424'}`,
         boxShadow: isLight ? '0px 4px 4px 0px rgba(0,0,0, 0.04)' : 'none',
       }}
     >

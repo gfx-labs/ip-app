@@ -95,9 +95,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
     <Box
       sx={{
         width: calculateContainerWidth(),
-        backgroundColor: isLight
-          ? formatColor(neutral.gray5)
-          : formatColor(neutral.black7),
+        backgroundColor: 'slider.background',
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'row',
@@ -118,7 +116,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         className={isOption1 ? 'option1' : 'option2'}
         sx={{
           width: calculateWidth(),
-          backgroundColor: formatColor(neutral.white),
+          backgroundColor: 'slider.button',
           color: formatColor(neutral.black),
           borderRadius: 2,
           height: '36px',
