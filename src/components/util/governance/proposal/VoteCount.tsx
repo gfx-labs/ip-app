@@ -49,9 +49,10 @@ export const VoteCount = (props: VoteCountProps) => {
     >
       <Box
         sx={{
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
+          backgroundColor: 'accordionCard.background',
+          borderColor: 'accordionCard.border',
+          borderWidth: 1,
+          borderStyle: 'solid',
           borderRadius: 2,
           p: { xs: 1, md: 4 },
           mb: 2,
@@ -81,9 +82,10 @@ export const VoteCount = (props: VoteCountProps) => {
       <Box
         sx={{
           width: '100%',
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
+          backgroundColor: 'accordionCard.background',
+          borderColor: 'accordionCard.border',
+          borderWidth: 1,
+          borderStyle: 'solid',
           borderRadius: 2,
           px: { xs: 1, md: 4 },
           pt: 4,

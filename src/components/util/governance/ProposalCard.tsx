@@ -174,15 +174,15 @@ export const ProposalCard = (props: ProposalCardProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: 'primary.light',
+        backgroundColor: 'accordion.background',
         borderRadius: 2,
         paddingX: { xs: 1, md: 4 },
         paddingTop: 3,
         paddingBottom: 1,
         cursor: 'pointer',
-        borderColor: formatColor(pink.pink1),
-        borderWidth: 2,
-        borderStyle: proposal?.emergency && isActive ? 'solid' : 'none',
+        borderColor: 'accordion.border',
+        borderWidth: 1,
+        borderStyle: 'solid',
       }}
       ref={ref}
     >
