@@ -91,7 +91,9 @@ export const getDesignTokens = (mode: PaletteMode) => {
         app: '#5E64F4',
         vote: '#5E64F4',
         start: '#5E64F4',
+        token: '#5E64F4',
         skip: '#374252',
+        hover: 'rgba(163, 169, 186, 0.2)',
       },
       card: {
         background: getColor(formatColor(neutral.white), '#1A1A1E'),

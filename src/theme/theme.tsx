@@ -376,7 +376,7 @@ theme.components = {
             minWidth: 120,
           },
           '&:hover': {
-            backgroundColor: formatColor(blue.blue14),
+            backgroundColor: formatColor(blue.blue7),
           },
         },
       },

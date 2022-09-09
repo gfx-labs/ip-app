@@ -1,7 +1,11 @@
 import { Box, Toolbar, Typography, Button, Link } from '@mui/material'
 import { useContext } from 'react'
 
-import { ConnectWalletButton, SelectedChainButton } from '../../util/button'
+import {
+  ConnectWalletButton,
+  SelectedChainButton,
+  TokenSaleButton,
+} from '../../util/button'
 import { BaseSwitch } from '../../util/switch'
 import { LightIcon } from '../../icons/misc/LightIcon'
 import { DarkIcon } from '../../icons/misc/DarkIcon'
@@ -39,11 +43,7 @@ export const DesktopToolBar = () => {
       )}
       {window.location.hash !== '#/sale' && (
         <Box mx={2} maxWidth={200} width="100%">
-          <Link href="#/sale">
-            <Button variant="contained">
-              <Typography variant="body3">IPT Sale</Typography>
-            </Button>
-          </Link>
+          <TokenSaleButton />
         </Box>
       )}
 
