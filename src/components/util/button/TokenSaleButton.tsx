@@ -16,7 +16,7 @@ export const TokenSaleButton = () => {
           width: 'fit-content',
           px: 2,
           '&:hover': {
-            backgroundColor: '#A3A9BA',
+            backgroundColor: 'button.hover',
           },
         }}
       >

@@ -18,24 +18,17 @@ interface ConnectWalletButtonProps {
 }
 
 export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
-  const { invertLight = false } = props
-
   const { setIsWalletModalOpen } = useWalletModalContext()
-
-  let isLight = useLight()
-
-  if (invertLight) {
-    isLight = !isLight
-  }
 
   const { connected, disconnectWallet, error, currentAccount } =
     useWeb3Context()
 
   const StyledConnectButton = (props: ButtonProps) => {
     const { onClick, children, sx } = props
+
+    const isLight = useLight()
     return (
       <Button
-        variant="outlined"
         sx={{
           minWidth: 'auto',
           width: '100%',
@@ -44,9 +37,9 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
           px: 3,
           justifyContent: 'space-between',
           backgroundColor: 'button.header',
+          border: isLight ? '1px solid #F4F4F4' : 'none',
           '&:hover': {
             backgroundColor: 'button.hover',
-            border: 'none',
           },
           ...sx,
         }}
