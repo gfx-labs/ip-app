@@ -1,26 +1,29 @@
-import { Box, Button, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
+import { useLight } from '../../../hooks/useLight'
+import { StarIcon } from '../../icons/misc/StarIcon'
 import { Link } from '../link'
 
 export const TokenSaleButton = () => {
+  const isLight = useLight()
+  const color = isLight ? '#5E64F4' : 'white'
   return (
-    <Link to="sale">
+    <Link to="/sale">
       <Button
         sx={{
-          color: '#FFFFFF',
-          backgroundColor: 'button.token',
+          borderColor: color,
+          borderWidth: 1,
+          borderStyle: 'solid',
           width: 'fit-content',
           px: 2,
+          '&:hover': {
+            backgroundColor: '#A3A9BA',
+          },
         }}
       >
-        {' '}
-        <Box
-          component="img"
-          src={`images/star_white.svg`}
-          width={22}
-          height={22}
-          mr={0.5}
-        ></Box>
-        <Typography variant="label2">IPT Sale</Typography>
+        <StarIcon stroke={color} sx={{ width: 22, height: 22, mr: 1 }} />
+        <Typography variant="label2" color={color}>
+          IPT Sale
+        </Typography>
       </Button>
     </Link>
   )
