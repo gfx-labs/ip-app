@@ -92,6 +92,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
         vote: '#5E64F4',
         start: '#5E64F4',
         token: '#5E64F4',
+        delegate: '#5E64F4',
         skip: '#374252',
         hover: 'rgba(163, 169, 186, 0.2)',
       },

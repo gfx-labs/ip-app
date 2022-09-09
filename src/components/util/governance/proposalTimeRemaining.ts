@@ -1,15 +1,15 @@
 import { IProposalType } from './ProposalCard'
 
 const proposalTimes = {
-  Standard: {
+  standard: {
     pending: 13140,
     voting: 40320,
   },
-  Emergency: {
+  emergency: {
     pending: null,
     voting: 6570,
   },
-  Optimistic: {
+  optimistic: {
     pending: 25600,
     voting: 40320,
   },

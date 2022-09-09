@@ -368,15 +368,8 @@ theme.components = {
       {
         props: { variant: 'contained' },
         style: {
-          backgroundColor: formatColor(blue.blue1),
-          width: '100%',
-          minWidth: 150,
-          fontSize: 14,
-          [theme.breakpoints.down('md')]: {
-            minWidth: 120,
-          },
           '&:hover': {
-            backgroundColor: formatColor(blue.blue7),
+            backgroundColor: 'rgba(163, 169, 186, 0.2)',
           },
         },
       },

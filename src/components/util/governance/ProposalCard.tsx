@@ -26,13 +26,15 @@ import { COMMON_CONTRACT_NAMES } from '../../../constants'
 import { getAddress } from 'ethers/lib/utils'
 import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
+import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
+import { ProposalTypeToolTip } from './ProposalTypeToolTip'
 
 export interface ProposalCardProps {
   proposal: Proposal
   votingPower: number
 }
 
-export type IProposalType = '' | 'Standard' | 'Optimistic' | 'Emergency'
+export type IProposalType = 'standard' | 'optimistic' | 'emergency'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 const isAddress = (value: any): string | false => {
@@ -91,7 +93,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
-  const [proposalType, setProposalType] = useState<IProposalType>('')
+  const [proposalType, setProposalType] = useState<IProposalType | undefined>()
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
@@ -100,10 +102,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
       getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(
         (isWhitelisted) => {
           const pType = isWhitelisted
-            ? 'Optimistic'
+            ? 'optimistic'
             : res.emergency
-            ? 'Emergency'
-            : 'Standard'
+            ? 'emergency'
+            : 'standard'
 
           setProposalType(pType)
         }
@@ -143,8 +145,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
       })
       return
     }
-
-    if (proposalType !== '') {
+    if (proposalType) {
       setTimeLeft(
         proposalTimeRemaining(proposalType, startBlock, endBlock, dataBlock)
       )
@@ -177,8 +178,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
         backgroundColor: 'accordion.background',
         borderRadius: 2,
         paddingX: { xs: 1, md: 4 },
-        paddingTop: 3,
-        paddingBottom: 1,
+        paddingTop: 2,
+        paddingBottom: 2,
         cursor: 'pointer',
         borderColor: 'accordion.border',
         borderWidth: 1,
@@ -188,11 +189,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
-          <Typography
-            variant="subtitle2_semi"
-            color={formatColor(blue.blue1)}
-            mr={2}
-          >
+          <Typography variant="subtitle2_semi" color="text.primary" mr={2}>
             {id}
           </Typography>
           <Box position="relative">
@@ -201,6 +198,23 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 {getTitle(body)}
               </Typography>
             </Box>
+            <Box display="inline" position="relative" top={-6} mr={1}>
+              {proposalType ? (
+                ProposalTypeToolTip(proposalType)
+              ) : (
+                <Skeleton
+                  variant="rectangular"
+                  width={70}
+                  height="14px"
+                  animation="wave"
+                  sx={{
+                    position: 'relative',
+                    display: 'inline-block',
+                  }}
+                />
+              )}
+            </Box>
+
             <Link
               href={`https://etherscan.io/tx/${transactionHash}`}
               target="_blank"
@@ -212,7 +226,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 width="12px"
                 height="12px"
                 position="relative"
-                top={-4}
+                top={-6}
                 mr={1}
               ></Box>
             </Link>
@@ -241,15 +255,24 @@ export const ProposalCard = (props: ProposalCardProps) => {
           </Box>
         </Box>
 
-        <Box display="flex">
+        <Box display="flex" alignItems="center">
           <Box display={{ xs: 'none', md: 'flex' }}>
             <Votes noVotes={againstVotes} yesVotes={forVotes} />
           </Box>
           <Box textAlign="center">
             <Status status={status} />
-            <Typography color="text.secondary" variant="label2_medium">
-              {proposalType}
-            </Typography>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <CaratUpIcon
+              strokecolor={isLight ? '#A3A9BA' : '#FFF'}
+              sx={{
+                width: 16,
+                height: 16,
+                ml: 2,
+                transform: `${isExpanded ? 'rotate(180deg)' : 'none'}`,
+                transition: 'transform 0.2s',
+              }}
+            />
           </Box>
         </Box>
       </Box>
