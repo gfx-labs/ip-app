@@ -1,11 +1,12 @@
 import { Box } from '@mui/material'
 import { CHART_INTEREST_RATE_OVERTIME } from '../../../constants'
 import getAPIBaseUrl from '../helpers/getAPIBaseUrl'
+import { CardContainer } from './CardContainer'
 import { ChartContainerCard } from './ChartContainerCard'
 
 export const InterestRateGraphCard = () => {
   return (
-    <Box sx={{ backgroundColor: 'card.background', borderRadius: 2.5 }}>
+    <CardContainer>
       <ChartContainerCard
         style={{
           position: 'relative',
@@ -15,6 +16,6 @@ export const InterestRateGraphCard = () => {
         }}
         src={`${getAPIBaseUrl()}${CHART_INTEREST_RATE_OVERTIME}`}
       />
-    </Box>
+    </CardContainer>
   )
 }
