@@ -116,7 +116,7 @@ export const Governance = () => {
 
   return (
     <Box
-      maxWidth="xl"
+      maxWidth={910}
       pt={{ xs: 7, sm: 0 }}
       pb={{ xs: 1, md: 10 }}
       px={{ xs: 2, md: 10 }}
@@ -152,7 +152,7 @@ export const Governance = () => {
               maximumFractionDigits: 2,
             })}
           </Typography>
-          <DelegateIPTButton />
+          <DelegateIPTButton votingPower={currentVotes} />
         </Box>
       </Box>
       {connected ? (

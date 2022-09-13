@@ -45,10 +45,10 @@ const getTimeRemaining = (blockDiff: number) => {
   const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100)
 
   if (hrdiff >= 24) {
-    return `Time Remaining: ${Math.floor(hrdiff / 24)} days`
+    return `${Math.floor(hrdiff / 24)} days left`
   } else if (hrdiff > 1) {
-    return `Time Remaining: ${Math.floor(hrdiff)} hours`
+    return `${Math.floor(hrdiff)} hours left`
   } else {
-    return `Time Remaining: ${Math.floor(hrdiff * 60)} minute(s)`
+    return `${Math.floor(hrdiff * 60)} minute(s) left`
   }
 }

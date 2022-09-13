@@ -87,13 +87,13 @@ const StatusContainer = ({ status }: { status: number }) => {
         alignItems: 'center',
         height: 38,
         px: 2,
-        width: 108,
+        width: { xs: 75, md: 108 },
         backgroundColor: colors[0],
         color: colors[1],
         borderRadius: 1,
       }}
     >
-      <Typography variant="body3">{statusText}</Typography>
+      <Typography variant="label">{statusText}</Typography>
     </Box>
   )
 }

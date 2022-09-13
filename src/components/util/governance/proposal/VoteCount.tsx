@@ -54,16 +54,18 @@ export const VoteCount = (props: VoteCountProps) => {
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 2,
-          p: { xs: 1, md: 4 },
+          p: { xs: 2, md: 3 },
         }}
       >
-        <Typography color="text.secondary" variant="body1" mb={1}>
-          {forOrAgainst}
-        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography color="text.secondary" variant="body1" mb={1}>
+            {forOrAgainst}
+          </Typography>
 
-        <Typography textAlign="right" variant="body1" color="text.secondary">
-          {votes.toLocaleString()} / {totalVotes.toLocaleString()}
-        </Typography>
+          <Typography textAlign="right" variant="body1" color="text.secondary">
+            {votes.toLocaleString()} / {totalVotes.toLocaleString()}
+          </Typography>
+        </Box>
 
         <LinearProgress
           color={barColor as any}
@@ -86,9 +88,8 @@ export const VoteCount = (props: VoteCountProps) => {
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 2,
-          px: { xs: 1, md: 4 },
-          pt: 4,
-          pb: 2,
+          p: { xs: 2, md: 3 },
+
           my: 2,
           height: 'fill-available',
           display: 'flex',

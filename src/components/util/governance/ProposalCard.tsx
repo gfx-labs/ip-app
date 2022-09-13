@@ -28,6 +28,7 @@ import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDeleg
 import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
 import { ProposalTypeToolTip } from './ProposalTypeToolTip'
+import useWindowDimensions from '../../../hooks/useWindowDimensions'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -51,6 +52,9 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { id, body, endBlock, transactionHash, details, startBlock } =
     props.proposal
   const isLight = useLight()
+
+  const { width } = useWindowDimensions()
+
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   )
@@ -141,7 +145,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
     if (bdiff < 0) {
       provider?.getBlock(endBlock).then((res) => {
         const endDate = new Date(res.timestamp * 1000)
-        setTimeLeft(`Voting Ended on ${endDate.toLocaleDateString()}`)
+
+        setTimeLeft(`Ended ${endDate.toLocaleDateString()}`)
       })
       return
     }
@@ -188,7 +193,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
-          <Typography variant="subtitle2_semi" color="text.primary" mr={3}>
+          <Typography
+            variant="subtitle2_semi"
+            color="text.primary"
+            mr={{ xs: 1, md: 3 }}
+          >
             {id}
           </Typography>
           <Box position="relative">
@@ -331,7 +340,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 votingPower={votingPower}
                 time={timeLeft}
               />
-              <Box fontWeight={400}>
+              <Box fontWeight={400} sx={{ '& h1': { lineHeight: 1 } }}>
                 <ReactMarkdown
                   children={expandedContent}
                   components={markdownComponentConfig}
