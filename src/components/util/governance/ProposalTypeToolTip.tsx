@@ -21,7 +21,7 @@ export const proposalTypeDiction = {
     <ProposalToolTip
       content={
         <>
-          <Typography variant="subtitle1" color="text.primary">
+          <Typography variant="label" color="text.primary">
             Emergency Voting
           </Typography>{' '}
           <br />
@@ -44,13 +44,14 @@ export const proposalTypeDiction = {
       }
       text="Emergency"
       text_variant="label2"
+      type="emergency"
     />
   ),
   optimistic: (
     <ProposalToolTip
       content={
         <>
-          <Typography variant="subtitle1" color="text.primary">
+          <Typography variant="label" color="text.primary">
             Optimistic Voting
           </Typography>{' '}
           <br />
@@ -80,13 +81,14 @@ export const proposalTypeDiction = {
       }
       text="Optimistic"
       text_variant="label2"
+      type="optimistic"
     />
   ),
   standard: (
     <ProposalToolTip
       content={
         <>
-          <Typography variant="subtitle1" color="text.primary">
+          <Typography variant="label" color="text.primary">
             Standard Voting
           </Typography>{' '}
           <br />
@@ -118,6 +120,7 @@ export const proposalTypeDiction = {
       }
       text="Standard"
       text_variant="label2"
+      type="standard"
     />
   ),
 }

@@ -104,7 +104,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       <Box
         display="flex"
         columnGap={2}
-        mt={4}
+        mt={3}
         flexDirection={{ xs: 'column', md: 'row' }}
       >
         <VoteCount

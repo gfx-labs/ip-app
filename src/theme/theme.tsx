@@ -334,13 +334,7 @@ const MuiTextFieldVariants: ComponentsVariants['MuiTextField'] = [
 
 theme.components = {
   MuiButtonBase: {
-    styleOverrides: {
-      root: {
-        '&:hover': {
-          backgroundColor: 'none',
-        },
-      },
-    },
+    styleOverrides: {},
   },
   MuiButton: {
     styleOverrides: {
@@ -369,7 +363,8 @@ theme.components = {
         props: { variant: 'contained' },
         style: {
           '&:hover': {
-            backgroundColor: 'rgba(163, 169, 186, 0.2)',
+            backgroundColor: '#E8E9EE',
+            color: '#374252',
           },
         },
       },
@@ -385,6 +380,7 @@ theme.components = {
           border: 'none',
           '&:hover': {
             backgroundColor: formatColor(neutral.gray5),
+
             border: 'none',
           },
         },

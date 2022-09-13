@@ -49,7 +49,7 @@ export const MobileToolBar = () => {
       sx={{
         marginTop: 3,
         marginBottom: 3,
-        paddingX: {xs: 0},
+        paddingX: { xs: 0 },
         justifyContent: {
           xs: 'space-between',
         },
@@ -128,7 +128,7 @@ export const MobileToolBar = () => {
           }}
         >
           <ForwardIcon
-            strokecolor={
+            stroke={
               isLight ? formatColor(neutral.black) : formatColor(neutral.white)
             }
           />

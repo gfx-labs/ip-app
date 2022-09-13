@@ -22,7 +22,7 @@ export const CaratUpIcon = forwardRef<
       <path
         d="M1.08354 4.66663L4.0002 1.74996L6.91687 4.66663"
         stroke={props.strokecolor || '#FFFFFF'}
-        strokeWidth="2"
+        strokeWidth="1"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

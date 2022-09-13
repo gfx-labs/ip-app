@@ -20,7 +20,7 @@ const VoteButton = (props: VoteButtonProps) => {
     <Box>
       {' '}
       <Button
-        sx={{ height: 43 }}
+        sx={{ height: 43, width: '100%', backgroundColor: 'button.vote' }}
         variant="contained"
         onClick={() => setOpen(true)}
         disabled={status !== 1}

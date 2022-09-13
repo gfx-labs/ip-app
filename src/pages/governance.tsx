@@ -130,7 +130,7 @@ export const Governance = () => {
         },
       }}
     >
-      <Box display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between" mb={2}>
         <Box
           display="flex"
           mb={1}

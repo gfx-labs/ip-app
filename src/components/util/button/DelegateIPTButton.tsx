@@ -16,12 +16,21 @@ export const DelegateIPTButton = () => {
         px: 2,
         height: 'auto',
         backgroundColor: 'button.delegate',
-        color: 'white',
+        stroke: 'white',
+        '&:hover': {
+          stroke: '#374252',
+        },
       }}
       onClick={() => setType(ModalType.DelegateIPT)}
     >
       <Typography variant="button">Delegate</Typography>
-      <ForwardIcon strokecolor="white" sx={{ width: 12, height: 12, ml: 1 }} />
+      <ForwardIcon
+        sx={{
+          width: 12,
+          height: 12,
+          ml: 1,
+        }}
+      />
     </Button>
   )
 }

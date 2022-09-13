@@ -21,7 +21,7 @@ export const ForwardIcon = forwardRef<
     >
       <path
         d="M8 1.36075L13 6.45359M13 6.45359L8 11.5464M13 6.45359H1"
-        stroke={props.strokecolor || 'black'}
+        stroke="inherit"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"

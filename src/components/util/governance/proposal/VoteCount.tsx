@@ -55,7 +55,6 @@ export const VoteCount = (props: VoteCountProps) => {
           borderStyle: 'solid',
           borderRadius: 2,
           p: { xs: 1, md: 4 },
-          mb: 2,
         }}
       >
         <Typography color="text.secondary" variant="body1" mb={1}>
@@ -97,7 +96,7 @@ export const VoteCount = (props: VoteCountProps) => {
         }}
       >
         {voters.map((voter, index) => (
-          <Box key={index} display="flex" justifyContent="space-between" mb={1}>
+          <Box key={index} display="flex" justifyContent="space-between" mb={2}>
             <Typography variant="body3_medium" color="text.secondary">
               {addressShortener(voter.address)}
             </Typography>
@@ -116,13 +115,13 @@ export const VoteCount = (props: VoteCountProps) => {
         </Button>
       </Box>
       <BaseModal setOpen={setSeeAllOpen} open={seeAllOpen}>
-        <Box pt={3}>
+        <Box pt={5}>
           {voters.map((voter, index) => (
             <Box
               key={index}
               display="flex"
               justifyContent="space-between"
-              mb={2}
+              mb={3}
             >
               <Typography variant="body3" color="text.secondary">
                 {addressShortener(voter.address)}

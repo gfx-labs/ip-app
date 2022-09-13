@@ -1,4 +1,4 @@
-import { Box, Link, Skeleton, Typography } from '@mui/material'
+import { Box, Divider, Link, Skeleton, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
@@ -177,9 +177,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
       sx={{
         backgroundColor: 'accordion.background',
         borderRadius: 2,
-        paddingX: { xs: 1, md: 4 },
-        paddingTop: 2,
-        paddingBottom: 2,
+        paddingX: { xs: 2, md: 3 },
+        paddingY: { xs: 2, md: 3 },
         cursor: 'pointer',
         borderColor: 'accordion.border',
         borderWidth: 1,
@@ -189,7 +188,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
-          <Typography variant="subtitle2_semi" color="text.primary" mr={2}>
+          <Typography variant="subtitle2_semi" color="text.primary" mr={3}>
             {id}
           </Typography>
           <Box position="relative">
@@ -198,7 +197,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 {getTitle(body)}
               </Typography>
             </Box>
-            <Box display="inline" position="relative" top={-6} mr={1}>
+
+            <Box
+              display="flex"
+              alignItems="center"
+              columnGap={{ xs: 1, md: 1.5 }}
+            >
               {proposalType ? (
                 ProposalTypeToolTip(proposalType)
               ) : (
@@ -213,48 +217,58 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   }}
                 />
               )}
-            </Box>
-
-            <Link
-              href={`https://etherscan.io/tx/${transactionHash}`}
-              target="_blank"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Box
-                component="img"
-                src={`images/etherscan-logo-${isLight ? 'dark' : 'light'}.svg`}
-                width="12px"
-                height="12px"
-                position="relative"
-                top={-6}
-                mr={1}
-              ></Box>
-            </Link>
-            {timeLeft ? (
-              <Typography
-                variant="label2_medium"
-                color={formatColor(neutral.gray3)}
-                position="relative"
-                top={-6}
-              >
-                {timeLeft}
-              </Typography>
-            ) : (
-              <Skeleton
-                variant="rectangular"
-                width={200}
-                height="14px"
-                animation="wave"
-                sx={{
-                  top: -6,
-                  position: 'relative',
-                  display: 'inline-block',
-                }}
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                sx={{ borderColor: 'text.secondary' }}
+                flexItem
               />
-            )}
+
+              {timeLeft ? (
+                <Typography
+                  variant="label2_medium"
+                  color={formatColor(neutral.gray3)}
+                  position="relative"
+                >
+                  {timeLeft}
+                </Typography>
+              ) : (
+                <Skeleton
+                  variant="rectangular"
+                  width={200}
+                  height="14px"
+                  animation="wave"
+                  sx={{
+                    position: 'relative',
+                    display: 'inline-block',
+                  }}
+                />
+              )}
+
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                sx={{ borderColor: 'text.secondary' }}
+                flexItem
+              />
+              <Link
+                href={`https://etherscan.io/tx/${transactionHash}`}
+                target="_blank"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Box
+                  component="img"
+                  src={`images/etherscan-logo-${
+                    isLight ? 'dark' : 'light'
+                  }.svg`}
+                  width="12px"
+                  height="12px"
+                  position="relative"
+                ></Box>
+              </Link>
+            </Box>
           </Box>
         </Box>
-
         <Box display="flex" alignItems="center">
           <Box display={{ xs: 'none', md: 'flex' }}>
             <Votes noVotes={againstVotes} yesVotes={forVotes} />
@@ -332,6 +346,23 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   totalVotes={totalVotes}
                 />
               )}
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                mt={3}
+                onClick={expandCard}
+                sx={{ cursor: 'pointer' }}
+              >
+                <CaratUpIcon
+                  strokecolor={isLight ? '#A3A9BA' : '#FFF'}
+                  sx={{
+                    width: 16,
+                    height: 16,
+                    transform: `${isExpanded ? 'rotate(180deg)' : 'none'}`,
+                    transition: 'transform 0.2s',
+                  }}
+                />
+              </Box>
             </Box>
           ) : (
             <Spinner />

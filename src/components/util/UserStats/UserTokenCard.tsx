@@ -239,7 +239,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
                   width: 12,
                   height: 10,
                 }}
-                strokecolor={
+                stroke={
                   isLight
                     ? formatColor(neutral.black)
                     : formatColor(neutral.white)
