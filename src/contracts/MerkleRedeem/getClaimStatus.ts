@@ -34,11 +34,12 @@ const getClaimStatusOf = async (
     )
 
     const latestWeek = await getLatestWeek(merkleContract)
-
+    console.log(latestWeek, 'latest week')
     const claimStatus = await merkleContract.claimStatus(account, 7, latestWeek)
 
     return claimStatus
   } catch (err) {
+    console.error(err)
     throw new Error('Error getting claim status')
   }
 }
