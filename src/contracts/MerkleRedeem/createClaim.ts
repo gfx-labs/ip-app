@@ -14,9 +14,7 @@ const createClaimOf = (account: string, claimStatus: boolean[]) => {
     if (claim) {
       return acc
     }
-
     const proofResult = getMerkleProof(account, week)
-
     if (!proofResult) {
       return acc
     }

@@ -7,9 +7,7 @@ import {
   ModalType,
   useModalContext,
 } from '../../libs/modal-content-provider/ModalContentProvider'
-import { BN } from '../../../easy/bn'
 import { useMerkleRedeemContext } from '../../libs/merkle-redeem-provider/MerkleRedeemProvider'
-import { BNtoHexNumber } from '../helpers/BNtoHex'
 import { utils } from 'ethers'
 
 export const ClaimsButton = () => {

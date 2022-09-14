@@ -22,25 +22,25 @@ export const MerkleRedeemContextProvider = ({
 }: {
   children: React.ReactElement
 }) => {
-  const { currentAccount, signerOrProvider, chainId } = useWeb3Context()
+  const { currentAccount, chainId, currentSigner } = useWeb3Context()
   const [claimStatus, setClaimStatus] = useState([true])
   const [claimAmount, setClaimAmount] = useState(BN('0'))
   const [claims, setClaims] = useState<Claim[]>([])
 
   useEffect(() => {
-    getClaimStatusOf(currentAccount, signerOrProvider!).then((claimStatus) => {
-      setClaimStatus(claimStatus)
+    if (currentSigner && currentAccount) {
+      getClaimStatusOf(currentAccount, currentSigner!).then((claimStatus) => {
+        setClaimStatus(claimStatus)
+        const claims = createClaimOf(currentAccount, claimStatus)
+        setClaims(claims)
 
-      const claims = createClaimOf(currentAccount, claimStatus)
-      setClaims(claims)
-
-      const iptToClaim = claims.reduce((iptToClaim, claim) => {
-        return iptToClaim.add(claim.balance)
-      }, BN(0))
-
-      setClaimAmount(iptToClaim)
-    })
-  }, [chainId, currentAccount])
+        const iptToClaim = claims.reduce((iptToClaim, claim) => {
+          return iptToClaim.add(claim.balance)
+        }, BN(0))
+        setClaimAmount(iptToClaim)
+      })
+    }
+  }, [chainId, currentAccount, currentSigner])
 
   return (
     <MerkleRedeemContext.Provider value={{ claimStatus, claims, claimAmount }}>
