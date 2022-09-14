@@ -26,6 +26,7 @@ export const ClaimsButton = () => {
 
   useEffect(() => {
     setFormattedAmount(Number(utils.formatEther(claimAmount)))
+    console.log(claimAmount)
   }, [claimAmount])
 
   return (
