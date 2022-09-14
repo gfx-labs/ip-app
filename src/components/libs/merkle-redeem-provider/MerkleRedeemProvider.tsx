@@ -28,6 +28,7 @@ export const MerkleRedeemContextProvider = ({
   const [claims, setClaims] = useState<Claim[]>([])
 
   useEffect(() => {
+    console.log('getting claim status 31', currentAccount, signerOrProvider)
     getClaimStatusOf(currentAccount, signerOrProvider!).then((claimStatus) => {
       setClaimStatus(claimStatus)
       console.log(claimStatus, 'claim status')

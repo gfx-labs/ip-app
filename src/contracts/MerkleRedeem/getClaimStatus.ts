@@ -28,14 +28,17 @@ const getClaimStatusOf = async (
   providerOrSigner: JsonRpcProvider | JsonRpcSigner
 ) => {
   try {
+    console.log('trying to get contract', account, providerOrSigner)
     const merkleContract = MerkleRedeem__factory.connect(
       MERKLE_REDEEM_ADDRESS,
       providerOrSigner
     )
+    console.log('contract')
 
     const latestWeek = await getLatestWeek(merkleContract)
     console.log(latestWeek, 'latest week')
     const claimStatus = await merkleContract.claimStatus(account, 7, latestWeek)
+    console.log(claimStatus, 'claimStatus')
 
     return claimStatus
   } catch (err) {
