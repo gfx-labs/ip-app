@@ -59,7 +59,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
         sx={{ color: formatColor(neutral.white) }}
         onClick={() => castVoteHandler(1)}
       >
-        Yes
+        For
       </Button>
 
       <Button
@@ -71,7 +71,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
         }}
         onClick={() => castVoteHandler(0)}
       >
-        No
+        Against
       </Button>
 
       <Button

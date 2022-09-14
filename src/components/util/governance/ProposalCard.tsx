@@ -1,4 +1,12 @@
-import { Box, Divider, Link, Skeleton, Typography } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Link,
+  Skeleton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
@@ -53,8 +61,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
     props.proposal
   const isLight = useLight()
 
-  const { width } = useWindowDimensions()
-
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   )
@@ -146,7 +154,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
       provider?.getBlock(endBlock).then((res) => {
         const endDate = new Date(res.timestamp * 1000)
 
-        setTimeLeft(`Ended ${endDate.toLocaleDateString()}`)
+        const endDateString = isMobile
+          ? endDate.toLocaleDateString()
+          : `Voting ended on ${endDate.toLocaleDateString()}`
+
+        setTimeLeft(endDateString)
       })
       return
     }
@@ -229,7 +241,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               <Divider
                 orientation="vertical"
                 variant="middle"
-                sx={{ borderColor: 'text.secondary' }}
+                sx={{ borderColor: 'text.secondary', minHeight: 10 }}
                 flexItem
               />
 
@@ -257,13 +269,20 @@ export const ProposalCard = (props: ProposalCardProps) => {
               <Divider
                 orientation="vertical"
                 variant="middle"
-                sx={{ borderColor: 'text.secondary' }}
+                sx={{
+                  borderColor: 'text.secondary',
+                  display: isMobile ? 'none' : 'block',
+                }}
                 flexItem
               />
               <Link
                 href={`https://etherscan.io/tx/${transactionHash}`}
                 target="_blank"
                 onClick={(e) => e.stopPropagation()}
+                sx={{
+                  borderColor: 'text.secondary',
+                  display: isMobile ? 'none' : 'block',
+                }}
               >
                 <Box
                   component="img"
@@ -435,7 +454,11 @@ const markdownComponentConfig: Partial<
     )
   },
   p: ({ node, style, children, ...props }) => {
-    return <p style={{ ...style, whiteSpace: 'pre-wrap' }}>{children}</p>
+    return (
+      <p style={{ ...style, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+        {children}
+      </p>
+    )
   },
   td: ({ node, style, children, isHeader, ...props }) => {
     if (isHeader) {
