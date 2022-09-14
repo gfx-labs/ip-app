@@ -30,14 +30,15 @@ export const MerkleRedeemContextProvider = ({
   useEffect(() => {
     getClaimStatusOf(currentAccount, signerOrProvider!).then((claimStatus) => {
       setClaimStatus(claimStatus)
-
+      console.log(claimStatus, 'claim status')
       const claims = createClaimOf(currentAccount, claimStatus)
+      console.log(claims, 'claims')
       setClaims(claims)
 
       const iptToClaim = claims.reduce((iptToClaim, claim) => {
         return iptToClaim.add(claim.balance)
       }, BN(0))
-
+      console.log(iptToClaim, 'ipt to claim')
       setClaimAmount(iptToClaim)
     })
   }, [chainId, currentAccount])
