@@ -11,9 +11,11 @@ const getLatestWeek = async (merkleContract: Contract) => {
   let lookingForLatestWeek = true
   do {
     let weekMerkleRoots = await merkleContract.weekMerkleRoots(i)
+    console.log(weekMerkleRoots, i, 'get laest week')
     lookingForLatestWeek = weekMerkleRoots !== ZERO_ADDRESS
     if (!lookingForLatestWeek) {
       // return previous week that wasnt ZERO_ADDRESS
+      console.log('found week:', i)
       return --i
     }
     i++
