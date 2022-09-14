@@ -9,9 +9,6 @@ import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate
 
 export interface ProposalDetailsProps {
   id: string
-  status: number
-  votingPower: number
-  time: string
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = (
@@ -19,7 +16,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 ) => {
   const theme = useTheme()
   const { provider, currentSigner } = useWeb3Context()
-  const { id, status, votingPower } = props
+  const { id } = props
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
   const [votersFor, setVotersFor] = useState<Array<Voter>>([])
@@ -81,26 +78,6 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
         },
       }}
     >
-      <Box
-        display="flex"
-        flexDirection={{ xs: 'column-reverse', md: 'row' }}
-        justifyContent="space-between"
-        alignItems={{ xs: 'start', md: 'center' }}
-        rowGap={1}
-      >
-        {status === 1 && (
-          <VoteButton
-            id={id}
-            status={status}
-            totalVotes={votesTotal}
-            votingPower={votingPower}
-          />
-        )}
-
-        {/* <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
-          {time}
-        </Typography> */}
-      </Box>
       <Box
         display="flex"
         columnGap={2}

@@ -89,7 +89,7 @@ export const VoteCount = (props: VoteCountProps) => {
           borderStyle: 'solid',
           borderRadius: 2,
           p: { xs: 2, md: 3 },
-
+          paddingBottom: { xs: 0, md: 0 },
           my: 2,
           height: 'fill-available',
           display: 'flex',

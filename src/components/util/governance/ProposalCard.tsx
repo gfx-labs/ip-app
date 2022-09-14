@@ -309,7 +309,16 @@ export const ProposalCard = (props: ProposalCardProps) => {
         >
           {expandedContent ? (
             <Box>
-              <Box>
+              <VoteButton
+                id={id}
+                status={status}
+                votingPower={votingPower}
+                totalVotes={totalVotes}
+              />
+
+              <ProposalDetails id={id} />
+              <Box mt={2}>
+                <Typography mb={2}>Details</Typography>
                 {details.map((d, i) => (
                   <Box
                     sx={{
@@ -334,12 +343,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 ))}
               </Box>
 
-              <ProposalDetails
-                id={id}
-                status={status}
-                votingPower={votingPower}
-                time={timeLeft}
-              />
+              <Typography my={2}>Description</Typography>
               <Box fontWeight={400} sx={{ '& h1': { lineHeight: 1 } }}>
                 <ReactMarkdown
                   children={expandedContent}
