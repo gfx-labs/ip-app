@@ -22,7 +22,6 @@ const initMerkle = (week: number) => {
 }
 
 const getMinterAmount = (currentAccount: string, week: number) => {
-  console.log(currentAccount, week, 'et minter amount')
   // @ts-ignore
   const selectedWeek: { [address: string]: string } = weeks[week]
   return selectedWeek[currentAccount]
