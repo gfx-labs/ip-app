@@ -328,12 +328,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
         >
           {expandedContent ? (
             <Box>
-              <VoteButton
-                id={id}
-                status={status}
-                votingPower={votingPower}
-                totalVotes={totalVotes}
-              />
+              {status === 1 && (
+                <VoteButton
+                  id={id}
+                  status={status}
+                  votingPower={votingPower}
+                  totalVotes={totalVotes}
+                />
+              )}
 
               <ProposalDetails id={id} />
               <Box mt={2}>
