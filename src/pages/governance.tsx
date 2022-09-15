@@ -134,7 +134,8 @@ export const Governance = () => {
   return (
     <Box
       maxWidth="xl"
-      py={{ xs: 7, sm: 0 }}
+      pt={{ xs: 7, sm: 0 }}
+      pb={{ xs: 1, md: 10 }}
       px={{ xs: 2, md: 10 }}
       minHeight="80vh"
       margin="auto"
@@ -142,7 +143,6 @@ export const Governance = () => {
       sx={{
         [theme.breakpoints.down('md')]: {
           mb: 0,
-          pb: 0,
           marginLeft: 'auto',
         },
       }}

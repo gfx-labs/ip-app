@@ -301,12 +301,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   remarkPlugins={[remarkGfm]}
                 />
               </Box>
-              <VoteButton
-                id={id}
-                status={status}
-                votingPower={votingPower}
-                totalVotes={totalVotes}
-              />
+              {status === 1 && (
+                <VoteButton
+                  id={id}
+                  status={status}
+                  votingPower={votingPower}
+                  totalVotes={totalVotes}
+                />
+              )}
             </Box>
           ) : (
             <Spinner />

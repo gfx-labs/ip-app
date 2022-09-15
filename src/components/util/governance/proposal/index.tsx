@@ -88,12 +88,14 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
         alignItems={{ xs: 'start', md: 'center' }}
         rowGap={1}
       >
-        <VoteButton
-          id={id}
-          status={status}
-          totalVotes={votesTotal}
-          votingPower={votingPower}
-        />
+        {status === 1 && (
+          <VoteButton
+            id={id}
+            status={status}
+            totalVotes={votesTotal}
+            votingPower={votingPower}
+          />
+        )}
 
         {/* <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
           {time}
