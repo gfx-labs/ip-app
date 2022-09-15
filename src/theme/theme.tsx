@@ -92,6 +92,8 @@ export const theme = createTheme({
 })
 
 // Responsive typography
+
+//figma title 1
 theme.typography.h1 = {
   fontWeight: 800,
   fontSize: pxToRem(88),
@@ -103,6 +105,7 @@ theme.typography.h1 = {
   },
 }
 
+// figma title 2
 theme.typography.h2 = {
   fontWeight: 800,
   fontSize: pxToRem(54),
@@ -114,6 +117,7 @@ theme.typography.h2 = {
   },
 }
 
+// figma title 3
 theme.typography.h3 = {
   fontWeight: 800,
   fontSize: pxToRem(48),
@@ -125,13 +129,14 @@ theme.typography.h3 = {
   },
 }
 
+// figma title 4
 theme.typography.h4 = {
   fontWeight: 700,
   fontSize: pxToRem(40),
-  lineHeight: fzTolineHeight(42),
+  lineHeight: fzTolineHeight(56),
   letterSpacing: -1,
   [theme.breakpoints.down('md')]: {
-    fontSize: pxToRem(28),
+    fontSize: pxToRem(24),
     lineHeight: fzTolineHeight(28),
   },
 }
