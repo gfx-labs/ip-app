@@ -21,7 +21,11 @@ declare module '@mui/material/Button' {
 
 declare module '@mui/material/styles' {
   interface TypographyVariants {
+    h6_midi: React.CSSProperties
     h6_semi: React.CSSProperties
+    h7: React.CSSProperties
+    h7_semi: React.CSSProperties
+    h8: React.CSSProperties
     subtitle2_semi: React.CSSProperties
     subtitle3_semi: React.CSSProperties
     subtitle3: React.CSSProperties
@@ -29,7 +33,7 @@ declare module '@mui/material/styles' {
     body3: React.CSSProperties
     body3_medium: React.CSSProperties
     label: React.CSSProperties
-    label2: React.CSSProperties
+    label_semi: React.CSSProperties
     label2_medium: React.CSSProperties
     label2_light: React.CSSProperties
   }
@@ -41,7 +45,11 @@ declare module '@mui/material/styles' {
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
+    h6_midi: true
     h6_semi: true
+    h7: true
+    h7_semi: true
+    h8: true
     subtitle2_semi: true
     subtitle3_semi: true
     subtitle3: true
@@ -49,7 +57,7 @@ declare module '@mui/material/Typography' {
     body3: true
     body3_medium: true
     label: true
-    label2: true
+    label_semi: true
     label2_medium: true
     label2_light: true
   }
@@ -141,36 +149,79 @@ theme.typography.h4 = {
   },
 }
 
+// figma title 5
 theme.typography.h5 = {
   fontWeight: 700,
   fontSize: pxToRem(28),
   lineHeight: fzTolineHeight(28),
-  letterSpacing: -1,
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(24),
-    lineHeight: fzTolineHeight(24),
+    lineHeight: fzTolineHeight(28),
   },
 }
 
+// figma title 6
 theme.typography.h6 = {
   fontWeight: 800,
   fontSize: pxToRem(24),
-  lineHeight: fzTolineHeight(24),
-  letterSpacing: -1,
+  lineHeight: fzTolineHeight(28),
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(20),
-    lineHeight: fzTolineHeight(20),
+    lineHeight: fzTolineHeight(22),
+  },
+}
+
+// figma title 6 midi
+theme.typography.h6_midi = {
+  fontWeight: 700,
+  fontSize: pxToRem(24),
+  lineHeight: fzTolineHeight(28),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(20),
+    lineHeight: fzTolineHeight(22),
   },
 }
 
 theme.typography.h6_semi = {
-  fontWeight: 700,
+  fontWeight: 600,
   fontSize: pxToRem(24),
-  lineHeight: fzTolineHeight(24),
-  letterSpacing: -1,
+  lineHeight: fzTolineHeight(28),
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(20),
-    lineHeight: fzTolineHeight(20),
+    lineHeight: fzTolineHeight(22),
+  },
+}
+
+// figma title 7
+theme.typography.h7 = {
+  fontWeight: 700,
+  fontSize: pxToRem(20),
+  lineHeight: fzTolineHeight(22),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(18),
+    lineHeight: fzTolineHeight(22),
+  },
+}
+
+// figma title 7
+theme.typography.h7_semi = {
+  fontWeight: 600,
+  fontSize: pxToRem(20),
+  lineHeight: fzTolineHeight(22),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(18),
+    lineHeight: fzTolineHeight(22),
+  },
+}
+
+// figma title 8
+theme.typography.h8 = {
+  fontWeight: 600,
+  fontSize: pxToRem(18),
+  lineHeight: fzTolineHeight(20),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(14),
+    lineHeight: fzTolineHeight(16),
   },
 }
 
@@ -217,24 +268,20 @@ theme.typography.subtitle3_semi = {
   },
 }
 
+// figma body
 theme.typography.body1 = {
   fontWeight: 600,
-  fontSize: pxToRem(20),
-  lineHeight: fzTolineHeight(24),
-  [theme.breakpoints.down('md')]: {
-    fontSize: pxToRem(16),
-    lineHeight: fzTolineHeight(20),
-  },
+  fontSize: pxToRem(16),
+  lineHeight: fzTolineHeight(18),
 }
 
-// tertiary in design
+// figma body semi
 theme.typography.body2 = {
-  fontWeight: 700,
-  fontSize: pxToRem(18),
-  lineHeight: fzTolineHeight(18),
+  fontWeight: 400,
+  fontSize: pxToRem(16),
+  lineHeight: fzTolineHeight(20),
   [theme.breakpoints.down('md')]: {
-    fontSize: pxToRem(14),
-    lineHeight: fzTolineHeight(14),
+    lineHeight: fzTolineHeight(18),
   },
 }
 
@@ -248,10 +295,15 @@ theme.typography.body2_semi = {
   },
 }
 
+// figma body tall
 theme.typography.body3 = {
-  fontWeight: 600,
+  fontWeight: 400,
   fontSize: pxToRem(16),
-  lineHeight: fzTolineHeight(16),
+  lineHeight: fzTolineHeight(20),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(16),
+    lineHeight: fzTolineHeight(18),
+  },
 }
 
 theme.typography.body3_medium = {
@@ -262,21 +314,17 @@ theme.typography.body3_medium = {
 
 theme.typography.label = {
   fontWeight: 600,
-  fontSize: pxToRem(16),
+  fontSize: pxToRem(14),
+  lineHeight: fzTolineHeight(16),
+}
+
+theme.typography.label_semi = {
+  fontWeight: 400,
+  fontSize: pxToRem(14),
   lineHeight: fzTolineHeight(16),
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(12),
-    lineHeight: fzTolineHeight(12),
-  },
-}
-
-theme.typography.label2 = {
-  fontWeight: 600,
-  fontSize: pxToRem(14),
-  lineHeight: fzTolineHeight(14),
-  [theme.breakpoints.down('md')]: {
-    fontSize: pxToRem(12),
-    lineHeight: fzTolineHeight(16),
+    lineHeight: fzTolineHeight(14),
   },
 }
 
