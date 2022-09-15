@@ -39,8 +39,8 @@ The protocol is deployed on Ethereum Mainnet.
 
 ### MATIC Oracle
 *    AnchoredViewRelay: 0x8BfE7aE486250dBf2901843Cc73B91843c2879de
-*    ChainlinkOracleRelay: 0xfe1cb3221f13a9c2aa67d29a2b7198e59de2f3b2
-*    StEthOracleRelay: 0xfc6b554818466a53806bb7eb319621d97b851d94
+*    ChainlinkOracleRelay: 0xfc6b554818466a53806bb7eb319621d97b851d94
+*    UniswapV3OracleRelay: 0xfe1cb3221f13a9c2aa67d29a2b7198e59de2f3b2
 
 ### Assets
 * USDC: 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
