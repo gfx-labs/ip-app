@@ -13,6 +13,7 @@ import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mod
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import { AppGovSwitch } from '../../util/switch/AppGovSwitch'
+import { DesktopMenu } from './DesktopMenu'
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -67,6 +68,8 @@ export const DesktopToolBar = () => {
           onOptionChange={toggleMode}
           defaultIsOption1={isLight}
         />
+
+        <DesktopMenu />
       </Box>
     </Toolbar>
   )
