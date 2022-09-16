@@ -54,15 +54,15 @@ export const VoteCount = (props: VoteCountProps) => {
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 2,
-          p: { xs: 2, md: 3 },
+          p: { xs: 2 },
         }}
       >
         <Box display="flex" justifyContent="space-between">
-          <Typography color="text.secondary" variant="body1" mb={1}>
+          <Typography color="text.primary" variant="body1" mb={1}>
             {forOrAgainst}
           </Typography>
 
-          <Typography textAlign="right" variant="body1" color="text.secondary">
+          <Typography textAlign="right" variant="body1" color="text.primary">
             {votes.toLocaleString()} / {totalVotes.toLocaleString()}
           </Typography>
         </Box>
@@ -72,7 +72,7 @@ export const VoteCount = (props: VoteCountProps) => {
           variant="determinate"
           value={votePercent}
           sx={{
-            marginY: 2,
+            marginTop: 1,
             backgroundColor: isLight
               ? formatColor(neutral.gray6)
               : formatColor(neutral.white),
@@ -112,7 +112,7 @@ export const VoteCount = (props: VoteCountProps) => {
           onClick={seeAllHandler}
           sx={{ marginTop: 'auto' }}
         >
-          See All
+          <Typography variant="label">See All</Typography>
         </Button>
       </Box>
       <BaseModal setOpen={setSeeAllOpen} open={seeAllOpen}>

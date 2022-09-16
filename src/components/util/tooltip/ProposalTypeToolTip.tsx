@@ -64,8 +64,7 @@ export const ProposalToolTip = (props: {
           }}
         ></Box>
         <Typography
-          variant="label2"
-          fontWeight={400}
+          variant="label_semi"
           color="text.secondary"
           whiteSpace="nowrap"
         >

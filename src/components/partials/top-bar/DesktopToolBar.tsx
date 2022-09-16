@@ -41,11 +41,6 @@ export const DesktopToolBar = () => {
       ) : (
         <></>
       )}
-      {window.location.hash !== '#/sale' && (
-        <Box mx={2} maxWidth={200} width="100%">
-          <TokenSaleButton />
-        </Box>
-      )}
 
       <Box mx={2} maxWidth={200} width="100%">
         <Link
@@ -53,12 +48,17 @@ export const DesktopToolBar = () => {
           target="_blank"
         >
           <Button variant="outlined">
-            <Typography variant="label2">ETH-USDi Rewards</Typography>
+            <Typography variant="label">ETH-USDi Rewards</Typography>
           </Button>
         </Link>
       </Box>
 
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
+        {window.location.hash !== '#/sale' && (
+          <Box mx={2} maxWidth={200} width="100%">
+            <TokenSaleButton />
+          </Box>
+        )}
         <SelectedChainButton />
         <ConnectWalletButton />
         <BaseSwitch

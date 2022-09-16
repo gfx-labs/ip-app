@@ -68,9 +68,7 @@ const FooterContent = () => {
         {footerLinks.map((navItem, index) => {
           return (
             <Box key={index}>
-              <Typography variant="body3" fontWeight={700}>
-                {navItem.title}
-              </Typography>
+              <Typography variant="body1">{navItem.title}</Typography>
               <Box
                 sx={{
                   display: 'flex',
@@ -85,7 +83,7 @@ const FooterContent = () => {
                       target="_blank"
                       key={link.label}
                       href={link.href}
-                      variant="body3"
+                      variant="label"
                       color="footer.color"
                       paddingBottom={1}
                       sx={{

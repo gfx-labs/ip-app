@@ -17,6 +17,9 @@ export const DelegateIPTButton = ({ votingPower }: { votingPower: number }) => {
         height: 'auto',
         backgroundColor: 'button.delegate',
         stroke: 'white',
+        '&.Mui-disabled': {
+          color: 'white',
+        },
         '&:hover': {
           stroke: '#374252',
         },
@@ -24,7 +27,7 @@ export const DelegateIPTButton = ({ votingPower }: { votingPower: number }) => {
       onClick={() => setType(ModalType.DelegateIPT)}
       disabled={votingPower <= 0}
     >
-      <Typography variant="button">Delegate</Typography>
+      <Typography variant="body1">Delegate</Typography>
       <ForwardIcon
         sx={{
           width: 12,

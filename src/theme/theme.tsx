@@ -352,6 +352,10 @@ theme.typography.button = {
   fontWeight: 600,
   fontSize: pxToRem(16),
   lineHeight: pxToRem(16),
+  [theme.breakpoints.down('md')]: {
+    fontSize: pxToRem(12),
+    lineHeight: fzTolineHeight(12),
+  },
 }
 
 const MuiTextFieldVariants: ComponentsVariants['MuiTextField'] = [

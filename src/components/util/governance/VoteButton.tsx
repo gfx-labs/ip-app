@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Box } from '@mui/material'
+import { Button, Box, Typography } from '@mui/material'
 import { VoteModal } from './proposal/VoteModal'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 
@@ -25,7 +25,9 @@ const VoteButton = (props: VoteButtonProps) => {
         onClick={() => setOpen(true)}
         disabled={status !== 1}
       >
-        Vote
+        <Typography variant="body1" lineHeight={1}>
+          Vote
+        </Typography>
       </Button>
       <VoteModal
         open={open}

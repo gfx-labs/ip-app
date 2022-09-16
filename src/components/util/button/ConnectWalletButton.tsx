@@ -46,7 +46,7 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
         size="large"
         onClick={onClick}
       >
-        <Typography variant="label2" whiteSpace="nowrap" color="text.primary">
+        <Typography variant="label" whiteSpace="nowrap" color="text.primary">
           {children}
         </Typography>
       </Button>

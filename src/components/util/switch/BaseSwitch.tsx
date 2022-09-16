@@ -40,7 +40,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
     >
       {typeof option === 'string' ? (
         <Typography
-          variant="label2"
+          variant="label"
           sx={{
             color: isSelected ? 'slider.text.active' : 'slider.text.inactive',
             display: 'flex',
@@ -118,7 +118,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         }}
       >
         <Typography
-          variant="body1"
+          variant="label"
           sx={{
             display: 'flex',
             alignItems: 'center',

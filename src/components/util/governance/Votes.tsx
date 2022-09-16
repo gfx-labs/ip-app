@@ -41,7 +41,7 @@ export const Votes = ({
           strokecolor={formatColor(green.green2)}
           sx={{ width: 16, height: '100%', mr: 1 }}
         />
-        <Typography color={formatColor(green.green2)} variant="label2_light">
+        <Typography color={formatColor(green.green2)} variant="label_semi">
           {yesVotes.toLocaleString()}
         </Typography>
       </Box>
@@ -50,7 +50,7 @@ export const Votes = ({
           strokecolor={formatColor(pink.pink1)}
           sx={{ width: 16, height: '100%', mr: 1, transform: 'rotate(180deg)' }}
         />
-        <Typography color={formatColor(pink.pink1)} variant="label2_light">
+        <Typography color={formatColor(pink.pink1)} variant="label_semi">
           {noVotes.toLocaleString()}
         </Typography>
       </Box>

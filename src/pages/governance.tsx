@@ -142,7 +142,7 @@ export const Governance = () => {
         <Box display="flex" alignItems="center">
           <Typography
             color="text.secondary"
-            variant="label2"
+            variant="body2"
             whiteSpace="nowrap"
             mr={1.5}
           >

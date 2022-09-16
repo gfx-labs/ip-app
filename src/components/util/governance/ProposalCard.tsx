@@ -158,7 +158,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
           ? endDate.toLocaleDateString()
           : `Voting ended on ${endDate.toLocaleDateString()}`
 
-        setTimeLeft(endDateString)
+        setTimeLeft(endDate.toLocaleDateString())
       })
       return
     }
@@ -205,16 +205,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
-          <Typography
-            variant="subtitle2_semi"
-            color="text.primary"
-            mr={{ xs: 1, md: 3 }}
-          >
+          <Typography variant="h8" color="text.primary" mr={{ xs: 1, md: 3 }}>
             {id}
           </Typography>
           <Box position="relative">
             <Box>
-              <Typography variant="subtitle2_semi" mr={2}>
+              <Typography variant="h8" mr={2}>
                 {getTitle(body)}
               </Typography>
             </Box>
@@ -247,7 +243,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
               {timeLeft ? (
                 <Typography
-                  variant="label2_medium"
+                  variant="label_semi"
                   color={formatColor(neutral.gray3)}
                   position="relative"
                 >
@@ -256,7 +252,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               ) : (
                 <Skeleton
                   variant="rectangular"
-                  width={200}
+                  width={100}
                   height="14px"
                   animation="wave"
                   sx={{
@@ -322,24 +318,27 @@ export const ProposalCard = (props: ProposalCardProps) => {
       {isExpanded ? (
         <Box
           sx={{
-            marginTop: 3,
             cursor: 'auto',
           }}
         >
           {expandedContent ? (
             <Box>
               {status === 1 && (
-                <VoteButton
-                  id={id}
-                  status={status}
-                  votingPower={votingPower}
-                  totalVotes={totalVotes}
-                />
+                <Box mt={2}>
+                  <VoteButton
+                    id={id}
+                    status={status}
+                    votingPower={votingPower}
+                    totalVotes={totalVotes}
+                  />
+                </Box>
               )}
 
               <ProposalDetails id={id} />
-              <Box mt={2}>
-                <Typography mb={2}>Details</Typography>
+              <Box my={2}>
+                <Typography variant="h6_midi" display="block" mb={2}>
+                  Details
+                </Typography>
                 {details.map((d, i) => (
                   <Box
                     sx={{
@@ -364,7 +363,9 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 ))}
               </Box>
 
-              <Typography my={2}>Description</Typography>
+              <Typography variant="h6_midi" my={2}>
+                Description
+              </Typography>
               <Box fontWeight={400} sx={{ '& h1': { lineHeight: 1 } }}>
                 <ReactMarkdown
                   children={expandedContent}

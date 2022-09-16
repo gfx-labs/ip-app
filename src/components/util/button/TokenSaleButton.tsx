@@ -21,8 +21,8 @@ export const TokenSaleButton = () => {
         }}
       >
         <StarIcon stroke={color} sx={{ width: 22, height: 22, mr: 1 }} />
-        <Typography variant="label2" color={color}>
-          IPT Sale
+        <Typography whiteSpace="nowrap" variant="label" color={color}>
+          Token Sale
         </Typography>
       </Button>
     </Link>

@@ -4,7 +4,6 @@ import { formatColor, neutral } from '../../../../theme'
 import { VoteCount, Voter } from './VoteCount'
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
 import { BN } from '../../../../easy/bn'
-import VoteButton from '../VoteButton'
 import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate/getProposalVoters'
 
 export interface ProposalDetailsProps {
@@ -66,14 +65,11 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       color={formatColor(neutral.black)}
       textAlign="left"
       maxWidth="xl"
-      py={{ xs: 7, sm: 0 }}
       margin="auto"
       position="relative"
       sx={{
         [theme.breakpoints.down('md')]: {
           mb: 0,
-          pb: 0,
-          pt: 2,
           marginLeft: 'auto',
         },
       }}

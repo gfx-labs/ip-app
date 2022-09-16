@@ -43,7 +43,7 @@ export const SelectedChainButton = () => {
           mr={1}
         ></Box>
       )}
-      <Typography variant="label2">{name}</Typography>
+      <Typography variant="label">{name}</Typography>
     </Button>
   )
 }
