@@ -14,10 +14,11 @@ type VoteModalProps = {
   votingPower: number
   setOpen: (val: boolean) => void
   signer: JsonRpcSigner
+  isOptimistic: boolean
 }
 
 export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
-  const { open, setOpen, id, totalVotes, signer, votingPower } = props
+  const { open, setOpen, id, totalVotes, signer, votingPower, isOptimistic = false } = props
   const { updateTransactionState } = useModalContext()
   const [error, setError] = useState('')
 
@@ -42,13 +43,13 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
 
   return (
     <BaseModal open={open} withCloseButton setOpen={setOpen}>
-      <Typography variant="h6_semi">Vote for Proposal {id}</Typography>
+      <Typography variant="h6_semi">Vote for Proposal {id} {isOptimistic ? '- Optimistic' : ''}</Typography>
       <Box mt={1}>
         <Typography variant="label2_medium">
           {totalVotes.toLocaleString()} Votes Submitted
         </Typography>
       </Box>
-
+      
       <Box my={2}>
         <Typography variant="body3">
           Your voting power: {votingPower.toLocaleString()}
@@ -56,10 +57,10 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       </Box>
       <Button
         variant="contained"
-        sx={{ color: formatColor(neutral.white) }}
+        sx={{ color: formatColor(neutral.white), display: isOptimistic ? 'none' : 'block' }}
         onClick={() => castVoteHandler(1)}
       >
-        Yes
+        For
       </Button>
 
       <Button
@@ -71,7 +72,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
         }}
         onClick={() => castVoteHandler(0)}
       >
-        No
+        Against
       </Button>
 
       <Button

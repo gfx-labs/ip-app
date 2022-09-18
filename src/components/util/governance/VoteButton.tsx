@@ -8,10 +8,11 @@ interface VoteButtonProps {
   id: string
   totalVotes: number
   votingPower: number
+  isOptimistic: boolean
 }
 
 const VoteButton = (props: VoteButtonProps) => {
-  const { status, id, totalVotes, votingPower } = props
+  const { status, id, totalVotes, votingPower, isOptimistic } = props
 
   const [open, setOpen] = useState(false)
 
@@ -28,6 +29,7 @@ const VoteButton = (props: VoteButtonProps) => {
         Vote
       </Button>
       <VoteModal
+        isOptimistic={isOptimistic}
         open={open}
         setOpen={setOpen}
         id={id}
