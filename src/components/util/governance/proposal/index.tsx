@@ -12,6 +12,7 @@ export interface ProposalDetailsProps {
   status: number
   votingPower: number
   time: string
+  isOptimistic: boolean
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = (
@@ -19,7 +20,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 ) => {
   const theme = useTheme()
   const { provider, currentSigner } = useWeb3Context()
-  const { id, status, votingPower } = props
+  const { id, status, votingPower, isOptimistic = false } = props
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
   const [votersFor, setVotersFor] = useState<Array<Voter>>([])
@@ -90,6 +91,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       >
         {status === 1 && (
           <VoteButton
+          isOptimistic={isOptimistic}
             id={id}
             status={status}
             totalVotes={votesTotal}
