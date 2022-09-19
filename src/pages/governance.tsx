@@ -93,16 +93,20 @@ export const Governance = () => {
     signerOrProvider,
   } = useWeb3Context()
   const { setType } = useModalContext()
-  const { needsToDelegate, setNeedsToDelegate} = useAppGovernanceContext()
+  const {
+    needsToDelegate,
+    setNeedsToDelegate,
+    setIptBalance,
+    setCurrentVotes,
+    currentVotes,
+  } = useAppGovernanceContext()
 
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])
   )
 
-  const [currentVotes, setCurrentVotes] = useState(0)
-
   const [noProposals, setNoProposals] = useState(false)
-  
+
   useEffect(() => {
     if (signerOrProvider) {
       getRecentProposals(signerOrProvider)
@@ -130,11 +134,12 @@ export const Governance = () => {
         const currentVotes = res.div(BN('1e16')).toNumber() / 100
         setCurrentVotes(currentVotes)
 
-        if(currentVotes <= 0) {
+        if (currentVotes <= 0) {
           getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
             const iptBalance = response.div(BN('1e16')).toNumber() / 100
 
             setNeedsToDelegate(iptBalance > 0)
+            setIptBalance(iptBalance)
           })
         }
       })
@@ -276,7 +281,13 @@ export const Governance = () => {
           </Typography>
           <Button
             variant="contained"
-            sx={{ ml: 2, px: 2, width: 'fit-content', minWidth: 'auto', height: 'auto'}}
+            sx={{
+              ml: 2,
+              px: 2,
+              width: 'fit-content',
+              minWidth: 'auto',
+              height: 'auto',
+            }}
             onClick={() => setType(ModalType.DelegateIPT)}
             disabled={currentVotes <= 0 && !needsToDelegate}
           >

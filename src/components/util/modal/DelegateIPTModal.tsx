@@ -13,12 +13,23 @@ import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalContent/ModalInputContainer'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
-import { delegateUserVotingPower } from '../../../contracts/IPTDelegate'
+import {
+  delegateUserVotingPower,
+  getUserVotingPower,
+} from '../../../contracts/IPTDelegate'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { getUserIPTBalance } from '../../../contracts/IPTDelegate/getUserIPTbalance'
+import { BN } from '../../../easy/bn'
 
 export const DelegateIPTModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
-  const {needsToDelegate} = useAppGovernanceContext()
+  const {
+    needsToDelegate,
+    iptBalance,
+    setCurrentVotes,
+    setNeedsToDelegate,
+    setIptBalance,
+  } = useAppGovernanceContext()
   const isLight = useLight()
 
   const [focus, setFocus] = useState(false)
@@ -50,6 +61,25 @@ export const DelegateIPTModal = () => {
             setLoading(false)
 
             updateTransactionState(res)
+
+            if (currentAccount && currentSigner) {
+              getUserVotingPower(currentAccount, currentSigner!).then((res) => {
+                const currentVotes = res.div(BN('1e16')).toNumber() / 100
+                setCurrentVotes(currentVotes)
+
+                if (currentVotes <= 0) {
+                  getUserIPTBalance(currentAccount, currentSigner!).then(
+                    (response) => {
+                      const iptBalance =
+                        response.div(BN('1e16')).toNumber() / 100
+
+                      setNeedsToDelegate(iptBalance > 0)
+                      setIptBalance(iptBalance)
+                    }
+                  )
+                }
+              })
+            }
           })
         }
       )
@@ -80,36 +110,41 @@ export const DelegateIPTModal = () => {
           columnGap: 1,
         }}
       >
-
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             mb: 1,
             mt: 1,
-            flexDirection: 'column'
+            flexDirection: 'column',
           }}
-        > 
-            
-            <Typography variant="subtitle2" color="text.primary" mb={0}>
-              {screen === 0 ? 'Delegate your Vote' : 'Add Delegate'}
-            </Typography>
-        </Box>
-        {
-          needsToDelegate && <Typography variant="label2" display="block" color="text.primary">You have 0 votes. You should delegate IPT votes to yourself or have a friend delegate to you before voting.</Typography>
-        }
-
-        <Typography
-          variant="label2"
-          
-          color={
-            isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)
-          }
         >
-          {screen === 0
-            ? 'You can vote on each proposal yourself or add a delegate to share your votes with.'
-            : 'You can either vote yourself or delegate your votes to someone else.'}
-        </Typography>
+          <Typography variant="subtitle2" color="text.primary" mb={0}>
+            {screen === 0 ? 'Delegate your IPT' : 'Add Delegate'}
+          </Typography>
+        </Box>
+        {needsToDelegate && (
+          <Typography variant="label2" display="block" color="text.primary">
+            You have{' '}
+            {iptBalance.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 2,
+            })}{' '}
+            IPT. You should delegate your IPT votes to yourself or a friend.
+          </Typography>
+        )}
+
+        {screen !== 0 && (
+          <Typography
+            variant="label2"
+            display="block"
+            color={
+              isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)
+            }
+          >
+            You can either vote yourself or delegate your votes to someone else.
+          </Typography>
+        )}
         {screen === 0 ? (
           <Box>
             <Button
@@ -126,6 +161,7 @@ export const DelegateIPTModal = () => {
             <Button
               variant="text"
               sx={{
+                fontSize: 14,
                 color: isLight
                   ? formatColor(neutral.black)
                   : formatColor(neutral.white),
