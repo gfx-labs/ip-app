@@ -5,7 +5,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  ClickAwayListener,
 } from '@mui/material'
+import { useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
@@ -22,6 +24,8 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
 
   const { connected, disconnectWallet, error, currentAccount } =
     useWeb3Context()
+
+  const [expanded, setExpanded] = useState(false)
 
   const StyledConnectButton = (props: ButtonProps) => {
     const { onClick, children, sx } = props
@@ -56,34 +60,40 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
   return (
     <>
       {connected ? (
-        <Accordion
-          sx={{ borderRadius: '10px !important', boxShadow: 'none' }}
-          disableGutters
-          TransitionProps={{ unmountOnExit: true }}
-        >
-          <AccordionSummary
-            sx={{
-              padding: 0,
-              '& .MuiAccordionSummary-content': {
-                margin: 0,
-              },
-            }}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+        <ClickAwayListener onClickAway={() => setExpanded(false)}>
+          <Accordion
+            sx={{ borderRadius: '10px !important', boxShadow: 'none' }}
+            disableGutters
+            TransitionProps={{ unmountOnExit: true }}
+            expanded={expanded}
+            onClick={() => setExpanded(!expanded)}
           >
-            <StyledConnectButton>
-              {addressShortener(currentAccount)}
-            </StyledConnectButton>
-          </AccordionSummary>
-          <AccordionDetails sx={{ position: 'absolute', px: 0, width: '100%' }}>
-            <StyledConnectButton
-              onClick={disconnectWallet}
-              sx={{ width: '100%', justifyContent: 'center' }}
+            <AccordionSummary
+              sx={{
+                padding: 0,
+                '& .MuiAccordionSummary-content': {
+                  margin: 0,
+                },
+              }}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              Disconnect
-            </StyledConnectButton>
-          </AccordionDetails>
-        </Accordion>
+              <StyledConnectButton>
+                {addressShortener(currentAccount)}
+              </StyledConnectButton>
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{ position: 'absolute', px: 0, width: '100%' }}
+            >
+              <StyledConnectButton
+                onClick={disconnectWallet}
+                sx={{ width: '100%', justifyContent: 'center' }}
+              >
+                Disconnect
+              </StyledConnectButton>
+            </AccordionDetails>
+          </Accordion>
+        </ClickAwayListener>
       ) : (
         <>
           <StyledConnectButton onClick={() => setIsWalletModalOpen(true)}>
