@@ -62,12 +62,12 @@ export const DesktopToolBar = () => {
         )}
         <SelectedChainButton />
         <ConnectWalletButton />
-        <BaseSwitch
+        {/* <BaseSwitch
           option1={<LightIcon sx={{ width: 15 }} />}
           option2={<DarkIcon sx={{ width: 15 }} />}
           onOptionChange={toggleMode}
           defaultIsOption1={isLight}
-        />
+        /> */}
 
         <DesktopMenu />
       </Box>
