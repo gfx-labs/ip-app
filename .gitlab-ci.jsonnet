@@ -23,7 +23,6 @@ local param_job(image,tag_var, merge = {}) = std.mergePatch({
             --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
             --destination "${CI_REGISTRY_IMAGE}/%(img)s:%(tag_var)s"
             --destination "${CI_REGISTRY_IMAGE}/%(img)s:latest"
-            --destination "${CI_REGISTRY_IMAGE}/%(img)s:${CI_COMMIT_REF_NAME}"
         ||| % {img: image, tag_var: tag_var}, "\n", " "),
         ]
   }, merge);
