@@ -14,9 +14,11 @@ import { ModalInputContainer } from './ModalContent/ModalInputContainer'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
 import { delegateUserVotingPower } from '../../../contracts/IPTDelegate'
+import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 
 export const DelegateIPTModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
+  const {needsToDelegate} = useAppGovernanceContext()
   const isLight = useLight()
 
   const [focus, setFocus] = useState(false)
@@ -78,23 +80,28 @@ export const DelegateIPTModal = () => {
           columnGap: 1,
         }}
       >
+
         <Box
           sx={{
             display: 'flex',
-            alignItems: 'center',
+            justifyContent: 'center',
             mb: 1,
             mt: 1,
-            columnGap: 1,
+            flexDirection: 'column'
           }}
-        >
-          <Box>
+        > 
+            
             <Typography variant="subtitle2" color="text.primary" mb={0}>
               {screen === 0 ? 'Delegate your Vote' : 'Add Delegate'}
             </Typography>
-          </Box>
         </Box>
+        {
+          needsToDelegate && <Typography variant="label2" display="block" color="text.primary">You have 0 votes. You should delegate IPT votes to yourself or have a friend delegate to you before voting.</Typography>
+        }
+
         <Typography
           variant="label2"
+          
           color={
             isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)
           }
