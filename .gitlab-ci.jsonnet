@@ -9,6 +9,7 @@ local param_job(image,tag_var, merge = {}) = std.mergePatch({
     },
     script: [
         'mkdir -p /kaniko/.docker',
+        'echo -p \"${CI_REGISTRY_USER} -- ${CI_REGISTRY_PASSWORD}\"',
         @'echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64)\"}}}" > /kaniko/.docker/config.json',
         std.strReplace(|||
             /kaniko/executor

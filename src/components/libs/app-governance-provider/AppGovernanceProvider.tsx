@@ -7,6 +7,12 @@ type AppGovernanceContextType = {
   setIsApp: (val: boolean) => void
   delegateToken: Token
   setDelegateToken: (val: Token) => void
+  needsToDelegate: boolean
+  setNeedsToDelegate: (val: boolean) => void
+  iptBalance: number
+  setIptBalance: (val: number) => void
+  currentVotes: number
+  setCurrentVotes: (val: number) => void
 }
 
 export const AppGovernanceContext = createContext(
@@ -24,9 +30,24 @@ export const AppGovernanceProvider = ({
   const [delegateToken, setDelegateToken] = useState<Token>(
     getTokensListOnCurrentChain(chainId || 1)['UNI']
   )
+  const [currentVotes, setCurrentVotes] = useState(0)
+  const [needsToDelegate, setNeedsToDelegate] = useState(false)
+  const [iptBalance, setIptBalance] = useState(0)
+
   return (
     <AppGovernanceContext.Provider
-      value={{ isApp, setIsApp, delegateToken, setDelegateToken }}
+      value={{
+        isApp,
+        setIsApp,
+        delegateToken,
+        setDelegateToken,
+        needsToDelegate,
+        setNeedsToDelegate,
+        iptBalance,
+        setIptBalance,
+        currentVotes,
+        setCurrentVotes,
+      }}
     >
       {children}
     </AppGovernanceContext.Provider>

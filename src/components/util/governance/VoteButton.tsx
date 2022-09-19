@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Button, Box } from '@mui/material'
 import { VoteModal } from './proposal/VoteModal'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useModalContext, ModalType } from '../../libs/modal-content-provider/ModalContentProvider'
+import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 
 interface VoteButtonProps {
   status: number
@@ -12,19 +14,30 @@ interface VoteButtonProps {
 }
 
 const VoteButton = (props: VoteButtonProps) => {
-  const { status, id, totalVotes, votingPower, isOptimistic } = props
+  const { id, totalVotes, votingPower, isOptimistic } = props
 
   const [open, setOpen] = useState(false)
 
   const { currentSigner } = useWeb3Context()
+  const {setType } = useModalContext()
+  const {needsToDelegate} = useAppGovernanceContext()
+
+  const handleVoteClick = () => {
+    if(needsToDelegate) {
+      setType(ModalType.DelegateIPT)
+    } else {
+      setOpen(true)
+    }
+  }
+
   return (
     <Box>
       {' '}
       <Button
         sx={{ height: 43 }}
         variant="contained"
-        onClick={() => setOpen(true)}
-        disabled={status !== 1}
+        onClick={handleVoteClick}
+        disabled={votingPower <= 0 && !needsToDelegate }
       >
         Vote
       </Button>

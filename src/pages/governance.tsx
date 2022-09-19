@@ -1,18 +1,18 @@
 import { defaultAbiCoder } from '@ethersproject/abi'
 import { Box, Typography, useTheme, Button } from '@mui/material'
-import { utils } from 'ethers'
 import { useEffect, useState } from 'react'
+import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
 import {
   useModalContext,
   ModalType,
 } from '../components/libs/modal-content-provider/ModalContentProvider'
 import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
 import { ProposalCard } from '../components/util/governance/ProposalCard'
-import { BNtoHexNumber } from '../components/util/helpers/BNtoHex'
 import { Spinner } from '../components/util/loading'
 import { ToolTip } from '../components/util/tooltip/ToolTip'
 import { getRecentProposals } from '../contracts/GovernorCharlieDelegate/getRecentProposals'
 import { getUserVotingPower } from '../contracts/IPTDelegate'
+import { getUserIPTBalance } from '../contracts/IPTDelegate/getUserIPTbalance'
 import { BN } from '../easy/bn'
 
 export interface Proposal {
@@ -93,11 +93,17 @@ export const Governance = () => {
     signerOrProvider,
   } = useWeb3Context()
   const { setType } = useModalContext()
+  const {
+    needsToDelegate,
+    setNeedsToDelegate,
+    setIptBalance,
+    setCurrentVotes,
+    currentVotes,
+  } = useAppGovernanceContext()
+
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])
   )
-
-  const [currentVotes, setCurrentVotes] = useState(0)
 
   const [noProposals, setNoProposals] = useState(false)
 
@@ -127,6 +133,15 @@ export const Governance = () => {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
         const currentVotes = res.div(BN('1e16')).toNumber() / 100
         setCurrentVotes(currentVotes)
+
+        if (currentVotes <= 0) {
+          getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
+            const iptBalance = response.div(BN('1e16')).toNumber() / 100
+
+            setNeedsToDelegate(iptBalance > 0)
+            setIptBalance(iptBalance)
+          })
+        }
       })
     }
   }, [provider, dataBlock, chainId])
@@ -256,7 +271,7 @@ export const Governance = () => {
           />
         </Box>
 
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" marginBottom={2}>
           <Typography variant="label2" whiteSpace="nowrap" mr={1}>
             Voting Power:{' '}
             {currentVotes.toLocaleString(undefined, {
@@ -265,9 +280,16 @@ export const Governance = () => {
             })}
           </Typography>
           <Button
-            variant="text"
-            sx={{ px: 2 }}
+            variant="contained"
+            sx={{
+              ml: 2,
+              px: 2,
+              width: 'fit-content',
+              minWidth: 'auto',
+              height: 'auto',
+            }}
             onClick={() => setType(ModalType.DelegateIPT)}
+            disabled={currentVotes <= 0 && !needsToDelegate}
           >
             Delegate
           </Button>
