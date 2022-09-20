@@ -330,6 +330,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                     status={status}
                     votingPower={votingPower}
                     totalVotes={totalVotes}
+                    isOptimistic={proposalType === 'optimistic'}
                   />
                 </Box>
               )}
@@ -375,6 +376,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               </Box>
               {status === 1 && (
                 <VoteButton
+                  isOptimistic={proposalType === 'optimistic'}
                   id={id}
                   status={status}
                   votingPower={votingPower}
