@@ -99,7 +99,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const [proposal, setProposal] = useState<ProposalInfo>()
   const [status, setStatus] = useState(0)
-  const [timeLeft, setTimeLeft] = useState('')
+  const [timeLeft, setTimeLeft] = useState<string>('')
   const [forVotes, setForVotes] = useState(0)
   const [abstainVotes, setAbstainVotes] = useState(0)
   const [againstVotes, setAgainstVotes] = useState(0)
@@ -162,10 +162,15 @@ export const ProposalCard = (props: ProposalCardProps) => {
       })
       return
     }
-    if (proposalType) {
-      setTimeLeft(
-        proposalTimeRemaining(proposalType, startBlock, endBlock, dataBlock)
-      )
+    if (proposalType && status && provider) {
+      proposalTimeRemaining(
+        proposalType,
+        startBlock,
+        endBlock,
+        dataBlock,
+        status,
+        provider
+      ).then((res) => setTimeLeft(res))
     }
   }, [dataBlock, proposalType])
 

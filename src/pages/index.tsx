@@ -24,6 +24,7 @@ import { OpenVaultButton } from '../components/util/button/OpenVaultButton'
 import { InterestRateGraphCard } from '../components/util/cards/InterestRateGraphCard'
 import { Substat } from '../components/util/text/Substat'
 import getAverages, { Averages } from '../components/util/api/getAverages'
+import { useLight } from '../hooks/useLight'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -37,6 +38,7 @@ const Dashboard = () => {
       </div>
     )
   }
+  const isLight = useLight()
   const { setType } = useModalContext()
   const theme = useTheme()
   const { currentAccount, dataBlock, gasPrice, chainId } = useWeb3Context()
@@ -126,9 +128,82 @@ const Dashboard = () => {
       >
         <Box
           sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: 2,
+            my: 3,
+            [theme.breakpoints.down('xs')]: {
+              flexDirection: 'column',
+            },
+          }}
+        >
+          <SingleStatCard>
+            <>
+              <Box
+                component="img"
+                src={`images/globe_${isLight ? 'light' : 'dark'}.svg`}
+                width="36px"
+                height="36px"
+                marginRight={3}
+              ></Box>
+              <TitleText
+                title="USDi in Circulation"
+                text={Math.round(Number(totalSupply)).toLocaleString()}
+              />
+            </>
+          </SingleStatCard>
+
+          <SingleStatCard>
+            <>
+              <Box
+                component="img"
+                src={`images/cube_${isLight ? 'light' : 'dark'}.svg`}
+                width="36px"
+                height="36px"
+                marginRight={3}
+              ></Box>
+              <TitleText
+                title="USDC in Reserve"
+                text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
+              />
+            </>
+          </SingleStatCard>
+          <SingleStatCard>
+            <>
+              <Box
+                component="img"
+                src={`images/cylinder_${isLight ? 'light' : 'dark'}.svg`}
+                width="36px"
+                height="36px"
+                marginRight={3}
+              ></Box>
+              <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
+            </>
+          </SingleStatCard>
+        </Box>
+
+        <InterestRateGraphCard />
+        <Box
+          sx={{
+            marginY: 3,
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            columnGap: 2,
+            [theme.breakpoints.down('lg')]: {
+              gridTemplateColumns: '1fr',
+              rowGap: 2,
+            },
+          }}
+        >
+          <ProtocolStatsCard />
+          <StatsMeter />
+        </Box>
+        <Box
+          sx={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: 2,
+            mb: 3,
             [theme.breakpoints.down('lg')]: {
               gridTemplateColumns: '1fr',
             },
@@ -226,71 +301,26 @@ const Dashboard = () => {
             </Box>
           </SingleStatCard>
         </Box>
-        <Box
-          sx={{
-            marginY: 3,
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: 2,
-            [theme.breakpoints.down('lg')]: {
-              gridTemplateColumns: '1fr',
-              rowGap: 2,
-            },
-          }}
-        >
-          <ProtocolStatsCard />
-          <StatsMeter />
-        </Box>
         <Box>
           <UserStats />
         </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            gap: 2,
-            my: 3,
-            [theme.breakpoints.down('xs')]: {
-              flexDirection: 'column',
-            },
-          }}
-        >
-          <SingleStatCard>
-            <TitleText
-              title="USDi in Circulation"
-              text={Math.round(Number(totalSupply)).toLocaleString()}
-            />
-          </SingleStatCard>
-
-          <SingleStatCard>
-            <TitleText
-              title="USDC in Reserve"
-              text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
-            />
-          </SingleStatCard>
-          <SingleStatCard>
-            <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
-          </SingleStatCard>
-        </Box>
-        <InterestRateGraphCard />
       </Box>
 
       <Box maxWidth="xl" margin="auto">
         <Box
-          px={{ xs: 3, md: 12 }}
+          px={{ xs: 3, md: 10 }}
           mb={2}
           display="flex"
           columnGap={2}
           justifyContent="flex-end"
         >
           <Box>
-            <Typography variant="label2">Gwei: </Typography>
+            <Typography variant="label">Gwei: </Typography>
             <Typography variant="label2_medium">{gasPrice}</Typography>
           </Box>
 
           <Box>
-            <Typography variant="label2">Block: </Typography>
+            <Typography variant="label">Block: </Typography>
             <Typography variant="label2_medium">{dataBlock}</Typography>
           </Box>
         </Box>

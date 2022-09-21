@@ -7,8 +7,9 @@ import {
   AccordionDetails,
   Box,
   Link,
+  ClickAwayListener,
 } from '@mui/material'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { useLight } from '../../../hooks/useLight'
 import { EllipsisIcon } from '../../icons/misc/EllipsisIcon'
@@ -77,12 +78,22 @@ export const DesktopMenu = () => {
 
   const { toggleMode } = useContext(PaletteModeContext)
 
+  const [expanded, setExpanded] = useState(false)
+
   return (
-    <>
+    <ClickAwayListener onClickAway={() => setExpanded(false)}>
       <Accordion
-        sx={{ borderRadius: '10px !important', boxShadow: 'none' }}
+        sx={{
+          borderRadius: '10px !important',
+          boxShadow: 'none',
+          '&:hover': {
+            backgroundColor: 'button.hover',
+          },
+        }}
         disableGutters
         TransitionProps={{ unmountOnExit: true }}
+        onClick={() => setExpanded(!expanded)}
+        expanded={expanded}
       >
         <AccordionSummary
           sx={{
@@ -142,6 +153,6 @@ export const DesktopMenu = () => {
           />
         </AccordionDetails>
       </Accordion>
-    </>
+    </ClickAwayListener>
   )
 }

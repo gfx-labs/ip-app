@@ -1,3 +1,4 @@
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { IProposalType } from './ProposalCard'
 
 const proposalTimes = {
@@ -17,26 +18,36 @@ const proposalTimes = {
   [K in Exclude<IProposalType, ''>]: { pending: number | null; voting: number }
 }
 
-export const proposalTimeRemaining = (
+export const proposalTimeRemaining = async (
   proposalType: Exclude<IProposalType, ''>,
   startingBlock: number,
   endingBlock: number,
-  currentBlock: number
+  currentBlock: number,
+  status: number,
+  provider: JsonRpcProvider
 ) => {
-  const proposalPeriods = proposalTimes[proposalType]
-
-  const blockDiff = currentBlock - startingBlock
   let blocksRemaining
-  const votingPeriod = proposalPeriods.voting + (proposalPeriods.pending || 0)
-  if (proposalPeriods.pending && blockDiff < proposalPeriods.pending) {
-    blocksRemaining = proposalPeriods.pending - blockDiff
-  } else if (blockDiff < votingPeriod) {
-    blocksRemaining = votingPeriod - blockDiff
-  } else {
-    blocksRemaining = endingBlock - currentBlock
-  }
+  if (status === 0) {
+    blocksRemaining = startingBlock - currentBlock
 
-  return getTimeRemaining(blocksRemaining)
+    return `Time remaining in review: ${getTimeRemaining(blocksRemaining)}`
+  } else if (status === 1) {
+    blocksRemaining = endingBlock - currentBlock
+
+    return `Time remaining in voting: ${getTimeRemaining(blocksRemaining)}`
+  } else if (status === 5) {
+    const endingBlockTime = await provider.getBlock(endingBlock).then((res) => {
+      const currentTimestamp = Date.now()
+      const currentDate = new Date(res.timestamp)
+      // console.log(currentDate)
+      // milliseconds in 2 days
+      const timelockPeriod = 172800
+      return `Time remaining in queue: ${getTimeRemaining(
+        (res.timestamp + timelockPeriod - currentTimestamp) / 13.5
+      )}`
+    })
+    return endingBlockTime
+  }
 }
 
 const getTimeRemaining = (blockDiff: number) => {
@@ -45,10 +56,10 @@ const getTimeRemaining = (blockDiff: number) => {
   const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100)
 
   if (hrdiff >= 24) {
-    return `${Math.floor(hrdiff / 24)} days left`
+    return `${Math.floor(hrdiff / 24)} days`
   } else if (hrdiff > 1) {
-    return `${Math.floor(hrdiff)} hours left`
+    return `${Math.floor(hrdiff)} hours`
   } else {
-    return `${Math.floor(hrdiff * 60)} minute(s) left`
+    return `${Math.floor(hrdiff * 60)} minute(s)`
   }
 }
