@@ -4,15 +4,10 @@ import { formatColor, neutral } from '../../../../theme'
 import { VoteCount, Voter } from './VoteCount'
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
 import { BN } from '../../../../easy/bn'
-import VoteButton from '../VoteButton'
 import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate/getProposalVoters'
 
 export interface ProposalDetailsProps {
   id: string
-  status: number
-  votingPower: number
-  time: string
-  isOptimistic: boolean
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = (
@@ -20,7 +15,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 ) => {
   const theme = useTheme()
   const { provider, currentSigner } = useWeb3Context()
-  const { id, status, votingPower, isOptimistic = false } = props
+  const { id } = props
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
   const [votersFor, setVotersFor] = useState<Array<Voter>>([])
@@ -33,6 +28,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 
     if (signerOrProvider) {
       getProposalVoters(id, signerOrProvider!).then((px) => {
+        console.log(px)
         px.map((p) => {
           voters.set(p.voter, {
             address: p.voter,
@@ -82,27 +78,6 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
         },
       }}
     >
-      <Box
-        display="flex"
-        flexDirection={{ xs: 'column-reverse', md: 'row' }}
-        justifyContent="space-between"
-        alignItems={{ xs: 'start', md: 'center' }}
-        rowGap={1}
-      >
-        {status === 1 && (
-          <VoteButton
-          isOptimistic={isOptimistic}
-            id={id}
-            status={status}
-            totalVotes={votesTotal}
-            votingPower={votingPower}
-          />
-        )}
-
-        {/* <Typography color={formatColor(neutral.gray10)} variant="body2_semi">
-          {time}
-        </Typography> */}
-      </Box>
       <Box
         display="flex"
         columnGap={2}

@@ -26,6 +26,7 @@ import { COMMON_CONTRACT_NAMES } from '../../../constants'
 import { getAddress } from 'ethers/lib/utils'
 import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
+import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -44,7 +45,8 @@ const isAddress = (value: any): string | false => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider, currentSigner } = useWeb3Context()
+  const { dataBlock, provider, currentSigner, currentAccount } =
+    useWeb3Context()
   const { votingPower } = props
   const { id, body, endBlock, transactionHash, details, startBlock } =
     props.proposal
@@ -92,6 +94,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
   const [proposalType, setProposalType] = useState<IProposalType>('')
+  const [hasPriorVotes, setHasPriorVotes] = useState(false)
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
@@ -153,6 +156,16 @@ export const ProposalCard = (props: ProposalCardProps) => {
         status,
         provider
       ).then((res) => setTimeLeft(res))
+    }
+
+    if (status === 1 && currentSigner) {
+      getPriorVotes(currentAccount, startBlock, currentSigner).then((res) => {
+        if (!res.isZero) {
+          setHasPriorVotes(true)
+        } else {
+          setHasPriorVotes(false)
+        }
+      })
     }
   }, [dataBlock, proposalType])
 
@@ -292,14 +305,24 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   </Box>
                 ))}
               </Box>
+              <Box
+                display="flex"
+                alignItems={{ xs: 'start', md: 'center' }}
+                rowGap={1}
+              >
+                {status === 1 && (
+                  <VoteButton
+                    isOptimistic={proposalType === 'Optimistic'}
+                    id={id}
+                    status={status}
+                    totalVotes={totalVotes}
+                    votingPower={votingPower}
+                    hasPriorVotes={hasPriorVotes}
+                  />
+                )}
+              </Box>
 
-              <ProposalDetails
-                isOptimistic={proposalType === 'Optimistic'}
-                id={id}
-                status={status}
-                votingPower={votingPower}
-                time={timeLeft}
-              />
+              <ProposalDetails id={id} />
               <Box fontWeight={400}>
                 <ReactMarkdown
                   children={expandedContent}
@@ -314,6 +337,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   status={status}
                   votingPower={votingPower}
                   totalVotes={totalVotes}
+                  hasPriorVotes={hasPriorVotes}
                 />
               )}
             </Box>
