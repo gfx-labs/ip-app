@@ -144,10 +144,15 @@ export const ProposalCard = (props: ProposalCardProps) => {
       return
     }
 
-    if (proposalType !== '') {
-      setTimeLeft(
-        proposalTimeRemaining(proposalType, startBlock, endBlock, dataBlock)
-      )
+    if (proposalType && status && provider) {
+      proposalTimeRemaining(
+        proposalType,
+        startBlock,
+        endBlock,
+        dataBlock,
+        status,
+        provider
+      ).then((res) => setTimeLeft(res))
     }
   }, [dataBlock, proposalType])
 
@@ -304,7 +309,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               </Box>
               {status === 1 && (
                 <VoteButton
-                isOptimistic={proposalType === 'Optimistic'}
+                  isOptimistic={proposalType === 'Optimistic'}
                   id={id}
                   status={status}
                   votingPower={votingPower}

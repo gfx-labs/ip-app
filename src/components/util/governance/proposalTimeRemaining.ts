@@ -1,42 +1,53 @@
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { IProposalType } from './ProposalCard'
 
-const proposalTimes = {
-  Standard: {
-    pending: 13140,
-    voting: 40320,
-  },
-  Emergency: {
-    pending: null,
-    voting: 6570,
-  },
-  Optimistic: {
-    pending: 25600,
-    voting: 40320,
-  },
-} as {
-  [K in Exclude<IProposalType, ''>]: { pending: number | null; voting: number }
-}
+// const proposalTimes = {
+//   Standard: {
+//     pending: 13140,
+//     voting: 40320,
+//   },
+//   Emergency: {
+//     pending: null,
+//     voting: 6570,
+//   },
+//   Optimistic: {
+//     pending: 25600,
+//     voting: 40320,
+//   },
+// } as {
+//   [K in Exclude<IProposalType, ''>]: { pending: number | null; voting: number }
+// }
 
-export const proposalTimeRemaining = (
+export const proposalTimeRemaining = async (
   proposalType: Exclude<IProposalType, ''>,
   startingBlock: number,
   endingBlock: number,
-  currentBlock: number
+  currentBlock: number,
+  status: number,
+  provider: JsonRpcProvider
 ) => {
-  const proposalPeriods = proposalTimes[proposalType]
-
-  const blockDiff = currentBlock - startingBlock
   let blocksRemaining
-  const votingPeriod = proposalPeriods.voting + (proposalPeriods.pending || 0)
-  if (proposalPeriods.pending && blockDiff < proposalPeriods.pending) {
-    blocksRemaining = proposalPeriods.pending - blockDiff
-  } else if (blockDiff < votingPeriod) {
-    blocksRemaining = votingPeriod - blockDiff
-  } else {
+  if (status === 0) {
+    blocksRemaining = startingBlock - currentBlock
+
+    return `Time remaining in review: ${getTimeRemaining(blocksRemaining)}`
+  } else if (status === 1) {
     blocksRemaining = endingBlock - currentBlock
+
+    return `Time remaining in voting: ${getTimeRemaining(blocksRemaining)}`
+  } else if (status === 5) {
+    const endingBlockTime = await provider.getBlock(endingBlock).then((res) => {
+      const currentTimestamp = Date.now()
+
+      const timelockPeriod = 172800
+      return `Time remaining in queue: ${getTimeRemaining(
+        (res.timestamp + timelockPeriod - currentTimestamp) / 13.5
+      )}`
+    })
+    return endingBlockTime
   }
 
-  return getTimeRemaining(blocksRemaining)
+  return 'N/A'
 }
 
 const getTimeRemaining = (blockDiff: number) => {
@@ -45,10 +56,10 @@ const getTimeRemaining = (blockDiff: number) => {
   const hrdiff = Math.abs(Math.round((100 * secs) / (60 * 60)) / 100)
 
   if (hrdiff >= 24) {
-    return `Time Remaining: ${Math.floor(hrdiff / 24)} days`
+    return `${Math.floor(hrdiff / 24)} days`
   } else if (hrdiff > 1) {
-    return `Time Remaining: ${Math.floor(hrdiff)} hours`
+    return `${Math.floor(hrdiff)} hours`
   } else {
-    return `Time Remaining: ${Math.floor(hrdiff * 60)} minute(s)`
+    return `${Math.floor(hrdiff * 60)} minute(s)`
   }
 }
