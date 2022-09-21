@@ -15,6 +15,7 @@ type VoteModalProps = {
   setOpen: (val: boolean) => void
   signer: JsonRpcSigner
   isOptimistic: boolean
+  hasPriorVotes: boolean
 }
 
 export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
@@ -26,6 +27,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
     signer,
     votingPower,
     isOptimistic = false,
+    hasPriorVotes,
   } = props
   const { updateTransactionState } = useModalContext()
   const [error, setError] = useState('')
@@ -61,8 +63,19 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       </Box>
 
       <Box my={2}>
-        <Typography variant="body3">
+        <Typography variant="body3" fontWeight={400}>
           Your voting power: {votingPower.toLocaleString()}
+        </Typography>
+
+        <Typography
+          variant="label"
+          fontWeight={400}
+          color="red"
+          display="block"
+          mt={2}
+        >
+          Your voting power at the start of the proposal was 0 so you are not
+          able to vote on this proposal.
         </Typography>
       </Box>
       <Button
@@ -72,6 +85,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
           display: isOptimistic ? 'none' : 'block',
         }}
         onClick={() => castVoteHandler(1)}
+        disabled={!hasPriorVotes}
       >
         For
       </Button>
@@ -84,14 +98,20 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
           my: 2,
         }}
         onClick={() => castVoteHandler(0)}
+        disabled={!hasPriorVotes}
       >
         Against
       </Button>
 
       <Button
         variant="text"
-        sx={{ color: 'text.primary', fontSize: 14 }}
+        sx={{
+          color: 'text.primary',
+          fontSize: 14,
+          '&.Mui-disabled': { color: 'text.secondary' },
+        }}
         onClick={() => castVoteHandler(2)}
+        disabled={!hasPriorVotes}
       >
         Abstain
       </Button>

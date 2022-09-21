@@ -28,6 +28,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 
     if (signerOrProvider) {
       getProposalVoters(id, signerOrProvider!).then((px) => {
+        console.log(px)
         px.map((p) => {
           voters.set(p.voter, {
             address: p.voter,

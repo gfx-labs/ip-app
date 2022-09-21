@@ -38,9 +38,7 @@ export const proposalTimeRemaining = async (
   } else if (status === 5) {
     const endingBlockTime = await provider.getBlock(endingBlock).then((res) => {
       const currentTimestamp = Date.now()
-      const currentDate = new Date(res.timestamp)
-      // console.log(currentDate)
-      // milliseconds in 2 days
+
       const timelockPeriod = 172800
       return `Time remaining in queue: ${getTimeRemaining(
         (res.timestamp + timelockPeriod - currentTimestamp) / 13.5
@@ -48,6 +46,8 @@ export const proposalTimeRemaining = async (
     })
     return endingBlockTime
   }
+
+  return 'N/A'
 }
 
 const getTimeRemaining = (blockDiff: number) => {

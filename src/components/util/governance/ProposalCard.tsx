@@ -37,6 +37,7 @@ import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
 import { ProposalTypeToolTip } from './ProposalTypeToolTip'
 import useWindowDimensions from '../../../hooks/useWindowDimensions'
+import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -55,7 +56,8 @@ const isAddress = (value: any): string | false => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider, currentSigner } = useWeb3Context()
+  const { dataBlock, provider, currentSigner, currentAccount } =
+    useWeb3Context()
   const { votingPower } = props
   const { id, body, endBlock, transactionHash, details, startBlock } =
     props.proposal
@@ -106,6 +108,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
   const [proposalType, setProposalType] = useState<IProposalType | undefined>()
+  const [hasPriorVotes, setHasPriorVotes] = useState(false)
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
@@ -162,6 +165,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
       })
       return
     }
+
     if (proposalType && status && provider) {
       proposalTimeRemaining(
         proposalType,
@@ -171,6 +175,16 @@ export const ProposalCard = (props: ProposalCardProps) => {
         status,
         provider
       ).then((res) => setTimeLeft(res))
+    }
+
+    if (status === 1 && currentSigner) {
+      getPriorVotes(currentAccount, startBlock, currentSigner).then((res) => {
+        if (!res.isZero) {
+          setHasPriorVotes(true)
+        } else {
+          setHasPriorVotes(false)
+        }
+      })
     }
   }, [dataBlock, proposalType])
 
@@ -336,6 +350,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                     votingPower={votingPower}
                     totalVotes={totalVotes}
                     isOptimistic={proposalType === 'optimistic'}
+                    hasPriorVotes={hasPriorVotes}
                   />
                 </Box>
               )}
@@ -386,6 +401,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   status={status}
                   votingPower={votingPower}
                   totalVotes={totalVotes}
+                  hasPriorVotes={hasPriorVotes}
                 />
               )}
               <Box
