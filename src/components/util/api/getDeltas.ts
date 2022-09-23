@@ -7,7 +7,7 @@ interface AmountPercent {
   Percent: string
 }
 
-interface CurrentWithTemporal {
+export interface CurrentWithTemporal {
   Current: string
   Day: AmountPercent
   Week: AmountPercent

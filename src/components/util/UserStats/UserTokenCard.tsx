@@ -26,6 +26,7 @@ interface UserTokenCardProps extends BoxProps {
   LTVPercent: string
   penaltyPercent: string
   canDelegate: boolean | undefined
+  index: number
 }
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
@@ -49,8 +50,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     LTVPercent,
     penaltyPercent,
     canDelegate = false,
+    index,
   } = props
-
   const openVault = async () => {
     try {
       const mintVaultRes = await rolodex!.VC!.mintVault()
@@ -83,12 +84,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: isLight
-          ? formatColor(neutral.gray5)
-          : formatColor(neutral.gray4),
-        borderRadius: 2,
-        padding: 2,
-
+        paddingY: 2,
+        paddingX: 4,
+        backgroundColor: index % 2 === 0 ? 'card.list' : 'transparent',
         [theme.breakpoints.down('lg')]: {},
         ...props.sx,
       }}
@@ -115,14 +113,14 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           ></Box>
           <Box display="flex" flexDirection="column">
             <Typography
-              variant="body3"
+              variant="body1"
               color="text.primary"
               display={{ xs: 'none', lg: 'block' }}
             >
               {tokenName}
             </Typography>
             <Typography
-              variant="label2"
+              variant="label_semi"
               fontWeight={400}
               color="text.secondary"
             >
@@ -132,7 +130,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         </Box>
         <Typography
           display={{ xs: 'none', lg: 'block' }}
-          variant="body2"
+          variant="body1"
           color="text.primary"
         >
           {tokenValue}
@@ -163,55 +161,13 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           />
         </Box>
         <Box display="flex" flexDirection="column">
-          <Typography variant="body3" color="text.primary">
+          <Typography variant="body1" color="text.primary">
             {vaultBalance}
           </Typography>
 
-          <Typography variant="label2_light" color="text.secondary">
+          <Typography variant="label_semi" color="text.secondary">
             {tokenAmount} {tokenTicker}
           </Typography>
-        </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            columnGap: 1.5,
-          }}
-        >
-          <Button
-            variant="contained"
-            onClick={() => handleDWClick(ModalType.DepositCollateral)}
-            sx={{
-              borderRadius: 20,
-              width: { xs: 32, lg: 40 },
-              height: { xs: 32, lg: 40 },
-              minWidth: { xs: 20, lg: 40 },
-            }}
-          >
-            <Box
-              component="img"
-              src={`images/plus.svg`}
-              width="12px"
-              height="12px"
-            ></Box>
-          </Button>
-          <Button
-            variant="contained"
-            onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
-            sx={{
-              borderRadius: 20,
-              width: { xs: 32, lg: 40 },
-              height: { xs: 32, lg: 40 },
-              minWidth: { xs: 20, lg: 40 },
-            }}
-          >
-            <Box
-              component="img"
-              src={`images/minus.svg`}
-              width="12px"
-              height="12px"
-            ></Box>
-          </Button>
         </Box>
 
         <Box display={{ xs: 'none', lg: 'block' }}>
@@ -220,7 +176,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               variant="text"
               sx={{
                 width: 'fit-content',
-                color: 'text.primary',
+                color: 'text.delegate',
                 '&:hover': {
                   backgroundColor: 'transparent',
                   color: formatColor(neutral.gray3),
@@ -232,21 +188,59 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               }}
               onClick={setAndOpenDelegate}
             >
-              Delegate
+              <Typography variant="body1">Delegate</Typography>
               <ForwardIcon
                 sx={{
                   marginLeft: 1,
                   width: 12,
                   height: 10,
                 }}
-                stroke={
-                  isLight
-                    ? formatColor(neutral.black)
-                    : formatColor(neutral.white)
-                }
+                stroke="#5E64F4"
               />{' '}
             </Button>
           )}
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            columnGap: 1.5,
+          }}
+        >
+          <Button
+            onClick={() => handleDWClick(ModalType.DepositCollateral)}
+            sx={{
+              borderRadius: 2,
+              border: '1.5px solid #A3A9BA',
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
+            }}
+          >
+            <Box
+              component="img"
+              src={`images/plus.svg`}
+              width="16px"
+              height="16px"
+            ></Box>
+          </Button>
+          <Button
+            onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
+            sx={{
+              borderRadius: 2,
+              border: '1.5px solid #A3A9BA',
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
+            }}
+          >
+            <Box
+              component="img"
+              src={`images/minus.svg`}
+              width="16px"
+              height="16px"
+            ></Box>
+          </Button>
         </Box>
       </Box>
     </Box>

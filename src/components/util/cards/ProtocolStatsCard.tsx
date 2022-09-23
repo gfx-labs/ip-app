@@ -11,7 +11,7 @@ export const ProtocolStatsCard = () => {
         }}
       >
         <Box lineHeight={0} mb={3}>
-          <Typography variant="label" color="text.secondary">
+          <Typography variant="body1" color="text.primary">
             Mint or Redeem USDi
           </Typography>
         </Box>

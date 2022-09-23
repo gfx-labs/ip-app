@@ -36,7 +36,7 @@ export const OpenVaultButton = () => {
   }
 
   return (
-    <InverseButton onClick={openVault}>
+    <InverseButton sx={{ width: '100%' }} onClick={openVault}>
       <Typography variant="body1">Open a Vault</Typography>
     </InverseButton>
   )

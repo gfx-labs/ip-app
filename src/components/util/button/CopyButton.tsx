@@ -5,7 +5,13 @@ import { formatColor, neutral } from '../../../theme'
 
 import { CopyIcon } from '../../icons/misc/CopyIcon'
 
-export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
+export const CopyButton = ({
+  text,
+  copy,
+}: {
+  text?: string
+  copy?: string
+}) => {
   const isLight = useLight()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
@@ -15,7 +21,7 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
     setAnchorEl(event.currentTarget)
     if (copy) {
       navigator.clipboard.writeText(copy)
-    } else {
+    } else if (text) {
       navigator.clipboard.writeText(text)
     }
     setOpen(true)
@@ -27,11 +33,13 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
   return (
     <>
       <Button
-        variant="outlined"
         onClick={copyText}
         sx={
           isLight
             ? {
+                width: 'fit-content',
+                minWidth: 'auto',
+                px: 2,
                 backgroundColor: formatColor(neutral.white),
                 color: formatColor(neutral.black),
                 '&:hover': {
@@ -39,6 +47,9 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
                 },
               }
             : {
+                width: 'fit-content',
+                minWidth: 'auto',
+                px: 2,
                 backgroundColor: formatColor(neutral.gray4),
                 color: formatColor(neutral.white),
                 '&:hover': {
@@ -47,17 +58,18 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
               }
         }
       >
-        <Typography
-          variant="label"
-          color="text.primary"
-          sx={{ position: 'relative', top: 1 }}
-        >
-          {text}
-        </Typography>{' '}
+        {text && (
+          <Typography
+            variant="label"
+            color="text.primary"
+            sx={{ position: 'relative', top: 1, marginRight: 1 }}
+          >
+            {text}
+          </Typography>
+        )}
         <CopyIcon
           sx={{
-            width: '19px',
-            marginLeft: 1,
+            width: '16px',
           }}
           islight={isLight.toString()}
         />
@@ -73,8 +85,9 @@ export const CopyButton = ({ text, copy }: { text: string; copy?: string }) => {
         <Typography
           sx={{
             p: 2,
+            display: 'block',
           }}
-          variant="label2"
+          variant="label_semi"
         >
           Copied to Clipboard
         </Typography>

@@ -25,6 +25,10 @@ import { InterestRateGraphCard } from '../components/util/cards/InterestRateGrap
 import { Substat } from '../components/util/text/Substat'
 import getAverages, { Averages } from '../components/util/api/getAverages'
 import { useLight } from '../hooks/useLight'
+import getDeltas, {
+  CurrentWithTemporal,
+} from '../components/util/api/getDeltas'
+import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -52,6 +56,9 @@ const Dashboard = () => {
   const [borrowAPR, setBorrowAPR] = useState(0)
   const [depositAPR, setDepositAPR] = useState(0)
   const [averages, setAverages] = useState<Averages | undefined>()
+  const [totalCollateral, setTotalCollateral] = useState<
+    CurrentWithTemporal | undefined
+  >()
 
   useEffect(() => {
     if (currentAccount && rolodex) {
@@ -100,6 +107,7 @@ const Dashboard = () => {
     }
 
     getAverages().then((averages) => setAverages(averages))
+    getDeltas().then((deltas) => setTotalCollateral(deltas.TotalCollateral))
   }, [rolodex, dataBlock])
 
   return (
@@ -183,9 +191,13 @@ const Dashboard = () => {
         </Box>
 
         <InterestRateGraphCard />
+
+        <Typography mt={5} mb={2} color="text.primary">
+          Your Position
+        </Typography>
         <Box
           sx={{
-            marginY: 3,
+            marginBottom: 4,
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             columnGap: 2,
@@ -201,7 +213,7 @@ const Dashboard = () => {
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
+            gridTemplateColumns: '3fr 2fr',
             gap: 2,
             mb: 3,
             [theme.breakpoints.down('lg')]: {
@@ -210,6 +222,20 @@ const Dashboard = () => {
           }}
         >
           <Box sx={{ display: 'flex', gap: 2 }}>
+            <SingleStatCard>
+              <TitleTextToolTip
+                title={`Collateral Deposited`}
+                tooltipContent="Total collateral value deposited"
+                text={
+                  totalCollateral?.Current !== null
+                    ? Number(totalCollateral?.Current).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                      })
+                    : null
+                }
+              />
+            </SingleStatCard>
             <SingleStatCard>
               <TitleTextToolTip
                 title={`Deposit APR`}
@@ -248,6 +274,7 @@ const Dashboard = () => {
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
+                columnGap: 12,
                 [theme.breakpoints.down('lg')]: {
                   flexWrap: 'wrap',
                   rowGap: 2,
@@ -269,6 +296,7 @@ const Dashboard = () => {
                   display="grid"
                   alignItems="center"
                   columnGap={2}
+                  width="100%"
                   gridTemplateColumns="1fr 1fr"
                   sx={{
                     [theme.breakpoints.down('lg')]: {
@@ -280,12 +308,18 @@ const Dashboard = () => {
                     },
                   }}
                 >
-                  <InverseButton onClick={() => setType(ModalType.Borrow)}>
-                    <Typography variant="body3">Borrow</Typography>
+                  <InverseButton
+                    sx={{ width: '100%' }}
+                    onClick={() => setType(ModalType.Borrow)}
+                  >
+                    <Typography variant="body1">Borrow</Typography>
                   </InverseButton>
 
-                  <InverseButton onClick={() => setType(ModalType.Repay)}>
-                    <Typography variant="body3">Repay</Typography>
+                  <InverseButton
+                    sx={{ width: '100%' }}
+                    onClick={() => setType(ModalType.Repay)}
+                  >
+                    <Typography variant="body1">Repay</Typography>
                   </InverseButton>
                 </Box>
               ) : (
@@ -302,6 +336,7 @@ const Dashboard = () => {
           </SingleStatCard>
         </Box>
         <Box>
+          <UserIPTVault />
           <UserStats />
         </Box>
       </Box>

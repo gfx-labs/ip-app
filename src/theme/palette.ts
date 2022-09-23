@@ -99,6 +99,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       card: {
         background: getColor(formatColor(neutral.white), '#1A1A1E'),
         border: getColor('#EBEBEB', '#242424'),
+        list: getColor('#f4f4f4', '#151515'),
       },
       input: {
         background: getColor('#F3F3F3', '#2C2D32'),

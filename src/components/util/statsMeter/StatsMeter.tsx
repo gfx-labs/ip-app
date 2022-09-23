@@ -42,7 +42,7 @@ export const StatsMeter = () => {
     <CardContainer>
       <Box padding={{ xs: 2, md: 3 }}>
         <Box lineHeight={0}>
-          <Typography variant="label" color={formatColor(neutral.gray3)}>
+          <Typography variant="body1" color="text.primary">
             Borrowing Power
           </Typography>
         </Box>
