@@ -87,6 +87,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
         ),
         claim: '#5E64F4',
         depositWithdraw: '#A3A9BA',
+        mintRedeem: '#5E64F4',
         link: '#748FF1',
         app: '#5E64F4',
         vote: '#5E64F4',
@@ -95,6 +96,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
         delegate: '#5E64F4',
         skip: '#374252',
         hover: 'rgba(163, 169, 186, 0.2)',
+        hoverGray: '#D6D9E0',
       },
       card: {
         background: getColor(formatColor(neutral.white), '#1A1A1E'),

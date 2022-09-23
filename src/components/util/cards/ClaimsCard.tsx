@@ -19,8 +19,14 @@ export const ClaimsCard = () => {
 
   return (
     <CardContainer>
-      <Box display="flex" justifyContent="space-between" py={3} px={4}>
-        <Box display="flex">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        py={3}
+        px={4}
+        flexDirection={{ xs: 'column', lg: 'row' }}
+      >
+        <Box display="flex" alignItems="center">
           <ClaimIcon
             sx={{
               width: 36,
@@ -28,16 +34,20 @@ export const ClaimsCard = () => {
             }}
           />
           <Box
-            sx={{ display: 'flex', flexDirection: 'column', ml: 2, rowGap: 1 }}
+            sx={{ display: 'flex', flexDirection: 'column', ml: 2, rowGap: 0 }}
           >
             <Typography
               variant="body2_semi"
               color="text.secondary"
-              lineHeight={1}
+              lineHeight={{ xs: 1 }}
             >
               Total IPT Rewards
             </Typography>
-            <Typography variant="h7_semi" lineHeight={1} color="text.primary">
+            <Typography
+              variant="h7_semi"
+              lineHeight={{ xs: 1 }}
+              color="text.primary"
+            >
               {formattedAmount}
             </Typography>
           </Box>

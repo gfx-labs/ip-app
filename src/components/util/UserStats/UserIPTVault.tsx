@@ -34,7 +34,7 @@ export const UserIPTVault = () => {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: '2fr 1fr',
+        gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' },
         columnGap: 3,
         justifyContent: {
           xs: 'space-between',

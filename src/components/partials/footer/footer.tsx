@@ -113,7 +113,7 @@ const FooterContent = () => {
           },
         }}
       >
-        <Typography color="footer.color" variant="label2">
+        <Typography color="footer.color" variant="label_semi">
           Interest Protocol 2022
         </Typography>
         <Box>

@@ -122,7 +122,7 @@ const Dashboard = () => {
         color={formatColor(neutral.black)}
         textAlign="left"
         maxWidth="xl"
-        pt={{ xs: 7, sm: 0 }}
+        pt={{ xs: 2, sm: 0 }}
         pb={{ xs: 5, sm: 10 }}
         px={{ xs: 2, md: 10 }}
         margin="auto"
@@ -140,7 +140,7 @@ const Dashboard = () => {
             justifyContent: 'space-between',
             gap: 2,
             my: 3,
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('lg')]: {
               flexDirection: 'column',
             },
           }}
@@ -191,150 +191,172 @@ const Dashboard = () => {
         </Box>
 
         <InterestRateGraphCard />
-
-        <Typography mt={5} mb={2} color="text.primary">
-          Your Position
-        </Typography>
         <Box
-          sx={{
-            marginBottom: 4,
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            columnGap: 2,
-            [theme.breakpoints.down('lg')]: {
-              gridTemplateColumns: '1fr',
-              rowGap: 2,
-            },
-          }}
+          display="flex"
+          flexDirection={{ xs: 'column-reverse', lg: 'column' }}
         >
-          <ProtocolStatsCard />
-          <StatsMeter />
-        </Box>
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: '3fr 2fr',
-            gap: 2,
-            mb: 3,
-            [theme.breakpoints.down('lg')]: {
-              gridTemplateColumns: '1fr',
-            },
-          }}
-        >
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <SingleStatCard>
-              <TitleTextToolTip
-                title={`Collateral Deposited`}
-                tooltipContent="Total collateral value deposited"
-                text={
-                  totalCollateral?.Current !== null
-                    ? Number(totalCollateral?.Current).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                      })
-                    : null
-                }
-              />
-            </SingleStatCard>
-            <SingleStatCard>
-              <TitleTextToolTip
-                title={`Deposit APR`}
-                tooltipContent="Current annualized rate paid to USDi holders"
-                text={depositAPR !== null ? depositAPR.toFixed(2) + '%' : null}
-                substat={
-                  <Substat
-                    days={7}
-                    stat={((averages?.Supply || 0) * 100).toFixed(2)}
-                    suffix="%"
-                  />
-                }
-              />
-            </SingleStatCard>
-            <SingleStatCard>
-              <TitleTextToolTip
-                title={`Borrow APR`}
-                tooltipContent="Current annualized rate paid by USDi borrowers"
-                text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
-                substat={
-                  <Substat
-                    days={7}
-                    stat={((averages?.Borrow || 0) * 100).toFixed(2)}
-                    suffix="%"
-                  />
-                }
-              />
-            </SingleStatCard>
+          <Typography
+            mt={5}
+            mb={2}
+            color="text.primary"
+            display={{ xs: 'none', lg: 'block' }}
+          >
+            Your Position
+          </Typography>
+          <Box
+            sx={{
+              marginBottom: 4,
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              columnGap: 2,
+              [theme.breakpoints.down('lg')]: {
+                gridTemplateColumns: '1fr',
+                rowGap: 2,
+              },
+            }}
+          >
+            <ProtocolStatsCard />
+            <StatsMeter />
           </Box>
-
-          <SingleStatCard>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: '3fr 2fr',
+              gap: 2,
+              mb: 3,
+              [theme.breakpoints.down('lg')]: {
+                gridTemplateColumns: '1fr',
+                mt: 3,
+              },
+            }}
+          >
             <Box
-              display="flex"
-              justifyContent="space-between"
               sx={{
-                width: '100%',
                 display: 'flex',
-                justifyContent: 'space-between',
-                columnGap: 12,
-                [theme.breakpoints.down('lg')]: {
-                  flexWrap: 'wrap',
-                  rowGap: 2,
-                },
+                gap: 2,
+                flexDirection: { xs: 'column', lg: 'row' },
               }}
             >
-              <TitleTextToolTip
-                tooltipContent="The amount of USDi your vault is currently borrowing. This increases as interest accrue."
-                title={`USDi Borrowed`}
-                text={
-                  accountLiability !== null
-                    ? '$' + Math.round(accountLiability).toLocaleString()
-                    : null
-                }
-              />
-
-              {hasVault ? (
-                <Box
-                  display="grid"
-                  alignItems="center"
-                  columnGap={2}
-                  width="100%"
-                  gridTemplateColumns="1fr 1fr"
-                  sx={{
-                    [theme.breakpoints.down('lg')]: {
-                      width: '100%',
-                    },
-                    [theme.breakpoints.down('sm')]: {
-                      gridTemplateColumns: '1fr',
-                      rowGap: 2,
-                    },
-                  }}
-                >
-                  <InverseButton
-                    sx={{ width: '100%' }}
-                    onClick={() => setType(ModalType.Borrow)}
-                  >
-                    <Typography variant="body1">Borrow</Typography>
-                  </InverseButton>
-
-                  <InverseButton
-                    sx={{ width: '100%' }}
-                    onClick={() => setType(ModalType.Repay)}
-                  >
-                    <Typography variant="body1">Repay</Typography>
-                  </InverseButton>
-                </Box>
-              ) : (
-                <Box
-                  maxWidth={{ xs: 'auto', md: 350 }}
-                  width="100%"
-                  display="flex"
-                  alignItems="center"
-                >
-                  <OpenVaultButton />
-                </Box>
-              )}
+              <SingleStatCard>
+                <TitleTextToolTip
+                  title={`Collateral Deposited`}
+                  tooltipContent="Total collateral value deposited"
+                  text={
+                    totalCollateral?.Current !== null
+                      ? Number(totalCollateral?.Current).toLocaleString(
+                          'en-US',
+                          {
+                            style: 'currency',
+                            currency: 'USD',
+                          }
+                        )
+                      : null
+                  }
+                />
+              </SingleStatCard>
+              <SingleStatCard>
+                <TitleTextToolTip
+                  title={`Deposit APR`}
+                  tooltipContent="Current annualized rate paid to USDi holders"
+                  text={
+                    depositAPR !== null ? depositAPR.toFixed(2) + '%' : null
+                  }
+                  substat={
+                    <Substat
+                      days={7}
+                      stat={((averages?.Supply || 0) * 100).toFixed(2)}
+                      suffix="%"
+                    />
+                  }
+                />
+              </SingleStatCard>
+              <SingleStatCard>
+                <TitleTextToolTip
+                  title={`Borrow APR`}
+                  tooltipContent="Current annualized rate paid by USDi borrowers"
+                  text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
+                  substat={
+                    <Substat
+                      days={7}
+                      stat={((averages?.Borrow || 0) * 100).toFixed(2)}
+                      suffix="%"
+                    />
+                  }
+                />
+              </SingleStatCard>
             </Box>
-          </SingleStatCard>
+
+            <SingleStatCard>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                sx={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  columnGap: 12,
+                  [theme.breakpoints.down('lg')]: {
+                    flexWrap: 'wrap',
+                    rowGap: 2,
+                  },
+                }}
+              >
+                <TitleTextToolTip
+                  tooltipContent="The amount of USDi your vault is currently borrowing. This increases as interest accrue."
+                  title={`USDi Borrowed`}
+                  text={
+                    accountLiability !== null
+                      ? '$' + Math.round(accountLiability).toLocaleString()
+                      : null
+                  }
+                />
+
+                {hasVault ? (
+                  <Box
+                    display="grid"
+                    alignItems="center"
+                    columnGap={2}
+                    width="100%"
+                    gridTemplateColumns="1fr 1fr"
+                    sx={{
+                      [theme.breakpoints.down('lg')]: {
+                        width: '100%',
+                      },
+                      [theme.breakpoints.down('sm')]: {
+                        gridTemplateColumns: '1fr',
+                        rowGap: 2,
+                      },
+                    }}
+                  >
+                    <InverseButton
+                      sx={{ width: '100%' }}
+                      onClick={() => setType(ModalType.Borrow)}
+                    >
+                      <Typography variant="body1">Borrow</Typography>
+                    </InverseButton>
+
+                    <InverseButton
+                      sx={{ width: '100%' }}
+                      onClick={() => setType(ModalType.Repay)}
+                    >
+                      <Typography variant="body1">Repay</Typography>
+                    </InverseButton>
+                  </Box>
+                ) : (
+                  <Box
+                    maxWidth={{ xs: 'auto', md: 350 }}
+                    width="100%"
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <OpenVaultButton />
+                  </Box>
+                )}
+              </Box>
+            </SingleStatCard>
+          </Box>
         </Box>
+
         <Box>
           <UserIPTVault />
           <UserStats />
