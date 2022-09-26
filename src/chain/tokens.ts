@@ -58,6 +58,13 @@ export const chainsToTokens = {
     [ChainIDs.POLYGON]: '0x0000000000000000000000000000000000000000',
     [ChainIDs.LOCAL]: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
   },
+  ENS: {
+    [ChainIDs.MAINNET]: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+    [ChainIDs.ROPSTEN]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.GOERLI]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.POLYGON]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.LOCAL]: '0x0000000000000000000000000000000000000000',
+  },
 }
 
 export const getStablecoins = (
@@ -171,6 +178,22 @@ export const getTokensListOnCurrentChain = (
       vault_unformatted_amount: '0',
       capped_token: true,
       capped_address: '0x5aC39Ed42e14Cf330A864d7D1B82690B4D1B9E61',
+    },
+    ENS: {
+      name: 'Ethereum Name Service',
+      address: chainsToTokens.ENS[chain_id],
+      ticker: 'ENS',
+      value: 0,
+      vault_balance: 0,
+      vault_amount: 0,
+      wallet_balance: 0,
+      wallet_amount: 0,
+      token_LTV: 0,
+      token_penalty: 0,
+      can_delegate: false,
+      vault_unformatted_amount: '0',
+      capped_token: true,
+      capped_address: '0xfb42f5afb722d2b01548f77c31ac05bf80e03381',
     },
   }
 }
