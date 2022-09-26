@@ -36,6 +36,7 @@ export const UserIPTVault = () => {
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' },
         columnGap: 3,
+        rowGap: 3,
         justifyContent: {
           xs: 'space-between',
         },
@@ -50,7 +51,7 @@ export const UserIPTVault = () => {
           display="flex"
           alignItems="center"
           justifyContent="space-between"
-          p={3}
+          p={{ xs: 2, lg: 3 }}
         >
           <Box>
             <ToolTip

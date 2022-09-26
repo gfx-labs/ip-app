@@ -12,7 +12,7 @@ export const ClaimsButton = () => {
     <Button
       onClick={() => setType(ModalType.Claim)}
       sx={{
-        maxWidth: 150,
+        maxWidth: { xs: '100%', lg: 150 },
         backgroundColor: 'button.claim',
         color: '#FFFFFF',
         padding: 2,

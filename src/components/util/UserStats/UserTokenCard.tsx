@@ -13,6 +13,7 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
 import { useLight } from '../../../hooks/useLight'
+import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
   tokenTicker: string
@@ -85,9 +86,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     <Box
       sx={{
         paddingY: 2,
-        paddingX: 4,
+        paddingX: { xs: 2, lg: 4 },
         backgroundColor: index % 2 === 0 ? 'card.list' : 'transparent',
-        [theme.breakpoints.down('lg')]: {},
         ...props.sx,
       }}
     >
@@ -95,7 +95,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         sx={{
           display: 'grid',
           gridTemplateColumns: {
-            xs: '1fr 1fr 1fr',
+            xs: '1.5fr 1fr 1fr',
             lg: '2fr 1fr 2fr 1fr 1fr 1fr',
           },
           mb: 0,
@@ -203,7 +203,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
         <Box
           sx={{
-            display: 'flex',
+            display: { xs: 'none', lg: 'flex' },
             columnGap: 1.5,
           }}
         >
@@ -241,6 +241,18 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               height="16px"
             ></Box>
           </Button>
+        </Box>
+        <Box
+          display={{ xs: 'flex', lg: 'none' }}
+          justifySelf="flex-end"
+          width="fit-content"
+        >
+          <UserTokenMobileDropdown
+            onClickDeposit={() => handleDWClick(ModalType.DepositCollateral)}
+            onClickWithdraw={() => handleDWClick(ModalType.WithdrawCollateral)}
+            canDelegate={canDelegate}
+            onClickDelegate={setAndOpenDelegate}
+          />
         </Box>
       </Box>
     </Box>

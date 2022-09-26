@@ -53,6 +53,7 @@ export const StatsMeter = () => {
             display: 'inline-flex',
             justifyContent: 'center',
             width: '100%',
+            paddingY: { xs: 4, lg: 0 },
           }}
         >
           <CircularProgress
@@ -82,7 +83,13 @@ export const StatsMeter = () => {
           />
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column-reverse', lg: 'row' },
+          }}
+        >
           <ToolTip
             content={
               <Typography variant="body3">

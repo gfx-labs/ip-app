@@ -7,7 +7,11 @@ export const ProtocolStatsCard = () => {
     <CardContainer>
       <Box
         sx={{
-          padding: { xs: 3 },
+          padding: { xs: 2, lg: 3 },
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <Box lineHeight={0} mb={3}>

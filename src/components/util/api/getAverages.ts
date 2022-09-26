@@ -12,7 +12,6 @@ const getAverages = async () => {
     const averageRateURL = `${DEFAULT_BASE_URL}${LIVE_AVERAGE_RATES}`
 
     const response = await axios.get(averageRateURL)
-    console.log(response.data)
     return response.data as Averages
   } catch (err) {
     const error = err as Error

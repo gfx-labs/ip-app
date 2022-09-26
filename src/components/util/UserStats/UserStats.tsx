@@ -52,9 +52,9 @@ export const UserStats = () => {
         <Box
           sx={{
             display: 'grid',
-            px: 4,
+            px: { xs: 2, lg: 4 },
             gridTemplateColumns: {
-              xs: '1fr 1fr 1fr',
+              xs: '1.5fr 1fr 1fr',
               lg: '2fr 1fr 2fr 1fr 1fr 1fr',
             },
             mb: 0,
@@ -69,7 +69,9 @@ export const UserStats = () => {
           <Typography display={{ xs: 'none', lg: 'block' }} variant="label">
             LTV and Penalty
           </Typography>
-          <Typography variant="label">Balance</Typography>
+          <Typography variant="label" whiteSpace="nowrap">
+            Vault Balance
+          </Typography>
           <Box></Box>
           <Box display={{ xs: 'none', lg: 'block' }}></Box>
         </Box>

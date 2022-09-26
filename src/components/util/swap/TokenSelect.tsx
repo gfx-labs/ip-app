@@ -30,7 +30,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
         backgroundColor: isLight
           ? formatColor(neutral.gray5)
           : formatColor(neutral.gray4),
-        paddingX: 4,
+        paddingX: { xs: 2, lg: 4 },
         paddingY: 2,
         borderRadius: 5,
         boxShadow: '0px 4px 4px 0px rgba(0,0,0, 0.05)',

@@ -1,6 +1,5 @@
 import { Typography, Box } from '@mui/material'
 import { useState, useEffect } from 'react'
-import { useLight } from '../../../hooks/useLight'
 import { ClaimIcon } from '../../icons/misc/ClaimIcon'
 import { useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
 import { useMerkleRedeemContext } from '../../libs/merkle-redeem-provider/MerkleRedeemProvider'
@@ -22,11 +21,11 @@ export const ClaimsCard = () => {
       <Box
         display="flex"
         justifyContent="space-between"
-        py={3}
-        px={4}
+        py={{ xs: 2, lg: 3 }}
+        px={{ xs: 2, lg: 4 }}
         flexDirection={{ xs: 'column', lg: 'row' }}
       >
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" mb={{ xs: 3, lg: 0 }}>
           <ClaimIcon
             sx={{
               width: 36,
