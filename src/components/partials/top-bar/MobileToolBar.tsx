@@ -78,11 +78,9 @@ export const MobileToolBar = () => {
             display: 'flex',
             minWidth: 'auto',
           }}
-          variant="text"
-          color="secondary"
           onClick={() => setNavMenuOpen(true)}
         >
-          <MenuIcon sx={{ width: 32, height: 32 }} />
+          <MenuIcon sx={{ width: 32, height: 32, fill: '#5E64F4' }} />
         </Button>
       </Box>
 
