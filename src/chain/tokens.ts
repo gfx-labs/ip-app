@@ -190,7 +190,7 @@ export const getTokensListOnCurrentChain = (
       wallet_amount: 0,
       token_LTV: 0,
       token_penalty: 0,
-      can_delegate: false,
+      can_delegate: true,
       vault_unformatted_amount: '0',
       capped_token: true,
       capped_address: '0xfb42f5afb722d2b01548f77c31ac05bf80e03381',
