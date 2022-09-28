@@ -63,7 +63,12 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
 
   useEffect(() => {
     if (options && echart) {
-      const opts = prepareOptions(options, ['nogrid', 'gradient'], isLight)
+      const opts = prepareOptions(
+        options,
+        ['nogrid', 'gradient'],
+        isLight,
+        width
+      )
       echart.setOption(opts)
     }
   }, [echart, options, isLight])
@@ -74,7 +79,7 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
         ref={ref}
         style={{
           ...style,
-          height: 300,
+          height: width < 900 ? 400 : 300,
         }}
       ></div>
     </>
@@ -84,10 +89,11 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
 const prepareOptions = (
   o: any,
   typ: Array<string>,
-  isLight: boolean
+  isLight: boolean,
+  width: number
 ): EChartOption => {
   typ.forEach((x) => {
-    o = prepareChartOptions(o, x, isLight)
+    o = prepareChartOptions(o, x, isLight, width)
   })
   return o
 }
@@ -95,10 +101,11 @@ const prepareOptions = (
 const prepareChartOptions = (
   o: any,
   typ: string,
-  isLight: boolean
+  isLight: boolean,
+  width: number
 ): EChartOption => {
   const to: EChartOption = o as EChartOption
-
+  const isMobile = width < 900
   switch (typ) {
     case 'gradient':
       if (to && to.legend && to.legend!.textStyle) {
@@ -119,12 +126,18 @@ const prepareChartOptions = (
       }
 
       to.grid = {
-        width: '80%',
-        left: '200px',
+        width: isMobile ? '100%' : '80%',
+        left: isMobile ? 0 : '200px',
       }
       // @ts-ignore
       to.title.textStyle!.color = isLight ? '#6B7687' : '#FFFFFF'
 
+      if (isMobile) {
+        to.legend = {
+          top: 30,
+          orient: 'horizontal',
+        }
+      }
       // to.dataZoom = [
       //   {
       //     type: 'inside',

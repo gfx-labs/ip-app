@@ -311,32 +311,23 @@ const Dashboard = () => {
                   }
                 />
 
-                {hasVault ? (
+                {!hasVault ? (
                   <Box
                     display="grid"
                     alignItems="center"
                     columnGap={2}
                     width="100%"
                     gridTemplateColumns="1fr 1fr"
-                    sx={{
-                      [theme.breakpoints.down('lg')]: {
-                        width: '100%',
-                      },
-                      [theme.breakpoints.down('sm')]: {
-                        gridTemplateColumns: '1fr',
-                        rowGap: 2,
-                      },
-                    }}
                   >
                     <InverseButton
-                      sx={{ width: '100%' }}
+                      sx={{ width: '100%', height: { xs: 37, md: 48 } }}
                       onClick={() => setType(ModalType.Borrow)}
                     >
                       <Typography variant="body1">Borrow</Typography>
                     </InverseButton>
 
                     <InverseButton
-                      sx={{ width: '100%' }}
+                      sx={{ width: '100%', height: { xs: 37, md: 48 } }}
                       onClick={() => setType(ModalType.Repay)}
                     >
                       <Typography variant="body1">Repay</Typography>
