@@ -69,6 +69,7 @@ export const TransactionStatusModal = () => {
             <Box
               component="img"
               my={3}
+              mx="auto"
               height={30}
               width={30}
               src="images/ip_green.svg"
@@ -82,7 +83,11 @@ export const TransactionStatusModal = () => {
             >
               <Button
                 variant="contained"
-                sx={{ color: formatColor(neutral.white) }}
+                sx={{
+                  color: formatColor(neutral.white),
+                  display: 'block',
+                  margin: 'auto',
+                }}
               >
                 View on {chain.scanSite}
               </Button>
