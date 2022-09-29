@@ -311,7 +311,7 @@ const Dashboard = () => {
                   }
                 />
 
-                {!hasVault ? (
+                {hasVault ? (
                   <Box
                     display="grid"
                     alignItems="center"

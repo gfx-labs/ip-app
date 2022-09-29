@@ -46,7 +46,7 @@ export const LandingMobileToolbar = () => {
           component="img"
           src="images/ip_green.svg"
           width={{ xs: 25, md: 50 }}
-          height={{ xs: 25, md: 50 }}
+          height={{ xs: 37, md: 50 }}
         ></Box>
       </Link>
 
@@ -62,7 +62,7 @@ export const LandingMobileToolbar = () => {
           color="secondary"
           onClick={() => setNavMenuOpen(true)}
         >
-          <MenuIcon sx={{ width: 32, height: 32 }} />
+          <MenuIcon sx={{ fill: '#5E64F4', width: 32, height: 32 }} />
         </Button>
       </Box>
 
@@ -107,7 +107,7 @@ export const LandingMobileToolbar = () => {
             alignItems: 'start',
           }}
         >
-          <ForwardIcon />
+          <ForwardIcon stroke="black" />
         </Button>
 
         <Box sx={{ gap: 4 }} display="flex" flexDirection="column">

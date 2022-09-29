@@ -14,6 +14,7 @@ import type { EChartOption, EChartsType } from 'echarts'
 import axios from 'axios'
 import useWindowDimensions from '../../../hooks/useWindowDimensions'
 import { useLight } from '../../../hooks/useLight'
+import { iTokenSol } from '../../../chain/contracts/governance/token'
 
 export interface ChartContainerCardProps {
   src: string
@@ -111,15 +112,26 @@ const prepareChartOptions = (
       if (to && to.legend && to.legend!.textStyle) {
         to.legend.textStyle.fontSize = 14
       }
+      //@ts-ignore
+      if (to && to.title && to.title.textStyle) {
+        //@ts-ignore
+        to.title.textStyle = {
+          fontSize: 16,
+          color: isLight ? '#6B7687' : '#FFFFFF',
+        }
+      }
       if (to.series) {
         to.series.forEach((x: any) => {
+          x.animation = true
+          if (x.lineStyle.type !== 'dotted') {
+            x.lineStyle = {
+              width: 3,
+            }
+          }
           if (x.areaStyle) {
             if (x.type == 'line') {
               x.smooth = true
               x.areaStyle.color = createGradient(x.areaStyle.color)
-              x.lineStyle = {
-                width: 0,
-              }
             }
           }
         })
@@ -129,8 +141,6 @@ const prepareChartOptions = (
         width: isMobile ? '100%' : '80%',
         left: isMobile ? 0 : '200px',
       }
-      // @ts-ignore
-      to.title.textStyle!.color = isLight ? '#6B7687' : '#FFFFFF'
 
       if (isMobile) {
         to.legend = {

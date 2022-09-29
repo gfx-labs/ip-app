@@ -32,7 +32,7 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
     pr: 7,
     justifyContent: 'start',
     backgroundColor: 'button.header',
-    height: 48,
+    height: 38,
     borderRadius: '10px',
     '&:hover': {
       backgroundColor: 'button.hover',
@@ -49,7 +49,7 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
         height={16}
       ></Box>
       <Typography
-        variant="body1"
+        variant="body2"
         whiteSpace="nowrap"
         color="text.primary"
         sx={{
@@ -91,7 +91,6 @@ export const DesktopMenu = () => {
         }}
         disableGutters
         TransitionProps={{ unmountOnExit: true }}
-        onClick={() => setExpanded(!expanded)}
         expanded={expanded}
       >
         <AccordionSummary
@@ -107,6 +106,7 @@ export const DesktopMenu = () => {
           }}
           aria-controls="panel1a-content"
           id="panel1a-header"
+          onClick={() => setExpanded(!expanded)}
         >
           <EllipsisIcon
             sx={{

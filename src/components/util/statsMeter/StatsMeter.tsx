@@ -58,7 +58,7 @@ export const StatsMeter = () => {
         >
           <CircularProgress
             variant="determinate"
-            thickness={5}
+            thickness={3}
             value={percentBorrowedGraph}
             sx={{
               position: 'relative',
@@ -71,7 +71,7 @@ export const StatsMeter = () => {
           <CircularProgress
             variant="determinate"
             value={100}
-            thickness={5}
+            thickness={3}
             size={190}
             sx={{
               position: 'absolute',

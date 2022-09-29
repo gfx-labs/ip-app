@@ -53,14 +53,19 @@ export const Splash: React.FC = () => {
             }}
           >
             <Typography
-              variant="body3"
+              variant="body1"
               whiteSpace="nowrap"
               color={formatColor(neutral.black)}
             >
               IP Whitepaper
             </Typography>
             <ForwardIcon
-              sx={{ width: 11, ml: 1, top: 1, position: 'relative' }}
+              sx={{
+                width: 11,
+                ml: 1,
+                position: 'relative',
+                stroke: 'black',
+              }}
             />
           </Button>
         </Box>

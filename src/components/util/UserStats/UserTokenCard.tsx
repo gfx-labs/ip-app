@@ -145,7 +145,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             }
             text={`LTV: ${LTVPercent}%
           `}
-            text_variant="label2"
+            text_variant="body2"
           />
           <Box mx={1}> </Box>
           <ToolTip
@@ -157,7 +157,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             }
             text={`Penalty: ${penaltyPercent}%
           `}
-            text_variant="label2"
+            text_variant="body2"
           />
         </Box>
         <Box display="flex" flexDirection="column">
