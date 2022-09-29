@@ -120,7 +120,7 @@ export const WithdrawCollateralContent = () => {
   return (
     <Box>
       <Box textAlign="right" mb={1}>
-        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+        <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
           Vault Balance: {round(collateralToken.vault_amount || 0, 4)}{' '}
           {collateralToken.ticker}
         </Typography>
@@ -221,7 +221,7 @@ export const WithdrawCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="label2" color={formatColor(blue.blue1)}>
+        <Typography variant="label_semi" color={formatColor(blue.blue1)}>
           Borrowing Power
         </Typography>
         <Box
@@ -234,7 +234,7 @@ export const WithdrawCollateralContent = () => {
             transform: 'rotate(180deg)',
           }}
         />
-        <Typography variant="label2" color={formatColor(blue.blue1)}>
+        <Typography variant="label_semi" color={formatColor(blue.blue1)}>
           ${newBorrowingPower.toLocaleString()}
         </Typography>
       </Box>

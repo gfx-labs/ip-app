@@ -43,7 +43,7 @@ export const proposalTypeDiction = {
         </>
       }
       text="Emergency"
-      text_variant="label2"
+      text_variant="label_semi"
       type="emergency"
     />
   ),
@@ -80,7 +80,7 @@ export const proposalTypeDiction = {
         </>
       }
       text="Optimistic"
-      text_variant="label2"
+      text_variant="label_semi"
       type="optimistic"
     />
   ),
@@ -119,7 +119,7 @@ export const proposalTypeDiction = {
         </>
       }
       text="Standard"
-      text_variant="label2"
+      text_variant="label_semi"
       type="standard"
     />
   ),

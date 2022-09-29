@@ -64,7 +64,7 @@ export const BorrowRepayModal = () => {
           alt={tokenName}
         ></Box>
         <Box>
-          <Typography variant="label2" color={formatColor(neutral.gray3)}>
+          <Typography variant="label" color={formatColor(neutral.gray3)}>
             Liability:
           </Typography>
           <Typography variant="subtitle1" color="text.primary">
@@ -103,7 +103,10 @@ export const BorrowRepayModal = () => {
         {borrowAmount ? (
           currType ? (
             <Box>
-              <Typography variant="label2" color={formatColor(neutral.gray3)}>
+              <Typography
+                variant="label_semi"
+                color={formatColor(neutral.gray3)}
+              >
                 New:
               </Typography>
               <Typography variant="subtitle1" color="text.primary">
@@ -112,7 +115,10 @@ export const BorrowRepayModal = () => {
             </Box>
           ) : (
             <Box>
-              <Typography variant="label2" color={formatColor(neutral.gray3)}>
+              <Typography
+                variant="label_semi"
+                color={formatColor(neutral.gray3)}
+              >
                 New:
               </Typography>
               <Typography variant="subtitle1" color="text.primary">

@@ -33,7 +33,7 @@ const BaseToolTipContainer = styled(({ className, ...props }: TooltipProps) => {
 export const ProposalToolTip = (props: {
   content: TooltipProps['title']
   text: string
-  text_variant?: 'body1' | 'body2' | 'body2_semi' | 'label2'
+  text_variant?: 'body1' | 'body2' | 'body2_semi' | 'label_semi'
   type: IProposalType
 }) => {
   const { content, text, type } = props

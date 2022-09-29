@@ -295,7 +295,7 @@ export const UsdiGraphCard = () => {
 }
 
 const GraphTypography = ({ text }: { text: string }) => (
-  <Typography variant="label2" color={formatColor(neutral.gray3)}>
+  <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
     {text}
   </Typography>
 )

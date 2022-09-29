@@ -101,7 +101,7 @@ export const StatsMeter = () => {
               borrowingPower
             ).toLocaleString()} USDi
           `}
-            text_variant="label2"
+            text_variant="label_semi"
           />
 
           <ToolTip
@@ -111,7 +111,7 @@ export const StatsMeter = () => {
               </Typography>
             }
             text={`USDi Borrowed:  ${percentBorrowed}%`}
-            text_variant="label2"
+            text_variant="label_semi"
           />
         </Box>
       </Box>
