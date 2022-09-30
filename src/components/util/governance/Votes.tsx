@@ -38,19 +38,19 @@ export const Votes = ({
     <Box display="flex" flexWrap="nowrap" marginX={7}>
       <Box display="flex" alignItems="center" marginX={1}>
         <ThumbsUpIcon
-          strokecolor={formatColor(green.green2)}
+          strokecolor={upStrokeColor}
           sx={{ width: 16, height: '100%', mr: 1 }}
         />
-        <Typography color={formatColor(green.green2)} variant="label_semi">
+        <Typography color={upStrokeColor} variant="label_semi">
           {yesVotes.toLocaleString()}
         </Typography>
       </Box>
       <Box display="flex" alignItems="center" marginX={1}>
         <ThumbsUpIcon
-          strokecolor={formatColor(pink.pink1)}
+          strokecolor={downStrokeColor}
           sx={{ width: 16, height: '100%', mr: 1, transform: 'rotate(180deg)' }}
         />
-        <Typography color={formatColor(pink.pink1)} variant="label_semi">
+        <Typography color={downStrokeColor} variant="label_semi">
           {noVotes.toLocaleString()}
         </Typography>
       </Box>
