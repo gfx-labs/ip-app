@@ -130,6 +130,18 @@ export const DesktopMenu = () => {
             backgroundColor: 'button.header',
           }}
         >
+          <StyledDropdownButton
+            img="rewards"
+            href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet"
+            text="ETH USDi Rewards"
+            target="_blank"
+          />
+          <StyledDropdownButton
+            img="chart-bar"
+            href="https://analytics.gfx.xyz/"
+            text="Analytics"
+            target="_blank"
+          />
           <StyledDropdownButton img="cog" text="Docs" href="#/docs" />
           <StyledDropdownButton
             img="document"
@@ -148,12 +160,7 @@ export const DesktopMenu = () => {
             text="Discord"
             target="_blank"
           />
-          <StyledDropdownButton
-            img="star"
-            href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet"
-            text="ETH USDi Rewards"
-            target="_blank"
-          />
+
           <StyledDropdownButton
             img="sun"
             text={isLight ? 'Dark Mode' : `Light Mode`}

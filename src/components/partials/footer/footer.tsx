@@ -9,6 +9,7 @@ const footerLinks = [
       { label: 'Whitepaper', href: '#/whitepaper' },
       { label: 'Docs & Guides', href: '#/docs' },
       { label: 'Sale', href: '#/sale' },
+      { label: 'Analytics', href: 'https://analytics.gfx.xyz/' },
       {
         label: 'Audit',
         href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
