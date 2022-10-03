@@ -253,33 +253,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   }}
                 />
               )}
-              <Divider
-                orientation="vertical"
-                variant="middle"
-                sx={{ borderColor: 'text.secondary', minHeight: 10 }}
-                flexItem
-              />
-
-              {timeLeft ? (
-                <Typography
-                  variant="label_semi"
-                  color={formatColor(neutral.gray3)}
-                  position="relative"
-                >
-                  {timeLeft}
-                </Typography>
-              ) : (
-                <Skeleton
-                  variant="rectangular"
-                  width={100}
-                  height="14px"
-                  animation="wave"
-                  sx={{
-                    position: 'relative',
-                    display: 'inline-block',
-                  }}
-                />
-              )}
 
               <Divider
                 orientation="vertical"
@@ -287,6 +260,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 sx={{
                   borderColor: 'text.secondary',
                   display: isMobile ? 'none' : 'block',
+                  height: 10,
                 }}
                 flexItem
               />
@@ -296,7 +270,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 onClick={(e) => e.stopPropagation()}
                 sx={{
                   borderColor: 'text.secondary',
-                  display: isMobile ? 'none' : 'block',
+                  display: isMobile ? 'none' : 'flex',
+                  alignItems: 'center',
                 }}
               >
                 <Box
@@ -307,7 +282,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   width="12px"
                   height="12px"
                   position="relative"
+                  marginRight={1}
                 ></Box>
+                <Typography color="text.secondary" variant="label_semi">
+                  Etherscan
+                </Typography>
               </Link>
             </Box>
           </Box>
@@ -317,7 +296,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
             <Votes noVotes={againstVotes} yesVotes={forVotes} />
           </Box>
           <Box textAlign="center">
-            <Status status={status} />
+            <Status status={status} timeLeft={timeLeft} />
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <CaratUpIcon
@@ -326,7 +305,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 width: 16,
                 height: 16,
                 ml: 2,
-                transform: `${isExpanded ? 'rotate(180deg)' : 'none'}`,
+                transform: `${!isExpanded ? 'rotate(180deg)' : 'none'}`,
                 transition: 'transform 0.2s',
               }}
             />
@@ -416,7 +395,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   sx={{
                     width: 16,
                     height: 16,
-                    transform: `${isExpanded ? 'rotate(180deg)' : 'none'}`,
+                    transform: `${!isExpanded ? 'rotate(180deg)' : 'none'}`,
                     transition: 'transform 0.2s',
                   }}
                 />

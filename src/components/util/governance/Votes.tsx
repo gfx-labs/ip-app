@@ -24,18 +24,18 @@ export const Votes = ({
       downStrokeColor = formatColor(neutral.white)
     }
   } else if (yesVotes > noVotes) {
-    upStrokeColor = formatColor(green.green2)
-    downStrokeColor = formatColor(pink.pink1)
+    upStrokeColor = formatColor(isLight ? neutral.black : neutral.white)
+    downStrokeColor = formatColor(neutral.gray3)
   } else if (noVotes > yesVotes) {
-    upStrokeColor = formatColor(pink.pink1)
-    downStrokeColor = formatColor(green.green2)
+    upStrokeColor = formatColor(neutral.gray3)
+    downStrokeColor = formatColor(isLight ? neutral.black : neutral.white)
   } else {
-    upStrokeColor = formatColor(green.green2)
-    downStrokeColor = formatColor(green.green2)
+    upStrokeColor = formatColor(neutral.gray3)
+    downStrokeColor = formatColor(neutral.gray3)
   }
 
   return (
-    <Box display="flex" flexWrap="nowrap" marginX={7}>
+    <Box display="flex" flexWrap="nowrap" marginX={2}>
       <Box display="flex" alignItems="center" marginX={1}>
         <ThumbsUpIcon
           strokecolor={upStrokeColor}

@@ -134,7 +134,7 @@ export const Governance = () => {
 
   return (
     <Box
-      maxWidth={910}
+      maxWidth={980}
       pt={{ xs: 7, sm: 0 }}
       pb={{ xs: 1, md: 10 }}
       px={{ xs: 2, md: 10 }}
