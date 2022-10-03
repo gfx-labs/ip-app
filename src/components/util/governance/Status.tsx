@@ -97,6 +97,8 @@ const StatusContainer = ({
             mr: 0.5,
             bottom: 1,
             position: 'relative',
+            display:
+              status === 1 || status === 1 || status === 5 ? 'block' : 'none',
           }}
         />
         <Typography variant="body2" lineHeight={1}>
