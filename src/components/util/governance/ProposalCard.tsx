@@ -168,7 +168,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
       return
     }
 
-    if (proposalType && status && provider) {
+    if (proposalType && provider) {
       proposalTimeRemaining(
         proposalType,
         startBlock,
@@ -521,7 +521,9 @@ const markdownComponentConfig: Partial<
       <img
         {...props}
         style={{
-          width: '25%',
+          display: 'block',
+          margin: 'auto',
+          width: '66%',
         }}
       ></img>
     )

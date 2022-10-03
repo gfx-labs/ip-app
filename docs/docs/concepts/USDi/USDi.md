@@ -22,7 +22,7 @@ USDi can maintain a stable value even in adverse market conditions because USDi 
 
 USDi is _pegged to $1_ because 1 USDi can be redeemed for 1 USDC at Interest Protocol.
 
-Interest Protocol automatically maintains its reserve of USDC by adjusting the interest rate as a function of the *reserve ratio*, which is defined as the amount of USDC in the protocol's reserve divided by the total supply of USDi. A lower reserve ratio implies that there is less USDC to meet the potential redemption demand of USDi. As the reserve ratio decreases, both the borrow rate and the deposit rate of USDi increase. This induces users to repay their USDi loans or deposit USDC to mint USDi, increaseing the reserve ratio.
+Interest Protocol automatically maintains its reserve of USDC by adjusting the interest rate as a function of the *reserve ratio*, which is defined as the amount of USDC in the protocol's reserve divided by the total supply of USDi. A lower reserve ratio implies that there is less USDC to meet the potential redemption demand of USDi. As the reserve ratio decreases, both the borrow rate and the deposit rate of USDi increase. This induces users to repay their USDi loans or deposit USDC to mint USDi, increasing the reserve ratio.
 
 ## Using USDi
 
