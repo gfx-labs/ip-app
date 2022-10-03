@@ -17,10 +17,11 @@ import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mod
 interface StyledDropdownButton extends ButtonProps {
   text: string
   img: string
+  target?: string
 }
 
 const StyledDropdownButton = (props: StyledDropdownButton) => {
-  const { onClick, sx, text, img, href } = props
+  const { onClick, sx, text, img, href, target = '' } = props
 
   const styles = {
     minWidth: 'auto',
@@ -62,7 +63,7 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
   )
 
   return href ? (
-    <Link href={href} sx={styles}>
+    <Link href={href} sx={styles} target={target}>
       {content}
     </Link>
   ) : (
@@ -139,11 +140,19 @@ export const DesktopMenu = () => {
             img="feedback"
             text="Feedback"
             href="https://discord.gg/s9Wja2tb6k"
+            target="_blank"
           />
           <StyledDropdownButton
             img="discord_icon_grey"
             href="https://discord.gg/s9Wja2tb6k"
             text="Discord"
+            target="_blank"
+          />
+          <StyledDropdownButton
+            img="star"
+            href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet"
+            text="ETH USDi Rewards"
+            target="_blank"
           />
           <StyledDropdownButton
             img="sun"
