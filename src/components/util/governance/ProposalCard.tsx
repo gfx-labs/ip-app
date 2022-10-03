@@ -38,6 +38,7 @@ import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
 import { ProposalTypeToolTip } from './ProposalTypeToolTip'
 import useWindowDimensions from '../../../hooks/useWindowDimensions'
 import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
+import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -101,6 +102,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const [proposal, setProposal] = useState<ProposalInfo>()
   const [status, setStatus] = useState(0)
+  const [hasVoted, setHasVoted] = useState(false)
   const [timeLeft, setTimeLeft] = useState<string>('')
   const [forVotes, setForVotes] = useState(0)
   const [abstainVotes, setAbstainVotes] = useState(0)
@@ -184,6 +186,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
         } else {
           setHasPriorVotes(false)
         }
+      })
+
+      getReceiptOf(id, currentAccount, currentSigner).then((receipt) => {
+        setHasVoted(receipt.hasVoted)
       })
     }
   }, [dataBlock, proposalType])
@@ -330,6 +336,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                     totalVotes={totalVotes}
                     isOptimistic={proposalType === 'optimistic'}
                     hasPriorVotes={hasPriorVotes}
+                    hasVoted={hasVoted}
                   />
                 </Box>
               )}
@@ -381,6 +388,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   votingPower={votingPower}
                   totalVotes={totalVotes}
                   hasPriorVotes={hasPriorVotes}
+                  hasVoted={hasVoted}
                 />
               )}
               <Box

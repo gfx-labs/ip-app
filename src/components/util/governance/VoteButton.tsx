@@ -15,10 +15,12 @@ interface VoteButtonProps {
   votingPower: number
   isOptimistic: boolean
   hasPriorVotes: boolean
+  hasVoted: boolean
 }
 
 const VoteButton = (props: VoteButtonProps) => {
-  const { id, totalVotes, votingPower, isOptimistic, hasPriorVotes } = props
+  const { id, totalVotes, votingPower, isOptimistic, hasPriorVotes, hasVoted } =
+    props
 
   const [open, setOpen] = useState(false)
 
@@ -41,7 +43,7 @@ const VoteButton = (props: VoteButtonProps) => {
         sx={{ height: 43, width: '100%', backgroundColor: 'button.vote' }}
         variant="contained"
         onClick={handleVoteClick}
-        disabled={votingPower <= 0 && !needsToDelegate}
+        disabled={(votingPower <= 0 && !needsToDelegate) || hasVoted}
       >
         <Typography variant="body1" lineHeight={1}>
           Vote

@@ -35,11 +35,7 @@ export const ClaimsCard = () => {
           <Box
             sx={{ display: 'flex', flexDirection: 'column', ml: 2, rowGap: 0 }}
           >
-            <Typography
-              variant="label_semi"
-              color="text.secondary"
-              lineHeight={{ xs: 1 }}
-            >
+            <Typography variant="label_semi" color="text.secondary">
               Total IPT Rewards
             </Typography>
             <Typography

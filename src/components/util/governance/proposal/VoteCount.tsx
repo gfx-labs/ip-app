@@ -20,7 +20,6 @@ interface VoteCountProps {
 
 export const VoteCount = (props: VoteCountProps) => {
   const { votes, totalVotes, voters, forOrAgainst } = props
-  console.log(voters)
   const isLight = useLight()
 
   const barColor = forOrAgainst == 'For' ? 'success' : 'error'
