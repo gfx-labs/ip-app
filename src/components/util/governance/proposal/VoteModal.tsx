@@ -83,6 +83,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
         sx={{
           color: formatColor(neutral.white),
           display: isOptimistic ? 'none' : 'block',
+          width: '100%',
         }}
         onClick={() => castVoteHandler(1)}
         disabled={!hasPriorVotes}
@@ -93,6 +94,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       <Button
         variant="contained"
         sx={{
+          width: '100%',
           backgroundColor: 'misc.blackWhite',
           color: 'misc.whiteBlack',
           my: 2,
@@ -106,6 +108,8 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
       <Button
         variant="text"
         sx={{
+          border: '1px solid',
+          borderColor: 'misc.blackWhite',
           color: 'text.primary',
           fontSize: 14,
           '&.Mui-disabled': { color: 'text.secondary' },
