@@ -127,7 +127,12 @@ const prepareChartOptions = (
             x.lineStyle = {
               width: 3,
             }
+
+            x.areaStyle = {
+              color: x.itemStyle.color,
+            }
           }
+
           if (x.areaStyle) {
             if (x.type == 'line') {
               x.smooth = true

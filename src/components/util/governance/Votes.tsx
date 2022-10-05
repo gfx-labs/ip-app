@@ -16,13 +16,8 @@ export const Votes = ({
   let downStrokeColor
 
   if (noVotes === 0 && yesVotes === 0) {
-    if (isLight) {
-      upStrokeColor = formatColor(neutral.gray1)
-      downStrokeColor = formatColor(neutral.gray1)
-    } else {
-      upStrokeColor = formatColor(neutral.white)
-      downStrokeColor = formatColor(neutral.white)
-    }
+    upStrokeColor = formatColor(neutral.gray3)
+    downStrokeColor = formatColor(neutral.gray3)
   } else if (yesVotes > noVotes) {
     upStrokeColor = formatColor(isLight ? neutral.black : neutral.white)
     downStrokeColor = formatColor(neutral.gray3)
