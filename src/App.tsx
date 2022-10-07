@@ -38,6 +38,7 @@ import { TermsPage } from './pages/terms'
 import { TestingPage } from './pages/playground'
 import { MerkleRedeemContextProvider } from './components/libs/merkle-redeem-provider/MerkleRedeemProvider'
 import { Governance } from './pages/governance'
+import { EnableCappedTokenModal } from './components/util/modal/EnableCappedTokenModal'
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,6 +78,7 @@ const DashboardContext = (props: { children: any }) => {
                         <BorrowRepayModal />
                         <DepositUSDCConfirmationModal />
                         <WithdrawUSDCConfirmationModal />
+                        <EnableCappedTokenModal />
                         <ClaimModal />
                         <TransactionStatusModal />
                       </>

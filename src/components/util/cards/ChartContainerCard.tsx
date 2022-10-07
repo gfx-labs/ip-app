@@ -130,13 +130,14 @@ const prepareChartOptions = (
 
             x.areaStyle = {
               color: x.itemStyle.color,
+              opacity: 0.3,
             }
           }
 
           if (x.areaStyle) {
             if (x.type == 'line') {
               x.smooth = true
-              x.areaStyle.color = createGradient(x.areaStyle.color)
+              x.areaStyle.color = createGradient(x.areaStyle.color, isLight)
             }
           }
         })
@@ -180,7 +181,7 @@ const prepareChartOptions = (
   return to
 }
 
-const createGradient = (startingColor: string = '#748ff1') =>
+const createGradient = (startingColor: string = '#748ff1', isLight: boolean) =>
   new graphic.LinearGradient(0, 0, 0, 1, [
     {
       offset: 0,
@@ -188,7 +189,7 @@ const createGradient = (startingColor: string = '#748ff1') =>
     },
     {
       offset: 1,
-      color: '#1c1d21',
+      color: isLight ? startingColor : '#1c1d21',
     },
   ])
 

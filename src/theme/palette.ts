@@ -47,6 +47,10 @@ export const getDesignTokens = (mode: PaletteMode) => {
         primary: getColor('#374252', formatColor(neutral.white)),
         secondary: '#A3A9BA',
         tertiary: '#748FF1',
+        inverse: getColor(
+          formatColor(neutral.white),
+          formatColor(neutral.black)
+        ),
       },
       accordion: {
         background: getColor(formatColor(neutral.white), '#1A1A1E'),
@@ -82,6 +86,10 @@ export const getDesignTokens = (mode: PaletteMode) => {
         sale: getColor('#374252', formatColor(neutral.white)),
         header: getColor(formatColor(neutral.white), '#202020'),
         borrowRepay: getColor(
+          formatColor(neutral.black),
+          formatColor(neutral.white)
+        ),
+        enableToken: getColor(
           formatColor(neutral.black),
           formatColor(neutral.white)
         ),
