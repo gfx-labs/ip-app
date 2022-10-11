@@ -29,7 +29,7 @@ export const SetAllowanceModal = () => {
 
         setLoading(false)
 
-        setButtonText('Vault Minted')
+        setButtonText('Allowance Set')
         setRefresh(true)
       }
     } catch (err) {
