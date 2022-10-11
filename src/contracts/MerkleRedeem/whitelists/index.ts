@@ -6,6 +6,8 @@ import week11 from '../../../pages/whitelist/week11'
 import week12 from '../../../pages/whitelist/week12'
 import week13 from '../../../pages/whitelist/week13'
 import week14 from '../../../pages/whitelist/week14'
+import week15 from '../../../pages/whitelist/week15'
+import week155 from '../../../pages/whitelist/week155'
 
 const weeks = {
   7: week7,
@@ -16,6 +18,8 @@ const weeks = {
   12: week12,
   13: week13,
   14: week14,
+  15: week15,
+  155: week155,
 }
 
 export default weeks
