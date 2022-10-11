@@ -30,13 +30,10 @@ export const DepositCollateralConfirmationModal = () => {
     collateralDepositAmountMax,
     setCollateralDepositAmountMax,
   } = useModalContext()
-  const { provider, currentAccount, currentSigner, dataBlock } =
-    useWeb3Context()
+  const { provider, currentAccount, currentSigner } = useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const [modalTitle, setModalTitle] = useState('Confirm Deposit')
-  const { vaultAddress, vaultID, hasVotingVault, setHasVotingVault } =
-    useVaultDataContext()
+  const { vaultAddress, vaultID, hasVotingVault } = useVaultDataContext()
   const [needAllowance, setNeedAllowance] = useState(true)
   const [decimals, setDecimals] = useState(18)
 
@@ -149,7 +146,7 @@ export const DepositCollateralConfirmationModal = () => {
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
       >
-        {modalTitle}
+        Confirm Deposit
       </Typography>
       <Box
         sx={{
@@ -189,6 +186,7 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
+          !collateralToken.capped_token ||
           (collateralToken.capped_token &&
             collateralToken.capped_address &&
             !hasVotingVault) ||
