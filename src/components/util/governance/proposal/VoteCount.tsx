@@ -20,7 +20,6 @@ interface VoteCountProps {
 
 export const VoteCount = (props: VoteCountProps) => {
   const { votes, totalVotes, voters, forOrAgainst } = props
-  console.log(voters)
   const isLight = useLight()
 
   const barColor = forOrAgainst == 'For' ? 'success' : 'error'
@@ -49,28 +48,30 @@ export const VoteCount = (props: VoteCountProps) => {
     >
       <Box
         sx={{
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
+          backgroundColor: 'accordionCard.background',
+          borderColor: 'accordionCard.border',
+          borderWidth: 1,
+          borderStyle: 'solid',
           borderRadius: 2,
-          p: { xs: 1, md: 4 },
-          mb: 2,
+          p: { xs: 2 },
         }}
       >
-        <Typography color="text.secondary" variant="body1" mb={1}>
-          {forOrAgainst}
-        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography color="text.primary" variant="body1" mb={1}>
+            {forOrAgainst}
+          </Typography>
 
-        <Typography textAlign="right" variant="body1" color="text.secondary">
-          {votes.toLocaleString()} / {totalVotes.toLocaleString()}
-        </Typography>
+          <Typography textAlign="right" variant="body1" color="text.primary">
+            {votes.toLocaleString()} / {totalVotes.toLocaleString()}
+          </Typography>
+        </Box>
 
         <LinearProgress
           color={barColor as any}
           variant="determinate"
           value={votePercent}
           sx={{
-            marginY: 2,
+            marginTop: 1,
             backgroundColor: isLight
               ? formatColor(neutral.gray6)
               : formatColor(neutral.white),
@@ -81,13 +82,13 @@ export const VoteCount = (props: VoteCountProps) => {
       <Box
         sx={{
           width: '100%',
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray4),
+          backgroundColor: 'accordionCard.background',
+          borderColor: 'accordionCard.border',
+          borderWidth: 1,
+          borderStyle: 'solid',
           borderRadius: 2,
-          px: { xs: 1, md: 4 },
-          pt: 4,
-          pb: 2,
+          p: { xs: 2, md: 3 },
+          paddingBottom: { xs: 0, md: 0 },
           my: 2,
           height: 'fill-available',
           display: 'flex',
@@ -95,7 +96,7 @@ export const VoteCount = (props: VoteCountProps) => {
         }}
       >
         {voters.map((voter, index) => (
-          <Box key={index} display="flex" justifyContent="space-between" mb={1}>
+          <Box key={index} display="flex" justifyContent="space-between" mb={2}>
             <Typography variant="body3_medium" color="text.secondary">
               {addressShortener(voter.address)}
             </Typography>
@@ -110,17 +111,17 @@ export const VoteCount = (props: VoteCountProps) => {
           onClick={seeAllHandler}
           sx={{ marginTop: 'auto' }}
         >
-          See All
+          <Typography variant="label">See All</Typography>
         </Button>
       </Box>
       <BaseModal setOpen={setSeeAllOpen} open={seeAllOpen}>
-        <Box pt={3}>
+        <Box pt={5}>
           {voters.map((voter, index) => (
             <Box
               key={index}
               display="flex"
               justifyContent="space-between"
-              mb={2}
+              mb={3}
             >
               <Typography variant="body3" color="text.secondary">
                 {addressShortener(voter.address)}

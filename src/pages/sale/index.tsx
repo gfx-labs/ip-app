@@ -79,7 +79,7 @@ const PurchasePage: React.FC = () => {
             overflow: 'hidden',
             py: { xs: 4 },
             maxWidth: 800,
-            paddingX: { xs: 2, sm: 10 },
+            paddingX: { xs: 2, sm: 4 },
             backgroundColor: isLight ? '#FFFFFF' : '#25262C',
             borderRadius: 2.5,
           }}

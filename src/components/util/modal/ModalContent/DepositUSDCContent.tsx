@@ -30,7 +30,7 @@ export const DepositUSDCContent = () => {
   return (
     <Box>
       <Box textAlign="right" mb={2}>
-        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+        <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
           {' '}
           Wallet Balance: {round(USDCToken.wallet_balance || 0, 2)} USDC
         </Typography>

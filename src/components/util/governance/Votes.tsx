@@ -1,56 +1,54 @@
-import { Box, Typography } from "@mui/material";
-import { useLight } from "../../../hooks/useLight";
-import { formatColor, neutral, green, pink } from "../../../theme";
-import { ArrowDownIcon } from "../../icons/misc/ArrowDownIcon";
-import { ArrowUpIcon } from "../../icons/misc/ArrowUpIcon";
+import { Box, Typography } from '@mui/material'
+import { useLight } from '../../../hooks/useLight'
+import { formatColor, neutral, green, pink } from '../../../theme'
+import { ThumbsUpIcon } from '../../icons/misc/ThumbsUpIcon'
 
 export const Votes = ({
   noVotes,
   yesVotes,
 }: {
-  noVotes: number;
-  yesVotes: number;
+  noVotes: number
+  yesVotes: number
 }) => {
-  const isLight = useLight();
+  const isLight = useLight()
 
-  let upStrokeColor;
-  let downStrokeColor;
+  let upStrokeColor
+  let downStrokeColor
 
   if (noVotes === 0 && yesVotes === 0) {
-    if (isLight) {
-      upStrokeColor = formatColor(neutral.gray1);
-      downStrokeColor = formatColor(neutral.gray1);
-    } else {
-      upStrokeColor = formatColor(neutral.white);
-      downStrokeColor = formatColor(neutral.white);
-    }
+    upStrokeColor = formatColor(neutral.gray3)
+    downStrokeColor = formatColor(neutral.gray3)
   } else if (yesVotes > noVotes) {
-    upStrokeColor = formatColor(green.green2);
-    downStrokeColor = formatColor(pink.pink1);
+    upStrokeColor = formatColor(isLight ? neutral.black : neutral.white)
+    downStrokeColor = formatColor(neutral.gray3)
   } else if (noVotes > yesVotes) {
-    upStrokeColor = formatColor(pink.pink1);
-    downStrokeColor = formatColor(green.green2);
+    upStrokeColor = formatColor(neutral.gray3)
+    downStrokeColor = formatColor(isLight ? neutral.black : neutral.white)
   } else {
-    upStrokeColor = formatColor(green.green2);
-    downStrokeColor = formatColor(green.green2);
+    upStrokeColor = formatColor(neutral.gray3)
+    downStrokeColor = formatColor(neutral.gray3)
   }
 
   return (
-    <Box display="flex" flexWrap="nowrap" marginX={3}>
-      <Box display="flex" alignItems="center" marginX={2}>
-        <ArrowUpIcon
+    <Box display="flex" flexWrap="nowrap" marginX={2}>
+      <Box display="flex" alignItems="center" marginX={1}>
+        <ThumbsUpIcon
           strokecolor={upStrokeColor}
-          sx={{ width: 10, height: 12, mr: 1 }}
+          sx={{ width: 16, height: '100%', mr: 1 }}
         />
-        <Typography variant="label2">{yesVotes.toLocaleString()}</Typography>
+        <Typography color={upStrokeColor} variant="label_semi">
+          {yesVotes.toLocaleString()}
+        </Typography>
       </Box>
-      <Box display="flex" alignItems="center" marginX={2}>
-        <ArrowDownIcon
+      <Box display="flex" alignItems="center" marginX={1}>
+        <ThumbsUpIcon
           strokecolor={downStrokeColor}
-          sx={{ width: 10, height: 12, mr: 1 }}
+          sx={{ width: 16, height: '100%', mr: 1, transform: 'rotate(180deg)' }}
         />
-        <Typography variant="label2">{noVotes.toLocaleString()}</Typography>
+        <Typography color={downStrokeColor} variant="label_semi">
+          {noVotes.toLocaleString()}
+        </Typography>
       </Box>
     </Box>
-  );
-};
+  )
+}

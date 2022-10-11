@@ -8,13 +8,14 @@ import { useEffect, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, formatGradient, neutral, gradient } from '../../../theme'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { CardContainer } from '../cards/CardContainer'
 import { ToolTip } from '../tooltip/ToolTip'
 
 export const StatsMeter = () => {
   const [percentBorrowed, setPercentBorrowed] = useState(0)
   const [percentBorrowedGraph, setPercentBorrowedGraph] = useState(0)
   const isLight = useLight()
-  const [barColor, setBarColor] = useState('success')
+  const [barColor, setBarColor] = useState('#50D66D')
 
   const { borrowingPower, accountLiability } = useVaultDataContext()
 
@@ -33,85 +34,87 @@ export const StatsMeter = () => {
 
   useEffect(() => {
     if (percentBorrowed > 80) {
-      setBarColor('error')
+      setBarColor('red')
     }
   }, [percentBorrowed])
 
   return (
-    <Box
-      sx={{
-        paddingX: { xs: 2, md: 3 },
-        paddingY: { xs: 2, md: 3 },
-        backgroundColor: 'smallCard.background',
-        borderRadius: 2.5,
-      }}
-    >
-      <Box lineHeight={0}>
-        <Typography variant="label" color={formatColor(neutral.gray3)}>
-          Borrowing Power
-        </Typography>
-      </Box>
+    <CardContainer>
+      <Box padding={{ xs: 2, md: 3 }}>
+        <Box lineHeight={0}>
+          <Typography variant="body1" color="text.primary">
+            Borrowing Power
+          </Typography>
+        </Box>
 
-      <Box
-        sx={{
-          position: 'relative',
-          display: 'inline-flex',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        <CircularProgress
-          color={barColor as any}
-          variant="determinate"
-          thickness={5}
-          value={percentBorrowedGraph}
+        <Box
           sx={{
             position: 'relative',
-            zIndex: 2,
+            display: 'inline-flex',
+            justifyContent: 'center',
+            width: '100%',
+            paddingY: { xs: 4, lg: 0 },
           }}
-          size={190}
-        />
+        >
+          <CircularProgress
+            variant="determinate"
+            thickness={3}
+            value={percentBorrowedGraph}
+            sx={{
+              position: 'relative',
+              zIndex: 2,
+              color: barColor,
+            }}
+            size={190}
+          />
 
-        <CircularProgress
-          variant="determinate"
-          value={100}
-          thickness={5}
-          size={190}
+          <CircularProgress
+            variant="determinate"
+            value={100}
+            thickness={3}
+            size={190}
+            sx={{
+              position: 'absolute',
+
+              '& svg': {
+                color: formatColor(neutral.gray5),
+              },
+            }}
+          />
+        </Box>
+
+        <Box
           sx={{
-            position: 'absolute',
-
-            '& svg': {
-              color: formatColor(neutral.gray5),
-            },
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexDirection: { xs: 'column-reverse', lg: 'row' },
           }}
-        />
-      </Box>
-
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <ToolTip
-          content={
-            <Typography variant="body3">
-              Maximum amount that your vault can borrow, calculated by the sum
-              of collateral values discounted by the LTV
-            </Typography>
-          }
-          text={`Borrowing Power: ${Math.round(
-            borrowingPower
-          ).toLocaleString()} USDi
+        >
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                Maximum amount that your vault can borrow, calculated by the sum
+                of collateral values discounted by the LTV
+              </Typography>
+            }
+            text={`Borrowing Power: ${Math.round(
+              borrowingPower
+            ).toLocaleString()} USDi
           `}
-          text_variant="label2"
-        />
+            text_variant="label_semi"
+          />
 
-        <ToolTip
-          content={
-            <Typography variant="body3">
-              USDi Borrowed / Borrowing Power
-            </Typography>
-          }
-          text={`USDi Borrowed:  ${percentBorrowed}%`}
-          text_variant="label2"
-        />
+          <ToolTip
+            content={
+              <Typography variant="body3">
+                USDi Borrowed / Borrowing Power
+              </Typography>
+            }
+            text={`USDi Borrowed:  ${percentBorrowed}%`}
+            text_variant="label_semi"
+          />
+        </Box>
       </Box>
-    </Box>
+    </CardContainer>
   )
 }

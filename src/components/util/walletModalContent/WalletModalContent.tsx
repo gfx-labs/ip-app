@@ -1,24 +1,24 @@
-import { Box, Button, Typography, Link, CircularProgress } from "@mui/material";
-import { useState } from "react";
-import { useWalletModalContext } from "../../libs/wallet-modal-provider/WalletModalProvider";
-import { WalletType } from "../../libs/web3-data-provider/WalletOptions";
-import { useWeb3Context } from "../../libs/web3-data-provider/Web3Provider";
+import { Box, Button, Typography, Link, CircularProgress } from '@mui/material'
+import { useState } from 'react'
+import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
+import { WalletType } from '../../libs/web3-data-provider/WalletOptions'
+import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 
 export const WalletModalContent = () => {
-  const { connectWallet, loading } = useWeb3Context();
-  const { setIsWalletModalOpen } = useWalletModalContext();
-  const [errorConnecting, setErrorConnecting] = useState(false);
+  const { connectWallet, loading } = useWeb3Context()
+  const { setIsWalletModalOpen } = useWalletModalContext()
+  const [errorConnecting, setErrorConnecting] = useState(false)
 
   const connectToWallet = async (walletType: WalletType) => {
     try {
-      await connectWallet(walletType);
+      await connectWallet(walletType)
 
-      setIsWalletModalOpen(false);
+      setIsWalletModalOpen(false)
     } catch (err) {
-      console.error(err);
-      setErrorConnecting(true);
+      console.error(err)
+      setErrorConnecting(true)
     }
-  };
+  }
   return (
     <Box>
       <Typography
@@ -37,7 +37,7 @@ export const WalletModalContent = () => {
           <Button
             variant="outlined"
             sx={{
-              justifyContent: "start",
+              justifyContent: 'start',
               my: 2,
               pl: 3,
             }}
@@ -49,14 +49,14 @@ export const WalletModalContent = () => {
               src="images/metamask.svg"
               width={26}
               mr={2}
-            ></Box>{" "}
+            ></Box>{' '}
             Browser wallet
           </Button>
 
           <Button
             variant="outlined"
             sx={{
-              justifyContent: "start",
+              justifyContent: 'start',
               mb: 2,
               pl: 3,
             }}
@@ -75,7 +75,7 @@ export const WalletModalContent = () => {
           <Button
             variant="outlined"
             sx={{
-              justifyContent: "start",
+              justifyContent: 'start',
               mb: 2,
               pl: 3,
             }}
@@ -99,17 +99,17 @@ export const WalletModalContent = () => {
       )}
 
       <Box mt={0}>
-        <Typography variant="label2">
-          By connecting to Interest Protocol you agree to GFX Labs'{" "}
+        <Typography variant="label_semi">
+          By connecting to Interest Protocol you agree to GFX Labs'{' '}
           <Link href="#/terms" target="_blank">
             Terms of Use
-          </Link>{" "}
-          and acknowledge you have read and understand the{" "}
+          </Link>{' '}
+          and acknowledge you have read and understand the{' '}
           <Link href="#/whitepaper" target="_blank">
             Interest Protocol Whitepaper.
           </Link>
         </Typography>
       </Box>
     </Box>
-  );
-};
+  )
+}

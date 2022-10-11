@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Box } from '@mui/material'
+import { Button, Box, Typography } from '@mui/material'
 import { VoteModal } from './proposal/VoteModal'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import {
@@ -15,10 +15,12 @@ interface VoteButtonProps {
   votingPower: number
   isOptimistic: boolean
   hasPriorVotes: boolean
+  hasVoted: boolean
 }
 
 const VoteButton = (props: VoteButtonProps) => {
-  const { id, totalVotes, votingPower, isOptimistic, hasPriorVotes } = props
+  const { id, totalVotes, votingPower, isOptimistic, hasPriorVotes, hasVoted } =
+    props
 
   const [open, setOpen] = useState(false)
 
@@ -38,12 +40,14 @@ const VoteButton = (props: VoteButtonProps) => {
     <Box>
       {' '}
       <Button
-        sx={{ height: 43 }}
+        sx={{ height: 43, width: '100%', backgroundColor: 'button.vote' }}
         variant="contained"
         onClick={handleVoteClick}
-        disabled={votingPower <= 0 && !needsToDelegate}
+        disabled={(votingPower <= 0 && !needsToDelegate) || hasVoted}
       >
-        Vote
+        <Typography variant="body1" lineHeight={1}>
+          Vote
+        </Typography>
       </Button>
       <VoteModal
         isOptimistic={isOptimistic}

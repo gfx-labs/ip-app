@@ -13,19 +13,11 @@ import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataPro
 import { locale } from '../../../locale'
 import { ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
-import hasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
 import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { Token } from '../../../chain/tokens'
-
-const mintBeforeDeposit = async (
-  vaultID: string,
-  currentSigner: JsonRpcSigner
-) => {
-  return await mintVotingVaultID(vaultID, currentSigner!)
-}
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -38,13 +30,10 @@ export const DepositCollateralConfirmationModal = () => {
     collateralDepositAmountMax,
     setCollateralDepositAmountMax,
   } = useModalContext()
-  const { provider, currentAccount, currentSigner, dataBlock } =
-    useWeb3Context()
+  const { provider, currentAccount, currentSigner } = useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const [modalTitle, setModalTitle] = useState('Confirm Deposit')
-  const { vaultAddress, vaultID, hasVotingVault, setHasVotingVault } =
-    useVaultDataContext()
+  const { vaultAddress, vaultID, hasVotingVault } = useVaultDataContext()
   const [needAllowance, setNeedAllowance] = useState(true)
   const [decimals, setDecimals] = useState(18)
 
@@ -78,26 +67,19 @@ export const DepositCollateralConfirmationModal = () => {
   }, [amount])
 
   const handleDepositConfirmationRequest = async () => {
-    setLoading(true)
-    setLoadmsg(locale('CheckWallet'))
-
     try {
       let attempt: ContractTransaction
-
       if (collateralToken.capped_token && collateralToken.capped_address) {
         if (!hasVotingVault) {
-          setModalTitle('Enabling Capped Tokens')
-
-          await mintBeforeDeposit(vaultID!, currentSigner!)
           setLoading(false)
-          setLoadmsg('')
-          setModalTitle('Confirm Deposit')
-          setHasVotingVault(true)
+          setType(ModalType.EnableCappedToken)
           return
         }
+        setLoading(true)
+        setLoadmsg(locale('CheckWallet'))
 
         const na = await needsAllowance(amount!, collateralToken)
-        console.log(na, 'THIS IS NA')
+        console.log(na)
         setNeedAllowance(na)
 
         if (na) {
@@ -164,7 +146,7 @@ export const DepositCollateralConfirmationModal = () => {
           isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
         }
       >
-        {modalTitle}
+        Confirm Deposit
       </Typography>
       <Box
         sx={{
@@ -204,7 +186,13 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          needAllowance && hasVotingVault ? 'Set Allowance' : 'Confirm Deposit'
+          !collateralToken.capped_token ||
+          (collateralToken.capped_token &&
+            collateralToken.capped_address &&
+            !hasVotingVault) ||
+          !needAllowance
+            ? 'Confirm Deposit'
+            : 'Set Allowance'
         }
         disabled={false}
         onClick={handleDepositConfirmationRequest}

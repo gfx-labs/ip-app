@@ -30,7 +30,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
         backgroundColor: isLight
           ? formatColor(neutral.gray5)
           : formatColor(neutral.gray4),
-        paddingX: 4,
+        paddingX: { xs: 2, lg: 4 },
         paddingY: 2,
         borderRadius: 5,
         boxShadow: '0px 4px 4px 0px rgba(0,0,0, 0.05)',
@@ -68,19 +68,22 @@ export const TokenSelect = (props: TokenSelectProps) => {
         </Box>
         <Box display="flex" justifyContent="end">
           <Typography
-            variant="label2"
+            variant="label_semi"
             sx={{
-              color: formatColor(neutral.gray3),
+              color: 'text.primary',
               textAlign: 'right',
               mt: 1,
+              display: 'flex',
             }}
           >
             Balance:
-            <br />
             <Button
               sx={{
+                fontSize: 14,
+                fontWeight: 400,
                 paddingY: 0,
-                paddingX: 1,
+                paddingLeft: 0.5,
+                color: 'text.primary',
                 marginRight: -1,
                 height: 'auto',
                 width: 'auto',

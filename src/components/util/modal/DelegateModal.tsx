@@ -105,7 +105,7 @@ export const DelegateModal = () => {
           </Box>
         </Box>
         <Typography
-          variant="label2"
+          variant="body2"
           color={
             isLight ? formatColor(neutral.black) : formatColor(neutral.white)
           }

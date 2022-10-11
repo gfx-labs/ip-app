@@ -9,6 +9,7 @@ const footerLinks = [
       { label: 'Whitepaper', href: '#/whitepaper' },
       { label: 'Docs & Guides', href: '#/docs' },
       { label: 'Sale', href: '#/sale' },
+      { label: 'Analytics', href: 'https://analytics.gfx.xyz/' },
       {
         label: 'Audit',
         href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
@@ -68,9 +69,7 @@ const FooterContent = () => {
         {footerLinks.map((navItem, index) => {
           return (
             <Box key={index}>
-              <Typography variant="body3" fontWeight={700}>
-                {navItem.title}
-              </Typography>
+              <Typography variant="body1">{navItem.title}</Typography>
               <Box
                 sx={{
                   display: 'flex',
@@ -85,7 +84,7 @@ const FooterContent = () => {
                       target="_blank"
                       key={link.label}
                       href={link.href}
-                      variant="body3"
+                      variant="label"
                       color="footer.color"
                       paddingBottom={1}
                       sx={{
@@ -115,7 +114,7 @@ const FooterContent = () => {
           },
         }}
       >
-        <Typography color="footer.color" variant="label2">
+        <Typography color="footer.color" variant="label_semi">
           Interest Protocol 2022
         </Typography>
         <Box>

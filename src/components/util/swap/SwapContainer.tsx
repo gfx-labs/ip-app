@@ -99,7 +99,7 @@ export const SwapContainer = () => {
           onClick={swapTokens}
         >
           <ForwardIcon
-            strokecolor={
+            stroke={
               isLight ? formatColor(neutral.black) : formatColor(neutral.white)
             }
             sx={{
@@ -123,7 +123,11 @@ export const SwapContainer = () => {
         token1.ticker === 'USDC' ? (
           <Button
             variant="contained"
-            sx={{ color: formatColor(neutral.white) }}
+            sx={{
+              backgroundColor: 'button.mintRedeem',
+              color: formatColor(neutral.white),
+              width: '100%',
+            }}
             disabled={Number(token1Amount) <= 0 || !token1.wallet_balance}
             onClick={() => {
               if (Number(token1Amount) > 0) {
@@ -136,7 +140,11 @@ export const SwapContainer = () => {
         ) : (
           <Button
             variant="contained"
-            sx={{ color: formatColor(neutral.white) }}
+            sx={{
+              backgroundColor: 'button.mintRedeem',
+              color: formatColor(neutral.white),
+              width: '100%',
+            }}
             disabled={!token1.wallet_balance || Number(token1Amount) <= 0}
             onClick={() => setType(ModalType.WithdrawUSDCConfirmation)}
           >
@@ -147,7 +155,11 @@ export const SwapContainer = () => {
         <Button
           variant="contained"
           onClick={() => setIsWalletModalOpen(true)}
-          sx={{ color: formatColor(neutral.white) }}
+          sx={{
+            backgroundColor: 'button.mintRedeem',
+            color: formatColor(neutral.white),
+            width: '100%',
+          }}
         >
           Connect Wallet
         </Button>

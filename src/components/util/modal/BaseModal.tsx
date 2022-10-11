@@ -52,6 +52,8 @@ export const BaseModal: React.FC<BaseModalProps> = ({
           maxHeight: 'calc(100vh - 20px)',
           p: 4,
           borderRadius: '10px',
+          backgroundColor: 'modal.background',
+          backgroundImage: 'none',
         }}
       >
         {children}

@@ -74,7 +74,7 @@ export const DepositCollateralContent = () => {
   return (
     <Box>
       <Box textAlign="right" mb={1}>
-        <Typography variant="label2" color={formatColor(neutral.gray3)}>
+        <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
           {' '}
           Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)}{' '}
           {collateralToken?.ticker}
@@ -175,7 +175,7 @@ export const DepositCollateralContent = () => {
           marginTop: 2,
         }}
       >
-        <Typography variant="label2" color={formatColor(blue.blue1)}>
+        <Typography variant="label_semi" color={formatColor(blue.blue1)}>
           Borrowing Power
         </Typography>
         <Box
@@ -185,7 +185,7 @@ export const DepositCollateralContent = () => {
           height={12}
           marginX={1}
         />
-        <Typography variant="label2" color={formatColor(blue.blue1)}>
+        <Typography variant="label_semi" color={formatColor(blue.blue1)}>
           ${newBorrowingPower.toLocaleString()}
         </Typography>
       </Box>

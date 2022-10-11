@@ -26,7 +26,7 @@ export const LandingDesktopToolbar = () => {
         color: formatColor(neutral.gray2),
         display: 'flex',
         zIndex: 10,
-        variant: 'body3',
+        variant: 'label',
         alignItems: 'center',
       }}
     >
@@ -56,7 +56,7 @@ export const LandingDesktopToolbar = () => {
           label="Git"
           newTarget
         />
-        <DesktopLinkTo url="#/sale" label="Sale" />
+        <DesktopLinkTo url="#/sale" label="Token Sale" />
       </Box>
 
       <Box ml="auto">
