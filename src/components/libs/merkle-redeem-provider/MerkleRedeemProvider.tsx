@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import createClaimOf, {
   Claim,
 } from '../../../contracts/MerkleRedeem/createClaim'
+import getClaimOf155 from '../../../contracts/MerkleRedeem/getClaimOf155'
 import getClaimStatusOf from '../../../contracts/MerkleRedeem/getClaimStatus'
 import { BN } from '../../../easy/bn'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
@@ -32,12 +33,19 @@ export const MerkleRedeemContextProvider = ({
       getClaimStatusOf(currentAccount, currentSigner!).then((claimStatus) => {
         setClaimStatus(claimStatus)
         const claims = createClaimOf(currentAccount, claimStatus)
-        setClaims(claims)
 
-        const iptToClaim = claims.reduce((iptToClaim, claim) => {
-          return iptToClaim.add(claim.balance)
-        }, BN(0))
-        setClaimAmount(iptToClaim)
+        getClaimOf155(currentAccount, currentSigner).then((claim155) => {
+          if (claim155) {
+            claims.push(claim155)
+          }
+
+          setClaims(claims)
+
+          const iptToClaim = claims.reduce((iptToClaim, claim) => {
+            return iptToClaim.add(claim.balance)
+          }, BN(0))
+          setClaimAmount(iptToClaim)
+        })
       })
     }
   }, [chainId, currentAccount, currentSigner])
