@@ -17,7 +17,7 @@ const getClaimOf155 = async (
 
     const claimStatus = await merkleContract.claimStatus(account, 155, 155)
 
-    if (!claimStatus[0]) {
+    if (claimStatus[0]) {
       return undefined
     }
     const proofResult = getMerkleProof(account, 155)
