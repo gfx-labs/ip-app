@@ -26,9 +26,6 @@ declare module '@mui/material/styles' {
     h7: React.CSSProperties
     h7_semi: React.CSSProperties
     h8: React.CSSProperties
-    subtitle2_semi: React.CSSProperties
-    subtitle3_semi: React.CSSProperties
-    subtitle3: React.CSSProperties
     body2_semi: React.CSSProperties
     body3: React.CSSProperties
     body3_medium: React.CSSProperties
@@ -50,9 +47,6 @@ declare module '@mui/material/Typography' {
     h7: true
     h7_semi: true
     h8: true
-    subtitle2_semi: true
-    subtitle3_semi: true
-    subtitle3: true
     body2_semi: true
     body3: true
     body3_medium: true
@@ -243,28 +237,6 @@ theme.typography.subtitle2 = {
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(20),
     lineHeight: fzTolineHeight(20),
-  },
-}
-
-theme.typography.subtitle3 = {
-  fontWeight: 700,
-  fontSize: pxToRem(24),
-  lineHeight: fzTolineHeight(28),
-
-  [theme.breakpoints.down('md')]: {
-    fontSize: pxToRem(16),
-    lineHeight: fzTolineHeight(18),
-  },
-}
-
-theme.typography.subtitle3_semi = {
-  fontWeight: 600,
-  fontSize: pxToRem(24),
-  lineHeight: fzTolineHeight(28),
-
-  [theme.breakpoints.down('md')]: {
-    fontSize: pxToRem(16),
-    lineHeight: fzTolineHeight(18),
   },
 }
 

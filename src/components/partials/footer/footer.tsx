@@ -7,25 +7,34 @@ const footerLinks = [
     title: 'Protocol',
     links: [
       { label: 'Whitepaper', href: '#/whitepaper' },
-      { label: 'Docs & Guides', href: '#/docs' },
-      { label: 'Sale', href: '#/sale' },
+      { label: 'Docs', href: '#/docs' },
       { label: 'Analytics', href: 'https://analytics.gfx.xyz/' },
+      { label: 'Sale', href: '#/sale' },
+      { label: 'Terms of Use', href: '#/terms' },
+    ],
+  },
+  {
+    title: 'Governance',
+    links: [
+      { label: 'Overview', href: '#/proposal' },
+      { label: 'Forums', href: 'https://forums.interestprotocol.io/' },
+    ],
+  },
+  {
+    title: 'Community',
+    links: [
+      { label: 'Twitter', href: 'https://twitter.com/InterestDeFi' },
+      { label: 'Discord', href: 'https://discord.gg/s9Wja2tb6k' },
+    ],
+  },
+  {
+    title: 'Developers',
+    links: [
       {
         label: 'Audit',
         href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
       },
-      {
-        label: 'Forum',
-        href: 'https://forums.interestprotocol.io/',
-      },
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      { label: 'Developer', href: 'https://github.com/gfx-labs/ip-contracts' },
-      { label: 'Contact', href: 'https://discord.gg/s9Wja2tb6k' },
-      { label: 'Terms of Use', href: '#/terms' },
+      { label: 'Github', href: 'https://github.com/gfx-labs/ip-contracts' },
     ],
   },
 ]
@@ -33,7 +42,7 @@ const footerLinks = [
 export const Footer = () => {
   return (
     <Box
-      paddingTop={{ xs: 13, sm: 5 }}
+      paddingTop={{ xs: 8, sm: 5 }}
       paddingBottom={{ xs: 7, sm: 3 }}
       px={{ xs: 4, md: 4 }}
       sx={{
@@ -58,6 +67,9 @@ const FooterContent = () => {
       <Box
         sx={{
           display: 'flex',
+          flexWrap: 'wrap',
+          // gridTemplateColumns: { xs: '1fr 1fr', lg: '1fr 1fr 1fr 1fr' },
+          rowGap: 4,
           justifyContent: { xs: 'space-evenly', md: 'space-evenly' },
           maxWidth: 900,
           margin: 'auto',
@@ -68,7 +80,14 @@ const FooterContent = () => {
       >
         {footerLinks.map((navItem, index) => {
           return (
-            <Box key={index}>
+            <Box
+              key={index}
+              sx={{
+                marginLeft: 'auto',
+                marginRight: { xs: 'unset', md: 'auto' },
+                width: { xs: '40%', md: 'fit-content' },
+              }}
+            >
               <Typography variant="body1">{navItem.title}</Typography>
               <Box
                 sx={{

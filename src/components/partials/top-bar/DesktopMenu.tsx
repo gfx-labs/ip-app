@@ -46,8 +46,8 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
       <Box
         component="img"
         src={`images/${img}.svg`}
-        width={16}
-        height={16}
+        width={14}
+        height={14}
       ></Box>
       <Typography
         variant="body2"
