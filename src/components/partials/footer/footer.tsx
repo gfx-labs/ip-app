@@ -103,7 +103,7 @@ const FooterContent = () => {
                       target="_blank"
                       key={link.label}
                       href={link.href}
-                      variant="label"
+                      variant="label_semi"
                       color="footer.color"
                       paddingBottom={1}
                       sx={{

@@ -20,7 +20,7 @@ export const SelectedChainButton = () => {
         color: 'text.primary',
         paddingX: 2,
         paddingY: 1,
-        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.03)',
+        boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
         backgroundColor: 'button.header',
         border: isLight ? '1px solid #F4F4F4' : 'none',
         minWidth: 'auto',

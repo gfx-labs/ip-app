@@ -98,6 +98,8 @@ export const DesktopMenu = () => {
           sx={{
             padding: 2,
             border: isLight ? '1px solid #F4F4F4' : 'none',
+            boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
+
             borderRadius: '10px',
             '& .MuiAccordionSummary-content': {
               display: 'flex',
