@@ -196,7 +196,7 @@ const Dashboard = () => {
           flexDirection={{ xs: 'column-reverse', lg: 'column' }}
         >
           <Typography
-            mt={5}
+            mt={8}
             mb={2}
             color="text.primary"
             display={{ xs: 'none', lg: 'block' }}
@@ -205,13 +205,14 @@ const Dashboard = () => {
           </Typography>
           <Box
             sx={{
-              marginBottom: 4,
+              marginBottom: 8,
               display: 'grid',
               gridTemplateColumns: '1fr 1fr',
               columnGap: 2,
               [theme.breakpoints.down('lg')]: {
                 gridTemplateColumns: '1fr',
                 rowGap: 2,
+                mb: 3,
               },
             }}
           >

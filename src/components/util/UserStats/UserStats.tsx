@@ -52,7 +52,7 @@ export const UserStats = () => {
         <Box
           sx={{
             display: 'grid',
-            px: { xs: 2, lg: 4 },
+            px: { xs: 2, lg: 3 },
             gridTemplateColumns: {
               xs: '1.5fr 1fr 1fr',
               lg: '2fr 1fr 2fr 1fr 1fr 1fr',

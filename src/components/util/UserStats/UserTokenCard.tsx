@@ -86,7 +86,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     <Box
       sx={{
         paddingY: 2,
-        paddingX: { xs: 2, lg: 4 },
+        paddingX: { xs: 2, lg: 3 },
         backgroundColor: index % 2 === 0 ? 'card.list' : 'transparent',
         ...props.sx,
       }}
