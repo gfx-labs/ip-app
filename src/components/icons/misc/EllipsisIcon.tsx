@@ -4,7 +4,7 @@ import { forwardRef } from 'react'
 export const EllipsisIcon = forwardRef<SVGSVGElement, SvgIconProps>(
   (props, ref) => {
     return (
-      <SvgIcon {...props} ref={ref} width="16" height="4" viewBox="0 0 16 4">
+      <SvgIcon {...props} ref={ref} width="16" height="4" viewBox="-2 0 20 4">
         <path
           d="M4 2C4 3.10457 3.10457 4 2 4C0.895431 4 0 3.10457 0 2C0 0.895431 0.895431 0 2 0C3.10457 0 4 0.895431 4 2Z"
           fill="inherit"
