@@ -1,4 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { BigNumber } from 'ethers'
 import { Rolodex } from '../../../chain/rolodex/rolodex'
 import { Token } from '../../../chain/tokens'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
@@ -15,10 +16,12 @@ export const getVaultTokenBalanceAndPrice = async (
   balance: number
   livePrice: number
   unformattedBalance: string
+  balanceBN: BigNumber
 }> => {
   // get vault balance
   let balance = 0
   let unformattedBalance = '0'
+  let balanceBN = BigNumber.from(0)
   const SOP = signerOrProvider ? signerOrProvider : rolodex.provider
 
   const token_address =
@@ -31,6 +34,7 @@ export const getVaultTokenBalanceAndPrice = async (
 
     balance = balanceOf.num
     unformattedBalance = balanceOf.str
+    balanceBN = balanceOf.bn
   }
 
   const price = await rolodex?.Oracle?.getLivePrice(token_address)
@@ -38,7 +42,7 @@ export const getVaultTokenBalanceAndPrice = async (
   const decimals = await getDecimals(token_address, SOP)
   const livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))
 
-  return { balance, livePrice, unformattedBalance }
+  return { balance, livePrice, unformattedBalance, balanceBN }
 }
 
 export const getVaultTokenMetadata = async (
