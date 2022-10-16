@@ -11,7 +11,7 @@ import { DisableableModalButton } from '../button/DisableableModalButton'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { locale } from '../../../locale'
-import { ContractReceipt, ContractTransaction, utils } from 'ethers'
+import { BigNumber, ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
 import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
@@ -38,7 +38,7 @@ export const DepositCollateralConfirmationModal = () => {
   const [decimals, setDecimals] = useState(18)
 
   const amount = collateralDepositAmountMax
-    ? collateralToken.wallet_amount?.toString()
+    ? collateralToken.wallet_amount_bn
     : collateralDepositAmount
 
   const contract = ERC20Detailed__factory.connect(
@@ -46,14 +46,22 @@ export const DepositCollateralConfirmationModal = () => {
     currentSigner!
   )
 
-  const needsAllowance = async (amount: string, token: Token) => {
+  const needsAllowance = async (amount: string | BigNumber, token: Token) => {
     const initialApproval = await contract.allowance(
       currentAccount,
       token.capped_address!
     )
-    const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
 
-    return initialApproval.lt(formattedUSDCAmount)
+
+    if(collateralDepositAmountMax) {
+     return  initialApproval.lt(amount)
+    } 
+
+    if (typeof amount === 'string') {const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
+      
+      return initialApproval.lt(formattedUSDCAmount)}
+
+    return true
   }
 
   useEffect(() => {
@@ -83,9 +91,15 @@ export const DepositCollateralConfirmationModal = () => {
         setNeedAllowance(na)
 
         if (na) {
+          let approveAmount
+          if(typeof amount === 'string') {
+            approveAmount = utils.parseUnits(amount!, decimals)
+          } else {
+            approveAmount = collateralToken.wallet_amount_bn
+          }
+
           const txn = await contract.approve(
-            collateralToken.capped_address!,
-            utils.parseUnits(amount!, decimals)
+            collateralToken.capped_address!, approveAmount!
           )
           setLoadmsg(locale('TransactionPending'))
 
