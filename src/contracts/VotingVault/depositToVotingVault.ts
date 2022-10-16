@@ -1,5 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { CappedGovToken__factory } from '../../chain/contracts/factories/lending/CappedGovToken__factory'
 import { Token } from '../../chain/tokens'
 
@@ -7,7 +7,7 @@ const depositToVotingVault = async (
   id: string,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
   token: Token,
-  amount: string
+  amount: string | BigNumber
 ) => {
   try {
     const cappedTokenContract = CappedGovToken__factory.connect(
@@ -15,9 +15,14 @@ const depositToVotingVault = async (
       signerOrProvider
     )
 
-    const decimals = await cappedTokenContract.decimals()
+    let formattedAmount
+    if(typeof amount === 'string') {
+      const decimals = await cappedTokenContract.decimals()
 
-    const formattedAmount = utils.parseUnits(amount, decimals)
+      formattedAmount = utils.parseUnits(amount, decimals)
+    } else {
+      formattedAmount = amount
+    }
 
     // const ge = (
     //   await cappedTokenContract.estimateGas.transfer(

@@ -1,26 +1,26 @@
 import { Box, Typography } from '@mui/material'
-
-import { useLight } from '../../../hooks/useLight'
-import { formatGradient, gradient, formatColor, neutral } from '../../../theme'
 import { SwapContainer } from '../swap'
+import { CardContainer } from './CardContainer'
 
 export const ProtocolStatsCard = () => {
-  const isLight = useLight()
-
   return (
-    <Box
-      sx={{
-        padding: { xs: 3 },
-        backgroundColor: 'smallCard.background',
-        borderRadius: 2.5,
-      }}
-    >
-      <Box lineHeight={0} mb={3}>
-        <Typography variant="label" color={formatColor(neutral.gray3)}>
-          Mint or Redeem USDi
-        </Typography>
+    <CardContainer>
+      <Box
+        sx={{
+          padding: { xs: 2, lg: 3 },
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box lineHeight={0} mb={3}>
+          <Typography variant="body1" color="text.primary">
+            Mint or Redeem USDi
+          </Typography>
+        </Box>
+        <SwapContainer />
       </Box>
-      <SwapContainer />
-    </Box>
+    </CardContainer>
   )
 }

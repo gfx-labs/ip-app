@@ -37,7 +37,7 @@ export const WithdrawCollateralConfirmationModal = () => {
     setLoadmsg(locale('CheckWallet'))
 
     const amount = collateralWithdrawAmountMax
-      ? collateralToken.vault_unformatted_amount
+      ? collateralToken.vault_amount_bn
       : collateralWithdrawAmount
     try {
       const attempt = await useWithdrawCollateral(

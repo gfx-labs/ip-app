@@ -28,7 +28,6 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
 
     if (signerOrProvider) {
       getProposalVoters(id, signerOrProvider!).then((px) => {
-        console.log(px)
         px.map((p) => {
           voters.set(p.voter, {
             address: p.voter,
@@ -66,14 +65,11 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       color={formatColor(neutral.black)}
       textAlign="left"
       maxWidth="xl"
-      py={{ xs: 7, sm: 0 }}
       margin="auto"
       position="relative"
       sx={{
         [theme.breakpoints.down('md')]: {
           mb: 0,
-          pb: 0,
-          pt: 2,
           marginLeft: 'auto',
         },
       }}
@@ -81,7 +77,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       <Box
         display="flex"
         columnGap={2}
-        mt={4}
+        mt={3}
         flexDirection={{ xs: 'column', md: 'row' }}
       >
         <VoteCount

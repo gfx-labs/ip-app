@@ -4,6 +4,7 @@ import {
   Button,
   InputAdornment,
   Skeleton,
+  Divider,
 } from '@mui/material'
 import { FormEvent, useEffect, useState } from 'react'
 import { AppLayout } from '../../components/partials/app-layout'
@@ -29,13 +30,17 @@ import { JsonRpcSigner, TransactionReceipt } from '@ethersproject/providers'
 import { BN } from '../../easy/bn'
 import { locale } from '../../locale'
 import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
-import useCurrentTime from '../../hooks/useCurrentTime'
 import { ClockIcon } from '../../components/icons/misc/ClockIcon'
 import { SwapIcon } from '../../components/icons/misc/SwapIcon'
+import getSaleSummary, {
+  SaleSummary,
+} from '../../components/util/api/getSaleSummary'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
+  const [saleSummary, setSaleSummary] = useState<SaleSummary>()
   const cookie = new Cookies()
+  const { dataBlock } = useWeb3Context()
 
   const [open, setOpen] = useState(cookie.get('IP_ACCEPT_TERMS') != 'YES')
   const handleAgree = () => {
@@ -53,6 +58,12 @@ const PurchasePage: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [scrollTop])
 
+  useEffect(() => {
+    getSaleSummary().then((saleSummary) => {
+      setSaleSummary(saleSummary)
+    })
+  }, [dataBlock])
+
   //if (1 == 0) {
   //  return (
   //    <div style={{ minHeight: '80vh' }}>
@@ -65,11 +76,99 @@ const PurchasePage: React.FC = () => {
   //    </div>
   //  )
   //}
+
+  const SaleSummaryStat = ({
+    stat,
+    statValue,
+  }: {
+    stat: string
+    statValue: string | undefined
+  }) => (
+    <Box display="flex" flexDirection={{ xs: 'column', lg: 'row' }}>
+      <Typography variant="label_semi" color="text.secondary" mr={1}>
+        {stat}:
+      </Typography>
+      {statValue ? (
+        <Typography variant="label_semi">{statValue}</Typography>
+      ) : (
+        <Skeleton
+          variant="rectangular"
+          width={70}
+          height="14px"
+          animation="wave"
+          sx={{
+            position: 'relative',
+            display: 'inline-block',
+          }}
+        />
+      )}
+    </Box>
+  )
+
   return (
     <AppLayout>
       <Box
-        sx={{ py: 5, minHeight: '70vh', display: 'flex', alignItems: 'center' }}
+        sx={{
+          py: 5,
+          minHeight: '70vh',
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          px: 2,
+        }}
       >
+        <Box
+          display="flex"
+          columnGap={2}
+          rowGap={1}
+          alignItems="center"
+          mb={{ xs: 2, lg: 4 }}
+        >
+          <SaleSummaryStat
+            stat="Total IPT Sold"
+            statValue={saleSummary?.IPTSold.toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            })}
+          />
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            sx={{
+              borderColor: 'text.secondary',
+              margin: 'auto',
+              position: 'relative',
+              height: 16,
+            }}
+            flexItem
+          />
+
+          <SaleSummaryStat
+            stat="USDC Raised"
+            statValue={saleSummary?.USDCRaised.toLocaleString(undefined, {
+              maximumFractionDigits: 0,
+            })}
+          />
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            sx={{
+              borderColor: 'text.secondary',
+              margin: 'auto',
+              position: 'relative',
+              height: 16,
+            }}
+            flexItem
+          />
+
+          <SaleSummaryStat
+            stat="Avg. Price"
+            statValue={saleSummary?.AveragePrice.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })}
+          />
+        </Box>
         <Box
           sx={{
             marginX: 'auto',
@@ -79,8 +178,8 @@ const PurchasePage: React.FC = () => {
             overflow: 'hidden',
             py: { xs: 4 },
             maxWidth: 800,
-            paddingX: { xs: 2, sm: 10 },
-            backgroundColor: isLight ? '#FFFFFF' : '#25262C',
+            paddingX: { xs: 2, sm: 4 },
+            backgroundColor: isLight ? '#fcfdff' : '#1C1D21',
             borderRadius: 2.5,
           }}
         >
@@ -91,7 +190,6 @@ const PurchasePage: React.FC = () => {
             must_agree={true}
             must_agree_handler={handleAgree}
           />
-
           <PurchaseBox setOpenTerms={setOpen} />
         </Box>
       </Box>
@@ -135,6 +233,7 @@ const PurchaseBox = ({
 
   const [basePrice, setBasePrice] = useState(0.25)
   const [salePrice, setSalePrice] = useState<number | undefined>()
+  const [saleSummary, setSaleSummary] = useState<SaleSummary>()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
 
@@ -173,39 +272,37 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    if (rolodex && dataBlock) {
-      getEndTime(signerOrProvider as JsonRpcSigner).then((x) => {
-        let remaining = x.toNumber() - new Date().valueOf() / 1000
-        let isNewDay = false
-        let srt = ''
-        if (remaining <= 0) {
-          isNewDay = true
-          srt = formatSecondsTill(22 * 60 * 60)
-        } else {
-          srt = formatSecondsTill(remaining)
-        }
-        setSalePeriodRemaining(srt)
-        if (isNewDay) {
-          setSalePrice(basePrice)
-          setIptSold('0')
-          setIptForSale(1000000)
-          return
-        }
-        getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
-          setBasePrice(res)
-        })
-        getAmountIPTForSale(signerOrProvider!).then((res) => {
-          let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
-          setIptSold(sold.toLocaleString())
-          let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
-          setIptForSale(max - sold)
-        })
-        getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
-          setSalePrice(res.toNumber() / 1e6)
-        })
+    getEndTime(signerOrProvider as JsonRpcSigner).then((x) => {
+      let remaining = x.toNumber() - new Date().valueOf() / 1000
+      let isNewDay = false
+      let srt = ''
+      if (remaining <= 0) {
+        isNewDay = true
+        srt = formatSecondsTill(22 * 60 * 60)
+      } else {
+        srt = formatSecondsTill(remaining)
+      }
+      setSalePeriodRemaining(srt)
+      if (isNewDay) {
+        setSalePrice(basePrice)
+        setIptSold('0')
+        setIptForSale(1000000)
+        return
+      }
+      getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+        setBasePrice(res)
       })
-    }
-  }, [chainId, rolodex, dataBlock, loadmsg])
+      getAmountIPTForSale(signerOrProvider!).then((res) => {
+        let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
+        setIptSold(sold.toLocaleString())
+        let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
+        setIptForSale(max - sold)
+      })
+      getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+        setSalePrice(res.toNumber() / 1e6)
+      })
+    })
+  }, [chainId, rolodex, loadmsg])
 
   useEffect(() => {
     if (rolodex && amountToCommit && rolodex.USDC) {
@@ -317,7 +414,12 @@ const PurchaseBox = ({
   return (
     <Box>
       <Box>
-        <Box display="flex" justifyContent="space-between">
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          rowGap={2}
+          flexDirection={{ xs: 'column', lg: 'row' }}
+        >
           <Box display="flex" alignItems="center">
             <Box
               component="img"
@@ -330,7 +432,10 @@ const PurchaseBox = ({
           </Box>
 
           <Box display="flex" alignItems="center">
-            <ClockIcon sx={{ width: 14, height: 14, mr: 1, mb: 0.5 }} />
+            <ClockIcon
+              sx={{ width: 14, height: 14, mr: 1, mb: 0.5 }}
+              strokecolor={isLight ? '#25262C' : '#FFF'}
+            />
             <Typography variant="body3" color="primary.dark">
               Sale Renews in{' '}
               {salePeriodRemaining ? (
@@ -350,7 +455,11 @@ const PurchaseBox = ({
           </Box>
         </Box>
 
-        <Box display="flex" justifyContent="space-between" mt={3}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          mt={{ xs: 2, lg: 3 }}
+        >
           <Box
             display=""
             flexDirection={{ xs: 'column', md: 'row' }}
@@ -358,7 +467,11 @@ const PurchaseBox = ({
             columnGap={4}
             rowGap={2}
           >
-            <Box display="flex" mb={2}>
+            <Box
+              display="flex"
+              mb={2}
+              flexDirection={{ xs: 'column', lg: 'row' }}
+            >
               <Typography
                 variant="body3"
                 fontWeight={400}
@@ -385,7 +498,7 @@ const PurchaseBox = ({
               </Typography>
             </Box>
 
-            <Box display="flex">
+            <Box display="flex" flexDirection={{ xs: 'column', lg: 'row' }}>
               <Typography
                 variant="body3"
                 fontWeight={400}
@@ -411,7 +524,7 @@ const PurchaseBox = ({
               </Typography>
             </Box>
           </Box>
-          <Box display="flex">
+          <Box display="flex" flexDirection={{ xs: 'column', lg: 'row' }}>
             <Typography variant="body3" fontWeight={400} color="#A3A9BA" mr={1}>
               IPT sold:{' '}
             </Typography>

@@ -124,7 +124,7 @@ export const DelegateIPTModal = () => {
           </Typography>
         </Box>
         {needsToDelegate && (
-          <Typography variant="label2" display="block" color="text.primary">
+          <Typography variant="label" display="block" color="text.primary">
             You have{' '}
             {iptBalance.toLocaleString(undefined, {
               minimumFractionDigits: 0,
@@ -136,7 +136,7 @@ export const DelegateIPTModal = () => {
 
         {screen !== 0 && (
           <Typography
-            variant="label2"
+            variant="body2"
             display="block"
             color={
               isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)

@@ -34,9 +34,10 @@ const BaseToolTipContainer = styled(({ className, ...props }: TooltipProps) => {
 export const ToolTip = (props: {
   content: TooltipProps['title']
   text: string
-  text_variant?: 'body1' | 'body2' | 'body2_semi' | 'label2'
+  text_variant?: 'body1' | 'body2' | 'body2_semi' | 'label_semi'
+  icon?: boolean
 }) => {
-  const { content, text, text_variant = 'body1' } = props
+  const { content, text, text_variant = 'body1', icon = false } = props
 
   return (
     <BaseToolTipContainer title={content}>
@@ -48,10 +49,12 @@ export const ToolTip = (props: {
         >
           {text}
         </Typography>
-        <ToolTipInfoIcon
-          sx={{ width: 14, ml: 0.5 }}
-          strokecolor={formatColor(neutral.gray3)}
-        />
+        {icon && (
+          <ToolTipInfoIcon
+            sx={{ width: 14, ml: 0.5 }}
+            strokecolor={formatColor(neutral.gray3)}
+          />
+        )}
       </Box>
     </BaseToolTipContainer>
   )

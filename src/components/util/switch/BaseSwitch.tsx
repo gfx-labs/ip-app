@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { SwitchProps, Box, Typography, useTheme } from '@mui/material'
-
-import { formatColor, neutral, blue } from '../../../theme'
+import { SwitchProps, Box, Typography } from '@mui/material'
 interface BaseSwitchProps extends SwitchProps {
   option1: string | React.ReactElement
   option2: string | React.ReactElement
@@ -11,15 +9,8 @@ interface BaseSwitchProps extends SwitchProps {
 
 export const BaseSwitch = (props: BaseSwitchProps) => {
   const { option1, option2, onOptionChange, defaultIsOption1 = true } = props
-  const [option, setOption] = useState(() => {
-    if (defaultIsOption1) {
-      return option1
-    }
-    return option2
-  })
 
   const [isOption1, setIsOption1] = useState(defaultIsOption1)
-  const theme = useTheme()
 
   const longerLength =
     typeof option1 === 'string' && typeof option2 === 'string'
@@ -49,11 +40,9 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
     >
       {typeof option === 'string' ? (
         <Typography
-          variant="label2"
+          variant="label"
           sx={{
-            color: isSelected
-              ? formatColor(neutral.gray1)
-              : formatColor(neutral.gray3),
+            color: isSelected ? 'slider.text.active' : 'slider.text.inactive',
             display: 'flex',
             zIndex: 10,
             alignItems: 'center',
@@ -78,26 +67,16 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
   )
 
   const toggleHandler = () => {
-    if (isOption1) {
-      setOption(option2)
-    } else {
-      setOption(option1)
-    }
-
     setIsOption1(!isOption1)
 
     onOptionChange(!isOption1)
   }
 
-  let isLight = theme.palette.mode === 'light'
-
   return (
     <Box
       sx={{
         width: calculateContainerWidth(),
-        backgroundColor: isLight
-          ? formatColor(neutral.gray5)
-          : formatColor(neutral.black7),
+        backgroundColor: 'slider.background',
         borderRadius: 2,
         display: 'flex',
         flexDirection: 'row',
@@ -118,8 +97,7 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         className={isOption1 ? 'option1' : 'option2'}
         sx={{
           width: calculateWidth(),
-          backgroundColor: formatColor(neutral.white),
-          color: formatColor(neutral.black),
+          backgroundColor: 'slider.button',
           borderRadius: 2,
           height: '36px',
           marginY: '6px',
@@ -140,9 +118,12 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
         }}
       >
         <Typography
-          variant="body1"
-          color={formatColor(neutral.black)}
-          sx={{ display: 'flex', alignItems: 'center' }}
+          variant="label"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            color: 'slider.text.active',
+          }}
         ></Typography>
       </Box>
     </Box>

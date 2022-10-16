@@ -18,7 +18,7 @@ export const TitleTextToolTip = (props: TitleTextProps) => {
         <ToolTip
           content={<Typography variant="body3">{tooltipContent}</Typography>}
           text={title}
-          text_variant="label2"
+          text_variant="label_semi"
         />
       </Box>
       {text !== null ? (

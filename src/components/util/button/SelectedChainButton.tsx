@@ -1,47 +1,49 @@
 import { Chains } from '../../../chain/chains'
-import { Button, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { blue, formatColor, neutral } from '../../../theme'
-import { useLight } from '../../../hooks/useLight'
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import ETH from '/images/eth.svg'
+import { useLight } from '../../../hooks/useLight'
 
 export const SelectedChainButton = () => {
   const ctx = useWeb3Context()
   const token = Chains.getInfo(ctx.chainId)
 
   const theme = useTheme()
-
+  const isLight = useLight()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   const name = isMobile ? token.ticker : token.name
 
-  const isLight = useLight()
-
   return (
     <Button
-      variant="outlined"
       sx={{
-        color: isLight
-          ? formatColor(neutral.gray8)
-          : formatColor(neutral.white),
+        color: 'text.primary',
         paddingX: 2,
         paddingY: 1,
         boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
-        backgroundColor: isLight
-          ? formatColor(neutral.white)
-          : formatColor(neutral.black7),
+        backgroundColor: 'button.header',
+        border: isLight ? '1px solid #F4F4F4' : 'none',
+        minWidth: 'auto',
         '&:hover': {
-          border: 'none',
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray2),
+          backgroundColor: 'button.hover',
         },
         [theme.breakpoints.down('md')]: {
-          paddingX: 1,
+          paddingX: 2,
           minWidth: 'auto',
         },
       }}
     >
-      <Typography variant="label2">{name}</Typography>
+      {token.ticker === 'ETH' && (
+        <Box
+          component="img"
+          src={ETH}
+          width={20}
+          height={24}
+          position="relative"
+          mr={1}
+        ></Box>
+      )}
+      <Typography variant="label">{name}</Typography>
     </Button>
   )
 }

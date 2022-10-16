@@ -194,7 +194,7 @@ export const UsdiGraphCard = () => {
       sx={{
         paddingX: { xs: 3, md: 6 },
         paddingY: { xs: 6, md: 6 },
-        backgroundColor: 'smallCard.background',
+        backgroundColor: 'card.background',
         borderRadius: 2.5,
         display: 'flex',
       }}
@@ -295,7 +295,7 @@ export const UsdiGraphCard = () => {
 }
 
 const GraphTypography = ({ text }: { text: string }) => (
-  <Typography variant="label2" color={formatColor(neutral.gray3)}>
+  <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
     {text}
   </Typography>
 )

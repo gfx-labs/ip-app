@@ -87,7 +87,7 @@ export const ClaimModal = () => {
       <Box>
         <Button
           variant="contained"
-          sx={{ color: formatColor(neutral.white), marginY: 2 }}
+          sx={{ color: formatColor(neutral.white), marginY: 2, width: '100%' }}
           onClick={handleClaimRequest}
           disabled={formattedAmount <= 0}
         >

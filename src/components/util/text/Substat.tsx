@@ -33,7 +33,7 @@ export const Substat = ({
       color={formatColor(blue.blue1)}
       sx={{ display: 'flex', alignItems: 'center' }}
     >
-      {days}D avg: {stat || '-'}
+      {days}D: {stat || '-'}
       {suffix}
     </Typography>
   )

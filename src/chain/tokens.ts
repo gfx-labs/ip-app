@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { Rolodex } from '../chain/rolodex/rolodex'
 import { ChainIDs } from './chains'
 export interface Token {
@@ -8,11 +9,12 @@ export interface Token {
 
   wallet_balance?: number
   wallet_amount?: number
+  wallet_amount_bn?: BigNumber
 
   vault_balance?: number
   vault_amount?: number
   vault_unformatted_amount?: string
-
+  vault_amount_bn?: BigNumber
   token_LTV?: number
   token_penalty?: number
 
@@ -65,6 +67,20 @@ export const chainsToTokens = {
     [ChainIDs.POLYGON]: '0x0000000000000000000000000000000000000000',
     [ChainIDs.LOCAL]: '0x0000000000000000000000000000000000000000',
   },
+  AAVE: {
+    [ChainIDs.MAINNET]: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
+    [ChainIDs.ROPSTEN]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.GOERLI]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.POLYGON]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.LOCAL]: '0x0000000000000000000000000000000000000000',
+  },
+  BAL: {
+    [ChainIDs.MAINNET]: '0xba100000625a3754423978a60c9317c58a424e3D',
+    [ChainIDs.ROPSTEN]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.GOERLI]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.POLYGON]: '0x0000000000000000000000000000000000000000',
+    [ChainIDs.LOCAL]: '0x0000000000000000000000000000000000000000',
+  },
 }
 
 export const getStablecoins = (
@@ -81,6 +97,7 @@ export const getStablecoins = (
       value: 1,
       wallet_balance: undefined,
       wallet_amount: undefined,
+      wallet_amount_bn: undefined,
       vault_unformatted_amount: '0',
     },
     USDC: {
@@ -90,6 +107,7 @@ export const getStablecoins = (
       value: 1,
       wallet_balance: undefined,
       wallet_amount: undefined,
+      wallet_amount_bn: undefined,
       vault_unformatted_amount: '0',
     },
   }
@@ -115,9 +133,11 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
       capped_token: false,
     },
     stETH: {
@@ -129,9 +149,11 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
       capped_token: false,
     },
     WBTC: {
@@ -143,9 +165,11 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
       capped_token: false,
     },
     UNI: {
@@ -157,10 +181,12 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: true,
       vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
       capped_token: false,
     },
     MATIC: {
@@ -172,10 +198,12 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: false,
       vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
       capped_token: true,
       capped_address: '0x5aC39Ed42e14Cf330A864d7D1B82690B4D1B9E61',
     },
@@ -188,12 +216,50 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: true,
       vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
       capped_token: true,
       capped_address: '0xfb42f5afb722d2b01548f77c31ac05bf80e03381',
+    },
+    AAVE: {
+      name: 'Aave',
+      address: chainsToTokens.AAVE[chain_id],
+      ticker: 'AAVE',
+      value: 0,
+      vault_balance: 0,
+      vault_amount: 0,
+      wallet_balance: 0,
+      wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
+      token_LTV: 0,
+      token_penalty: 0,
+      can_delegate: true,
+      vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
+      capped_token: true,
+      capped_address: '0xd3bd7a8777c042De830965de1C1BCC9784135DD2',
+    },
+    BAL: {
+      name: 'Balancer',
+      address: chainsToTokens.BAL[chain_id],
+      ticker: 'BAL',
+      value: 0,
+      vault_balance: 0,
+      vault_amount: 0,
+      wallet_balance: 0,
+      wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
+      token_LTV: 0,
+      token_penalty: 0,
+      can_delegate: false,
+      vault_unformatted_amount: '0',
+      vault_amount_bn: BigNumber.from(0),
+      capped_token: true,
+      capped_address: '0x05498574BD0Fa99eeCB01e1241661E7eE58F8a85',
     },
   }
 }

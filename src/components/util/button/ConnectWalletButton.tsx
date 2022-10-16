@@ -5,9 +5,10 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  ClickAwayListener,
 } from '@mui/material'
+import { useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
-import { formatColor, neutral, blue } from '../../../theme'
 import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 
@@ -19,24 +20,19 @@ interface ConnectWalletButtonProps {
 }
 
 export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
-  const { invertLight = false } = props
-
   const { setIsWalletModalOpen } = useWalletModalContext()
-
-  let isLight = useLight()
-
-  if (invertLight) {
-    isLight = !isLight
-  }
 
   const { connected, disconnectWallet, error, currentAccount } =
     useWeb3Context()
 
+  const [expanded, setExpanded] = useState(false)
+
   const StyledConnectButton = (props: ButtonProps) => {
     const { onClick, children, sx } = props
+
+    const isLight = useLight()
     return (
       <Button
-        variant="outlined"
         sx={{
           minWidth: 'auto',
           width: '100%',
@@ -44,29 +40,19 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
           flexDirection: 'row',
           px: 3,
           justifyContent: 'space-between',
-          backgroundColor: isLight
-            ? formatColor(neutral.white)
-            : formatColor(neutral.black7),
+          backgroundColor: 'button.header',
+          boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
+
+          border: isLight ? '1px solid #F4F4F4' : 'none',
           '&:hover': {
-            backgroundColor: isLight
-              ? formatColor(neutral.gray5)
-              : formatColor(neutral.gray2),
-            border: 'none',
+            backgroundColor: 'button.hover',
           },
           ...sx,
         }}
         size="large"
         onClick={onClick}
       >
-        <Typography
-          variant="label2"
-          whiteSpace="nowrap"
-          sx={{
-            color: isLight
-              ? formatColor(neutral.black)
-              : formatColor(neutral.white),
-          }}
-        >
+        <Typography variant="label" whiteSpace="nowrap" color="text.primary">
           {children}
         </Typography>
       </Button>
@@ -76,34 +62,40 @@ export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
   return (
     <>
       {connected ? (
-        <Accordion
-          sx={{ borderRadius: '10px !important', boxShadow: 'none' }}
-          disableGutters
-          TransitionProps={{ unmountOnExit: true }}
-        >
-          <AccordionSummary
-            sx={{
-              padding: 0,
-              '& .MuiAccordionSummary-content': {
-                margin: 0,
-              },
-            }}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+        <ClickAwayListener onClickAway={() => setExpanded(false)}>
+          <Accordion
+            sx={{ borderRadius: '10px !important', boxShadow: 'none' }}
+            disableGutters
+            TransitionProps={{ unmountOnExit: true }}
+            expanded={expanded}
+            onClick={() => setExpanded(!expanded)}
           >
-            <StyledConnectButton>
-              {addressShortener(currentAccount)}
-            </StyledConnectButton>
-          </AccordionSummary>
-          <AccordionDetails sx={{ position: 'absolute', px: 0, width: '100%' }}>
-            <StyledConnectButton
-              onClick={disconnectWallet}
-              sx={{ width: '100%', justifyContent: 'center' }}
+            <AccordionSummary
+              sx={{
+                padding: 0,
+                '& .MuiAccordionSummary-content': {
+                  margin: 0,
+                },
+              }}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
             >
-              Disconnect
-            </StyledConnectButton>
-          </AccordionDetails>
-        </Accordion>
+              <StyledConnectButton>
+                {addressShortener(currentAccount)}
+              </StyledConnectButton>
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{ position: 'absolute', px: 0, width: '100%' }}
+            >
+              <StyledConnectButton
+                onClick={disconnectWallet}
+                sx={{ width: '100%', justifyContent: 'center' }}
+              >
+                Disconnect
+              </StyledConnectButton>
+            </AccordionDetails>
+          </Accordion>
+        </ClickAwayListener>
       ) : (
         <>
           <StyledConnectButton onClick={() => setIsWalletModalOpen(true)}>

@@ -1,4 +1,12 @@
-import { Box, Link, Skeleton, Typography } from '@mui/material'
+import {
+  Box,
+  Divider,
+  Link,
+  Skeleton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import { useEffect, useState } from 'react'
 import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
@@ -26,14 +34,18 @@ import { COMMON_CONTRACT_NAMES } from '../../../constants'
 import { getAddress } from 'ethers/lib/utils'
 import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
+import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
+import { ProposalTypeToolTip } from './ProposalTypeToolTip'
+import useWindowDimensions from '../../../hooks/useWindowDimensions'
 import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
+import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
 
 export interface ProposalCardProps {
   proposal: Proposal
   votingPower: number
 }
 
-export type IProposalType = '' | 'Standard' | 'Optimistic' | 'Emergency'
+export type IProposalType = 'standard' | 'optimistic' | 'emergency'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 const isAddress = (value: any): string | false => {
@@ -51,6 +63,9 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { id, body, endBlock, transactionHash, details, startBlock } =
     props.proposal
   const isLight = useLight()
+
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const [expandedContent, setExpandedContent] = useState<string | undefined>(
     undefined
   )
@@ -87,13 +102,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   const [proposal, setProposal] = useState<ProposalInfo>()
   const [status, setStatus] = useState(0)
-  const [timeLeft, setTimeLeft] = useState('')
+  const [hasVoted, setHasVoted] = useState(false)
+  const [timeLeft, setTimeLeft] = useState<string>('')
   const [forVotes, setForVotes] = useState(0)
   const [abstainVotes, setAbstainVotes] = useState(0)
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
-  const [proposalType, setProposalType] = useState<IProposalType>('')
+  const [proposalType, setProposalType] = useState<IProposalType | undefined>()
   const [hasPriorVotes, setHasPriorVotes] = useState(false)
 
   useEffect(() => {
@@ -103,10 +119,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
       getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(
         (isWhitelisted) => {
           const pType = isWhitelisted
-            ? 'Optimistic'
+            ? 'optimistic'
             : res.emergency
-            ? 'Emergency'
-            : 'Standard'
+            ? 'emergency'
+            : 'standard'
 
           setProposalType(pType)
         }
@@ -142,7 +158,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
     if (bdiff < 0) {
       provider?.getBlock(endBlock).then((res) => {
         const endDate = new Date(res.timestamp * 1000)
-        setTimeLeft(`Voting Ended on ${endDate.toLocaleDateString()}`)
+
+        const endDateString = isMobile
+          ? endDate.toLocaleDateString()
+          : `Voting ended on ${endDate.toLocaleDateString()}`
+
+        setTimeLeft(endDate.toLocaleDateString())
       })
       return
     }
@@ -165,6 +186,10 @@ export const ProposalCard = (props: ProposalCardProps) => {
         } else {
           setHasPriorVotes(false)
         }
+      })
+
+      getReceiptOf(id, currentAccount, currentSigner).then((receipt) => {
+        setHasVoted(receipt.hasVoted)
       })
     }
   }, [dataBlock, proposalType])
@@ -192,82 +217,104 @@ export const ProposalCard = (props: ProposalCardProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: 'primary.light',
+        backgroundColor: 'accordion.background',
         borderRadius: 2,
-        paddingX: { xs: 1, md: 4 },
-        paddingTop: 3,
-        paddingBottom: 1,
+        paddingX: { xs: 2, md: 3 },
+        paddingY: { xs: 2, md: 3 },
         cursor: 'pointer',
-        borderColor: formatColor(pink.pink1),
-        borderWidth: 2,
-        borderStyle: proposal?.emergency && isActive ? 'solid' : 'none',
+        borderColor: 'accordion.border',
+        borderWidth: 1,
+        borderStyle: 'solid',
       }}
       ref={ref}
     >
       <Box onClick={expandCard} display="flex" justifyContent="space-between">
         <Box display="flex" alignItems="start">
-          <Typography
-            variant="subtitle2_semi"
-            color={formatColor(blue.blue1)}
-            mr={2}
-          >
+          <Typography variant="h8" color="text.primary" mr={{ xs: 1, md: 3 }}>
             {id}
           </Typography>
           <Box position="relative">
             <Box>
-              <Typography variant="subtitle2_semi" mr={2}>
+              <Typography variant="h8" mr={2}>
                 {getTitle(body)}
               </Typography>
             </Box>
-            <Link
-              href={`https://etherscan.io/tx/${transactionHash}`}
-              target="_blank"
-              onClick={(e) => e.stopPropagation()}
+
+            <Box
+              display="flex"
+              alignItems="center"
+              columnGap={{ xs: 1, md: 1.5 }}
             >
-              <Box
-                component="img"
-                src={`images/etherscan-logo-${isLight ? 'dark' : 'light'}.svg`}
-                width="12px"
-                height="12px"
-                position="relative"
-                top={-4}
-                mr={1}
-              ></Box>
-            </Link>
-            {timeLeft ? (
-              <Typography
-                variant="label2_medium"
-                color={formatColor(neutral.gray3)}
-                position="relative"
-                top={-6}
-              >
-                {timeLeft}
-              </Typography>
-            ) : (
-              <Skeleton
-                variant="rectangular"
-                width={200}
-                height="14px"
-                animation="wave"
+              {proposalType ? (
+                ProposalTypeToolTip(proposalType)
+              ) : (
+                <Skeleton
+                  variant="rectangular"
+                  width={70}
+                  height="14px"
+                  animation="wave"
+                  sx={{
+                    position: 'relative',
+                    display: 'inline-block',
+                  }}
+                />
+              )}
+
+              <Divider
+                orientation="vertical"
+                variant="middle"
                 sx={{
-                  top: -6,
-                  position: 'relative',
-                  display: 'inline-block',
+                  borderColor: 'text.secondary',
+                  display: isMobile ? 'none' : 'block',
+                  height: 10,
                 }}
+                flexItem
               />
-            )}
+              <Link
+                href={`https://etherscan.io/tx/${transactionHash}`}
+                target="_blank"
+                onClick={(e) => e.stopPropagation()}
+                sx={{
+                  borderColor: 'text.secondary',
+                  display: isMobile ? 'none' : 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Box
+                  component="img"
+                  src={`images/etherscan-logo-${
+                    isLight ? 'dark' : 'light'
+                  }.svg`}
+                  width="12px"
+                  height="12px"
+                  position="relative"
+                  marginRight={1}
+                ></Box>
+                <Typography color="text.secondary" variant="label_semi">
+                  Etherscan
+                </Typography>
+              </Link>
+            </Box>
           </Box>
         </Box>
-
-        <Box display="flex">
+        <Box display="flex" alignItems="center">
           <Box display={{ xs: 'none', md: 'flex' }}>
             <Votes noVotes={againstVotes} yesVotes={forVotes} />
           </Box>
           <Box textAlign="center">
-            <Status status={status} />
-            <Typography color="text.secondary" variant="label2_medium">
-              {proposalType}
-            </Typography>
+            <Status status={status} timeLeft={timeLeft} />
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <CaratUpIcon
+              strokecolor={isLight ? '#A3A9BA' : '#FFF'}
+              sx={{
+                width: 16,
+                height: 16,
+                ml: 2,
+                transform: `${!isExpanded ? 'rotate(180deg)' : 'none'}`,
+                transition: 'transform 0.2s',
+              }}
+            />
           </Box>
         </Box>
       </Box>
@@ -275,13 +322,30 @@ export const ProposalCard = (props: ProposalCardProps) => {
       {isExpanded ? (
         <Box
           sx={{
-            marginTop: 3,
             cursor: 'auto',
           }}
         >
           {expandedContent ? (
             <Box>
-              <Box>
+              {status === 1 && (
+                <Box mt={2}>
+                  <VoteButton
+                    id={id}
+                    status={status}
+                    votingPower={votingPower}
+                    totalVotes={totalVotes}
+                    isOptimistic={proposalType === 'optimistic'}
+                    hasPriorVotes={hasPriorVotes}
+                    hasVoted={hasVoted}
+                  />
+                </Box>
+              )}
+
+              <ProposalDetails id={id} />
+              <Box my={2}>
+                <Typography variant="h6_midi" display="block" mb={2}>
+                  Details
+                </Typography>
                 {details.map((d, i) => (
                   <Box
                     sx={{
@@ -305,25 +369,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   </Box>
                 ))}
               </Box>
-              <Box
-                display="flex"
-                alignItems={{ xs: 'start', md: 'center' }}
-                rowGap={1}
-              >
-                {status === 1 && (
-                  <VoteButton
-                    isOptimistic={proposalType === 'Optimistic'}
-                    id={id}
-                    status={status}
-                    totalVotes={totalVotes}
-                    votingPower={votingPower}
-                    hasPriorVotes={hasPriorVotes}
-                  />
-                )}
-              </Box>
 
-              <ProposalDetails id={id} />
-              <Box fontWeight={400}>
+              <Typography variant="h6_midi" my={2}>
+                Description
+              </Typography>
+              <Box fontWeight={400} sx={{ '& h1': { lineHeight: 1 } }}>
                 <ReactMarkdown
                   children={expandedContent}
                   components={markdownComponentConfig}
@@ -332,14 +382,32 @@ export const ProposalCard = (props: ProposalCardProps) => {
               </Box>
               {status === 1 && (
                 <VoteButton
-                  isOptimistic={proposalType === 'Optimistic'}
+                  isOptimistic={proposalType === 'optimistic'}
                   id={id}
                   status={status}
                   votingPower={votingPower}
                   totalVotes={totalVotes}
                   hasPriorVotes={hasPriorVotes}
+                  hasVoted={hasVoted}
                 />
               )}
+              <Box
+                display="flex"
+                justifyContent="flex-end"
+                mt={3}
+                onClick={expandCard}
+                sx={{ cursor: 'pointer' }}
+              >
+                <CaratUpIcon
+                  strokecolor={isLight ? '#A3A9BA' : '#FFF'}
+                  sx={{
+                    width: 16,
+                    height: 16,
+                    transform: `${!isExpanded ? 'rotate(180deg)' : 'none'}`,
+                    transition: 'transform 0.2s',
+                  }}
+                />
+              </Box>
             </Box>
           ) : (
             <Spinner />
@@ -399,7 +467,11 @@ const markdownComponentConfig: Partial<
     )
   },
   p: ({ node, style, children, ...props }) => {
-    return <p style={{ ...style, whiteSpace: 'pre-wrap' }}>{children}</p>
+    return (
+      <p style={{ ...style, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
+        {children}
+      </p>
+    )
   },
   td: ({ node, style, children, isHeader, ...props }) => {
     if (isHeader) {

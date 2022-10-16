@@ -12,5 +12,6 @@ export const useFormatBNtoPreciseStringAndNumber = (
   return {
     str: formatted,
     num: Number(formatted),
+    bn: amount
   }
 }

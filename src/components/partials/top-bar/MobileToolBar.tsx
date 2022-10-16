@@ -1,35 +1,20 @@
 import {
   Box,
   Button,
-  Divider,
   Link as MuiLink,
   SwipeableDrawer,
   Toolbar,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
 } from '@mui/material'
 import { useRef, useState, useContext } from 'react'
-import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
-
-import { LightIcon } from '../../icons/misc/LightIcon'
-import { DarkIcon } from '../../icons/misc/DarkIcon'
 import { MenuIcon } from '../../icons/misc/menuIcon'
 import { Link } from '../../util/link'
-import {
-  ClaimsButton,
-  ConnectWalletButton,
-  SelectedChainButton,
-} from '../../util/button'
+import { ConnectWalletButton, SelectedChainButton } from '../../util/button'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
-import { ForwardArrowCircleIcon } from '../../icons/misc/ForwardArrowCircleIcon'
 import { useLight } from '../../../hooks/useLight'
-import { formatColor, neutral, green } from '../../../theme'
+import { formatColor, neutral } from '../../../theme'
 
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
-import { BaseSwitch } from '../../util/switch'
-import { AppGovSwitch } from '../../util/switch/AppGovSwitch'
+import { MobileIconButton } from './MobileIconButton'
 
 const iOS =
   typeof navigator !== 'undefined' &&
@@ -49,7 +34,7 @@ export const MobileToolBar = () => {
       sx={{
         marginTop: 3,
         marginBottom: 3,
-        paddingX: {xs: 0},
+        paddingX: { xs: 1 },
         justifyContent: {
           xs: 'space-between',
         },
@@ -59,8 +44,8 @@ export const MobileToolBar = () => {
         <Box
           component="img"
           src={`images/ip_${isLight ? 'black' : 'white'}.svg`}
-          width={40}
-          height={40}
+          width={32}
+          height={32}
         ></Box>
       </MuiLink>
 
@@ -74,15 +59,13 @@ export const MobileToolBar = () => {
         <Button
           ref={navMenuButtonRef}
           sx={{
-            p: 1,
+            p: 0,
             display: 'flex',
             minWidth: 'auto',
           }}
-          variant="text"
-          color="secondary"
           onClick={() => setNavMenuOpen(true)}
         >
-          <MenuIcon sx={{ width: 32, height: 32 }} />
+          <MenuIcon sx={{ width: 32, height: 32, fill: '#5E64F4' }} />
         </Button>
       </Box>
 
@@ -98,7 +81,7 @@ export const MobileToolBar = () => {
         PaperProps={{
           elevation: 12,
           sx: {
-            py: 8,
+            py: 5,
             px: 4,
             height: '100%',
             width: '80%',
@@ -108,7 +91,6 @@ export const MobileToolBar = () => {
             justifyContent: 'start',
           },
         }}
-        sx={{}}
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
         transitionDuration={500}
@@ -122,83 +104,57 @@ export const MobileToolBar = () => {
             alignSelf: 'start',
             width: 'auto',
             height: 23,
-            marginBottom: 5,
+            marginBottom: 3,
             minWidth: 14,
             padding: 0,
           }}
         >
           <ForwardIcon
-            strokecolor={
+            stroke={
               isLight ? formatColor(neutral.black) : formatColor(neutral.white)
             }
           />
         </Button>
-
         {/* <ClaimsButton /> */}
         {window.location.hash !== '#/sale' && (
-          <Box my={1} maxWidth={200} width="100%">
-            <MuiLink href="#/sale">
-              <Button variant="outlined">
-                <Typography variant="body3" color={formatColor(green.green2)}>
-                  IPT Sale
-                </Typography>
-              </Button>
-            </MuiLink>
-          </Box>
+          <MobileIconButton text="Token Sale" img="star" href="/#/sale" />
         )}
+        <MobileIconButton text="App" img="rocket" href="/" />
+        <MobileIconButton text="Governance" img="people" href="/#/proposal" />
+        <br />
+        <MobileIconButton text="Docs" img="cog" href="/#/docs" />
+        <MobileIconButton
+          text="Whitepaper"
+          img="document"
+          href="/#/whitepaper"
+        />
+        <MobileIconButton
+          text="Feedback"
+          img="feedback"
+          href="https://gfxlabs.io"
+        />
+        <br />
+        <MobileIconButton
+          text="Discord"
+          img="discord_icon_grey"
+          href="https://discord.gg/s9Wja2tb6k"
+        />
+        <MobileIconButton
+          text={isLight ? `Light Mode` : 'Dark Mode'}
+          img="sun"
+          onClick={toggleMode}
+        />
 
-        <Box my={1} maxWidth={200} width="100%">
+        {/* <Box my={1} maxWidth={200} width="100%">
           <MuiLink
             href="https://app.uniswap.org/#/add/v2/ETH/0x2A54bA2964C8Cd459Dc568853F79813a60761B58?chain=mainnet"
             target="_blank"
           >
             <Button variant="outlined">
-              <Typography variant="label2">ETH-USDi Rewards</Typography>
+              <Typography variant="label">ETH-USDi Rewards</Typography>
             </Button>
           </MuiLink>
-        </Box>
-        <br />
-        <br />
-        <Divider variant="middle" />
-        <br />
-        {/*
-        <Accordion
-          sx={{ boxShadow: 'none', border: 'none' }}
-          disableGutters={true}
-        >
-          <AccordionSummary
-            expandIcon={<CaratUpIcon sx={{ transform: 'rotate(180deg)' }} />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            sx={{ paddingX: 0 }}
-          >
-            <ForwardArrowCircleIcon sx={{ width: 18, height: 18 }} />{' '}
-            <Typography
-              variant="body1"
-              sx={{ color: 'text.secondary', marginLeft: 1 }}
-            >
-              Your Vault
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography
-              variant="body1"
-              sx={{ color: 'text.secondary', marginLeft: 1 }}
-            >
-              Manage WBTC
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-  */}
-        <Box marginBottom={12} marginTop={5}>
-          <BaseSwitch
-            option1={<LightIcon />}
-            option2={<DarkIcon />}
-            onOptionChange={toggleMode}
-            defaultIsOption1={isLight}
-          />
-        </Box>
-        <AppGovSwitch />
+        </Box> */}
       </SwipeableDrawer>
     </Toolbar>
   )
