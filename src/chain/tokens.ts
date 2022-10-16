@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { Rolodex } from '../chain/rolodex/rolodex'
 import { ChainIDs } from './chains'
 export interface Token {
@@ -8,6 +9,7 @@ export interface Token {
 
   wallet_balance?: number
   wallet_amount?: number
+  wallet_amount_bn?: BigNumber
 
   vault_balance?: number
   vault_amount?: number
@@ -95,6 +97,7 @@ export const getStablecoins = (
       value: 1,
       wallet_balance: undefined,
       wallet_amount: undefined,
+      wallet_amount_bn: undefined,
       vault_unformatted_amount: '0',
     },
     USDC: {
@@ -104,6 +107,7 @@ export const getStablecoins = (
       value: 1,
       wallet_balance: undefined,
       wallet_amount: undefined,
+      wallet_amount_bn: undefined,
       vault_unformatted_amount: '0',
     },
   }
@@ -129,6 +133,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       vault_unformatted_amount: '0',
@@ -143,6 +148,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       vault_unformatted_amount: '0',
@@ -157,6 +163,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       vault_unformatted_amount: '0',
@@ -171,6 +178,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: true,
@@ -186,6 +194,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: false,
@@ -202,6 +211,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: true,
@@ -218,6 +228,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: true,
@@ -234,6 +245,7 @@ export const getTokensListOnCurrentChain = (
       vault_amount: 0,
       wallet_balance: 0,
       wallet_amount: 0,
+      wallet_amount_bn:  BigNumber.from(0),
       token_LTV: 0,
       token_penalty: 0,
       can_delegate: false,

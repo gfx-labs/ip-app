@@ -134,6 +134,7 @@ export const VaultDataProvider = ({
           )
             .then((val) => {
               token.wallet_amount = val.num
+              token.wallet_amount_bn = val.bn
             })
             .catch((e) => {
               console.log('failed to get token balances')
