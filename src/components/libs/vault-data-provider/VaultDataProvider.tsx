@@ -119,6 +119,7 @@ export const VaultDataProvider = ({
               token.value = Math.round(100 * Number(res.livePrice)) / 100
               token.vault_amount = res.balance
               token.vault_unformatted_amount = res.unformattedBalance
+              token.vault_amount_bn = res.balanceBN
               token.vault_balance = Number(
                 (token.vault_amount * token.value).toFixed(2)
               )
