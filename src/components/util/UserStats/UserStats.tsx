@@ -32,6 +32,7 @@ export const UserStats = () => {
             LTVPercent={val.token_LTV!.toLocaleString()}
             penaltyPercent={val.token_penalty!.toLocaleString()}
             canDelegate={val.can_delegate ? true : false}
+            cappedAddress={val.capped_address}
           />
         )
       }
@@ -43,7 +44,7 @@ export const UserStats = () => {
     <CardContainer>
       <Box
         sx={{
-          paddingTop: 4,
+          paddingTop: 2.5,
           [theme.breakpoints.down('md')]: {
             paddingTop: 2,
           },
@@ -55,7 +56,7 @@ export const UserStats = () => {
             px: { xs: 2, lg: 3 },
             gridTemplateColumns: {
               xs: '1.5fr 1fr 1fr',
-              lg: '2fr 1fr 2fr 1fr 1fr 1fr',
+              lg: '2fr 1fr 2fr 1fr 1fr 1fr 1fr',
             },
             mb: 0,
             columnGap: 2,
@@ -68,6 +69,13 @@ export const UserStats = () => {
           </Typography>
           <Typography display={{ xs: 'none', lg: 'block' }} variant="label">
             LTV and Penalty
+          </Typography>
+          <Typography
+            variant="label"
+            whiteSpace="nowrap"
+            display={{ xs: 'none', lg: 'block' }}
+          >
+            Capped Token
           </Typography>
           <Typography variant="label" whiteSpace="nowrap">
             Vault Balance
