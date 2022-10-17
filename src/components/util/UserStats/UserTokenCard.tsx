@@ -1,4 +1,11 @@
-import { Box, BoxProps, Button, Typography, useTheme } from '@mui/material'
+import {
+  Box,
+  BoxProps,
+  Button,
+  LinearProgress,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { formatColor, neutral, blue } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
@@ -14,6 +21,8 @@ import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
 import { useLight } from '../../../hooks/useLight'
 import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
+import getCappedPercentOf from '../../../contracts/VotingVault/getCappedPercentOf'
+import { useEffect, useState } from 'react'
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
   tokenTicker: string
@@ -28,19 +37,23 @@ interface UserTokenCardProps extends BoxProps {
   penaltyPercent: string
   canDelegate: boolean | undefined
   index: number
+  cappedAddress: string | undefined
 }
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const theme = useTheme()
   const isLight = useLight()
   const rolodex = useRolodexContext()
-  const { currentSigner, connected, currentAccount } = useWeb3Context()
+  const { currentSigner, connected, currentAccount, signerOrProvider } =
+    useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
   const { tokens } = useVaultDataContext()
   const { setType, setCollateralToken, updateTransactionState } =
     useModalContext()
   const { hasVault, vaultAddress } = useVaultDataContext()
   const { setDelegateToken } = useAppGovernanceContext()
+  const [cappedPercent, setCappedPercent] = useState(10)
+
   const {
     tokenName,
     tokenTicker,
@@ -52,7 +65,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     penaltyPercent,
     canDelegate = false,
     index,
+    cappedAddress,
   } = props
+
   const openVault = async () => {
     try {
       const mintVaultRes = await rolodex!.VC!.mintVault()
@@ -82,11 +97,24 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     setType(ModalType.Delegate)
   }
 
+  useEffect(() => {
+    if (cappedAddress && signerOrProvider) {
+      getCappedPercentOf(cappedAddress, signerOrProvider).then((res) => {
+        if (res <= 5) {
+          res = 5
+        } else if (res >= 100) {
+          res = 100
+        }
+        setCappedPercent(res)
+      })
+    }
+  }, [signerOrProvider])
+
   return (
     <Box
       sx={{
         paddingY: 2,
-        paddingX: { xs: 2, lg: 3 },
+        paddingX: { xs: 2, lg: 2.5 },
         backgroundColor: index % 2 === 0 ? 'card.list' : 'transparent',
         ...props.sx,
       }}
@@ -96,7 +124,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           display: 'grid',
           gridTemplateColumns: {
             xs: '1.5fr 1fr 1fr',
-            lg: '2fr 1fr 2fr 1fr 1fr 1fr',
+            lg: '2fr 1fr 2fr 1fr 1fr 1fr 1fr',
           },
           mb: 0,
           columnGap: 2,
@@ -160,6 +188,23 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             text_variant="body2"
           />
         </Box>
+        <Box display={{ xs: 'none', lg: 'block' }}>
+          {cappedAddress && (
+            <LinearProgress
+              color="success"
+              variant="determinate"
+              sx={{
+                width: 80,
+                height: 11,
+                borderRadius: 1,
+                backgroundColor: isLight
+                  ? formatColor(neutral.gray6)
+                  : formatColor(neutral.white),
+              }}
+              value={cappedPercent}
+            />
+          )}
+        </Box>
         <Box display="flex" flexDirection="column">
           <Typography variant="body1" color="text.primary">
             {vaultBalance}
@@ -205,6 +250,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           sx={{
             display: { xs: 'none', lg: 'flex' },
             columnGap: 1.5,
+            justifySelf: 'flex-end',
           }}
         >
           <Button

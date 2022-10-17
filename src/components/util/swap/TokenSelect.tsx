@@ -53,7 +53,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
             component="img"
             width={24}
             height={24}
-            src={`images/${token.ticker}.svg`}
+            src={`images/${token?.ticker}.svg`}
           ></Box>
 
           <Typography
@@ -63,7 +63,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
             }}
             variant="body2_semi"
           >
-            {token.ticker}
+            {token?.ticker}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="end">
