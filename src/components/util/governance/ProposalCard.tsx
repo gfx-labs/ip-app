@@ -85,14 +85,19 @@ export const ProposalCard = (props: ProposalCardProps) => {
     return title
   }
 
+  function containsWhitespace(str: string) {
+    return /\s/.test(str)
+  }
+
   const linkIfAddress = (content: string) => {
     if (isAddress(content.trim())) {
-      const commonName = COMMON_CONTRACT_NAMES[content] ?? content
+      const commonName = COMMON_CONTRACT_NAMES[content.trim()] ?? content
       return (
         <Link
           href={`https://etherscan.io/address/${content.trim()}`}
           target="_blank"
         >
+          {containsWhitespace(content) ? ' ' : ''}
           {commonName}
         </Link>
       )
