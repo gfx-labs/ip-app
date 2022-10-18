@@ -109,7 +109,8 @@ const PurchasePage: React.FC = () => {
     <AppLayout>
       <Box
         sx={{
-          py: 5,
+          pt: 5,
+          pb: 15,
           minHeight: '70vh',
           display: 'flex',
           alignItems: 'center',

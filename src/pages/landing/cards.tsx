@@ -86,13 +86,15 @@ const GradientBox = (props: { left: string; right: string; bg: string }) => {
         paddingY: { xs: 4, md: 8 },
         marginRight: { xs: 0, md: 8 },
         flexBasis: '100%',
-        display: 'flex',
+        display: 'grid',
+        gridTemplateColumns: { xs: '40% 40%' },
+        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
         maxWidth: 1250,
         background: bg,
         borderRadius: 5,
-        columnGap: 5,
+        columnGap: 3,
       }}
     >
       <Box>
