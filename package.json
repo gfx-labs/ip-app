@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "npx yarn install && npm run docs",
     "build": "tsc && vite build",
-    "postbuild": "mkdir -p ./dist/book && cp -r ./docs/build/* ./dist/book && cp -r ./dist/build/assets ./dist",
+    "postbuild": "mkdir -p ./dist/book && cp -r ./docs/build/* ./dist/book && mkdir -p ./dist/assets && cp -r ./dist/build/assets/* ./dist/assets",
     "_vite": "",
     "dev": "vite",
     "preview": "vite preview",
