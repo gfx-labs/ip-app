@@ -2,9 +2,9 @@ import { ContractReceipt, ContractTransaction } from 'ethers'
 import { createContext, useState, useContext } from 'react'
 import {
   getStablecoins,
-  Token,
   getTokensListOnCurrentChain,
 } from '../../../chain/tokens'
+import { Token } from '../../../types/token'
 import { useRolodexContext } from '../rolodex-data-provider/RolodexDataProvider'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 

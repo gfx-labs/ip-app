@@ -3,11 +3,8 @@ import { ReactNode } from 'react'
 
 import { Footer } from '../footer'
 import { TopBar } from '../top-bar'
-export interface AppLayoutProps {
-  children?: ReactNode
-}
 
-export const AppLayout = (props: AppLayoutProps) => {
+export const AppLayout = (props: { children: ReactNode }) => {
   const { children } = props
   return (
     <Box>

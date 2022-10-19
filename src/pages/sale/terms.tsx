@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 import Cookies from 'universal-cookie'
 
-export const Terms: React.FC = () => {
+const Terms: React.FC = () => {
   const cookie = new Cookies()
   const [open, setOpen] = useState(cookie.get('IP_ACCEPT_TERMS') != 'YES')
   const handleClose = () => {}

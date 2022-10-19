@@ -15,7 +15,7 @@ export const Substat = ({
   const getArrow = (stat: number) => {
     return stat > 0 ? (
       <ArrowUpIcon
-        strokecolor={formatColor(green.green3)}
+        strokecolor={formatColor(green.green2)}
         sx={{ width: 10, height: 14, mx: 0.5 }}
       />
     ) : (

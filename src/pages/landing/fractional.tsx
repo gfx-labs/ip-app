@@ -2,6 +2,7 @@ import { Button, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { ForwardIcon } from '../../components/icons/misc/ForwardIcon'
 import { formatColor, neutral } from '../../theme'
+
 export const Fractional: React.FC = () => {
   return (
     <Box

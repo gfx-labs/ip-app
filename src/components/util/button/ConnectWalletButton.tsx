@@ -15,15 +15,10 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { WalletModal } from '../modal'
 import { addressShortener } from '../text'
 
-interface ConnectWalletButtonProps {
-  invertLight?: boolean
-}
-
-export const ConnectWalletButton = (props: ConnectWalletButtonProps) => {
+export const ConnectWalletButton = () => {
   const { setIsWalletModalOpen } = useWalletModalContext()
 
-  const { connected, disconnectWallet, error, currentAccount } =
-    useWeb3Context()
+  const { connected, disconnectWallet, currentAccount } = useWeb3Context()
 
   const [expanded, setExpanded] = useState(false)
 
