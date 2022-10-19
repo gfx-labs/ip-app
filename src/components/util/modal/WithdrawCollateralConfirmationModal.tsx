@@ -8,12 +8,12 @@ import {
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
-import { useWithdrawCollateral } from '../../../hooks/useWithdraw'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { locale } from '../../../locale'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { round } from '../../../easy/bn'
+import withdrawCollateral from '../../../contracts/Vault/withdrawCollateral'
 
 export const WithdrawCollateralConfirmationModal = () => {
   const {
@@ -40,7 +40,7 @@ export const WithdrawCollateralConfirmationModal = () => {
       ? collateralToken.vault_amount_bn
       : collateralWithdrawAmount
     try {
-      const attempt = await useWithdrawCollateral(
+      const attempt = await withdrawCollateral(
         amount!,
         collateralToken.capped_address
           ? collateralToken.capped_address

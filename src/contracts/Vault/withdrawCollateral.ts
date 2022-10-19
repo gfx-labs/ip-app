@@ -1,35 +1,8 @@
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
-import { Rolodex } from '../chain/rolodex/rolodex'
-import { ERC20Detailed__factory, Vault__factory } from '../chain/contracts'
+import { ERC20Detailed__factory, Vault__factory } from '../../chain/contracts'
 
-export const useWithdrawUSDC = async (
-  usdc_amount: string,
-  rolodex: Rolodex,
-  signer: JsonRpcSigner
-) => {
-  const formattedUSDCAmount = utils.parseUnits(usdc_amount, 6)
-  try {
-    const ge = (
-      await rolodex.USDI.connect(signer).estimateGas.withdraw(
-        Number(formattedUSDCAmount)
-      )
-    )
-      .mul(100)
-      .div(90)
-    const withdrawAttempt = await rolodex.USDI.connect(signer).withdraw(
-      Number(formattedUSDCAmount),
-      { gasLimit: ge }
-    )
-    const receipt = await withdrawAttempt?.wait()
-    return receipt
-  } catch (err) {
-    console.error(err)
-    throw new Error('Could not withdraw')
-  }
-}
-
-export const useWithdrawCollateral = async (
+const withdrawCollateral = async (
   amount: string | BigNumber,
   collateral_address: string,
   vault_address: string,
@@ -38,7 +11,7 @@ export const useWithdrawCollateral = async (
   let decimal = 18
 
   try {
-    if(typeof amount === 'string') {
+    if (typeof amount === 'string') {
       decimal = await ERC20Detailed__factory.connect(
         collateral_address,
         signer
@@ -66,3 +39,5 @@ export const useWithdrawCollateral = async (
     throw new Error('Could not deposit')
   }
 }
+
+export default withdrawCollateral
