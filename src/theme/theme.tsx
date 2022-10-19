@@ -135,7 +135,7 @@ theme.typography.h3 = {
 theme.typography.h4 = {
   fontWeight: 700,
   fontSize: pxToRem(40),
-  lineHeight: fzTolineHeight(56),
+  lineHeight: fzTolineHeight(46),
   letterSpacing: -1,
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(24),
@@ -271,7 +271,7 @@ theme.typography.body2_semi = {
 theme.typography.body3 = {
   fontWeight: 400,
   fontSize: pxToRem(16),
-  lineHeight: fzTolineHeight(20),
+  lineHeight: fzTolineHeight(24),
   [theme.breakpoints.down('md')]: {
     fontSize: pxToRem(16),
     lineHeight: fzTolineHeight(18),

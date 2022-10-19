@@ -164,7 +164,7 @@ export const DesktopMenu = () => {
           />
 
           <StyledDropdownButton
-            img="sun"
+            img={isLight ? 'star' : 'sun'}
             text={isLight ? 'Dark Mode' : `Light Mode`}
             onClick={toggleMode}
           />

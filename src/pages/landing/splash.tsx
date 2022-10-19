@@ -33,11 +33,7 @@ export const Splash: React.FC = () => {
         }}
       >
         <Box>
-          <Typography
-            flexBasis="50%"
-            variant="h1"
-            color={formatColor(neutral.gray1)}
-          >
+          <Typography flexBasis="50%" variant="h1" color="#202020">
             Interest Protocol
           </Typography>
         </Box>
