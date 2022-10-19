@@ -18,9 +18,7 @@ import { useRolodexContext } from '../../components/libs/rolodex-data-provider/R
 import {
   getCurrentPrice,
   getAmountIPTForSale,
-  SLOWROLL_ADDRESS,
-  useCommitUSDC,
-  getWaveDuration,
+  commitUSDC,
   getEndTime,
   getBasePrice,
 } from '../../hooks/useSaleUtils'
@@ -35,6 +33,7 @@ import { SwapIcon } from '../../components/icons/misc/SwapIcon'
 import getSaleSummary, {
   SaleSummary,
 } from '../../components/util/api/getSaleSummary'
+import { SLOWROLL_ADDRESS } from '../../constants'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
@@ -59,9 +58,7 @@ const PurchasePage: React.FC = () => {
   }, [scrollTop])
 
   useEffect(() => {
-    getSaleSummary().then((saleSummary) => {
-      setSaleSummary(saleSummary)
-    })
+    getSaleSummary().then(setSaleSummary)
   }, [dataBlock])
 
   //if (1 == 0) {
@@ -392,7 +389,7 @@ const PurchaseBox = ({
       try {
         setLoadmsg(locale('CheckWallet'))
 
-        const commitTransaction = await useCommitUSDC(
+        const commitTransaction = await commitUSDC(
           formattedCommitAmount,
           currentSigner!
         )

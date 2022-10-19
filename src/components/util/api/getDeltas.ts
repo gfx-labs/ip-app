@@ -1,5 +1,4 @@
-import { DEFAULT_BASE_URL, LIVE_DELTAS } from '../../../constants'
-import getAPIBaseUrl from '../helpers/getAPIBaseUrl'
+import { STAGING_ANALYTICS_URL, LIVE_DELTAS } from '../../../constants'
 import axios from 'axios'
 
 interface AmountPercent {
@@ -31,7 +30,7 @@ export interface Deltas {
 
 const getDeltas = async () => {
   try {
-    const deltaURL = `${DEFAULT_BASE_URL}${LIVE_DELTAS}`
+    const deltaURL = `${STAGING_ANALYTICS_URL}${LIVE_DELTAS}`
 
     const response = await axios.get(deltaURL)
 

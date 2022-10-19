@@ -1,23 +1,16 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { BigNumber, BigNumberish } from 'ethers'
+import { BigNumber } from 'ethers'
 import { SlowRoll__factory } from '../chain/contracts/factories/IPTsale/slowroll.sol'
-
-export const SLOWROLL_ADDRESS = '0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d'
+import { SLOWROLL_ADDRESS } from '../constants'
 
 export type sop = JsonRpcSigner | JsonRpcProvider
+
 const getSlowRollContract = (signer: sop) => {
   return SlowRoll__factory.connect(SLOWROLL_ADDRESS, signer)
 }
 
-export const useCommitUSDC = async (
-  amount: BigNumber,
-  signer: JsonRpcSigner
-) => {
+export const commitUSDC = async (amount: BigNumber, signer: JsonRpcSigner) => {
   return getSlowRollContract(signer).getPoints(amount)
-}
-
-export const getWaveDuration = async (signer: sop) => {
-  return await getSlowRollContract(signer)._waveDuration()
 }
 
 export const getBasePrice = async (signer: sop): Promise<number> => {
@@ -28,9 +21,11 @@ export const getEndTime = async (signer: sop) => {
 }
 
 export const getAmountIPTForSale = async (signer: sop) => {
-  const soldQuantity = await getSlowRollContract(signer)._soldQuantity()
+  const slowRollContract = getSlowRollContract(signer)
 
-  const maxQuantity = await getSlowRollContract(signer)._maxQuantity()
+  const soldQuantity = await slowRollContract._soldQuantity()
+
+  const maxQuantity = await slowRollContract._maxQuantity()
 
   return { maxQuantity, soldQuantity }
 }

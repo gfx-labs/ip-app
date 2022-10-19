@@ -1,11 +1,11 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber } from 'ethers'
 import { Rolodex } from '../../../chain/rolodex/rolodex'
-import { Token } from '../../../chain/tokens'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import getDecimals from '../../../contracts/misc/getDecimals'
 import { BN } from '../../../easy/bn'
 import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
+import { Token } from '../../../types/token'
 
 export const getVaultTokenBalanceAndPrice = async (
   vault_address: string | undefined,

@@ -1,26 +1,18 @@
-import { Box, Toolbar, Typography, Button, Link } from '@mui/material'
-import { useContext } from 'react'
-
+import { Box, Toolbar, Link } from '@mui/material'
 import {
   ConnectWalletButton,
   SelectedChainButton,
   TokenSaleButton,
 } from '../../util/button'
-import { BaseSwitch } from '../../util/switch'
-import { LightIcon } from '../../icons/misc/LightIcon'
-import { DarkIcon } from '../../icons/misc/DarkIcon'
-import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
-import { AppGovSwitch } from '../../util/switch/AppGovSwitch'
+import { AppGovSwitch } from '../../util/switch'
 import { DesktopMenu } from './DesktopMenu'
 
 export const DesktopToolBar = () => {
   //desktop menu config
 
   const isLight = useLight()
-
-  const { toggleMode } = useContext(PaletteModeContext)
 
   const { setIsApp } = useAppGovernanceContext()
 

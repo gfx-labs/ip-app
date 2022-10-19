@@ -1,5 +1,4 @@
-import { DEFAULT_BASE_URL, SALE_SUMMARY } from '../../../constants'
-import getAPIBaseUrl from '../helpers/getAPIBaseUrl'
+import { STAGING_ANALYTICS_URL, SALE_SUMMARY } from '../../../constants'
 import axios from 'axios'
 
 export interface SaleSummary {
@@ -11,7 +10,7 @@ export interface SaleSummary {
 
 const getSaleSummary = async () => {
   try {
-    const saleSummaryUrl = `${DEFAULT_BASE_URL}${SALE_SUMMARY}`
+    const saleSummaryUrl = `${STAGING_ANALYTICS_URL}${SALE_SUMMARY}`
 
     const response = await axios.get(saleSummaryUrl)
     return response.data as SaleSummary
