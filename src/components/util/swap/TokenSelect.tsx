@@ -17,7 +17,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
 
   const setBalance = () => {
     if (token.wallet_balance != undefined) {
-      setTokenAmount(token.wallet_balance.toString())
+      setTokenAmount(token.wallet_balance)
     }
   }
 
@@ -97,7 +97,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
               disabled={token.wallet_balance === undefined}
             >
               <WithDots val={token.wallet_balance != undefined}>
-                {token.wallet_balance?.toLocaleString(undefined, {
+                {Number(token.wallet_balance).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}

@@ -33,7 +33,7 @@ export const StableCoinsProvider = ({
     if (rolodex && rolodex?.addressUSDC) {
       getBalanceOf(currentAccount, rolodex.addressUSDC, rolodex.provider).then(
         (res) => {
-          setUSDC({ ...USDC, wallet_balance: res.num, wallet_amount: res.num })
+          setUSDC({ ...USDC, wallet_balance: res.str, wallet_amount: res.bn })
         }
       )
     }
@@ -43,7 +43,7 @@ export const StableCoinsProvider = ({
     if (rolodex && rolodex?.addressUSDI) {
       getBalanceOf(currentAccount, rolodex.addressUSDI, rolodex.provider).then(
         (res) =>
-          setUSDI({ ...USDI, wallet_balance: res.num, wallet_amount: res.num })
+          setUSDI({ ...USDI, wallet_balance: res.str, wallet_amount: res.bn })
       )
     }
   }, [currentAccount, dataBlock, chainId, rolodex])

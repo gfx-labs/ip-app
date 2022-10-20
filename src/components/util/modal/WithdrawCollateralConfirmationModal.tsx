@@ -37,7 +37,7 @@ export const WithdrawCollateralConfirmationModal = () => {
     setLoadmsg(locale('CheckWallet'))
 
     const amount = collateralWithdrawAmountMax
-      ? collateralToken.vault_amount_bn
+      ? collateralToken.vault_amount
       : collateralWithdrawAmount
     try {
       const attempt = await withdrawCollateral(
@@ -113,7 +113,7 @@ export const WithdrawCollateralConfirmationModal = () => {
             <Typography variant="body3" color="text.primary">
               $
               {round(
-                collateralToken.value * Number(collateralWithdrawAmount),
+                collateralToken.price * Number(collateralWithdrawAmount),
                 2
               )}{' '}
               ({round(collateralWithdrawAmount, 4)} {collateralToken.ticker} )

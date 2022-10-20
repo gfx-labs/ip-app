@@ -38,8 +38,8 @@ export const DepositCollateralContent = () => {
 
   const setMax = () => {
     const inputAmount = isMoneyValue
-      ? collateralToken.wallet_amount! * collateralToken.value
-      : collateralToken.wallet_amount!
+      ? collateralToken.wallet_amount?.toNumber()! * collateralToken.price
+      : collateralToken.wallet_amount?.toNumber()!
 
     setInputAmount(inputAmount.toString())
     setCollateralDepositAmountMax(true)
@@ -50,23 +50,23 @@ export const DepositCollateralContent = () => {
 
     if (isMoneyValue) {
       setCollateralDepositAmount(
-        (Number(inputAmount) / collateralToken.value).toString()
+        (Number(inputAmount) / collateralToken.price).toString()
       )
       setNewBorrowingPower(borrowingPower + Number(inputAmount) * (ltv / 100))
     } else {
       setCollateralDepositAmount(inputAmount)
       setNewBorrowingPower(
         borrowingPower +
-          Number(inputAmount) * collateralToken.value * (ltv / 100)
+          Number(inputAmount) * collateralToken.price * (ltv / 100)
       )
     }
   }, [inputAmount])
 
   const swapHandler = () => {
     if (!isMoneyValue) {
-      setInputAmount((Number(inputAmount) * collateralToken.value).toString())
+      setInputAmount((Number(inputAmount) * collateralToken.price).toString())
     } else {
-      setInputAmount((Number(inputAmount) / collateralToken.value).toString())
+      setInputAmount((Number(inputAmount) / collateralToken.price).toString())
     }
     setIsMoneyValue(!isMoneyValue)
   }
@@ -76,7 +76,8 @@ export const DepositCollateralContent = () => {
       <Box textAlign="right" mb={1}>
         <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
           {' '}
-          Wallet Balance: {collateralToken?.wallet_amount!.toFixed(2)}{' '}
+          Wallet Balance:{' '}
+          {collateralToken?.wallet_amount!.toNumber().toFixed(2)}{' '}
           {collateralToken?.ticker}
         </Typography>
       </Box>
@@ -104,10 +105,10 @@ export const DepositCollateralContent = () => {
               ? `${
                   inputAmount === '0'
                     ? '0'
-                    : (Number(inputAmount) / collateralToken?.value).toFixed(4)
+                    : (Number(inputAmount) / collateralToken?.price).toFixed(4)
                 } ${collateralToken?.ticker}`
               : `$${(
-                  Number(inputAmount) * collateralToken?.value
+                  Number(inputAmount) * collateralToken?.price
                 ).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,

@@ -72,7 +72,7 @@ export const DepositWithdrawCollateralModal = () => {
           </Typography>
           <Typography variant="subtitle1" color="text.primary" mb={1}>
             $
-            {collateralToken.value.toLocaleString(undefined, {
+            {collateralToken.price.toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}

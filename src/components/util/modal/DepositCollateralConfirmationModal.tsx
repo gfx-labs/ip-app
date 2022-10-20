@@ -36,7 +36,7 @@ export const DepositCollateralConfirmationModal = () => {
   const [decimals, setDecimals] = useState(18)
 
   const amount = collateralDepositAmountMax
-    ? collateralToken.wallet_amount_bn
+    ? collateralToken.wallet_amount
     : collateralDepositAmount
 
   const contract = ERC20Detailed__factory.connect(
@@ -94,7 +94,7 @@ export const DepositCollateralConfirmationModal = () => {
           if (typeof amount === 'string') {
             approveAmount = utils.parseUnits(amount!, decimals)
           } else {
-            approveAmount = collateralToken.wallet_amount_bn
+            approveAmount = collateralToken.wallet_amount
           }
 
           const txn = await contract.approve(
@@ -190,7 +190,7 @@ export const DepositCollateralConfirmationModal = () => {
             <Typography variant="body3" color="text.primary">
               $
               {(
-                collateralToken.value * Number(collateralDepositAmount)
+                collateralToken.price * Number(collateralDepositAmount)
               ).toFixed(2)}{' '}
               ({collateralDepositAmount} {collateralToken.ticker})
             </Typography>
