@@ -191,9 +191,9 @@ export const DepositUSDCConfirmationModal = () => {
           mt={1}
           display="block"
           target="_blank"
-          href={`${chain.scanUrl}${approvalTxn.hash}`}
+          href={`${chain.scan_url}${approvalTxn.hash}`}
         >
-          <Button variant="text">View approval on {chain.scanSite}</Button>
+          <Button variant="text">View approval on {chain.scan_site}</Button>
         </MuiLink>
       )}
     </BaseModal>

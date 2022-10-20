@@ -45,7 +45,7 @@ export const TransactionStatusModal = () => {
 
             <MuiLink
               target="_blank"
-              href={`${chain.scanUrl}${
+              href={`${chain.scan_url}${
                 (transaction as ContractTransaction).hash
               }`}
             >
@@ -53,7 +53,7 @@ export const TransactionStatusModal = () => {
                 variant="contained"
                 sx={{ color: formatColor(neutral.white) }}
               >
-                View on {chain.scanSite}
+                View on {chain.scan_site}
               </Button>
             </MuiLink>
           </Box>
@@ -77,7 +77,7 @@ export const TransactionStatusModal = () => {
 
             <MuiLink
               target="_blank"
-              href={`${chain.scanUrl}${
+              href={`${chain.scan_url}${
                 (transaction as ContractReceipt).transactionHash
               }`}
             >
@@ -89,7 +89,7 @@ export const TransactionStatusModal = () => {
                   margin: 'auto',
                 }}
               >
-                View on {chain.scanSite}
+                View on {chain.scan_site}
               </Button>
             </MuiLink>
           </Box>
@@ -113,7 +113,7 @@ export const TransactionStatusModal = () => {
             </Box>
             <MuiLink
               target="_blank"
-              href={`${chain.scanUrl}${
+              href={`${chain.scan_url}${
                 (transaction as ContractReceipt).transactionHash
               }`}
             >
@@ -121,7 +121,7 @@ export const TransactionStatusModal = () => {
                 variant="contained"
                 sx={{ color: formatColor(neutral.white) }}
               >
-                View on {chain.scanSite}
+                View on {chain.scan_site}
               </Button>
             </MuiLink>
           </Box>

@@ -14,7 +14,6 @@ import {
 } from './getVaultTokenBalanceAndPrice'
 import { getVaultBorrowingPower } from './getBorrowingPower'
 import { BN } from '../../../easy/bn'
-import { BigNumber } from 'ethers'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import checkHasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
@@ -172,7 +171,7 @@ export const VaultDataProvider = ({
     if (currentAccount && rolodex) {
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
-          const id = BigNumber.from(vaultIDs[0]._hex).toString()
+          const id = vaultIDs.toString()
           setVaultID(id)
 
           checkHasVotingVault(id, signerOrProvider!).then(setHasVotingVault)
@@ -187,11 +186,9 @@ export const VaultDataProvider = ({
     setHasVault(!!vaultID)
     if (hasVault && rolodex) {
       rolodex?.VC?.vaultAddress(vaultID!)
-        .then((addr) => {
-          setVaultAddress(addr)
-        })
+        .then(setVaultAddress)
         .catch((e) => {
-          console.log('failed to get vault address', e)
+          console.error('failed to get vault address', e)
         })
     }
   }, [vaultID, rolodex])
