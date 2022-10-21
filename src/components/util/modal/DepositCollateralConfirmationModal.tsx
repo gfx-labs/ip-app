@@ -76,7 +76,7 @@ export const DepositCollateralConfirmationModal = () => {
   const handleDepositConfirmationRequest = async () => {
     try {
       let attempt: ContractTransaction
-      if (collateralToken.capped_token && collateralToken.capped_address) {
+      if (collateralToken.capped_address) {
         if (!hasVotingVault) {
           setLoading(false)
           setType(ModalType.EnableCappedToken)
@@ -200,10 +200,8 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          !collateralToken.capped_token ||
-          (collateralToken.capped_token &&
-            collateralToken.capped_address &&
-            !hasVotingVault) ||
+          !collateralToken.capped_address ||
+          (collateralToken.capped_address && !hasVotingVault) ||
           !needAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'

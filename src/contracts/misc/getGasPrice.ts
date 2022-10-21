@@ -1,5 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { Contract } from 'ethers'
+import { BigNumber, Contract } from 'ethers'
 import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
 import { LINK_FAST_GAS_GWEI } from '../../constants'
 
@@ -22,10 +22,10 @@ const getGasPrice = async (
     signerOrProvider
   )
 
-  const gasPrice = await gasContract.latestAnswer()
-  const formattedGasPrice = BNtoHexNumber(gasPrice) / 1000000000
+  const gasPrice: BigNumber = await gasContract.latestAnswer()
 
-  return formattedGasPrice.toFixed(2)
+  // bignumber to decimal to 2 decimal places
+  return (BNtoHexNumber(gasPrice) / 1000000000).toFixed(2)
 }
 
 export default getGasPrice

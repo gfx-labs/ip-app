@@ -1,7 +1,11 @@
 import { BigNumber, utils } from 'ethers'
+import { useMemo } from 'react'
 
 export const useFormatBNWithDecimals = (amount: BigNumber, decimals: number) =>
-  Number(utils.formatUnits(amount._hex, decimals))
+  useMemo(
+    () => Number(utils.formatUnits(amount._hex, decimals)),
+    [amount, decimals]
+  )
 
 export const useFormatBNtoPreciseStringAndNumber = (
   amount: BigNumber,
@@ -12,6 +16,6 @@ export const useFormatBNtoPreciseStringAndNumber = (
   return {
     str: formatted,
     num: Number(formatted),
-    bn: amount
+    bn: amount,
   }
 }

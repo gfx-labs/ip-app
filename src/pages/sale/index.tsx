@@ -21,7 +21,7 @@ import {
   commitUSDC,
   getEndTime,
   getBasePrice,
-} from '../../hooks/useSaleUtils'
+} from '../../contracts/IPTSale/slowRollMethods'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
 import { JsonRpcSigner, TransactionReceipt } from '@ethersproject/providers'
