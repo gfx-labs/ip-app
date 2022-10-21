@@ -1,32 +1,14 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
-
-import { getWallet, WalletType } from './WalletOptions'
-import {
-  JsonRpcProvider,
-  JsonRpcSigner,
-  TransactionResponse,
-} from '@ethersproject/providers'
-import { BigNumber, providers } from 'ethers'
-
-import { SignatureLike } from '@ethersproject/bytes'
+import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
-import { BACKUP_PROVIDER } from '../../../constants'
-import hexToAscii from '../../util/helpers/hexToAscii'
-import getGasPrice from '../../../contracts/misc/getGasPrice'
 
-type transactionType = {
-  value?: string | undefined
-  from?: string | undefined
-  to?: string | undefined
-  nonce?: number | undefined
-  gasLimit?: BigNumber | undefined
-  gasPrice?: BigNumber | undefined
-  data?: string | undefined
-  chainId?: number | undefined
-}
+import { getWallet, WalletType } from './WalletOptions'
+import { BACKUP_PROVIDER } from '../../../constants'
+import getGasPrice from '../../../contracts/misc/getGasPrice'
 
 export type ERC20TokenType = {
   address: string
@@ -46,11 +28,7 @@ export type Web3Data = {
   provider: JsonRpcProvider | undefined
   chainId: number
   dataBlock: number
-  gasPrice: number
-  getTxError: (txHash: string) => Promise<string>
-  sendTx: (txData: transactionType) => Promise<TransactionResponse>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  signTxData: (unsignedData: string) => Promise<SignatureLike>
+  gasPrice: string
   error: Error | undefined
   signerOrProvider: JsonRpcSigner | JsonRpcProvider | undefined
 }
@@ -88,7 +66,7 @@ export const Web3ContextProvider = ({
   const [tried, setTried] = useState<boolean>(false)
 
   const [dataBlock, setDataBlock] = useState(0)
-  const [gasPrice, setGasPrice] = useState(0)
+  const [gasPrice, setGasPrice] = useState('0')
 
   // Wallet connection and disconnection
   // clean local storage
@@ -178,9 +156,7 @@ export const Web3ContextProvider = ({
           ? signerOrProvider
           : tempProvider
 
-        getGasPrice(tempSignerOrProvider!).then((gas) => {
-          setGasPrice(Number(gas))
-        })
+        getGasPrice(tempSignerOrProvider!).then(setGasPrice)
         if (n > dataBlock) {
           setDataBlock(n)
         }
@@ -231,58 +207,6 @@ export const Web3ContextProvider = ({
     }
   }, [tried, active])
 
-  const getTxError = async (txHash: string): Promise<string> => {
-    try {
-      const tx = await provider?.getTransaction(txHash)
-      // @ts-expect-error TODO: need think about "tx" type
-      const code = await provider.call(tx, tx?.blockNumber)
-      const txError = hexToAscii(code.substr(138))
-
-      return txError
-    } catch (err) {
-      const error = err as Error
-
-      throw new Error(error.message)
-    }
-  }
-
-  const sendTx = async (
-    txData: transactionType
-  ): Promise<TransactionResponse> => {
-    const { from, value } = txData
-
-    const bigNumValue = value ? BigNumber.from(value) : undefined
-    try {
-      const signer = provider?.getSigner(from)
-
-      // @ts-expect-error
-      const txResponse: TransactionResponse = await signer.sendTransaction({
-        ...txData,
-        value: bigNumValue,
-      })
-
-      return txResponse
-    } catch (err) {
-      const error = err as Error
-
-      throw new Error(error.message)
-    }
-  }
-
-  const signTxData = async (unsignedData: string): Promise<SignatureLike> => {
-    try {
-      const signature: SignatureLike = await provider?.send(
-        'eth_signTypedData_v4',
-        [account, unsignedData]
-      )
-
-      return signature
-    } catch (err) {
-      const error = err as Error
-      throw new Error(error.message)
-    }
-  }
-
   useEffect(() => {
     if (provider && account) {
       setCurrentSigner(provider?.getSigner(account?.toLowerCase()))
@@ -300,11 +224,8 @@ export const Web3ContextProvider = ({
           connected: active,
           loading,
           chainId: chainId || 1,
-          getTxError,
-          sendTx,
           dataBlock,
           gasPrice,
-          signTxData,
           error,
           currentAccount: account?.toLowerCase() || '',
           signerOrProvider,
