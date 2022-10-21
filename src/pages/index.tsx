@@ -234,7 +234,7 @@ const Dashboard = () => {
               <SingleStatCard>
                 <TitleTextToolTip
                   title={`Borrowing Power`}
-                  tooltipContent="Vault Borrowing Power"
+                  tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
                     borrowingPower !== null
                       ? borrowingPower.toLocaleString(
