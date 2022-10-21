@@ -25,9 +25,6 @@ import { InterestRateGraphCard } from '../components/util/cards/InterestRateGrap
 import { Substat } from '../components/util/text/Substat'
 import getAverages, { Averages } from '../components/util/api/getAverages'
 import { useLight } from '../hooks/useLight'
-import getDeltas, {
-  CurrentWithTemporal,
-} from '../components/util/api/getDeltas'
 import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
 
 const Dashboard = () => {
@@ -47,7 +44,7 @@ const Dashboard = () => {
   const theme = useTheme()
   const { currentAccount, dataBlock, gasPrice, chainId } = useWeb3Context()
   const rolodex = useRolodexContext()
-  const { setVaultID, setVaultAddress, accountLiability, hasVault } =
+  const { setVaultID, setVaultAddress, accountLiability, hasVault, borrowingPower } =
     useVaultDataContext()
 
   const [totalSupply, setTotalSupply] = useState<string>('')
@@ -56,9 +53,6 @@ const Dashboard = () => {
   const [borrowAPR, setBorrowAPR] = useState(0)
   const [depositAPR, setDepositAPR] = useState(0)
   const [averages, setAverages] = useState<Averages | undefined>()
-  const [totalCollateral, setTotalCollateral] = useState<
-    CurrentWithTemporal | undefined
-  >()
 
   useEffect(() => {
     if (currentAccount && rolodex) {
@@ -107,7 +101,6 @@ const Dashboard = () => {
     }
 
     getAverages().then((averages) => setAverages(averages))
-    getDeltas().then((deltas) => setTotalCollateral(deltas.TotalCollateral))
   }, [rolodex, dataBlock])
 
   return (
@@ -240,11 +233,11 @@ const Dashboard = () => {
             >
               <SingleStatCard>
                 <TitleTextToolTip
-                  title={`Collateral Deposited`}
-                  tooltipContent="Total collateral value deposited"
+                  title={`Borrowing Power`}
+                  tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
-                    totalCollateral?.Current !== null
-                      ? Number(totalCollateral?.Current).toLocaleString(
+                    borrowingPower !== null
+                      ? borrowingPower.toLocaleString(
                           'en-US',
                           {
                             style: 'currency',
