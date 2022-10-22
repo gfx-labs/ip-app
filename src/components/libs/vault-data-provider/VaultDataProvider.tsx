@@ -5,10 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
-import {
-  CollateralTokens,
-  getTokensListOnCurrentChain,
-} from '../../../chain/tokens'
+import { getTokensListOnCurrentChain } from '../../../chain/tokens'
 import { useRolodexContext } from '../rolodex-data-provider/RolodexDataProvider'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 import {
@@ -21,6 +18,7 @@ import { BigNumber } from 'ethers'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import checkHasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
+import { CollateralTokens } from '../../../types/token'
 
 export type VaultDataContextType = {
   hasVault: boolean

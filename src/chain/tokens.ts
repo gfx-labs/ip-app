@@ -1,28 +1,7 @@
-import { BigNumber } from 'ethers'
 import { Rolodex } from '../chain/rolodex/rolodex'
+import initializeToken from '../components/util/tokens/initializeToken'
+import { CollateralTokens, Token } from '../types/token'
 import { ChainIDs } from './chains'
-export interface Token {
-  name: string
-  address: string
-  ticker: string
-  value: number
-
-  wallet_balance?: number
-  wallet_amount?: number
-  wallet_amount_bn?: BigNumber
-
-  vault_balance?: number
-  vault_amount?: number
-  vault_unformatted_amount?: string
-  vault_amount_bn?: BigNumber
-  token_LTV?: number
-  token_penalty?: number
-
-  can_delegate?: boolean
-
-  capped_token?: boolean
-  capped_address?: string
-}
 
 export const chainsToTokens = {
   WBTC: {
@@ -90,177 +69,77 @@ export const getStablecoins = (
   USDC: Token
 } => {
   return {
-    USDI: {
+    USDI: initializeToken({
       name: 'USDI',
       address: rolodex?.addressUSDI,
       ticker: 'USDI',
       value: 1,
-      wallet_balance: undefined,
-      wallet_amount: undefined,
-      wallet_amount_bn: undefined,
-      vault_unformatted_amount: '0',
-    },
-    USDC: {
+    }),
+    USDC: initializeToken({
       name: 'USDC',
       address: rolodex?.addressUSDC!,
       ticker: 'USDC',
       value: 1,
-      wallet_balance: undefined,
-      wallet_amount: undefined,
-      wallet_amount_bn: undefined,
-      vault_unformatted_amount: '0',
-    },
+    }),
   }
 }
 
-export interface CollateralTokens {
-  WETH: Token
-  UNI: Token
-  WBTC: Token
-  stETH: Token
-  [key: string]: Token
-}
 export const getTokensListOnCurrentChain = (
   chain_id: ChainIDs
 ): CollateralTokens => {
   return {
-    WETH: {
+    WETH: initializeToken({
       name: 'Wrapped ETH',
       address: chainsToTokens.WETH[chain_id],
       ticker: 'WETH',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
-      capped_token: false,
-    },
-    stETH: {
+    }),
+    stETH: initializeToken({
       name: 'Lido Staked ETH',
       address: chainsToTokens.stETH[chain_id],
       ticker: 'stETH',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
-      capped_token: false,
-    },
-    WBTC: {
+    }),
+    WBTC: initializeToken({
       name: 'Wrapped BTC',
       address: chainsToTokens.WBTC[chain_id],
       ticker: 'WBTC',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
-      capped_token: false,
-    },
-    UNI: {
+    }),
+    UNI: initializeToken({
       name: 'Uniswap',
       address: chainsToTokens.UNI[chain_id],
       ticker: 'UNI',
       value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
       can_delegate: true,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
-      capped_token: false,
-    },
-    MATIC: {
+    }),
+    MATIC: initializeToken({
       name: 'Matic',
       address: chainsToTokens.MATIC[chain_id],
       ticker: 'MATIC',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
-      can_delegate: false,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
       capped_token: true,
       capped_address: '0x5aC39Ed42e14Cf330A864d7D1B82690B4D1B9E61',
-    },
-    ENS: {
+    }),
+    ENS: initializeToken({
       name: 'Ethereum Name Service',
       address: chainsToTokens.ENS[chain_id],
       ticker: 'ENS',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
       can_delegate: true,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
       capped_token: true,
       capped_address: '0xfb42f5afb722d2b01548f77c31ac05bf80e03381',
-    },
-    AAVE: {
+    }),
+    AAVE: initializeToken({
       name: 'Aave',
       address: chainsToTokens.AAVE[chain_id],
       ticker: 'AAVE',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
       can_delegate: true,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
       capped_token: true,
       capped_address: '0xd3bd7a8777c042De830965de1C1BCC9784135DD2',
-    },
-    BAL: {
+    }),
+    BAL: initializeToken({
       name: 'Balancer',
       address: chainsToTokens.BAL[chain_id],
       ticker: 'BAL',
-      value: 0,
-      vault_balance: 0,
-      vault_amount: 0,
-      wallet_balance: 0,
-      wallet_amount: 0,
-      wallet_amount_bn:  BigNumber.from(0),
-      token_LTV: 0,
-      token_penalty: 0,
-      can_delegate: false,
-      vault_unformatted_amount: '0',
-      vault_amount_bn: BigNumber.from(0),
       capped_token: true,
       capped_address: '0x05498574BD0Fa99eeCB01e1241661E7eE58F8a85',
-    },
+    }),
   }
 }
 

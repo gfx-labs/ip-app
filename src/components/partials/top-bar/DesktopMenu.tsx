@@ -114,7 +114,7 @@ export const DesktopMenu = () => {
           <EllipsisIcon
             sx={{
               stroke: isLight ? '#374252' : 'white',
-              fill: !isLight ? 'white' : '#374252',
+              fill: isLight ? '#374252' : 'white',
               width: 16,
               height: 14,
             }}

@@ -2,8 +2,8 @@ import { Box, Typography, Button } from '@mui/material'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 import { DecimalInput } from '../textFields'
-import { Token } from '../../../chain/tokens'
 import { WithDots } from '../loading'
+import { Token } from '../../../types/token'
 
 interface TokenSelectProps {
   token: Token

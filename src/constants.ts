@@ -6,12 +6,13 @@ export const VOTING_VAULT_CONTROLLER_ADDRESS =
   '0xaE49ddCA05Fe891c6a5492ED52d739eC1328CBE2'
 
 export const IPT_DELEGATE_ADDRESS = '0xd909c5862cdb164adb949d92622082f0092efc3d'
+export const SLOWROLL_ADDRESS = '0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d'
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export const USDI_DECIMALS = 18
 export const BACKUP_PROVIDER = 'https://cloudflare-eth.com'
-export const DEFAULT_BASE_URL = 'https://ip-stats-api.staging.gfx.town'
+export const STAGING_ANALYTICS_URL = 'https://ip-stats-api.staging.gfx.town'
 export const ANALYTICS_URL = 'https://analytics-api.gfx.xyz'
 export const CHART_INTEREST_RATE_OVERTIME = '/charts/interest_rates_overtime'
 export const LIVE_DELTAS = '/live/deltas'
@@ -33,5 +34,5 @@ export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   '0xfb42f5AFb722d2b01548F77C31AC05bf80e03381': 'Capped ENS',
   '0x6DB54416CBB28C6a78F606947df53E83Dd69eb70': 'ENS AnchoredViewRelay',
   '0xC18360217D8F7Ab5e7c516566761Ea12Ce7F9D72': 'ENS',
-  '0x16Ac44B1e161c735D7E372169d3573d920a23906': 'ThreeLines0_100 v2'
+  '0x16Ac44B1e161c735D7E372169d3573d920a23906': 'ThreeLines0_100 v2',
 }

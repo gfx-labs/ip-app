@@ -1,16 +1,11 @@
 import { defaultAbiCoder } from '@ethersproject/abi'
-import { Box, Typography, useTheme, Button } from '@mui/material'
+import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
-import {
-  useModalContext,
-  ModalType,
-} from '../components/libs/modal-content-provider/ModalContentProvider'
 import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
 import { DelegateIPTButton } from '../components/util/button'
 import { ProposalCard } from '../components/util/governance/ProposalCard'
 import { Spinner } from '../components/util/loading'
-import { ToolTip } from '../components/util/tooltip/ToolTip'
 import { getRecentProposals } from '../contracts/GovernorCharlieDelegate/getRecentProposals'
 import { getUserVotingPower } from '../contracts/IPTDelegate'
 import { getUserIPTBalance } from '../contracts/IPTDelegate/getUserIPTbalance'
@@ -78,14 +73,8 @@ export const Governance = () => {
     currentSigner,
     signerOrProvider,
   } = useWeb3Context()
-  const { setType } = useModalContext()
-  const {
-    needsToDelegate,
-    setNeedsToDelegate,
-    setIptBalance,
-    setCurrentVotes,
-    currentVotes,
-  } = useAppGovernanceContext()
+  const { setNeedsToDelegate, setIptBalance, setCurrentVotes, currentVotes } =
+    useAppGovernanceContext()
 
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])

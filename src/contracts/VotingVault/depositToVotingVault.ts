@@ -1,7 +1,7 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
 import { CappedGovToken__factory } from '../../chain/contracts/factories/lending/CappedGovToken__factory'
-import { Token } from '../../chain/tokens'
+import { Token } from '../../types/token'
 
 const depositToVotingVault = async (
   id: string,
@@ -16,7 +16,7 @@ const depositToVotingVault = async (
     )
 
     let formattedAmount
-    if(typeof amount === 'string') {
+    if (typeof amount === 'string') {
       const decimals = await cappedTokenContract.decimals()
 
       formattedAmount = utils.parseUnits(amount, decimals)

@@ -26,46 +26,26 @@ export const neutral: { [key: string]: [number, number, number] } = {
   gray6: [237, 237, 237], // #EDEDED
   gray7: [37, 38, 44], // #25262C
   gray8: [47, 56, 72], // #2F3848
-  gray9: [127, 127, 127], // #7F7F7F
   gray10: [107, 118, 135], // #6B7687
   gray11: [245, 247, 250], // #FBFCFD
   gray12: [176, 180, 194], // #B0B4C2
   black: [0, 0, 0],
   black1: [47, 45, 45], // #2F2D2D
-  black2: [22, 22, 22], // #161616,
-  black3: [101, 101, 101], // #656565
-  black4: [26, 26, 26], // #1B1A1A
   black5: [10, 11, 12], // #0A0B0C
-  black6: [29, 35, 46], // #1D232E
   black7: [28, 29, 33], // #1C1D21
 }
 
 export const blue: { [key: string]: [number, number, number] } = {
   blue1: [116, 143, 241], // #748FF1
   blue2: [5, 45, 255], // #052DFF
-  blue3: [205, 225, 255], // #CDE1FF
-  blue4: [146, 189, 255], // #92BDFF
-  blue5: [173, 176, 255], // #ADB0FF
-  blue6: [46, 54, 249], // #2E36F9
-  blue7: [94, 100, 244], // #5E64F4
-  blue8: [193, 195, 254], // #C1C3FE
-  blue9: [226, 238, 252], // blue1 0.17
   blue10: [188, 197, 233], // #BCC5E9
   blue11: [217, 227, 255], // #D9E3FF
-  blue12: [73, 111, 246], // #496FF7
-  blue13: [59, 66, 95], // #3B425F
   blue14: [84, 102, 165], // #5466A5
-  blue15: [53, 149, 255], // #3595FF
-  blue16: [26, 49, 85], // #1A3155
 }
 
 export const green: { [key: string]: [number, number, number] } = {
   green1: [80, 214, 109], // #50D66D
-  green2: [13, 215, 57], // #0DD739
-  green3: [0, 187, 41], // #00BB29
-  green4: [42, 61, 45], // #2A3D2D
-  green5: [219, 249, 225], // #DBF9E1
-  green6: [51, 65, 62], // #33413E
+  green2: [0, 187, 41], // #00BB29
 }
 
 export const disabled: { [key: string]: [number, number, number] } = {

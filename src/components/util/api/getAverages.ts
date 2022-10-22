@@ -1,5 +1,4 @@
-import { DEFAULT_BASE_URL, LIVE_AVERAGE_RATES } from '../../../constants'
-import getAPIBaseUrl from '../helpers/getAPIBaseUrl'
+import { STAGING_ANALYTICS_URL, LIVE_AVERAGE_RATES } from '../../../constants'
 import axios from 'axios'
 
 export interface Averages {
@@ -9,7 +8,7 @@ export interface Averages {
 
 const getAverages = async () => {
   try {
-    const averageRateURL = `${DEFAULT_BASE_URL}${LIVE_AVERAGE_RATES}`
+    const averageRateURL = `${STAGING_ANALYTICS_URL}${LIVE_AVERAGE_RATES}`
 
     const response = await axios.get(averageRateURL)
     return response.data as Averages

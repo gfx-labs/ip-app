@@ -1,3 +1,5 @@
+import { ChainInfo } from '../types/chain'
+
 export enum ChainIDs {
   MAINNET = 1,
   ROPSTEN = 3,
@@ -47,15 +49,6 @@ const configs: Array<ChainInfo> = [
     scanSite: 'Etherscan',
   },
 ]
-
-export interface ChainInfo {
-  id: number
-  name: string
-  ticker: string
-  usdiAddress?: string
-  scanUrl: string
-  scanSite: string
-}
 
 class chainHolder {
   m: Map<number, ChainInfo>

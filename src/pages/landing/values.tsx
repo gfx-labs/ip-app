@@ -1,7 +1,6 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { formatColor, formatGradient, gradient, neutral } from '../../theme'
-import { generateSmoothGradient } from '../../theme/gradient/easing'
 
 export const Values: React.FC = () => {
   return (
