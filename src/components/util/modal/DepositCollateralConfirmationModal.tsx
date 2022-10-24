@@ -16,6 +16,7 @@ import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { Token } from '../../../types/token'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -178,14 +179,13 @@ export const DepositCollateralConfirmationModal = () => {
         }}
       >
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/${collateralToken.ticker}.svg`}
+            svg_name={collateralToken.ticker}
             alt={collateralToken.ticker}
-            marginRight={3}
-          ></Box>
+            sx={{ mr: 3 }}
+          />
           <Box>
             <Typography variant="body3" color="text.primary">
               $

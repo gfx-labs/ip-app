@@ -13,6 +13,7 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { ContractReceipt, ContractTransaction } from 'ethers'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useEffect } from 'react'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const TransactionStatusModal = () => {
   const { type, setType, transactionState, transaction } = useModalContext()
@@ -66,14 +67,13 @@ export const TransactionStatusModal = () => {
               Successful Transaction
             </Typography>
 
-            <Box
-              component="img"
-              my={3}
-              mx="auto"
-              height={30}
+            <SVGBox
+              svg_name="ip_green"
               width={30}
-              src="images/ip_green.svg"
-            ></Box>
+              height={30}
+              alt="ip_green"
+              sx={{ my: 3, mx: 'auto' }}
+            />
 
             <MuiLink
               target="_blank"

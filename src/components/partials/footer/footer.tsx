@@ -2,6 +2,7 @@ import { Box, Typography, useTheme, Link as MuiLink } from '@mui/material'
 import { Link } from '../../util/link'
 import { useLight } from '../../../hooks/useLight'
 import footerLinks from './footerLinks'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const Footer = () => {
   return (
@@ -106,13 +107,12 @@ const FooterContent = () => {
             target="_blank"
             paddingBottom={2}
           >
-            <Box
-              component="img"
-              src={`images/discord_icon_${isLight ? 'black' : 'grey'}.svg`}
-              width="24px"
-              height="24px"
-              marginX={3}
-            ></Box>
+            <SVGBox
+              svg_name={isLight ? 'discord_icon_black' : 'discord_icon_grey'}
+              width={24}
+              height={24}
+              sx={{ marginX: 3 }}
+            />
           </MuiLink>
           <MuiLink
             component={Link}
@@ -120,13 +120,14 @@ const FooterContent = () => {
             target="_blank"
             paddingBottom={2}
           >
-            <Box
-              component="img"
-              src={`images/twitter_bird_icon_${isLight ? 'black' : 'grey'}.svg`}
-              width="25px"
-              height="26px"
-              marginX={3}
-            ></Box>
+            <SVGBox
+              svg_name={
+                isLight ? 'twitter_bird_icon_black' : 'twitter_bird_icon_grey'
+              }
+              width={25}
+              height={26}
+              sx={{ marginX: 3 }}
+            />
           </MuiLink>
           <MuiLink
             component={Link}
@@ -134,13 +135,12 @@ const FooterContent = () => {
             target="_blank"
             paddingBottom={2}
           >
-            <Box
-              component="img"
-              src={`images/medium_icon_${isLight ? 'black' : 'grey'}.svg`}
-              width="24px"
-              height="24px"
-              marginX={3}
-            ></Box>
+            <SVGBox
+              svg_name={isLight ? 'medium_icon_black' : 'medium_icon_grey'}
+              width={24}
+              height={24}
+              sx={{ marginX: 3 }}
+            />
           </MuiLink>
         </Box>
       </Box>

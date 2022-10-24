@@ -1,5 +1,6 @@
 import { Box, Button, Typography, Link, CircularProgress } from '@mui/material'
 import { useState } from 'react'
+import SVGBox from '../../icons/misc/SVGBox'
 import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
 import { WalletType } from '../../libs/web3-data-provider/WalletOptions'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
@@ -44,13 +45,8 @@ export const WalletModalContent = () => {
             size="large"
             onClick={() => connectToWallet(WalletType.INJECTED)}
           >
-            <Box
-              component="img"
-              src="images/metamask.svg"
-              width={26}
-              mr={2}
-            ></Box>{' '}
-            Browser wallet
+            <SVGBox svg_name="metamask" width={26} sx={{ mr: 2 }} /> Browser
+            wallet
           </Button>
 
           <Button
@@ -63,12 +59,13 @@ export const WalletModalContent = () => {
             size="large"
             onClick={() => connectToWallet(WalletType.WALLET_LINK)}
           >
-            <Box
-              component="img"
-              src="images/coinbase.svg"
+            <SVGBox
               width={26}
-              mr={2}
-            ></Box>
+              height={26}
+              svg_name="coinbase"
+              alt="coinbase"
+              sx={{ mr: 2 }}
+            />
             Coinbase
           </Button>
 
@@ -82,12 +79,7 @@ export const WalletModalContent = () => {
             size="large"
             onClick={() => connectToWallet(WalletType.WALLET_CONNECT)}
           >
-            <Box
-              component="img"
-              src="images/wallet_connect.svg"
-              width={26}
-              mr={2}
-            ></Box>
+            <SVGBox svg_name="wallet_connect" width={26} sx={{ mr: 2 }} />
             Wallet Connect
           </Button>
           {errorConnecting && (

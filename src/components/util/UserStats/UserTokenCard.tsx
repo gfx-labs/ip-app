@@ -22,6 +22,7 @@ import { useLight } from '../../../hooks/useLight'
 import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
 import getCappedPercentOf from '../../../contracts/VotingVault/getCappedPercentOf'
 import { useEffect, useState } from 'react'
+import SVGBox from '../../icons/misc/SVGBox'
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
@@ -131,13 +132,13 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <Box
-            component="img"
+          <SVGBox
             width={{ xs: 24, lg: 40 }}
             height={{ xs: 24, lg: 40 }}
-            src={`images/${image.src}.svg`}
+            svg_name={image.src}
             alt={image.alt}
-          ></Box>
+          />
+
           <Box display="flex" flexDirection="column">
             <Typography
               variant="body1"
@@ -262,12 +263,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               minWidth: { xs: 20, lg: 40 },
             }}
           >
-            <Box
-              component="img"
-              src={`images/plus.svg`}
-              width="16px"
-              height="16px"
-            ></Box>
+            <SVGBox width={16} height={16} svg_name="plus" />
           </Button>
           <Button
             onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
@@ -279,12 +275,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               minWidth: { xs: 20, lg: 40 },
             }}
           >
-            <Box
-              component="img"
-              src={`images/minus.svg`}
-              width="16px"
-              height="16px"
-            ></Box>
+            <SVGBox width={16} height={16} svg_name="minus" />
           </Button>
         </Box>
         <Box

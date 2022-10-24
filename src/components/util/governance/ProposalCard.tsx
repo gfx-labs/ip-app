@@ -39,6 +39,7 @@ import { ProposalTypeToolTip } from './ProposalTypeToolTip'
 import useWindowDimensions from '../../../hooks/useWindowDimensions'
 import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -285,16 +286,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   alignItems: 'center',
                 }}
               >
-                <Box
-                  component="img"
-                  src={`images/etherscan-logo-${
-                    isLight ? 'dark' : 'light'
-                  }.svg`}
-                  width="12px"
-                  height="12px"
-                  position="relative"
-                  marginRight={1}
-                ></Box>
+                <SVGBox
+                  svg_name={
+                    isLight ? 'etherscan-logo-dark' : 'etherscan-logo-light'
+                  }
+                  width={12}
+                  height={12}
+                  sx={{ mr: 1 }}
+                />
                 <Typography color="text.secondary" variant="label_semi">
                   Etherscan
                 </Typography>

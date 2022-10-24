@@ -1,18 +1,18 @@
 import { Chains } from '../../../chain/chains'
-import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { Button, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import ETH from '/images/eth.svg'
 import { useLight } from '../../../hooks/useLight'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const SelectedChainButton = () => {
   const ctx = useWeb3Context()
-  const token = Chains.getInfo(ctx.chainId)
+  const chain = Chains.getInfo(ctx.chainId)
 
   const theme = useTheme()
   const isLight = useLight()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
-  const name = isMobile ? token.ticker : token.name
+  const name = isMobile ? chain.symbol : chain.name
 
   return (
     <Button
@@ -33,16 +33,8 @@ export const SelectedChainButton = () => {
         },
       }}
     >
-      {token.ticker === 'ETH' && (
-        <Box
-          component="img"
-          src={ETH}
-          width={20}
-          height={24}
-          position="relative"
-          mr={1}
-        ></Box>
-      )}
+      <SVGBox svg_name={chain.logo} height={24} sx={{ mr: 1 }} />
+
       <Typography variant="label">{name}</Typography>
     </Button>
   )

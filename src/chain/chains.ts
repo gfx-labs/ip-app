@@ -12,7 +12,8 @@ const configs: Array<ChainInfo> = [
   {
     id: ChainIDs.MAINNET,
     name: 'Ethereum',
-    ticker: 'ETH',
+    symbol: 'ETH',
+    logo: 'ETH',
     usdi_address: '0x2A54bA2964C8Cd459Dc568853F79813a60761B58',
     scan_url: 'https://etherscan.io/tx/',
     scan_site: 'Etherscan',
@@ -20,7 +21,8 @@ const configs: Array<ChainInfo> = [
   {
     id: ChainIDs.ROPSTEN,
     name: 'Switch to Mainnet',
-    ticker: 'ROP ETH',
+    symbol: 'ROP ETH',
+    logo: 'ETH',
     usdi_address: '0x12f4e7c4e7993d724eac73ef99f2fca36f1fa921',
     scan_url: 'https://ropsten.etherscan.io/tx/',
     scan_site: 'Ropsten Etherscan',
@@ -28,14 +30,16 @@ const configs: Array<ChainInfo> = [
   {
     id: ChainIDs.GOERLI,
     name: 'Switch to Mainnet',
-    ticker: 'ETH',
+    symbol: 'ETH',
+    logo: 'ETH',
     scan_url: 'https://goerli.etherscan.io/tx/',
     scan_site: 'Goerli Etherscan',
   },
   {
     id: ChainIDs.POLYGON,
     name: 'Polygon TESTDEPLOY',
-    ticker: 'MATIC',
+    symbol: 'MATIC',
+    logo: 'MATIC',
     usdi_address: '0xf61275F2358EEd209cc2C0efcCEcC1E542277aED',
     scan_url: 'https://polygonscan.com/tx/',
     scan_site: 'PolygonScan',
@@ -43,7 +47,8 @@ const configs: Array<ChainInfo> = [
   {
     id: ChainIDs.LOCAL,
     name: 'Ethereum Local',
-    ticker: 'ETH Local',
+    symbol: 'ETH Local',
+    logo: 'ETH',
     usdi_address: '0x2A54bA2964C8Cd459Dc568853F79813a60761B58',
     scan_url: 'https://etherscan.io/tx/',
     scan_site: 'Etherscan',
@@ -65,7 +70,8 @@ class chainHolder {
     return {
       id: 0,
       name: 'NOT SUPPORTED',
-      ticker: 'N/A',
+      symbol: 'N/A',
+      logo: 'ETH',
       scan_url: 'N/A',
       scan_site: 'N/A',
     }

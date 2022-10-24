@@ -34,6 +34,7 @@ import getSaleSummary, {
   SaleSummary,
 } from '../../components/util/api/getSaleSummary'
 import { SLOWROLL_ADDRESS } from '../../constants'
+import SVGBox from '../../components/icons/misc/SVGBox'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
@@ -419,13 +420,13 @@ const PurchaseBox = ({
           flexDirection={{ xs: 'column', lg: 'row' }}
         >
           <Box display="flex" alignItems="center">
-            <Box
-              component="img"
-              src={`images/ipt_${isLight ? 'blue' : 'white'}.svg`}
+            <SVGBox
+              svg_name={`ipt_${isLight ? 'blue' : 'white'}`}
               width={32}
               height={32}
-              mr={2}
-            ></Box>
+              sx={{ mr: 2 }}
+            />
+
             <Typography variant="subtitle1">IPT Sale</Typography>
           </Box>
 

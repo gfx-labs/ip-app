@@ -8,6 +8,7 @@ import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import { AppGovSwitch } from '../../util/switch'
 import { DesktopMenu } from './DesktopMenu'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const DesktopToolBar = () => {
   //desktop menu config
@@ -19,12 +20,11 @@ export const DesktopToolBar = () => {
   return (
     <Toolbar sx={{ padding: 0 }} disableGutters>
       <Link href="#/landing" role="heading" aria-level={1}>
-        <Box
-          component="img"
-          src={`images/ip_${isLight ? 'black' : 'white'}.svg`}
+        <SVGBox
+          svg_name={isLight ? 'ip_black' : 'ip_white'}
           width={50}
           height={50}
-        ></Box>
+        />
       </Link>
       {setIsApp !== undefined ? (
         <Box sx={{ gap: 3 }} display="flex" ml={3}>

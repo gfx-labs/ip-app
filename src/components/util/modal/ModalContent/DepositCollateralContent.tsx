@@ -12,6 +12,7 @@ import {
 } from '../../../libs/modal-content-provider/ModalContentProvider'
 import { useLight } from '../../../../hooks/useLight'
 import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
+import SVGBox from '../../../icons/misc/SVGBox'
 
 export const DepositCollateralContent = () => {
   const {

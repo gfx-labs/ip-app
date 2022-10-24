@@ -15,6 +15,7 @@ import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataP
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
 import { withdrawUSDC } from '../../../contracts/USDI/withdrawUSDC'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const WithdrawUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
@@ -89,14 +90,13 @@ export const WithdrawUSDCConfirmationModal = () => {
             </Typography>
           </Box>
 
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/USDI.svg`}
+            svg_name="USDI"
             alt="USDI"
-            marginLeft={3}
-          ></Box>
+            sx={{ ml: 3 }}
+          />
         </Box>
 
         <ForwardIcon
@@ -105,14 +105,14 @@ export const WithdrawUSDCConfirmationModal = () => {
         />
 
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/${USDC.token.ticker}.svg`}
-            alt={USDC.token.ticker}
-            marginRight={3}
-          ></Box>
+            sx={{ mr: 3 }}
+            svg_name="USDC"
+            alt="USDC"
+          />
+
           <Box>
             <Typography variant="body3" color="text.secondary">
               {'$' +
