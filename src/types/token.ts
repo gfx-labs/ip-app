@@ -4,16 +4,17 @@ export interface Token {
   name: string
   address: string
   ticker: string
-  value: number
+  price: number
+  decimals: number
 
-  wallet_balance?: number
-  wallet_amount?: number
-  wallet_amount_bn?: BigNumber
+  wallet_balance?: string
+  wallet_amount?: BigNumber
+  wallet_amount_str?: string
 
-  vault_balance?: number
-  vault_amount?: number
-  vault_unformatted_amount?: string
-  vault_amount_bn?: BigNumber
+  vault_balance?: string
+  vault_amount?: BigNumber
+  vault_amount_str?: string
+
   token_LTV?: number
   token_penalty?: number
 
@@ -29,8 +30,9 @@ export interface InitializeTokenProps {
   address: string
   capped_token?: boolean
   capped_address?: string
-  value?: number
+  price?: number
   can_delegate?: boolean
+  decimals?: number
 }
 
 export interface CollateralTokens {

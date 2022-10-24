@@ -2,6 +2,7 @@ import { Typography, Button, Box } from '@mui/material'
 import { ContractReceipt } from 'ethers'
 import { useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
+import SVGBox from '../../icons/misc/SVGBox'
 import { useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
@@ -54,15 +55,13 @@ export const OpenVaultButton = () => {
       onMouseEnter={() => setIshovered(true)}
       onMouseLeave={() => setIshovered(false)}
     >
-      {
-        <Box
-          component="img"
-          src={`images/${ishovered ? 'unlock' : 'lock'}.svg`}
-          width="16px"
-          height="16px"
-          mr={1}
-        ></Box>
-      }
+      <SVGBox
+        svg_name={ishovered ? 'unlock' : 'lock'}
+        width={16}
+        height={16}
+        sx={{ mr: 1 }}
+      />
+
       <Typography variant="body1" lineHeight={1}>
         Open a Vault
       </Typography>

@@ -9,6 +9,7 @@ import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataPro
 import { useState } from 'react'
 import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
 import { DisableableModalButton } from '../button/DisableableModalButton'
+import SVGBox from '../../icons/misc/SVGBox'
 
 type ButtonText = 'Enable Token' | 'Vault Minted'
 
@@ -58,13 +59,13 @@ export const EnableCappedTokenModal = () => {
           rowGap: 2,
         }}
       >
-        <Box
-          component="img"
-          mx="auto"
-          height={141}
+        <SVGBox
           width={170}
-          src="images/enable_capped_token_icon.svg"
-        ></Box>
+          height={141}
+          svg_name="enable_capped_token_icon"
+          alt="enable capped token icon"
+          sx={{ mx: 'auto' }}
+        />
 
         <Typography variant="h7">Enable Capped Token</Typography>
 

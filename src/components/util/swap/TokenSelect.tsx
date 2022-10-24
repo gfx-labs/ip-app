@@ -4,6 +4,7 @@ import { formatColor, neutral } from '../../../theme'
 import { DecimalInput } from '../textFields'
 import { WithDots } from '../loading'
 import { Token } from '../../../types/token'
+import SVGBox from '../../icons/misc/SVGBox'
 
 interface TokenSelectProps {
   token: Token
@@ -17,7 +18,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
 
   const setBalance = () => {
     if (token.wallet_balance != undefined) {
-      setTokenAmount(token.wallet_balance.toString())
+      setTokenAmount(token.wallet_balance)
     }
   }
 
@@ -49,12 +50,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
             justifyContent: 'flex-end',
           }}
         >
-          <Box
-            component="img"
-            width={24}
-            height={24}
-            src={`images/${token?.ticker}.svg`}
-          ></Box>
+          <SVGBox svg_name={token.ticker} height={24} width={24} />
 
           <Typography
             sx={{
@@ -97,7 +93,7 @@ export const TokenSelect = (props: TokenSelectProps) => {
               disabled={token.wallet_balance === undefined}
             >
               <WithDots val={token.wallet_balance != undefined}>
-                {token.wallet_balance?.toLocaleString(undefined, {
+                {Number(token.wallet_balance).toLocaleString(undefined, {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 })}

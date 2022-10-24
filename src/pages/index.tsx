@@ -25,6 +25,7 @@ import { Substat } from '../components/util/text/Substat'
 import getAverages, { Averages } from '../components/util/api/getAverages'
 import { useLight } from '../hooks/useLight'
 import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
+import SVGBox from '../components/icons/misc/SVGBox'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -43,8 +44,13 @@ const Dashboard = () => {
   const theme = useTheme()
   const { currentAccount, dataBlock, gasPrice, chainId } = useWeb3Context()
   const rolodex = useRolodexContext()
-  const { setVaultID, setVaultAddress, accountLiability, hasVault, borrowingPower } =
-    useVaultDataContext()
+  const {
+    setVaultID,
+    setVaultAddress,
+    accountLiability,
+    hasVault,
+    borrowingPower,
+  } = useVaultDataContext()
 
   const [totalSupply, setTotalSupply] = useState<string>('')
   const [totalUSDCDeposited, setTotalUSDCDeposited] = useState<string>('')
@@ -139,13 +145,13 @@ const Dashboard = () => {
         >
           <SingleStatCard>
             <>
-              <Box
-                component="img"
-                src={`images/globe_${isLight ? 'light' : 'dark'}.svg`}
-                width="36px"
-                height="36px"
-                marginRight={3}
-              ></Box>
+              <SVGBox
+                svg_name={`globe_${isLight ? 'light' : 'dark'}`}
+                width={36}
+                height={36}
+                sx={{ mr: 3 }}
+              />
+
               <TitleText
                 title="USDi in Circulation"
                 text={Math.round(Number(totalSupply)).toLocaleString()}
@@ -155,13 +161,13 @@ const Dashboard = () => {
 
           <SingleStatCard>
             <>
-              <Box
-                component="img"
-                src={`images/cube_${isLight ? 'light' : 'dark'}.svg`}
-                width="36px"
-                height="36px"
-                marginRight={3}
-              ></Box>
+              <SVGBox
+                svg_name={`cube_${isLight ? 'light' : 'dark'}`}
+                width={36}
+                height={36}
+                sx={{ mr: 3 }}
+              />
+
               <TitleText
                 title="USDC in Reserve"
                 text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
@@ -170,13 +176,13 @@ const Dashboard = () => {
           </SingleStatCard>
           <SingleStatCard>
             <>
-              <Box
-                component="img"
-                src={`images/cylinder_${isLight ? 'light' : 'dark'}.svg`}
-                width="36px"
-                height="36px"
-                marginRight={3}
-              ></Box>
+              <SVGBox
+                svg_name={`cylinder_${isLight ? 'light' : 'dark'}`}
+                width={36}
+                height={36}
+                sx={{ mr: 3 }}
+              />
+
               <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
             </>
           </SingleStatCard>
@@ -236,13 +242,10 @@ const Dashboard = () => {
                   tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
                     borrowingPower !== null
-                      ? borrowingPower.toLocaleString(
-                          'en-US',
-                          {
-                            style: 'currency',
-                            currency: 'USD',
-                          }
-                        )
+                      ? borrowingPower.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })
                       : null
                   }
                 />

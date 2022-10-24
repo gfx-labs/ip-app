@@ -15,6 +15,7 @@ import { formatColor, neutral } from '../../../theme'
 
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { MobileIconButton } from './MobileIconButton'
+import SVGBox from '../../icons/misc/SVGBox'
 
 const iOS =
   typeof navigator !== 'undefined' &&
@@ -41,12 +42,11 @@ export const MobileToolBar = () => {
       }}
     >
       <MuiLink component={Link} to="/landing" aria-level={1}>
-        <Box
-          component="img"
-          src={`images/ip_${isLight ? 'black' : 'white'}.svg`}
+        <SVGBox
+          svg_name={isLight ? 'ip_black' : 'ip_white'}
           width={32}
           height={32}
-        ></Box>
+        />
       </MuiLink>
 
       <Box display="flex">

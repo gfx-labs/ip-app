@@ -16,6 +16,7 @@ import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { Token } from '../../../types/token'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -36,7 +37,7 @@ export const DepositCollateralConfirmationModal = () => {
   const [decimals, setDecimals] = useState(18)
 
   const amount = collateralDepositAmountMax
-    ? collateralToken.wallet_amount_bn
+    ? collateralToken.wallet_amount
     : collateralDepositAmount
 
   const contract = ERC20Detailed__factory.connect(
@@ -76,7 +77,7 @@ export const DepositCollateralConfirmationModal = () => {
   const handleDepositConfirmationRequest = async () => {
     try {
       let attempt: ContractTransaction
-      if (collateralToken.capped_token && collateralToken.capped_address) {
+      if (collateralToken.capped_address) {
         if (!hasVotingVault) {
           setLoading(false)
           setType(ModalType.EnableCappedToken)
@@ -94,7 +95,7 @@ export const DepositCollateralConfirmationModal = () => {
           if (typeof amount === 'string') {
             approveAmount = utils.parseUnits(amount!, decimals)
           } else {
-            approveAmount = collateralToken.wallet_amount_bn
+            approveAmount = collateralToken.wallet_amount
           }
 
           const txn = await contract.approve(
@@ -178,19 +179,18 @@ export const DepositCollateralConfirmationModal = () => {
         }}
       >
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/${collateralToken.ticker}.svg`}
+            svg_name={collateralToken.ticker}
             alt={collateralToken.ticker}
-            marginRight={3}
-          ></Box>
+            sx={{ mr: 3 }}
+          />
           <Box>
             <Typography variant="body3" color="text.primary">
               $
               {(
-                collateralToken.value * Number(collateralDepositAmount)
+                collateralToken.price * Number(collateralDepositAmount)
               ).toFixed(2)}{' '}
               ({collateralDepositAmount} {collateralToken.ticker})
             </Typography>
@@ -200,10 +200,8 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          !collateralToken.capped_token ||
-          (collateralToken.capped_token &&
-            collateralToken.capped_address &&
-            !hasVotingVault) ||
+          !collateralToken.capped_address ||
+          (collateralToken.capped_address && !hasVotingVault) ||
           !needAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'

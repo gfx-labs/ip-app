@@ -24,10 +24,9 @@ export const getVaultTokenBalanceAndPrice = async (
   let balanceBN = BigNumber.from(0)
   const SOP = signerOrProvider ? signerOrProvider : rolodex.provider
 
-  const token_address =
-    token.capped_token && token.capped_address
-      ? token.capped_address
-      : token.address
+  const token_address = token.capped_address
+    ? token.capped_address
+    : token.address
 
   if (vault_address !== undefined) {
     const balanceOf = await getBalanceOf(vault_address, token_address, SOP)

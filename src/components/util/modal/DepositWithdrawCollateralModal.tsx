@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
+import SVGBox from '../../icons/misc/SVGBox'
 import {
   ModalType,
   useModalContext,
@@ -59,20 +60,19 @@ export const DepositWithdrawCollateralModal = () => {
           columnGap: 2,
         }}
       >
-        <Box
-          component="img"
+        <SVGBox
           width={80}
           height={80}
-          src={`images/${collateralToken.ticker}.svg`}
+          svg_name={collateralToken.ticker}
           alt={collateralToken.name}
-        ></Box>
+        />
         <Box>
           <Typography variant="body3" color={formatColor(neutral.gray3)}>
             1 {collateralToken.ticker}
           </Typography>
           <Typography variant="subtitle1" color="text.primary" mb={1}>
             $
-            {collateralToken.value.toLocaleString(undefined, {
+            {collateralToken.price.toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}

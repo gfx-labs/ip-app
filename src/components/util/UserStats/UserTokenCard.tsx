@@ -4,9 +4,8 @@ import {
   Button,
   LinearProgress,
   Typography,
-  useTheme,
 } from '@mui/material'
-import { formatColor, neutral, blue } from '../../../theme'
+import { formatColor, neutral } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import {
@@ -23,10 +22,12 @@ import { useLight } from '../../../hooks/useLight'
 import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
 import getCappedPercentOf from '../../../contracts/VotingVault/getCappedPercentOf'
 import { useEffect, useState } from 'react'
+import SVGBox from '../../icons/misc/SVGBox'
+
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
   tokenTicker: string
-  tokenValue: string
+  tokenPrice: string
   vaultBalance: string
   tokenAmount: string
   image: {
@@ -41,11 +42,9 @@ interface UserTokenCardProps extends BoxProps {
 }
 
 export const UserTokenCard = (props: UserTokenCardProps) => {
-  const theme = useTheme()
   const isLight = useLight()
   const rolodex = useRolodexContext()
-  const { currentSigner, connected, currentAccount, signerOrProvider } =
-    useWeb3Context()
+  const { connected, signerOrProvider } = useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
   const { tokens } = useVaultDataContext()
   const { setType, setCollateralToken, updateTransactionState } =
@@ -57,7 +56,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const {
     tokenName,
     tokenTicker,
-    tokenValue,
+    tokenPrice,
     vaultBalance,
     tokenAmount,
     image,
@@ -100,6 +99,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   useEffect(() => {
     if (cappedAddress && signerOrProvider) {
       getCappedPercentOf(cappedAddress, signerOrProvider).then((res) => {
+        // show minimum 5%
         if (res <= 5) {
           res = 5
         } else if (res >= 100) {
@@ -132,13 +132,13 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <Box
-            component="img"
+          <SVGBox
             width={{ xs: 24, lg: 40 }}
             height={{ xs: 24, lg: 40 }}
-            src={`images/${image.src}.svg`}
+            svg_name={image.src}
             alt={image.alt}
-          ></Box>
+          />
+
           <Box display="flex" flexDirection="column">
             <Typography
               variant="body1"
@@ -161,7 +161,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           variant="body1"
           color="text.primary"
         >
-          {tokenValue}
+          {tokenPrice}
         </Typography>
 
         <Box display={{ xs: 'none', lg: 'flex' }}>
@@ -263,12 +263,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               minWidth: { xs: 20, lg: 40 },
             }}
           >
-            <Box
-              component="img"
-              src={`images/plus.svg`}
-              width="16px"
-              height="16px"
-            ></Box>
+            <SVGBox width={16} height={16} svg_name="plus" />
           </Button>
           <Button
             onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
@@ -280,12 +275,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
               minWidth: { xs: 20, lg: 40 },
             }}
           >
-            <Box
-              component="img"
-              src={`images/minus.svg`}
-              width="16px"
-              height="16px"
-            ></Box>
+            <SVGBox width={16} height={16} svg_name="minus" />
           </Button>
         </Box>
         <Box

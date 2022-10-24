@@ -73,13 +73,12 @@ export const getStablecoins = (
       name: 'USDI',
       address: rolodex?.addressUSDI,
       ticker: 'USDI',
-      value: 1,
     }),
     USDC: initializeToken({
       name: 'USDC',
       address: rolodex?.addressUSDC!,
       ticker: 'USDC',
-      value: 1,
+      decimals: 6,
     }),
   }
 }
@@ -92,6 +91,7 @@ export const getTokensListOnCurrentChain = (
       name: 'Wrapped ETH',
       address: chainsToTokens.WETH[chain_id],
       ticker: 'WETH',
+      decimals: 8,
     }),
     stETH: initializeToken({
       name: 'Lido Staked ETH',
@@ -107,7 +107,6 @@ export const getTokensListOnCurrentChain = (
       name: 'Uniswap',
       address: chainsToTokens.UNI[chain_id],
       ticker: 'UNI',
-      value: 0,
       can_delegate: true,
     }),
     MATIC: initializeToken({

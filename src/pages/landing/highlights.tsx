@@ -1,5 +1,6 @@
 import { Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import SVGBox from '../../components/icons/misc/SVGBox'
 import { formatColor, neutral } from '../../theme'
 export const Highlights: React.FC = () => {
   return (
@@ -109,16 +110,15 @@ const HighlightBox = (props: { icon: any; header: string; copy: string }) => {
         gap: 4,
       }}
     >
-      <Box
+      <SVGBox
+        svg_name={icon}
         sx={{
           background: formatColor(neutral.gray5),
           height: 140,
           width: 140,
           borderRadius: '50%',
         }}
-        component="img"
-        src={`images/${icon}.svg`}
-      ></Box>
+      />
 
       <Typography
         variant="h4"
