@@ -22,9 +22,7 @@ export const withdrawUSDC = async (
       { gasLimit: ge }
     )
 
-    const receipt = await withdrawAttempt?.wait()
-
-    return receipt
+    return withdrawAttempt
   } catch (err) {
     console.error(err)
     throw new Error('Could not withdraw')
