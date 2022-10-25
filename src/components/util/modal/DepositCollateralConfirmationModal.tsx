@@ -49,7 +49,7 @@ export const DepositCollateralConfirmationModal = () => {
         currentAccount,
         collateralToken.capped_address,
         amount,
-        collateralToken.capped_address,
+        collateralToken.address,
         collateralToken.decimals,
         currentSigner!
       ).then(setHasAllowance)
@@ -72,7 +72,7 @@ export const DepositCollateralConfirmationModal = () => {
           currentAccount,
           collateralToken.capped_address,
           amount!,
-          collateralToken.capped_address,
+          collateralToken.address,
           collateralToken.decimals,
           currentSigner!
         )
