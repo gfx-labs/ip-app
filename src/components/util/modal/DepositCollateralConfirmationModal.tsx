@@ -11,12 +11,11 @@ import { DisableableModalButton } from '../button/DisableableModalButton'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { locale } from '../../../locale'
-import { BigNumber, ContractReceipt, ContractTransaction, utils } from 'ethers'
+import { ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
-import { Token } from '../../../types/token'
-import SVGBox from '../../icons/misc/SVGBox'
+import { hasTokenAllowance } from '../../../contracts/misc/hasAllowance'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -33,8 +32,7 @@ export const DepositCollateralConfirmationModal = () => {
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const { vaultAddress, vaultID, hasVotingVault } = useVaultDataContext()
-  const [needAllowance, setNeedAllowance] = useState(true)
-  const [decimals, setDecimals] = useState(18)
+  const [hasAllowance, setHasAllowance] = useState(false)
 
   const amount = collateralDepositAmountMax
     ? collateralToken.wallet_amount
@@ -45,39 +43,23 @@ export const DepositCollateralConfirmationModal = () => {
     currentSigner!
   )
 
-  const needsAllowance = async (amount: string | BigNumber, token: Token) => {
-    const initialApproval = await contract.allowance(
-      currentAccount,
-      token.capped_address!
-    )
-
-    if (collateralDepositAmountMax) {
-      return initialApproval.lt(amount)
-    }
-
-    if (typeof amount === 'string') {
-      const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
-
-      return initialApproval.lt(formattedUSDCAmount)
-    }
-
-    return true
-  }
-
-  useEffect(() => {
-    contract.decimals().then((decimals) => setDecimals(decimals))
-  }, [])
-
   useEffect(() => {
     if (collateralToken.capped_address && amount) {
-      needsAllowance(amount!, collateralToken).then(setNeedAllowance)
+      hasTokenAllowance(
+        currentAccount,
+        collateralToken.capped_address,
+        amount,
+        collateralToken.capped_address,
+        collateralToken.decimals,
+        currentSigner!
+      ).then(setHasAllowance)
     }
   }, [amount])
 
   const handleDepositConfirmationRequest = async () => {
     try {
       let attempt: ContractTransaction
-      if (collateralToken.capped_address) {
+      if (collateralToken.capped_token && collateralToken.capped_address) {
         if (!hasVotingVault) {
           setLoading(false)
           setType(ModalType.EnableCappedToken)
@@ -86,14 +68,21 @@ export const DepositCollateralConfirmationModal = () => {
         setLoading(true)
         setLoadmsg(locale('CheckWallet'))
 
-        const na = await needsAllowance(amount!, collateralToken)
-        console.log(na)
-        setNeedAllowance(na)
+        const ha = await hasTokenAllowance(
+          currentAccount,
+          collateralToken.capped_address,
+          amount!,
+          collateralToken.capped_address,
+          collateralToken.decimals,
+          currentSigner!
+        )
+        console.log(ha)
+        setHasAllowance(ha)
 
-        if (na) {
+        if (!ha) {
           let approveAmount
           if (typeof amount === 'string') {
-            approveAmount = utils.parseUnits(amount!, decimals)
+            approveAmount = utils.parseUnits(amount!, collateralToken.decimals)
           } else {
             approveAmount = collateralToken.wallet_amount
           }
@@ -108,7 +97,7 @@ export const DepositCollateralConfirmationModal = () => {
 
           setLoading(false)
           setLoadmsg('')
-          setNeedAllowance(false)
+          setHasAllowance(true)
 
           return
         }
@@ -179,13 +168,14 @@ export const DepositCollateralConfirmationModal = () => {
         }}
       >
         <Box display="flex" alignItems="center">
-          <SVGBox
+          <Box
+            component="img"
             width={36}
             height={36}
-            svg_name={collateralToken.ticker}
+            src={`images/${collateralToken.ticker}.svg`}
             alt={collateralToken.ticker}
-            sx={{ mr: 3 }}
-          />
+            marginRight={3}
+          ></Box>
           <Box>
             <Typography variant="body3" color="text.primary">
               $
@@ -200,9 +190,11 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          !collateralToken.capped_address ||
-          (collateralToken.capped_address && !hasVotingVault) ||
-          !needAllowance
+          !collateralToken.capped_token ||
+          (collateralToken.capped_token &&
+            collateralToken.capped_address &&
+            !hasVotingVault) ||
+          hasAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'
         }
