@@ -17,6 +17,7 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { Chains } from '../../../chain/chains'
 import { depositUSDC } from '../../../contracts/USDI/depositUSDC'
 import SVGBox from '../../icons/misc/SVGBox'
+import { hasUSDCAllowance } from '../../../contracts/misc/hasAllowance'
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
@@ -25,23 +26,19 @@ export const DepositUSDCConfirmationModal = () => {
   const [loadmsg, setLoadmsg] = useState('')
   const rolodex = useRolodexContext()
 
-  const [needAllowance, setNeedAllowance] = useState(true)
+  const [hasAllowance, setHasAllowance] = useState(false)
   const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
 
   const chain = Chains.getInfo(chainId)
 
   useEffect(() => {
-    if (rolodex && USDC.amountToDeposit && rolodex.USDC) {
-      rolodex
-        .USDC!.allowance(currentAccount, rolodex.addressUSDI)
-        .then((initialApproval) => {
-          const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN('1e6'))
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true)
-          } else {
-            setNeedAllowance(false)
-          }
-        })
+    if (rolodex && USDC.amountToDeposit) {
+      hasUSDCAllowance(
+        currentAccount,
+        rolodex.addressUSDI,
+        USDC.amountToDeposit,
+        rolodex
+      ).then(setHasAllowance)
     }
   }, [rolodex, dataBlock, chainId, USDC.amountToDeposit, loadmsg])
 
@@ -175,12 +172,12 @@ export const DepositUSDCConfirmationModal = () => {
       </Box>
 
       <DisableableModalButton
-        text={needAllowance ? 'Set Allowance' : 'Confirm Deposit'}
+        text={hasAllowance ? 'Confirm Deposit' : 'Has Allowance'}
         disabled={false}
         onClick={
-          needAllowance
-            ? handleApprovalRequest
-            : handleDepositConfirmationRequest
+          hasAllowance
+            ? handleDepositConfirmationRequest
+            : handleApprovalRequest
         }
         loading={loading}
         load_text={loadmsg}

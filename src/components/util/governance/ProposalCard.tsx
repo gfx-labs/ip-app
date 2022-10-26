@@ -32,7 +32,7 @@ import { useParams } from 'react-router'
 import { useRef } from 'react'
 import { COMMON_CONTRACT_NAMES } from '../../../constants'
 import { getAddress } from 'ethers/lib/utils'
-import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
+import { getProposalIsOptimistic } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
 import { ProposalTypeToolTip } from './ProposalTypeToolTip'
@@ -120,16 +120,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
-
     getProposalInfo(id, signerOrProvider!).then((res) => {
-      getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(
+      getProposalIsOptimistic(res.proposer, signerOrProvider!).then(
         (isWhitelisted) => {
           const pType = isWhitelisted
             ? 'optimistic'
             : res.emergency
             ? 'emergency'
             : 'standard'
-
           setProposalType(pType)
         }
       )
@@ -168,15 +166,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
         const endDateString = isMobile
           ? endDate.toLocaleDateString()
           : `Voting ended on ${endDate.toLocaleDateString()}`
-
         setTimeLeft(endDate.toLocaleDateString())
       })
       return
     }
-
     if (proposalType && provider) {
       proposalTimeRemaining(
-        proposalType,
         startBlock,
         endBlock,
         dataBlock,

@@ -61,8 +61,8 @@ export const DepositWithdrawCollateralModal = () => {
         }}
       >
         <SVGBox
-          width={80}
-          height={80}
+          width={40}
+          height={40}
           svg_name={collateralToken.ticker}
           alt={collateralToken.name}
         />
@@ -70,7 +70,7 @@ export const DepositWithdrawCollateralModal = () => {
           <Typography variant="body3" color={formatColor(neutral.gray3)}>
             1 {collateralToken.ticker}
           </Typography>
-          <Typography variant="subtitle1" color="text.primary" mb={1}>
+          <Typography variant="h7" display="block" color="text.primary" mb={1}>
             $
             {collateralToken.price.toLocaleString(undefined, {
               minimumFractionDigits: 2,

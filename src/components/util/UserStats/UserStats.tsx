@@ -56,28 +56,44 @@ export const UserStats = () => {
             px: { xs: 2, lg: 3 },
             gridTemplateColumns: {
               xs: '1.5fr 1fr 1fr',
-              lg: '2fr 1fr 2fr 1fr 1fr 1fr 1fr',
+              lg: '1.5fr 1fr 0.5fr 0.5fr 1fr 1fr 1fr 92px',
             },
             mb: 0,
-            columnGap: 2,
+            columnGap: 4,
             color: 'text.secondary',
           }}
         >
           <Typography variant="label">Assets</Typography>
-          <Typography display={{ xs: 'none', lg: 'block' }} variant="label">
+          <Typography
+            display={{ xs: 'none', lg: 'block' }}
+            textAlign="end"
+            variant="label"
+          >
             Price
           </Typography>
-          <Typography display={{ xs: 'none', lg: 'block' }} variant="label">
-            LTV and Penalty
+          <Typography
+            display={{ xs: 'none', lg: 'flex' }}
+            variant="label"
+            justifyContent="end"
+          >
+            LTV
+          </Typography>
+          <Typography
+            display={{ xs: 'none', lg: 'flex' }}
+            variant="label"
+            justifyContent="end"
+          >
+            Penalty
           </Typography>
           <Typography
             variant="label"
             whiteSpace="nowrap"
-            display={{ xs: 'none', lg: 'block' }}
+            display={{ xs: 'none', lg: 'flex' }}
+            justifyContent="end"
           >
             Capped Token
           </Typography>
-          <Typography variant="label" whiteSpace="nowrap">
+          <Typography variant="label" whiteSpace="nowrap" textAlign="end">
             Vault Balance
           </Typography>
           <Box></Box>

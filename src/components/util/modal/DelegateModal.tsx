@@ -94,12 +94,12 @@ export const DelegateModal = () => {
         >
           <SVGBox
             svg_name={delegateToken.ticker}
-            width={80}
-            height={80}
+            width={40}
+            height={40}
             alt={delegateToken.name}
           />
           <Box>
-            <Typography variant="subtitle1" color="text.primary" mb={1}>
+            <Typography variant="subtitle1" color="text.primary">
               ${delegateToken.ticker}
             </Typography>
           </Box>

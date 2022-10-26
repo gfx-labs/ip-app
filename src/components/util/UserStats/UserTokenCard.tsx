@@ -124,10 +124,10 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           display: 'grid',
           gridTemplateColumns: {
             xs: '1.5fr 1fr 1fr',
-            lg: '2fr 1fr 2fr 1fr 1fr 1fr 1fr',
+            lg: '1.5fr 1fr 0.5fr 0.5fr 1fr 1fr 1fr 92px',
           },
           mb: 0,
-          columnGap: 2,
+          columnGap: 4,
           alignItems: 'center',
         }}
       >
@@ -160,22 +160,24 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           display={{ xs: 'none', lg: 'block' }}
           variant="body1"
           color="text.primary"
+          textAlign="end"
         >
           {tokenPrice}
         </Typography>
 
-        <Box display={{ xs: 'none', lg: 'flex' }}>
+        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
             content={
               <Typography variant="body3">
                 Maximum Loan-To-Value for this asset
               </Typography>
             }
-            text={`LTV: ${LTVPercent}%
+            text={`${LTVPercent}%
           `}
             text_variant="body2"
           />
-          <Box mx={1}> </Box>
+        </Box>
+        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
             content={
               <Typography variant="body3">
@@ -183,12 +185,12 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
                 liquidating this asset
               </Typography>
             }
-            text={`Penalty: ${penaltyPercent}%
+            text={`${penaltyPercent}%
           `}
             text_variant="body2"
           />
         </Box>
-        <Box display={{ xs: 'none', lg: 'block' }}>
+        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           {cappedAddress && (
             <LinearProgress
               color="success"
@@ -205,7 +207,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             />
           )}
         </Box>
-        <Box display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" textAlign="end">
           <Typography variant="body1" color="text.primary">
             {vaultBalance}
           </Typography>
@@ -215,7 +217,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           </Typography>
         </Box>
 
-        <Box display={{ xs: 'none', lg: 'block' }}>
+        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="center">
           {canDelegate && (
             <Button
               variant="text"
