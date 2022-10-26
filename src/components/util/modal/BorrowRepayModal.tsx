@@ -57,7 +57,7 @@ export const BorrowRepayModal = () => {
           columnGap: 2,
         }}
       >
-        <SVGBox svg_name={tokenName} width={80} height={80} alt={tokenName} />
+        <SVGBox svg_name={tokenName} width={40} height={40} alt={tokenName} />
         <Box>
           <Typography variant="label" color={formatColor(neutral.gray3)}>
             Liability:

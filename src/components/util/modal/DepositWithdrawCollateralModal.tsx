@@ -61,8 +61,8 @@ export const DepositWithdrawCollateralModal = () => {
         }}
       >
         <SVGBox
-          width={80}
-          height={80}
+          width={40}
+          height={40}
           svg_name={collateralToken.ticker}
           alt={collateralToken.name}
         />
