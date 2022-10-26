@@ -56,10 +56,10 @@ export const UserStats = () => {
             px: { xs: 2, lg: 3 },
             gridTemplateColumns: {
               xs: '1.5fr 1fr 1fr',
-              lg: '1.5fr 1fr 0.5fr 0.5fr 1fr 1fr 1fr 92px',
+              lg: '1.5fr 1fr 0.5fr 0.5fr 1fr 0.6fr 1fr 92px',
             },
             mb: 0,
-            columnGap: 4,
+            columnGap: 2,
             color: 'text.secondary',
           }}
         >
@@ -89,7 +89,7 @@ export const UserStats = () => {
             variant="label"
             whiteSpace="nowrap"
             display={{ xs: 'none', lg: 'flex' }}
-            justifyContent="end"
+            justifyContent="center"
           >
             Capped Token
           </Typography>

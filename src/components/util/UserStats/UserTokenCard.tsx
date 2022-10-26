@@ -124,10 +124,10 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           display: 'grid',
           gridTemplateColumns: {
             xs: '1.5fr 1fr 1fr',
-            lg: '1.5fr 1fr 0.5fr 0.5fr 1fr 1fr 1fr 92px',
+            lg: '1.5fr 1fr 0.5fr 0.5fr 1fr 0.6fr 1fr 92px',
           },
           mb: 0,
-          columnGap: 4,
+          columnGap: 2,
           alignItems: 'center',
         }}
       >
@@ -190,7 +190,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             text_variant="body2"
           />
         </Box>
-        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
+        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="center">
           {cappedAddress && (
             <LinearProgress
               color="success"
