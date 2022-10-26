@@ -62,7 +62,7 @@ export const BorrowRepayModal = () => {
           <Typography variant="label" color={formatColor(neutral.gray3)}>
             Liability:
           </Typography>
-          <Typography variant="subtitle1" color="text.primary">
+          <Typography variant="h7" display="block" color="text.primary">
             ${accountLiability.toFixed(0)}
           </Typography>
         </Box>
