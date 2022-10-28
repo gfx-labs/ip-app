@@ -8,7 +8,6 @@ import {
   useTheme,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
 import { Status } from './Status'
 import { Spinner } from '../loading'
@@ -36,7 +35,6 @@ import { getProposalIsOptimistic } from '../../../contracts/GovernorCharlieDeleg
 import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
 import { ProposalTypeToolTip } from './ProposalTypeToolTip'
-import useWindowDimensions from '../../../hooks/useWindowDimensions'
 import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
 import SVGBox from '../../icons/misc/SVGBox'
@@ -111,7 +109,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [hasVoted, setHasVoted] = useState(false)
   const [timeLeft, setTimeLeft] = useState<string>('')
   const [forVotes, setForVotes] = useState(0)
-  const [abstainVotes, setAbstainVotes] = useState(0)
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
@@ -147,7 +144,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
       const againstVotes = useFormatBNWithDecimals(proposal?.againstVotes, 18)
 
       const totalVotes = abstainVotes + forVotes + againstVotes
-      setAbstainVotes(abstainVotes)
       setAgainstVotes(againstVotes)
       setForVotes(forVotes)
       setTotalVotes(totalVotes)
@@ -162,10 +158,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
     if (bdiff < 0) {
       provider?.getBlock(endBlock).then((res) => {
         const endDate = new Date(res.timestamp * 1000)
-
-        const endDateString = isMobile
-          ? endDate.toLocaleDateString()
-          : `Voting ended on ${endDate.toLocaleDateString()}`
         setTimeLeft(endDate.toLocaleDateString())
       })
       return

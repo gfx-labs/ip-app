@@ -26,35 +26,14 @@ import getAverages, { Averages } from '../components/util/api/getAverages'
 import { useLight } from '../hooks/useLight'
 import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
 import SVGBox from '../components/icons/misc/SVGBox'
+import RedirectTo from '../components/util/redirect/Redirect'
 
 const Dashboard = () => {
   const cookies = new Cookies()
   const firstVisitExists = cookies.get('first-visit')
   if (!firstVisitExists) {
     console.log('detected first login')
-    return (
-      <div
-        style={{
-          minHeight: '80vh',
-          width: '100%',
-        }}
-      >
-        <meta http-equiv="refresh" content="0; url=#/landing" />
-        <a
-          style={{
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '20vh',
-            position: 'relative',
-            display: ' block',
-            width: 'fit-content',
-          }}
-          href="#/landing"
-        >
-          Please click here if you are not redirected
-        </a>
-      </div>
-    )
+    return <RedirectTo url="#/landing" />
   }
   const isLight = useLight()
   const { setType } = useModalContext()
