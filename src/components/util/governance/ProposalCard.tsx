@@ -186,7 +186,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
     if (status === 1 && currentSigner) {
       getPriorVotes(currentAccount, startBlock, currentSigner).then((res) => {
-        if (!res.isZero) {
+        if (!res.isZero()) {
           setHasPriorVotes(true)
         } else {
           setHasPriorVotes(false)
