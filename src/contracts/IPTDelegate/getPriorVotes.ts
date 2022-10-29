@@ -13,6 +13,7 @@ export const getPriorVotes = async (
       startingBlock
     )
   } catch (err) {
+    console.error(err)
     throw new Error('Error getting prior votes')
   }
 }
