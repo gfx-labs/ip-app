@@ -21,6 +21,7 @@ export const getWallet = (
   switch (wallet) {
     case WalletType.INJECTED:
       return new InjectedConnector({})
+
     case WalletType.WALLET_LINK:
       return new WalletLinkConnector({
         url: rpc_url,

@@ -77,11 +77,7 @@ export const VaultDataProvider = ({
           })
 
         getVaultBorrowingPower(vaultID, rolodex)
-          .then((res) => {
-            if (res != undefined) {
-              setBorrowingPower(res)
-            }
-          })
+          .then(setBorrowingPower)
           .catch((e) => {
             console.log('could not get borrowing power ', e)
           })
@@ -110,19 +106,15 @@ export const VaultDataProvider = ({
           token,
           rolodex!,
           signerOrProvider!
-        )
-          .then((res) => {
-            if (res.livePrice) {
-              token.price = Math.round(100 * Number(res.livePrice)) / 100
-              token.vault_amount_str = res.unformattedBalance
-              token.vault_amount = res.balanceBN
-              token.vault_balance = token.vault_amount
-                .mul(token.price)
-                .toNumber()
-                .toFixed(2)
-            }
-          })
-          .catch((e) => {})
+        ).then((res) => {
+          token.price = Math.round(100 * Number(res.livePrice)) / 100
+          token.vault_amount_str = res.unformattedBalance
+          token.vault_amount = res.balanceBN
+          token.vault_balance = token.vault_amount
+            .mul(token.price)
+            .toNumber()
+            .toFixed(2)
+        })
         px.push(p2)
         if (currentAccount && connected) {
           let p3 = getBalanceOf(
@@ -184,7 +176,7 @@ export const VaultDataProvider = ({
 
   useEffect(() => {
     setHasVault(!!vaultID)
-    if (hasVault && rolodex) {
+    if (!!vaultID && rolodex) {
       rolodex?.VC?.vaultAddress(vaultID!)
         .then(setVaultAddress)
         .catch((e) => {

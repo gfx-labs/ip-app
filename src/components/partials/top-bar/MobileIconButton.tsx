@@ -1,4 +1,4 @@
-import { ButtonProps, Box, Typography, Link, Button } from '@mui/material'
+import { ButtonProps, Typography, Link, Button } from '@mui/material'
 import SVGBox from '../../icons/misc/SVGBox'
 
 interface MobileIconButtonProps extends ButtonProps {
