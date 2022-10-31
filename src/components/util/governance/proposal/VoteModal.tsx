@@ -71,7 +71,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
           variant="label"
           fontWeight={400}
           color="red"
-          display="block"
+          display={hasPriorVotes ? 'none' : 'block'}
           mt={2}
         >
           Your voting power at the start of the proposal was 0 so you are not
