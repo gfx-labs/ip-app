@@ -1,1 +1,1 @@
-export * from './Redirect'
+export * from './RedirectTo'

@@ -26,7 +26,7 @@ import getAverages, { Averages } from '../components/util/api/getAverages'
 import { useLight } from '../hooks/useLight'
 import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
 import SVGBox from '../components/icons/misc/SVGBox'
-import RedirectTo from '../components/util/redirect/Redirect'
+import { RedirectTo } from '../components/util/redirect'
 
 const Dashboard = () => {
   const cookies = new Cookies()
