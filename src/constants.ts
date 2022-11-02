@@ -19,6 +19,8 @@ export const LIVE_DELTAS = '/live/deltas'
 export const LIVE_AVERAGE_RATES = '/live/average_rates'
 export const SALE_SUMMARY = '/sale/summary'
 
+export const GOV_PROPOSAL_CREATED_EVENTS = '/gov/proposal_created_events'
+
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   [GOVERNOR_ADDRESS]: 'Governance',
   '0x4aaE9823Fb4C70490F1d802fC697F3ffF8D5CbE3': 'Vault Controller',

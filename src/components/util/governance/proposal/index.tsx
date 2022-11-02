@@ -3,19 +3,18 @@ import { Box, useTheme } from '@mui/material'
 import { formatColor, neutral } from '../../../../theme'
 import { VoteCount, Voter } from './VoteCount'
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
-import { BN } from '../../../../easy/bn'
+import { BNtoDec } from '../../../../easy/bn'
 import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate/getProposalVoters'
 
 export interface ProposalDetailsProps {
   id: string
 }
 
-const ProposalDetails: React.FC<ProposalDetailsProps> = (
-  props: ProposalDetailsProps
-) => {
+const ProposalDetails: React.FC<ProposalDetailsProps> = ({
+  id,
+}: ProposalDetailsProps) => {
   const theme = useTheme()
   const { provider, currentSigner } = useWeb3Context()
-  const { id } = props
 
   const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
   const [votersFor, setVotersFor] = useState<Array<Voter>>([])
@@ -31,7 +30,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
         px.map((p) => {
           voters.set(p.voter, {
             address: p.voter,
-            votingPower: p.votes.div(BN('1e16')).toNumber() / 100,
+            votingPower: BNtoDec(p.votes),
             direction: p.support,
           })
         })

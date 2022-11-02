@@ -13,7 +13,7 @@ import {
   getVaultTokenMetadata,
 } from './getVaultTokenBalanceAndPrice'
 import { getVaultBorrowingPower } from './getBorrowingPower'
-import { BN } from '../../../easy/bn'
+import { BN, BNtoDec } from '../../../easy/bn'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import checkHasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
@@ -69,7 +69,7 @@ export const VaultDataProvider = ({
         rolodex
           .VC!.vaultLiability(vaultID!)
           .then((val) => {
-            const vl = val.div(BN('1e16')).toNumber() / 100
+            const vl = BNtoDec(val)
             setAccountLiability(vl)
           })
           .catch((e) => {
@@ -84,7 +84,7 @@ export const VaultDataProvider = ({
       }
 
       rolodex.VC?.totalBaseLiability().then((res) => {
-        const bl = res.div(BN('1e16')).toNumber() / 100
+        const bl = BNtoDec(res)
 
         setTotalBaseLiability(bl)
       })

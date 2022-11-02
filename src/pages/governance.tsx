@@ -3,13 +3,19 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
 import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
+import getProposalCreatedEvents, {
+  ProposalCreatedEvent,
+} from '../components/util/api/getProposalCreatedEvents'
 import { DelegateIPTButton } from '../components/util/button'
 import { ProposalCard } from '../components/util/governance/ProposalCard'
+import getProposalDetails, {
+  ProposalDetails,
+} from '../components/util/helpers/getProposalDescription'
 import { Spinner } from '../components/util/loading'
 import { getRecentProposals } from '../contracts/GovernorCharlieDelegate/getRecentProposals'
 import { getUserVotingPower } from '../contracts/IPTDelegate'
 import { getUserIPTBalance } from '../contracts/IPTDelegate/getUserIPTbalance'
-import { BN } from '../easy/bn'
+import { BN, BNtoDec } from '../easy/bn'
 
 export interface Proposal {
   body: string
@@ -21,47 +27,6 @@ export interface Proposal {
   details: ProposalDetails[]
 }
 
-export interface ProposalDetails {
-  target: string
-  functionSig: string
-  callData: string
-}
-const FOUR_BYTES_DIR: { [sig: string]: string } = {
-  '0x5ef2c7f0': 'setSubnodeRecord(bytes32,bytes32,address,address,uint64)',
-  '0x10f13a8c': 'setText(bytes32,string,string)',
-  '0xb4720477': 'sendMessageToChild(address,bytes)',
-}
-
-const getProposalDetails = (details: any): ProposalDetails[] => {
-  const proposalDetails = []
-
-  for (let i = 0; i < details.targets.length; i++) {
-    const signature = details.signatures[i]
-    let calldata = details.calldatas[i]
-    let name: string
-    let types: string
-
-    if (signature === '') {
-      const fourbyte = calldata.slice(0, 10)
-      const sig = FOUR_BYTES_DIR[fourbyte] ?? 'UNKNOWN()'
-      if (!sig) throw new Error('Missing four byte sig')
-      ;[name, types] = sig.substring(0, sig.length - 1).split('(')
-      calldata = `0x${calldata.slice(10)}`
-    } else {
-      ;[name, types] = signature.substring(0, signature.length - 1).split('(')
-    }
-    const decoded = defaultAbiCoder.decode(types.split(','), calldata)
-
-    proposalDetails.push({
-      target: details.targets[i],
-      functionSig: name,
-      callData: decoded.join(', '),
-    })
-  }
-
-  return proposalDetails
-}
-
 export const Governance = () => {
   const theme = useTheme()
   const {
@@ -71,7 +36,6 @@ export const Governance = () => {
     connected,
     currentAccount,
     currentSigner,
-    signerOrProvider,
   } = useWeb3Context()
   const { setNeedsToDelegate, setIptBalance, setCurrentVotes, currentVotes } =
     useAppGovernanceContext()
@@ -83,35 +47,41 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
-    if (signerOrProvider) {
-      getRecentProposals(signerOrProvider)
-        .then((pl) => {
-          pl.forEach((val) => {
-            proposals.set(val.args.id.toNumber(), {
-              id: val.args.id.toString(),
-              proposer: val.args.proposer,
-              body: val.args.description,
-              endBlock: val.args.endBlock.toNumber(),
-              startBlock: val.args.startBlock.toNumber(),
-              transactionHash: val.transactionHash,
-              details: getProposalDetails(val.args),
-            })
+    getRecentProposals(currentSigner!).then((res) => {
+      console.log(res)
+    })
+    getProposalCreatedEvents()
+      .then((pl) => {
+        console.log('pl', pl)
+        pl.forEach((val) => {
+          proposals.set(val.ProposalId, {
+            id: val.ProposalId.toString(),
+            proposer: val.Proposer,
+            body: val.Description,
+            endBlock: val.EndBlock,
+            startBlock: val.StartBlock,
+            transactionHash: val.Transaction,
+            details: getProposalDetails({
+              targets: val.Targets,
+              signatures: val.Signatures,
+              calldatas: val.Calldatas,
+            }),
           })
-          setProposals(new Map(proposals))
         })
-        .catch((e) => {
-          console.log('failed to load proposal info', e)
-          setNoProposals(true)
-        })
-    }
+        setProposals(new Map(proposals))
+      })
+      .catch((e) => {
+        console.log('failed to load proposal info', e)
+        setNoProposals(true)
+      })
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-        const currentVotes = res.div(BN('1e16')).toNumber() / 100
+        const currentVotes = BNtoDec(res)
         setCurrentVotes(currentVotes)
 
         if (currentVotes <= 0) {
           getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
-            const iptBalance = response.div(BN('1e16')).toNumber() / 100
+            const iptBalance = BNtoDec(response)
 
             setNeedsToDelegate(iptBalance > 0)
             setIptBalance(iptBalance)
