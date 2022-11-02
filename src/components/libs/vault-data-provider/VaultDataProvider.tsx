@@ -16,7 +16,10 @@ import { getVaultBorrowingPower } from './getBorrowingPower'
 import { BN, BNtoDec } from '../../../easy/bn'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
-import checkHasVotingVault from '../../../contracts/VotingVault/hasVotingVault'
+import {
+  getVotingVaultAddress,
+  hasVotingVaultAddress,
+} from '../../../contracts/VotingVault/hasVotingVault'
 import { CollateralTokens } from '../../../types/token'
 
 export type VaultDataContextType = {
@@ -34,7 +37,7 @@ export type VaultDataContextType = {
   totalBaseLiability: number
   tokens: CollateralTokens | undefined
   setTokens: Dispatch<SetStateAction<CollateralTokens | undefined>>
-
+  votingVaultAddress: string | undefined
   hasVotingVault: boolean
   setHasVotingVault: Dispatch<SetStateAction<boolean>>
 }
@@ -60,6 +63,10 @@ export const VaultDataProvider = ({
   const [tokens, setTokens] =
     useState<VaultDataContextType['tokens']>(undefined)
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
+  //
+  const [votingVaultAddress, setVotingVaultAddress] = useState<
+    string | undefined
+  >(undefined)
   const [hasVotingVault, setHasVotingVault] = useState(false)
 
   const update = async () => {
@@ -170,7 +177,10 @@ export const VaultDataProvider = ({
           const id = vaultIDs.toString()
           setVaultID(id)
 
-          checkHasVotingVault(id, signerOrProvider!).then(setHasVotingVault)
+          getVotingVaultAddress(id, signerOrProvider!).then((address) => {
+            setVotingVaultAddress(address)
+            setHasVotingVault(hasVotingVaultAddress(address))
+          })
         } else {
           setVaultID(null)
         }
@@ -208,6 +218,7 @@ export const VaultDataProvider = ({
         totalBaseLiability,
         hasVotingVault,
         setHasVotingVault,
+        votingVaultAddress,
       }}
     >
       {children}

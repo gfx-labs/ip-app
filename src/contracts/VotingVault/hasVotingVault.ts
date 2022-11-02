@@ -2,7 +2,7 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { VotingVaultController__factory } from '../../chain/contracts/factories/lending/VotingVaultController__factory'
 import { VOTING_VAULT_CONTROLLER_ADDRESS, ZERO_ADDRESS } from '../../constants'
 
-const getVotingVaultAddress = async (
+export const getVotingVaultAddress = async (
   id: string,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider
 ) => {
@@ -16,13 +16,5 @@ const getVotingVaultAddress = async (
   return votingVaultAddress
 }
 
-const hasVotingVault = async (
-  id: string,
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider
-) => {
-  const votingVaultAddress = await getVotingVaultAddress(id, signerOrProvider)
-
-  return votingVaultAddress !== ZERO_ADDRESS
-}
-
-export default hasVotingVault
+export const hasVotingVaultAddress = (address: string) =>
+  address !== ZERO_ADDRESS

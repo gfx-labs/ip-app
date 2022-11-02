@@ -32,7 +32,8 @@ export const DelegateModal = () => {
   const toggle = () => setFocus(!focus)
 
   const { delegateToken } = useAppGovernanceContext()
-  const { vaultAddress } = useVaultDataContext()
+  const { vaultAddress, votingVaultAddress, hasVotingVault } =
+    useVaultDataContext()
   const { provider, currentAccount } = useWeb3Context()
 
   const handleDelegateRequest = async (e: FormEvent) => {
@@ -40,8 +41,13 @@ export const DelegateModal = () => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
+      const delegateAddress =
+        delegateToken.capped_address && hasVotingVault
+          ? votingVaultAddress
+          : vaultAddress
+
       await delegateVaultVotingPower(
-        vaultAddress!,
+        delegateAddress!,
         delegateToken.address,
         address,
         provider!.getSigner(currentAccount)!
