@@ -47,12 +47,8 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
-    getRecentProposals(currentSigner!).then((res) => {
-      console.log(res)
-    })
     getProposalCreatedEvents()
       .then((pl) => {
-        console.log('pl', pl)
         pl.forEach((val) => {
           proposals.set(val.ProposalId, {
             id: val.ProposalId.toString(),

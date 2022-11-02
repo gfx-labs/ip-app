@@ -223,7 +223,7 @@ const Dashboard = () => {
                   tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
                     borrowingPower !== null
-                      ? borrowingPower.toLocaleString('en-US', {
+                      ? borrowingPower?.toLocaleString('en-US', {
                           style: 'currency',
                           currency: 'USD',
                         })

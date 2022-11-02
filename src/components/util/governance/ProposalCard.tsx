@@ -332,7 +332,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 </Box>
               )}
 
-              <ProposalDetails id={id} />
+              <ProposalDetails id={id} proposalType={proposalType} />
               <Box my={2}>
                 <Typography variant="h6_midi" display="block" mb={2}>
                   Details

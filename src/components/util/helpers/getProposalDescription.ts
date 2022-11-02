@@ -29,7 +29,6 @@ const getProposalDetails = ({
     let calldata = calldatas[i]
     let name: string
     let types: string
-    console.log(signature, calldata)
     if (signature === '') {
       const fourbyte = calldata.slice(0, 10)
       const sig = FOUR_BYTES_DIR[fourbyte] ?? 'UNKNOWN()'

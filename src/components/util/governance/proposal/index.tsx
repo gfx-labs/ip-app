@@ -5,22 +5,36 @@ import { VoteCount, Voter } from './VoteCount'
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
 import { BNtoDec } from '../../../../easy/bn'
 import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate/getProposalVoters'
+import { IProposalType } from '../ProposalCard'
 
 export interface ProposalDetailsProps {
   id: string
+  proposalType?: IProposalType
+}
+
+const totalVotesDependentOnType = (proposalType: IProposalType) => {
+  switch (proposalType) {
+    case 'optimistic':
+      return { for: 0, against: 2500000 }
+    case 'emergency':
+      return { for: 10000000, against: 10000000 }
+    case 'standard':
+      return { for: 10000000, against: 10000000 }
+  }
 }
 
 const ProposalDetails: React.FC<ProposalDetailsProps> = ({
   id,
+  proposalType = 'standard',
 }: ProposalDetailsProps) => {
   const theme = useTheme()
   const { provider, currentSigner } = useWeb3Context()
 
-  const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
+  const voters: Map<string, Voter> = new Map()
   const [votersFor, setVotersFor] = useState<Array<Voter>>([])
   const [votersBad, setVotersBad] = useState<Array<Voter>>([])
 
-  const [votesTotal, setVotesTotal] = useState(0)
+  const votesTotal = totalVotesDependentOnType(proposalType)
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
@@ -37,9 +51,7 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = ({
         const vfor: Array<Voter> = []
         const vbad: Array<Voter> = []
         const vpea: Array<Voter> = []
-        let total = 0
         voters.forEach((v) => {
-          total = total + v.votingPower
           switch (v.direction) {
             case 0:
               vbad.push(v)
@@ -52,7 +64,6 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = ({
               break
           }
         })
-        setVotesTotal(total)
         setVotersFor(vfor)
         setVotersBad(vbad)
       })
@@ -81,18 +92,14 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = ({
       >
         <VoteCount
           forOrAgainst="For"
-          votes={votersFor.reduce((a, b) => {
-            return a + b.votingPower
-          }, 0)}
-          totalVotes={votesTotal}
+          votes={votersFor.reduce((a, b) => (a += b.votingPower), 0)}
+          totalVotes={votesTotal.for}
           voters={votersFor}
         />
         <VoteCount
           forOrAgainst="Against"
-          votes={votersBad.reduce((a, b) => {
-            return a + b.votingPower
-          }, 0)}
-          totalVotes={votesTotal}
+          votes={votersBad.reduce((a, b) => (a += b.votingPower), 0)}
+          totalVotes={votesTotal.against}
           voters={votersBad}
         />
       </Box>
