@@ -24,7 +24,7 @@ export const UserStats = () => {
             tokenTicker={val.ticker}
             tokenPrice={'$' + val.price?.toLocaleString()!}
             vaultBalance={'$' + val.vault_balance?.toLocaleString()!}
-            tokenAmount={val.vault_amount?.toLocaleString()!}
+            tokenAmount={Number(val.vault_amount_str).toLocaleString()}
             image={{
               src: val.ticker,
               alt: val.ticker,
