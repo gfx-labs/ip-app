@@ -20,6 +20,7 @@ export const LIVE_AVERAGE_RATES = '/live/average_rates'
 export const SALE_SUMMARY = '/sale/summary'
 
 export const GOV_PROPOSAL_CREATED_EVENTS = '/gov/proposal_created_events'
+export const GOV_PROPOSAL_VOTE_CAST_EVENTS = '/gov/proposal_vote_cast_events'
 
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   [GOVERNOR_ADDRESS]: 'Governance',
