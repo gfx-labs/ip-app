@@ -43,7 +43,10 @@ export const ClaimsCard = () => {
               lineHeight={{ xs: 1 }}
               color="text.primary"
             >
-              {formattedAmount}
+              {formattedAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </Typography>
           </Box>
         </Box>
