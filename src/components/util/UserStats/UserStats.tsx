@@ -22,7 +22,7 @@ export const UserStats = () => {
             index={el.length}
             tokenName={val.name}
             tokenTicker={val.ticker}
-            tokenValue={
+            tokenPrice={
               '$' +
               val.price?.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
