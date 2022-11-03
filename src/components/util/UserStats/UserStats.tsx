@@ -22,7 +22,13 @@ export const UserStats = () => {
             index={el.length}
             tokenName={val.name}
             tokenTicker={val.ticker}
-            tokenPrice={'$' + val.price?.toLocaleString()!}
+            tokenPrice={
+              '$' +
+              val.price?.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })!
+            }
             vaultBalance={'$' + val.vault_balance?.toLocaleString()!}
             tokenAmount={Number(val.vault_amount_str).toLocaleString()}
             image={{
