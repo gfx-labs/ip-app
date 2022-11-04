@@ -5,7 +5,7 @@ import {
   ModalType,
 } from '../../libs/modal-content-provider/ModalContentProvider'
 
-export const DelegateIPTButton = ({ votingPower }: { votingPower: number }) => {
+export const DelegateIPTButton = ({ iptBalance }: { iptBalance: number }) => {
   const { setType } = useModalContext()
 
   return (
@@ -25,7 +25,7 @@ export const DelegateIPTButton = ({ votingPower }: { votingPower: number }) => {
         },
       }}
       onClick={() => setType(ModalType.DelegateIPT)}
-      disabled={votingPower <= 0}
+      disabled={iptBalance <= 0}
     >
       <Typography variant="body1">Delegate</Typography>
       <ForwardIcon

@@ -145,21 +145,16 @@ export const DelegateIPTModal = () => {
           </Typography>
         )}
         {screen === 0 ? (
-          <Box>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: formatColor(blue.blue1),
-                color: formatColor(neutral.white),
-                my: 2,
-              }}
+          <Box mt={2}>
+            <DisableableModalButton
+              text="Self Delegate"
               onClick={() => handleDelegateRequest(false)}
-            >
-              Self Delegate
-            </Button>
+            />
+
             <Button
               variant="text"
               sx={{
+                mt: 1,
                 fontSize: 14,
                 color: isLight
                   ? formatColor(neutral.black)
