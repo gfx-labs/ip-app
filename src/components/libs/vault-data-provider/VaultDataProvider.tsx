@@ -114,13 +114,17 @@ export const VaultDataProvider = ({
           signerOrProvider!
         )
           .then((res) => {
-            token.price = Math.round(100 * Number(res.livePrice)) / 100
+            token.price = Math.round(100 * res.livePrice) / 100
             token.vault_amount_str = res.unformattedBalance
             token.vault_amount = res.balanceBN
-            token.vault_balance = token.vault_amount
-              .mul(token.price)
-              .toNumber()
-              .toFixed(2)
+            if (token.vault_amount.isZero()) {
+              token.vault_balance = '0'
+            } else {
+              token.vault_balance = token.vault_amount
+                .mul(token.price)
+                .toNumber()
+                .toFixed(2)
+            }
           })
           .catch((e) => {
             console.error('failed token balance check', e)

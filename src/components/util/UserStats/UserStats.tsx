@@ -113,7 +113,7 @@ export const UserStats = () => {
               sm: '1fr',
             },
             columnGap: 3,
-            '&:nth-child(odd) .MuiBox-root': {
+            '&:nth-of-type(odd) .MuiBox-root': {
               backgroundColor: 'red',
             },
           }}
