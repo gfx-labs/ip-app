@@ -3,62 +3,43 @@ import { Box, useTheme } from '@mui/material'
 import { formatColor, neutral } from '../../../../theme'
 import { VoteCount, Voter } from './VoteCount'
 import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
-import { BN } from '../../../../easy/bn'
+import { BNtoDec } from '../../../../easy/bn'
 import { getProposalVoters } from '../../../../contracts/GovernorCharlieDelegate/getProposalVoters'
+import { IProposalType } from '../ProposalCard'
+import { Proposal } from '../../api/getProposals'
 
 export interface ProposalDetailsProps {
   id: string
+  proposalType?: IProposalType
+  votes: Proposal['votes']
 }
 
-const ProposalDetails: React.FC<ProposalDetailsProps> = (
-  props: ProposalDetailsProps
-) => {
-  const theme = useTheme()
-  const { provider, currentSigner } = useWeb3Context()
-  const { id } = props
+const totalVotesDependentOnType = (proposalType: IProposalType) => {
+  switch (proposalType) {
+    case 'optimistic':
+      return { for: 0, against: 2500000 }
+    case 'emergency':
+      return { for: 10000000, against: 10000000 }
+    case 'standard':
+      return { for: 10000000, against: 10000000 }
+  }
+}
 
-  const [voters, setVoters] = useState<Map<string, Voter>>(new Map())
+const ProposalDetails: React.FC<ProposalDetailsProps> = ({
+  proposalType = 'standard',
+  votes,
+}: ProposalDetailsProps) => {
+  const theme = useTheme()
+
   const [votersFor, setVotersFor] = useState<Array<Voter>>([])
   const [votersBad, setVotersBad] = useState<Array<Voter>>([])
 
-  const [votesTotal, setVotesTotal] = useState(0)
+  const votesTotal = totalVotesDependentOnType(proposalType)
 
   useEffect(() => {
-    const signerOrProvider = currentSigner ? currentSigner : provider
-
-    if (signerOrProvider) {
-      getProposalVoters(id, signerOrProvider!).then((px) => {
-        px.map((p) => {
-          voters.set(p.voter, {
-            address: p.voter,
-            votingPower: p.votes.div(BN('1e16')).toNumber() / 100,
-            direction: p.support,
-          })
-        })
-        const vfor: Array<Voter> = []
-        const vbad: Array<Voter> = []
-        const vpea: Array<Voter> = []
-        let total = 0
-        voters.forEach((v) => {
-          total = total + v.votingPower
-          switch (v.direction) {
-            case 0:
-              vbad.push(v)
-              break
-            case 1:
-              vfor.push(v)
-              break
-            case 2:
-              vpea.push(v)
-              break
-          }
-        })
-        setVotesTotal(total)
-        setVotersFor(vfor)
-        setVotersBad(vbad)
-      })
-    }
-  }, [provider])
+    setVotersFor(votes.for)
+    setVotersBad(votes.against)
+  }, [votes])
 
   return (
     <Box
@@ -82,19 +63,19 @@ const ProposalDetails: React.FC<ProposalDetailsProps> = (
       >
         <VoteCount
           forOrAgainst="For"
-          votes={votersFor.reduce((a, b) => {
-            return a + b.votingPower
-          }, 0)}
-          totalVotes={votesTotal}
+          votes={
+            proposalType !== 'optimistic'
+              ? votersFor.reduce((a, b) => (a += b.votingPower), 0)
+              : 0
+          }
           voters={votersFor}
+          totalVotes={votesTotal.for}
         />
         <VoteCount
           forOrAgainst="Against"
-          votes={votersBad.reduce((a, b) => {
-            return a + b.votingPower
-          }, 0)}
-          totalVotes={votesTotal}
+          votes={votersBad.reduce((a, b) => (a += b.votingPower), 0)}
           voters={votersBad}
+          totalVotes={votesTotal.against}
         />
       </Box>
     </Box>

@@ -19,7 +19,7 @@ import {
 } from '../../../contracts/IPTDelegate'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import { getUserIPTBalance } from '../../../contracts/IPTDelegate/getUserIPTbalance'
-import { BN } from '../../../easy/bn'
+import { BN, BNtoDec } from '../../../easy/bn'
 
 export const DelegateIPTModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
@@ -64,14 +64,13 @@ export const DelegateIPTModal = () => {
 
             if (currentAccount && currentSigner) {
               getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-                const currentVotes = res.div(BN('1e16')).toNumber() / 100
+                const currentVotes = BNtoDec(res)
                 setCurrentVotes(currentVotes)
 
                 if (currentVotes <= 0) {
                   getUserIPTBalance(currentAccount, currentSigner!).then(
                     (response) => {
-                      const iptBalance =
-                        response.div(BN('1e16')).toNumber() / 100
+                      const iptBalance = BNtoDec(response)
 
                       setNeedsToDelegate(iptBalance > 0)
                       setIptBalance(iptBalance)
@@ -146,21 +145,16 @@ export const DelegateIPTModal = () => {
           </Typography>
         )}
         {screen === 0 ? (
-          <Box>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: formatColor(blue.blue1),
-                color: formatColor(neutral.white),
-                my: 2,
-              }}
+          <Box mt={2}>
+            <DisableableModalButton
+              text="Self Delegate"
               onClick={() => handleDelegateRequest(false)}
-            >
-              Self Delegate
-            </Button>
+            />
+
             <Button
               variant="text"
               sx={{
+                mt: 1,
                 fontSize: 14,
                 color: isLight
                   ? formatColor(neutral.black)

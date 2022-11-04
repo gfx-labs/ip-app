@@ -1,42 +1,39 @@
-import {
-  Box,
-  LinearProgress,
-  CircularProgress,
-  Typography,
-} from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useLight } from '../../../hooks/useLight'
-import { formatColor, formatGradient, neutral, gradient } from '../../../theme'
+import { Box, CircularProgress, Typography } from '@mui/material'
+import { useEffect, useMemo, useState } from 'react'
+import { formatColor, neutral } from '../../../theme'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { CardContainer } from '../cards/CardContainer'
 import { ToolTip } from '../tooltip/ToolTip'
 
 export const StatsMeter = () => {
-  const [percentBorrowed, setPercentBorrowed] = useState(0)
-  const [percentBorrowedGraph, setPercentBorrowedGraph] = useState(0)
-  const isLight = useLight()
   const [barColor, setBarColor] = useState('#50D66D')
 
   const { borrowingPower, accountLiability } = useVaultDataContext()
 
-  useEffect(() => {
+  const percentBorrowedCalc = useMemo(() => {
     if (borrowingPower && accountLiability) {
       const borrowPercent = Math.floor(
         100 * (accountLiability / borrowingPower)
       )
 
-      setPercentBorrowed(borrowPercent)
-
-      // limits graph value to 100%
-      setPercentBorrowedGraph(borrowPercent > 100 ? 100 : borrowPercent)
+      return {
+        borrowPercent,
+        borrowPercentGraph: borrowPercent > 100 ? 100 : borrowPercent,
+      }
+    }
+    return {
+      borrowPercent: 0,
+      borrowPercentGraph: 0,
     }
   }, [borrowingPower, accountLiability])
 
   useEffect(() => {
-    if (percentBorrowed > 80) {
+    if (percentBorrowedCalc?.borrowPercent > 80) {
       setBarColor('red')
+    } else {
+      setBarColor('#50D66D')
     }
-  }, [percentBorrowed])
+  }, [percentBorrowedCalc])
 
   return (
     <CardContainer>
@@ -59,7 +56,7 @@ export const StatsMeter = () => {
           <CircularProgress
             variant="determinate"
             thickness={3}
-            value={percentBorrowedGraph}
+            value={percentBorrowedCalc.borrowPercentGraph}
             sx={{
               position: 'relative',
               zIndex: 2,
@@ -110,7 +107,7 @@ export const StatsMeter = () => {
                 USDi Borrowed / Borrowing Power
               </Typography>
             }
-            text={`USDi Borrowed:  ${percentBorrowed}%`}
+            text={`USDi Borrowed:  ${percentBorrowedCalc.borrowPercent}%`}
             text_variant="label_semi"
           />
         </Box>

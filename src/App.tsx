@@ -12,7 +12,6 @@ import { ModalContentProvider } from './components/libs/modal-content-provider/M
 import { PaletteModeContextProvider } from './components/libs/palette-mode-provider/palette-mode-provider'
 import Dashboard from './pages'
 import PurchasePage from './pages/sale'
-import RedirectBook from './pages/book'
 import LandingPage from './pages/landing'
 import NotFound404Page from './pages/404'
 import {
@@ -39,6 +38,7 @@ import { TestingPage } from './pages/playground'
 import { MerkleRedeemContextProvider } from './components/libs/merkle-redeem-provider/MerkleRedeemProvider'
 import { Governance } from './pages/governance'
 import { EnableCappedTokenModal } from './components/util/modal/EnableCappedTokenModal'
+import { RedirectTo } from './components/util/redirect'
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -120,8 +120,14 @@ const AppRouter = () => {
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/whitepaper`} element={<WhitepaperPage />} />
         <Route path={`/terms`} element={<TermsPage />} />
-        <Route path={`/docs`} element={<RedirectBook />} />
-        <Route path={`/book`} element={<RedirectBook />} />
+        <Route
+          path={`/docs`}
+          element={<RedirectTo url="book/docs/intro/index.html" />}
+        />
+        <Route
+          path={`/book`}
+          element={<RedirectTo url="book/docs/intro/index.html" />}
+        />
         <Route path={`/testing`} element={<TestingPage />} />
         <Route path={`*`} element={<NotFound404Page />} />
 

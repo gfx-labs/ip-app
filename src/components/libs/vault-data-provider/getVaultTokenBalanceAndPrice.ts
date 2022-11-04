@@ -18,30 +18,40 @@ export const getVaultTokenBalanceAndPrice = async (
   unformattedBalance: string
   balanceBN: BigNumber
 }> => {
-  // get vault balance
-  let balance = 0
-  let unformattedBalance = '0'
-  let balanceBN = BigNumber.from(0)
-  const SOP = signerOrProvider ? signerOrProvider : rolodex.provider
+  try {
+    // get vault balance
+    let balance = 0
+    let unformattedBalance = '0'
+    let balanceBN = BigNumber.from(0)
+    const SOP = signerOrProvider ? signerOrProvider : rolodex.provider
 
-  const token_address = token.capped_address
-    ? token.capped_address
-    : token.address
+    const token_address = token.capped_address
+      ? token.capped_address
+      : token.address
 
-  if (vault_address !== undefined) {
-    const balanceOf = await getBalanceOf(vault_address, token_address, SOP)
+    if (vault_address !== undefined) {
+      const balanceOf = await getBalanceOf(vault_address, token_address, SOP)
 
-    balance = balanceOf.num
-    unformattedBalance = balanceOf.str
-    balanceBN = balanceOf.bn
+      balance = balanceOf.num
+      unformattedBalance = balanceOf.str
+      balanceBN = balanceOf.bn
+    }
+
+    const price = await rolodex?.Oracle?.getLivePrice(token_address)
+
+    const decimals = await getDecimals(token_address, SOP)
+    const livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))
+
+    return { balance, livePrice, unformattedBalance, balanceBN }
+  } catch (e) {
+    console.log(e)
+    return {
+      balance: 0,
+      livePrice: 0,
+      unformattedBalance: '0',
+      balanceBN: BigNumber.from(0),
+    }
   }
-
-  const price = await rolodex?.Oracle?.getLivePrice(token_address)
-
-  const decimals = await getDecimals(token_address, SOP)
-  const livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))
-
-  return { balance, livePrice, unformattedBalance, balanceBN }
 }
 
 export const getVaultTokenMetadata = async (

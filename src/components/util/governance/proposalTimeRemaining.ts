@@ -1,22 +1,4 @@
 import { JsonRpcProvider } from '@ethersproject/providers'
-import { IProposalType } from './ProposalCard'
-
-const proposalTimes = {
-  standard: {
-    pending: 13140,
-    voting: 40320,
-  },
-  emergency: {
-    pending: null,
-    voting: 6570,
-  },
-  optimistic: {
-    pending: 25600,
-    voting: 40320,
-  },
-} as {
-  [K in Exclude<IProposalType, ''>]: { pending: number | null; voting: number }
-}
 
 export const proposalTimeRemaining = async (
   startingBlock: number,

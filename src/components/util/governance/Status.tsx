@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material'
 import { useLight } from '../../../hooks/useLight'
-import { green, formatColor, blue, neutral, pink } from '../../../theme'
 import { ClockIcon } from '../../icons/misc/ClockIcon'
 
 type statusColor = string

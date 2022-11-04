@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
 import { useLight } from '../../../hooks/useLight'
-import { formatColor, neutral, green, pink } from '../../../theme'
+import { formatColor, neutral } from '../../../theme'
 import { ThumbsUpIcon } from '../../icons/misc/ThumbsUpIcon'
 
 export const Votes = ({
@@ -14,7 +14,6 @@ export const Votes = ({
 
   let upStrokeColor
   let downStrokeColor
-
   if (noVotes === 0 && yesVotes === 0) {
     upStrokeColor = formatColor(neutral.gray3)
     downStrokeColor = formatColor(neutral.gray3)

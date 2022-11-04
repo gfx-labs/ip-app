@@ -63,19 +63,6 @@ const PurchasePage: React.FC = () => {
     getSaleSummary().then(setSaleSummary)
   }, [dataBlock])
 
-  //if (1 == 0) {
-  //  return (
-  //    <div style={{ minHeight: '80vh' }}>
-  //      <meta
-  //        http-equiv="refresh"
-  //        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
-  //      />.round  //      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
-  //        please click here if you are not redirected
-  //      </a>
-  //    </div>
-  //  )
-  //}
-
   const SaleSummaryStat = ({
     stat,
     statValue,

@@ -1,5 +1,5 @@
 import { Rolodex } from '../../../chain/rolodex/rolodex'
-import { BN } from '../../../easy/bn'
+import { BNtoDec } from '../../../easy/bn'
 
 export const getVaultBorrowingPower = async (
   vaultID: string,
@@ -9,7 +9,7 @@ export const getVaultBorrowingPower = async (
     // get user balance
     const BP = await rolodex.VC?.vaultBorrowingPower(vaultID)
     if (BP?._isBigNumber) {
-      return BP.div(BN('1e16')).toNumber() / 100
+      return BNtoDec(BP)
     }
     return 0
   } catch (err) {

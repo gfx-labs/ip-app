@@ -5,7 +5,6 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Box,
   Link,
   ClickAwayListener,
 } from '@mui/material'

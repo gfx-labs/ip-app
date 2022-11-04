@@ -13,7 +13,7 @@ import {
   getVaultTokenMetadata,
 } from './getVaultTokenBalanceAndPrice'
 import { getVaultBorrowingPower } from './getBorrowingPower'
-import { BN } from '../../../easy/bn'
+import { BN, BNtoDec } from '../../../easy/bn'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
@@ -76,7 +76,7 @@ export const VaultDataProvider = ({
         rolodex
           .VC!.vaultLiability(vaultID!)
           .then((val) => {
-            const vl = val.div(BN('1e16')).toNumber() / 100
+            const vl = BNtoDec(val)
             setAccountLiability(vl)
           })
           .catch((e) => {
@@ -84,19 +84,14 @@ export const VaultDataProvider = ({
           })
 
         getVaultBorrowingPower(vaultID, rolodex)
-          .then((res) => {
-            if (res != undefined) {
-              setBorrowingPower(res)
-            }
-          })
+          .then(setBorrowingPower)
           .catch((e) => {
             console.log('could not get borrowing power ', e)
           })
       }
 
       rolodex.VC?.totalBaseLiability().then((res) => {
-        const bl = res.div(BN('1e16')).toNumber() / 100
-
+        const bl = BNtoDec(res)
         setTotalBaseLiability(bl)
       })
       for (const [key, token] of Object.entries(tokens!)) {
@@ -119,17 +114,21 @@ export const VaultDataProvider = ({
           signerOrProvider!
         )
           .then((res) => {
-            if (res.livePrice) {
-              token.price = Math.round(100 * Number(res.livePrice)) / 100
-              token.vault_amount_str = res.unformattedBalance
-              token.vault_amount = res.balanceBN
+            token.price = Math.round(100 * res.livePrice) / 100
+            token.vault_amount_str = res.unformattedBalance
+            token.vault_amount = res.balanceBN
+            if (token.vault_amount.isZero()) {
+              token.vault_balance = '0'
+            } else {
               token.vault_balance = token.vault_amount
                 .mul(token.price)
                 .toNumber()
                 .toFixed(2)
             }
           })
-          .catch((e) => {})
+          .catch((e) => {
+            console.error('failed token balance check', e)
+          })
         px.push(p2)
         if (currentAccount && connected) {
           let p3 = getBalanceOf(
@@ -149,6 +148,7 @@ export const VaultDataProvider = ({
     }
     return Promise.all(px)
   }
+
   useEffect(() => {
     if (redraw) {
       setRedraw(false)
@@ -194,7 +194,7 @@ export const VaultDataProvider = ({
 
   useEffect(() => {
     setHasVault(!!vaultID)
-    if (hasVault && rolodex) {
+    if (!!vaultID && rolodex) {
       rolodex?.VC?.vaultAddress(vaultID!)
         .then(setVaultAddress)
         .catch((e) => {

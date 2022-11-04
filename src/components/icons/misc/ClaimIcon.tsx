@@ -39,9 +39,9 @@ export const ClaimIcon = forwardRef<
           y2="34.3265"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#748FF1" />
-          <stop offset="0.465557" stop-color="#4E70EB" />
-          <stop offset="1" stop-color="#224DE4" />
+          <stop stopColor="#748FF1" />
+          <stop offset="0.465557" stopColor="#4E70EB" />
+          <stop offset="1" stopColor="#224DE4" />
         </linearGradient>
       </defs>
     </SvgIcon>

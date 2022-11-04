@@ -63,7 +63,7 @@ export const BorrowRepayModal = () => {
             Liability:
           </Typography>
           <Typography variant="h7" display="block" color="text.primary">
-            ${accountLiability.toFixed(0)}
+            ${accountLiability?.toFixed(0)}
           </Typography>
         </Box>
         {currType ? (
