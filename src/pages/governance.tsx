@@ -114,14 +114,12 @@ export const Governance = () => {
         const currentVotes = res.div(BN('1e16')).toNumber() / 100
         setCurrentVotes(currentVotes)
 
-        if (currentVotes <= 0) {
-          getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
-            const iptBalance = response.div(BN('1e16')).toNumber() / 100
+        getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
+          const iptBalance = response.div(BN('1e16')).toNumber() / 100
 
-            setNeedsToDelegate(iptBalance > 0)
-            setIptBalance(iptBalance)
-          })
-        }
+          setNeedsToDelegate(iptBalance > 0)
+          setIptBalance(iptBalance)
+        })
       })
     }
   }, [provider, dataBlock, chainId])
