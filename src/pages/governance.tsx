@@ -57,14 +57,12 @@ export const Governance = () => {
         const currentVotes = BNtoDec(res)
         setCurrentVotes(currentVotes)
 
-        if (currentVotes <= 0) {
-          getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
-            const iptBalance = BNtoDec(response)
+        getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
+          const iptBalance = BNtoDec(response)
 
-            setNeedsToDelegate(iptBalance > 0)
-            setIptBalance(iptBalance)
-          })
-        }
+          setNeedsToDelegate(iptBalance > 0)
+          setIptBalance(iptBalance)
+        })
       })
     }
   }, [provider, dataBlock, chainId])
