@@ -18,7 +18,6 @@ import { SpecialComponents } from 'react-markdown/lib/ast-to-react'
 import remarkGfm from 'remark-gfm'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import ProposalDetails from './proposal'
-import { Proposal } from '../../../pages/governance'
 import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 import VoteButton from './VoteButton'
 import {
@@ -30,7 +29,7 @@ import { useLight } from '../../../hooks/useLight'
 import { useParams } from 'react-router'
 import { useRef } from 'react'
 import { COMMON_CONTRACT_NAMES } from '../../../constants'
-import { getAddress } from 'ethers/lib/utils'
+import { formatEther, formatUnits, getAddress } from 'ethers/lib/utils'
 import { getProposalIsOptimistic } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
@@ -38,6 +37,7 @@ import { ProposalTypeToolTip } from './ProposalTypeToolTip'
 import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
 import SVGBox from '../../icons/misc/SVGBox'
+import { Proposal } from '../api/getProposals'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -59,7 +59,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider, currentSigner, currentAccount } =
     useWeb3Context()
   const { votingPower } = props
-  const { id, body, endBlock, transactionHash, details, startBlock } =
+  const { id, body, endBlock, transactionHash, details, startBlock, votes } =
     props.proposal
   const isLight = useLight()
 
@@ -138,17 +138,20 @@ export const ProposalCard = (props: ProposalCardProps) => {
   }, [id])
 
   useEffect(() => {
-    if (proposal) {
-      const abstainVotes = useFormatBNWithDecimals(proposal?.abstainVotes, 18)
-      const forVotes = useFormatBNWithDecimals(proposal?.forVotes, 18)
-      const againstVotes = useFormatBNWithDecimals(proposal?.againstVotes, 18)
+    if (votes.for.length || votes.against.length) {
+      const forVotes =
+        proposalType !== 'optimistic'
+          ? votes.for.reduce((a, b) => a + b.votingPower, 0)
+          : 0
 
-      const totalVotes = abstainVotes + forVotes + againstVotes
+      const againstVotes = votes.against.reduce((a, b) => a + b.votingPower, 0)
+
+      const totalVotes = forVotes + againstVotes
       setAgainstVotes(againstVotes)
       setForVotes(forVotes)
       setTotalVotes(totalVotes)
     }
-  }, [proposal])
+  }, [votes, proposal])
 
   useEffect(() => {
     const bdiff = endBlock - dataBlock
@@ -332,7 +335,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 </Box>
               )}
 
-              <ProposalDetails id={id} proposalType={proposalType} />
+              <ProposalDetails
+                id={id}
+                proposalType={proposalType}
+                votes={votes}
+              />
               <Box my={2}>
                 <Typography variant="h6_midi" display="block" mb={2}>
                   Details

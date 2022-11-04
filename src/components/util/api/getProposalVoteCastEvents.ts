@@ -1,6 +1,7 @@
 import {
   ANALYTICS_URL,
   GOV_PROPOSAL_VOTE_CAST_EVENTS,
+  STAGING_ANALYTICS_URL,
 } from '../../../constants'
 import axios from 'axios'
 
@@ -11,13 +12,13 @@ export interface ProposalVoteCastEvent {
   Voter: string
   ProposalId: number
   Support: number
-  Votes: number
+  Votes: string
   Reason: string
 }
 
 const getProposalVoteCastEvents = async () => {
   try {
-    const proposalsUrl = `${ANALYTICS_URL}${GOV_PROPOSAL_VOTE_CAST_EVENTS}`
+    const proposalsUrl = `${STAGING_ANALYTICS_URL}${GOV_PROPOSAL_VOTE_CAST_EVENTS}`
 
     const response = await axios.get(proposalsUrl)
     return response.data as ProposalVoteCastEvent[]

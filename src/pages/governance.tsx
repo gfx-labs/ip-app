@@ -6,26 +6,14 @@ import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provid
 import getProposalCreatedEvents, {
   ProposalCreatedEvent,
 } from '../components/util/api/getProposalCreatedEvents'
+import getProposals, { Proposal } from '../components/util/api/getProposals'
+import getProposalVoteCastEvents from '../components/util/api/getProposalVoteCastEvents'
 import { DelegateIPTButton } from '../components/util/button'
 import { ProposalCard } from '../components/util/governance/ProposalCard'
-import getProposalDetails, {
-  ProposalDetails,
-} from '../components/util/helpers/getProposalDescription'
 import { Spinner } from '../components/util/loading'
-import { getRecentProposals } from '../contracts/GovernorCharlieDelegate/getRecentProposals'
 import { getUserVotingPower } from '../contracts/IPTDelegate'
 import { getUserIPTBalance } from '../contracts/IPTDelegate/getUserIPTbalance'
-import { BN, BNtoDec } from '../easy/bn'
-
-export interface Proposal {
-  body: string
-  id: string
-  proposer: string
-  endBlock: number
-  startBlock: number
-  transactionHash: string
-  details: ProposalDetails[]
-}
+import { BNtoDec } from '../easy/bn'
 
 export const Governance = () => {
   const theme = useTheme()
@@ -47,29 +35,18 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
-    getProposalCreatedEvents()
-      .then((pl) => {
-        pl.forEach((val) => {
-          proposals.set(val.ProposalId, {
-            id: val.ProposalId.toString(),
-            proposer: val.Proposer,
-            body: val.Description,
-            endBlock: val.EndBlock,
-            startBlock: val.StartBlock,
-            transactionHash: val.Transaction,
-            details: getProposalDetails({
-              targets: val.Targets,
-              signatures: val.Signatures,
-              calldatas: val.Calldatas,
-            }),
-          })
-        })
+    getProposals()
+      .then((proposals) => {
         setProposals(new Map(proposals))
+        if (proposals.size === 0) {
+          setNoProposals(true)
+        }
       })
       .catch((e) => {
-        console.log('failed to load proposal info', e)
+        console.error(e)
         setNoProposals(true)
       })
+
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner!).then((res) => {
         const currentVotes = BNtoDec(res)
