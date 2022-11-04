@@ -73,8 +73,13 @@ export const Governance = () => {
     currentSigner,
     signerOrProvider,
   } = useWeb3Context()
-  const { setNeedsToDelegate, setIptBalance, setCurrentVotes, currentVotes } =
-    useAppGovernanceContext()
+  const {
+    setNeedsToDelegate,
+    setIptBalance,
+    setCurrentVotes,
+    currentVotes,
+    iptBalance,
+  } = useAppGovernanceContext()
 
   const [proposals, setProposals] = useState<Map<number, Proposal>>(
     new Map<number, Proposal>([])
@@ -159,7 +164,7 @@ export const Governance = () => {
               maximumFractionDigits: 2,
             })}
           </Typography>
-          <DelegateIPTButton votingPower={currentVotes} />
+          <DelegateIPTButton iptBalance={iptBalance} />
         </Box>
       </Box>
       {connected ? (
