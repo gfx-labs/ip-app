@@ -34,6 +34,8 @@ interface DepositWithdrawUSDC {
   token: Token
   amountToDeposit: string
   amountToWithdraw: string
+  maxWithdraw: boolean
+  maxDeposit: boolean
 }
 
 export type ModalContextType = {
@@ -54,7 +56,7 @@ export type ModalContextType = {
   setCollateralWithdrawAmountMax: (val: boolean) => void
   // Control USDC
   USDC: DepositWithdrawUSDC
-  updateUSDC: (prop: string, val: string) => void
+  updateUSDC: (prop: string, val: any) => void
 
   // Transaction State
   transactionState: TransactionState
@@ -68,6 +70,8 @@ const createDepositWithdrawUSDC = () => {
     token: getStablecoins(rolodex!).USDC,
     amountToDeposit: '0',
     amountToWithdraw: '0',
+    maxWithdraw: false,
+    maxDeposit: false,
   }
 }
 
@@ -95,7 +99,7 @@ export const ModalContentProvider = ({
     createDepositWithdrawUSDC()
   )
 
-  const updateUSDC = (prop: string, val: string) => {
+  const updateUSDC = (prop: string, val: any) => {
     setUSDC({
       ...USDC,
       [prop]: val,

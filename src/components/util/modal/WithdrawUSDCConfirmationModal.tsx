@@ -32,7 +32,7 @@ export const WithdrawUSDCConfirmationModal = () => {
         setLoadmsg(locale('CheckWallet'))
 
         const withdrawTxn = await withdrawUSDC(
-          USDC.amountToWithdraw,
+          USDC.maxWithdraw ? USDC.token.vault_amount! : USDC.amountToWithdraw,
           rolodex,
           currentSigner
         )

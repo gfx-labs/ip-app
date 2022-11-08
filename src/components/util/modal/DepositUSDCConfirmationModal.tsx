@@ -36,7 +36,7 @@ export const DepositUSDCConfirmationModal = () => {
       hasUSDCAllowance(
         currentAccount,
         rolodex.addressUSDI,
-        USDC.amountToDeposit,
+        USDC.maxDeposit ? USDC.token.wallet_amount! : USDC.amountToDeposit,
         rolodex
       ).then(setHasAllowance)
     }
@@ -48,7 +48,9 @@ export const DepositUSDCConfirmationModal = () => {
       setLoadmsg(locale('CheckWallet'))
       try {
         const depositTransaction = await depositUSDC(
-          USDC.amountToDeposit,
+          USDC.maxDeposit
+            ? USDC.token.wallet_amount!
+            : BN(USDC.amountToDeposit).mul(BN('1e6')),
           rolodex,
           currentSigner!
         )
@@ -69,15 +71,16 @@ export const DepositUSDCConfirmationModal = () => {
   }
   const handleApprovalRequest = async () => {
     if (rolodex && USDC.amountToDeposit) {
-      let depositAmount = BN(USDC.amountToDeposit)
+      let depositAmount = USDC.maxDeposit
+        ? USDC.token.wallet_amount!
+        : BN(USDC.amountToDeposit).mul(BN('1e6'))
 
-      const formattedUSDCAmount = depositAmount.mul(BN('1e6'))
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
         const txn = await rolodex.USDC?.connect(currentSigner!).approve(
           rolodex.addressUSDI,
-          formattedUSDCAmount
+          depositAmount
         )
 
         setApprovalTxn(txn)
@@ -172,7 +175,7 @@ export const DepositUSDCConfirmationModal = () => {
       </Box>
 
       <DisableableModalButton
-        text={hasAllowance ? 'Confirm Deposit' : 'Has Allowance'}
+        text={hasAllowance ? 'Confirm Deposit' : 'Set Allowance'}
         disabled={false}
         onClick={
           hasAllowance
