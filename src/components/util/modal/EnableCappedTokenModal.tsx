@@ -26,7 +26,7 @@ export const EnableCappedTokenModal = () => {
     try {
       if (vaultID && currentSigner) {
         setLoading(true)
-        // await mintVotingVaultID(vaultID, currentSigner!)
+        await mintVotingVaultID(vaultID, currentSigner!)
 
         setLoading(false)
         setButtonText('Vault Minted')
