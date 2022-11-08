@@ -27,12 +27,13 @@ export const EnableCappedTokenModal = () => {
     try {
       if (vaultID && currentSigner) {
         setLoading(true)
-        // await mintVotingVaultID(vaultID, currentSigner!)
+        await mintVotingVaultID(vaultID, currentSigner!)
 
         setLoading(false)
         setButtonText('Vault Minted')
         setRefresh(true)
         setHasVotingVault(true)
+        setError(undefined)
         setType(ModalType.DepositCollateralConfirmation)
       }
     } catch (err) {
