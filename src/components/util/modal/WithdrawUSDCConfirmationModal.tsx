@@ -16,6 +16,7 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
 import { withdrawUSDC } from '../../../contracts/USDI/withdrawUSDC'
 import SVGBox from '../../icons/misc/SVGBox'
+import { useStableCoinsContext } from '../../libs/stable-coins-provider/StableCoinsProvider'
 
 export const WithdrawUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
@@ -25,14 +26,16 @@ export const WithdrawUSDCConfirmationModal = () => {
   const { currentSigner } = useWeb3Context()
   const isLight = useLight()
 
+  const { USDI } = useStableCoinsContext()
+
   const handleWithdrawUSDC = async () => {
     if (rolodex && currentSigner) {
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
-
+        console.log(USDI)
         const withdrawTxn = await withdrawUSDC(
-          USDC.maxWithdraw ? USDC.token.vault_amount! : USDC.amountToWithdraw,
+          USDC.maxWithdraw ? USDI.wallet_amount! : USDC.amountToWithdraw,
           rolodex,
           currentSigner
         )
