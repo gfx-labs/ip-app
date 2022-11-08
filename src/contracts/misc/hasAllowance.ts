@@ -7,15 +7,20 @@ import { getERC20Allowance, getUSDCAllowanceWithRolodex } from './getAllowance'
 export const hasUSDCAllowance = async (
   owner: string,
   spender: string,
-  amount: string,
+  amount: string | BigNumber,
   rolodex: Rolodex
 ) => {
   const allowance = await getUSDCAllowanceWithRolodex(owner, spender, rolodex)
 
   if (allowance !== undefined) {
-    const formattedUSDCAmount = BN(amount).mul(BN('1e6'))
+    let usdcBN: BigNumber
+    if (typeof amount === 'string') {
+      usdcBN = BN(amount).mul(BN('1e6'))
+    } else {
+      usdcBN = amount
+    }
 
-    return allowance.gte(formattedUSDCAmount)
+    return allowance.gte(usdcBN)
   }
   return false
 }

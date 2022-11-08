@@ -10,15 +10,26 @@ interface TokenSelectProps {
   token: Token
   tokenAmount: string
   setTokenAmount: (amount: string) => void
+  onMaxBalanceClick?: () => void
+  disableSetMax?: boolean
 }
 
 export const TokenSelect = (props: TokenSelectProps) => {
-  const { token, tokenAmount, setTokenAmount } = props
+  const {
+    token,
+    tokenAmount,
+    setTokenAmount,
+    onMaxBalanceClick,
+    disableSetMax = false,
+  } = props
   const isLight = useLight()
 
-  const setBalance = () => {
+  const setMax = () => {
     if (token.wallet_balance != undefined) {
       setTokenAmount(token.wallet_balance)
+      if (onMaxBalanceClick) {
+        onMaxBalanceClick()
+      }
     }
   }
 
@@ -89,8 +100,8 @@ export const TokenSelect = (props: TokenSelectProps) => {
                   color: formatColor(neutral.gray3),
                 },
               }}
-              onClick={setBalance}
-              disabled={token.wallet_balance === undefined}
+              onClick={setMax}
+              disabled={token.wallet_balance === undefined || disableSetMax}
             >
               <WithDots val={token.wallet_balance != undefined}>
                 {Number(token.wallet_balance).toLocaleString(undefined, {
