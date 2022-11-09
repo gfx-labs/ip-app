@@ -1,4 +1,7 @@
-import { ANALYTICS_URL, GOV_PROPOSAL_CREATED_EVENTS } from '../../../constants'
+import {
+  STAGING_ANALYTICS_URL,
+  GOV_PROPOSAL_CREATED_EVENTS,
+} from '../../../constants'
 import axios from 'axios'
 
 export interface ProposalCreatedEvent {
@@ -18,7 +21,7 @@ export interface ProposalCreatedEvent {
 
 const getProposalCreatedEvents = async () => {
   try {
-    const proposalsUrl = `${ANALYTICS_URL}${GOV_PROPOSAL_CREATED_EVENTS}`
+    const proposalsUrl = `${STAGING_ANALYTICS_URL}${GOV_PROPOSAL_CREATED_EVENTS}`
 
     const response = await axios.get(proposalsUrl)
     return response.data as ProposalCreatedEvent[]
