@@ -35,5 +35,5 @@ export const useTokenAmountInput = (): [
 }
 
 const convertPairAmount = (token: string, from: Token, to: Token) => {
-  return ((Number(token) * from.value) / to.value).toString()
+  return ((Number(token) * from.price) / to.price).toString()
 }

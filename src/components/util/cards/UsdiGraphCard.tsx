@@ -10,6 +10,7 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { Spinner, WithSpinner } from '../loading'
 import { InterestEventEvent } from '../../../chain/contracts/lending/VaultController'
 import { DonationEvent } from '../../../chain/contracts/USDI'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const UsdiGraphCard = () => {
   const isLight = useLight()
@@ -275,12 +276,7 @@ export const UsdiGraphCard = () => {
           justifyContent="center"
           margin="auto"
         >
-          <Box
-            component="img"
-            width={100}
-            mb={3}
-            src="images/loading_placeholder.svg"
-          ></Box>
+          <SVGBox svg_name="loading_placeholder" sx={{ mb: 3 }} width={100} />
 
           <Typography
             variant="label2_medium"

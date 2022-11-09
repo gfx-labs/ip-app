@@ -1,7 +1,6 @@
 import { Typography, Box } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { ClaimIcon } from '../../icons/misc/ClaimIcon'
-import { useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
 import { useMerkleRedeemContext } from '../../libs/merkle-redeem-provider/MerkleRedeemProvider'
 import { utils } from 'ethers'
 import { CardContainer } from './CardContainer'

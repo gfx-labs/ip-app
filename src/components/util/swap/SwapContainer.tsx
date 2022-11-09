@@ -21,7 +21,7 @@ export const SwapContainer = () => {
 
   const [token1, token2, swapTokenPositions] = useSwapTokenContext()
   const { setIsWalletModalOpen } = useWalletModalContext()
-  const { setType, USDC, updateUSDC } = useModalContext()
+  const { setType, updateUSDC } = useModalContext()
 
   const { connected } = useWeb3Context()
 
@@ -41,6 +41,28 @@ export const SwapContainer = () => {
     }
     swapTokenAmount()
     swapTokenPositions()
+    updateUSDC('maxDeposit', false)
+    updateUSDC('maxWithdraw', false)
+  }
+
+  const token1MaxBalance = () => {
+    if (token1.ticker === 'USDC') {
+      updateUSDC('maxDeposit', true)
+    } else {
+      updateUSDC('maxWithdraw', true)
+    }
+  }
+
+  const token1Input = (amount: string) => {
+    setToken1Amount(amount)
+    updateUSDC('maxDeposit', false)
+    updateUSDC('maxWithdraw', false)
+  }
+
+  const token2Input = (amount: string) => {
+    setToken2Amount(amount)
+    updateUSDC('maxDeposit', false)
+    updateUSDC('maxWithdraw', false)
   }
 
   useEffect(() => {
@@ -70,7 +92,8 @@ export const SwapContainer = () => {
         <TokenSelect
           token={token1}
           tokenAmount={token1Amount}
-          setTokenAmount={setToken1Amount}
+          setTokenAmount={token1Input}
+          onMaxBalanceClick={token1MaxBalance}
         />
 
         <Button
@@ -115,7 +138,8 @@ export const SwapContainer = () => {
         <TokenSelect
           token={token2}
           tokenAmount={token2Amount}
-          setTokenAmount={setToken2Amount}
+          setTokenAmount={token2Input}
+          disableSetMax={true}
         />
       </Box>
 

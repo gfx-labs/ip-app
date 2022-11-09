@@ -12,6 +12,7 @@ import { BorrowContent } from './ModalContent/BorrowContent'
 import { RepayContent } from './ModalContent/RepayContent'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const BorrowRepayModal = () => {
   const { type, setType } = useModalContext()
@@ -56,19 +57,13 @@ export const BorrowRepayModal = () => {
           columnGap: 2,
         }}
       >
-        <Box
-          component="img"
-          width={80}
-          height={80}
-          src={`images/${tokenName}.svg`}
-          alt={tokenName}
-        ></Box>
+        <SVGBox svg_name={tokenName} width={40} height={40} alt={tokenName} />
         <Box>
           <Typography variant="label" color={formatColor(neutral.gray3)}>
             Liability:
           </Typography>
-          <Typography variant="subtitle1" color="text.primary">
-            ${accountLiability.toFixed(0)}
+          <Typography variant="h7" display="block" color="text.primary">
+            ${accountLiability?.toFixed(0)}
           </Typography>
         </Box>
         {currType ? (

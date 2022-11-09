@@ -1,4 +1,5 @@
-import { ButtonProps, Box, Typography, Link, Button } from '@mui/material'
+import { ButtonProps, Typography, Link, Button } from '@mui/material'
+import SVGBox from '../../icons/misc/SVGBox'
 
 interface MobileIconButtonProps extends ButtonProps {
   text: string
@@ -28,12 +29,7 @@ export const MobileIconButton = (props: MobileIconButtonProps) => {
 
   const content = (
     <>
-      <Box
-        component="img"
-        src={`images/${img}.svg`}
-        width={20}
-        height={20}
-      ></Box>
+      <SVGBox svg_name={img} />
       <Typography
         variant="body1"
         whiteSpace="nowrap"

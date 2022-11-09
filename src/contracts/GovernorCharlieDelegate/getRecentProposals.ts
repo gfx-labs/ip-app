@@ -2,16 +2,19 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import connectToGovernorContract from './connectToGovernorContract'
 
 export const getRecentProposals = async (
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider,
+  signer: JsonRpcSigner,
   headBlock?: number
 ) => {
   try {
-    const contract = connectToGovernorContract(signerOrProvider)
+    console.log(signer, 'signer')
+    const contract = connectToGovernorContract(signer)
     const filters = contract.filters.ProposalCreated()
+    console.log(headBlock, 'headBlock', filters)
     const logs = await contract.queryFilter(filters, undefined, headBlock)
-
+    console.log(logs, 'logs')
     return logs
-  } catch (err) { 
+  } catch (err) {
+    console.error(err)
     throw new Error('error getting proposals')
   }
 }

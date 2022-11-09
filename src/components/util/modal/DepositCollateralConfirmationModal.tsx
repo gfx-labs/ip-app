@@ -11,11 +11,11 @@ import { DisableableModalButton } from '../button/DisableableModalButton'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { locale } from '../../../locale'
-import { BigNumber, ContractReceipt, ContractTransaction, utils } from 'ethers'
+import { ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
-import { Token } from '../../../types/token'
+import { hasTokenAllowance } from '../../../contracts/misc/hasAllowance'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -32,11 +32,10 @@ export const DepositCollateralConfirmationModal = () => {
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const { vaultAddress, vaultID, hasVotingVault } = useVaultDataContext()
-  const [needAllowance, setNeedAllowance] = useState(true)
-  const [decimals, setDecimals] = useState(18)
+  const [hasAllowance, setHasAllowance] = useState(false)
 
   const amount = collateralDepositAmountMax
-    ? collateralToken.wallet_amount_bn
+    ? collateralToken.wallet_amount
     : collateralDepositAmount
 
   const contract = ERC20Detailed__factory.connect(
@@ -44,32 +43,16 @@ export const DepositCollateralConfirmationModal = () => {
     currentSigner!
   )
 
-  const needsAllowance = async (amount: string | BigNumber, token: Token) => {
-    const initialApproval = await contract.allowance(
-      currentAccount,
-      token.capped_address!
-    )
-
-    if (collateralDepositAmountMax) {
-      return initialApproval.lt(amount)
-    }
-
-    if (typeof amount === 'string') {
-      const formattedUSDCAmount = utils.parseUnits(amount!, decimals)
-
-      return initialApproval.lt(formattedUSDCAmount)
-    }
-
-    return true
-  }
-
-  useEffect(() => {
-    contract.decimals().then((decimals) => setDecimals(decimals))
-  }, [])
-
   useEffect(() => {
     if (collateralToken.capped_address && amount) {
-      needsAllowance(amount!, collateralToken).then(setNeedAllowance)
+      hasTokenAllowance(
+        currentAccount,
+        collateralToken.capped_address,
+        amount,
+        collateralToken.address,
+        collateralToken.decimals,
+        currentSigner!
+      ).then(setHasAllowance)
     }
   }, [amount])
 
@@ -85,16 +68,23 @@ export const DepositCollateralConfirmationModal = () => {
         setLoading(true)
         setLoadmsg(locale('CheckWallet'))
 
-        const na = await needsAllowance(amount!, collateralToken)
-        console.log(na)
-        setNeedAllowance(na)
+        const ha = await hasTokenAllowance(
+          currentAccount,
+          collateralToken.capped_address,
+          amount!,
+          collateralToken.address,
+          collateralToken.decimals,
+          currentSigner!
+        )
+        console.log(ha)
+        setHasAllowance(ha)
 
-        if (na) {
+        if (!ha) {
           let approveAmount
           if (typeof amount === 'string') {
-            approveAmount = utils.parseUnits(amount!, decimals)
+            approveAmount = utils.parseUnits(amount!, collateralToken.decimals)
           } else {
-            approveAmount = collateralToken.wallet_amount_bn
+            approveAmount = collateralToken.wallet_amount
           }
 
           const txn = await contract.approve(
@@ -107,7 +97,7 @@ export const DepositCollateralConfirmationModal = () => {
 
           setLoading(false)
           setLoadmsg('')
-          setNeedAllowance(false)
+          setHasAllowance(true)
 
           return
         }
@@ -190,7 +180,7 @@ export const DepositCollateralConfirmationModal = () => {
             <Typography variant="body3" color="text.primary">
               $
               {(
-                collateralToken.value * Number(collateralDepositAmount)
+                collateralToken.price * Number(collateralDepositAmount)
               ).toFixed(2)}{' '}
               ({collateralDepositAmount} {collateralToken.ticker})
             </Typography>
@@ -204,7 +194,7 @@ export const DepositCollateralConfirmationModal = () => {
           (collateralToken.capped_token &&
             collateralToken.capped_address &&
             !hasVotingVault) ||
-          !needAllowance
+          hasAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'
         }

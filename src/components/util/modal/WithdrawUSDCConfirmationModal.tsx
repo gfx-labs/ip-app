@@ -13,41 +13,38 @@ import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { BN } from '../../../easy/bn'
 import { locale } from '../../../locale'
+import { withdrawUSDC } from '../../../contracts/USDI/withdrawUSDC'
+import SVGBox from '../../icons/misc/SVGBox'
+import { useStableCoinsContext } from '../../libs/stable-coins-provider/StableCoinsProvider'
 
 export const WithdrawUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
   const rolodex = useRolodexContext()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const { provider, currentAccount, currentSigner } = useWeb3Context()
+  const { currentSigner } = useWeb3Context()
   const isLight = useLight()
 
+  const { USDI } = useStableCoinsContext()
+
   const handleWithdrawUSDC = async () => {
-    let withdrawAmount = BN(USDC.amountToWithdraw)
-    const formattedUSDCAmount = withdrawAmount.mul(1e6)
     if (rolodex && currentSigner) {
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
-        const ge = (
-          await rolodex.USDI.connect(currentSigner).estimateGas.withdraw(
-            formattedUSDCAmount
-          )
+
+        const withdrawTxn = await withdrawUSDC(
+          USDC.maxWithdraw ? USDI.wallet_amount! : USDC.amountToWithdraw,
+          rolodex,
+          currentSigner
         )
-          .mul(100)
-          .div(85)
-        const txn = await rolodex.USDI.connect(currentSigner).withdraw(
-          formattedUSDCAmount,
-          { gasLimit: ge }
-        )
+
         setLoadmsg(locale('TransactionPending'))
-        updateTransactionState(txn)
-        const receipt = await txn?.wait()
+        updateTransactionState(withdrawTxn)
+        const receipt = await withdrawTxn?.wait()
         updateTransactionState(receipt)
       } catch (e) {
-        console.log(e)
         const error = e as ContractReceipt
         updateTransactionState(error)
       }
@@ -96,14 +93,13 @@ export const WithdrawUSDCConfirmationModal = () => {
             </Typography>
           </Box>
 
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/USDI.svg`}
+            svg_name="USDI"
             alt="USDI"
-            marginLeft={3}
-          ></Box>
+            sx={{ ml: 3 }}
+          />
         </Box>
 
         <ForwardIcon
@@ -112,14 +108,14 @@ export const WithdrawUSDCConfirmationModal = () => {
         />
 
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/${USDC.token.ticker}.svg`}
-            alt={USDC.token.ticker}
-            marginRight={3}
-          ></Box>
+            sx={{ mr: 3 }}
+            svg_name="USDC"
+            alt="USDC"
+          />
+
           <Box>
             <Typography variant="body3" color="text.secondary">
               {'$' +

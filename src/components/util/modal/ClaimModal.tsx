@@ -14,6 +14,7 @@ import { BNtoHexNumber } from '../helpers/BNtoHex'
 import claimWeeks from '../../../contracts/MerkleRedeem/claimWeeks'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { utils } from 'ethers'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const ClaimModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
@@ -63,13 +64,13 @@ export const ClaimModal = () => {
           columnGap: 2,
         }}
       >
-        <Box
-          component="img"
+        <SVGBox
+          svg_name={isLight ? 'ipt_blue' : 'ipt_white'}
           width={80}
           height={80}
-          src={`images/ipt_${isLight ? 'blue' : 'white'}.svg`}
           alt="IPT"
-        ></Box>
+        />
+
         <Box>
           <Typography variant="body2" color={formatColor(neutral.gray3)}>
             Unclaimed Rewards

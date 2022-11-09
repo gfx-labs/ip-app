@@ -1,43 +1,8 @@
 import { Box, Typography, useTheme, Link as MuiLink } from '@mui/material'
 import { Link } from '../../util/link'
 import { useLight } from '../../../hooks/useLight'
-
-const footerLinks = [
-  {
-    title: 'Protocol',
-    links: [
-      { label: 'Whitepaper', href: '#/whitepaper' },
-      { label: 'Docs', href: '#/docs' },
-      { label: 'Analytics', href: 'https://analytics.gfx.xyz/' },
-      { label: 'Sale', href: '#/sale' },
-      { label: 'Terms of Use', href: '#/terms' },
-    ],
-  },
-  {
-    title: 'Governance',
-    links: [
-      { label: 'Overview', href: '#/proposal' },
-      { label: 'Forums', href: 'https://forums.interestprotocol.io/' },
-    ],
-  },
-  {
-    title: 'Community',
-    links: [
-      { label: 'Twitter', href: 'https://twitter.com/InterestDeFi' },
-      { label: 'Discord', href: 'https://discord.gg/s9Wja2tb6k' },
-    ],
-  },
-  {
-    title: 'Developers',
-    links: [
-      {
-        label: 'Audit',
-        href: 'https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf',
-      },
-      { label: 'Github', href: 'https://github.com/gfx-labs/ip-contracts' },
-    ],
-  },
-]
+import footerLinks from './footerLinks'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const Footer = () => {
   return (
@@ -68,7 +33,6 @@ const FooterContent = () => {
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          // gridTemplateColumns: { xs: '1fr 1fr', lg: '1fr 1fr 1fr 1fr' },
           rowGap: 4,
           justifyContent: { xs: 'space-evenly', md: 'space-evenly' },
           maxWidth: 900,
@@ -134,7 +98,7 @@ const FooterContent = () => {
         }}
       >
         <Typography color="footer.color" variant="label_semi">
-          Interest Protocol 2022
+          Interest Protocol {new Date().getFullYear()}
         </Typography>
         <Box>
           <MuiLink
@@ -143,13 +107,12 @@ const FooterContent = () => {
             target="_blank"
             paddingBottom={2}
           >
-            <Box
-              component="img"
-              src={`images/discord_icon_${isLight ? 'black' : 'grey'}.svg`}
-              width="24px"
-              height="24px"
-              marginX={3}
-            ></Box>
+            <SVGBox
+              svg_name={isLight ? 'discord_icon_black' : 'discord_icon_grey'}
+              width={24}
+              height={24}
+              sx={{ marginX: 3 }}
+            />
           </MuiLink>
           <MuiLink
             component={Link}
@@ -157,13 +120,14 @@ const FooterContent = () => {
             target="_blank"
             paddingBottom={2}
           >
-            <Box
-              component="img"
-              src={`images/twitter_bird_icon_${isLight ? 'black' : 'grey'}.svg`}
-              width="25px"
-              height="26px"
-              marginX={3}
-            ></Box>
+            <SVGBox
+              svg_name={
+                isLight ? 'twitter_bird_icon_black' : 'twitter_bird_icon_grey'
+              }
+              width={25}
+              height={26}
+              sx={{ marginX: 3 }}
+            />
           </MuiLink>
           <MuiLink
             component={Link}
@@ -171,13 +135,12 @@ const FooterContent = () => {
             target="_blank"
             paddingBottom={2}
           >
-            <Box
-              component="img"
-              src={`images/medium_icon_${isLight ? 'black' : 'grey'}.svg`}
-              width="24px"
-              height="24px"
-              marginX={3}
-            ></Box>
+            <SVGBox
+              svg_name={isLight ? 'medium_icon_black' : 'medium_icon_grey'}
+              width={24}
+              height={24}
+              sx={{ marginX: 3 }}
+            />
           </MuiLink>
         </Box>
       </Box>

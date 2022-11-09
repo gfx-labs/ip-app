@@ -16,6 +16,7 @@ import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataPro
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
 import { delegateVaultVotingPower } from '../../../contracts/Vault/delegateVaultVotingPower'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const DelegateModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
@@ -97,15 +98,14 @@ export const DelegateModal = () => {
             columnGap: 2,
           }}
         >
-          <Box
-            component="img"
-            width={80}
-            height={80}
-            src={`images/${delegateToken.ticker}.svg`}
+          <SVGBox
+            svg_name={delegateToken.ticker}
+            width={40}
+            height={40}
             alt={delegateToken.name}
-          ></Box>
+          />
           <Box>
-            <Typography variant="subtitle1" color="text.primary" mb={1}>
+            <Typography variant="subtitle1" color="text.primary">
               ${delegateToken.ticker}
             </Typography>
           </Box>

@@ -16,6 +16,8 @@ import { locale } from '../../../locale'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { Chains } from '../../../chain/chains'
 import { depositUSDC } from '../../../contracts/USDI/depositUSDC'
+import SVGBox from '../../icons/misc/SVGBox'
+import { hasUSDCAllowance } from '../../../contracts/misc/hasAllowance'
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
@@ -24,23 +26,19 @@ export const DepositUSDCConfirmationModal = () => {
   const [loadmsg, setLoadmsg] = useState('')
   const rolodex = useRolodexContext()
 
-  const [needAllowance, setNeedAllowance] = useState(true)
+  const [hasAllowance, setHasAllowance] = useState(false)
   const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
 
   const chain = Chains.getInfo(chainId)
 
   useEffect(() => {
-    if (rolodex && USDC.amountToDeposit && rolodex.USDC) {
-      rolodex
-        .USDC!.allowance(currentAccount, rolodex.addressUSDI)
-        .then((initialApproval) => {
-          const formattedUSDCAmount = BN(USDC.amountToDeposit).mul(BN('1e6'))
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true)
-          } else {
-            setNeedAllowance(false)
-          }
-        })
+    if (rolodex && USDC.amountToDeposit) {
+      hasUSDCAllowance(
+        currentAccount,
+        rolodex.addressUSDI,
+        USDC.maxDeposit ? USDC.token.wallet_amount! : USDC.amountToDeposit,
+        rolodex
+      ).then(setHasAllowance)
     }
   }, [rolodex, dataBlock, chainId, USDC.amountToDeposit, loadmsg])
 
@@ -50,7 +48,9 @@ export const DepositUSDCConfirmationModal = () => {
       setLoadmsg(locale('CheckWallet'))
       try {
         const depositTransaction = await depositUSDC(
-          USDC.amountToDeposit,
+          USDC.maxDeposit
+            ? USDC.token.wallet_amount!
+            : BN(USDC.amountToDeposit).mul(BN('1e6')),
           rolodex,
           currentSigner!
         )
@@ -71,15 +71,16 @@ export const DepositUSDCConfirmationModal = () => {
   }
   const handleApprovalRequest = async () => {
     if (rolodex && USDC.amountToDeposit) {
-      let depositAmount = BN(USDC.amountToDeposit)
+      let depositAmount = USDC.maxDeposit
+        ? USDC.token.wallet_amount!
+        : BN(USDC.amountToDeposit).mul(BN('1e6'))
 
-      const formattedUSDCAmount = depositAmount.mul(BN('1e6'))
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
         const txn = await rolodex.USDC?.connect(currentSigner!).approve(
           rolodex.addressUSDI,
-          formattedUSDCAmount
+          depositAmount
         )
 
         setApprovalTxn(txn)
@@ -119,14 +120,13 @@ export const DepositUSDCConfirmationModal = () => {
         }}
       >
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src="images/USDC.svg"
-            alt="USDC svg"
-            marginRight={3}
-          ></Box>
+            svg_name="USDC"
+            alt="USDC"
+            sx={{ mr: 3 }}
+          />
           <Box>
             <Typography variant="body3" color="text.primary">
               {'$' +
@@ -154,14 +154,13 @@ export const DepositUSDCConfirmationModal = () => {
             </Typography>
           </Box>
 
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/USDI.svg`}
+            svg_name="USDI"
             alt="USDI"
-            marginLeft={3}
-          ></Box>
+            sx={{ ml: 3 }}
+          />
         </Box>
       </Box>
 
@@ -176,12 +175,12 @@ export const DepositUSDCConfirmationModal = () => {
       </Box>
 
       <DisableableModalButton
-        text={needAllowance ? 'Set Allowance' : 'Confirm Deposit'}
+        text={hasAllowance ? 'Confirm Deposit' : 'Set Allowance'}
         disabled={false}
         onClick={
-          needAllowance
-            ? handleApprovalRequest
-            : handleDepositConfirmationRequest
+          hasAllowance
+            ? handleDepositConfirmationRequest
+            : handleApprovalRequest
         }
         loading={loading}
         load_text={loadmsg}
@@ -191,9 +190,9 @@ export const DepositUSDCConfirmationModal = () => {
           mt={1}
           display="block"
           target="_blank"
-          href={`${chain.scanUrl}${approvalTxn.hash}`}
+          href={`${chain.scan_url}${approvalTxn.hash}`}
         >
-          <Button variant="text">View approval on {chain.scanSite}</Button>
+          <Button variant="text">View approval on {chain.scan_site}</Button>
         </MuiLink>
       )}
     </BaseModal>

@@ -9,9 +9,9 @@ import { useEffect, useState } from 'react'
 import { useVaultDataContext } from '../components/libs/vault-data-provider/VaultDataProvider'
 import Cookies from 'universal-cookie'
 import fetchVaultOf from '../contracts/Vault/fetchVaultOf'
-import { getTotalSupply, getReserveRatio } from '../contracts/USDI'
-import { BN, round } from '../easy/bn'
-import { TitleText } from '../components/util/text'
+import { getTotalSupply, getReserveRatioPercentage } from '../contracts/USDI'
+import { BN } from '../easy/bn'
+import { GweiBlockText, TitleText } from '../components/util/text'
 import { SingleStatCard } from '../components/util/cards'
 import { InverseButton } from '../components/util/button'
 import { TitleTextToolTip } from '../components/util/text/TitleTextToolTip'
@@ -25,26 +25,27 @@ import { Substat } from '../components/util/text/Substat'
 import getAverages, { Averages } from '../components/util/api/getAverages'
 import { useLight } from '../hooks/useLight'
 import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
+import SVGBox from '../components/icons/misc/SVGBox'
+import { RedirectTo } from '../components/util/redirect'
+import getAPRs from '../contracts/USDI/getAPRs'
 
 const Dashboard = () => {
   const cookies = new Cookies()
   const firstVisitExists = cookies.get('first-visit')
-  if (!firstVisitExists) {
-    console.log('detected first login')
-    return (
-      <div style={{ minHeight: '80vh' }}>
-        <meta http-equiv="refresh" content="0; url=#/landing" />
-        <a href="#/landing">please click here if you are not redirected</a>
-      </div>
-    )
-  }
+  if (!firstVisitExists) return <RedirectTo url="#/landing" />
+
   const isLight = useLight()
   const { setType } = useModalContext()
   const theme = useTheme()
-  const { currentAccount, dataBlock, gasPrice, chainId } = useWeb3Context()
+  const { currentAccount, dataBlock, chainId } = useWeb3Context()
   const rolodex = useRolodexContext()
-  const { setVaultID, setVaultAddress, accountLiability, hasVault, borrowingPower } =
-    useVaultDataContext()
+  const {
+    setVaultID,
+    setVaultAddress,
+    accountLiability,
+    hasVault,
+    borrowingPower,
+  } = useVaultDataContext()
 
   const [totalSupply, setTotalSupply] = useState<string>('')
   const [totalUSDCDeposited, setTotalUSDCDeposited] = useState<string>('')
@@ -70,37 +71,23 @@ const Dashboard = () => {
         setTotalUSDCDeposited(val.div(BN('1e6')).toLocaleString())
       })
 
-      getTotalSupply(rolodex).then((res) => {
-        setTotalSupply(res)
-      })
-      getReserveRatio(rolodex).then((res) => {
-        setReserveRatio(res)
-      })
+      getTotalSupply(rolodex).then(setTotalSupply)
+      getReserveRatioPercentage(rolodex).then(setReserveRatio)
     }
-  }, [rolodex, dataBlock, chainId])
 
-  useEffect(() => {
     if (rolodex) {
-      rolodex!
-        .USDI!.reserveRatio()
-        .then((ratio) => {
-          const ratioDec = ratio.div(1e14).toNumber() / 1e4
-          return rolodex!.Curve?.getValueAt(
-            '0x0000000000000000000000000000000000000000',
-            ratio
-          ).then((apr) => {
-            const ba = apr.div(BN('1e14')).toNumber() / 100
-            setBorrowAPR(ba)
-            setDepositAPR(round(ba * (1 - ratioDec) * 0.85, 3))
-          })
+      getAPRs(rolodex)
+        .then(({ borrow, deposit }) => {
+          setBorrowAPR(borrow)
+          setDepositAPR(deposit)
         })
-        .catch((e) => {
+        .catch(() => {
           setBorrowAPR(0)
+          setDepositAPR(0)
         })
     }
-
     getAverages().then((averages) => setAverages(averages))
-  }, [rolodex, dataBlock])
+  }, [rolodex, dataBlock, chainId])
 
   return (
     <Box
@@ -139,13 +126,13 @@ const Dashboard = () => {
         >
           <SingleStatCard>
             <>
-              <Box
-                component="img"
-                src={`images/globe_${isLight ? 'light' : 'dark'}.svg`}
-                width="36px"
-                height="36px"
-                marginRight={3}
-              ></Box>
+              <SVGBox
+                svg_name={`globe_${isLight ? 'light' : 'dark'}`}
+                width={36}
+                height={36}
+                sx={{ mr: 3 }}
+              />
+
               <TitleText
                 title="USDi in Circulation"
                 text={Math.round(Number(totalSupply)).toLocaleString()}
@@ -155,13 +142,13 @@ const Dashboard = () => {
 
           <SingleStatCard>
             <>
-              <Box
-                component="img"
-                src={`images/cube_${isLight ? 'light' : 'dark'}.svg`}
-                width="36px"
-                height="36px"
-                marginRight={3}
-              ></Box>
+              <SVGBox
+                svg_name={`cube_${isLight ? 'light' : 'dark'}`}
+                width={36}
+                height={36}
+                sx={{ mr: 3 }}
+              />
+
               <TitleText
                 title="USDC in Reserve"
                 text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
@@ -170,13 +157,13 @@ const Dashboard = () => {
           </SingleStatCard>
           <SingleStatCard>
             <>
-              <Box
-                component="img"
-                src={`images/cylinder_${isLight ? 'light' : 'dark'}.svg`}
-                width="36px"
-                height="36px"
-                marginRight={3}
-              ></Box>
+              <SVGBox
+                svg_name={`cylinder_${isLight ? 'light' : 'dark'}`}
+                width={36}
+                height={36}
+                sx={{ mr: 3 }}
+              />
+
               <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
             </>
           </SingleStatCard>
@@ -236,13 +223,10 @@ const Dashboard = () => {
                   tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
                     borrowingPower !== null
-                      ? borrowingPower.toLocaleString(
-                          'en-US',
-                          {
-                            style: 'currency',
-                            currency: 'USD',
-                          }
-                        )
+                      ? borrowingPower?.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })
                       : null
                   }
                 />
@@ -348,23 +332,7 @@ const Dashboard = () => {
       </Box>
 
       <Box maxWidth="xl" margin="auto">
-        <Box
-          px={{ xs: 3, md: 10 }}
-          mb={2}
-          display="flex"
-          columnGap={2}
-          justifyContent="flex-end"
-        >
-          <Box>
-            <Typography variant="label">Gwei: </Typography>
-            <Typography variant="label2_medium">{gasPrice}</Typography>
-          </Box>
-
-          <Box>
-            <Typography variant="label">Block: </Typography>
-            <Typography variant="label2_medium">{dataBlock}</Typography>
-          </Box>
-        </Box>
+        <GweiBlockText />
       </Box>
     </Box>
   )

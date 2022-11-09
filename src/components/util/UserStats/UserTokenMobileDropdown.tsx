@@ -12,6 +12,7 @@ import {
 import { useContext, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { EllipsisIcon } from '../../icons/misc/EllipsisIcon'
+import SVGBox from '../../icons/misc/SVGBox'
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 
 interface StyledDropdownButton extends ButtonProps {
@@ -42,12 +43,8 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
 
   const content = (
     <>
-      <Box
-        component="img"
-        src={`images/${img}.svg`}
-        width={15}
-        height={15}
-      ></Box>
+      <SVGBox svg_name={img} height={15} width={15} />
+
       <Typography
         variant="body1"
         whiteSpace="nowrap"

@@ -5,13 +5,13 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Box,
   Link,
   ClickAwayListener,
 } from '@mui/material'
 import { useContext, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { EllipsisIcon } from '../../icons/misc/EllipsisIcon'
+import SVGBox from '../../icons/misc/SVGBox'
 import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 
 interface StyledDropdownButton extends ButtonProps {
@@ -43,12 +43,7 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
 
   const content = (
     <>
-      <Box
-        component="img"
-        src={`images/${img}.svg`}
-        width={14}
-        height={14}
-      ></Box>
+      <SVGBox svg_name={img} width={14} height={14} />
       <Typography
         variant="body2"
         whiteSpace="nowrap"

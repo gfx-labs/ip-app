@@ -1,5 +1,6 @@
 import { Typography, Link } from '@mui/material'
 import { Box } from '@mui/system'
+import SVGBox from '../../components/icons/misc/SVGBox'
 import { formatColor, neutral } from '../../theme'
 export const Community: React.FC = () => {
   return (
@@ -49,37 +50,28 @@ export const Community: React.FC = () => {
       >
         <Box sx={{ flexBasis: '30%' }} />
         <Link href="https://discord.gg/s9Wja2tb6k" target="_blank">
-          <Box
-            sx={{
-              mx: 2,
-              textAlign: 'center',
-              width: { xs: 36, md: 48 },
-            }}
-            component="img"
-            src="images/discord_icon_black.svg"
-          ></Box>
+          <SVGBox
+            svg_name="discord_icon_black"
+            width={{ xs: 36, md: 48 }}
+            height={{ xs: 36, md: 48 }}
+            sx={{ mx: 2, textAlign: 'center' }}
+          />
         </Link>
         <Link href="https://twitter.com/InterestDeFi" target="_blank">
-          <Box
-            sx={{
-              mx: 2,
-              textAlign: 'center',
-              width: { xs: 36, md: 48 },
-            }}
-            component="img"
-            src="images/twitter_bird_icon_black.svg"
-          ></Box>
+          <SVGBox
+            svg_name="twitter_bird_icon_black"
+            width={{ xs: 36, md: 48 }}
+            height={{ xs: 36, md: 48 }}
+            sx={{ mx: 2, textAlign: 'center' }}
+          />
         </Link>
         <Link href="https://medium.com/interest-protocol" target="_blank">
-          <Box
-            sx={{
-              mx: 2,
-              textAlign: 'center',
-              width: { xs: 36, md: 30 },
-            }}
-            component="img"
-            src="images/medium_icon_black.svg"
-          ></Box>
+          <SVGBox
+            svg_name="medium_icon_black"
+            width={{ xs: 36, md: 30 }}
+            height={{ xs: 36, md: 30 }}
+            sx={{ mx: 2, textAlign: 'center' }}
+          />
         </Link>
         <Box sx={{ flexBasis: '30%' }} />
       </Box>

@@ -13,8 +13,7 @@ import {
   getVaultTokenMetadata,
 } from './getVaultTokenBalanceAndPrice'
 import { getVaultBorrowingPower } from './getBorrowingPower'
-import { BN } from '../../../easy/bn'
-import { BigNumber } from 'ethers'
+import { BN, BNtoDec } from '../../../easy/bn'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
@@ -77,7 +76,7 @@ export const VaultDataProvider = ({
         rolodex
           .VC!.vaultLiability(vaultID!)
           .then((val) => {
-            const vl = val.div(BN('1e16')).toNumber() / 100
+            const vl = BNtoDec(val)
             setAccountLiability(vl)
           })
           .catch((e) => {
@@ -85,19 +84,14 @@ export const VaultDataProvider = ({
           })
 
         getVaultBorrowingPower(vaultID, rolodex)
-          .then((res) => {
-            if (res != undefined) {
-              setBorrowingPower(res)
-            }
-          })
+          .then(setBorrowingPower)
           .catch((e) => {
             console.log('could not get borrowing power ', e)
           })
       }
 
       rolodex.VC?.totalBaseLiability().then((res) => {
-        const bl = res.div(BN('1e16')).toNumber() / 100
-
+        const bl = BNtoDec(res)
         setTotalBaseLiability(bl)
       })
       for (const [key, token] of Object.entries(tokens!)) {
@@ -120,17 +114,21 @@ export const VaultDataProvider = ({
           signerOrProvider!
         )
           .then((res) => {
-            if (res.livePrice) {
-              token.value = Math.round(100 * Number(res.livePrice)) / 100
-              token.vault_amount = res.balance
-              token.vault_unformatted_amount = res.unformattedBalance
-              token.vault_amount_bn = res.balanceBN
-              token.vault_balance = Number(
-                (token.vault_amount * token.value).toFixed(2)
-              )
+            token.price = Math.round(100 * res.livePrice) / 100
+            token.vault_amount_str = res.unformattedBalance
+            token.vault_amount = res.balanceBN
+            if (token.vault_amount.isZero()) {
+              token.vault_balance = '0'
+            } else {
+              token.vault_balance = token.vault_amount
+                .mul(token.price)
+                .toNumber()
+                .toFixed(2)
             }
           })
-          .catch((e) => {})
+          .catch((e) => {
+            console.error('failed token balance check', e)
+          })
         px.push(p2)
         if (currentAccount && connected) {
           let p3 = getBalanceOf(
@@ -139,8 +137,7 @@ export const VaultDataProvider = ({
             signerOrProvider!
           )
             .then((val) => {
-              token.wallet_amount = val.num
-              token.wallet_amount_bn = val.bn
+              token.wallet_amount = val.bn
             })
             .catch((e) => {
               console.log('failed to get token balances')
@@ -151,6 +148,7 @@ export const VaultDataProvider = ({
     }
     return Promise.all(px)
   }
+
   useEffect(() => {
     if (redraw) {
       setRedraw(false)
@@ -180,7 +178,7 @@ export const VaultDataProvider = ({
     if (currentAccount && rolodex) {
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
-          const id = BigNumber.from(vaultIDs[0]._hex).toString()
+          const id = vaultIDs.toString()
           setVaultID(id)
 
           getVotingVaultAddress(id, signerOrProvider!).then((address) => {
@@ -196,13 +194,11 @@ export const VaultDataProvider = ({
 
   useEffect(() => {
     setHasVault(!!vaultID)
-    if (hasVault && rolodex) {
+    if (!!vaultID && rolodex) {
       rolodex?.VC?.vaultAddress(vaultID!)
-        .then((addr) => {
-          setVaultAddress(addr)
-        })
+        .then(setVaultAddress)
         .catch((e) => {
-          console.log('failed to get vault address', e)
+          console.error('failed to get vault address', e)
         })
     }
   }, [vaultID, rolodex])

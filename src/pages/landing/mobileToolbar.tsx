@@ -13,6 +13,7 @@ import { formatColor, neutral } from '../../theme'
 import { MenuIcon } from '../../components/icons/misc/menuIcon'
 import { useNavigate } from 'react-router'
 import Cookies from 'universal-cookie'
+import SVGBox from '../../components/icons/misc/SVGBox'
 
 const iOS =
   typeof navigator !== 'undefined' &&
@@ -42,12 +43,11 @@ export const LandingMobileToolbar = () => {
       }}
     >
       <Link href="/" aria-level={1}>
-        <Box
-          component="img"
-          src="images/ip_green.svg"
+        <SVGBox
+          svg_name="ip_green"
           width={{ xs: 25, md: 50 }}
-          height={{ xs: 37, md: 50 }}
-        ></Box>
+          height={{ xs: 25, md: 50 }}
+        />
       </Link>
 
       <Box display="flex">

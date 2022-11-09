@@ -12,6 +12,6 @@ export const getReceiptOf = async (
 
     return receipt
   } catch (err) {
-    throw new Error('error getting proposals')
+    throw new Error('error getting receipt')
   }
 }

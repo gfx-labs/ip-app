@@ -21,7 +21,7 @@ import {
   commitUSDC,
   getEndTime,
   getBasePrice,
-} from '../../hooks/useSaleUtils'
+} from '../../contracts/IPTSale/slowRollMethods'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
 import { JsonRpcSigner, TransactionReceipt } from '@ethersproject/providers'
@@ -34,6 +34,8 @@ import getSaleSummary, {
   SaleSummary,
 } from '../../components/util/api/getSaleSummary'
 import { SLOWROLL_ADDRESS } from '../../constants'
+import SVGBox from '../../components/icons/misc/SVGBox'
+import { hasUSDCAllowance } from '../../contracts/misc/hasAllowance'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
@@ -60,19 +62,6 @@ const PurchasePage: React.FC = () => {
   useEffect(() => {
     getSaleSummary().then(setSaleSummary)
   }, [dataBlock])
-
-  //if (1 == 0) {
-  //  return (
-  //    <div style={{ minHeight: '80vh' }}>
-  //      <meta
-  //        http-equiv="refresh"
-  //        content="0; url=https://forum.interestprotocol.io/t/token-distribution-delayed/30"
-  //      />.round  //      <a href="https://forum.interestprotocol.io/t/token-distribution-delayed/30">
-  //        please click here if you are not redirected
-  //      </a>
-  //    </div>
-  //  )
-  //}
 
   const SaleSummaryStat = ({
     stat,
@@ -235,7 +224,7 @@ const PurchaseBox = ({
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
 
-  const [needAllowance, setNeedAllowance] = useState(true)
+  const [hasAllowance, setHasAllowance] = useState(false)
 
   const [salePeriodRemaining, setSalePeriodRemaining] = useState<
     string | undefined
@@ -303,53 +292,24 @@ const PurchaseBox = ({
   }, [chainId, rolodex, loadmsg])
 
   useEffect(() => {
-    if (rolodex && amountToCommit && rolodex.USDC) {
+    if (rolodex && amountToCommit) {
       const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
 
-      checkUSDCAllowance(currentAccount, SLOWROLL_ADDRESS, usdcAmount).then(
-        (needsAllowance) => setNeedAllowance(needsAllowance)
-      )
-    }
-  }, [rolodex, amountToCommit])
-
-  useEffect(() => {
-    if (rolodex && amountToCommit && rolodex.USDC) {
-      rolodex
-        .USDC!.allowance(currentAccount, SLOWROLL_ADDRESS)
-        .then((initialApproval) => {
-          const formattedUSDCAmount = BN(amountToCommit).mul(1e6)
-          if (initialApproval.lt(formattedUSDCAmount)) {
-            setNeedAllowance(true)
-          } else {
-            setNeedAllowance(false)
-          }
-        })
+      hasUSDCAllowance(
+        currentAccount,
+        SLOWROLL_ADDRESS,
+        usdcAmount,
+        rolodex
+      ).then(setHasAllowance)
     }
   }, [rolodex, dataBlock, chainId, amountToCommit])
 
-  const checkUSDCAllowance = async (
-    owner: string,
-    spender: string,
-    usdcAmount: string
-  ): Promise<boolean> => {
-    if (rolodex) {
-      setLoading(true)
-      const initialApproval = await rolodex.USDC!.allowance(owner, spender)
-
-      const formattedUSDCAmount = BN(usdcAmount).mul(1e6)
-      setLoading(false)
-      return initialApproval.lt(formattedUSDCAmount)
-    }
-    setLoading(false)
-    return true
-  }
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (needAllowance) {
-      handleApprovalRequest()
-    } else {
+    if (hasAllowance) {
       usdcCommitHandler()
+    } else {
+      handleApprovalRequest()
     }
   }
 
@@ -369,9 +329,12 @@ const PurchaseBox = ({
         setLoadmsg(locale('TransactionPending'))
         await approve?.wait()
 
-        checkUSDCAllowance(currentAccount, SLOWROLL_ADDRESS, usdcAmount).then(
-          (needsAllowance) => setNeedAllowance(needsAllowance)
-        )
+        hasUSDCAllowance(
+          currentAccount,
+          SLOWROLL_ADDRESS,
+          usdcAmount,
+          rolodex
+        ).then(setHasAllowance)
       } catch (e) {
         console.log(e)
       }
@@ -419,13 +382,13 @@ const PurchaseBox = ({
           flexDirection={{ xs: 'column', lg: 'row' }}
         >
           <Box display="flex" alignItems="center">
-            <Box
-              component="img"
-              src={`images/ipt_${isLight ? 'blue' : 'white'}.svg`}
+            <SVGBox
+              svg_name={`ipt_${isLight ? 'blue' : 'white'}`}
               width={32}
               height={32}
-              mr={2}
-            ></Box>
+              sx={{ mr: 2 }}
+            />
+
             <Typography variant="subtitle1">IPT Sale</Typography>
           </Box>
 
@@ -586,7 +549,7 @@ const PurchaseBox = ({
           <DisableableModalButton
             disabled={Number(amountToCommit) <= 0 || !connected}
             type="submit"
-            text={needAllowance ? 'Set Allowance' : 'Commit'}
+            text={hasAllowance ? 'Commit' : 'Set Allowance'}
             loading={loading}
             load_text={loadmsg}
             onClick={handleSubmit}

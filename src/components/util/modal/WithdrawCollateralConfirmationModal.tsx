@@ -14,6 +14,7 @@ import { locale } from '../../../locale'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { round } from '../../../easy/bn'
 import withdrawCollateral from '../../../contracts/Vault/withdrawCollateral'
+import SVGBox from '../../icons/misc/SVGBox'
 
 export const WithdrawCollateralConfirmationModal = () => {
   const {
@@ -37,7 +38,7 @@ export const WithdrawCollateralConfirmationModal = () => {
     setLoadmsg(locale('CheckWallet'))
 
     const amount = collateralWithdrawAmountMax
-      ? collateralToken.vault_amount_bn
+      ? collateralToken.vault_amount
       : collateralWithdrawAmount
     try {
       const attempt = await withdrawCollateral(
@@ -101,19 +102,19 @@ export const WithdrawCollateralConfirmationModal = () => {
         }}
       >
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
+          <SVGBox
             width={36}
             height={36}
-            src={`images/${collateralToken.ticker}.svg`}
+            svg_name={collateralToken.ticker}
+            sx={{ mr: 3 }}
             alt={collateralToken.ticker}
-            marginRight={3}
-          ></Box>
+          />
+
           <Box>
             <Typography variant="body3" color="text.primary">
               $
               {round(
-                collateralToken.value * Number(collateralWithdrawAmount),
+                collateralToken.price * Number(collateralWithdrawAmount),
                 2
               )}{' '}
               ({round(collateralWithdrawAmount, 4)} {collateralToken.ticker} )

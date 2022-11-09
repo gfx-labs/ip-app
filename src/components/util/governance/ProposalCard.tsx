@@ -8,7 +8,6 @@ import {
   useTheme,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { blue, formatColor, neutral, pink } from '../../../theme'
 import { Votes } from './Votes'
 import { Status } from './Status'
 import { Spinner } from '../loading'
@@ -19,7 +18,6 @@ import { SpecialComponents } from 'react-markdown/lib/ast-to-react'
 import remarkGfm from 'remark-gfm'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import ProposalDetails from './proposal'
-import { Proposal } from '../../../pages/governance'
 import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 import VoteButton from './VoteButton'
 import {
@@ -31,14 +29,15 @@ import { useLight } from '../../../hooks/useLight'
 import { useParams } from 'react-router'
 import { useRef } from 'react'
 import { COMMON_CONTRACT_NAMES } from '../../../constants'
-import { getAddress } from 'ethers/lib/utils'
-import { getProposalIsOptimisitc } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
+import { formatEther, formatUnits, getAddress } from 'ethers/lib/utils'
+import { getProposalIsOptimistic } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
 import { ProposalTypeToolTip } from './ProposalTypeToolTip'
-import useWindowDimensions from '../../../hooks/useWindowDimensions'
 import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
+import SVGBox from '../../icons/misc/SVGBox'
+import { Proposal } from '../api/getProposals'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -60,7 +59,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider, currentSigner, currentAccount } =
     useWeb3Context()
   const { votingPower } = props
-  const { id, body, endBlock, transactionHash, details, startBlock } =
+  const { id, body, endBlock, transactionHash, details, startBlock, votes } =
     props.proposal
   const isLight = useLight()
 
@@ -110,7 +109,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [hasVoted, setHasVoted] = useState(false)
   const [timeLeft, setTimeLeft] = useState<string>('')
   const [forVotes, setForVotes] = useState(0)
-  const [abstainVotes, setAbstainVotes] = useState(0)
   const [againstVotes, setAgainstVotes] = useState(0)
   const [totalVotes, setTotalVotes] = useState(0)
   const [isActive, setIsActive] = useState(false)
@@ -119,16 +117,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   useEffect(() => {
     const signerOrProvider = currentSigner ? currentSigner : provider
-
     getProposalInfo(id, signerOrProvider!).then((res) => {
-      getProposalIsOptimisitc(res.proposer, signerOrProvider!).then(
+      getProposalIsOptimistic(res.proposer, signerOrProvider!).then(
         (isWhitelisted) => {
           const pType = isWhitelisted
             ? 'optimistic'
             : res.emergency
             ? 'emergency'
             : 'standard'
-
           setProposalType(pType)
         }
       )
@@ -142,18 +138,20 @@ export const ProposalCard = (props: ProposalCardProps) => {
   }, [id])
 
   useEffect(() => {
-    if (proposal) {
-      const abstainVotes = useFormatBNWithDecimals(proposal?.abstainVotes, 18)
-      const forVotes = useFormatBNWithDecimals(proposal?.forVotes, 18)
-      const againstVotes = useFormatBNWithDecimals(proposal?.againstVotes, 18)
+    if (votes.for.length || votes.against.length) {
+      const forVotes =
+        proposalType !== 'optimistic'
+          ? votes.for.reduce((a, b) => a + b.votingPower, 0)
+          : 0
 
-      const totalVotes = abstainVotes + forVotes + againstVotes
-      setAbstainVotes(abstainVotes)
+      const againstVotes = votes.against.reduce((a, b) => a + b.votingPower, 0)
+
+      const totalVotes = forVotes + againstVotes
       setAgainstVotes(againstVotes)
       setForVotes(forVotes)
       setTotalVotes(totalVotes)
     }
-  }, [proposal])
+  }, [votes, proposal])
 
   useEffect(() => {
     const bdiff = endBlock - dataBlock
@@ -163,19 +161,12 @@ export const ProposalCard = (props: ProposalCardProps) => {
     if (bdiff < 0) {
       provider?.getBlock(endBlock).then((res) => {
         const endDate = new Date(res.timestamp * 1000)
-
-        const endDateString = isMobile
-          ? endDate.toLocaleDateString()
-          : `Voting ended on ${endDate.toLocaleDateString()}`
-
         setTimeLeft(endDate.toLocaleDateString())
       })
       return
     }
-
     if (proposalType && provider) {
       proposalTimeRemaining(
-        proposalType,
         startBlock,
         endBlock,
         dataBlock,
@@ -285,16 +276,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   alignItems: 'center',
                 }}
               >
-                <Box
-                  component="img"
-                  src={`images/etherscan-logo-${
-                    isLight ? 'dark' : 'light'
-                  }.svg`}
-                  width="12px"
-                  height="12px"
-                  position="relative"
-                  marginRight={1}
-                ></Box>
+                <SVGBox
+                  svg_name={
+                    isLight ? 'etherscan-logo-dark' : 'etherscan-logo-light'
+                  }
+                  width={12}
+                  height={12}
+                  sx={{ mr: 1 }}
+                />
                 <Typography color="text.secondary" variant="label_semi">
                   Etherscan
                 </Typography>
@@ -346,7 +335,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 </Box>
               )}
 
-              <ProposalDetails id={id} />
+              <ProposalDetails
+                id={id}
+                proposalType={proposalType}
+                votes={votes}
+              />
               <Box my={2}>
                 <Typography variant="h6_midi" display="block" mb={2}>
                   Details
