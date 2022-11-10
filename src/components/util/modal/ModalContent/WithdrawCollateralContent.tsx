@@ -84,7 +84,8 @@ export const WithdrawCollateralContent = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
       let a2s = borrowingPower - accountLiability
-      const tv = collateralToken.vault_amount.toNumber() * collateralToken.price
+      const tv =
+        Number(collateralToken.vault_amount_str) * collateralToken.price
 
       if (accountLiability == 0) {
         if (isMoneyValue) {
@@ -121,7 +122,7 @@ export const WithdrawCollateralContent = () => {
     <Box>
       <Box textAlign="right" mb={1}>
         <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
-          Vault Balance: {round(collateralToken.vault_amount || 0, 4)}{' '}
+          Vault Balance: {round(collateralToken.vault_amount_str || 0, 4)}{' '}
           {collateralToken.ticker}
         </Typography>
       </Box>

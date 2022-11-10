@@ -120,10 +120,9 @@ export const VaultDataProvider = ({
             if (token.vault_amount.isZero()) {
               token.vault_balance = '0'
             } else {
-              token.vault_balance = token.vault_amount
-                .mul(token.price)
-                .toNumber()
-                .toFixed(2)
+              const vaultBalance = BNtoDec(token.vault_amount) * token.price
+
+              token.vault_balance = vaultBalance.toFixed(2)
             }
           })
           .catch((e) => {
