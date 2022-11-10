@@ -10,19 +10,19 @@ export const depositCollateral = async (
 ) => {
   const contract = ERC20Detailed__factory.connect(collateral_address, signer)
   try {
-    const formattedERC20Amount = typeof amount === 'string' ? utils.parseUnits(
-      amount,
-      await contract.decimals()
-    ) : amount
-    const ge = (
-      await contract.estimateGas.transfer(vaultAddress!, formattedERC20Amount)
-    )
-      .mul(100)
-      .div(85)
+    const formattedERC20Amount =
+      typeof amount === 'string'
+        ? utils.parseUnits(amount, await contract.decimals())
+        : amount
+    // const ge = (
+    //   await contract.estimateGas.transfer(vaultAddress!, formattedERC20Amount)
+    // )
+    //   .mul(100)
+    //   .div(85)
     const transferAttempt = await contract.transfer(
       vaultAddress!,
-      formattedERC20Amount,
-      { gasLimit: ge }
+      formattedERC20Amount
+      // { gasLimit: ge }
     )
 
     return transferAttempt
