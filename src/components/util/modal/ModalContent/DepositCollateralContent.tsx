@@ -39,8 +39,8 @@ export const DepositCollateralContent = () => {
 
   const setMax = () => {
     const inputAmount = isMoneyValue
-      ? collateralToken.wallet_amount?.toNumber()! * collateralToken.price
-      : collateralToken.wallet_amount?.toNumber()!
+      ? Number(collateralToken.wallet_amount_str)! * collateralToken.price
+      : Number(collateralToken.wallet_amount_str)!
 
     setInputAmount(inputAmount.toString())
     setCollateralDepositAmountMax(true)
@@ -78,7 +78,7 @@ export const DepositCollateralContent = () => {
         <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
           {' '}
           Wallet Balance:{' '}
-          {collateralToken?.wallet_amount!.toNumber().toFixed(2)}{' '}
+          {Number(collateralToken?.wallet_amount_str!).toFixed(2)}{' '}
           {collateralToken?.ticker}
         </Typography>
       </Box>
