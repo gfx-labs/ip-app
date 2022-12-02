@@ -103,6 +103,20 @@ export const getTokensListOnCurrentChain = (
       capped_token: true,
       capped_address: '0x7C1Caa71943Ef43e9b203B02678000755a4eCdE9',
     }),
+    cbETH: initializeToken({
+      name: 'cbETH',
+      address: tokensToChains.cbETH[chain_id],
+      ticker: 'cbETH',
+      capped_token: true,
+      capped_address: '0x99bd1f28a5A7feCbE39a53463a916794Be798FC3',
+    }),
+    rETH: initializeToken({
+      name: 'rETH',
+      address: tokensToChains.rETH[chain_id],
+      ticker: 'rETH',
+      capped_token: true,
+      capped_address: '0x64eA012919FD9e53bDcCDc0Fc89201F484731f41',
+    }),
   }
 }
 
