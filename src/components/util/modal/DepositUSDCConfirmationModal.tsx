@@ -18,10 +18,12 @@ import { Chains } from '../../../chain/chains'
 import { depositUSDC } from '../../../contracts/USDI/depositUSDC'
 import SVGBox from '../../icons/misc/SVGBox'
 import { hasUSDCAllowance } from '../../../contracts/misc/hasAllowance'
+import { useStableCoinsContext } from '../../libs/stable-coins-provider/StableCoinsProvider'
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
   const { currentAccount, dataBlock, currentSigner, chainId } = useWeb3Context()
+  const { USDC: USDC_TOKEN } = useStableCoinsContext()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const rolodex = useRolodexContext()
@@ -36,7 +38,7 @@ export const DepositUSDCConfirmationModal = () => {
       hasUSDCAllowance(
         currentAccount,
         rolodex.addressUSDI,
-        USDC.maxDeposit ? USDC.token.wallet_amount! : USDC.amountToDeposit,
+        USDC.maxDeposit ? USDC_TOKEN.wallet_amount! : USDC.amountToDeposit,
         rolodex
       ).then(setHasAllowance)
     }
@@ -49,7 +51,7 @@ export const DepositUSDCConfirmationModal = () => {
       try {
         const depositTransaction = await depositUSDC(
           USDC.maxDeposit
-            ? USDC.token.wallet_amount!
+            ? USDC_TOKEN.wallet_amount!
             : BN(USDC.amountToDeposit).mul(BN('1e6')),
           rolodex,
           currentSigner!
