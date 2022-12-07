@@ -1,11 +1,8 @@
 import { ContractReceipt, ContractTransaction } from 'ethers'
 import { createContext, useState, useContext } from 'react'
-import {
-  getStablecoins,
-  getTokensListOnCurrentChain,
-} from '../../../chain/tokens'
+import { getTokensListOnCurrentChain } from '../../../chain/tokens'
 import { Token } from '../../../types/token'
-import { useRolodexContext } from '../rolodex-data-provider/RolodexDataProvider'
+import { useStableCoinsContext } from '../stable-coins-provider/StableCoinsProvider'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 
 export enum ModalType {
@@ -65,9 +62,10 @@ export type ModalContextType = {
 }
 
 const createDepositWithdrawUSDC = () => {
-  const rolodex = useRolodexContext()
+  const { USDC } = useStableCoinsContext()
+
   return {
-    token: getStablecoins(rolodex!).USDC,
+    token: USDC,
     amountToDeposit: '0',
     amountToWithdraw: '0',
     maxWithdraw: false,
@@ -96,7 +94,7 @@ export const ModalContentProvider = ({
     useState(false)
 
   const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
-    createDepositWithdrawUSDC()
+    createDepositWithdrawUSDC
   )
 
   const updateUSDC = (prop: string, val: any) => {
