@@ -33,7 +33,6 @@ export const getTokensListOnCurrentChain = (
       name: 'Wrapped ETH',
       address: tokensToChains.WETH[chain_id],
       ticker: 'WETH',
-      decimals: 8,
     }),
     stETH: initializeToken({
       name: 'Lido Staked ETH',
@@ -44,6 +43,7 @@ export const getTokensListOnCurrentChain = (
       name: 'Wrapped BTC',
       address: tokensToChains.WBTC[chain_id],
       ticker: 'WBTC',
+      decimals: 8,
     }),
     UNI: initializeToken({
       name: 'Uniswap',

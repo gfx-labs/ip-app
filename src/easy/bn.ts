@@ -20,3 +20,7 @@ export const round = (a: BigNumberish, n: number): number => {
 export const BNtoDec = (bn: BigNumber): number => {
   return bn.div(BN('1e16')).toNumber() / 100
 }
+
+export const BNtoDecSpecific = (bn: BigNumber, decimals: number): number => {
+  return bn.div(BN(`1e${decimals - 2}`)).toNumber() / 100
+}
