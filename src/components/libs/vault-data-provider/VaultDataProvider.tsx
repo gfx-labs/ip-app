@@ -13,7 +13,7 @@ import {
   getVaultTokenMetadata,
 } from './getVaultTokenBalanceAndPrice'
 import { getVaultBorrowingPower } from './getBorrowingPower'
-import { BN, BNtoDec } from '../../../easy/bn'
+import { BNtoDec, BNtoDecSpecific } from '../../../easy/bn'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
@@ -120,7 +120,9 @@ export const VaultDataProvider = ({
             if (token.vault_amount.isZero()) {
               token.vault_balance = '0'
             } else {
-              const vaultBalance = BNtoDec(token.vault_amount) * token.price
+              const vaultBalance =
+                BNtoDecSpecific(token.vault_amount, token.decimals) *
+                token.price
 
               token.vault_balance = vaultBalance.toFixed(2)
             }
@@ -195,7 +197,7 @@ export const VaultDataProvider = ({
   useEffect(() => {
     setHasVault(!!vaultID)
     if (!!vaultID && rolodex) {
-      rolodex?.VC?.vaultAddress(vaultID!)
+      rolodex?.VC?.vaultAddress(vaultID)
         .then(setVaultAddress)
         .catch((e) => {
           console.error('failed to get vault address', e)
