@@ -3,11 +3,7 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useAppGovernanceContext } from '../components/libs/app-governance-provider/AppGovernanceProvider'
 import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
-import getProposalCreatedEvents, {
-  ProposalCreatedEvent,
-} from '../components/util/api/getProposalCreatedEvents'
 import getProposals, { Proposal } from '../components/util/api/getProposals'
-import getProposalVoteCastEvents from '../components/util/api/getProposalVoteCastEvents'
 import { DelegateIPTButton } from '../components/util/button'
 import { ProposalCard } from '../components/util/governance/ProposalCard'
 import { Spinner } from '../components/util/loading'

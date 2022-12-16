@@ -3,7 +3,7 @@ import { getTokensListOnCurrentChain } from '../../../chain/tokens'
 import { Token } from '../../../types/token'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 
-type AppGovernanceContextType = {
+interface AppGovernanceContextType {
   isApp: boolean
   setIsApp: (val: boolean) => void
   delegateToken: Token
@@ -16,9 +16,7 @@ type AppGovernanceContextType = {
   setCurrentVotes: (val: number) => void
 }
 
-export const AppGovernanceContext = createContext(
-  [] as unknown as AppGovernanceContextType
-)
+export const AppGovernanceContext = createContext({} as AppGovernanceContextType)
 
 export const AppGovernanceProvider = ({
   children,
