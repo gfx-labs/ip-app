@@ -36,8 +36,7 @@ Interest Protocol improves upon each component to create an efficent and decentr
 3. *To bring much-needed innovations to DeFi.* GFX team members have been active contributors to various prominent DeFi protocols. During that time, we grew a unique perspective on their limitations and the remaining gaps to be filled in DeFi. Most importantly, we realized that DeFi lacks a fractional reserve bank that pays interest to depositors. So we built one ourselves.
 
 ## Protocol Audit
-
-GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol. No critical, high, or medium severity issues were found. The audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf)
+GFX Labs commissioned [Dedaub](https://dedaub.com/) to audit Interest Protocol at the protocol's launch. No critical, high, or medium severity issues were found. The audit report can be found [here.](https://github.com/gfx-labs/ip-contracts/blob/master/audit/GFX_IP_Protocol_Audit_Report.pdf). In November of 2022, GFX Labs commissioned a second audit to be performed by [Sigma Prime](https://sigmaprime.io/) which audited Interest Protocol in entirety. No urgent errors we're found, and all issues have been addressed or acknowledged. Sigma Prime's audit report can be found [here](https://github.com/gfx-labs/ip-contracts/blob/master/audit/Sigma_Prime_-_Interest_Protocol_Smart_Contract_Security_Assessment_Report.pdf).
 
 
 

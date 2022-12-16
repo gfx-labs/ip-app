@@ -12,3 +12,4 @@ export const getUserVotingPower = async (
     throw new Error('Error getting voting power')
   }
 }
+
