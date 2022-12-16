@@ -7,6 +7,7 @@ import {
   ModalType,
 } from '../../libs/modal-content-provider/ModalContentProvider'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { ZERO_ADDRESS } from '../../../constants'
 
 interface VoteButtonProps {
   status: number
@@ -26,10 +27,10 @@ const VoteButton = (props: VoteButtonProps) => {
 
   const { currentSigner } = useWeb3Context()
   const { setType } = useModalContext()
-  const { needsToDelegate } = useAppGovernanceContext()
+  const { delegatedTo } = useAppGovernanceContext()
 
   const handleVoteClick = () => {
-    if (needsToDelegate) {
+    if (delegatedTo == ZERO_ADDRESS) {
       setType(ModalType.DelegateIPT)
     } else {
       setOpen(true)
@@ -43,7 +44,7 @@ const VoteButton = (props: VoteButtonProps) => {
         sx={{ height: 43, width: '100%', backgroundColor: 'button.vote' }}
         variant="contained"
         onClick={handleVoteClick}
-        disabled={(votingPower <= 0 && !needsToDelegate) || hasVoted}
+        disabled={(votingPower <= 0 && !(delegatedTo == ZERO_ADDRESS)) || hasVoted}
       >
         <Typography variant="body1" lineHeight={1}>
           Vote
