@@ -135,7 +135,7 @@ export const DelegateIPTModal = () => {
               maximumFractionDigits: 2,
             })}{' '}
             IPT.
-            {(delegatedTo != ZERO_ADDRESS) ? (<span> You are currently delegating to {delegatedTo}</span>) : (<>"You should delegate your IPT votes to yourself or a friend."</>)}
+            {(delegatedTo != ZERO_ADDRESS) ? (<> You are currently delegating to {delegatedTo}</>) : (<>"You should delegate your IPT votes to yourself or a friend."</>)}
           </Typography>
         )}
         {screen !== 0 && (
