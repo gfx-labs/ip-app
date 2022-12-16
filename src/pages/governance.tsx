@@ -11,7 +11,7 @@ import getProposalVoteCastEvents from '../components/util/api/getProposalVoteCas
 import { DelegateIPTButton } from '../components/util/button'
 import { ProposalCard } from '../components/util/governance/ProposalCard'
 import { Spinner } from '../components/util/loading'
-import { getUserVotingPower } from '../contracts/IPTDelegate'
+import { getUserVotingPower, getUserDelegates } from '../contracts/IPTDelegate'
 import { getUserIPTBalance } from '../contracts/IPTDelegate/getUserIPTbalance'
 import { BNtoDec } from '../easy/bn'
 
@@ -26,7 +26,7 @@ export const Governance = () => {
     currentSigner,
   } = useWeb3Context()
   const {
-    setNeedsToDelegate,
+    setDelegatedTo,
     setIptBalance,
     setCurrentVotes,
     currentVotes,
@@ -53,15 +53,17 @@ export const Governance = () => {
       })
 
     if (currentAccount && currentSigner) {
-      getUserVotingPower(currentAccount, currentSigner!).then((res) => {
+      getUserVotingPower(currentAccount, currentSigner).then((res) => {
         const currentVotes = BNtoDec(res)
         setCurrentVotes(currentVotes)
-
-        getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
+        getUserIPTBalance(currentAccount, currentSigner).then((response) => {
           const iptBalance = BNtoDec(response)
-
-          setNeedsToDelegate(iptBalance > 0)
           setIptBalance(iptBalance)
+          if(iptBalance > 0) {
+            getUserDelegates(currentAccount, currentSigner).then((delegatee)=>{
+              setDelegatedTo(delegatee)
+            })
+          }
         })
       })
     }

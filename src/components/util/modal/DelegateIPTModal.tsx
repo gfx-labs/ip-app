@@ -15,19 +15,21 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
 import {
   delegateUserVotingPower,
+  getUserDelegates,
   getUserVotingPower,
 } from '../../../contracts/IPTDelegate'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import { getUserIPTBalance } from '../../../contracts/IPTDelegate/getUserIPTbalance'
 import { BN, BNtoDec } from '../../../easy/bn'
+import { ZERO_ADDRESS } from '../../../constants'
 
 export const DelegateIPTModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
   const {
-    needsToDelegate,
+    delegatedTo,
+    setDelegatedTo,
     iptBalance,
     setCurrentVotes,
-    setNeedsToDelegate,
     setIptBalance,
   } = useAppGovernanceContext()
   const isLight = useLight()
@@ -71,9 +73,12 @@ export const DelegateIPTModal = () => {
                   getUserIPTBalance(currentAccount, currentSigner!).then(
                     (response) => {
                       const iptBalance = BNtoDec(response)
-
-                      setNeedsToDelegate(iptBalance > 0)
                       setIptBalance(iptBalance)
+                      if(iptBalance > 0){
+                        getUserDelegates(currentAccount, currentSigner).then((delegatee)=>{
+                          setDelegatedTo(delegatee)
+                        })
+                      }
                     }
                   )
                 }
@@ -122,17 +127,17 @@ export const DelegateIPTModal = () => {
             {screen === 0 ? 'Delegate your IPT' : 'Add Delegate'}
           </Typography>
         </Box>
-        {needsToDelegate && (
+        {(iptBalance > 0) && (
           <Typography variant="label" display="block" color="text.primary">
             You have{' '}
             {iptBalance.toLocaleString(undefined, {
               minimumFractionDigits: 0,
               maximumFractionDigits: 2,
             })}{' '}
-            IPT. You should delegate your IPT votes to yourself or a friend.
+            IPT.
+            {(delegatedTo != ZERO_ADDRESS) ? (<span> You are currently delegating to {delegatedTo}</span>) : (<>"You should delegate your IPT votes to yourself or a friend."</>)}
           </Typography>
         )}
-
         {screen !== 0 && (
           <Typography
             variant="body2"
@@ -180,8 +185,8 @@ export const DelegateIPTModal = () => {
                     sx: {
                       '&:before, &:after': {
                         borderBottom: 'none !important',
-                      },
-                    },
+                  },
+                  },
                   }}
                   sx={{
                     width: '100%',
@@ -191,7 +196,7 @@ export const DelegateIPTModal = () => {
                       color: isLight
                         ? formatColor(neutral.gray1)
                         : formatColor(neutral.white),
-                    },
+                  },
                   }}
                 />
               </ModalInputContainer>
