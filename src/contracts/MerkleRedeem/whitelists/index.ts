@@ -19,6 +19,7 @@ import week23 from './week23'
 import week24 from './week24'
 import week25 from './week25'
 import week26 from './week26'
+import week27 from './week27'
 
 const weeks = {
   7: week7,
@@ -42,6 +43,7 @@ const weeks = {
   24: week24,
   25: week25,
   26: week26,
+  27: week27,
 }
 
 export default weeks
