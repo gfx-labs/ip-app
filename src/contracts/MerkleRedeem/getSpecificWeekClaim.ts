@@ -1,30 +1,24 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { Contract } from 'ethers'
 import { MerkleRedeem__factory } from '../../chain/contracts/factories/IPTsale/MerkleRedeem'
 import { MERKLE_REDEEM_ADDRESS } from '../../constants'
-import createClaimOf from './createClaim'
 import { getMerkleProof } from './getMerkleProof'
 
-const getClaimOf155 = async (
-  account: string,
-  providerOrSigner: JsonRpcProvider | JsonRpcSigner
-) => {
-  try {
-    const merkleContract = MerkleRedeem__factory.connect(
-      MERKLE_REDEEM_ADDRESS,
-      providerOrSigner
-    )
+export const SPECIFIC_WEEKS = [155, 305]
 
-    const claimStatus = await merkleContract.claimStatus(account, 155, 155)
+const getSpecificWeekClaim = async (account: string, providerOrSigner: JsonRpcProvider | JsonRpcSigner, week: number) => {
+  try {
+    const merkleContract = MerkleRedeem__factory.connect(MERKLE_REDEEM_ADDRESS, providerOrSigner)
+
+    const claimStatus = await merkleContract.claimStatus(account, week, week)
 
     if (claimStatus[0]) {
       return undefined
     }
-    const proofResult = getMerkleProof(account, 155)
+    const proofResult = getMerkleProof(account, week)
 
     if (proofResult) {
       return {
-        week: 155,
+        week: week,
         balance: proofResult.minter.amount,
         merkleProof: proofResult.proof,
       }
@@ -37,4 +31,4 @@ const getClaimOf155 = async (
   }
 }
 
-export default getClaimOf155
+export default getSpecificWeekClaim
