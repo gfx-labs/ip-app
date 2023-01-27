@@ -25,12 +25,12 @@ export type Web3Data = {
   currentSigner: JsonRpcSigner | undefined
   connected: boolean
   loading: boolean
-  provider: JsonRpcProvider | undefined
+  provider: JsonRpcProvider
   chainId: number
   dataBlock: number
   gasPrice: string
   error: Error | undefined
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider | undefined
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider
 }
 
 export type Web3ContextData = {
@@ -39,34 +39,38 @@ export type Web3ContextData = {
 
 export const Web3Context = React.createContext({} as Web3ContextData)
 
-export const Web3ContextProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => {
-  const {
-    account,
-    chainId,
-    library: provider,
-    activate,
-    active,
-    error,
-    deactivate,
-    setError,
-  } = useWeb3React<providers.Web3Provider>()
+export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
+  const { account, chainId, library: libraryProvider, activate, active, error, deactivate, setError } = useWeb3React<providers.Web3Provider>()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [connector, setConnector] = useState<AbstractConnector>()
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
-  const [signerOrProvider, setSignerOrProvider] = useState<
-    JsonRpcSigner | JsonRpcProvider | undefined
-  >()
+  const [provider, setProvider] = useState<JsonRpcProvider>(libraryProvider || new JsonRpcProvider(BACKUP_PROVIDER))
+  const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
 
   const [deactivated, setDeactivated] = useState<boolean>(false)
   const [tried, setTried] = useState<boolean>(false)
 
   const [dataBlock, setDataBlock] = useState(0)
   const [gasPrice, setGasPrice] = useState('0')
+
+  useEffect(() => {
+    if (libraryProvider) {
+      setProvider(libraryProvider)
+    } else {
+      setProvider(new JsonRpcProvider(BACKUP_PROVIDER))
+    }
+  }, [libraryProvider])
+
+  useEffect(() => {
+    if (provider && account) {
+      setCurrentSigner(provider?.getSigner(account?.toLowerCase()))
+    }
+  }, [provider, account])
+
+  useEffect(() => {
+    setSignerOrProvider(currentSigner ? currentSigner : provider)
+  }, [provider, currentSigner])
 
   // Wallet connection and disconnection
   // clean local storage
@@ -76,24 +80,12 @@ export const Web3ContextProvider = ({
     }
     if (connector instanceof WalletLinkConnector) {
       localStorage.removeItem('-walletlink:https://www.walletlink.org:version')
-      localStorage.removeItem(
-        '-walletlink:https://www.walletlink.org:session:id'
-      )
-      localStorage.removeItem(
-        '-walletlink:https://www.walletlink.org:session:secret'
-      )
-      localStorage.removeItem(
-        '-walletlink:https://www.walletlink.org:session:linked'
-      )
-      localStorage.removeItem(
-        '-walletlink:https://www.walletlink.org:AppVersion'
-      )
-      localStorage.removeItem(
-        '-walletlink:https://www.walletlink.org:Addresses'
-      )
-      localStorage.removeItem(
-        '-walletlink:https://www.walletlink.org:walletUsername'
-      )
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:session:id')
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:session:secret')
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:session:linked')
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:AppVersion')
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:Addresses')
+      localStorage.removeItem('-walletlink:https://www.walletlink.org:walletUsername')
     }
   }, [connector])
 
@@ -145,16 +137,10 @@ export const Web3ContextProvider = ({
   )
 
   useEffect(() => {
-    const tempProvider = provider
-      ? provider
-      : new JsonRpcProvider(BACKUP_PROVIDER)
-
-    if (tempProvider) {
-      console.log('started auto refresh of blockNumber for', tempProvider)
-      tempProvider.on('block', (n: number) => {
-        const tempSignerOrProvider = signerOrProvider
-          ? signerOrProvider
-          : tempProvider
+    if (provider) {
+      console.log('started auto refresh of blockNumber for', provider)
+      provider.on('block', (n: number) => {
+        const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
 
         getGasPrice(tempSignerOrProvider!).then(setGasPrice)
         if (n > dataBlock) {
@@ -163,16 +149,10 @@ export const Web3ContextProvider = ({
       })
       return () => {
         console.log('stopped auto refresh of blockNumber for', provider)
-        tempProvider.on('block', () => {})
+        provider.on('block', () => {})
       }
     }
   }, [provider])
-
-  useEffect(() => {
-    setSignerOrProvider(
-      currentSigner ? currentSigner : new JsonRpcProvider(BACKUP_PROVIDER)
-    )
-  }, [provider, currentSigner])
 
   // handle logic to eagerly connect to the injected ethereum provider,
   // if it exists and has granted access already
@@ -207,12 +187,6 @@ export const Web3ContextProvider = ({
     }
   }, [tried, active])
 
-  useEffect(() => {
-    if (provider && account) {
-      setCurrentSigner(provider?.getSigner(account?.toLowerCase()))
-    }
-  }, [provider, account])
-
   return (
     <Web3Context.Provider
       value={{
@@ -240,10 +214,7 @@ export const Web3ContextProvider = ({
 export const useWeb3Context = () => {
   const { web3ProviderData } = useContext(Web3Context)
   if (Object.keys(web3ProviderData).length === 0) {
-    throw new Error(
-      'useWeb3Context() can only be used inside of <Web3ContextProvider />, ' +
-        'please declare it at a higher level.'
-    )
+    throw new Error('useWeb3Context() can only be used inside of <Web3ContextProvider />, ' + 'please declare it at a higher level.')
   }
 
   return web3ProviderData

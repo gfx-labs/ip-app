@@ -1,13 +1,10 @@
-import { JsonRpcSigner } from '@ethersproject/providers'
+import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { InterestProtocolTokenDelegate__factory } from '../../chain/contracts'
 import { IPT_DELEGATE_ADDRESS } from '../../constants'
 
-const connectIPTDelegateContract = (signer: JsonRpcSigner) => {
+const connectIPTDelegateContract = (signerOrProvider: JsonRpcSigner | JsonRpcProvider) => {
   try {
-    return InterestProtocolTokenDelegate__factory.connect(
-      IPT_DELEGATE_ADDRESS,
-      signer
-    )
+    return InterestProtocolTokenDelegate__factory.connect(IPT_DELEGATE_ADDRESS, signerOrProvider)
   } catch (err) {
     throw new Error('Error getting voting power')
   }

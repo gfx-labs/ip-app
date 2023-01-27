@@ -1,12 +1,4 @@
-import {
-  Box,
-  Divider,
-  Link,
-  Skeleton,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material'
+import { Box, Divider, Link, Skeleton, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Votes } from './Votes'
 import { Status } from './Status'
@@ -20,11 +12,7 @@ import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import ProposalDetails from './proposal'
 import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 import VoteButton from './VoteButton'
-import {
-  getProposalInfo,
-  ProposalInfo,
-  getProposalState,
-} from '../../../contracts/GovernorCharlieDelegate'
+import { getProposalInfo, ProposalInfo, getProposalState } from '../../../contracts/GovernorCharlieDelegate'
 import { useLight } from '../../../hooks/useLight'
 import { useParams } from 'react-router'
 import { useRef } from 'react'
@@ -56,18 +44,14 @@ const isAddress = (value: any): string | false => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider, currentSigner, currentAccount } =
-    useWeb3Context()
+  const { dataBlock, provider, currentAccount, signerOrProvider } = useWeb3Context()
   const { votingPower } = props
-  const { id, body, endBlock, transactionHash, details, startBlock, votes } =
-    props.proposal
+  const { id, body, endBlock, transactionHash, details, startBlock, votes } = props.proposal
   const isLight = useLight()
 
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const [expandedContent, setExpandedContent] = useState<string | undefined>(
-    undefined
-  )
+  const [expandedContent, setExpandedContent] = useState<string | undefined>(undefined)
   const param = useParams()
   const ref = useRef<HTMLDivElement>(null)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -92,10 +76,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
     if (isAddress(content.trim())) {
       const commonName = COMMON_CONTRACT_NAMES[content.trim()] ?? content
       return (
-        <Link
-          href={`https://etherscan.io/address/${content.trim()}`}
-          target="_blank"
-        >
+        <Link href={`https://etherscan.io/address/${content.trim()}`} target="_blank">
           {containsWhitespace(content) ? ' ' : ''}
           {commonName}
         </Link>
@@ -116,18 +97,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [hasPriorVotes, setHasPriorVotes] = useState(false)
 
   useEffect(() => {
-    const signerOrProvider = currentSigner ? currentSigner : provider
     getProposalInfo(id, signerOrProvider!).then((res) => {
-      getProposalIsOptimistic(res.proposer, signerOrProvider!).then(
-        (isWhitelisted) => {
-          const pType = isWhitelisted
-            ? 'optimistic'
-            : res.emergency
-            ? 'emergency'
-            : 'standard'
-          setProposalType(pType)
-        }
-      )
+      getProposalIsOptimistic(res.proposer, signerOrProvider!).then((isWhitelisted) => {
+        const pType = isWhitelisted ? 'optimistic' : res.emergency ? 'emergency' : 'standard'
+        setProposalType(pType)
+      })
 
       setProposal(res)
     })
@@ -139,10 +113,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
 
   useEffect(() => {
     if (votes.for.length || votes.against.length) {
-      const forVotes =
-        proposalType !== 'optimistic'
-          ? votes.for.reduce((a, b) => a + b.votingPower, 0)
-          : 0
+      const forVotes = proposalType !== 'optimistic' ? votes.for.reduce((a, b) => a + b.votingPower, 0) : 0
 
       const againstVotes = votes.against.reduce((a, b) => a + b.votingPower, 0)
 
@@ -166,17 +137,11 @@ export const ProposalCard = (props: ProposalCardProps) => {
       return
     }
     if (proposalType && provider) {
-      proposalTimeRemaining(
-        startBlock,
-        endBlock,
-        dataBlock,
-        status,
-        provider
-      ).then((res) => setTimeLeft(res))
+      proposalTimeRemaining(startBlock, endBlock, dataBlock, status, provider).then((res) => setTimeLeft(res))
     }
 
-    if (status === 1 && currentSigner) {
-      getPriorVotes(currentAccount, startBlock, currentSigner).then((res) => {
+    if (status === 1 && provider) {
+      getPriorVotes(currentAccount, startBlock, provider).then((res) => {
         if (!res.isZero()) {
           setHasPriorVotes(true)
         } else {
@@ -184,7 +149,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         }
       })
 
-      getReceiptOf(id, currentAccount, currentSigner).then((receipt) => {
+      getReceiptOf(id, currentAccount, signerOrProvider).then((receipt) => {
         setHasVoted(receipt.hasVoted)
       })
     }
@@ -236,11 +201,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
               </Typography>
             </Box>
 
-            <Box
-              display="flex"
-              alignItems="center"
-              columnGap={{ xs: 1, md: 1.5 }}
-            >
+            <Box display="flex" alignItems="center" columnGap={{ xs: 1, md: 1.5 }}>
               {proposalType ? (
                 ProposalTypeToolTip(proposalType)
               ) : (
@@ -276,14 +237,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   alignItems: 'center',
                 }}
               >
-                <SVGBox
-                  svg_name={
-                    isLight ? 'etherscan-logo-dark' : 'etherscan-logo-light'
-                  }
-                  width={12}
-                  height={12}
-                  sx={{ mr: 1 }}
-                />
+                <SVGBox svg_name={isLight ? 'etherscan-logo-dark' : 'etherscan-logo-light'} width={12} height={12} sx={{ mr: 1 }} />
                 <Typography color="text.secondary" variant="label_semi">
                   Etherscan
                 </Typography>
@@ -335,11 +289,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 </Box>
               )}
 
-              <ProposalDetails
-                id={id}
-                proposalType={proposalType}
-                votes={votes}
-              />
+              <ProposalDetails id={id} proposalType={proposalType} votes={votes} />
               <Box my={2}>
                 <Typography variant="h6_midi" display="block" mb={2}>
                   Details
@@ -372,11 +322,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                 Description
               </Typography>
               <Box fontWeight={400} sx={{ '& h1': { lineHeight: 1 } }}>
-                <ReactMarkdown
-                  children={expandedContent}
-                  components={markdownComponentConfig}
-                  remarkPlugins={[remarkGfm]}
-                />
+                <ReactMarkdown children={expandedContent} components={markdownComponentConfig} remarkPlugins={[remarkGfm]} />
               </Box>
               {status === 1 && (
                 <VoteButton
@@ -389,13 +335,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
                   hasVoted={hasVoted}
                 />
               )}
-              <Box
-                display="flex"
-                justifyContent="flex-end"
-                mt={3}
-                onClick={expandCard}
-                sx={{ cursor: 'pointer' }}
-              >
+              <Box display="flex" justifyContent="flex-end" mt={3} onClick={expandCard} sx={{ cursor: 'pointer' }}>
                 <CaratUpIcon
                   strokecolor={isLight ? '#A3A9BA' : '#FFF'}
                   sx={{
@@ -418,9 +358,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   )
 }
 
-const markdownComponentConfig: Partial<
-  Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents
-> = {
+const markdownComponentConfig: Partial<Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents> = {
   a: ({ node, style, children, ...props }) => {
     return (
       <Link
@@ -465,11 +403,7 @@ const markdownComponentConfig: Partial<
     )
   },
   p: ({ node, style, children, ...props }) => {
-    return (
-      <p style={{ ...style, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>
-        {children}
-      </p>
-    )
+    return <p style={{ ...style, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>{children}</p>
   },
   td: ({ node, style, children, isHeader, ...props }) => {
     if (isHeader) {
