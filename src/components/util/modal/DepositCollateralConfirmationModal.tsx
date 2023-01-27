@@ -68,14 +68,9 @@ export const DepositCollateralConfirmationModal = () => {
         setHasAllowance(ha)
 
         if (!ha) {
-          let approveAmount
-          if (typeof amount === 'string') {
-            approveAmount = utils.parseUnits(DEFAULT_APPROVE_AMOUNT, collateralToken.decimals)
-          } else {
-            approveAmount = collateralToken.wallet_amount
-          }
+          let approveAmount = utils.parseUnits(DEFAULT_APPROVE_AMOUNT, collateralToken.decimals)
 
-          const txn = await contract.approve(collateralToken.capped_address!, DEFAULT_APPROVE_AMOUNT)
+          const txn = await contract.approve(collateralToken.capped_address!, approveAmount)
           setLoadmsg(locale('TransactionPending'))
 
           await txn?.wait()
