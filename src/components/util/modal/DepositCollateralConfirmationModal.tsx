@@ -1,10 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import { useState, useEffect } from 'react'
-import {
-  ModalType,
-  useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+import { ModalType, useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
@@ -16,6 +13,7 @@ import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { hasTokenAllowance } from '../../../contracts/misc/hasAllowance'
+import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -34,25 +32,15 @@ export const DepositCollateralConfirmationModal = () => {
   const { vaultAddress, vaultID, hasVotingVault } = useVaultDataContext()
   const [hasAllowance, setHasAllowance] = useState(false)
 
-  const amount = collateralDepositAmountMax
-    ? collateralToken.wallet_amount
-    : collateralDepositAmount
+  const amount = collateralDepositAmountMax ? collateralToken.wallet_amount : collateralDepositAmount
 
-  const contract = ERC20Detailed__factory.connect(
-    collateralToken.address,
-    currentSigner!
-  )
+  const contract = ERC20Detailed__factory.connect(collateralToken.address, currentSigner!)
 
   useEffect(() => {
     if (collateralToken.capped_address && amount) {
-      hasTokenAllowance(
-        currentAccount,
-        collateralToken.capped_address,
-        amount,
-        collateralToken.address,
-        collateralToken.decimals,
-        currentSigner!
-      ).then(setHasAllowance)
+      hasTokenAllowance(currentAccount, collateralToken.capped_address, amount, collateralToken.address, collateralToken.decimals, currentSigner!).then(
+        setHasAllowance
+      )
     }
   }, [amount])
 
@@ -82,15 +70,12 @@ export const DepositCollateralConfirmationModal = () => {
         if (!ha) {
           let approveAmount
           if (typeof amount === 'string') {
-            approveAmount = utils.parseUnits(amount!, collateralToken.decimals)
+            approveAmount = utils.parseUnits(DEFAULT_APPROVE_AMOUNT, collateralToken.decimals)
           } else {
             approveAmount = collateralToken.wallet_amount
           }
 
-          const txn = await contract.approve(
-            collateralToken.capped_address!,
-            approveAmount!
-          )
+          const txn = await contract.approve(collateralToken.capped_address!, DEFAULT_APPROVE_AMOUNT)
           setLoadmsg(locale('TransactionPending'))
 
           await txn?.wait()
@@ -102,19 +87,9 @@ export const DepositCollateralConfirmationModal = () => {
           return
         }
 
-        attempt = await depositToVotingVault(
-          vaultID!,
-          currentSigner!,
-          collateralToken,
-          amount!
-        )
+        attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
       } else {
-        attempt = await depositCollateral(
-          amount!,
-          collateralToken.address,
-          provider?.getSigner(currentAccount)!,
-          vaultAddress!
-        )
+        attempt = await depositCollateral(amount!, collateralToken.address, provider?.getSigner(currentAccount)!, vaultAddress!)
       }
       updateTransactionState(attempt!)
 
@@ -144,12 +119,7 @@ export const DepositCollateralConfirmationModal = () => {
         setType(ModalType.DepositCollateral)
       }}
     >
-      <Typography
-        variant="body1"
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      >
+      <Typography variant="body1" color={isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)}>
         Confirm Deposit
       </Typography>
       <Box
@@ -162,27 +132,14 @@ export const DepositCollateralConfirmationModal = () => {
           py: 2,
           borderRadius: '10px',
           columnGap: 4,
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray7),
+          backgroundColor: isLight ? formatColor(neutral.gray5) : formatColor(neutral.gray7),
         }}
       >
         <Box display="flex" alignItems="center">
-          <Box
-            component="img"
-            width={36}
-            height={36}
-            src={`images/${collateralToken.ticker}.svg`}
-            alt={collateralToken.ticker}
-            marginRight={3}
-          ></Box>
+          <Box component="img" width={36} height={36} src={`images/${collateralToken.ticker}.svg`} alt={collateralToken.ticker} marginRight={3}></Box>
           <Box>
             <Typography variant="body3" color="text.primary">
-              $
-              {(
-                collateralToken.price * Number(collateralDepositAmount)
-              ).toFixed(2)}{' '}
-              ({collateralDepositAmount} {collateralToken.ticker})
+              ${(collateralToken.price * Number(collateralDepositAmount)).toFixed(2)} ({collateralDepositAmount} {collateralToken.ticker})
             </Typography>
           </Box>
         </Box>
@@ -190,11 +147,7 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          !collateralToken.capped_token ||
-          (collateralToken.capped_token &&
-            collateralToken.capped_address &&
-            !hasVotingVault) ||
-          hasAllowance
+          !collateralToken.capped_token || (collateralToken.capped_token && collateralToken.capped_address && !hasVotingVault) || hasAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'
         }

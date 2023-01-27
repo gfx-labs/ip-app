@@ -1,8 +1,6 @@
 import { BN } from '../../../easy/bn'
 import { Voter } from '../governance/proposal/VoteCount'
-import getProposalDetails, {
-  ProposalDetails,
-} from '../helpers/getProposalDescription'
+import getProposalDetails, { ProposalDetails } from '../helpers/getProposalDescription'
 import getProposalCreatedEvents from './getProposalCreatedEvents'
 import getProposalVoteCastEvents from './getProposalVoteCastEvents'
 
@@ -27,31 +25,29 @@ const getProposals = async () => {
     const voteEvents = await getProposalVoteCastEvents()
 
     const createdEvents = await getProposalCreatedEvents()
+    const votes: { [id: number]: { for: Voter[]; against: Voter[] } } = voteEvents.reduce((acc, voteEvent) => {
+      const { ProposalId, Support, Voter, Votes } = voteEvent
+      const voter: Voter = {
+        address: Voter,
+        votingPower: BN(Votes).div(BN('1e16')).toNumber() / 100,
+        direction: Support,
+      }
 
-    const votes: { [id: number]: { for: Voter[]; against: Voter[] } } =
-      voteEvents.reduce((acc, voteEvent) => {
-        const { ProposalId, Support, Voter, Votes } = voteEvent
-        const voter: Voter = {
-          address: Voter,
-          votingPower: BN(Votes).div(BN('1e16')).toNumber() / 100,
-          direction: Support,
-        }
-
-        if (acc[ProposalId]) {
-          if (Support === 1) {
-            acc[ProposalId].for.push(voter)
-          } else {
-            acc[ProposalId].against.push(voter)
-          }
+      if (acc[ProposalId]) {
+        if (Support === 1) {
+          acc[ProposalId].for.push(voter)
         } else {
-          acc[ProposalId] = {
-            for: Support === 1 ? [voter] : [],
-            against: Support === 0 ? [voter] : [],
-          }
+          acc[ProposalId].against.push(voter)
         }
+      } else {
+        acc[ProposalId] = {
+          for: Support === 1 ? [voter] : [],
+          against: Support === 0 ? [voter] : [],
+        }
+      }
 
-        return acc
-      }, {} as { [id: number]: { for: Proposal['votes']['for']; against: Proposal['votes']['against'] } })
+      return acc
+    }, {} as { [id: number]: { for: Proposal['votes']['for']; against: Proposal['votes']['against'] } })
 
     createdEvents.forEach((val) => {
       proposals.set(val.ProposalId, {
@@ -66,9 +62,7 @@ const getProposals = async () => {
           signatures: val.Signatures,
           calldatas: val.Calldatas,
         }),
-        votes: votes[val.ProposalId]
-          ? { ...votes[val.ProposalId] }
-          : { for: [], against: [] },
+        votes: votes[val.ProposalId] ? { ...votes[val.ProposalId] } : { for: [], against: [] },
       })
     })
 

@@ -13,31 +13,17 @@ import { BNtoDec } from '../easy/bn'
 
 export const Governance = () => {
   const theme = useTheme()
-  const {
-    dataBlock,
-    provider,
-    chainId,
-    connected,
-    currentAccount,
-    currentSigner,
-  } = useWeb3Context()
-  const {
-    setDelegatedTo,
-    setIptBalance,
-    setCurrentVotes,
-    currentVotes,
-    iptBalance,
-  } = useAppGovernanceContext()
+  const { dataBlock, provider, chainId, connected, currentAccount, currentSigner } = useWeb3Context()
+  const { setDelegatedTo, setIptBalance, setCurrentVotes, currentVotes, iptBalance } = useAppGovernanceContext()
 
-  const [proposals, setProposals] = useState<Map<number, Proposal>>(
-    new Map<number, Proposal>([])
-  )
+  const [proposals, setProposals] = useState<Map<number, Proposal>>(new Map<number, Proposal>([]))
 
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
     getProposals()
       .then((proposals) => {
+        console.log(proposals)
         setProposals(new Map(proposals))
         if (proposals.size === 0) {
           setNoProposals(true)
@@ -55,8 +41,8 @@ export const Governance = () => {
         getUserIPTBalance(currentAccount, currentSigner).then((response) => {
           const iptBalance = BNtoDec(response)
           setIptBalance(iptBalance)
-          if(iptBalance > 0) {
-            getUserDelegates(currentAccount, currentSigner).then((delegatee)=>{
+          if (iptBalance > 0) {
+            getUserDelegates(currentAccount, currentSigner).then((delegatee) => {
               setDelegatedTo(delegatee)
             })
           }
@@ -82,21 +68,10 @@ export const Governance = () => {
       }}
     >
       <Box display="flex" justifyContent="space-between" mb={2}>
-        <Box
-          display="flex"
-          mb={1}
-          columnGap={2}
-          rowGap={1}
-          flexDirection={{ xs: 'column', md: 'row' }}
-        ></Box>
+        <Box display="flex" mb={1} columnGap={2} rowGap={1} flexDirection={{ xs: 'column', md: 'row' }}></Box>
 
         <Box display="flex" alignItems="center">
-          <Typography
-            color="text.secondary"
-            variant="body2"
-            whiteSpace="nowrap"
-            mr={1.5}
-          >
+          <Typography color="text.secondary" variant="body2" whiteSpace="nowrap" mr={1.5}>
             Voting Power:{' '}
             {currentVotes.toLocaleString(undefined, {
               minimumFractionDigits: 0,
@@ -106,29 +81,20 @@ export const Governance = () => {
           <DelegateIPTButton iptBalance={iptBalance} />
         </Box>
       </Box>
-      {connected ? (
-        proposals.size != 0 ? (
-          Array.from(proposals.values())
-            .sort((a, b) => {
-              return Number(a.id) < Number(b.id) ? 1 : -1
-            })
-            .map((proposal, index) => (
-              <Box key={index} mb={2}>
-                <ProposalCard proposal={proposal} votingPower={currentVotes} />
-              </Box>
-            ))
-        ) : (
-          <Box display="flex" justifyContent="center" mt="30vh">
-            {noProposals ? (
-              <Box>No Proposals available to show</Box>
-            ) : (
-              <Spinner />
-            )}
-          </Box>
-        )
+
+      {proposals.size != 0 ? (
+        Array.from(proposals.values())
+          .sort((a, b) => {
+            return Number(a.id) < Number(b.id) ? 1 : -1
+          })
+          .map((proposal, index) => (
+            <Box key={index} mb={2}>
+              <ProposalCard proposal={proposal} votingPower={currentVotes} />
+            </Box>
+          ))
       ) : (
         <Box display="flex" justifyContent="center" mt="30vh">
-          <Box>Please Connect a Wallet</Box>
+          {noProposals ? <Box>No Proposals available to show</Box> : <Spinner />}
         </Box>
       )}
     </Box>
