@@ -24,7 +24,6 @@ import week28 from './week28'
 import week29 from './week29'
 import week30 from './week30'
 import week31 from './week31'
-import week305 from './week305'
 
 const weeks = {
   7: week7,
@@ -52,7 +51,6 @@ const weeks = {
   28: week28,
   29: week29,
   30: week30,
-  305: week305,
   31: week31,
 }
 
