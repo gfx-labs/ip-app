@@ -1,10 +1,7 @@
 import { Box, Typography, Button } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { formatColor, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+import { ModalType, useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { DecimalInput } from '../textFields'
 import { useLight } from '../../../hooks/useLight'
@@ -30,11 +27,7 @@ export const ClaimModal = () => {
 
   const handleClaimRequest = async () => {
     try {
-      const claimTransaction = await claimWeeks(
-        currentAccount,
-        claims,
-        currentSigner!
-      )
+      const claimTransaction = await claimWeeks(currentAccount, claims, currentSigner!)
 
       updateTransactionState(claimTransaction)
 
@@ -64,12 +57,7 @@ export const ClaimModal = () => {
           columnGap: 2,
         }}
       >
-        <SVGBox
-          svg_name={isLight ? 'ipt_blue' : 'ipt_white'}
-          width={80}
-          height={80}
-          alt="IPT"
-        />
+        <SVGBox svg_name={isLight ? 'ipt_blue' : 'ipt_white'} width={80} height={80} alt="IPT" />
 
         <Box>
           <Typography variant="body2" color={formatColor(neutral.gray3)}>

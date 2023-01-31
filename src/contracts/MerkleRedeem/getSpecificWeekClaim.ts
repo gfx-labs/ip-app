@@ -3,7 +3,7 @@ import { MerkleRedeem__factory } from '../../chain/contracts/factories/IPTsale/M
 import { MERKLE_REDEEM_ADDRESS } from '../../constants'
 import { getMerkleProof } from './getMerkleProof'
 
-export const SPECIFIC_WEEKS = [155]
+export const SPECIFIC_WEEKS = [155, 305]
 
 const getSpecificWeekClaim = async (account: string, providerOrSigner: JsonRpcProvider | JsonRpcSigner, week: number) => {
   try {
@@ -15,7 +15,6 @@ const getSpecificWeekClaim = async (account: string, providerOrSigner: JsonRpcPr
       return undefined
     }
     const proofResult = getMerkleProof(account, week)
-
     if (proofResult) {
       return {
         week: week,
