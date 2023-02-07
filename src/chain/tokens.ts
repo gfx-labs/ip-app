@@ -117,6 +117,13 @@ export const getTokensListOnCurrentChain = (
       capped_token: true,
       capped_address: '0x64eA012919FD9e53bDcCDc0Fc89201F484731f41',
     }),
+    ZRX: initializeToken({
+      name: 'ZRX',
+      address: tokensToChains.ZRX[chain_id],
+      ticker: 'ZRX',
+      capped_token: true,
+      capped_address: '0xDf623240ec300fD9e2B7780B34dC2F417c0Ab6D2',
+    }),
   }
 }
 
