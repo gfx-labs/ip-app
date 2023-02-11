@@ -31,6 +31,9 @@ import week33 from './week33'
 
 import week1000 from './week1000'
 
+
+import week1000 from './week1000'
+
 const weeks = {
   7: week7,
   8: week8,
