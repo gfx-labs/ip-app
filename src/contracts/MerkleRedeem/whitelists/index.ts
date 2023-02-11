@@ -28,10 +28,6 @@ import week31 from './week31'
 import week32 from './week32'
 import week33 from './week33'
 
-
-import week1000 from './week1000'
-
-
 import week1000 from './week1000'
 
 const weeks = {
