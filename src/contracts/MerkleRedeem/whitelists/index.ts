@@ -27,6 +27,7 @@ import week305 from './week305'
 import week31 from './week31'
 import week32 from './week32'
 import week33 from './week33'
+import week34 from './week34'
 
 import week1000 from './week1000'
 
