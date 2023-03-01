@@ -61,17 +61,7 @@ export type ModalContextType = {
   transaction: ContractReceipt | ContractTransaction | null
 }
 
-const createDepositWithdrawUSDC = () => {
-  const { USDC } = useStableCoinsContext()
 
-  return {
-    token: USDC,
-    amountToDeposit: '0',
-    amountToWithdraw: '0',
-    maxWithdraw: false,
-    maxDeposit: false,
-  }
-}
 
 export const ModalContentContext = createContext({} as ModalContextType)
 
@@ -92,6 +82,17 @@ export const ModalContentProvider = ({
     useState(false)
   const [collateralWithdrawAmountMax, setCollateralWithdrawAmountMax] =
     useState(false)
+
+  const { USDC:usdcContext } = useStableCoinsContext()
+  const createDepositWithdrawUSDC = () => {
+    return {
+      token: usdcContext,
+      amountToDeposit: '0',
+      amountToWithdraw: '0',
+      maxWithdraw: false,
+      maxDeposit: false,
+    }
+  }
 
   const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
     createDepositWithdrawUSDC
