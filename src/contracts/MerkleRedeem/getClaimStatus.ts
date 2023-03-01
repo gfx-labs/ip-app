@@ -17,7 +17,7 @@ const getLatestWeek = async (merkleContract: Contract) => {
       return --i
     }
     i++
-  } while (lookingForLatestWeek || i < 520)
+  } while (lookingForLatestWeek || i < 2520)
 
   // defaults to returning first week
   return 7
