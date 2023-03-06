@@ -19,25 +19,22 @@ IPT holders can make substantial upgrades to Interest Protocol. These include, b
 - Altering collateral assets' specifications
 - Funding grants to support the development of the protocol
 - Revising liquidation incentives
+- Improving the governance system
 
 ## Governance Communications & Discussions
 Good governance depends on quality discussions and collaboration. The Interest Protocol Forum and Discord Channel are the two main venues for those discussions. Discord is more useful for quick questions and fluid conversation, whereas the forum is better for in-depth discussions. IPT holders are encouraged to visit both regularly to receive updates and participate in discussions.
 
 ## Proposal Process
-The process for upgrading or altering the protocol typically consists of two steps: first a Consensus Check and then a Proposal Vote.
+The process for upgrading or altering the protocol requires an on-chain Proposal Vote.
 
-A *Consensus Check* confirms whether the community should invest time producing and coding a proposal, and potentially whether Interest Protocol should grant funding for an audit of that proposal's code.
-
-When formulating a Consensus Check, authors should strive to:
+When formulating a proposal, authors should strive to:
 
 - Be clear about the impact and goals of their proposal.
 - Avoid contradiction with existing code unless the intent is to remove/edit active code.
 - Be as brief as possible.
 - Be complete. Any reliance upon previous or future proposals should be explicit and clear.
 
-Consensus Checks must have a 5-day voting window. In order to initiate a Consensus Check, a proposer must have (or have been delegated) .01% of IPT supply. For a Consensus Check to be successful, it must receive more Yes votes than No, and meet a quorum of 10% of IPT supply. Consensus Check votes occur on [Snapshot](https://snapshot.org/#/).
-
-A *Proposal Vote* approves and executes a formalized proposal, which has already passed a Consensus Check. In order to initiate a Proposal Vote, a proposer must have (or have been delegated) 0.10% of IPT supply. Proposal Votes have a 6-day voting window and a 48-hour time lock during which they are queued before execution. In order for a Proposal Vote to be successful, it must have more Yes votes than No, and meet a quorum of 10% of IPT supply. The sponsor of a Proposal Vote does not need to be the same as the sponsor of the Consensus Check. This allows those who successfully proposed a Consensus Check to collaborate with a party that meets the proposal threshold.
+A *Proposal Vote* approves and executes a formalized proposal. In order to initiate a Proposal Vote, a proposer must have (or have been delegated) 200k IPT. Proposal Votes have a 6-day (40320 block) voting window and a 48-hour time lock during which they are queued before execution. In order for a Proposal Vote to be successful, it must have more Yes votes than No, and meet a quorum of 2m IPT.
 
 Token holders are strongly encouraged to communicate early about proposal ideas, and to solicit feedback in the forum. 
 
@@ -45,40 +42,40 @@ Token holders are strongly encouraged to communicate early about proposal ideas,
 
 There may be a need for urgent action, for which an Emergency Proposal can be used.
 
-An *Emergency Proposal* is a special proposal process with a unique voting period, quourm threshold, and timelock period. At launch the voting period is 12-hours and Emergency Proposals have a 6-hour time lock during which they are queued before execution.
+An *Emergency Proposal* is a special proposal process with a unique voting period, quourm threshold, and timelock period. At launch the voting period is 24-hours (6570 blocks) and Emergency Proposals have a 12-hour time lock during which they are queued before execution.
 
-In order to initiate an Emergency Proposal, a proposer must have (or have been delegated) 0.10% of IPT supply.
+In order to initiate an Emergency Proposal, a proposer must have (or have been delegated) 200k IPT.
 
-In order for an Emergency Proposal to be successful, it must have more Yes votes than No, and meet a quorum of 50% of IPT supply.
+In order for an Emergency Proposal to be successful, it must have more Yes votes than No, and meet a quorum of 40m IPT.
 
 ## Optimistic Proposals
 
 A whitelisted address, as designated by governance or the whitelist guardian (currently unlisted) can propose without voting power, and doesn’t require affirmative approval by IPT voters. Instead, if votes in opposition to the proposal exceed the optimistic quorum, the proposal will fail.
 
-In addition to the optimistic quorum parameter, we have included a configurable optimistic voting delay. The delay, often referred to as the review period, is the time between a proposal’s creation and voting. Generally, we believe that the review period for optimistic proposals should be longer than the standard review period, but the standard voting period and timelock are sufficient. The proposer, once whitelisted, can make proposals without voting power, and the community doesn’t need to mobilize IPT votes, except in the event of opposition.
+In addition to the optimistic quorum parameter, there is a configurable optimistic voting delay. The delay, often referred to as the review period, is the time between a proposal’s creation and voting. Generally, the review period for optimistic proposals should be longer than the standard review period, but the standard voting period and timelock are sufficient. The proposer, once whitelisted, can make proposals without voting power, and the community doesn’t need to mobilize IPT votes, except in the event of opposition.
 
-Optimistic governance privileges are ideal for frequent proposers who are making uncontroversial proposals. IPT holders who don’t qualify for a regular proposal but are regularly making improvements to the protocol or parameter adjustments would be clear examples. In the event a controversial optimistic proposal is made, 2 million IPT opposing the proposal will successfully reject the proposal.
+Optimistic governance privileges are ideal for frequent proposers who are making uncontroversial proposals. IPT holders who don’t qualify for a regular proposal but are regularly making improvements to the protocol or parameter adjustments would be clear examples. In the event a controversial optimistic proposal is made, 500k IPT opposing the proposal will successfully reject the proposal.
 
-Optimistic governance is currently implemented in our Governor Charlie contract, and GFX Labs’ governance address is a whitelisted proposer.
+Optimistic governance is currently implemented in our Governor Charlie contract, and GFX Labs’ governance address (gfxlabs.eth) is a whitelisted proposer.
 
 ## Voting Parameters
 The following, parameters are governed by the token holders:
 
 ### Governance Parameters
-* proposalThreshold: 1,000,000
+* proposalThreshold: 200,000
 
 #### Proposal Parameters
 * votingDelay (blocks): 13140
 * votingPeriod (blocks): 40320
 * proposalTimelockDelay (seconds): 172800
-* quorumVotes: 10,000,000
+* quorumVotes: 2,000,000
 
 #### Emergency Parameters
 * emergencyVotingPeriod (blocks): 6570
 * emergencyVotingTimelockDelay (seconds): 43200
-* emergencyQuorumVotes: 50,000,000
+* emergencyQuorumVotes: 40,000,000
 
 ### Optimistic Parameters
 * optimisticVotingDelay (blocks): 25600  
-* optimisticQuorum: 2,000,000
+* optimisticQuorum: 500,000
 * whitelist guardian: not set (can be set by governance)

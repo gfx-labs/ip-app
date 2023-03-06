@@ -26,11 +26,11 @@ export const proposalTypeDiction = {
           </Typography>{' '}
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
-            Proposal Threshold: <TooltipValue text="1,000,000" />
+            Proposal Threshold: <TooltipValue text="200,000" />
           </Typography>{' '}
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
-            Quorum Threshold: <TooltipValue text="50,000,000" />
+            Quorum Threshold: <TooltipValue text="40,000,000" />
           </Typography>{' '}
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
@@ -62,7 +62,7 @@ export const proposalTypeDiction = {
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
             Quorum Threshold:
-            <TooltipValue text="2,000,000" />
+            <TooltipValue text="500,000" />
           </Typography>{' '}
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
@@ -94,12 +94,12 @@ export const proposalTypeDiction = {
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
             Proposal Threshold:
-            <TooltipValue text="1,000,000" />
+            <TooltipValue text="200,000" />
           </Typography>{' '}
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
             Quorum Threshold:
-            <TooltipValue text="10,000,000" />
+            <TooltipValue text="2,000,000" />
           </Typography>{' '}
           <br />
           <Typography variant="body3" whiteSpace="nowrap">
