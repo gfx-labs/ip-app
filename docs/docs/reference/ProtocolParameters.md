@@ -1,13 +1,13 @@
 # Governance Defined Parameters in Interest Protocol
 
 ## Governance Parameters
-* proposalThreshold: 1,000,000
+* proposalThreshold: 200,000
 
 ### Proposal Parameters
 * votingDelay (blocks): 13140
 * votingPeriod (blocks): 40320
 * proposalTimelockDelay (seconds): 172800
-* quorumVotes: 10,000,000
+* quorumVotes: 2,000,000
 
 ### Emergency Parameters
 * emergencyVotingPeriod (blocks): 6570
@@ -16,7 +16,7 @@
 
 ### Optimistic Parameters
 * optimisticVotingDelay (blocks): 25600  
-* optimisticQuorum: 2,000,000
+* optimisticQuorum: 500,000
 * whitelist guardian: not set (can be set by governance)
 
 ## Protocol Parameters
@@ -29,7 +29,6 @@
 
 ### Fee Parameter
 * Protocol Fee: 15%
-
 
 ## Asset Parameters
 ### Collateral Assset Parameters
@@ -46,6 +45,7 @@
 * LDO: LTV: 70%, oracle address: 0x610d4DFAC3EC32e0be98D18DDb280DACD76A1889, liquidation incentive: 10%
 * cbETH: LTV: 75%, oracle address: 0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2, liquidation incentive: 10%
 * rETH: LTV: 75%, oracle address: 0x69F3d75Fa1eaA2a46005D566Ec784FE9059bb04B, liquidation incentive: 10%
+* ZRX: LTV: 50%, oracle address: 0xEF12fa3183362506A2dd0ff1CF06b2f4156e751E, liquidation incentive: 15%
 
 ### wETH Oracle
 * AnchoredViewRelay: widthNumerator: 20
@@ -243,3 +243,19 @@
 * BalancerPeggedAssetRelay: _multiply: 1
 * BalancerPeggedAssetRelay: _secs: 14400
 * BalancerPeggedAssetRelay: _underlyingOracle: 0x22B01826063564CBe01Ef47B96d623b739F82Bf2
+
+### ZRX Oracle
+* AnchoredViewRelay: _anchorAddress: 0xCfae22EAD912F7F8299113915bEC0c92F98Cd4a7
+* AnchoredViewRelay: _mainAddress: 0x8cd06C41617B0882A2a5D1334BdE48664fD89b5A
+* AnchoredViewRelay: widthNumerator: 20
+* AnchoredViewRelay: widthDenominator: 100
+* UniswapV3OracleRelay: _div: 1
+* UniswapV3OracleRelay: lookback: 14400
+* UniswapV3OracleRelay: _mul: 1
+* UniswapV3OracleRelay: _pool: 0x14424eEeCbfF345B38187d0B8b749E56FAA68539
+* UniswapV3OracleRelay: _quoteTokenIsToken0: True
+* UniswapV3OracleRelay: ethOracle: 0x22B01826063564CBe01Ef47B96d623b739F82Bf2
+* ChainlinkOracleRelay: feed_address: 0xFC6b554818466A53806Bb7eb319621D97b851D94
+* ChainlinkOracleRelay: mul: 10000000000
+* ChainlinkOracleRelay: div: 1
+* ChainlinkOracleRelay: feedAddress: 0x2da4983a622a8498bb1a21fae9d8f6c664939962

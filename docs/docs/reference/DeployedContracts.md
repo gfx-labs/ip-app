@@ -82,6 +82,11 @@ The protocol is deployed on Ethereum Mainnet.
 *    ChainlinkOracleRelay: 0xA8c7eaeD981c433A7424ce244d753A69d4e24363
 *    UniswapV3OracleRelay: 0x9128bA6B88a3851d6aa856aadE7dA0Bb694560Db
 
+### ZRX Oracle
+*   AnchoredViewRelay: 0xEF12fa3183362506A2dd0ff1CF06b2f4156e751E
+*   ChainlinkOracleRelay: 0x8cd06C41617B0882A2a5D1334BdE48664fD89b5A
+*   UniswapV3OracleRelay: 0xCfae22EAD912F7F8299113915bEC0c92F98Cd4a7
+
 ### Assets
 * USDC: 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
 * wETH: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
@@ -97,6 +102,7 @@ The protocol is deployed on Ethereum Mainnet.
 * CRV (capped): 0x9d878eC06F628e883D2F9F1D793adbcfd52822A8
 * rETH (capped): 0x64eA012919FD9e53bDcCDc0Fc89201F484731f41
 * cbETH (capped): 0x99bd1f28a5A7feCbE39a53463a916794Be798FC3
+* ZRX (capped): 0xDf623240ec300fD9e2B7780B34dC2F417c0Ab6D2
 
 ## Polygon Mainnet
 *    USDC_UNI_CL: 0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c
