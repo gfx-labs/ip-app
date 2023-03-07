@@ -17,11 +17,11 @@ export interface ProposalDetailsProps {
 const totalVotesDependentOnType = (proposalType: IProposalType) => {
   switch (proposalType) {
     case 'optimistic':
-      return { for: 0, against: 2500000 }
+      return { for: 0, against: 500000 }
     case 'emergency':
-      return { for: 10000000, against: 10000000 }
+      return { for: 40000000, against: 40000000 }
     case 'standard':
-      return { for: 10000000, against: 10000000 }
+      return { for: 2000000, against: 2000000 }
   }
 }
 

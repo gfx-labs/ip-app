@@ -1,11 +1,11 @@
 # Delegation
 
-The governance token for Interest Protocol, IPT, allows its holder to delegate their associated governance rights to a designated representative's address. Delegates can then use that voting power on Consensus Checks, Proposal Votes, and Emergency Votes.
+The governance token for Interest Protocol, IPT, allows its holder to delegate their associated governance rights to a designated representative's address. Delegates can then use that voting power to vote on standard proposals, optimistic proposals, and emergency votes.
 
 Delegates have access only to the voting weight, and not the actual IPT, assigned to them by governance token holders. Delegates do not require any special identification unless they wish to be Recognized Delegates
 
 ### Recognized Delegates
-Recognized Delegates are delegates that have fulfilled some basic requirements (as established by IP DAO) and maintain a minimum threshold of voting activity and communication.
+Recognized Delegates are delegates that have fulfilled some basic requirements (as established by IP governance) and maintain a minimum threshold of voting activity and communication.
 
 At launch, Recognized Delegates must meet the following criteria:
 - Unambiguously and publicly post their intention to become a Recognized Delegate in the appropriate section of the Interest Protocol forum.
@@ -16,6 +16,7 @@ At launch, Recognized Delegates must meet the following criteria:
 At launch, Recognized Delegates must meet the following communications and participation criteria:
 - Participate in at least 90% of all votes that have occured in the last 90 days (voting Abstain counts).
 - Communicate in the Interest Protocol forum how and why they voted within 7 days of that vote ending. If a delegate did not vote, they should communicate why. At least 90% of all votes should be followed by this timely communication.
+- Attend one community call a month.
 
 Recognized Delegates that do not meet their communication and participation thresholds will not be eligible for compensation from Interest Protocol (if any compensation schedule has been approved).
 
