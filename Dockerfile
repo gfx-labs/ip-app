@@ -1,9 +1,3 @@
-FROM golang:1.18-alpine3.14 as GOBUILDER
-
-WORKDIR /wd
-COPY server .
-RUN go build .
-
 FROM node:18-alpine3.14 as NODEBUILDER
 
 ENV PYTHONUNBUFFERED=1
@@ -20,9 +14,6 @@ COPY . .
 RUN npx yarn install
 RUN npm run build
 
-FROM alpine:3.14
-
-WORKDIR /wd
-COPY --from=GOBUILDER /wd/server server
+FROM cr.gfx.cafe/open/swim/swim:v0.0.4
 COPY --from=NODEBUILDER /wd/dist dist
-CMD ["/wd/server","/wd/dist"]
+CMD ["swim", "-port","8080","-fs","dist","-name","ip-site"]
