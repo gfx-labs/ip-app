@@ -403,7 +403,7 @@ const markdownComponentConfig: Partial<Omit<NormalComponents, keyof SpecialCompo
     )
   },
   p: ({ node, style, children, ...props }) => {
-    return <p style={{ ...style, whiteSpace: 'pre-wrap', wordBreak: 'break-all' }}>{children}</p>
+    return <p style={{ ...style, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{children}</p>
   },
   td: ({ node, style, children, isHeader, ...props }) => {
     if (isHeader) {
