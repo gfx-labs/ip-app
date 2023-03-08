@@ -23,7 +23,6 @@ export const Governance = () => {
   useEffect(() => {
     getProposals()
       .then((proposals) => {
-        console.log(proposals)
         setProposals(new Map(proposals))
         if (proposals.size === 0) {
           setNoProposals(true)
@@ -33,19 +32,17 @@ export const Governance = () => {
         console.error(e)
         setNoProposals(true)
       })
-
     if (currentAccount && currentSigner) {
       getUserVotingPower(currentAccount, currentSigner).then((res) => {
         const currentVotes = BNtoDec(res)
         setCurrentVotes(currentVotes)
         getUserIPTBalance(currentAccount, currentSigner).then((response) => {
           const iptBalance = BNtoDec(response)
+          console.log("user ipt balance", currentAccount, iptBalance)
           setIptBalance(iptBalance)
-          if (iptBalance > 0) {
-            getUserDelegates(currentAccount, currentSigner).then((delegatee) => {
-              setDelegatedTo(delegatee)
-            })
-          }
+          getUserDelegates(currentAccount, currentSigner).then((delegatee) => {
+            setDelegatedTo(delegatee)
+          })
         })
       })
     }
@@ -64,7 +61,7 @@ export const Governance = () => {
         [theme.breakpoints.down('md')]: {
           mb: 0,
           marginLeft: 'auto',
-        },
+      },
       }}
     >
       <Box display="flex" justifyContent="space-between" mb={2}>
@@ -84,14 +81,14 @@ export const Governance = () => {
 
       {proposals.size != 0 ? (
         Array.from(proposals.values())
-          .sort((a, b) => {
-            return Number(a.id) < Number(b.id) ? 1 : -1
-          })
-          .map((proposal, index) => (
-            <Box key={index} mb={2}>
-              <ProposalCard proposal={proposal} votingPower={currentVotes} />
-            </Box>
-          ))
+        .sort((a, b) => {
+          return Number(a.id) < Number(b.id) ? 1 : -1
+        })
+        .map((proposal, index) => (
+          <Box key={index} mb={2}>
+            <ProposalCard proposal={proposal} votingPower={currentVotes} />
+          </Box>
+        ))
       ) : (
         <Box display="flex" justifyContent="center" mt="30vh">
           {noProposals ? <Box>No Proposals available to show</Box> : <Spinner />}
