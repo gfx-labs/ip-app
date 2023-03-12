@@ -29,7 +29,10 @@ export const UserStats = () => {
                 maximumFractionDigits: 2,
               })!
             }
-            vaultBalance={'$' + val.vault_balance?.toLocaleString()!}
+            vaultBalance={Number(val.vault_balance).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })!}
             tokenAmount={Number(val.vault_amount_str).toLocaleString()}
             image={{
               src: val.ticker,
