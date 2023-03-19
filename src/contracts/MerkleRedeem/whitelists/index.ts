@@ -35,6 +35,8 @@ import week38 from './week38'
 
 import week1000 from './week1000'
 
+export const SPECIFIC_WEEKS = [155, 305, 1000]
+
 const weeks = {
   7: week7,
   8: week8,
