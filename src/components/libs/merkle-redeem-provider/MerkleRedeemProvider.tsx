@@ -1,10 +1,11 @@
 import { BigNumber } from 'ethers'
 import { createContext, useContext, useEffect, useState } from 'react'
 import createClaimOf, { Claim } from '../../../contracts/MerkleRedeem/createClaim'
-import getSpecificWeekClaim, { SPECIFIC_WEEKS } from '../../../contracts/MerkleRedeem/getSpecificWeekClaim'
+import getSpecificWeekClaim  from '../../../contracts/MerkleRedeem/getSpecificWeekClaim'
 import getClaimStatusOf from '../../../contracts/MerkleRedeem/getClaimStatus'
 import { BN } from '../../../easy/bn'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
+import { SPECIFIC_WEEKS } from '../../../contracts/MerkleRedeem/whitelists'
 
 export type MerkleRedeemContextType = {
   claims: Claim[]
@@ -25,21 +26,19 @@ export const MerkleRedeemContextProvider = ({ children }: { children: React.Reac
       getClaimStatusOf(currentAccount, currentSigner!).then((claimStatus) => {
         setClaimStatus(claimStatus)
         const claims = createClaimOf(currentAccount, claimStatus)
-
+        let iptToClaim = BN(0)
         SPECIFIC_WEEKS.forEach((week) => {
           getSpecificWeekClaim(currentAccount, currentSigner, week).then((claimRes) => {
             if (claimRes) {
               claims.push(claimRes)
             }
-
-            setClaims(claims)
-
-            const iptToClaim = claims.reduce((iptToClaim, claim) => {
-              return iptToClaim.add(claim.balance)
-            }, BN(0))
-            setClaimAmount(iptToClaim)
           })
         })
+        setClaims(claims)
+        claims.forEach((claim)=>{
+          iptToClaim = iptToClaim.add(claim.balance)
+        })
+        setClaimAmount(iptToClaim)
       })
     }
   }, [chainId, currentAccount, currentSigner])
