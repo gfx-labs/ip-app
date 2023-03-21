@@ -1,4 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { log, trace } from '../../easy/log'
 import { Contract } from 'ethers'
 import { MerkleRedeem__factory } from '../../chain/contracts/factories/IPTsale/MerkleRedeem'
 import { MERKLE_REDEEM_ADDRESS } from '../../constants'
@@ -26,19 +27,29 @@ const getLatestWeek = async (merkleContract: Contract) => {
 const getClaimStatusOf = async (
   account: string,
   providerOrSigner: JsonRpcProvider | JsonRpcSigner
-) => {
+):Promise<number[]> => {
   try {
     const merkleContract = MerkleRedeem__factory.connect(
       MERKLE_REDEEM_ADDRESS,
       providerOrSigner
     )
 
+    log.trace("attempting to get claim status", account)
     const latestWeek = await getLatestWeek(merkleContract)
     const claimStatus = await merkleContract.claimStatus(account, 7, latestWeek)
+    let idx = 7
+    const weeks = []
+    for(let i = 0; i < claimStatus.length; i++) {
+      if(claimStatus[i] === false) {
+        weeks.push(idx)
+      }
+      idx = idx + 1
+    }
+    log.trace("claim status", account, claimStatus, weeks)
 
-    return claimStatus
+    return weeks
   } catch (err) {
-    console.error(err)
+    log.warn("getting status", err)
     throw new Error('Error getting claim status')
   }
 }
