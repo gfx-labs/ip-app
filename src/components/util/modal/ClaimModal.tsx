@@ -12,16 +12,19 @@ import claimWeeks from '../../../contracts/MerkleRedeem/claimWeeks'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { utils } from 'ethers'
 import SVGBox from '../../icons/misc/SVGBox'
+import { log } from '../../../easy/log'
+import { Dots } from '../loading'
 
 export const ClaimModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
   const { currentAccount, currentSigner } = useWeb3Context()
-  const { claimAmount, claims } = useMerkleRedeemContext()
+  const { claimAmount, claims, loading} = useMerkleRedeemContext()
   const isLight = useLight()
 
   const [formattedAmount, setFormattedAmount] = useState(0)
 
   useEffect(() => {
+    log.trace(`got claim amount ${claimAmount} for ${currentAccount}`)
     setFormattedAmount(Number(utils.formatEther(claimAmount)))
   }, [claimAmount])
 
@@ -64,10 +67,10 @@ export const ClaimModal = () => {
             Unclaimed Rewards
           </Typography>
           <Typography variant="h5" color="text.primary" mb={1}>
-            {formattedAmount.toLocaleString(undefined, {
+            {loading ? <><Dots/></>: (formattedAmount.toLocaleString(undefined, {
               minimumFractionDigits: 0,
               maximumFractionDigits: 2,
-            })}{' '}
+            }))}{' '}
             IPT
           </Typography>
         </Box>

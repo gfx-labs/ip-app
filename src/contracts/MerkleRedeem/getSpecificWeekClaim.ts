@@ -1,6 +1,7 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { MerkleRedeem__factory } from '../../chain/contracts/factories/IPTsale/MerkleRedeem'
 import { MERKLE_REDEEM_ADDRESS } from '../../constants'
+import { BN } from '../../easy/bn'
 import { getMerkleProof } from './getMerkleProof'
 
 
@@ -17,7 +18,7 @@ const getSpecificWeekClaim = async (account: string, providerOrSigner: JsonRpcPr
     if (proofResult) {
       return {
         week: week,
-        balance: proofResult.minter.amount,
+        balance: BN(proofResult.minter.amount),
         merkleProof: proofResult.proof,
       }
     }

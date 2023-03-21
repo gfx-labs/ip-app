@@ -5,9 +5,10 @@ import { useMerkleRedeemContext } from '../../libs/merkle-redeem-provider/Merkle
 import { utils } from 'ethers'
 import { CardContainer } from './CardContainer'
 import { ClaimsButton } from '../button'
+import { Dots } from '../loading'
 
 export const ClaimsCard = () => {
-  const { claimAmount } = useMerkleRedeemContext()
+  const { claimAmount, loading } = useMerkleRedeemContext()
 
   const [formattedAmount, setFormattedAmount] = useState(0)
 
@@ -42,7 +43,7 @@ export const ClaimsCard = () => {
               lineHeight={{ xs: 1 }}
               color="text.primary"
             >
-              {formattedAmount.toLocaleString(undefined, {
+              {loading ? <Dots/> : formattedAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               })}
