@@ -201,7 +201,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
           dataBlock,
           gasPrice,
           error,
-          currentAccount: account?.toLowerCase() || '',
+          currentAccount: account?.toLowerCase() || DEFAULT_ADDRESS,
           signerOrProvider,
         },
       }}
@@ -210,6 +210,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     </Web3Context.Provider>
   )
 }
+export const DEFAULT_ADDRESS = "0x000000000000000000000000000000000000dead"
 
 export const useWeb3Context = () => {
   const { web3ProviderData } = useContext(Web3Context)
