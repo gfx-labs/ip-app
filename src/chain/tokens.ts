@@ -124,7 +124,13 @@ export const getTokensListOnCurrentChain = (
       capped_token: true,
       capped_address: '0xDf623240ec300fD9e2B7780B34dC2F417c0Ab6D2',
     }),
-
+    CHAI: initializeToken({
+      name: 'CHAI',
+      address: tokensToChains.CHAI[chain_id],
+      ticker: 'CHAI',
+      capped_token: true,
+      capped_address: '0xDdAD1d1127A7042F43CFC209b954cFc37F203897',
+    }),
   }
 }
 
