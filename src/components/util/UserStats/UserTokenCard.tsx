@@ -1,17 +1,8 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  LinearProgress,
-  Typography,
-} from '@mui/material'
+import { Box, BoxProps, Button, LinearProgress, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
-import {
-  ModalType,
-  useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+import { ModalType, useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
 import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
@@ -47,25 +38,12 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const { connected, signerOrProvider } = useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
   const { tokens } = useVaultDataContext()
-  const { setType, setCollateralToken, updateTransactionState } =
-    useModalContext()
+  const { setType, setCollateralToken, updateTransactionState } = useModalContext()
   const { hasVault, vaultAddress } = useVaultDataContext()
   const { setDelegateToken } = useAppGovernanceContext()
   const [cappedPercent, setCappedPercent] = useState(10)
 
-  const {
-    tokenName,
-    tokenTicker,
-    tokenPrice,
-    vaultBalance,
-    tokenAmount,
-    image,
-    LTVPercent,
-    penaltyPercent,
-    canDelegate = false,
-    index,
-    cappedAddress,
-  } = props
+  const { tokenName, tokenTicker, tokenPrice, vaultBalance, tokenAmount, image, LTVPercent, penaltyPercent, canDelegate = false, index, cappedAddress } = props
 
   const openVault = async () => {
     try {
@@ -132,46 +110,24 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <SVGBox
-            width={{ xs: 24, lg: 40 }}
-            height={{ xs: 24, lg: 40 }}
-            svg_name={image.src}
-            alt={image.alt}
-          />
+          <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} />
 
           <Box display="flex" flexDirection="column">
-            <Typography
-              variant="body1"
-              color="text.primary"
-              display={{ xs: 'none', lg: 'block' }}
-            >
+            <Typography variant="body1" color="text.primary" display={{ xs: 'none', lg: 'block' }}>
               {tokenName}
             </Typography>
-            <Typography
-              variant="label_semi"
-              fontWeight={400}
-              color="text.secondary"
-            >
+            <Typography variant="label_semi" fontWeight={400} color="text.secondary">
               {tokenTicker}
             </Typography>
           </Box>
         </Box>
-        <Typography
-          display={{ xs: 'none', lg: 'block' }}
-          variant="body1"
-          color="text.primary"
-          textAlign="end"
-        >
+        <Typography display={{ xs: 'none', lg: 'block' }} variant="body1" color="text.primary" textAlign="end">
           {tokenPrice}
         </Typography>
 
         <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
-            content={
-              <Typography variant="body3">
-                Maximum Loan-To-Value for this asset
-              </Typography>
-            }
+            content={<Typography variant="body3">Maximum Loan-To-Value for this asset</Typography>}
             text={`${LTVPercent}%
           `}
             text_variant="body2"
@@ -179,12 +135,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         </Box>
         <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
-            content={
-              <Typography variant="body3">
-                Liquidation penalty paid by vault to the liquidator for
-                liquidating this asset
-              </Typography>
-            }
+            content={<Typography variant="body3">Liquidation penalty paid by vault to the liquidator for liquidating this asset</Typography>}
             text={`${penaltyPercent}%
           `}
             text_variant="body2"
@@ -199,9 +150,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
                 width: 80,
                 height: 11,
                 borderRadius: 1,
-                backgroundColor: isLight
-                  ? formatColor(neutral.gray6)
-                  : formatColor(neutral.white),
+                backgroundColor: isLight ? formatColor(neutral.gray6) : formatColor(neutral.white),
               }}
               value={cappedPercent}
             />
@@ -280,11 +229,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             <SVGBox width={16} height={16} svg_name="minus" />
           </Button>
         </Box>
-        <Box
-          display={{ xs: 'flex', lg: 'none' }}
-          justifySelf="flex-end"
-          width="fit-content"
-        >
+        <Box display={{ xs: 'flex', lg: 'none' }} justifySelf="flex-end" width="fit-content">
           <UserTokenMobileDropdown
             onClickDeposit={() => handleDWClick(ModalType.DepositCollateral)}
             onClickWithdraw={() => handleDWClick(ModalType.WithdrawCollateral)}
