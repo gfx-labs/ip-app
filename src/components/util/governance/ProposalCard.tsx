@@ -64,7 +64,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
     } else {
       title = splitBody[0].replace(/[#]/g, '')
     }
-
+    let sub = title.substring(0, 25)
+    if (!containsWhitespace(sub)) {
+      title = sub + "\n" + title.substring(26)
+      if (title.length > 50) {
+        title = title.substring(0, 50)+"..."
+      }
+    }
+    
     return title
   }
 
