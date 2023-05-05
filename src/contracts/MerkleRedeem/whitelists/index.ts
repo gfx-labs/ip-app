@@ -84,11 +84,8 @@ const weeks = {
   40: week40,
   41: week41,
   42: week42,
-<<<<<<< HEAD
-=======
   43: week43,
   44: week44,
->>>>>>> origin/master
   1000: week1000,
   1002: week1002,
   1003: week1003,
