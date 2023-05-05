@@ -133,14 +133,14 @@ export const getTokensListOnCurrentChain = (
     }),
     YFI: initializeToken({
       name: 'YFI',
-      address: tokensToChains.CHAI[chain_id],
+      address: tokensToChains.YFI[chain_id],
       ticker: 'YFI',
       capped_token: true,
       capped_address: '0xe2C1d2E7aA4008081CAAFc350A040246b9EBB579',
     }),
     LINK: initializeToken({
       name: 'LINK',
-      address: tokensToChains.CHAI[chain_id],
+      address: tokensToChains.LINK[chain_id],
       ticker: 'LINK',
       capped_token: true,
       capped_address: '0x5F39aD3df3eD9Cf383EeEE45218c33dA86479165',
