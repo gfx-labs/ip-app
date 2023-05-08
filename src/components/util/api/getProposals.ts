@@ -36,7 +36,7 @@ const getProposals = async () => {
       if (acc[ProposalId]) {
         if (Support === 1) {
           acc[ProposalId].for.push(voter)
-        } else {
+        } else if (Support === 0) {
           acc[ProposalId].against.push(voter)
         }
       } else {

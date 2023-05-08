@@ -7,7 +7,7 @@ export interface ProposalVoteCastEvent {
   TransactionIndex: number
   Voter: string
   ProposalId: number
-  Support: number
+  Support: number // 1 = for, 0 = against, 2 = abstain
   Votes: string
   Reason: string
 }
