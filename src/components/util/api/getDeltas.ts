@@ -1,5 +1,6 @@
-import { STAGING_ANALYTICS_URL, LIVE_DELTAS } from '../../../constants'
+import { LIVE_DELTAS } from '../../../constants'
 import axios from 'axios'
+import { VITE_ANALYTICS_URL } from '../../../config'
 
 interface AmountPercent {
   Amount: number
@@ -30,7 +31,7 @@ export interface Deltas {
 
 const getDeltas = async () => {
   try {
-    const deltaURL = `${STAGING_ANALYTICS_URL}${LIVE_DELTAS}`
+    const deltaURL = `${VITE_ANALYTICS_URL()}${LIVE_DELTAS}`
 
     const response = await axios.get(deltaURL)
 
