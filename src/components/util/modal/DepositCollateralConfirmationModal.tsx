@@ -64,13 +64,13 @@ export const DepositCollateralConfirmationModal = () => {
           collateralToken.decimals,
           currentSigner!
         )
-        console.log(ha)
+        //console.log(ha)
         setHasAllowance(ha)
 
         if (!ha) {
           let approveAmount = utils.parseUnits(DEFAULT_APPROVE_AMOUNT, collateralToken.decimals)
 
-          const txn = await contract.approve(collateralToken.capped_address!, approveAmount)
+          const txn = await contract.approve(vaultAddress!, approveAmount)
           setLoadmsg(locale('TransactionPending'))
 
           await txn?.wait()
