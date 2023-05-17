@@ -1,5 +1,6 @@
-import { STAGING_ANALYTICS_URL, LIVE_AVERAGE_RATES } from '../../../constants'
+import { LIVE_AVERAGE_RATES } from '../../../constants'
 import axios from 'axios'
+import { VITE_ANALYTICS_URL } from '../../../config'
 
 export interface Averages {
   Borrow: number
@@ -8,7 +9,7 @@ export interface Averages {
 
 const getAverages = async () => {
   try {
-    const averageRateURL = `${STAGING_ANALYTICS_URL}${LIVE_AVERAGE_RATES}`
+    const averageRateURL = `${VITE_ANALYTICS_URL()}${LIVE_AVERAGE_RATES}`
 
     const response = await axios.get(averageRateURL)
     return response.data as Averages

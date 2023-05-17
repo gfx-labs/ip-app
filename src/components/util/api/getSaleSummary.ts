@@ -1,5 +1,6 @@
-import { STAGING_ANALYTICS_URL, SALE_SUMMARY } from '../../../constants'
+import { SALE_SUMMARY } from '../../../constants'
 import axios from 'axios'
+import { VITE_ANALYTICS_URL } from '../../../config'
 
 export interface SaleSummary {
   IPTSold: number
@@ -10,7 +11,7 @@ export interface SaleSummary {
 
 const getSaleSummary = async () => {
   try {
-    const saleSummaryUrl = `${STAGING_ANALYTICS_URL}${SALE_SUMMARY}`
+    const saleSummaryUrl = `${VITE_ANALYTICS_URL()}${SALE_SUMMARY}`
 
     const response = await axios.get(saleSummaryUrl)
     return response.data as SaleSummary

@@ -11,8 +11,6 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export const USDI_DECIMALS = 18
 export const BACKUP_PROVIDER = 'https://mainnet.rpc.gfx.xyz'
-export const STAGING_ANALYTICS_URL = 'https://ip-stats-api.staging.gfx.town'
-export const ANALYTICS_URL = 'https://analytics-api.gfx.xyz'
 export const CHART_INTEREST_RATE_OVERTIME = '/charts/interest_rates_overtime'
 export const LIVE_DELTAS = '/live/deltas'
 export const LIVE_AVERAGE_RATES = '/live/average_rates'
