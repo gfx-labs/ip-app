@@ -79,19 +79,29 @@ export const WithdrawCollateralContent = () => {
     setCollateralWithdrawAmountMax(false)
     setInputAmount(amount)
   }
+  
+  const countDecimals = function (value: number) {
+    if(Math.floor(value) === value) return 0;
+    return value.toString().split(".")[1].length || 0; 
+  }
+
 
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
       let a2s = borrowingPower - accountLiability
-      const tv =
-        Number(collateralToken.vault_amount_str) * collateralToken.price
+      const tv = Number(collateralToken.vault_balance)
+        //Number(collateralToken.vault_amount_str) * collateralToken.price
+      const amt = tv/collateralToken.price
+      const dec = countDecimals(amt)
+      const samt = amt.toFixed(dec-1)
 
       if (accountLiability == 0) {
         if (isMoneyValue) {
           setInputAmount(tv.toString())
         } else {
-          setInputAmount(collateralToken.vault_amount_str!)
+          setInputAmount(samt)
+          //setInputAmount(collateralToken.vault_amount_str!)
           setCollateralWithdrawAmountMax(true)
         }
       } else if (a2s >= 0) {
@@ -99,7 +109,8 @@ export const WithdrawCollateralContent = () => {
           if (isMoneyValue) {
             setInputAmount(tv.toString())
           } else {
-            setInputAmount(collateralToken.vault_amount_str!)
+            setInputAmount(samt)
+            //setInputAmount(collateralToken.vault_amount_str!)
             setCollateralWithdrawAmountMax(true)
           }
         } else {

@@ -114,7 +114,7 @@ export const VaultDataProvider = ({
           signerOrProvider!
         )
           .then((res) => {
-            token.price = Math.round(100 * res.livePrice) / 100
+            token.price = res.livePrice//Math.round(100 * res.livePrice) / 100
             token.vault_amount_str = res.unformattedBalance
             token.vault_amount = res.balanceBN
             if (token.vault_amount.isZero()) {
@@ -124,7 +124,7 @@ export const VaultDataProvider = ({
                 BNtoDecSpecific(token.vault_amount, token.decimals) *
                 token.price
 
-              token.vault_balance = vaultBalance.toFixed(2)
+              token.vault_balance = vaultBalance.toString()//.toFixed(2)
             }
           })
           .catch((e) => {
