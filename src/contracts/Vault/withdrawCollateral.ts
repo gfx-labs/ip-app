@@ -36,7 +36,7 @@ const withdrawCollateral = async (
     return transferAttempt
   } catch (err) {
     console.error(err)
-    throw new Error('Could not deposit')
+    throw new Error('Could not withdraw')
   }
 }
 

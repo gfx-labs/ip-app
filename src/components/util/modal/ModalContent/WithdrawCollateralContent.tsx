@@ -38,17 +38,17 @@ export const WithdrawCollateralContent = () => {
 
   useEffect(() => {
     let newBorrowingPower
-    if (isMoneyValue) {
-      newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100)
-      setCollateralWithdrawAmount(
-        (Number(inputAmount) / collateralToken.price).toString()
-      )
-    } else {
+    // if (isMoneyValue) {
+    //   newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100)
+    //   setCollateralWithdrawAmount(
+    //     (Number(inputAmount) / collateralToken.price).toString()
+    //   )
+    // } else {
       newBorrowingPower =
         borrowingPower -
         Number(inputAmount) * collateralToken.price * (ltv / 100)
       setCollateralWithdrawAmount(inputAmount)
-    }
+    //}
 
     if (newBorrowingPower <= 0) {
       setNewBorrowingPower(0)
@@ -67,11 +67,11 @@ export const WithdrawCollateralContent = () => {
   }, [inputAmount])
 
   const swapHandler = () => {
-    if (!isMoneyValue) {
-      setInputAmount((Number(inputAmount) * collateralToken.price).toString())
-    } else {
-      setInputAmount((Number(inputAmount) / collateralToken.price).toString())
-    }
+    // if (!isMoneyValue) {
+    //   setInputAmount((Number(inputAmount) * collateralToken.price).toString())
+    // } else {
+    //   setInputAmount((Number(inputAmount) / collateralToken.price).toString())
+    // }
     setIsMoneyValue(!isMoneyValue)
   }
 
@@ -79,51 +79,34 @@ export const WithdrawCollateralContent = () => {
     setCollateralWithdrawAmountMax(false)
     setInputAmount(amount)
   }
-  
-  const countDecimals = function (value: number) {
-    if(Math.floor(value) === value) return 0;
-    return value.toString().split(".")[1].length || 0; 
-  }
 
+  function roundDown(val: number, decimals: number) {
+    decimals = decimals || 0;
+    return (Math.floor(val * Math.pow(10, decimals)) / Math.pow(10, decimals));
+  }
 
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
-      let a2s = borrowingPower - accountLiability
-      const tv = Number(collateralToken.vault_balance)
-        //Number(collateralToken.vault_amount_str) * collateralToken.price
-      const amt = tv/collateralToken.price
-      const dec = countDecimals(amt)
-      const samt = amt.toFixed(dec-1)
+      let a2s = roundDown(borrowingPower - accountLiability, 2)
 
-      if (accountLiability == 0) {
-        if (isMoneyValue) {
-          setInputAmount(tv.toString())
-        } else {
-          setInputAmount(samt)
-          //setInputAmount(collateralToken.vault_amount_str!)
+      if (a2s > 0) {
+        const max = roundDown(a2s*100/ltv, 2)
+        let amt = roundDown((max*100)/(collateralToken.price*100), 2)
+        const va =  roundDown(Number(collateralToken.vault_amount_str), 2)
+        //amt = Math.min(amt, va)
+        
+        if (va < amt) {
           setCollateralWithdrawAmountMax(true)
-        }
-      } else if (a2s >= 0) {
-        if (tv <= a2s) {
-          if (isMoneyValue) {
-            setInputAmount(tv.toString())
-          } else {
-            setInputAmount(samt)
-            //setInputAmount(collateralToken.vault_amount_str!)
-            setCollateralWithdrawAmountMax(true)
-          }
+          amt = va
         } else {
-          if (isMoneyValue) {
-            setInputAmount((a2s / (ltv / 100)).toString())
-          } else {
-            setInputAmount(
-              (a2s / collateralToken.price / (ltv / 100)).toString()
-            )
-          }
+          setCollateralWithdrawAmountMax(false)
         }
+        setInputAmount(amt.toString())
+        setDisabled(false)
+      } else {
+        setInputAmount('0')
       }
-      setDisabled(false)
     } else {
       setInputAmount('0')
     }
@@ -144,7 +127,7 @@ export const WithdrawCollateralContent = () => {
           onFocus={toggle}
           onChange={trySetInputAmount}
           placeholder={`0 ${isMoneyValue ? 'USD' : collateralToken.ticker}`}
-          value={inputAmount}
+          value={ isMoneyValue ? (Number(inputAmount)*collateralToken.price).toFixed(4) : inputAmount }
           isMoneyValue={isMoneyValue}
         />
         <Box sx={{ display: 'flex', paddingBottom: 0.5, alignItems: 'center' }}>
@@ -160,7 +143,7 @@ export const WithdrawCollateralContent = () => {
               ? `${
                   inputAmount === '0'
                     ? '0'
-                    : round(Number(inputAmount) / collateralToken.price, 4)
+                    : inputAmount
                 } ${collateralToken.ticker}`
               : `$${(
                   Number(inputAmount) * collateralToken.price
