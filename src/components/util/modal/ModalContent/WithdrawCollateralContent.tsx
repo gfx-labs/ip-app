@@ -37,18 +37,9 @@ export const WithdrawCollateralContent = () => {
   const ltv = tokens![collateralToken.ticker].token_LTV || 0
 
   useEffect(() => {
-    let newBorrowingPower
-    // if (isMoneyValue) {
-    //   newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100)
-    //   setCollateralWithdrawAmount(
-    //     (Number(inputAmount) / collateralToken.price).toString()
-    //   )
-    // } else {
-      newBorrowingPower =
-        borrowingPower -
+    const newBorrowingPower = borrowingPower -
         Number(inputAmount) * collateralToken.price * (ltv / 100)
-      setCollateralWithdrawAmount(inputAmount)
-    //}
+    setCollateralWithdrawAmount(inputAmount)
 
     if (newBorrowingPower <= 0) {
       setNewBorrowingPower(0)
@@ -67,11 +58,6 @@ export const WithdrawCollateralContent = () => {
   }, [inputAmount])
 
   const swapHandler = () => {
-    // if (!isMoneyValue) {
-    //   setInputAmount((Number(inputAmount) * collateralToken.price).toString())
-    // } else {
-    //   setInputAmount((Number(inputAmount) / collateralToken.price).toString())
-    // }
     setIsMoneyValue(!isMoneyValue)
   }
 
@@ -80,19 +66,20 @@ export const WithdrawCollateralContent = () => {
     setInputAmount(amount)
   }
 
-  function roundDown(val: number, decimals: number) {
-    decimals = decimals || 0;
-    return (Math.floor(val * Math.pow(10, decimals)) / Math.pow(10, decimals));
+  function roundDown(val: number, dec: number) {
+    dec = dec || 0;
+    const mul = Math.pow(10, dec)
+    return Math.floor(val * mul) / mul;
   }
 
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
-      let a2s = roundDown(borrowingPower - accountLiability, 2)
+      const a = roundDown(borrowingPower - accountLiability, 2)
 
-      if (a2s > 0) {
-        const max = roundDown(a2s*100/ltv, 2)
-        let amt = roundDown((max*100)/(collateralToken.price*100), 2)
+      if (a > 0) {
+        const max = roundDown(a * 100 / ltv, 2)
+        let amt = roundDown((max * 100) / (collateralToken.price * 100), 2)
         const va =  roundDown(Number(collateralToken.vault_amount_str), 2)
         //amt = Math.min(amt, va)
         

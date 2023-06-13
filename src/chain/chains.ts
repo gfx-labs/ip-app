@@ -4,6 +4,7 @@ export enum ChainIDs {
   MAINNET = 1,
   ROPSTEN = 3,
   GOERLI = 5,
+  OPTIMISM = 10,
   POLYGON = 137,
   LOCAL = 31337,
 }
@@ -34,6 +35,14 @@ const configs: Array<ChainInfo> = [
     logo: 'ETH',
     scan_url: 'https://goerli.etherscan.io/tx/',
     scan_site: 'Goerli Etherscan',
+  },
+  {
+    id: ChainIDs.OPTIMISM,
+    name: 'opUSDi',
+    symbol: 'opUSDi',
+    logo: 'USDI',
+    scan_url: 'https://optimistic.etherscan.io/',
+    scan_site: 'Optimism Etherscan',
   },
   {
     id: ChainIDs.POLYGON,
