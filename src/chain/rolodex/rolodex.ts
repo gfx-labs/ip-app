@@ -59,11 +59,11 @@ export const NewRolodex = async (ctx: Web3Data) => {
     if (ctx.currentAccount) {
       const signer = await ctx.provider!.getSigner(ctx.currentAccount)
       provider = ctx.provider!
-      rolo = new Rolodex(signer!, token.usdi_address!)
+      rolo = new Rolodex(signer!, token.usdi_addr!)
       rolo.addressVC = await rolo.USDI?.getVaultController()
       rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!)
     } else {
-      rolo = new Rolodex(provider!, token.usdi_address!)
+      rolo = new Rolodex(provider!, token.usdi_addr!)
       rolo.addressVC = await rolo.USDI?.getVaultController()
       rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     }

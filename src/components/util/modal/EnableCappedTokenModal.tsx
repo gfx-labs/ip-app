@@ -10,6 +10,7 @@ import { useState } from 'react'
 import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import SVGBox from '../../icons/misc/SVGBox'
+import { Chains } from '../../../chain/chains'
 
 type ButtonText = 'Enable Token' | 'Vault Minted'
 
@@ -17,17 +18,19 @@ export const EnableCappedTokenModal = () => {
   const { type, setType } = useModalContext()
 
   const { vaultID, setHasVotingVault } = useVaultDataContext()
-  const { currentSigner } = useWeb3Context()
+  const { chainId, currentSigner } = useWeb3Context()
   const { setRefresh } = useVaultDataContext()
 
   const [loading, setLoading] = useState(false)
   const [buttonText, setButtonText] = useState<ButtonText>('Enable Token')
   const [error, setError] = useState<string | undefined>()
+  const chain = Chains.getInfo(chainId)
+
   const mintVotingVault = async () => {
     try {
       if (vaultID && currentSigner) {
         setLoading(true)
-        await mintVotingVaultID(vaultID, currentSigner!)
+        await mintVotingVaultID(chain.votingVaultController_addr!, vaultID, currentSigner!)
 
         setLoading(false)
         setButtonText('Vault Minted')

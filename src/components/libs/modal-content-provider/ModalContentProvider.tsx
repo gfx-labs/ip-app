@@ -61,8 +61,6 @@ export type ModalContextType = {
   transaction: ContractReceipt | ContractTransaction | null
 }
 
-
-
 export const ModalContentContext = createContext({} as ModalContextType)
 
 export const ModalContentProvider = ({

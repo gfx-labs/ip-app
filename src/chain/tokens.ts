@@ -33,18 +33,22 @@ export const getTokensListOnCurrentChain = (
       name: 'Wrapped ETH',
       address: tokensToChains.WETH[chain_id],
       ticker: 'WETH',
+      capped_token: tokensToChains.capped_WETH[chain_id] ? true : false,
+      capped_address: tokensToChains.capped_WETH[chain_id],
     }),
     stETH: initializeToken({
       name: 'Lido Staked ETH',
       address: tokensToChains.stETH[chain_id],
       ticker: 'stETH',
+      capped_token: tokensToChains.capped_stETH[chain_id] ? true : false,
+      capped_address: tokensToChains.capped_stETH[chain_id],
     }),
     rETH: initializeToken({
       name: 'rETH',
       address: tokensToChains.rETH[chain_id],
       ticker: 'rETH',
       capped_token: true,
-      capped_address: '0x64eA012919FD9e53bDcCDc0Fc89201F484731f41',
+      capped_address: tokensToChains.capped_rETH[chain_id]
     }),
     cbETH: initializeToken({
       name: 'cbETH',
@@ -58,6 +62,8 @@ export const getTokensListOnCurrentChain = (
       address: tokensToChains.WBTC[chain_id],
       ticker: 'WBTC',
       decimals: 8,
+      capped_token: tokensToChains.capped_WBTC[chain_id] ? true : false,
+      capped_address: tokensToChains.capped_WBTC[chain_id]
     }),
     UNI: initializeToken({
       name: 'Uniswap',

@@ -45,8 +45,11 @@ export const DepositCollateralConfirmationModal = () => {
   }, [amount])
 
   const handleDepositConfirmationRequest = async () => {
+
+    
     try {
       let attempt: ContractTransaction
+      // IF TOKEN IS CAPPED
       if (collateralToken.capped_token && collateralToken.capped_address) {
         if (!hasVotingVault) {
           setLoading(false)
@@ -70,7 +73,7 @@ export const DepositCollateralConfirmationModal = () => {
         if (!ha) {
           let approveAmount = utils.parseUnits(DEFAULT_APPROVE_AMOUNT, collateralToken.decimals)
 
-          const txn = await contract.approve(vaultAddress!, approveAmount)
+          const txn = await contract.approve(collateralToken.capped_address!, approveAmount)
           setLoadmsg(locale('TransactionPending'))
 
           await txn?.wait()

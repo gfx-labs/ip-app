@@ -21,6 +21,7 @@ import {
   hasVotingVaultAddress,
 } from '../../../contracts/VotingVault/hasVotingVault'
 import { CollateralTokens } from '../../../types/token'
+import { Chains } from '../../../chain/chains'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -181,9 +182,10 @@ export const VaultDataProvider = ({
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = vaultIDs.toString()
+          const addr = Chains.getInfo(chainId).votingVaultController_addr
           setVaultID(id)
 
-          getVotingVaultAddress(id, signerOrProvider!).then((address) => {
+          getVotingVaultAddress(addr!, id, signerOrProvider!).then((address) => {
             setVotingVaultAddress(address)
             setHasVotingVault(hasVotingVaultAddress(address))
           })
