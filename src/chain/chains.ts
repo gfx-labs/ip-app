@@ -41,7 +41,7 @@ const configs: Array<ChainInfo> = [
     id: ChainIDs.OPTIMISM,
     name: 'opUSDi',
     symbol: 'opUSDi',
-    logo: 'USDI',
+    logo: 'opUSDi',
     usdi_addr: '0x889be273BE5F75a177f9a1D00d84D607d75fB4e1',
     votingVaultController_addr: '0x9C3b60A1ad08740fCD842351ff0960C1Ee3FeA52',
     scan_url: 'https://optimistic.etherscan.io/',
