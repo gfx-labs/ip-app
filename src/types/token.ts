@@ -40,7 +40,7 @@ export interface CollateralTokens {
   [key: string]: Token
 }
 
-export type TokenInfo {
+export interface TokenInfo {
   addr?: string,
   capped_addr?: string,
   can_delegate?: boolean,
