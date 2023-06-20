@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { ChainIDs } from '../chain/chains'
 
 export interface Token {
   name: string
@@ -37,4 +38,14 @@ export interface InitializeTokenProps {
 
 export interface CollateralTokens {
   [key: string]: Token
+}
+
+export type TokenInfo {
+  addr?: string,
+  capped_addr?: string,
+  can_delegate?: boolean,
+}
+
+export interface TokensOnChains {
+  [key: string]: Record<ChainIDs, TokenInfo>
 }
