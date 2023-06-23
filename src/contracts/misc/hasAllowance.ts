@@ -1,7 +1,6 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
 import { Rolodex } from '../../chain/rolodex/rolodex'
-import { BN } from '../../easy/bn'
 import { getERC20Allowance, getUSDCAllowanceWithRolodex } from './getAllowance'
 
 export const hasUSDCAllowance = async (
