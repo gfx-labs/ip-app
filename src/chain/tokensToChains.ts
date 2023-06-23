@@ -23,10 +23,13 @@ export const tickerToName: {[index: string]: string} = {
   YFI: 'yearn.finance'
 }
 
+export const tickerToDecimals: {[index: string]: number} = {
+  WBTC: 8
+}
+
 // if token has an address on a chain, it means it is enabled on that chain
 // use undefined if it is not enabled on a chain
 // if a token has a capped address it also has to have a normal address
-// if a token does not have a normal address it does not exist on that chain
 export const tokensToChains: TokensOnChains = {
   WBTC: {
     [ChainIDs.MAINNET]: {addr:'0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'},
@@ -60,6 +63,25 @@ export const tokensToChains: TokensOnChains = {
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {addr: '0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb', 
                           capped_addr: '0xE1442bA08e330967Dab4fd4Fc173835e9730bff6'},
+    [ChainIDs.POLYGON]: {},
+    [ChainIDs.LOCAL]: {},
+  },
+  cbETH: {
+    [ChainIDs.MAINNET]: {addr: '0xbe9895146f7af43049ca1c1ae358b0541ea49704',
+                         capped_addr: '0x99bd1f28a5A7feCbE39a53463a916794Be798FC3'},
+    [ChainIDs.ROPSTEN]: {},
+    [ChainIDs.GOERLI]: {},
+    [ChainIDs.OPTIMISM]: {},
+    [ChainIDs.POLYGON]: {},
+    [ChainIDs.LOCAL]: {},
+  },
+  rETH: {
+    [ChainIDs.MAINNET]: {addr: '0xae78736cd615f374d3085123a210448e74fc6393',
+                         capped_addr: '0x64eA012919FD9e53bDcCDc0Fc89201F484731f41'},
+    [ChainIDs.ROPSTEN]: {},
+    [ChainIDs.GOERLI]: {},
+    [ChainIDs.OPTIMISM]: {addr: '0x9Bcef72be871e61ED4fBbc7630889beE758eb81D',
+                          capped_addr: '0x399bA3957D0e5F6e62836506e760787FDDFb01c3'},
     [ChainIDs.POLYGON]: {},
     [ChainIDs.LOCAL]: {},
   },
@@ -135,25 +157,6 @@ export const tokensToChains: TokensOnChains = {
     [ChainIDs.ROPSTEN]: {},
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {},
-    [ChainIDs.POLYGON]: {},
-    [ChainIDs.LOCAL]: {},
-  },
-  cbETH: {
-    [ChainIDs.MAINNET]: {addr: '0xbe9895146f7af43049ca1c1ae358b0541ea49704',
-                         capped_addr: '0x99bd1f28a5A7feCbE39a53463a916794Be798FC3'},
-    [ChainIDs.ROPSTEN]: {},
-    [ChainIDs.GOERLI]: {},
-    [ChainIDs.OPTIMISM]: {},
-    [ChainIDs.POLYGON]: {},
-    [ChainIDs.LOCAL]: {},
-  },
-  rETH: {
-    [ChainIDs.MAINNET]: {addr: '0xae78736cd615f374d3085123a210448e74fc6393',
-                         capped_addr: '0x64eA012919FD9e53bDcCDc0Fc89201F484731f41'},
-    [ChainIDs.ROPSTEN]: {},
-    [ChainIDs.GOERLI]: {},
-    [ChainIDs.OPTIMISM]: {addr: '0x9Bcef72be871e61ED4fBbc7630889beE758eb81D',
-                          capped_addr: '0x399bA3957D0e5F6e62836506e760787FDDFb01c3'},
     [ChainIDs.POLYGON]: {},
     [ChainIDs.LOCAL]: {},
   },

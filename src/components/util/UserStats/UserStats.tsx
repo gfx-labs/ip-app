@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { UserTokenCard } from './UserTokenCard'
 import { CardContainer } from '../cards/CardContainer'
+import { DISPLAY_DECIMALS } from '../../../constants'
+import { round } from '../../../easy/bn'
 
 export const UserStats = () => {
   const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
@@ -33,7 +35,7 @@ export const UserStats = () => {
               style: 'currency',
               currency: 'USD',
             })!}
-            tokenAmount={Number(val.vault_amount_str).toLocaleString()}
+            tokenAmount={round(val.vault_amount_str || 0, DISPLAY_DECIMALS).toString()}
             image={{
               src: val.ticker,
               alt: val.ticker,

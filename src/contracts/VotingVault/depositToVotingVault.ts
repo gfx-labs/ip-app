@@ -15,28 +15,24 @@ const depositToVotingVault = async (
       signerOrProvider
     )
 
-    let formattedAmount
+    let formattedAmount: BigNumber
     if (typeof amount === 'string') {
       const decimals = await cappedTokenContract.decimals()
-
       formattedAmount = utils.parseUnits(amount, decimals)
     } else {
       formattedAmount = amount
     }
 
-    // const ge = (
-    //   await cappedTokenContract.estimateGas.transfer(
-    //     token.capped_address!,
-    //     formattedAmount
-    //   )
-    // )
-    //   .mul(100)
-    //   .div(80)
+    const ge = (
+      await cappedTokenContract.estimateGas.deposit(formattedAmount, Number(id))
+    )
+      .mul(100)
+      .div(80)
 
     const depositCapped = await cappedTokenContract.deposit(
       formattedAmount,
-      Number(id)
-      // { gasLimit: ge }
+      Number(id),
+      { gasLimit: ge }
     )
 
     return depositCapped

@@ -45,8 +45,6 @@ export const DepositCollateralConfirmationModal = () => {
   }, [amount])
 
   const handleDepositConfirmationRequest = async () => {
-
-    
     try {
       let attempt: ContractTransaction
       // IF TOKEN IS CAPPED

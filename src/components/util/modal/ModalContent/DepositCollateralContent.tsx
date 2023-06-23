@@ -13,6 +13,8 @@ import {
 import { useLight } from '../../../../hooks/useLight'
 import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
 import SVGBox from '../../../icons/misc/SVGBox'
+import { DISPLAY_DECIMALS } from '../../../../constants'
+import { round } from '../../../../easy/bn'
 
 export const DepositCollateralContent = () => {
   const {
@@ -78,7 +80,7 @@ export const DepositCollateralContent = () => {
         <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
           {' '}
           Wallet Balance:{' '}
-          {Number(collateralToken?.wallet_amount_str!).toFixed(2)}{' '}
+          {round(collateralToken.wallet_amount_str || 0, DISPLAY_DECIMALS)}{' '}
           {collateralToken?.ticker}
         </Typography>
       </Box>

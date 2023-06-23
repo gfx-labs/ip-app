@@ -9,6 +9,7 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { getWallet, WalletType } from './WalletOptions'
 import { BACKUP_PROVIDER } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
+import { ChainIDs } from '../../../chain/chains'
 
 export type ERC20TokenType = {
   address: string
@@ -141,8 +142,9 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       console.log('started auto refresh of blockNumber for', provider)
       provider.on('block', (n: number) => {
         const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
-
-        getGasPrice(tempSignerOrProvider!).then(setGasPrice)
+        if (chainId === ChainIDs.MAINNET) {
+          getGasPrice(tempSignerOrProvider!).then(setGasPrice)
+        }
         if (n > dataBlock) {
           setDataBlock(n)
         }
@@ -210,7 +212,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     </Web3Context.Provider>
   )
 }
-export const DEFAULT_ADDRESS = "0x000000000000000000000000000000000000dead"
+export const DEFAULT_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 export const useWeb3Context = () => {
   const { web3ProviderData } = useContext(Web3Context)

@@ -41,9 +41,6 @@ export const getVaultTokenBalanceAndPrice = async (
   }
 
   try {
-    if (token.ticker == "WETH") {
-      console.log("here")
-    }
     const price = await rolodex?.Oracle?.getLivePrice(token_address)
 
     const decimals = await getDecimals(token_address, SOP)

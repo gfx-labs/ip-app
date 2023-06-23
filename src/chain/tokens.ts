@@ -2,7 +2,7 @@ import { Rolodex } from '../chain/rolodex/rolodex'
 import initializeToken from '../components/util/tokens/initializeToken'
 import { CollateralTokens, Token } from '../types/token'
 import { ChainIDs } from './chains'
-import { tickerToName, tokensToChains } from './tokensToChains'
+import { tickerToName, tickerToDecimals, tokensToChains } from './tokensToChains'
 
 export const getStablecoins = (
   rolodex: Rolodex
@@ -30,12 +30,12 @@ export const getTokensListOnCurrentChain = (
 ): CollateralTokens => {
   let out: CollateralTokens = {}
   for (const ticker in tokensToChains) {
-    let name = ticker
-    if (Object.prototype.hasOwnProperty.call(tickerToName, ticker)) {
-      name = tickerToName[ticker]
-    }
     let token = tokensToChains[ticker][chain_id]
     if (token.addr) {
+      let name = ticker
+      if (Object.prototype.hasOwnProperty.call(tickerToName, ticker)) {
+        name = tickerToName[ticker]
+      }
       out[ticker] = initializeToken({
         name: name,
         ticker: ticker,
@@ -44,6 +44,9 @@ export const getTokensListOnCurrentChain = (
         capped_address: token.capped_addr,
         can_delegate: token.can_delegate ?? false
       })
+      if (Object.prototype.hasOwnProperty.call(tickerToDecimals, ticker)) {
+        out[ticker].decimals = tickerToDecimals[ticker]
+      }
     }
   }
   return out
