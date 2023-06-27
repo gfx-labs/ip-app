@@ -7,7 +7,7 @@ import { BaseModal } from './BaseModal'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useState } from 'react'
-import mintVotingVaultID from '../../../contracts/VotingVault/mintVault'
+import mintVotingVaultID from '../../../contracts/VotingVault/mintVotingVault'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import SVGBox from '../../icons/misc/SVGBox'
 import { Chains } from '../../../chain/chains'
@@ -15,7 +15,7 @@ import { Chains } from '../../../chain/chains'
 type ButtonText = 'Enable Token' | 'Vault Minted'
 
 export const EnableCappedTokenModal = () => {
-  const { type, setType } = useModalContext()
+  const { type, setType, collateralToken } = useModalContext()
 
   const { vaultID, setHasVotingVault } = useVaultDataContext()
   const { chainId, currentSigner } = useWeb3Context()

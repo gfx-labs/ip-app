@@ -41,6 +41,8 @@ export type VaultDataContextType = {
   votingVaultAddress: string | undefined
   hasVotingVault: boolean
   setHasVotingVault: Dispatch<SetStateAction<boolean>>
+  hasBptVault: boolean
+  setHasBptVault: Dispatch<SetStateAction<boolean>>
 }
 
 export const VaultDataContext = React.createContext({} as VaultDataContextType)
@@ -69,6 +71,7 @@ export const VaultDataProvider = ({
     string | undefined
   >(undefined)
   const [hasVotingVault, setHasVotingVault] = useState(false)
+  const [hasBptVault, setHasBptVault] = useState(false)
 
   const update = async () => {
     const px: Array<Promise<any>> = []
@@ -226,6 +229,8 @@ export const VaultDataProvider = ({
         totalBaseLiability,
         hasVotingVault,
         setHasVotingVault,
+        hasBptVault,
+        setHasBptVault,
         votingVaultAddress,
       }}
     >

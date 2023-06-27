@@ -23,6 +23,8 @@ export interface Token {
 
   capped_token?: boolean
   capped_address?: string
+
+  bpt?: boolean
 }
 
 export interface InitializeTokenProps {
@@ -34,6 +36,7 @@ export interface InitializeTokenProps {
   price?: number
   can_delegate?: boolean
   decimals?: number
+  bpt?: boolean
 }
 
 export interface CollateralTokens {

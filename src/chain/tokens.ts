@@ -31,7 +31,7 @@ export const getTokensListOnCurrentChain = (
   let out: CollateralTokens = {}
   for (const ticker in tokensToChains) {
     let token = tokensToChains[ticker][chain_id]
-    if (token.addr) {
+    if (token && token.addr) {
       let name = ticker
       if (Object.prototype.hasOwnProperty.call(tickerToName, ticker)) {
         name = tickerToName[ticker]
