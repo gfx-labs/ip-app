@@ -8,6 +8,7 @@ import { BN } from '../../easy/bn'
 export const getBalanceOf = async (
   wallet_address: string,
   contract_address: string,
+  decimals: number,
   providerOrSigner: JsonRpcProvider | JsonRpcSigner
 ): Promise<{ num: number; str: string; bn: BigNumber }> => {
   if(wallet_address == undefined || wallet_address == "" ) {
@@ -22,7 +23,7 @@ export const getBalanceOf = async (
     providerOrSigner
   )
   const balance = await contract.balanceOf(wallet_address)
-  const decimals = await getDecimals(contract, providerOrSigner)
+  //const decimals = await getDecimals(contract, providerOrSigner)
   const formattedBalance = useFormatBNtoPreciseStringAndNumber(
     balance,
     decimals

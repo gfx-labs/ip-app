@@ -11,6 +11,7 @@ import { locale } from '../../../locale'
 import { ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
+import depositToBptVault from '../../../contracts/VotingVault/depositToBptVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { hasTokenAllowance } from '../../../contracts/misc/hasAllowance'
 import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
@@ -85,7 +86,11 @@ export const DepositCollateralConfirmationModal = () => {
           return
         }
 
-        attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
+        if (collateralToken.bpt) {
+          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!)
+        } else {
+          attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
+        }
       } else {
         attempt = await depositCollateral(amount!, collateralToken.address, provider?.getSigner(currentAccount)!, vaultAddress!)
       }
@@ -145,7 +150,7 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          !collateralToken.capped_token || (collateralToken.capped_token && collateralToken.capped_address && !hasVotingVault) || hasAllowance
+          !collateralToken.capped_token || hasAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'
         }

@@ -42,7 +42,8 @@ export const getTokensListOnCurrentChain = (
         address: token.addr!,
         capped_token: token.capped_addr !== undefined,
         capped_address: token.capped_addr,
-        can_delegate: token.can_delegate ?? false
+        can_delegate: token.can_delegate ?? false,
+        bpt: token.bpt ?? false,
       })
       if (Object.prototype.hasOwnProperty.call(tickerToDecimals, ticker)) {
         out[ticker].decimals = tickerToDecimals[ticker]

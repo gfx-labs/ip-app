@@ -19,7 +19,9 @@ import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
   getVotingVaultAddress,
   hasVotingVaultAddress,
-} from '../../../contracts/VotingVault/hasVotingVault'
+  getBptVaultAddress,
+  hasBptVaultAddress,
+} from '../../../contracts/VotingVault/getSubVault'
 import { CollateralTokens } from '../../../types/token'
 import { Chains } from '../../../chain/chains'
 
@@ -41,6 +43,7 @@ export type VaultDataContextType = {
   votingVaultAddress: string | undefined
   hasVotingVault: boolean
   setHasVotingVault: Dispatch<SetStateAction<boolean>>
+  bptVaultAddress: string | undefined
   hasBptVault: boolean
   setHasBptVault: Dispatch<SetStateAction<boolean>>
 }
@@ -68,8 +71,9 @@ export const VaultDataProvider = ({
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
   //
   const [votingVaultAddress, setVotingVaultAddress] = useState<
-    string | undefined
-  >(undefined)
+    string | undefined>(undefined)
+  const [bptVaultAddress, setBptVaultAddress] = useState<
+    string | undefined>(undefined)
   const [hasVotingVault, setHasVotingVault] = useState(false)
   const [hasBptVault, setHasBptVault] = useState(false)
 
@@ -118,17 +122,19 @@ export const VaultDataProvider = ({
           signerOrProvider!
         )
           .then((res) => {
-            token.price = res.livePrice//Math.round(100 * res.livePrice) / 100
+            token.price = res.livePrice
             token.vault_amount_str = res.unformattedBalance
             token.vault_amount = res.balanceBN
+
             if (token.vault_amount.isZero()) {
               token.vault_balance = '0'
             } else {
-              const vaultBalance =
-                BNtoDecSpecific(token.vault_amount, token.decimals) *
-                token.price
+              //const vaultBalance = Number(utils.formatUnits(token.vault_amount._hex, token.decimals)) * token.price
+              // const vaultBalance = 
+              //   BNtoDecSpecific(token.vault_amount, token.decimals) *
+              //   token.price
 
-              token.vault_balance = vaultBalance.toString()//.toFixed(2)
+              token.vault_balance = res.balance//vaultBalance.toString()
             }
           })
           .catch((e) => {
@@ -139,6 +145,7 @@ export const VaultDataProvider = ({
           let p3 = getBalanceOf(
             currentAccount,
             token.address,
+            token.decimals,
             signerOrProvider!
           )
             .then((val) => {
@@ -192,6 +199,11 @@ export const VaultDataProvider = ({
             setVotingVaultAddress(address)
             setHasVotingVault(hasVotingVaultAddress(address))
           })
+
+          getBptVaultAddress(addr!, id, signerOrProvider!).then((addr) => {
+            setBptVaultAddress(addr)
+            setHasBptVault(hasBptVaultAddress(addr))
+          })
         } else {
           setVaultID(null)
         }
@@ -232,6 +244,7 @@ export const VaultDataProvider = ({
         hasBptVault,
         setHasBptVault,
         votingVaultAddress,
+        bptVaultAddress,
       }}
     >
       {children}

@@ -47,6 +47,7 @@ export interface TokenInfo {
   addr?: string,
   capped_addr?: string,
   can_delegate?: boolean,
+  bpt?: boolean
 }
 
 export interface TokensOnChains {

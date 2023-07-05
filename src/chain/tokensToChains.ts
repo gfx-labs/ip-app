@@ -20,7 +20,8 @@ export const tickerToName: {[index: string]: string} = {
   AAVE: 'Aave',
   CHAI: 'Chai',
   ZRX: '0x Protocol',
-  YFI: 'yearn.finance'
+  YFI: 'yearn.finance',
+  B_stETH: 'wstETH-WETH Pool',
 }
 
 export const tickerToDecimals: {[index: string]: number} = {
@@ -203,6 +204,16 @@ export const tokensToChains: TokensOnChains = {
     [ChainIDs.OPTIMISM]: {addr: '0x4200000000000000000000000000000000000042',
                           capped_addr: '0xb549c8cc8011CA0d023A73DAD54d725125b25F31',
                           can_delegate: true},
+    [ChainIDs.POLYGON]: {},
+    [ChainIDs.LOCAL]: {},
+  },
+  B_stETH: {
+    [ChainIDs.MAINNET]: {addr: '0x32296969Ef14EB0c6d29669C550D4a0449130230',
+                         capped_addr: '0x7d3CD037aE7efA9eBed7432c11c9DFa73519303d',
+                         bpt: true},
+    [ChainIDs.ROPSTEN]: {},
+    [ChainIDs.GOERLI]: {},
+    [ChainIDs.OPTIMISM]: {},
     [ChainIDs.POLYGON]: {},
     [ChainIDs.LOCAL]: {},
   }

@@ -1,16 +1,16 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
-import { CappedGovToken__factory } from '../../chain/contracts/factories/lending/CappedGovToken__factory'
+import { CappedBptToken__factory } from '../../chain/contracts/factories/lending/CappedBptToken__factory'
 import { Token } from '../../types/token'
 
-const depositToVotingVault = async (
+const depositToBptVault = async (
   id: string,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
   token: Token,
   amount: string | BigNumber
 ) => {
   try {
-    const cappedTokenContract = CappedGovToken__factory.connect(
+    const cappedTokenContract = CappedBptToken__factory.connect(
       token.capped_address!,
       signerOrProvider
     )
@@ -32,6 +32,7 @@ const depositToVotingVault = async (
     const depositCapped = await cappedTokenContract.deposit(
       formattedAmount,
       Number(id),
+      true
       //{ gasLimit: ge }
     )
 
@@ -42,4 +43,4 @@ const depositToVotingVault = async (
   }
 }
 
-export default depositToVotingVault
+export default depositToBptVault

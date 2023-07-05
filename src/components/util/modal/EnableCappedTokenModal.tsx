@@ -7,7 +7,7 @@ import { BaseModal } from './BaseModal'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useState } from 'react'
-import mintVotingVaultID from '../../../contracts/VotingVault/mintVotingVault'
+import { SubVault, mintSubVault } from '../../../contracts/VotingVault/mintSubVault'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import SVGBox from '../../icons/misc/SVGBox'
 import { Chains } from '../../../chain/chains'
@@ -17,7 +17,7 @@ type ButtonText = 'Enable Token' | 'Vault Minted'
 export const EnableCappedTokenModal = () => {
   const { type, setType, collateralToken } = useModalContext()
 
-  const { vaultID, setHasVotingVault } = useVaultDataContext()
+  const { vaultID, setHasVotingVault, setHasBptVault } = useVaultDataContext()
   const { chainId, currentSigner } = useWeb3Context()
   const { setRefresh } = useVaultDataContext()
 
@@ -30,12 +30,17 @@ export const EnableCappedTokenModal = () => {
     try {
       if (vaultID && currentSigner) {
         setLoading(true)
-        await mintVotingVaultID(chain.votingVaultController_addr!, vaultID, currentSigner!)
+        const type = collateralToken.bpt ? SubVault.BPT : SubVault.Voting
+        await mintSubVault(chain.votingVaultController_addr!, vaultID, currentSigner!, type)
 
         setLoading(false)
         setButtonText('Vault Minted')
         setRefresh(true)
-        setHasVotingVault(true)
+        if (type == SubVault.BPT) {
+          setHasBptVault(true)
+        } else {
+          setHasVotingVault(true)
+        }
         setError(undefined)
         setType(ModalType.DepositCollateralConfirmation)
       }

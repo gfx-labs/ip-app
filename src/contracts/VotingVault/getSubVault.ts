@@ -15,5 +15,21 @@ export const getVotingVaultAddress = async (
   return votingVaultAddress
 }
 
+export const getBptVaultAddress = async (
+  vaultController_addr: string,
+  id: string,
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider
+) => {
+  const VVCContract = VotingVaultController__factory.connect(
+    vaultController_addr,
+    signerOrProvider
+  )
+  const bptVaultAddress = await VVCContract.BPTvaultAddress(Number(id))
+  return bptVaultAddress
+}
+
+export const hasBptVaultAddress = (address: string) =>
+  address !== ZERO_ADDRESS
+
 export const hasVotingVaultAddress = (address: string) =>
   address !== ZERO_ADDRESS
