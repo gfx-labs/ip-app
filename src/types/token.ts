@@ -25,6 +25,7 @@ export interface Token {
   capped_address?: string
 
   bpt?: boolean
+  icons?: string[]
 }
 
 export interface InitializeTokenProps {
@@ -37,6 +38,7 @@ export interface InitializeTokenProps {
   can_delegate?: boolean
   decimals?: number
   bpt?: boolean
+  icons?: string[]
 }
 
 export interface CollateralTokens {
@@ -48,6 +50,7 @@ export interface TokenInfo {
   capped_addr?: string,
   can_delegate?: boolean,
   bpt?: boolean
+  icons?: string[]
 }
 
 export interface TokensOnChains {

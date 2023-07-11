@@ -210,7 +210,8 @@ export const tokensToChains: TokensOnChains = {
   B_stETH: {
     [ChainIDs.MAINNET]: {addr: '0x32296969Ef14EB0c6d29669C550D4a0449130230',
                          capped_addr: '0x7d3CD037aE7efA9eBed7432c11c9DFa73519303d',
-                         bpt: true},
+                         bpt: true,
+                         icons: ['wstETH', 'WETH']},
     [ChainIDs.ROPSTEN]: {},
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {},

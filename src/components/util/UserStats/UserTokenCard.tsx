@@ -25,6 +25,10 @@ interface UserTokenCardProps extends BoxProps {
     src: string
     alt: string
   }
+  image2? : {
+    src: string
+    alt: string
+  }
   LTVPercent: string
   penaltyPercent: string
   canDelegate: boolean | undefined
@@ -43,7 +47,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const { setDelegateToken } = useAppGovernanceContext()
   const [cappedPercent, setCappedPercent] = useState(10)
 
-  const { tokenName, tokenTicker, tokenPrice, vaultBalance, tokenAmount, image, LTVPercent, penaltyPercent, canDelegate = false, index, cappedAddress } = props
+  const { tokenName, tokenTicker, tokenPrice, vaultBalance, tokenAmount, image, image2, LTVPercent, penaltyPercent, canDelegate = false, index, cappedAddress } = props
 
   const openVault = async () => {
     try {
@@ -110,8 +114,21 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} />
-
+          <Box display="flex" flexDirection={"column"}>
+            <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} />
+            {image2 && (
+            <SVGBox 
+              display={image2 ? 'flex' : 'none' } 
+              position={"absolute"}
+              zIndex={-10}
+              top={0}
+              left={{ xs: 12, lg: 20 }}
+              width={{ xs: 24, lg: 40 }} 
+              height={{ xs: 24, lg: 40 }} 
+              svg_name={image2!.src} alt={image2!.alt} />
+          )}
+          </Box>
+          
           <Box display="flex" flexDirection="column">
             <Typography variant="body1" color="text.primary" display={{ xs: 'none', lg: 'block' }}>
               {tokenName}

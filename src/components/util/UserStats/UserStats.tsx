@@ -36,10 +36,23 @@ export const UserStats = () => {
               currency: 'USD',
             })!}
             tokenAmount={round(val.vault_amount_str || 0, DISPLAY_DECIMALS).toString()}
-            image={{
-              src: val.ticker,
-              alt: val.ticker,
-            }}
+            image={ val.icons? 
+              {
+                src: val.icons[0],
+                alt: val.icons[0]
+              }
+              : {
+                src: val.ticker,
+                alt: val.ticker,
+              }
+            }
+            image2={ val.icons ? 
+              {
+                src: val.icons[1],
+                alt: val.icons[1]
+              } 
+              : undefined
+            }
             LTVPercent={val.token_LTV!.toLocaleString()}
             penaltyPercent={val.token_penalty!.toLocaleString()}
             canDelegate={val.can_delegate ? true : false}

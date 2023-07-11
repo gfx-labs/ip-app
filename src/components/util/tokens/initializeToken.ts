@@ -11,6 +11,7 @@ const initializeToken = ({
   decimals = 18,
   price = 1,
   bpt = false,
+  //icons,
 }: InitializeTokenProps): Token => ({
   name,
   address,
@@ -29,6 +30,7 @@ const initializeToken = ({
   capped_token,
   capped_address,
   can_delegate,
+  //icons,
 })
 
 export default initializeToken
