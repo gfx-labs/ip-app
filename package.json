@@ -72,5 +72,5 @@
     "vite-plugin-shim-react-pdf": "^1.0.5",
     "web3-provider-engine": "^16.0.4"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@3.2.1"
 }
