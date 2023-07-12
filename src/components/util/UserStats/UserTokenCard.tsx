@@ -115,18 +115,23 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       >
         <Box display="flex" alignItems="center" columnGap={2}>
           <Box display="flex" flexDirection={"column"}>
-            <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} />
+            <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} 
+            sx={{
+              borderRadius: {xs: 12, lg: 20},
+              position: 'relative',
+              zIndex: 10,
+            }}/>
             {image2 && (
-            <SVGBox 
-              display={image2 ? 'flex' : 'none' } 
-              position={"absolute"}
-              zIndex={-10}
-              top={0}
-              left={{ xs: 12, lg: 20 }}
-              width={{ xs: 24, lg: 40 }} 
-              height={{ xs: 24, lg: 40 }} 
-              svg_name={image2!.src} alt={image2!.alt} />
-          )}
+              <SVGBox
+                width={{ xs: 24, lg: 40 }} 
+                height={{ xs: 24, lg: 40 }} 
+                svg_name={image2!.src} alt={image2!.alt}
+                sx={{
+                  position: 'relative',
+                  top: 0,
+                  left: { xs: 20, lg: 30 },
+                }}/>
+            )}
           </Box>
           
           <Box display="flex" flexDirection="column">
