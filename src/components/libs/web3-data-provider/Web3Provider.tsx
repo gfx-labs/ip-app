@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
@@ -9,7 +10,6 @@ import { getWallet, WalletType } from './WalletOptions'
 import { BACKUP_PROVIDER } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
 import { ChainIDs } from '../../../chain/chains'
-import { providers } from 'ethers'
 
 export type ERC20TokenType = {
   address: string
@@ -22,7 +22,6 @@ export type ERC20TokenType = {
 export type Web3Data = {
   connectWallet: (wallet: WalletType) => Promise<boolean>
   disconnectWallet: () => void
-  switchNetwork: (network: number) => void
   currentAccount: string
   currentSigner: JsonRpcSigner | undefined
   connected: boolean
@@ -39,20 +38,15 @@ export type Web3ContextData = {
   web3ProviderData: Web3Data
 }
 
-export const toHex = (num: any) => {
-  const val = Number(num);
-  return "0x" + val.toString(16);
-};
-
 export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
-  const { library, account, chainId, activate, active, error, deactivate, setError } = useWeb3React()
+  const { account, chainId, library: libraryProvider, activate, active, error, deactivate, setError } = useWeb3React<providers.Web3Provider>()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [connector, setConnector] = useState<AbstractConnector>()
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
-  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(BACKUP_PROVIDER))
+  const [provider, setProvider] = useState<JsonRpcProvider>(libraryProvider || new JsonRpcProvider(BACKUP_PROVIDER))
   const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
 
   const [deactivated, setDeactivated] = useState<boolean>(false)
@@ -62,12 +56,12 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const [gasPrice, setGasPrice] = useState('0')
 
   useEffect(() => {
-    if (library) {
-      setProvider(library)
+    if (libraryProvider) {
+      setProvider(libraryProvider)
     } else {
       setProvider(new JsonRpcProvider(BACKUP_PROVIDER))
     }
-  }, [library])
+  }, [libraryProvider])
 
   useEffect(() => {
     if (provider && account) {
@@ -143,26 +137,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     [disconnectWallet]
   )
 
-  const switchNetwork = async (network: number) => {
-    try {
-      await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
-    } catch (switchError: any) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [{ chainId: toHex(network) }]
-          });
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-  }
-
   useEffect(() => {
     if (provider) {
       console.log('started auto refresh of blockNumber for', provider)
@@ -221,7 +195,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
         web3ProviderData: {
           connectWallet,
           disconnectWallet,
-          switchNetwork,
           provider,
           currentSigner,
           connected: active,
