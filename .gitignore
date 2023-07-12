@@ -32,4 +32,5 @@ stats.html
 tsconfig.tsbuildinfo
 
 #yarn
-.yarn
+**/.yarn/*
+!.yarn/releases
