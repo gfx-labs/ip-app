@@ -93,22 +93,22 @@ trigger-gfxlabs-dev-deploy:
     - kubectl config use-context ip/gitlab-agents:gfxlabs-dev
     - kubectl patch deployment $APP_NAME -p '{"spec":{"template":{"metadata":{"labels":{"date":"'$(date +'%s')'","sha":"'${CI_COMMIT_SHA}'"}},"spec":{"containers":[{"name":"'${APP_NAME}'","image":"'${CI_REGISTRY_IMAGE}'/'${IMAGE_NAME}':devel"}]}}}}'
 
-trigger-ovh-k3s-dev-deploy:
-  stage: deploy
-  needs:
-    - trigger-builds
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  variables:
-    APP_NAME: "ip-app"
-    IMAGE_NAME: "app"
-  only:
-    variables:
-      - $CI_COMMIT_BRANCH == "devel"
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context ip/gitlab-agents:ovh-k3s-dev
-    - kubectl patch deployment $APP_NAME -p '{"spec":{"template":{"metadata":{"labels":{"date":"'$(date +'%s')'","sha":"'${CI_COMMIT_SHA}'"}},"spec":{"containers":[{"name":"'${APP_NAME}'","image":"'${CI_REGISTRY_IMAGE}'/'${IMAGE_NAME}':devel"}]}}}}'
+#trigger-ovh-k3s-dev-deploy:
+#  stage: deploy
+#  needs:
+#    - trigger-builds
+#  image:
+#    name: bitnami/kubectl:latest
+#    entrypoint: ['']
+#  variables:
+#    APP_NAME: "ip-app"
+#    IMAGE_NAME: "app"
+#  only:
+#    variables:
+#      - $CI_COMMIT_BRANCH == "devel"
+#  script:
+#    - kubectl config get-contexts
+#    - kubectl config use-context ip/gitlab-agents:ovh-k3s-dev
+#    - kubectl patch deployment $APP_NAME -p '{"spec":{"template":{"metadata":{"labels":{"date":"'$(date +'%s')'","sha":"'${CI_COMMIT_SHA}'"}},"spec":{"containers":[{"name":"'${APP_NAME}'","image":"'${CI_REGISTRY_IMAGE}'/'${IMAGE_NAME}':devel"}]}}}}'
 
 
