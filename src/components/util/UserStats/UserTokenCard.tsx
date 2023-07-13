@@ -114,22 +114,24 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <Box display="flex" flexDirection={"column"}>
+          <Box display="flex" flexDirection={"row"} maxWidth={{ xs: 42, lg: 70}}>
             <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} 
             sx={{
-              borderRadius: {xs: 12, lg: 20},
               position: 'relative',
               zIndex: 10,
+              borderRadius: {xs: 12, lg: 20},
             }}/>
             {image2 && (
               <SVGBox
                 width={{ xs: 24, lg: 40 }} 
                 height={{ xs: 24, lg: 40 }} 
-                svg_name={image2!.src} alt={image2!.alt}
+                svg_name={image2.src} alt={image2.alt}
                 sx={{
                   position: 'relative',
-                  top: 0,
-                  left: { xs: 20, lg: 30 },
+                  left: { xs: -6, lg: -10 },
+                  border: '0.02em solid',
+                  borderRadius: {xs: 12, lg: 20},
+                  borderColor: 'text.secondary',
                 }}/>
             )}
           </Box>
