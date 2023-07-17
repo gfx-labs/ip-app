@@ -76,9 +76,9 @@ export const RepayContent = (props: RepayContent) => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      const repayAllTransaction = await repayAllUsdi(
+      const repayAllTransaction = await repayUsdi(//repayAllUsdi(
         vaultID,
-        //repayAmount,
+        repayAmount,
         rolodex!,
         currentSigner!
       )
