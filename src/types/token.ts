@@ -41,6 +41,7 @@ export interface InitializeTokenProps {
   icons?: string[]
 }
 
+// ticker: token object
 export interface CollateralTokens {
   [key: string]: Token
 }

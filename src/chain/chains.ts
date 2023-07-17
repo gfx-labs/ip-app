@@ -9,6 +9,27 @@ export enum ChainIDs {
   LOCAL = 31337,
 }
 
+export const networkParams: {[index: number]: any} = {
+  1: {
+    chainId: "0x1",
+    rpcUrls: ["https://eth.llamarpc.com","https://ethereum.publicnode.com", "https://api.zmok.io/mainnet/oaen6dy8ff6hju9k"],
+    chainName: "Ethereum Mainnet",
+    nativeCurrency: { name: "ETH", decimals: 18, symbol: "ETH" },
+    blockExplorerUrls: ["https://etherscan.io"],
+    iconUrls: ["https://ethereum.org/static/6b935ac0e6194247347855dc3d328e83/81d9f/eth-diamond-black.webp"]
+  },
+  10: {
+    chainId: "0xa",
+    rpcUrls: ["https://optimism.publicnode.com", "https://rpc.ankr.com/optimism", "https://optimism.blockpi.network/v1/rpc/public"],
+    chainName: "Optimism",
+    nativeCurrency: { name: "ETH", decimals: 18, symbol: "ETH" },
+    blockExplorerUrls: ["https://optimistic.etherscan.io"],
+    iconUrls: [
+      "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=025"
+    ]
+  }
+}
+
 const configs: Array<ChainInfo> = [
   {
     id: ChainIDs.MAINNET,

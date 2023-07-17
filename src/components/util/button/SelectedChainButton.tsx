@@ -105,6 +105,7 @@ export const SelectedChainButton = () => {
       const name = isMobile ? chain.symbol : chain.name
       otherChains.push(
         <StyledDropdownButton
+          key={num}
           img={chain.logo}
           text={name}
           onClick={() => switchNetwork(num)}

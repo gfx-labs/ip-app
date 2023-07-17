@@ -9,7 +9,7 @@ import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import { getWallet, WalletType } from './WalletOptions'
 import { BACKUP_PROVIDER } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
-import { ChainIDs } from '../../../chain/chains'
+import { ChainIDs, networkParams } from '../../../chain/chains'
 
 export type ERC20TokenType = {
   address: string
@@ -154,7 +154,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
         try {
           await library.provider.request({
             method: "wallet_addEthereumChain",
-            params: [{ chainId: toHex(network) }]
+            params: [networkParams[network]]
           });
         } catch (error) {
           console.log(error)
