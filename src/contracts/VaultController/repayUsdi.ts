@@ -25,6 +25,7 @@ export const repayAllUsdi = (
   try {
     return rolodex.VC!.connect(signer).repayAllUSDi(vaultID)
   } catch (err) {
+    console.log(err)
     throw new Error('Could not repay:' + err)
   }
 }
