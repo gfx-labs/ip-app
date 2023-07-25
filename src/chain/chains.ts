@@ -40,6 +40,8 @@ const configs: Array<ChainInfo> = [
     votingVaultController_addr: '0xaE49ddCA05Fe891c6a5492ED52d739eC1328CBE2',
     scan_url: 'https://etherscan.io/tx/',
     scan_site: 'Etherscan',
+    delegate_token: 'UNI',
+    analytics: 'https://analytics-api.gfx.xyz',
   },
   // {
   //   id: ChainIDs.ROPSTEN,
@@ -60,13 +62,15 @@ const configs: Array<ChainInfo> = [
   // },
   {
     id: ChainIDs.OPTIMISM,
-    name: 'opUSDi',
+    name: 'Optimism',
     symbol: 'opUSDi',
     logo: 'opUSDi',
     usdi_addr: '0x889be273BE5F75a177f9a1D00d84D607d75fB4e1',
     votingVaultController_addr: '0x9C3b60A1ad08740fCD842351ff0960C1Ee3FeA52',
     scan_url: 'https://optimistic.etherscan.io/tx/',
     scan_site: 'Optimism Etherscan',
+    delegate_token: 'OP',
+    analytics: 'https://ip-stats-api-op.staging.gfx.town'
   },
   // {
   //   id: ChainIDs.POLYGON,
@@ -107,6 +111,8 @@ class chainHolder {
       logo: 'ETH',
       scan_url: 'N/A',
       scan_site: 'N/A',
+      delegate_token: 'N/A',
+      analytics: 'N/A'
     }
   }
 }

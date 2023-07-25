@@ -2,6 +2,7 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Web3Data } from '../../components/libs/web3-data-provider/Web3Provider'
 import { BACKUP_PROVIDER } from '../../constants'
 import { Chains } from '../chains'
+import { DEFAULT_CHAIN } from '../../constants'
 import {
   IUSDI,
   USDI__factory,
@@ -51,7 +52,7 @@ export class Rolodex {
 
 export const NewRolodex = async (ctx: Web3Data) => {
   // default to ethereum mainnet 1
-  const token = Chains.getInfo(ctx.chainId || 1)
+  const chain = Chains.getInfo(ctx.chainId)
   let rolo: Rolodex
   let provider = backupProvider
 
@@ -59,11 +60,11 @@ export const NewRolodex = async (ctx: Web3Data) => {
     if (ctx.currentAccount) {
       const signer = await ctx.provider!.getSigner(ctx.currentAccount)
       provider = ctx.provider!
-      rolo = new Rolodex(signer!, token.usdi_addr!)
+      rolo = new Rolodex(signer!, chain.usdi_addr!)
       rolo.addressVC = await rolo.USDI?.getVaultController()
       rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer!)
     } else {
-      rolo = new Rolodex(provider!, token.usdi_addr!)
+      rolo = new Rolodex(provider!, chain.usdi_addr!)
       rolo.addressVC = await rolo.USDI?.getVaultController()
       rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     }

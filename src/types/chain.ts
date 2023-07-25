@@ -7,4 +7,6 @@ export interface ChainInfo {
   votingVaultController_addr?: string
   scan_url: string
   scan_site: string
+  delegate_token: string
+  analytics: string
 }

@@ -7,10 +7,9 @@ export interface Averages {
   Supply: number
 }
 
-const getAverages = async () => {
+const getAverages = async (url: string) => {
   try {
-    const averageRateURL = `${VITE_ANALYTICS_URL()}${LIVE_AVERAGE_RATES}`
-
+    const averageRateURL = `${VITE_ANALYTICS_URL(url)}${LIVE_AVERAGE_RATES}`
     const response = await axios.get(averageRateURL)
     return response.data as Averages
   } catch (err) {

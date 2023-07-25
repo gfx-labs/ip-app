@@ -9,9 +9,9 @@ export interface SaleSummary {
   Buyers: number
 }
 
-const getSaleSummary = async () => {
+const getSaleSummary = async (url: string) => {
   try {
-    const saleSummaryUrl = `${VITE_ANALYTICS_URL()}${SALE_SUMMARY}`
+    const saleSummaryUrl = `${VITE_ANALYTICS_URL(url)}${SALE_SUMMARY}`
 
     const response = await axios.get(saleSummaryUrl)
     return response.data as SaleSummary

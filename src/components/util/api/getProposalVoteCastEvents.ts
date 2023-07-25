@@ -13,9 +13,9 @@ export interface ProposalVoteCastEvent {
   Reason: string
 }
 
-const getProposalVoteCastEvents = async () => {
+const getProposalVoteCastEvents = async (url: string) => {
   try {
-    const proposalsUrl = `${VITE_ANALYTICS_URL()}${GOV_PROPOSAL_VOTE_CAST_EVENTS}`
+    const proposalsUrl = `${VITE_ANALYTICS_URL(url)}${GOV_PROPOSAL_VOTE_CAST_EVENTS}`
 
     const response = await axios.get(proposalsUrl)
     return response.data as ProposalVoteCastEvent[]

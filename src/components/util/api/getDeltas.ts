@@ -29,12 +29,10 @@ export interface Deltas {
   DepositRate: CurrentWithTemporal
 }
 
-const getDeltas = async () => {
+const getDeltas = async (url: string) => {
   try {
-    const deltaURL = `${VITE_ANALYTICS_URL()}${LIVE_DELTAS}`
-
+    const deltaURL = `${VITE_ANALYTICS_URL(url)}${LIVE_DELTAS}`
     const response = await axios.get(deltaURL)
-
     return response.data as Deltas
   } catch (err) {
     const error = err as Error

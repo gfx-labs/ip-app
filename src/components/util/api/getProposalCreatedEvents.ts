@@ -17,9 +17,9 @@ export interface ProposalCreatedEvent {
   Values: number[]
 }
 
-const getProposalCreatedEvents = async () => {
+const getProposalCreatedEvents = async (url: string) => {
   try {
-    const proposalsUrl = `${VITE_ANALYTICS_URL()}${GOV_PROPOSAL_CREATED_EVENTS}`
+    const proposalsUrl = `${VITE_ANALYTICS_URL(url)}${GOV_PROPOSAL_CREATED_EVENTS}`
 
     const response = await axios.get(proposalsUrl)
     return response.data as ProposalCreatedEvent[]

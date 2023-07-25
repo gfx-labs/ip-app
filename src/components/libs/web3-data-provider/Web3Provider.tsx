@@ -7,7 +7,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 import { getWallet, WalletType } from './WalletOptions'
-import { BACKUP_PROVIDER } from '../../../constants'
+import { BACKUP_PROVIDER, DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
 import { ChainIDs, networkParams } from '../../../chain/chains'
 
@@ -226,7 +226,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
           currentSigner,
           connected: active,
           loading,
-          chainId: chainId || 1,
+          chainId: chainId || DEFAULT_CHAIN,
           dataBlock,
           gasPrice,
           error,

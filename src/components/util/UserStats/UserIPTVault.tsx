@@ -82,7 +82,7 @@ export const UserIPTVault = () => {
               <CopyButton copy={`0x0000000000000000000000000000000000000000`} />
             )
           ) : (
-            <Box maxWidth={150}>
+            <Box>
               <ConnectWalletButton />
             </Box>
           )}

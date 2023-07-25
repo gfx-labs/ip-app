@@ -21,7 +21,7 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
-    getProposals()
+    getProposals(chainId)
       .then((proposals) => {
         setProposals(new Map(proposals))
         if (proposals.size === 0) {
