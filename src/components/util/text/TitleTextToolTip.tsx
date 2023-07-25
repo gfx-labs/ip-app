@@ -2,21 +2,22 @@ import { Typography, Box, BoxProps, Skeleton } from '@mui/material'
 import { ReactElement } from 'react'
 import { formatColor, neutral } from '../../../theme'
 import { ToolTip } from '../tooltip/ToolTip'
+
 export interface TitleTextProps extends BoxProps {
   title: string
   text: string | null
-  tooltipContent: string
+  content: string
   substat?: ReactElement
 }
 
 export const TitleTextToolTip = (props: TitleTextProps) => {
-  const { title, text, tooltipContent, substat } = props
+  const { title, text, content, substat } = props
 
   return (
     <Box {...props}>
       <Box mb={0.5}>
         <ToolTip
-          content={<Typography variant="body3">{tooltipContent}</Typography>}
+          content={<Typography variant="body3">{content}</Typography>}
           text={title}
           text_variant="label_semi"
         />

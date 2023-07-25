@@ -36,12 +36,13 @@ import getSaleSummary, {
 import { SLOWROLL_ADDRESS } from '../../constants'
 import SVGBox from '../../components/icons/misc/SVGBox'
 import { hasUSDCAllowance } from '../../contracts/misc/hasAllowance'
+import { Chains } from '../../chain/chains'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const [saleSummary, setSaleSummary] = useState<SaleSummary>()
   const cookie = new Cookies()
-  const { dataBlock } = useWeb3Context()
+  const { chainId, dataBlock } = useWeb3Context()
 
   const [open, setOpen] = useState(cookie.get('IP_ACCEPT_TERMS') != 'YES')
   const handleAgree = () => {
@@ -60,7 +61,7 @@ const PurchasePage: React.FC = () => {
   }, [scrollTop])
 
   useEffect(() => {
-    getSaleSummary().then(setSaleSummary)
+    getSaleSummary(Chains.getInfo(chainId).analytics).then(setSaleSummary)
   }, [dataBlock])
 
   const SaleSummaryStat = ({

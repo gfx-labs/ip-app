@@ -13,6 +13,7 @@ import {
 } from '../../../libs/modal-content-provider/ModalContentProvider'
 import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
 import { useLight } from '../../../../hooks/useLight'
+import { DISPLAY_DECIMALS } from '../../../../constants'
 
 export const WithdrawCollateralContent = () => {
   const {
@@ -37,15 +38,13 @@ export const WithdrawCollateralContent = () => {
   const ltv = tokens![collateralToken.ticker].token_LTV || 0
 
   useEffect(() => {
-    let newBorrowingPower
+    let newBorrowingPower: number
     if (isMoneyValue) {
       newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100)
-      setCollateralWithdrawAmount(
-        (Number(inputAmount) / collateralToken.price).toString()
-      )
+      let amt = roundDown((Number(inputAmount) * 100) / (collateralToken.price * 100), 2)
+      setCollateralWithdrawAmount(amt.toString())
     } else {
-      newBorrowingPower =
-        borrowingPower -
+      newBorrowingPower = borrowingPower -
         Number(inputAmount) * collateralToken.price * (ltv / 100)
       setCollateralWithdrawAmount(inputAmount)
     }
@@ -59,6 +58,8 @@ export const WithdrawCollateralContent = () => {
     if (
       !collateralWithdrawAmountMax &&
       (newBorrowingPower < accountLiability || Number(inputAmount) <= 0)
+      // (isMoneyValue ? Number(inputAmount) > Number(collateralToken.vault_balance) 
+      // : Number(inputAmount) > Number(collateralToken.vault_amount_str)))
     ) {
       setDisabled(true)
     } else {
@@ -80,39 +81,51 @@ export const WithdrawCollateralContent = () => {
     setInputAmount(amount)
   }
 
+  // not precise but will only be < correct value so its ok
+  function roundDown(val: number, dec: number) {
+    dec = dec || 0;
+    const mul = Math.pow(10, dec)
+    return Math.floor(val * mul) / mul;
+  }
+
+  function countDecimals(val: string): number {
+    if (Math.floor(Number(val)) === Number(val)) return 0;
+    return val.toString().split(".")[1].length || 0; 
+  }
+
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
-      let a2s = borrowingPower - accountLiability
-      const tv =
-        Number(collateralToken.vault_amount_str) * collateralToken.price
+      const a = roundDown(borrowingPower - accountLiability, 2)
+      const dec = countDecimals(collateralToken.vault_amount_str!)
 
-      if (accountLiability == 0) {
+      if (a > 0) {
+        const max = roundDown(a * 100 / ltv, 2)
+        let amt = (max * 100) / (collateralToken.price * 100)
+
         if (isMoneyValue) {
-          setInputAmount(tv.toString())
-        } else {
-          setInputAmount(collateralToken.vault_amount_str!)
-          setCollateralWithdrawAmountMax(true)
-        }
-      } else if (a2s >= 0) {
-        if (tv <= a2s) {
-          if (isMoneyValue) {
-            setInputAmount(tv.toString())
-          } else {
-            setInputAmount(collateralToken.vault_amount_str!)
+          if (Number(collateralToken.vault_balance) < max) {
             setCollateralWithdrawAmountMax(true)
+            amt = Number(collateralToken.vault_balance)
+          } else {
+            amt = roundDown(max, dec)
+            setCollateralWithdrawAmountMax(false)
           }
         } else {
-          if (isMoneyValue) {
-            setInputAmount((a2s / (ltv / 100)).toString())
+          if (Number(collateralToken.vault_amount_str) < amt) {
+            setCollateralWithdrawAmountMax(true)
+            amt = Number(collateralToken.vault_amount_str)
           } else {
-            setInputAmount(
-              (a2s / collateralToken.price / (ltv / 100)).toString()
-            )
+            amt = roundDown(amt, dec)
+            setCollateralWithdrawAmountMax(false)
           }
         }
+
+        setInputAmount(amt.toString())
+        setDisabled(false)
+      } else {
+        setInputAmount('0')
       }
-      setDisabled(false)
     } else {
       setInputAmount('0')
     }
@@ -122,7 +135,7 @@ export const WithdrawCollateralContent = () => {
     <Box>
       <Box textAlign="right" mb={1}>
         <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
-          Vault Balance: {round(collateralToken.vault_amount_str || 0, 4)}{' '}
+          Vault Balance: {round(collateralToken.vault_amount_str || 0, DISPLAY_DECIMALS)}{' '}
           {collateralToken.ticker}
         </Typography>
       </Box>
@@ -149,7 +162,7 @@ export const WithdrawCollateralContent = () => {
               ? `${
                   inputAmount === '0'
                     ? '0'
-                    : round(Number(inputAmount) / collateralToken.price, 4)
+                    : round(Number(inputAmount) / collateralToken.price, DISPLAY_DECIMALS)
                 } ${collateralToken.ticker}`
               : `$${(
                   Number(inputAmount) * collateralToken.price

@@ -25,6 +25,10 @@ interface UserTokenCardProps extends BoxProps {
     src: string
     alt: string
   }
+  image2? : {
+    src: string
+    alt: string
+  }
   LTVPercent: string
   penaltyPercent: string
   canDelegate: boolean | undefined
@@ -43,7 +47,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const { setDelegateToken } = useAppGovernanceContext()
   const [cappedPercent, setCappedPercent] = useState(10)
 
-  const { tokenName, tokenTicker, tokenPrice, vaultBalance, tokenAmount, image, LTVPercent, penaltyPercent, canDelegate = false, index, cappedAddress } = props
+  const { tokenName, tokenTicker, tokenPrice, vaultBalance, tokenAmount, image, image2, LTVPercent, penaltyPercent, canDelegate = false, index, cappedAddress } = props
 
   const openVault = async () => {
     try {
@@ -110,8 +114,28 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} />
-
+          <Box display="flex" flexDirection={"row"} maxWidth={{ xs: 42, lg: 70}}>
+            <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} 
+            sx={{
+              position: 'relative',
+              zIndex: 10,
+              borderRadius: {xs: 12, lg: 20},
+            }}/>
+            {image2 && (
+              <SVGBox
+                width={{ xs: 24, lg: 40 }} 
+                height={{ xs: 24, lg: 40 }} 
+                svg_name={image2.src} alt={image2.alt}
+                sx={{
+                  position: 'relative',
+                  left: { xs: -6, lg: -10 },
+                  border: '0.02em solid',
+                  borderRadius: {xs: 12, lg: 20},
+                  borderColor: 'text.secondary',
+                }}/>
+            )}
+          </Box>
+          
           <Box display="flex" flexDirection="column">
             <Typography variant="body1" color="text.primary" display={{ xs: 'none', lg: 'block' }}>
               {tokenName}

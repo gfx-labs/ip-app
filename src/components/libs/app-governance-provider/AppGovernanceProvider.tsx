@@ -2,6 +2,8 @@ import { createContext, useState, useContext } from 'react'
 import { getTokensListOnCurrentChain } from '../../../chain/tokens'
 import { Token } from '../../../types/token'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
+import { Chains } from '../../../chain/chains'
+import { DEFAULT_CHAIN } from '../../../constants'
 
 interface AppGovernanceContextType {
   isApp: boolean
@@ -24,10 +26,10 @@ export const AppGovernanceProvider = ({
   children: React.ReactElement
 }) => {
   const { chainId } = useWeb3Context()
-
+  const chain = chainId || DEFAULT_CHAIN
   const [isApp, setIsApp] = useState<boolean>(true)
   const [delegateToken, setDelegateToken] = useState<Token>(
-    getTokensListOnCurrentChain(chainId || 1)['UNI']
+    getTokensListOnCurrentChain(chain)[Chains.getInfo(chain).delegate_token]
   )
   const [currentVotes, setCurrentVotes] = useState(0)
   const [delegatedTo, setDelegatedTo] = useState("0x0000000000000000000000000000000000000000")

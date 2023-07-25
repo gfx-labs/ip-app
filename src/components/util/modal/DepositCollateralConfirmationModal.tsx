@@ -11,6 +11,7 @@ import { locale } from '../../../locale'
 import { ContractReceipt, ContractTransaction, utils } from 'ethers'
 import { depositCollateral } from '../../../contracts/ERC20'
 import depositToVotingVault from '../../../contracts/VotingVault/depositToVotingVault'
+import depositToBptVault from '../../../contracts/VotingVault/depositToBptVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { hasTokenAllowance } from '../../../contracts/misc/hasAllowance'
 import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
@@ -29,7 +30,7 @@ export const DepositCollateralConfirmationModal = () => {
   const { provider, currentAccount, currentSigner } = useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const { vaultAddress, vaultID, hasVotingVault } = useVaultDataContext()
+  const { vaultAddress, vaultID, hasVotingVault, hasBptVault } = useVaultDataContext()
   const [hasAllowance, setHasAllowance] = useState(false)
 
   const amount = collateralDepositAmountMax ? collateralToken.wallet_amount : collateralDepositAmount
@@ -47,12 +48,15 @@ export const DepositCollateralConfirmationModal = () => {
   const handleDepositConfirmationRequest = async () => {
     try {
       let attempt: ContractTransaction
+      // IF TOKEN IS CAPPED
       if (collateralToken.capped_token && collateralToken.capped_address) {
-        if (!hasVotingVault) {
+        if ((!hasVotingVault && !collateralToken.bpt) || 
+        (!hasBptVault && collateralToken.bpt)) {
           setLoading(false)
           setType(ModalType.EnableCappedToken)
           return
         }
+        
         setLoading(true)
         setLoadmsg(locale('CheckWallet'))
 
@@ -64,7 +68,7 @@ export const DepositCollateralConfirmationModal = () => {
           collateralToken.decimals,
           currentSigner!
         )
-        console.log(ha)
+        //console.log(ha)
         setHasAllowance(ha)
 
         if (!ha) {
@@ -82,7 +86,11 @@ export const DepositCollateralConfirmationModal = () => {
           return
         }
 
-        attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
+        if (collateralToken.bpt) {
+          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!)
+        } else {
+          attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
+        }
       } else {
         attempt = await depositCollateral(amount!, collateralToken.address, provider?.getSigner(currentAccount)!, vaultAddress!)
       }
@@ -142,7 +150,7 @@ export const DepositCollateralConfirmationModal = () => {
 
       <DisableableModalButton
         text={
-          !collateralToken.capped_token || (collateralToken.capped_token && collateralToken.capped_address && !hasVotingVault) || hasAllowance
+          !collateralToken.capped_token || hasAllowance
             ? 'Confirm Deposit'
             : 'Set Allowance'
         }

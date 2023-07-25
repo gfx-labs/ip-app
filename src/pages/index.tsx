@@ -28,6 +28,7 @@ import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
 import SVGBox from '../components/icons/misc/SVGBox'
 import { RedirectTo } from '../components/util/redirect'
 import getAPRs from '../contracts/USDI/getAPRs'
+import { Chains } from '../chain/chains'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -86,7 +87,7 @@ const Dashboard = () => {
           setDepositAPR(0)
         })
     }
-    getAverages().then((averages) => setAverages(averages))
+    getAverages(Chains.getInfo(chainId).analytics).then((averages) => setAverages(averages))
   }, [rolodex, dataBlock, chainId])
 
   return (
@@ -169,7 +170,7 @@ const Dashboard = () => {
           </SingleStatCard>
         </Box>
 
-        <InterestRateGraphCard />
+        <InterestRateGraphCard url={Chains.getInfo(chainId).analytics}/>
         <Box
           display="flex"
           flexDirection={{ xs: 'column-reverse', lg: 'column' }}
@@ -220,7 +221,7 @@ const Dashboard = () => {
               <SingleStatCard>
                 <TitleTextToolTip
                   title={`Borrowing Power`}
-                  tooltipContent="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
+                  content="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
                     borrowingPower !== null
                       ? borrowingPower?.toLocaleString('en-US', {
@@ -234,7 +235,7 @@ const Dashboard = () => {
               <SingleStatCard>
                 <TitleTextToolTip
                   title={`Deposit APR`}
-                  tooltipContent="Current annualized rate paid to USDi holders"
+                  content="Current annualized rate paid to USDi holders"
                   text={
                     depositAPR !== null ? depositAPR.toFixed(2) + '%' : null
                   }
@@ -250,7 +251,7 @@ const Dashboard = () => {
               <SingleStatCard>
                 <TitleTextToolTip
                   title={`Borrow APR`}
-                  tooltipContent="Current annualized rate paid by USDi borrowers"
+                  content="Current annualized rate paid by USDi borrowers"
                   text={borrowAPR !== null ? borrowAPR.toFixed(2) + '%' : null}
                   substat={
                     <Substat
@@ -279,7 +280,7 @@ const Dashboard = () => {
                 }}
               >
                 <TitleTextToolTip
-                  tooltipContent="The amount of USDi your vault is currently borrowing. This increases as interest accrue."
+                  content="The amount of USDi your vault is currently borrowing. This increases as interest accrue."
                   title={`USDi Borrowed`}
                   text={
                     accountLiability !== null

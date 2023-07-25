@@ -35,6 +35,7 @@ export const ConnectWalletButton = () => {
           flexDirection: 'row',
           px: 3,
           justifyContent: 'space-between',
+          textAlign: 'center',
           backgroundColor: 'button.header',
           boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
           border: isLight ? '1px solid #F4F4F4' : 'none',

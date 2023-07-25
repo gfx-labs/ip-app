@@ -44,19 +44,21 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
 
   const [echart, setEchart] = useState<EChartsType | undefined>(undefined)
   const [options, setOptions] = useState<EChartOption | undefined>(undefined)
+
   useEffect(() => {
     if (!echart) {
       const ec = init(ref.current!, 'white', { renderer: 'canvas' })
       setEchart(ec as any)
     }
   }, [])
+
   useEffect(() => {
     axios.get(src).then((resp) => {
       if (resp.status == 200) {
         setOptions(resp.data)
       }
     })
-  }, [echart])
+  }, [src])
 
   useEffect(() => {
     if (echart) echart.resize()

@@ -19,8 +19,11 @@ import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
   getVotingVaultAddress,
   hasVotingVaultAddress,
-} from '../../../contracts/VotingVault/hasVotingVault'
+  getBptVaultAddress,
+  hasBptVaultAddress,
+} from '../../../contracts/VotingVault/getSubVault'
 import { CollateralTokens } from '../../../types/token'
+import { Chains } from '../../../chain/chains'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -40,6 +43,9 @@ export type VaultDataContextType = {
   votingVaultAddress: string | undefined
   hasVotingVault: boolean
   setHasVotingVault: Dispatch<SetStateAction<boolean>>
+  bptVaultAddress: string | undefined
+  hasBptVault: boolean
+  setHasBptVault: Dispatch<SetStateAction<boolean>>
 }
 
 export const VaultDataContext = React.createContext({} as VaultDataContextType)
@@ -65,9 +71,11 @@ export const VaultDataProvider = ({
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
   //
   const [votingVaultAddress, setVotingVaultAddress] = useState<
-    string | undefined
-  >(undefined)
+    string | undefined>(undefined)
+  const [bptVaultAddress, setBptVaultAddress] = useState<
+    string | undefined>(undefined)
   const [hasVotingVault, setHasVotingVault] = useState(false)
+  const [hasBptVault, setHasBptVault] = useState(false)
 
   const update = async () => {
     const px: Array<Promise<any>> = []
@@ -94,57 +102,63 @@ export const VaultDataProvider = ({
         const bl = BNtoDec(res)
         setTotalBaseLiability(bl)
       })
-      for (const [key, token] of Object.entries(tokens!)) {
-        const tokenAddress = token.capped_address
-          ? token.capped_address
-          : token.address
-        let p1 = getVaultTokenMetadata(tokenAddress, rolodex!)
-          .then((res) => {
-            token.token_penalty = res.penalty
-            token.token_LTV = res.ltv
-          })
-          .catch(Logp('failed token metadata check'))
-        if (!(token.token_LTV && token.token_penalty)) {
-          px.push(p1)
-        }
-        let p2 = getVaultTokenBalanceAndPrice(
-          vaultAddress,
-          token,
-          rolodex!,
-          signerOrProvider!
-        )
-          .then((res) => {
-            token.price = Math.round(100 * res.livePrice) / 100
-            token.vault_amount_str = res.unformattedBalance
-            token.vault_amount = res.balanceBN
-            if (token.vault_amount.isZero()) {
-              token.vault_balance = '0'
-            } else {
-              const vaultBalance =
-                BNtoDecSpecific(token.vault_amount, token.decimals) *
-                token.price
 
-              token.vault_balance = vaultBalance.toFixed(2)
-            }
-          })
-          .catch((e) => {
-            console.error('failed token balance check', e)
-          })
-        px.push(p2)
-        if (currentAccount && connected) {
-          let p3 = getBalanceOf(
-            currentAccount,
-            token.address,
+      if (tokens) {
+        for (const [key, token] of Object.entries(tokens)) {
+          const tokenAddress = token.capped_address
+            ? token.capped_address
+            : token.address
+          let p1 = getVaultTokenMetadata(tokenAddress, rolodex!)
+            .then((res) => {
+              token.token_penalty = res.penalty
+              token.token_LTV = res.ltv
+            })
+            .catch(Logp('failed token metadata check'))
+          if (!(token.token_LTV && token.token_penalty)) {
+            px.push(p1)
+          }
+          let p2 = getVaultTokenBalanceAndPrice(
+            vaultAddress,
+            token,
+            rolodex!,
             signerOrProvider!
           )
-            .then((val) => {
-              token.wallet_amount = val.bn
-              token.wallet_amount_str = val.str
+            .then((res) => {
+              token.price = res.livePrice
+              token.vault_amount_str = res.unformattedBalance
+              token.vault_amount = res.balanceBN
+
+              if (token.vault_amount.isZero()) {
+                token.vault_balance = '0'
+              } else {
+                //const vaultBalance = Number(utils.formatUnits(token.vault_amount._hex, token.decimals)) * token.price
+                // const vaultBalance = 
+                //   BNtoDecSpecific(token.vault_amount, token.decimals) *
+                //   token.price
+
+                token.vault_balance = res.balance//vaultBalance.toString()
+              }
             })
             .catch((e) => {
-              console.log('failed to get token balances')
+              console.error('failed token balance check', e)
             })
-          px.push(p3)
+          px.push(p2)
+          if (currentAccount && connected) {
+            let p3 = getBalanceOf(
+              currentAccount,
+              token.address,
+              token.decimals,
+              signerOrProvider!
+            )
+              .then((val) => {
+                token.wallet_amount = val.bn
+                token.wallet_amount_str = val.str
+              })
+              .catch((e) => {
+                console.log('failed to get token balances')
+              })
+            px.push(p3)
+          }
         }
       }
     }
@@ -181,11 +195,17 @@ export const VaultDataProvider = ({
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = vaultIDs.toString()
+          const addr = Chains.getInfo(chainId).votingVaultController_addr
           setVaultID(id)
 
-          getVotingVaultAddress(id, signerOrProvider!).then((address) => {
+          getVotingVaultAddress(addr!, id, signerOrProvider!).then((address) => {
             setVotingVaultAddress(address)
             setHasVotingVault(hasVotingVaultAddress(address))
+          })
+
+          getBptVaultAddress(addr!, id, signerOrProvider!).then((addr) => {
+            setBptVaultAddress(addr)
+            setHasBptVault(hasBptVaultAddress(addr))
           })
         } else {
           setVaultID(null)
@@ -224,7 +244,10 @@ export const VaultDataProvider = ({
         totalBaseLiability,
         hasVotingVault,
         setHasVotingVault,
+        hasBptVault,
+        setHasBptVault,
         votingVaultAddress,
+        bptVaultAddress,
       }}
     >
       {children}
