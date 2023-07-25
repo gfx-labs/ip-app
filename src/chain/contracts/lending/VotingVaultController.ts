@@ -29,18 +29,31 @@ import type {
 
 export interface VotingVaultControllerInterface extends utils.Interface {
   functions: {
+    "BPTvaultAddress(uint96)": FunctionFragment;
+    "BPTvaultId(address)": FunctionFragment;
     "_CappedToken_underlying(address)": FunctionFragment;
+    "_auraBal()": FunctionFragment;
+    "_auraBooster()": FunctionFragment;
+    "_auraLpData(address)": FunctionFragment;
     "_underlying_CappedToken(address)": FunctionFragment;
     "_vaultAddress_vaultId(address)": FunctionFragment;
+    "_vaultBPTaddress_vaultId(address)": FunctionFragment;
     "_vaultController()": FunctionFragment;
+    "_vaultId_vaultBPTaddress(uint96)": FunctionFragment;
     "_vaultId_votingVaultAddress(uint96)": FunctionFragment;
     "_votingVaultAddress_vaultId(address)": FunctionFragment;
+    "getAuraLpData(address)": FunctionFragment;
     "initialize(address)": FunctionFragment;
+    "mintBptVault(uint96)": FunctionFragment;
     "mintVault(uint96)": FunctionFragment;
     "owner()": FunctionFragment;
+    "registerAuraBal(address)": FunctionFragment;
+    "registerAuraBooster(address)": FunctionFragment;
+    "registerAuraLpData(address,address,uint256)": FunctionFragment;
     "registerUnderlying(address,address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "retrieveUnderlying(uint256,address,address)": FunctionFragment;
+    "retrieveUnderlyingBPT(uint256,address,address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "vaultId(address)": FunctionFragment;
     "votingVaultAddress(uint96)": FunctionFragment;
@@ -49,30 +62,56 @@ export interface VotingVaultControllerInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "BPTvaultAddress"
+      | "BPTvaultAddress(uint96)"
+      | "BPTvaultId"
+      | "BPTvaultId(address)"
       | "_CappedToken_underlying"
       | "_CappedToken_underlying(address)"
+      | "_auraBal"
+      | "_auraBal()"
+      | "_auraBooster"
+      | "_auraBooster()"
+      | "_auraLpData"
+      | "_auraLpData(address)"
       | "_underlying_CappedToken"
       | "_underlying_CappedToken(address)"
       | "_vaultAddress_vaultId"
       | "_vaultAddress_vaultId(address)"
+      | "_vaultBPTaddress_vaultId"
+      | "_vaultBPTaddress_vaultId(address)"
       | "_vaultController"
       | "_vaultController()"
+      | "_vaultId_vaultBPTaddress"
+      | "_vaultId_vaultBPTaddress(uint96)"
       | "_vaultId_votingVaultAddress"
       | "_vaultId_votingVaultAddress(uint96)"
       | "_votingVaultAddress_vaultId"
       | "_votingVaultAddress_vaultId(address)"
+      | "getAuraLpData"
+      | "getAuraLpData(address)"
       | "initialize"
       | "initialize(address)"
+      | "mintBptVault"
+      | "mintBptVault(uint96)"
       | "mintVault"
       | "mintVault(uint96)"
       | "owner"
       | "owner()"
+      | "registerAuraBal"
+      | "registerAuraBal(address)"
+      | "registerAuraBooster"
+      | "registerAuraBooster(address)"
+      | "registerAuraLpData"
+      | "registerAuraLpData(address,address,uint256)"
       | "registerUnderlying"
       | "registerUnderlying(address,address)"
       | "renounceOwnership"
       | "renounceOwnership()"
       | "retrieveUnderlying"
       | "retrieveUnderlying(uint256,address,address)"
+      | "retrieveUnderlyingBPT"
+      | "retrieveUnderlyingBPT(uint256,address,address)"
       | "transferOwnership"
       | "transferOwnership(address)"
       | "vaultId"
@@ -84,11 +123,48 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(
+    functionFragment: "BPTvaultAddress",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "BPTvaultAddress(uint96)",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "BPTvaultId",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "BPTvaultId(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "_CappedToken_underlying",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "_CappedToken_underlying(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "_auraBal", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "_auraBal()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_auraBooster",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_auraBooster()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_auraLpData",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_auraLpData(address)",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
@@ -108,12 +184,28 @@ export interface VotingVaultControllerInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "_vaultBPTaddress_vaultId",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_vaultBPTaddress_vaultId(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "_vaultController",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "_vaultController()",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_vaultId_vaultBPTaddress",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_vaultId_vaultBPTaddress(uint96)",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "_vaultId_votingVaultAddress",
@@ -132,12 +224,28 @@ export interface VotingVaultControllerInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "getAuraLpData",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAuraLpData(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize(address)",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintBptVault",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintBptVault(uint96)",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "mintVault",
@@ -149,6 +257,38 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner()", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "registerAuraBal",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerAuraBal(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerAuraBooster",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerAuraBooster(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerAuraLpData",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerAuraLpData(address,address,uint256)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
   encodeFunctionData(
     functionFragment: "registerUnderlying",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
@@ -175,6 +315,22 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "retrieveUnderlying(uint256,address,address)",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "retrieveUnderlyingBPT",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "retrieveUnderlyingBPT(uint256,address,address)",
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -215,11 +371,42 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(
+    functionFragment: "BPTvaultAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "BPTvaultAddress(uint96)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "BPTvaultId", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "BPTvaultId(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_CappedToken_underlying",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "_CappedToken_underlying(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "_auraBal", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "_auraBal()", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "_auraBooster",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_auraBooster()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_auraLpData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_auraLpData(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -239,11 +426,27 @@ export interface VotingVaultControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_vaultBPTaddress_vaultId",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_vaultBPTaddress_vaultId(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_vaultController",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "_vaultController()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_vaultId_vaultBPTaddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_vaultId_vaultBPTaddress(uint96)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -262,9 +465,25 @@ export interface VotingVaultControllerInterface extends utils.Interface {
     functionFragment: "_votingVaultAddress_vaultId(address)",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAuraLpData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAuraLpData(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "initialize(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintBptVault",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintBptVault(uint96)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "mintVault", data: BytesLike): Result;
@@ -274,6 +493,30 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner()", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAuraBal",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAuraBal(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAuraBooster",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAuraBooster(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAuraLpData",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAuraLpData(address,address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "registerUnderlying",
     data: BytesLike
@@ -296,6 +539,14 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "retrieveUnderlying(uint256,address,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "retrieveUnderlyingBPT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "retrieveUnderlyingBPT(uint256,address,address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -329,10 +580,15 @@ export interface VotingVaultControllerInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "NewVaultBPT(address,uint256)": EventFragment;
     "NewVotingVault(address,uint256)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "NewVaultBPT"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "NewVaultBPT(address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "NewVotingVault"): EventFragment;
   getEvent(
     nameOrSignatureOrTopic: "NewVotingVault(address,uint256)"
@@ -342,6 +598,17 @@ export interface VotingVaultControllerInterface extends utils.Interface {
     nameOrSignatureOrTopic: "OwnershipTransferred(address,address)"
   ): EventFragment;
 }
+
+export interface NewVaultBPTEventObject {
+  vault_bpt_address: string;
+  vaultId: BigNumber;
+}
+export type NewVaultBPTEvent = TypedEvent<
+  [string, BigNumber],
+  NewVaultBPTEventObject
+>;
+
+export type NewVaultBPTEventFilter = TypedEventFilter<NewVaultBPTEvent>;
 
 export interface NewVotingVaultEventObject {
   voting_vault_address: string;
@@ -393,6 +660,26 @@ export interface VotingVaultController extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    BPTvaultAddress(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    "BPTvaultAddress(uint96)"(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    BPTvaultId(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "BPTvaultId(address)"(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     _CappedToken_underlying(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -402,6 +689,24 @@ export interface VotingVaultController extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[string]>;
+
+    _auraBal(overrides?: CallOverrides): Promise<[string]>;
+
+    "_auraBal()"(overrides?: CallOverrides): Promise<[string]>;
+
+    _auraBooster(overrides?: CallOverrides): Promise<[string]>;
+
+    "_auraBooster()"(overrides?: CallOverrides): Promise<[string]>;
+
+    _auraLpData(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
+    "_auraLpData(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
 
     _underlying_CappedToken(
       arg0: PromiseOrValue<string>,
@@ -423,9 +728,29 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    _vaultBPTaddress_vaultId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "_vaultBPTaddress_vaultId(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     _vaultController(overrides?: CallOverrides): Promise<[string]>;
 
     "_vaultController()"(overrides?: CallOverrides): Promise<[string]>;
+
+    _vaultId_vaultBPTaddress(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
+    "_vaultId_vaultBPTaddress(uint96)"(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     _vaultId_votingVaultAddress(
       arg0: PromiseOrValue<BigNumberish>,
@@ -447,6 +772,16 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getAuraLpData(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
+    "getAuraLpData(address)"(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
     initialize(
       vaultController_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -454,6 +789,16 @@ export interface VotingVaultController extends BaseContract {
 
     "initialize(address)"(
       vaultController_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    mintBptVault(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "mintBptVault(uint96)"(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -470,6 +815,40 @@ export interface VotingVaultController extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     "owner()"(overrides?: CallOverrides): Promise<[string]>;
+
+    registerAuraBal(
+      auraBal: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "registerAuraBal(address)"(
+      auraBal: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    registerAuraBooster(
+      newBooster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "registerAuraBooster(address)"(
+      newBooster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    registerAuraLpData(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "registerAuraLpData(address,address,uint256)"(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     registerUnderlying(
       underlying_address: PromiseOrValue<string>,
@@ -501,6 +880,20 @@ export interface VotingVaultController extends BaseContract {
     "retrieveUnderlying(uint256,address,address)"(
       amount: PromiseOrValue<BigNumberish>,
       voting_vault: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    retrieveUnderlyingBPT(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "retrieveUnderlyingBPT(uint256,address,address)"(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
       target: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -546,6 +939,26 @@ export interface VotingVaultController extends BaseContract {
     ): Promise<[BigNumber]>;
   };
 
+  BPTvaultAddress(
+    vault_id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  "BPTvaultAddress(uint96)"(
+    vault_id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  BPTvaultId(
+    vault_bpt_address: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "BPTvaultId(address)"(
+    vault_bpt_address: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   _CappedToken_underlying(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -555,6 +968,24 @@ export interface VotingVaultController extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<string>;
+
+  _auraBal(overrides?: CallOverrides): Promise<string>;
+
+  "_auraBal()"(overrides?: CallOverrides): Promise<string>;
+
+  _auraBooster(overrides?: CallOverrides): Promise<string>;
+
+  "_auraBooster()"(overrides?: CallOverrides): Promise<string>;
+
+  _auraLpData(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
+  "_auraLpData(address)"(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
 
   _underlying_CappedToken(
     arg0: PromiseOrValue<string>,
@@ -576,9 +1007,29 @@ export interface VotingVaultController extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  _vaultBPTaddress_vaultId(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "_vaultBPTaddress_vaultId(address)"(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   _vaultController(overrides?: CallOverrides): Promise<string>;
 
   "_vaultController()"(overrides?: CallOverrides): Promise<string>;
+
+  _vaultId_vaultBPTaddress(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
+  "_vaultId_vaultBPTaddress(uint96)"(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   _vaultId_votingVaultAddress(
     arg0: PromiseOrValue<BigNumberish>,
@@ -600,6 +1051,16 @@ export interface VotingVaultController extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getAuraLpData(
+    lp: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
+  "getAuraLpData(address)"(
+    lp: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
   initialize(
     vaultController_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -607,6 +1068,16 @@ export interface VotingVaultController extends BaseContract {
 
   "initialize(address)"(
     vaultController_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  mintBptVault(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "mintBptVault(uint96)"(
+    id: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -623,6 +1094,40 @@ export interface VotingVaultController extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
+
+  registerAuraBal(
+    auraBal: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "registerAuraBal(address)"(
+    auraBal: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  registerAuraBooster(
+    newBooster: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "registerAuraBooster(address)"(
+    newBooster: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  registerAuraLpData(
+    auraLP: PromiseOrValue<string>,
+    rewardToken: PromiseOrValue<string>,
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "registerAuraLpData(address,address,uint256)"(
+    auraLP: PromiseOrValue<string>,
+    rewardToken: PromiseOrValue<string>,
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   registerUnderlying(
     underlying_address: PromiseOrValue<string>,
@@ -654,6 +1159,20 @@ export interface VotingVaultController extends BaseContract {
   "retrieveUnderlying(uint256,address,address)"(
     amount: PromiseOrValue<BigNumberish>,
     voting_vault: PromiseOrValue<string>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  retrieveUnderlyingBPT(
+    amount: PromiseOrValue<BigNumberish>,
+    vaultBPT: PromiseOrValue<string>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "retrieveUnderlyingBPT(uint256,address,address)"(
+    amount: PromiseOrValue<BigNumberish>,
+    vaultBPT: PromiseOrValue<string>,
     target: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -699,6 +1218,26 @@ export interface VotingVaultController extends BaseContract {
   ): Promise<BigNumber>;
 
   callStatic: {
+    BPTvaultAddress(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    "BPTvaultAddress(uint96)"(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    BPTvaultId(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "BPTvaultId(address)"(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     _CappedToken_underlying(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -708,6 +1247,24 @@ export interface VotingVaultController extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<string>;
+
+    _auraBal(overrides?: CallOverrides): Promise<string>;
+
+    "_auraBal()"(overrides?: CallOverrides): Promise<string>;
+
+    _auraBooster(overrides?: CallOverrides): Promise<string>;
+
+    "_auraBooster()"(overrides?: CallOverrides): Promise<string>;
+
+    _auraLpData(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
+    "_auraLpData(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
 
     _underlying_CappedToken(
       arg0: PromiseOrValue<string>,
@@ -729,9 +1286,29 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    _vaultBPTaddress_vaultId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "_vaultBPTaddress_vaultId(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     _vaultController(overrides?: CallOverrides): Promise<string>;
 
     "_vaultController()"(overrides?: CallOverrides): Promise<string>;
+
+    _vaultId_vaultBPTaddress(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    "_vaultId_vaultBPTaddress(uint96)"(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     _vaultId_votingVaultAddress(
       arg0: PromiseOrValue<BigNumberish>,
@@ -753,6 +1330,16 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getAuraLpData(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
+    "getAuraLpData(address)"(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber] & { rewardToken: string; pid: BigNumber }>;
+
     initialize(
       vaultController_: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -762,6 +1349,16 @@ export interface VotingVaultController extends BaseContract {
       vaultController_: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    mintBptVault(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    "mintBptVault(uint96)"(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     mintVault(
       id: PromiseOrValue<BigNumberish>,
@@ -776,6 +1373,40 @@ export interface VotingVaultController extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     "owner()"(overrides?: CallOverrides): Promise<string>;
+
+    registerAuraBal(
+      auraBal: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "registerAuraBal(address)"(
+      auraBal: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    registerAuraBooster(
+      newBooster: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "registerAuraBooster(address)"(
+      newBooster: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    registerAuraLpData(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "registerAuraLpData(address,address,uint256)"(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     registerUnderlying(
       underlying_address: PromiseOrValue<string>,
@@ -803,6 +1434,20 @@ export interface VotingVaultController extends BaseContract {
     "retrieveUnderlying(uint256,address,address)"(
       amount: PromiseOrValue<BigNumberish>,
       voting_vault: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    retrieveUnderlyingBPT(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "retrieveUnderlyingBPT(uint256,address,address)"(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
       target: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -849,6 +1494,15 @@ export interface VotingVaultController extends BaseContract {
   };
 
   filters: {
+    "NewVaultBPT(address,uint256)"(
+      vault_bpt_address?: null,
+      vaultId?: null
+    ): NewVaultBPTEventFilter;
+    NewVaultBPT(
+      vault_bpt_address?: null,
+      vaultId?: null
+    ): NewVaultBPTEventFilter;
+
     "NewVotingVault(address,uint256)"(
       voting_vault_address?: null,
       vaultId?: null
@@ -869,12 +1523,50 @@ export interface VotingVaultController extends BaseContract {
   };
 
   estimateGas: {
+    BPTvaultAddress(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "BPTvaultAddress(uint96)"(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    BPTvaultId(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "BPTvaultId(address)"(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     _CappedToken_underlying(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     "_CappedToken_underlying(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    _auraBal(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_auraBal()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _auraBooster(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_auraBooster()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _auraLpData(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "_auraLpData(address)"(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -899,9 +1591,29 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    _vaultBPTaddress_vaultId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "_vaultBPTaddress_vaultId(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     _vaultController(overrides?: CallOverrides): Promise<BigNumber>;
 
     "_vaultController()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _vaultId_vaultBPTaddress(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "_vaultId_vaultBPTaddress(uint96)"(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     _vaultId_votingVaultAddress(
       arg0: PromiseOrValue<BigNumberish>,
@@ -923,6 +1635,16 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getAuraLpData(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "getAuraLpData(address)"(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     initialize(
       vaultController_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -930,6 +1652,16 @@ export interface VotingVaultController extends BaseContract {
 
     "initialize(address)"(
       vaultController_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    mintBptVault(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "mintBptVault(uint96)"(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -946,6 +1678,40 @@ export interface VotingVaultController extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    registerAuraBal(
+      auraBal: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "registerAuraBal(address)"(
+      auraBal: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    registerAuraBooster(
+      newBooster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "registerAuraBooster(address)"(
+      newBooster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    registerAuraLpData(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "registerAuraLpData(address,address,uint256)"(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     registerUnderlying(
       underlying_address: PromiseOrValue<string>,
@@ -977,6 +1743,20 @@ export interface VotingVaultController extends BaseContract {
     "retrieveUnderlying(uint256,address,address)"(
       amount: PromiseOrValue<BigNumberish>,
       voting_vault: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    retrieveUnderlyingBPT(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "retrieveUnderlyingBPT(uint256,address,address)"(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
       target: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1023,12 +1803,50 @@ export interface VotingVaultController extends BaseContract {
   };
 
   populateTransaction: {
+    BPTvaultAddress(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "BPTvaultAddress(uint96)"(
+      vault_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    BPTvaultId(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "BPTvaultId(address)"(
+      vault_bpt_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     _CappedToken_underlying(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     "_CappedToken_underlying(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    _auraBal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "_auraBal()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    _auraBooster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "_auraBooster()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    _auraLpData(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_auraLpData(address)"(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
@@ -1053,9 +1871,29 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    _vaultBPTaddress_vaultId(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_vaultBPTaddress_vaultId(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     _vaultController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "_vaultController()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    _vaultId_vaultBPTaddress(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_vaultId_vaultBPTaddress(uint96)"(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -1079,6 +1917,16 @@ export interface VotingVaultController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    getAuraLpData(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "getAuraLpData(address)"(
+      lp: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     initialize(
       vaultController_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1086,6 +1934,16 @@ export interface VotingVaultController extends BaseContract {
 
     "initialize(address)"(
       vaultController_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mintBptVault(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "mintBptVault(uint96)"(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1102,6 +1960,40 @@ export interface VotingVaultController extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    registerAuraBal(
+      auraBal: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "registerAuraBal(address)"(
+      auraBal: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    registerAuraBooster(
+      newBooster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "registerAuraBooster(address)"(
+      newBooster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    registerAuraLpData(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "registerAuraLpData(address,address,uint256)"(
+      auraLP: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     registerUnderlying(
       underlying_address: PromiseOrValue<string>,
@@ -1133,6 +2025,20 @@ export interface VotingVaultController extends BaseContract {
     "retrieveUnderlying(uint256,address,address)"(
       amount: PromiseOrValue<BigNumberish>,
       voting_vault: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    retrieveUnderlyingBPT(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "retrieveUnderlyingBPT(uint256,address,address)"(
+      amount: PromiseOrValue<BigNumberish>,
+      vaultBPT: PromiseOrValue<string>,
       target: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

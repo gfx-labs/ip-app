@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { ChainIDs } from '../chain/chains'
 
 export interface Token {
   name: string
@@ -22,6 +23,9 @@ export interface Token {
 
   capped_token?: boolean
   capped_address?: string
+
+  bpt?: boolean
+  icons?: string[]
 }
 
 export interface InitializeTokenProps {
@@ -33,8 +37,23 @@ export interface InitializeTokenProps {
   price?: number
   can_delegate?: boolean
   decimals?: number
+  bpt?: boolean
+  icons?: string[]
 }
 
+// ticker: token object
 export interface CollateralTokens {
   [key: string]: Token
+}
+
+export interface TokenInfo {
+  addr?: string,
+  capped_addr?: string,
+  can_delegate?: boolean,
+  bpt?: boolean
+  icons?: string[]
+}
+
+export interface TokensOnChains {
+  [key: string]: Record<ChainIDs, TokenInfo>
 }

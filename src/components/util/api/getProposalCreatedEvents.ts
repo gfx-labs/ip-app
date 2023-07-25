@@ -1,5 +1,6 @@
-import { GOV_PROPOSAL_CREATED_EVENTS, ANALYTICS_URL } from '../../../constants'
+import { GOV_PROPOSAL_CREATED_EVENTS} from '../../../constants'
 import axios from 'axios'
+import { VITE_ANALYTICS_URL } from '../../../config'
 
 export interface ProposalCreatedEvent {
   Block: number
@@ -16,9 +17,9 @@ export interface ProposalCreatedEvent {
   Values: number[]
 }
 
-const getProposalCreatedEvents = async () => {
+const getProposalCreatedEvents = async (url: string) => {
   try {
-    const proposalsUrl = `${ANALYTICS_URL}${GOV_PROPOSAL_CREATED_EVENTS}`
+    const proposalsUrl = `${VITE_ANALYTICS_URL(url)}${GOV_PROPOSAL_CREATED_EVENTS}`
 
     const response = await axios.get(proposalsUrl)
     return response.data as ProposalCreatedEvent[]

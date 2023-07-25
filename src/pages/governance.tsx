@@ -21,7 +21,7 @@ export const Governance = () => {
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
-    getProposals()
+    getProposals(chainId)
       .then((proposals) => {
         setProposals(new Map(proposals))
         if (proposals.size === 0) {
@@ -66,7 +66,6 @@ export const Governance = () => {
     >
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Box display="flex" mb={1} columnGap={2} rowGap={1} flexDirection={{ xs: 'column', md: 'row' }}></Box>
-
         <Box display="flex" alignItems="center">
           <Typography color="text.secondary" variant="body2" whiteSpace="nowrap" mr={1.5}>
             Voting Power:{' '}

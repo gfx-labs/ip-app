@@ -1,3 +1,4 @@
+import { Chains } from '../../../chain/chains'
 import { BN } from '../../../easy/bn'
 import { Voter } from '../governance/proposal/VoteCount'
 import getProposalDetails, { ProposalDetails } from '../helpers/getProposalDescription'
@@ -18,13 +19,14 @@ export interface Proposal {
   }
 }
 
-const getProposals = async () => {
+const getProposals = async (chain: number) => {
   const proposals = new Map<number, Proposal>()
 
   try {
-    const voteEvents = await getProposalVoteCastEvents()
+    const api = Chains.getInfo(chain).analytics
+    const voteEvents = await getProposalVoteCastEvents(api)
+    const createdEvents = await getProposalCreatedEvents(api)
 
-    const createdEvents = await getProposalCreatedEvents()
     const votes: { [id: number]: { for: Voter[]; against: Voter[] } } = voteEvents.reduce((acc, voteEvent) => {
       const { ProposalId, Support, Voter, Votes } = voteEvent
       const voter: Voter = {
@@ -36,7 +38,7 @@ const getProposals = async () => {
       if (acc[ProposalId]) {
         if (Support === 1) {
           acc[ProposalId].for.push(voter)
-        } else {
+        } else if (Support === 0) {
           acc[ProposalId].against.push(voter)
         }
       } else {

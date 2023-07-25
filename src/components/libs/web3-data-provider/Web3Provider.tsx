@@ -7,8 +7,9 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 import { getWallet, WalletType } from './WalletOptions'
-import { BACKUP_PROVIDER } from '../../../constants'
+import { BACKUP_PROVIDER, DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
+import { ChainIDs, networkParams } from '../../../chain/chains'
 
 export type ERC20TokenType = {
   address: string
@@ -21,6 +22,7 @@ export type ERC20TokenType = {
 export type Web3Data = {
   connectWallet: (wallet: WalletType) => Promise<boolean>
   disconnectWallet: () => void
+  switchNetwork: (network: number) => void
   currentAccount: string
   currentSigner: JsonRpcSigner | undefined
   connected: boolean
@@ -37,15 +39,20 @@ export type Web3ContextData = {
   web3ProviderData: Web3Data
 }
 
+export const toHex = (num: any) => {
+  const val = Number(num);
+  return "0x" + val.toString(16);
+}
+
 export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
-  const { account, chainId, library: libraryProvider, activate, active, error, deactivate, setError } = useWeb3React<providers.Web3Provider>()
+  const { account, chainId, library, activate, active, error, deactivate, setError } = useWeb3React()
 
   const [loading, setLoading] = useState<boolean>(false)
   const [connector, setConnector] = useState<AbstractConnector>()
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
-  const [provider, setProvider] = useState<JsonRpcProvider>(libraryProvider || new JsonRpcProvider(BACKUP_PROVIDER))
+  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(BACKUP_PROVIDER))
   const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
 
   const [deactivated, setDeactivated] = useState<boolean>(false)
@@ -55,12 +62,12 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const [gasPrice, setGasPrice] = useState('0')
 
   useEffect(() => {
-    if (libraryProvider) {
-      setProvider(libraryProvider)
+    if (library) {
+      setProvider(library)
     } else {
       setProvider(new JsonRpcProvider(BACKUP_PROVIDER))
     }
-  }, [libraryProvider])
+  }, [library])
 
   useEffect(() => {
     if (provider && account) {
@@ -136,13 +143,34 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     [disconnectWallet]
   )
 
+  const switchNetwork = async (network: number) => {
+    try {
+      await library.provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(network) }]
+      });
+    } catch (switchError: any) {
+      if (switchError.code === 4902) {
+        try {
+          await library.provider.request({
+            method: "wallet_addEthereumChain",
+            params: [networkParams[network]]
+          });
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    }
+  }
+
   useEffect(() => {
     if (provider) {
       console.log('started auto refresh of blockNumber for', provider)
       provider.on('block', (n: number) => {
         const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
-
-        getGasPrice(tempSignerOrProvider!).then(setGasPrice)
+        if (chainId === ChainIDs.MAINNET) {
+          getGasPrice(tempSignerOrProvider!).then(setGasPrice)
+        }
         if (n > dataBlock) {
           setDataBlock(n)
         }
@@ -193,11 +221,12 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
         web3ProviderData: {
           connectWallet,
           disconnectWallet,
+          switchNetwork,
           provider,
           currentSigner,
           connected: active,
           loading,
-          chainId: chainId || 1,
+          chainId: chainId || DEFAULT_CHAIN,
           dataBlock,
           gasPrice,
           error,
@@ -210,7 +239,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     </Web3Context.Provider>
   )
 }
-export const DEFAULT_ADDRESS = "0x000000000000000000000000000000000000dead"
+export const DEFAULT_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 export const useWeb3Context = () => {
   const { web3ProviderData } = useContext(Web3Context)

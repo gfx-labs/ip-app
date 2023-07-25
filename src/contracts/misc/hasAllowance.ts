@@ -1,7 +1,6 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { Rolodex } from '../../chain/rolodex/rolodex'
-import { BN } from '../../easy/bn'
 import { getERC20Allowance, getUSDCAllowanceWithRolodex } from './getAllowance'
 
 export const hasUSDCAllowance = async (
@@ -15,7 +14,7 @@ export const hasUSDCAllowance = async (
   if (allowance !== undefined) {
     let usdcBN: BigNumber
     if (typeof amount === 'string') {
-      usdcBN = BN(amount).mul(BN('1e6'))
+      usdcBN = utils.parseUnits(amount, 6)
     } else {
       usdcBN = amount
     }
@@ -40,12 +39,15 @@ export const hasTokenAllowance = async (
     signerOrProvider
   )
 
+  let formattedAmount: BigNumber
   if (typeof amount === 'string') {
-    amount = BN(amount).mul(BN('1e' + decimals))
+    formattedAmount = utils.parseUnits(amount, decimals)
+  } else {
+    formattedAmount = amount
   }
 
   if (allowance !== undefined) {
-    return allowance.gte(amount)
+    return allowance.gte(formattedAmount)
   }
   return false
 }

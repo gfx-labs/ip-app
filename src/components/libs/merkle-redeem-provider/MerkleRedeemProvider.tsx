@@ -6,6 +6,7 @@ import getClaimStatusOf from '../../../contracts/MerkleRedeem/getClaimStatus'
 import { BN } from '../../../easy/bn'
 import { DEFAULT_ADDRESS, useWeb3Context } from '../web3-data-provider/Web3Provider'
 import { SPECIFIC_WEEKS } from '../../../contracts/MerkleRedeem/whitelists'
+import { ChainIDs } from '../../../chain/chains'
 
 export type MerkleRedeemContextType = {
   claims: Claim[]
@@ -29,7 +30,7 @@ export const MerkleRedeemContextProvider = ({ children }: { children: React.Reac
     if(lastAccount != currentAccount){
       setLoading(true)
     }
-    if (currentSigner && currentAccount) {
+    if (currentSigner && currentAccount && chainId === ChainIDs.MAINNET) {
       getClaimStatusOf(currentAccount, currentSigner!).then((claimStatus) => {
         setClaimStatus(claimStatus)
         const claims = createClaimOf(currentAccount, claimStatus)

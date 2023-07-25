@@ -10,12 +10,15 @@ const initializeToken = ({
   can_delegate = false,
   decimals = 18,
   price = 1,
+  bpt = false,
+  icons,
 }: InitializeTokenProps): Token => ({
   name,
   address,
   ticker,
   price,
   decimals,
+  bpt,
   vault_balance: '0',
   vault_amount_str: '0',
   vault_amount: BigNumber.from(0),
@@ -27,6 +30,7 @@ const initializeToken = ({
   capped_token,
   capped_address,
   can_delegate,
+  icons,
 })
 
 export default initializeToken

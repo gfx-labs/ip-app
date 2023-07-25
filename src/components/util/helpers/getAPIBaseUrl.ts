@@ -1,16 +1,18 @@
-import { ANALYTICS_URL } from '../../../constants'
-
+import { VITE_ANALYTICS_URL } from '../../../config'
+import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { Chains } from '../../../chain/chains'
 let SET_BASE_URL = ''
 
 const getAPIBaseUrl = () => {
-  if (SET_BASE_URL !== '') {
-    return SET_BASE_URL
-  }
+  const { chainId } = useWeb3Context()
 
-  const envURL: string | undefined = import.meta.env.VITE_ANALYTICS_URL
-  if (envURL === '' || envURL === undefined) {
-    SET_BASE_URL = ANALYTICS_URL
-    return ANALYTICS_URL
+  // if (SET_BASE_URL !== '') {
+  //   return SET_BASE_URL
+  // }
+  
+  const envURL: string = VITE_ANALYTICS_URL(Chains.getInfo(chainId).analytics)
+  if (envURL == SET_BASE_URL) {
+    return SET_BASE_URL
   }
   SET_BASE_URL = envURL
   return envURL
