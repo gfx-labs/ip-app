@@ -40,8 +40,8 @@ export type Web3ContextData = {
 }
 
 export const toHex = (num: any) => {
-  const val = Number(num);
-  return "0x" + val.toString(16);
+  const val = Number(num)
+  return '0x' + val.toString(16)
 }
 
 export const Web3Context = React.createContext({} as Web3ContextData)
@@ -140,22 +140,22 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
         throw new Error('Error connecting to')
       }
     },
-    [disconnectWallet]
+    [disconnectWallet],
   )
 
   const switchNetwork = async (network: number) => {
     try {
       await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: toHex(network) }],
+      })
     } catch (switchError: any) {
       if (switchError.code === 4902) {
         try {
           await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[network]]
-          });
+            method: 'wallet_addEthereumChain',
+            params: [networkParams[network]],
+          })
         } catch (error) {
           console.log(error)
         }
@@ -239,7 +239,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     </Web3Context.Provider>
   )
 }
-export const DEFAULT_ADDRESS = "0x0000000000000000000000000000000000000000"
+export const DEFAULT_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export const useWeb3Context = () => {
   const { web3ProviderData } = useContext(Web3Context)

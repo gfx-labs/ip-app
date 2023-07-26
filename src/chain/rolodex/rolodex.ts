@@ -2,7 +2,6 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { Web3Data } from '../../components/libs/web3-data-provider/Web3Provider'
 import { BACKUP_PROVIDER } from '../../constants'
 import { Chains } from '../chains'
-import { DEFAULT_CHAIN } from '../../constants'
 import {
   IUSDI,
   USDI__factory,
@@ -58,7 +57,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
 
   try {
     if (ctx.currentAccount) {
-      const signer = await ctx.provider!.getSigner(ctx.currentAccount)
+      const signer = ctx.provider!.getSigner(ctx.currentAccount)
       provider = ctx.provider!
       rolo = new Rolodex(signer!, chain.usdi_addr!)
       rolo.addressVC = await rolo.USDI?.getVaultController()
@@ -76,10 +75,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
 
     if (!rolo.addressOracle) {
       rolo.addressOracle = await rolo.VC?.getOracleMaster()
-      rolo.Oracle = OracleMaster__factory.connect(
-        rolo.addressOracle!,
-        provider!
-      )
+      rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!)
     }
 
     if (!rolo.addressCurve) {

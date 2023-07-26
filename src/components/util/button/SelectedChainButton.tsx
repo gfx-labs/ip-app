@@ -48,9 +48,9 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
   )
 
   return (
-  <Button sx={styles} onClick={onClick}>
+    <Button sx={styles} onClick={onClick}>
       {content}
-  </Button>
+    </Button>
   )
 }
 
@@ -103,14 +103,7 @@ export const SelectedChainButton = () => {
     const chain = Chains.getInfo(num)
     if (!isNaN(num) && num !== curChain.id && chain.id !== 0) {
       const name = isMobile ? chain.symbol : chain.name
-      otherChains.push(
-        <StyledDropdownButton
-          key={num}
-          img={chain.logo}
-          text={name}
-          onClick={() => switchNetwork(num)}
-        />
-      )
+      otherChains.push(<StyledDropdownButton key={num} img={chain.logo} text={name} onClick={() => switchNetwork(num)} />)
     }
   }
 
@@ -162,11 +155,7 @@ export const SelectedChainButton = () => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <StyledChainButton
-            img={curChain.logo}
-            text={isMobile? curChain.symbol : curChain.name}
-            onClick={() => setExpanded(!expanded)}
-          />
+          <StyledChainButton img={curChain.logo} text={isMobile ? curChain.symbol : curChain.name} onClick={() => setExpanded(!expanded)} />
         </AccordionSummary>
         <AccordionDetails
           sx={{
