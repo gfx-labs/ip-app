@@ -87,7 +87,7 @@ const Dashboard = () => {
           setDepositAPR(0)
         })
     }
-    getAverages(Chains.getInfo(chainId).analytics).then((averages) => setAverages(averages))
+    getAverages(Chains[chainId].analytics).then((averages) => setAverages(averages))
   }, [rolodex, dataBlock, chainId])
 
   return (
@@ -170,7 +170,7 @@ const Dashboard = () => {
           </SingleStatCard>
         </Box>
 
-        <InterestRateGraphCard url={Chains.getInfo(chainId).analytics}/>
+        <InterestRateGraphCard url={Chains[chainId].analytics}/>
         <Box
           display="flex"
           flexDirection={{ xs: 'column-reverse', lg: 'column' }}

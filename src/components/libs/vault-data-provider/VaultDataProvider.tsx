@@ -195,7 +195,7 @@ export const VaultDataProvider = ({
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = vaultIDs.toString()
-          const addr = Chains.getInfo(chainId).votingVaultController_addr
+          const addr = Chains[chainId].votingVaultController_addr
           setVaultID(id)
 
           getVotingVaultAddress(addr!, id, signerOrProvider!).then((address) => {

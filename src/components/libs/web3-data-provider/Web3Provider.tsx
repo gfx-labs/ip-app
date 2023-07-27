@@ -1,15 +1,14 @@
 import React, { useCallback, useContext, useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { providers } from 'ethers'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 
 import { getWallet, WalletType } from './WalletOptions'
-import { BACKUP_PROVIDER, DEFAULT_CHAIN } from '../../../constants'
+import { DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
-import { ChainIDs, networkParams } from '../../../chain/chains'
+import { ChainIDs, Chains, networkParams } from '../../../chain/chains'
 
 export type ERC20TokenType = {
   address: string
@@ -52,7 +51,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const [loading, setLoading] = useState<boolean>(false)
   const [connector, setConnector] = useState<AbstractConnector>()
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
-  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(BACKUP_PROVIDER))
+  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(Chains[chainId || DEFAULT_CHAIN].rpc))
   const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
 
   const [deactivated, setDeactivated] = useState<boolean>(false)
@@ -60,14 +59,15 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
 
   const [dataBlock, setDataBlock] = useState(0)
   const [gasPrice, setGasPrice] = useState('0')
+  const [chain, setChain] = useState(chainId)
 
   useEffect(() => {
     if (library) {
+      provider.removeAllListeners('block')
+      setDataBlock(0)
       setProvider(library)
-    } else {
-      setProvider(new JsonRpcProvider(BACKUP_PROVIDER))
     }
-  }, [library])
+  }, [library, chainId])
 
   useEffect(() => {
     if (provider && account) {
@@ -119,7 +119,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     async (wallet: WalletType) => {
       setLoading(false)
       try {
-        const connector: AbstractConnector = getWallet(wallet, chainId)
+        const connector: AbstractConnector = getWallet(wallet, chainId || DEFAULT_CHAIN)
 
         if (connector instanceof WalletConnectConnector) {
           connector.walletConnectProvider = undefined
@@ -144,22 +144,32 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   )
 
   const switchNetwork = async (network: number) => {
-    try {
-      await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
-    } catch (switchError: any) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[network]]
-          });
-        } catch (error) {
-          console.log(error)
+    
+    if (library) {
+      try {
+        await library.provider.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: toHex(network) }]
+        });
+      } catch (switchError: any) {
+        if (switchError.code === 4902) {
+          try {
+            await library.provider.request({
+              method: "wallet_addEthereumChain",
+              params: [networkParams[network]]
+            });
+          } catch (error) {
+            console.log(error)
+          }
         }
       }
+    } else {
+      localStorage.setItem('network', network.toString())
+      window.location.reload()
+      // setChain(network)
+      // provider.removeAllListeners('block')
+      // setDataBlock(0)
+      // setProvider(new JsonRpcProvider(Chains[network].rpc))
     }
   }
 
@@ -167,9 +177,9 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     if (provider) {
       console.log('started auto refresh of blockNumber for', provider)
       provider.on('block', (n: number) => {
-        const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
-        if (chainId === ChainIDs.MAINNET) {
-          getGasPrice(tempSignerOrProvider!).then(setGasPrice)
+        //const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
+        if (provider.network.chainId === ChainIDs.MAINNET) {
+          getGasPrice(provider).then(setGasPrice)
         }
         if (n > dataBlock) {
           setDataBlock(n)
@@ -194,6 +204,15 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       } else {
         setTried(true)
       }
+    }
+    
+    const network = localStorage.getItem('network')
+    if (network && !chain) {
+      const c = Number(network)
+      setChain(c)
+      provider.removeAllListeners('block')
+      setDataBlock(0)
+      setProvider(new JsonRpcProvider(Chains[c].rpc))
     }
   }, [activate, setTried, active, connectWallet, deactivated])
 
@@ -226,7 +245,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
           currentSigner,
           connected: active,
           loading,
-          chainId: chainId || DEFAULT_CHAIN,
+          chainId: chain || DEFAULT_CHAIN,
           dataBlock,
           gasPrice,
           error,

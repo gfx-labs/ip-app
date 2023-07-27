@@ -9,6 +9,7 @@ export enum ChainIDs {
   LOCAL = 31337,
 }
 
+// to use when switching chains
 export const networkParams: {[index: number]: any} = {
   1: {
     chainId: "0x1",
@@ -30,8 +31,8 @@ export const networkParams: {[index: number]: any} = {
   }
 }
 
-const configs: Array<ChainInfo> = [
-  {
+export const Chains: {[index: number]: ChainInfo} = {
+  1: {
     id: ChainIDs.MAINNET,
     name: 'Ethereum',
     symbol: 'ETH',
@@ -42,6 +43,7 @@ const configs: Array<ChainInfo> = [
     scan_site: 'Etherscan',
     delegate_token: 'UNI',
     analytics: 'https://analytics-api.gfx.xyz',
+    rpc: 'https://mainnet.rpc.gfx.xyz'
   },
   // {
   //   id: ChainIDs.ROPSTEN,
@@ -60,7 +62,7 @@ const configs: Array<ChainInfo> = [
   //   scan_url: 'https://goerli.etherscan.io/tx/',
   //   scan_site: 'Goerli Etherscan',
   // },
-  {
+  10: {
     id: ChainIDs.OPTIMISM,
     name: 'Optimism',
     symbol: 'opUSDi',
@@ -70,7 +72,8 @@ const configs: Array<ChainInfo> = [
     scan_url: 'https://optimistic.etherscan.io/tx/',
     scan_site: 'Optimism Etherscan',
     delegate_token: 'OP',
-    analytics: 'https://ip-stats-api-op.staging.gfx.town'
+    analytics: 'https://ip-stats-api-op.staging.gfx.town',
+    rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226'
   },
   // {
   //   id: ChainIDs.POLYGON,
@@ -90,34 +93,25 @@ const configs: Array<ChainInfo> = [
   //   scan_url: 'https://etherscan.io/tx/',
   //   scan_site: 'Etherscan',
   // },
-]
+}
 
-class chainHolder {
-  m: Map<number, ChainInfo>
-  constructor() {
-    this.m = new Map()
-  }
-  addChain(v: ChainInfo) {
-    this.m.set(v.id, v)
-  }
-  getInfo(id: number | string): ChainInfo {
-    if (this.m.has(Number(id))) {
-      return this.m.get(Number(id))!
-    }
-    return {
-      id: 0,
-      name: 'NOT SUPPORTED',
-      symbol: 'N/A',
-      logo: 'ETH',
-      scan_url: 'N/A',
-      scan_site: 'N/A',
-      delegate_token: 'N/A',
-      analytics: 'N/A'
-    }
-  }
-}
-const chains = new chainHolder()
-for (let e of configs) {
-  chains.addChain(e)
-}
-export const Chains = chains
+// class chainHolder {
+//   m: Map<number, ChainInfo>
+//   constructor() {
+//     this.m = new Map()
+//   }
+//   addChain(v: ChainInfo) {
+//     this.m.set(v.id, v)
+//   }
+//   getInfo(id: number | string): ChainInfo | undefined {
+//     if (this.m.has(Number(id))) {
+//       return this.m.get(Number(id))!
+//     }
+//     return undefined
+//   }
+// }
+// const chains = new chainHolder()
+// for (let e of configs) {
+//   chains.addChain(e)
+// }
+// export const Chains = chains

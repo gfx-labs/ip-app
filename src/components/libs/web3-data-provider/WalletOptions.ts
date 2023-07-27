@@ -2,8 +2,7 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
-
-import { BACKUP_PROVIDER } from '../../../constants'
+import { Chains } from '../../../chain/chains'
 
 export enum WalletType {
   INJECTED = 'injected', // browser wallets (metamask)
@@ -12,11 +11,10 @@ export enum WalletType {
 }
 
 const appName = 'IP'
-const rpc_url = BACKUP_PROVIDER
 
 export const getWallet = (
   wallet: WalletType,
-  chainId: number | undefined = 1
+  chainId: number
 ): AbstractConnector => {
   switch (wallet) {
     case WalletType.INJECTED:
@@ -24,16 +22,17 @@ export const getWallet = (
 
     case WalletType.WALLET_LINK:
       return new WalletLinkConnector({
-        url: rpc_url,
+        url: Chains[chainId].rpc,
         appName,
         appLogoUrl: 'https://interestprotocol.io/images/ip_green.svg',
-        supportedChainIds: [1, 3, 4, 5, 42],
+        supportedChainIds: [1, 3, 4, 5, 10, 42],
       })
 
     case WalletType.WALLET_CONNECT:
       return new WalletConnectConnector({
         rpc: {
-          1: rpc_url,
+          1: Chains[1].rpc,
+          10: Chains[10].rpc
         },
         bridge: 'https://app.bridge.walletconnect.org',
         qrcode: true,

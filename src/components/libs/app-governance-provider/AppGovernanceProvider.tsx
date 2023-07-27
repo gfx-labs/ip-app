@@ -29,7 +29,7 @@ export const AppGovernanceProvider = ({
   const chain = chainId || DEFAULT_CHAIN
   const [isApp, setIsApp] = useState<boolean>(true)
   const [delegateToken, setDelegateToken] = useState<Token>(
-    getTokensListOnCurrentChain(chain)[Chains.getInfo(chain).delegate_token]
+    getTokensListOnCurrentChain(chain)[Chains[chainId].delegate_token]
   )
   const [currentVotes, setCurrentVotes] = useState(0)
   const [delegatedTo, setDelegatedTo] = useState("0x0000000000000000000000000000000000000000")

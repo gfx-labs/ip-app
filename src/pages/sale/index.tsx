@@ -61,7 +61,7 @@ const PurchasePage: React.FC = () => {
   }, [scrollTop])
 
   useEffect(() => {
-    getSaleSummary(Chains.getInfo(chainId).analytics).then(setSaleSummary)
+    getSaleSummary(Chains[chainId].analytics).then(setSaleSummary)
   }, [dataBlock])
 
   const SaleSummaryStat = ({
