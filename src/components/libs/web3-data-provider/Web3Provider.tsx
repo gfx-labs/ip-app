@@ -67,6 +67,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       setDataBlock(0)
       setProvider(library)
     }
+    setChain(chainId)
   }, [library, chainId])
 
   useEffect(() => {
@@ -207,7 +208,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     }
     
     const network = localStorage.getItem('network')
-    if (network && !chain) {
+    if (network && !chain && !active) {
       const c = Number(network)
       setChain(c)
       provider.removeAllListeners('block')
