@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
-import { BACKUP_PROVIDER, DEFAULT_CHAIN } from '../../../constants'
+import { DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
-import { ChainIDs } from '../../../chain/chains'
+import { ChainIDs, Chains } from '../../../chain/chains'
 import {useAccount, useDisconnect, useNetwork, useSwitchNetwork} from "wagmi";
 import {useEthersSigner} from "./ethers";
 
@@ -41,33 +41,50 @@ export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
   const {address: account, isConnected: active} = useAccount()
-  const {chain} = useNetwork()
+  const {chain: rawChain} = useNetwork()
   const {disconnect: disconnectWallet} = useDisconnect()
   const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
   const currentSigner = useEthersSigner()
   const library = currentSigner?.provider
 
-  const chainId = chain?.id
+  const chainId = rawChain?.id
 
   const switchNetwork = (chainId: number) => {
-    doSwitchNetwork?.(chainId)
+    if (doSwitchNetwork) {
+      doSwitchNetwork(chainId)
+    } else {
+      localStorage.setItem('network', chainId.toString())
+      window.location.reload()
+      // setChain(network)
+      // provider.removeAllListeners('block')
+      // setDataBlock(0)
+      // setProvider(new JsonRpcProvider(Chains[network].rpc))
+    }
   }
 
-  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(BACKUP_PROVIDER))
+  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(Chains[chainId || DEFAULT_CHAIN].rpc))
   const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
 
-  const [tried, setTried] = useState<boolean>(false)
   const [dataBlock, setDataBlock] = useState(0)
 
   const [gasPrice, setGasPrice] = useState('0')
+  const [chain, setChain] = useState(chainId)
 
   useEffect(() => {
     if (library) {
+      provider.removeAllListeners('block')
+      setDataBlock(0)
+      setGasPrice('0')
       setProvider(library)
-    } else {
-      setProvider(new JsonRpcProvider(BACKUP_PROVIDER))
     }
-  }, [library])
+    if (chainId) {
+      setChain(chainId)
+      localStorage.setItem('network', chainId.toString())
+      if (chain !== chainId) {
+        window.ethereum?.emit('chainChanged')
+      }
+    }
+  }, [library, chainId])
 
   useEffect(() => {
     setSignerOrProvider(currentSigner ? currentSigner : provider)
@@ -91,24 +108,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       }
     }
   }, [provider])
-
-  useEffect(() => {
-    if (window && window.ethereum) {
-      window.ethereum.on('chainChanged', () => {
-        window.location.reload()
-      })
-      window.ethereum.on('accountsChanged', () => {
-        window.location.reload()
-      })
-    }
-  }, [])
-
-  // if the connection worked, wait until we get confirmation of that to flip the flag
-  useEffect(() => {
-    if (!tried && active) {
-      setTried(true)
-    }
-  }, [tried, active])
 
   return (
     <Web3Context.Provider
