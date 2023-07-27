@@ -3,9 +3,9 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 
 import { BACKUP_PROVIDER, DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
-import { ChainIDs, networkParams } from '../../../chain/chains'
+import { ChainIDs } from '../../../chain/chains'
 import {useAccount, useDisconnect, useNetwork, useSwitchNetwork} from "wagmi";
-import {useEthersProvider} from "./ethers";
+import {useEthersSigner} from "./ethers";
 
 export type ERC20TokenType = {
   address: string
@@ -44,7 +44,8 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const {chain} = useNetwork()
   const {disconnect: disconnectWallet} = useDisconnect()
   const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
-  const library = useEthersProvider()
+  const currentSigner = useEthersSigner()
+  const library = currentSigner?.provider
 
   const chainId = chain?.id
 
@@ -52,7 +53,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     doSwitchNetwork?.(chainId)
   }
 
-  const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
   const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(BACKUP_PROVIDER))
   const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
 
@@ -68,12 +68,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       setProvider(new JsonRpcProvider(BACKUP_PROVIDER))
     }
   }, [library])
-
-  useEffect(() => {
-    if (provider && account) {
-      setCurrentSigner(provider?.getSigner(account?.toLowerCase()))
-    }
-  }, [provider, account])
 
   useEffect(() => {
     setSignerOrProvider(currentSigner ? currentSigner : provider)
