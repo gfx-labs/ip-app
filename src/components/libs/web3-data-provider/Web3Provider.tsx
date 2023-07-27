@@ -4,8 +4,7 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BACKUP_PROVIDER, DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
 import { ChainIDs, networkParams } from '../../../chain/chains'
-import {useAccount, useDisconnect, usePublicClient, useSwitchNetwork} from "wagmi";
-import {useChain} from "../../../hooks/useChain";
+import {useAccount, useDisconnect, useNetwork, useSwitchNetwork} from "wagmi";
 import {useEthersProvider} from "./ethers";
 
 export type ERC20TokenType = {
@@ -42,10 +41,12 @@ export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
   const {address: account, isConnected: active} = useAccount()
-  const {id: chainId} = useChain()
+  const {chain} = useNetwork()
   const {disconnect: disconnectWallet} = useDisconnect()
   const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
   const library = useEthersProvider()
+
+  const chainId = chain?.id
 
   const switchNetwork = (chainId: number) => {
     doSwitchNetwork?.(chainId)
@@ -140,7 +141,7 @@ export const DEFAULT_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 export const useWeb3Context = () => {
   const { web3ProviderData } = useContext(Web3Context)
-  if (Object.keys(web3ProviderData).length === 0) {
+  if (!web3ProviderData || Object.keys(web3ProviderData).length === 0) {
     throw new Error('useWeb3Context() can only be used inside of <Web3ContextProvider />, ' + 'please declare it at a higher level.')
   }
 

@@ -52,7 +52,7 @@ function getWeb3Library(provider: any): providers.Web3Provider {
 }
 
 const chains = [mainnet, optimism]
-const projectId = 'YOUR_PROJECT_ID'
+const projectId = '1076f5912040f4580a3c3dd2b2df8a51'
 
 const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })])
 const wagmiConfig = createConfig({

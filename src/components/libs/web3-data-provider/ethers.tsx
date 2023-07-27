@@ -12,6 +12,8 @@ export function publicClientToProvider(publicClient: PublicClient) {
         name: chain.name,
         ensAddress: chain.contracts?.ensRegistry?.address,
     }
+    if (transport.type === 'fallback')
+        return undefined
     return new providers.JsonRpcProvider(transport.url, network)
 }
 
