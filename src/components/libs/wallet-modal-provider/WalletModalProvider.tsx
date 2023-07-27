@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useWeb3Context } from "../web3-data-provider/Web3Provider";
+import React, { useContext } from "react";
+import {useWeb3Modal} from "@web3modal/react";
 
 export type WalletModalContextType = {
   isWalletModalOpen: boolean;
-  setIsWalletModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsWalletModalOpen: (isWalletModalOpen: boolean) => void;
 };
 
 export const WalletModalContext = React.createContext(
@@ -15,19 +15,17 @@ export const WalletModalProvider = ({
 }: {
   children: React.ReactElement;
 }) => {
-  const { connected } = useWeb3Context();
-
-  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (connected) {
-      setIsWalletModalOpen(false);
-    }
-  }, [connected]);
+  const {open, close, isOpen} = useWeb3Modal();
 
   return (
     <WalletModalContext.Provider
-      value={{ isWalletModalOpen, setIsWalletModalOpen }}
+      value={{ isWalletModalOpen: isOpen, setIsWalletModalOpen: (isWalletModalOpen: boolean) => {
+        if (isWalletModalOpen) {
+          (async () => await open())()
+        } else {
+          close()
+        }
+      }}}
     >
       {children}
     </WalletModalContext.Provider>
