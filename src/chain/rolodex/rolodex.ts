@@ -74,10 +74,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
 
     if (!rolo.addressOracle) {
       rolo.addressOracle = await rolo.VC?.getOracleMaster()
-      rolo.Oracle = OracleMaster__factory.connect(
-        rolo.addressOracle!,
-        provider!
-      )
+      rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!)
     }
 
     if (!rolo.addressCurve) {

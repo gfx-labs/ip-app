@@ -11,7 +11,7 @@ export const getVaultTokenBalanceAndPrice = async (
   vault_address: string | undefined,
   token: Token,
   rolodex: Rolodex,
-  signerOrProvider: JsonRpcProvider | JsonRpcSigner
+  signerOrProvider: JsonRpcProvider | JsonRpcSigner,
 ): Promise<{
   balance: string // balance in money units
   livePrice: number
@@ -49,7 +49,6 @@ export const getVaultTokenBalanceAndPrice = async (
     console.error(e)
   }
 
-  
   return { balance, livePrice, unformattedBalance, balanceBN }
 }
 

@@ -48,9 +48,9 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
   )
 
   return (
-  <Button sx={styles} onClick={onClick}>
+    <Button sx={styles} onClick={onClick}>
       {content}
-  </Button>
+    </Button>
   )
 }
 
@@ -104,14 +104,7 @@ export const SelectedChainButton = () => {
     const chain = Chains[num]
     if (!isNaN(num) && num !== curChain.id && chain) {
       const name = isMobile ? chain.symbol : chain.name
-      otherChains.push(
-        <StyledDropdownButton
-          key={num}
-          img={chain.logo}
-          text={name}
-          onClick={() => switchNetwork(num)}
-        />
-      )
+      otherChains.push(<StyledDropdownButton key={num} img={chain.logo} text={name} onClick={() => switchNetwork(num)} />)
     }
   }
 
