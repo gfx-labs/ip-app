@@ -65,9 +65,16 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     if (library) {
       provider.removeAllListeners('block')
       setDataBlock(0)
+      setGasPrice('0')
       setProvider(library)
     }
-    setChain(chainId)
+    if (chainId) {
+      setChain(chainId)
+      localStorage.setItem('network', chainId.toString())
+      if (chain !== chainId) {
+        window.ethereum?.emit('chainChanged')
+      }
+    }
   }, [library, chainId])
 
   useEffect(() => {
@@ -99,7 +106,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
 
   const disconnectWallet = useCallback(async () => {
     cleanConnectorStorage()
-
     localStorage.removeItem('walletProvider')
     deactivate()
 
@@ -110,9 +116,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     }
 
     setDeactivated(true)
-
     setLoading(false)
-
     window.location.reload()
   }, [provider, connector])
 
@@ -120,7 +124,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     async (wallet: WalletType) => {
       setLoading(false)
       try {
-        const connector: AbstractConnector = getWallet(wallet, chainId || DEFAULT_CHAIN)
+        const connector: AbstractConnector = getWallet(wallet, chain || DEFAULT_CHAIN)
 
         if (connector instanceof WalletConnectConnector) {
           connector.walletConnectProvider = undefined
@@ -140,12 +144,9 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
 
         throw new Error('Error connecting to')
       }
-    },
-    [disconnectWallet],
-  )
+    }, [disconnectWallet])
 
   const switchNetwork = async (network: number) => {
-    
     if (library) {
       try {
         await library.provider.request({
