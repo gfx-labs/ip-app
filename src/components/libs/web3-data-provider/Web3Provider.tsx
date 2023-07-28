@@ -44,10 +44,12 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const {chain: rawChain} = useNetwork()
   const {disconnect: disconnectWallet} = useDisconnect()
   const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
-  const currentSigner = useEthersSigner()
+  const chainId = rawChain?.id
+  const currentSigner = useEthersSigner({
+    chainId,
+  })
   const library = currentSigner?.provider
 
-  const chainId = rawChain?.id
   const [targetChainID, setTargetChainID] = useState(chainId ?? DEFAULT_CHAIN)
 
   const [provider, setProvider] = useState(library ?? new JsonRpcProvider(Chains[targetChainID].rpc))
@@ -68,21 +70,19 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const signerOrProvider = currentSigner ?? provider
 
   useEffect(() => {
-    if (provider) {
-      console.log('started auto refresh of blockNumber for', provider)
-      provider.on('block', (n: number) => {
-        const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
-        if (chainId === ChainIDs.MAINNET) {
-          getGasPrice(tempSignerOrProvider!).then(setGasPrice)
-        }
-        if (n > dataBlock) {
-          setDataBlock(n)
-        }
-      })
-      return () => {
-        console.log('stopped auto refresh of blockNumber for', provider)
-        provider.on('block', () => {})
+    console.log('started auto refresh of blockNumber for', provider)
+    provider.on('block', (n: number) => {
+      const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
+      if (chainId === ChainIDs.MAINNET) {
+        getGasPrice(tempSignerOrProvider!).then(setGasPrice)
       }
+      if (n > dataBlock) {
+        setDataBlock(n)
+      }
+    })
+    return () => {
+      console.log('stopped auto refresh of blockNumber for', provider)
+      provider.on('block', () => {})
     }
   }, [provider])
 
