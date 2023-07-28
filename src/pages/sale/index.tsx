@@ -213,7 +213,7 @@ const PurchaseBox = ({
     dataBlock,
     chainId,
     connected,
-    signerOrProvider,
+    provider,
   } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
   const [iptForSale, setIptForSale] = useState<number | undefined>()
@@ -260,7 +260,7 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    getEndTime(signerOrProvider as JsonRpcSigner).then((x) => {
+    getEndTime(provider).then((x) => {
       let remaining = x.toNumber() - new Date().valueOf() / 1000
       let isNewDay = false
       let srt = ''
@@ -277,16 +277,16 @@ const PurchaseBox = ({
         setIptForSale(1000000)
         return
       }
-      getBasePrice(signerOrProvider as JsonRpcSigner).then((res) => {
+      getBasePrice(provider).then((res) => {
         setBasePrice(res)
       })
-      getAmountIPTForSale(signerOrProvider!).then((res) => {
+      getAmountIPTForSale(provider).then((res) => {
         let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
         setIptSold(sold.toLocaleString())
         let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
         setIptForSale(max - sold)
       })
-      getCurrentPrice(signerOrProvider as JsonRpcSigner).then((res) => {
+      getCurrentPrice(provider).then((res) => {
         setSalePrice(res.toNumber() / 1e6)
       })
     })

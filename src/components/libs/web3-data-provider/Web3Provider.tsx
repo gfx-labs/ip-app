@@ -25,7 +25,6 @@ export type Web3Data = {
   chainId: number
   dataBlock: number
   gasPrice: string
-  signerOrProvider: JsonRpcSigner | JsonRpcProvider
 }
 
 export type Web3ContextData = {
@@ -60,19 +59,21 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const [gasPrice, setGasPrice] = useState('0')
 
   useEffect(() => {
+    if (chainId === undefined || doSwitchNetwork === undefined) {
+      return
+    }
     if (chainId !== targetChainID) {
-      doSwitchNetwork?.(targetChainID)
+      console.log("switching to", targetChainID)
+      doSwitchNetwork(targetChainID)
     }
   }, [doSwitchNetwork, chainId, targetChainID])
-
-  const signerOrProvider = currentSigner ?? provider
 
   useEffect(() => {
     console.log('started auto refresh of blockNumber for', provider)
     provider.on('block', (n: number) => {
-      const tempSignerOrProvider = signerOrProvider ? signerOrProvider : provider
+      const signerOrProvider = currentSigner ?? provider
       if (chainId === ChainIDs.MAINNET) {
-        getGasPrice(tempSignerOrProvider!).then(setGasPrice)
+        getGasPrice(signerOrProvider!).then(setGasPrice)
       }
       if (n > dataBlock) {
         setDataBlock(n)
@@ -97,7 +98,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
           dataBlock,
           gasPrice,
           currentAccount: account?.toLowerCase() || DEFAULT_ADDRESS,
-          signerOrProvider,
         },
       }}
     >
