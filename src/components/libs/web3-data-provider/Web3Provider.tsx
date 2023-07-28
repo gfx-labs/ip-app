@@ -46,14 +46,14 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
   const chainId = rawChain?.id
   const currentSigner = useEthersSigner()
-  const library = currentSigner?.provider
 
   const [targetChainID, setTargetChainID] = useState(chainId ?? DEFAULT_CHAIN)
+  const setChainId = chainId ?? targetChainID
 
-  const [provider, setProvider] = useState(library ?? new JsonRpcProvider(Chains[targetChainID].rpc))
+  const [provider, setProvider] = useState(new JsonRpcProvider(Chains[setChainId].rpc))
   useEffect(() => {
-    setProvider(library ?? new JsonRpcProvider(Chains[targetChainID].rpc))
-  }, [library])
+    setProvider(new JsonRpcProvider(Chains[setChainId].rpc))
+  }, [setChainId])
 
   const [dataBlock, setDataBlock] = useState(0)
 

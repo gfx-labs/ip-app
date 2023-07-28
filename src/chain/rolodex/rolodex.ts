@@ -46,10 +46,9 @@ export class Rolodex {
   }
 }
 
-export const NewRolodex = async (ctx: Web3Data) => {
-  const chain = Chains[ctx.chainId]
+export const NewRolodex = async (provider: JsonRpcProvider, chainId: number) => {
+  const chain = Chains[chainId]
   let rolo: Rolodex
-  let provider = ctx.signerOrProvider
 
   try {
     // if (ctx.currentSigner) {
