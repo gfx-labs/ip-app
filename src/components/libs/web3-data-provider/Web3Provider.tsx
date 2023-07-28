@@ -48,47 +48,24 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const library = currentSigner?.provider
 
   const chainId = rawChain?.id
+  const [targetChainID, setTargetChainID] = useState(chainId ?? DEFAULT_CHAIN)
 
-  const switchNetwork = (chainId: number) => {
-    if (doSwitchNetwork) {
-      doSwitchNetwork(chainId)
-    } else {
-      localStorage.setItem('network', chainId.toString())
-      window.location.reload()
-      // setChain(network)
-      // provider.removeAllListeners('block')
-      // setDataBlock(0)
-      // setProvider(new JsonRpcProvider(Chains[network].rpc))
-    }
-  }
-
-  const [provider, setProvider] = useState<JsonRpcProvider>(library || new JsonRpcProvider(Chains[chainId || DEFAULT_CHAIN].rpc))
-  const [signerOrProvider, setSignerOrProvider] = useState<JsonRpcSigner | JsonRpcProvider>(provider)
+  const [provider, setProvider] = useState(library ?? new JsonRpcProvider(Chains[targetChainID].rpc))
+  useEffect(() => {
+    setProvider(library ?? new JsonRpcProvider(Chains[targetChainID].rpc))
+  }, [library])
 
   const [dataBlock, setDataBlock] = useState(0)
 
   const [gasPrice, setGasPrice] = useState('0')
-  const [chain, setChain] = useState(chainId)
 
   useEffect(() => {
-    if (library) {
-      provider.removeAllListeners('block')
-      setDataBlock(0)
-      setGasPrice('0')
-      setProvider(library)
+    if (chainId !== targetChainID) {
+      doSwitchNetwork?.(targetChainID)
     }
-    if (chainId) {
-      setChain(chainId)
-      localStorage.setItem('network', chainId.toString())
-      if (chain !== chainId) {
-        window.ethereum?.emit('chainChanged')
-      }
-    }
-  }, [library, chainId])
+  }, [doSwitchNetwork, chainId, targetChainID])
 
-  useEffect(() => {
-    setSignerOrProvider(currentSigner ? currentSigner : provider)
-  }, [provider, currentSigner])
+  const signerOrProvider = currentSigner ?? provider
 
   useEffect(() => {
     if (provider) {
@@ -114,11 +91,11 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       value={{
         web3ProviderData: {
           disconnectWallet,
-          switchNetwork,
+          switchNetwork: setTargetChainID,
           provider,
           currentSigner,
           connected: active,
-          chainId: chainId || DEFAULT_CHAIN,
+          chainId: chainId ?? targetChainID,
           dataBlock,
           gasPrice,
           currentAccount: account?.toLowerCase() || DEFAULT_ADDRESS,

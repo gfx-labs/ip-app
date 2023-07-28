@@ -14,7 +14,7 @@ export const RolodexContentProvider = ({ children }: { children: React.ReactElem
       return
     }
     NewRolodex(ctx).then(setRolodex).catch(Logp('failed setting up rolodex'))
-  }, [ctx, ctx.connected, ctx.currentAccount, ctx.chainId])
+  }, [ctx, ctx.signerOrProvider, ctx.connected, ctx.currentAccount, ctx.chainId])
 
   return <RolodexContentContext.Provider value={rolodex}>{children}</RolodexContentContext.Provider>
 }
