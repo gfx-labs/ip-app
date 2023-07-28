@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 import './theme/fonts.css'
 
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
-import { Web3ReactProvider } from '@web3-react/core'
 import { providers } from 'ethers'
 import { AppLayout } from './components/partials/app-layout'
 import { Web3ContextProvider } from './components/libs/web3-data-provider/Web3Provider'
@@ -39,6 +38,10 @@ import { MerkleRedeemContextProvider } from './components/libs/merkle-redeem-pro
 import { Governance } from './pages/governance'
 import { EnableCappedTokenModal } from './components/util/modal/EnableCappedTokenModal'
 import { RedirectTo } from './components/util/redirect'
+import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
+import { Web3Modal } from '@web3modal/react'
+import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 
 // https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,11 +51,27 @@ function getWeb3Library(provider: any): providers.Web3Provider {
   return library
 }
 
+const chains = [mainnet, optimism]
+const projectId = '1076f5912040f4580a3c3dd2b2df8a51'
+
+const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })])
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors: w3mConnectors({ projectId, chains }),
+  publicClient,
+  webSocketPublicClient,
+})
+const ethereumClient = new EthereumClient(wagmiConfig, chains)
+
 const WalletContext = (props: { children: any }) => {
   return (
-    <Web3ReactProvider getLibrary={getWeb3Library}>
-      {props.children}
-    </Web3ReactProvider>
+    <>
+      <WagmiConfig config={wagmiConfig}>
+        {props.children}
+      </WagmiConfig>
+
+      <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+    </>
   )
 }
 

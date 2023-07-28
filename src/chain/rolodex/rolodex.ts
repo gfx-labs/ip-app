@@ -49,7 +49,7 @@ export class Rolodex {
 export const NewRolodex = async (ctx: Web3Data) => {
   const chain = Chains[ctx.chainId]
   let rolo: Rolodex
-  let provider = ctx.provider
+  let provider = ctx.signerOrProvider
 
   try {
     // if (ctx.currentSigner) {
@@ -62,7 +62,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
     //   rolo.addressVC = await rolo.USDI?.getVaultController()
     //   rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     // }
-    rolo = new Rolodex(ctx.signerOrProvider, chain.usdi_addr!)
+    rolo = new Rolodex(provider, chain.usdi_addr!)
     rolo.addressVC = await rolo.USDI?.getVaultController()
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     
@@ -74,7 +74,7 @@ export const NewRolodex = async (ctx: Web3Data) => {
 
     if (!rolo.addressOracle) {
       rolo.addressOracle = await rolo.VC?.getOracleMaster()
-      rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider!)
+      rolo.Oracle = OracleMaster__factory.connect(rolo.addressOracle!, provider)
     }
 
     if (!rolo.addressCurve) {

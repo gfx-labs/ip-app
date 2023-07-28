@@ -58,7 +58,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
       return mintVaultRes
     } catch (err) {
       updateTransactionState(err as ContractReceipt)
-      throw new Error('Error creating vault')
+      throw new Error(`Error creating vault: ${err}`)
     }
   }
 
