@@ -45,9 +45,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const {disconnect: disconnectWallet} = useDisconnect()
   const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
   const chainId = rawChain?.id
-  const currentSigner = useEthersSigner({
-    chainId,
-  })
+  const currentSigner = useEthersSigner()
   const library = currentSigner?.provider
 
   const [targetChainID, setTargetChainID] = useState(chainId ?? DEFAULT_CHAIN)
