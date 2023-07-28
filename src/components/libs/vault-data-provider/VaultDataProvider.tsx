@@ -55,7 +55,7 @@ export const VaultDataProvider = ({
 }: {
   children: React.ReactElement
 }) => {
-  const { dataBlock, currentAccount, chainId, signerOrProvider, connected } =
+  const { dataBlock, currentAccount, chainId, provider, connected } =
     useWeb3Context()
   const rolodex = useRolodexContext()
   const [redraw, setRedraw] = useState(false)
@@ -121,7 +121,7 @@ export const VaultDataProvider = ({
             vaultAddress,
             token,
             rolodex!,
-            signerOrProvider!
+            provider!
           )
             .then((res) => {
               token.price = res.livePrice
@@ -148,7 +148,7 @@ export const VaultDataProvider = ({
               currentAccount,
               token.address,
               token.decimals,
-              signerOrProvider!
+              provider!
             )
               .then((val) => {
                 token.wallet_amount = val.bn
@@ -198,12 +198,12 @@ export const VaultDataProvider = ({
           const addr = Chains[chainId].votingVaultController_addr
           setVaultID(id)
 
-          getVotingVaultAddress(addr!, id, signerOrProvider!).then((address) => {
+          getVotingVaultAddress(addr!, id, provider!).then((address) => {
             setVotingVaultAddress(address)
             setHasVotingVault(hasVotingVaultAddress(address))
           })
 
-          getBptVaultAddress(addr!, id, signerOrProvider!).then((addr) => {
+          getBptVaultAddress(addr!, id, provider!).then((addr) => {
             setBptVaultAddress(addr)
             setHasBptVault(hasBptVaultAddress(addr))
           })
