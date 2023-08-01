@@ -131,6 +131,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       setDataBlock(blockNumber)
     })
     return () => {
+      setGasPrice('0')
       subscription.removeAllListeners()
     }
   }, [provider])
