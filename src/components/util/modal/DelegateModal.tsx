@@ -34,7 +34,7 @@ export const DelegateModal = () => {
   const { delegateToken } = useAppGovernanceContext()
   const { vaultAddress, votingVaultAddress, hasVotingVault } =
     useVaultDataContext()
-  const { provider, currentAccount } = useWeb3Context()
+  const { currentSigner, currentAccount } = useWeb3Context()
 
   const handleDelegateRequest = async (e: FormEvent) => {
     e.preventDefault()
@@ -50,7 +50,7 @@ export const DelegateModal = () => {
         delegateAddress!,
         delegateToken.address,
         address,
-        provider!.getSigner(currentAccount)!
+        currentSigner!
       ).then(async (res) => {
         updateTransactionState(res)
         setLoadmsg(locale('TransactionPending'))

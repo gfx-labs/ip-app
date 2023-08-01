@@ -17,8 +17,8 @@ const depositToVotingVault = async (
 
     let formattedAmount: BigNumber
     if (typeof amount === 'string') {
-      //const decimals = await cappedTokenContract.decimals()
-      formattedAmount = utils.parseUnits(amount, token.decimals)
+      const decimals = await cappedTokenContract.decimals()
+      formattedAmount = utils.parseUnits(amount, decimals)
     } else {
       formattedAmount = amount
     }

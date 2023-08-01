@@ -31,11 +31,6 @@ export type Web3ContextData = {
   web3ProviderData: Web3Data
 }
 
-export const toHex = (num: any) => {
-  const val = Number(num);
-  return "0x" + val.toString(16);
-}
-
 export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
@@ -50,13 +45,12 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const setChainId = chainId ?? targetChainID
 
   const [provider, setProvider] = useState(new JsonRpcProvider(Chains[setChainId].rpc))
+  const [dataBlock, setDataBlock] = useState(0)
+  const [gasPrice, setGasPrice] = useState('0')
+
   useEffect(() => {
     setProvider(new JsonRpcProvider(Chains[setChainId].rpc))
   }, [setChainId])
-
-  const [dataBlock, setDataBlock] = useState(0)
-
-  const [gasPrice, setGasPrice] = useState('0')
 
   useEffect(() => {
     if (chainId === undefined || doSwitchNetwork === undefined) {

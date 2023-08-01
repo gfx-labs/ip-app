@@ -12,7 +12,6 @@ import {
 } from '../../../libs/modal-content-provider/ModalContentProvider'
 import { useLight } from '../../../../hooks/useLight'
 import { useVaultDataContext } from '../../../libs/vault-data-provider/VaultDataProvider'
-import SVGBox from '../../../icons/misc/SVGBox'
 import { DISPLAY_DECIMALS } from '../../../../constants'
 import { round } from '../../../../easy/bn'
 
@@ -55,11 +54,11 @@ export const DepositCollateralContent = () => {
       setCollateralDepositAmount(
         (Number(inputAmount) / collateralToken.price).toString()
       )
-      setNewBorrowingPower(borrowingPower + Number(inputAmount) * (ltv / 100))
+      setNewBorrowingPower(Number(borrowingPower) + Number(inputAmount) * (ltv / 100))
     } else {
       setCollateralDepositAmount(inputAmount)
       setNewBorrowingPower(
-        borrowingPower +
+        Number(borrowingPower) +
           Number(inputAmount) * collateralToken.price * (ltv / 100)
       )
     }

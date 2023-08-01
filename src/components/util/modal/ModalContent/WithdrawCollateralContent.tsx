@@ -40,11 +40,11 @@ export const WithdrawCollateralContent = () => {
   useEffect(() => {
     let newBorrowingPower: number
     if (isMoneyValue) {
-      newBorrowingPower = borrowingPower - Number(inputAmount) * (ltv / 100)
+      newBorrowingPower = Number(borrowingPower) - Number(inputAmount) * (ltv / 100)
       let amt = roundDown((Number(inputAmount) * 100) / (collateralToken.price * 100), 2)
       setCollateralWithdrawAmount(amt.toString())
     } else {
-      newBorrowingPower = borrowingPower -
+      newBorrowingPower = Number(borrowingPower) -
         Number(inputAmount) * collateralToken.price * (ltv / 100)
       setCollateralWithdrawAmount(inputAmount)
     }
@@ -56,10 +56,7 @@ export const WithdrawCollateralContent = () => {
     }
 
     if (
-      !collateralWithdrawAmountMax &&
-      (newBorrowingPower < accountLiability || Number(inputAmount) <= 0)
-      // (isMoneyValue ? Number(inputAmount) > Number(collateralToken.vault_balance) 
-      // : Number(inputAmount) > Number(collateralToken.vault_amount_str)))
+      Number(inputAmount) <= 0 || (newBorrowingPower < Number(accountLiability))
     ) {
       setDisabled(true)
     } else {
@@ -96,35 +93,42 @@ export const WithdrawCollateralContent = () => {
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
-      const a = roundDown(borrowingPower - accountLiability, 2)
-      const dec = countDecimals(collateralToken.vault_amount_str!)
+      
+      let amt = 0
 
-      if (a > 0) {
-        const max = roundDown(a * 100 / ltv, 2)
-        let amt = (max * 100) / (collateralToken.price * 100)
-
-        if (isMoneyValue) {
-          if (Number(collateralToken.vault_balance) < max) {
-            setCollateralWithdrawAmountMax(true)
-            amt = Number(collateralToken.vault_balance)
-          } else {
-            amt = roundDown(max, dec)
-            setCollateralWithdrawAmountMax(false)
-          }
-        } else {
-          if (Number(collateralToken.vault_amount_str) < amt) {
-            setCollateralWithdrawAmountMax(true)
-            amt = Number(collateralToken.vault_amount_str)
-          } else {
-            amt = roundDown(amt, dec)
-            setCollateralWithdrawAmountMax(false)
-          }
-        }
-
-        setInputAmount(amt.toString())
-        setDisabled(false)
+      if (Number(accountLiability) == 0) {
+        setCollateralWithdrawAmountMax(true)
+        amt = isMoneyValue ? Number(collateralToken.vault_balance) 
+        : Number(collateralToken.vault_amount_str)
       } else {
-        setInputAmount('0')
+        const a = Number(borrowingPower) - Number(accountLiability)
+        const dec = countDecimals(collateralToken.vault_amount_str!)
+        if (a > 0) {
+          const max = a * 100 / ltv
+          amt = (max * 100) / (collateralToken.price * 100)
+  
+          if (isMoneyValue) {
+            if (Number(collateralToken.vault_balance) < max) {
+              setCollateralWithdrawAmountMax(true)
+              amt = Number(collateralToken.vault_balance)
+            } else {
+              amt = roundDown(max, dec)
+              setCollateralWithdrawAmountMax(false)
+            }
+          } else {
+            if (Number(collateralToken.vault_amount_str) < amt) {
+              setCollateralWithdrawAmountMax(true)
+              amt = Number(collateralToken.vault_amount_str)
+            } else {
+              amt = roundDown(amt, dec)
+              setCollateralWithdrawAmountMax(false)
+            }
+          }
+          setInputAmount(amt.toString())
+          setDisabled(false)
+        } else {
+          setInputAmount('0')
+        }
       }
     } else {
       setInputAmount('0')

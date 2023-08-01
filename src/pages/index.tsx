@@ -224,10 +224,10 @@ const Dashboard = () => {
                   content="Maximum amount that your vault can borrow, calculated by the sum of collateral values discounted by the LTV"
                   text={
                     borrowingPower !== null
-                      ? borrowingPower?.toLocaleString('en-US', {
-                          style: 'currency',
-                          currency: 'USD',
-                        })
+                      ? Number(borrowingPower).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                      })
                       : null
                   }
                 />
@@ -284,7 +284,7 @@ const Dashboard = () => {
                   title={`USDi Borrowed`}
                   text={
                     accountLiability !== null
-                      ? '$' + Math.round(accountLiability).toLocaleString()
+                      ? '$' + Math.round(parseFloat(accountLiability)).toLocaleString()
                       : null
                   }
                 />
