@@ -13,7 +13,7 @@ export const StatsMeter = () => {
   const percentBorrowedCalc = useMemo(() => {
     if (borrowingPower && accountLiability) {
       const borrowPercent = Math.floor(
-        100 * (accountLiability / borrowingPower)
+        100 * (Number(accountLiability) / Number(borrowingPower))
       )
 
       return {
@@ -94,9 +94,10 @@ export const StatsMeter = () => {
                 of collateral values discounted by the LTV
               </Typography>
             }
-            text={`Borrowing Power: ${Math.round(
-              borrowingPower
-            ).toLocaleString()} USDi
+            text={`Borrowing Power: ${Number(borrowingPower).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })} USDi
           `}
             text_variant="label_semi"
           />
