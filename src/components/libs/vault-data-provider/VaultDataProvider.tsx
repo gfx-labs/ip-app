@@ -24,6 +24,7 @@ import {
 } from '../../../contracts/VotingVault/getSubVault'
 import { CollateralTokens } from '../../../types/token'
 import { Chains } from '../../../chain/chains'
+import { utils } from 'ethers'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -35,8 +36,8 @@ export type VaultDataContextType = {
   vaultID: string | null
   vaultAddress?: string
   setVaultAddress: Dispatch<SetStateAction<string | undefined>>
-  borrowingPower: number
-  accountLiability: number
+  borrowingPower: string
+  accountLiability: string
   totalBaseLiability: number
   tokens: CollateralTokens | undefined
   setTokens: Dispatch<SetStateAction<CollateralTokens | undefined>>
@@ -55,7 +56,7 @@ export const VaultDataProvider = ({
 }: {
   children: React.ReactElement
 }) => {
-  const { dataBlock, currentAccount, chainId, signerOrProvider, connected } =
+  const { dataBlock, currentAccount, chainId, provider, connected } =
     useWeb3Context()
   const rolodex = useRolodexContext()
   const [redraw, setRedraw] = useState(false)
@@ -64,8 +65,8 @@ export const VaultDataProvider = ({
   const [vaultID, setVaultID] = useState<string | null>(null)
   const [vaultAddress, setVaultAddress] =
     useState<VaultDataContextType['vaultAddress']>(undefined)
-  const [accountLiability, setAccountLiability] = useState(0)
-  const [borrowingPower, setBorrowingPower] = useState(0)
+  const [accountLiability, setAccountLiability] = useState('0')
+  const [borrowingPower, setBorrowingPower] = useState('0')
   const [tokens, setTokens] =
     useState<VaultDataContextType['tokens']>(undefined)
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
@@ -84,7 +85,7 @@ export const VaultDataProvider = ({
         rolodex
           .VC!.vaultLiability(vaultID!)
           .then((val) => {
-            const vl = BNtoDec(val)
+            const vl = utils.formatUnits(val, 18)//BNtoDec(val)
             setAccountLiability(vl)
           })
           .catch((e) => {
@@ -121,7 +122,7 @@ export const VaultDataProvider = ({
             vaultAddress,
             token,
             rolodex!,
-            signerOrProvider!
+            provider!
           )
             .then((res) => {
               token.price = res.livePrice
@@ -148,7 +149,7 @@ export const VaultDataProvider = ({
               currentAccount,
               token.address,
               token.decimals,
-              signerOrProvider!
+              provider!
             )
               .then((val) => {
                 token.wallet_amount = val.bn
@@ -195,15 +196,15 @@ export const VaultDataProvider = ({
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = vaultIDs.toString()
-          const addr = Chains.getInfo(chainId).votingVaultController_addr
+          const addr = Chains[chainId].votingVaultController_addr
           setVaultID(id)
 
-          getVotingVaultAddress(addr!, id, signerOrProvider!).then((address) => {
+          getVotingVaultAddress(addr!, id, provider!).then((address) => {
             setVotingVaultAddress(address)
             setHasVotingVault(hasVotingVaultAddress(address))
           })
 
-          getBptVaultAddress(addr!, id, signerOrProvider!).then((addr) => {
+          getBptVaultAddress(addr!, id, provider!).then((addr) => {
             setBptVaultAddress(addr)
             setHasBptVault(hasBptVaultAddress(addr))
           })

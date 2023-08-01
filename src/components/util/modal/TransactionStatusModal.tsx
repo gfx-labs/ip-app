@@ -30,7 +30,7 @@ export const TransactionStatusModal = () => {
   const renderTransitionState = () => {
     const isLight = useLight()
 
-    const chain = Chains.getInfo(chainId)
+    const chain = Chains[chainId]
 
     switch (transactionState) {
       case 'PENDING':

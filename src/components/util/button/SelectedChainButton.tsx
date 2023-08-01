@@ -48,9 +48,9 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
   )
 
   return (
-  <Button sx={styles} onClick={onClick}>
+    <Button sx={styles} onClick={onClick}>
       {content}
-  </Button>
+    </Button>
   )
 }
 
@@ -88,56 +88,26 @@ const StyledChainButton = (props: StyledDropdownButton) => {
 
 export const SelectedChainButton = () => {
   const { chainId, switchNetwork } = useWeb3Context()
-  const curChain = Chains.getInfo(chainId)
+  const curChain = Chains[chainId]
 
   const theme = useTheme()
   const isLight = useLight()
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
   const [expanded, setExpanded] = useState(false)
 
-  //const name = isMobile ? chain.symbol : chain.name
+  const curName = isMobile ? (curChain ? curChain.symbol : 'N/A') 
+  : (curChain ? curChain.name : 'NOT SUPPORTED')
 
   let otherChains = []
   for (let item in ChainIDs) {
     let num = Number(item)
-    const chain = Chains.getInfo(num)
-    if (!isNaN(num) && num !== curChain.id && chain.id !== 0) {
+    const chain = Chains[num]
+    if (!isNaN(num) && num !== curChain.id && chain) {
       const name = isMobile ? chain.symbol : chain.name
-      otherChains.push(
-        <StyledDropdownButton
-          key={num}
-          img={chain.logo}
-          text={name}
-          onClick={() => switchNetwork(num)}
-        />
-      )
+      otherChains.push(<StyledDropdownButton key={num} img={chain.logo} text={name} onClick={() => switchNetwork(num)} />)
     }
   }
 
-  // return (
-  //   <Button
-  //     sx={{
-  //       color: 'text.primary',
-  //       paddingX: 2,
-  //       paddingY: 1,
-  //       boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.03)',
-  //       backgroundColor: 'button.header',
-  //       border: isLight ? '1px solid #F4F4F4' : 'none',
-  //       minWidth: 'auto',
-  //       '&:hover': {
-  //         backgroundColor: 'button.hover',
-  //       },
-  //       [theme.breakpoints.down('md')]: {
-  //         paddingX: 2,
-  //         minWidth: 'auto',
-  //       },
-  //     }}
-  //   >
-  //     <SVGBox svg_name={chain.logo} height={24} sx={{ mr: 1 }} />
-
-  //     <Typography variant="label">{name}</Typography>
-  //   </Button>
-  // )
   return (
     <ClickAwayListener onClickAway={() => setExpanded(false)}>
       <Accordion
@@ -163,8 +133,8 @@ export const SelectedChainButton = () => {
           id="panel1a-header"
         >
           <StyledChainButton
-            img={curChain.logo}
-            text={isMobile? curChain.symbol : curChain.name}
+            img={curChain ? curChain.logo : 'ETH'}
+            text={curName}
             onClick={() => setExpanded(!expanded)}
           />
         </AccordionSummary>

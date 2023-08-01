@@ -39,7 +39,7 @@ interface UserTokenCardProps extends BoxProps {
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const isLight = useLight()
   const rolodex = useRolodexContext()
-  const { connected, signerOrProvider } = useWeb3Context()
+  const { connected, currentSigner, provider } = useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
   const { tokens } = useVaultDataContext()
   const { setType, setCollateralToken, updateTransactionState } = useModalContext()
@@ -51,14 +51,14 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
 
   const openVault = async () => {
     try {
-      const mintVaultRes = await rolodex!.VC!.mintVault()
+      const mintVaultRes = await rolodex!.VC!.connect(currentSigner!).mintVault()
       updateTransactionState(mintVaultRes)
       const mintVaultReceipt = await mintVaultRes.wait()
       updateTransactionState(mintVaultReceipt)
       return mintVaultRes
     } catch (err) {
       updateTransactionState(err as ContractReceipt)
-      throw new Error('Error creating vault')
+      throw new Error(`Error creating vault: ${err}`)
     }
   }
 
@@ -79,8 +79,8 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   }
 
   useEffect(() => {
-    if (cappedAddress && signerOrProvider) {
-      getCappedPercentOf(cappedAddress, signerOrProvider).then((res) => {
+    if (cappedAddress) {
+      getCappedPercentOf(cappedAddress, provider).then((res) => {
         // show minimum 5%
         if (res <= 5) {
           res = 5
@@ -90,7 +90,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         setCappedPercent(res)
       })
     }
-  }, [signerOrProvider])
+  }, [provider])
 
   return (
     <Box

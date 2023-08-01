@@ -28,7 +28,7 @@ export const BorrowRepayModal = () => {
   const [borrowAmount, setBorrowAmount] = useState('')
   useEffect(() => {
     if (borrowingPower) {
-      setVaultBorrowPower(borrowingPower.toFixed(0))
+      setVaultBorrowPower(borrowingPower)
     }
   }, [borrowingPower])
   const onSwitch = (val: boolean) => {
@@ -63,7 +63,7 @@ export const BorrowRepayModal = () => {
             Liability:
           </Typography>
           <Typography variant="h7" display="block" color="text.primary">
-            ${accountLiability?.toFixed(0)}
+            ${parseFloat(accountLiability).toFixed(2)}
           </Typography>
         </Box>
         {currType ? (
@@ -133,7 +133,7 @@ export const BorrowRepayModal = () => {
           vaultID={Number(vaultID)}
           borrowAmount={borrowAmount}
           setBorrowAmount={setBorrowAmount}
-          accountLiability={accountLiability}
+          accountLiability={parseFloat(accountLiability)}
         />
       ) : (
         <RepayContent
@@ -142,7 +142,7 @@ export const BorrowRepayModal = () => {
           vaultID={Number(vaultID)}
           repayAmount={borrowAmount}
           setRepayAmount={setBorrowAmount}
-          accountLiability={accountLiability}
+          accountLiability={parseFloat(accountLiability)}
         />
       )}
     </BaseModal>

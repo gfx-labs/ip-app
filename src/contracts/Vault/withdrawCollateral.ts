@@ -20,18 +20,18 @@ const withdrawCollateral = async (
       amount = utils.parseUnits(amount, decimal)
     }
 
-    const ge = (
-      await Vault__factory.connect(
-        vault_address,
-        signer
-      ).estimateGas.withdrawErc20(collateral_address, amount)
-    )
-      .mul(100)
-      .div(90)
+    // const ge = (
+    //   await Vault__factory.connect(
+    //     vault_address,
+    //     signer
+    //   ).estimateGas.withdrawErc20(collateral_address, amount)
+    // )
+    //   .mul(100)
+    //   .div(90)
     const transferAttempt = await Vault__factory.connect(
       vault_address,
       signer
-    ).withdrawErc20(collateral_address, amount, { gasLimit: ge })
+    ).withdrawErc20(collateral_address, amount)
 
     return transferAttempt
   } catch (err) {

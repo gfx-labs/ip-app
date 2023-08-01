@@ -24,7 +24,7 @@ export const EnableCappedTokenModal = () => {
   const [loading, setLoading] = useState(false)
   const [buttonText, setButtonText] = useState<ButtonText>('Enable Token')
   const [error, setError] = useState<string | undefined>()
-  const chain = Chains.getInfo(chainId)
+  const chain = Chains[chainId]
 
   const mintVotingVault = async () => {
     try {

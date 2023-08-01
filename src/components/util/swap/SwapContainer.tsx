@@ -34,11 +34,11 @@ export const SwapContainer = () => {
   ] = useTokenAmountInput()
 
   const swapTokens = () => {
-    if (token1.ticker === 'USDC') {
-      updateUSDC('amountToWithdraw', token1Amount)
-    } else {
-      updateUSDC('amountToDeposit', token1Amount)
-    }
+    // if (token1.ticker === 'USDC') {
+    //   updateUSDC('amountToWithdraw', token1Amount)
+    // } else {
+    //   updateUSDC('amountToDeposit', token1Amount)
+    // }
     swapTokenAmount()
     swapTokenPositions()
     updateUSDC('maxDeposit', false)
@@ -71,7 +71,7 @@ export const SwapContainer = () => {
     } else {
       updateUSDC('amountToWithdraw', token1Amount)
     }
-  }, [token1Amount])
+  }, [token1Amount, token1])
 
   return (
     <>

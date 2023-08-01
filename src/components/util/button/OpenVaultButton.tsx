@@ -12,7 +12,7 @@ export const OpenVaultButton = () => {
   const { setIsWalletModalOpen } = useWalletModalContext()
   const rolodex = useRolodexContext()
   const { updateTransactionState } = useModalContext()
-  const { connected, currentAccount } = useWeb3Context()
+  const { connected, currentAccount, currentSigner } = useWeb3Context()
   const isLight = useLight()
   const [ishovered, setIshovered] = useState(false)
   useState
@@ -28,14 +28,14 @@ export const OpenVaultButton = () => {
     }
 
     try {
-      const mintVaultRes = await rolodex!.VC!.mintVault()
+      const mintVaultRes = await rolodex!.VC!.connect(currentSigner!).mintVault()
       updateTransactionState(mintVaultRes)
       const mintVaultReceipt = await mintVaultRes.wait()
       updateTransactionState(mintVaultReceipt)
       return mintVaultRes
     } catch (err) {
       updateTransactionState(err as ContractReceipt)
-      throw new Error('Error creating vault')
+      throw new Error(`Error creating vault: ${err}`)
     }
   }
 

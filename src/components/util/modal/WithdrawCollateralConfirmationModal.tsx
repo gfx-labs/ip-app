@@ -27,7 +27,7 @@ export const WithdrawCollateralConfirmationModal = () => {
     collateralWithdrawAmountMax,
     setCollateralWithdrawAmountMax,
   } = useModalContext()
-  const { provider, currentAccount } = useWeb3Context()
+  const {currentSigner} = useWeb3Context()
   const { vaultAddress } = useVaultDataContext()
   const [loadmsg, setLoadmsg] = useState('')
   const [loading, setLoading] = useState(false)
@@ -47,7 +47,7 @@ export const WithdrawCollateralConfirmationModal = () => {
           ? collateralToken.capped_address
           : collateralToken.address,
         vaultAddress!,
-        provider?.getSigner(currentAccount)!
+        currentSigner!,
       )
 
       updateTransactionState(attempt)

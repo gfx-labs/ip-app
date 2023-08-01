@@ -9,4 +9,5 @@ export interface ChainInfo {
   scan_site: string
   delegate_token: string
   analytics: string
+  rpc: string // backup rpc when not connected
 }
