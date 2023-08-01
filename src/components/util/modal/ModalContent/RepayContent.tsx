@@ -13,6 +13,7 @@ import { repayAllUsdi, repayUsdi } from '../../../../contracts/VaultController'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { useStableCoinsContext } from '../../../libs/stable-coins-provider/StableCoinsProvider'
 import { useLight } from '../../../../hooks/useLight'
+import { ContractTransaction } from 'ethers'
 
 interface RepayContent {
   tokenName: string
@@ -40,7 +41,7 @@ export const RepayContent = (props: RepayContent) => {
   const [newHealth, setNewHealth] = useState(
     100 * (accountLiability / Number(vaultBorrowPower))
   )
-
+  const [repayMax, setRepayMax] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const [disabled, setDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
@@ -80,6 +81,7 @@ export const RepayContent = (props: RepayContent) => {
       setRepayAmount(USDI.wallet_balance ?? '0')
     } else {
       setRepayAmount(accountLiability.toString())
+      setRepayMax(true)
     }
   }
 
@@ -121,15 +123,22 @@ export const RepayContent = (props: RepayContent) => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      const repayTransaction = await repayUsdi(
-        vaultID,
-        repayAmount,
-        rolodex!,
-        currentSigner!
-      )
-
+      let repayTransaction: ContractTransaction
+      if (repayMax) {
+        repayTransaction = await repayAllUsdi(
+          vaultID,
+          rolodex!,
+          currentSigner!
+        )
+      } else {
+        repayTransaction = await repayUsdi(
+          vaultID,
+          repayAmount,
+          rolodex!,
+          currentSigner!
+        )
+      }
       updateTransactionState(repayTransaction)
-
       const repayReceipt = await repayTransaction.wait()
 
       updateTransactionState(repayReceipt)
