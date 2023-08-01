@@ -44,7 +44,7 @@ const isAddress = (value: any): string | false => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider, currentAccount, signerOrProvider } = useWeb3Context()
+  const { dataBlock, provider, currentAccount } = useWeb3Context()
   const { votingPower } = props
   const { id, body, endBlock, transactionHash, details, startBlock, votes } = props.proposal
   const isLight = useLight()
@@ -104,8 +104,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [hasPriorVotes, setHasPriorVotes] = useState(false)
 
   useEffect(() => {
-    getProposalInfo(id, signerOrProvider!).then((res) => {
-      getProposalIsOptimistic(res.proposer, signerOrProvider!).then((isWhitelisted) => {
+    getProposalInfo(id, provider).then((res) => {
+      getProposalIsOptimistic(res.proposer, provider).then((isWhitelisted) => {
         const pType = isWhitelisted ? 'optimistic' : res.emergency ? 'emergency' : 'standard'
         setProposalType(pType)
       })
@@ -113,7 +113,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
       setProposal(res)
     })
 
-    getProposalState(id, signerOrProvider!).then((res) => {
+    getProposalState(id, provider).then((res) => {
       setStatus(res)
     })
   }, [id])
@@ -156,7 +156,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         }
       })
 
-      getReceiptOf(id, currentAccount, signerOrProvider).then((receipt) => {
+      getReceiptOf(id, currentAccount, provider).then((receipt) => {
         setHasVoted(receipt.hasVoted)
       })
     }

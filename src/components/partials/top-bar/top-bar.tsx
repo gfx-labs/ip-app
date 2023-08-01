@@ -20,6 +20,7 @@ export const TopBar = (props: AppBarProps) => {
         margin: 'auto',
         left: 0,
         right: 0,
+        zIndex: 0,
       }}
     >
       {isTablet ? <MobileToolBar /> : <DesktopToolBar />}

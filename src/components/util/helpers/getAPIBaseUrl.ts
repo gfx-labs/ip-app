@@ -10,7 +10,7 @@ const getAPIBaseUrl = () => {
   //   return SET_BASE_URL
   // }
   
-  const envURL: string = VITE_ANALYTICS_URL(Chains.getInfo(chainId).analytics)
+  const envURL: string = VITE_ANALYTICS_URL(Chains[chainId].analytics)
   if (envURL == SET_BASE_URL) {
     return SET_BASE_URL
   }

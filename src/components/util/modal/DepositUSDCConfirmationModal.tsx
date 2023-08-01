@@ -29,7 +29,7 @@ export const DepositUSDCConfirmationModal = () => {
   const [hasAllowance, setHasAllowance] = useState(false)
   const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
 
-  const chain = Chains.getInfo(chainId)
+  const chain = Chains[chainId]
 
   useEffect(() => {
     if (rolodex && USDC.amountToDeposit) {

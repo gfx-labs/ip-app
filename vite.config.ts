@@ -32,6 +32,7 @@ export default defineConfig({
     },
     publicDir: "./res",
     build: {
+        target: ["esnext"],
         rollupOptions: {
             plugins: [nodePolyfills()],
             output: {
@@ -47,6 +48,7 @@ export default defineConfig({
     },
     optimizeDeps: {
         esbuildOptions: {
+            target: "esnext",
             // Node.js global to browser globalThis
             define: {
                 global: 'globalThis'

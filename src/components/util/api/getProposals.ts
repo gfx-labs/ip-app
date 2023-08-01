@@ -23,7 +23,7 @@ const getProposals = async (chain: number) => {
   const proposals = new Map<number, Proposal>()
 
   try {
-    const api = Chains.getInfo(chain).analytics
+    const api = Chains[chain].analytics
     const voteEvents = await getProposalVoteCastEvents(api)
     const createdEvents = await getProposalCreatedEvents(api)
 

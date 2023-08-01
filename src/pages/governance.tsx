@@ -13,7 +13,7 @@ import { BNtoDec } from '../easy/bn'
 
 export const Governance = () => {
   const theme = useTheme()
-  const { dataBlock, provider, chainId, connected, currentAccount, currentSigner } = useWeb3Context()
+  const { dataBlock, provider, chainId, currentAccount } = useWeb3Context()
   const { setDelegatedTo, setIptBalance, setCurrentVotes, currentVotes, iptBalance } = useAppGovernanceContext()
 
   const [proposals, setProposals] = useState<Map<number, Proposal>>(new Map<number, Proposal>([]))
@@ -32,15 +32,15 @@ export const Governance = () => {
         console.error(e)
         setNoProposals(true)
       })
-    if (currentAccount && currentSigner) {
-      getUserVotingPower(currentAccount, currentSigner).then((res) => {
+    if (currentAccount) {
+      getUserVotingPower(currentAccount, provider).then((res) => {
         const currentVotes = BNtoDec(res)
         setCurrentVotes(currentVotes)
-        getUserIPTBalance(currentAccount, currentSigner).then((response) => {
+        getUserIPTBalance(currentAccount, provider).then((response) => {
           const iptBalance = BNtoDec(response)
           console.log("user ipt balance", currentAccount, iptBalance)
           setIptBalance(iptBalance)
-          getUserDelegates(currentAccount, currentSigner).then((delegatee) => {
+          getUserDelegates(currentAccount, provider).then((delegatee) => {
             setDelegatedTo(delegatee)
           })
         })
