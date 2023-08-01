@@ -56,8 +56,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   const [dataBlock, setDataBlock] = useState(0)
   const [gasPrice, setGasPrice] = useState('0')
 
- 
-
   useEffect(() => {
     if (!rawChain) {
       return
@@ -68,12 +66,9 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   }, [rawChain])
 
   useEffect(() => {
-    
-    // if (!active) {
-    //   provider.removeAllListeners()
-    //   setDataBlock(0)
-    //   setProvider(new JsonRpcProvider(Chains[chainId].rpc))
-    // }
+    if (!active) {
+      setProvider(new JsonRpcProvider(Chains[chainId].rpc))
+    }
   }, [chainId])
 
   const switchNetwork = async (network: number) => {
