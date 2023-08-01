@@ -1,18 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { JsonRpcProvider, JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
 import { DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
 import { ChainIDs, Chains } from '../../../chain/chains'
-import {useAccount, useDisconnect, useNetwork, useSwitchNetwork} from "wagmi";
-import {useEthersSigner} from "./ethers";
+import { type WalletClient, useWalletClient, useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { ethers, providers } from 'ethers'
+//import { getProvider, useEthersSigner } from "./ethers";
 
-export type ERC20TokenType = {
-  address: string
-  symbol: string
-  decimals: number
-  image?: string
-  aToken?: boolean
+interface Contract {
+  address: `0x${string}`;
+  blockCreated?: number;
+}
+
+interface Chain {
+  id: number;
+  name: string;
+  contracts?: {
+      ensRegistry?: Contract;
+  };
 }
 
 export type Web3Data = {
@@ -21,7 +27,7 @@ export type Web3Data = {
   currentAccount: string
   currentSigner: JsonRpcSigner | undefined
   connected: boolean
-  provider: JsonRpcProvider
+  provider: JsonRpcProvider | Web3Provider
   chainId: number
   dataBlock: number
   gasPrice: string
@@ -31,51 +37,106 @@ export type Web3ContextData = {
   web3ProviderData: Web3Data
 }
 
+const reload = async () => {
+  window.location.reload()
+}
+
 export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
-  const {address: account, isConnected: active} = useAccount()
-  const {chain: rawChain} = useNetwork()
-  const {disconnect: disconnectWallet} = useDisconnect()
-  const {switchNetwork: doSwitchNetwork} = useSwitchNetwork()
-  const chainId = rawChain?.id
-  const currentSigner = useEthersSigner()
-
-  const [targetChainID, setTargetChainID] = useState(chainId ?? DEFAULT_CHAIN)
-  const setChainId = chainId ?? targetChainID
-
-  const [provider, setProvider] = useState(new JsonRpcProvider(Chains[setChainId].rpc))
+  const { address: account, isConnected: active } = useAccount({ onDisconnect: reload })
+  const { chain: rawChain } = useNetwork()
+  const { disconnect: disconnectWallet } = useDisconnect()
+  const { switchNetwork: doSwitchNetwork } = useSwitchNetwork({ onSuccess: reload })
+  const { data: walletClient } = useWalletClient()
+  
+  const [chainId, setChainId] = useState(rawChain?.id ?? DEFAULT_CHAIN)
+  const [provider, setProvider] = useState<JsonRpcProvider | Web3Provider>(new JsonRpcProvider(Chains[chainId].rpc))
+  const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
   const [dataBlock, setDataBlock] = useState(0)
   const [gasPrice, setGasPrice] = useState('0')
 
-  useEffect(() => {
-    setProvider(new JsonRpcProvider(Chains[setChainId].rpc))
-  }, [setChainId])
+ 
 
   useEffect(() => {
-    if (chainId === undefined || doSwitchNetwork === undefined) {
+    if (!rawChain) {
       return
     }
-    if (chainId !== targetChainID) {
-      console.log("switching to", targetChainID)
-      doSwitchNetwork(targetChainID)
+    if (chainId !== rawChain.id) {
+      setChainId(rawChain.id)
     }
-  }, [doSwitchNetwork, chainId, targetChainID])
+  }, [rawChain])
 
   useEffect(() => {
-    console.log('started auto refresh of blockNumber for', provider)
-    provider.on('block', (n: number) => {
-      const signerOrProvider = currentSigner ?? provider
+    
+    // if (!active) {
+    //   provider.removeAllListeners()
+    //   setDataBlock(0)
+    //   setProvider(new JsonRpcProvider(Chains[chainId].rpc))
+    // }
+  }, [chainId])
+
+  const switchNetwork = async (network: number) => {
+    if (chainId !== network) {
+      if (doSwitchNetwork) {
+        doSwitchNetwork(network)
+      } else {
+        setChainId(network)
+      }
+    }
+  }
+
+  // useEffect(() => {
+  //   if (doSwitchNetwork) {
+  //     if (chainId !== targetChainId) {
+  //       console.log("switching to", targetChainId)
+  //       doSwitchNetwork(targetChainId)
+  //     }
+  //   }
+  // }, [doSwitchNetwork, chainId, targetChainId])
+  useEffect(() => {
+      if (walletClient && rawChain) {
+      const { account, transport } = walletClient
+      const network = {
+          chainId: rawChain.id,
+          name: rawChain.name,
+          ensAddress: rawChain.contracts?.ensRegistry?.address,
+      }
+      // provider.removeAllListeners()
+      // setDataBlock(0)
+      const temp = new providers.Web3Provider(transport, network)
+      setProvider(temp)
+      setCurrentSigner(temp.getSigner(account.address))
+    }
+  }, [walletClient, rawChain])
+  
+
+  useEffect(() => {
+    // console.log('started auto refresh of blockNumber for', provider)
+    // provider.on('block', (n: number) => {
+    //   const signerOrProvider = currentSigner ?? provider
+    //   if (chainId === ChainIDs.MAINNET) {
+    //     getGasPrice(signerOrProvider!).then(setGasPrice)
+    //   }
+    //   if (n > dataBlock) {
+    //     setDataBlock(n)
+    //   }
+    // })
+    // return () => {
+    //   console.log('stopped auto refresh of blockNumber for', provider)
+    //   provider.on('block', () => {})
+    // }
+    if (!provider) {
+      return
+    }
+    const subscription = provider.on('block', (blockNumber: number) => {
       if (chainId === ChainIDs.MAINNET) {
-        getGasPrice(signerOrProvider!).then(setGasPrice)
+        getGasPrice(currentSigner ?? provider).then(setGasPrice)
       }
-      if (n > dataBlock) {
-        setDataBlock(n)
-      }
+      setDataBlock(blockNumber)
     })
     return () => {
-      console.log('stopped auto refresh of blockNumber for', provider)
-      provider.on('block', () => {})
+      subscription.removeAllListeners()
     }
   }, [provider])
 
@@ -84,11 +145,11 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       value={{
         web3ProviderData: {
           disconnectWallet,
-          switchNetwork: setTargetChainID,
+          switchNetwork: switchNetwork,
           provider,
           currentSigner,
           connected: active,
-          chainId: chainId ?? targetChainID,
+          chainId: chainId,
           dataBlock,
           gasPrice,
           currentAccount: account?.toLowerCase() || DEFAULT_ADDRESS,

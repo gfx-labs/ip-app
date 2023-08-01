@@ -102,7 +102,7 @@ export const WithdrawCollateralContent = () => {
         : Number(collateralToken.vault_amount_str)
       } else {
         const a = Number(borrowingPower) - Number(accountLiability)
-        const dec = countDecimals(collateralToken.vault_amount_str!)
+        const dec = Math.max(countDecimals(collateralToken.vault_amount_str!), 2)
         if (a > 0) {
           const max = a * 100 / ltv
           amt = (max * 100) / (collateralToken.price * 100)

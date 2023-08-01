@@ -43,14 +43,6 @@ import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { mainnet, optimism } from 'wagmi/chains'
 
-// https://github.com/NoahZinsmeister/web3-react/tree/v6/docs
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getWeb3Library(provider: any): providers.Web3Provider {
-  const library = new providers.Web3Provider(provider)
-  library.pollingInterval = 12000
-  return library
-}
-
 const chains = [mainnet, optimism]
 const projectId = '1076f5912040f4580a3c3dd2b2df8a51'
 

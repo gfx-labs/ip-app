@@ -26,15 +26,24 @@ export function walletClientToSigner(walletClient: WalletClient, chain: Chain) {
     }
     const provider = new providers.Web3Provider(transport, network)
     const signer = provider.getSigner(account.address)
-    return signer
+    return {provider, signer}
+}
+
+export function getEthersProvider() {
+    const { chain } = useNetwork()
+    const { data: walletClient } = useWalletClient()
+    return React.useMemo(
+        () => (walletClient && chain ? walletClientToSigner(walletClient, chain).provider : undefined),
+        [walletClient, chain],
+    )
 }
 
 /** Hook to convert a viem Wallet Client to an ethers.js Signer. */
 export function useEthersSigner() {
-    const {chain} = useNetwork()
+    const { chain } = useNetwork()
     const { data: walletClient } = useWalletClient()
     return React.useMemo(
-        () => (walletClient && chain ? walletClientToSigner(walletClient, chain) : undefined),
+        () => (walletClient && chain ? walletClientToSigner(walletClient, chain).signer : undefined),
         [walletClient, chain],
     )
 }
