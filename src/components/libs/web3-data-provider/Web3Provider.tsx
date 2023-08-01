@@ -107,20 +107,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   
 
   useEffect(() => {
-    // console.log('started auto refresh of blockNumber for', provider)
-    // provider.on('block', (n: number) => {
-    //   const signerOrProvider = currentSigner ?? provider
-    //   if (chainId === ChainIDs.MAINNET) {
-    //     getGasPrice(signerOrProvider!).then(setGasPrice)
-    //   }
-    //   if (n > dataBlock) {
-    //     setDataBlock(n)
-    //   }
-    // })
-    // return () => {
-    //   console.log('stopped auto refresh of blockNumber for', provider)
-    //   provider.on('block', () => {})
-    // }
     if (!provider) {
       return
     }

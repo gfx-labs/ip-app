@@ -96,7 +96,7 @@ export const ModalContentProvider = ({
     createDepositWithdrawUSDC
   )
 
-  const updateUSDC = (prop: string, val: any) => {
+  const updateUSDC = async (prop: string, val: any) => {
     setUSDC({
       ...USDC,
       [prop]: val,

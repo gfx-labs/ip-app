@@ -93,7 +93,6 @@ export const WithdrawCollateralContent = () => {
   const setMax = () => {
     if (collateralToken && collateralToken.vault_amount) {
       //allowed to withdraw
-      
       let amt = 0
 
       if (Number(accountLiability) == 0) {
@@ -124,12 +123,12 @@ export const WithdrawCollateralContent = () => {
               setCollateralWithdrawAmountMax(false)
             }
           }
-          setInputAmount(amt.toString())
-          setDisabled(false)
         } else {
           setInputAmount('0')
         }
       }
+      setInputAmount(amt.toString())
+      setDisabled(false)
     } else {
       setInputAmount('0')
     }
