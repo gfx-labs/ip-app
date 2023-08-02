@@ -1,4 +1,4 @@
-import { Chains } from '../../../chain/chains'
+import { ChainIDs, Chains } from '../../../chain/chains'
 import { BN } from '../../../easy/bn'
 import { Voter } from '../governance/proposal/VoteCount'
 import getProposalDetails, { ProposalDetails } from '../helpers/getProposalDescription'
@@ -23,7 +23,7 @@ const getProposals = async (chain: number) => {
   const proposals = new Map<number, Proposal>()
 
   try {
-    const api = Chains[chain].analytics
+    const api = Chains[ChainIDs.MAINNET].analytics
     const voteEvents = await getProposalVoteCastEvents(api)
     const createdEvents = await getProposalCreatedEvents(api)
 

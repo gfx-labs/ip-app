@@ -26,6 +26,8 @@ import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
 import SVGBox from '../../icons/misc/SVGBox'
 import { Proposal } from '../api/getProposals'
+import { JsonRpcProvider } from '@ethersproject/providers'
+import { ChainIDs, Chains } from '../../../chain/chains'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -44,7 +46,7 @@ const isAddress = (value: any): string | false => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider, currentAccount } = useWeb3Context()
+  const { dataBlock, provider: providerContext, currentAccount, chainId } = useWeb3Context()
   const { votingPower } = props
   const { id, body, endBlock, transactionHash, details, startBlock, votes } = props.proposal
   const isLight = useLight()
@@ -102,6 +104,14 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [isActive, setIsActive] = useState(false)
   const [proposalType, setProposalType] = useState<IProposalType | undefined>()
   const [hasPriorVotes, setHasPriorVotes] = useState(false)
+  const defaultProvider = new JsonRpcProvider(Chains[ChainIDs.MAINNET].rpc)
+  const [provider, setProvider] = useState((chainId !== ChainIDs.MAINNET) ? defaultProvider : providerContext)
+
+  useEffect(() => {
+    if (chainId !== ChainIDs.MAINNET) {
+      setProvider(defaultProvider)
+    }
+  }, [providerContext])
 
   useEffect(() => {
     getProposalInfo(id, provider).then((res) => {
