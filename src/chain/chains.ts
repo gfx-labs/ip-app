@@ -10,28 +10,26 @@ export enum ChainIDs {
 }
 
 // to use when switching chains
-export const networkParams: {[index: number]: any} = {
+export const networkParams: { [index: number]: any } = {
   1: {
-    chainId: "0x1",
-    rpcUrls: ["https://eth.llamarpc.com","https://ethereum.publicnode.com", "https://api.zmok.io/mainnet/oaen6dy8ff6hju9k"],
-    chainName: "Ethereum Mainnet",
-    nativeCurrency: { name: "ETH", decimals: 18, symbol: "ETH" },
-    blockExplorerUrls: ["https://etherscan.io"],
-    iconUrls: ["https://ethereum.org/static/6b935ac0e6194247347855dc3d328e83/81d9f/eth-diamond-black.webp"]
+    chainId: '0x1',
+    rpcUrls: ['https://eth.llamarpc.com', 'https://ethereum.publicnode.com', 'https://api.zmok.io/mainnet/oaen6dy8ff6hju9k'],
+    chainName: 'Ethereum Mainnet',
+    nativeCurrency: { name: 'ETH', decimals: 18, symbol: 'ETH' },
+    blockExplorerUrls: ['https://etherscan.io'],
+    iconUrls: ['https://ethereum.org/static/6b935ac0e6194247347855dc3d328e83/81d9f/eth-diamond-black.webp'],
   },
   10: {
-    chainId: "0xa",
-    rpcUrls: ["https://optimism.publicnode.com", "https://rpc.ankr.com/optimism", "https://optimism.blockpi.network/v1/rpc/public"],
-    chainName: "Optimism",
-    nativeCurrency: { name: "ETH", decimals: 18, symbol: "ETH" },
-    blockExplorerUrls: ["https://optimistic.etherscan.io"],
-    iconUrls: [
-      "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=025"
-    ]
-  }
+    chainId: '0xa',
+    rpcUrls: ['https://optimism.publicnode.com', 'https://rpc.ankr.com/optimism', 'https://optimism.blockpi.network/v1/rpc/public'],
+    chainName: 'Optimism',
+    nativeCurrency: { name: 'ETH', decimals: 18, symbol: 'ETH' },
+    blockExplorerUrls: ['https://optimistic.etherscan.io'],
+    iconUrls: ['https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=025'],
+  },
 }
 
-export const Chains: {[index: number]: ChainInfo} = {
+export const Chains: { [index: number]: ChainInfo } = {
   1: {
     id: ChainIDs.MAINNET,
     name: 'Ethereum',
@@ -42,8 +40,8 @@ export const Chains: {[index: number]: ChainInfo} = {
     scan_url: 'https://etherscan.io/tx/',
     scan_site: 'Etherscan',
     delegate_token: 'UNI',
-    analytics: 'https://analytics-api.gfx.xyz',
-    rpc: 'https://mainnet.rpc.gfx.xyz'
+    analytics: 'https://analytics-api.apiary.software',
+    rpc: 'https://mainnet.rpc.apiary.software',
   },
   // {
   //   id: ChainIDs.ROPSTEN,
@@ -73,7 +71,7 @@ export const Chains: {[index: number]: ChainInfo} = {
     scan_site: 'Optimism Etherscan',
     delegate_token: 'OP',
     analytics: 'https://ip-stats-api-op.staging.gfx.town',
-    rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226'
+    rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226',
   },
   // {
   //   id: ChainIDs.POLYGON,
