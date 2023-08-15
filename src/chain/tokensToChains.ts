@@ -221,9 +221,10 @@ export const tokensToChains: TokensOnChains = {
     [ChainIDs.LOCAL]: {},
   },
   MKR: {
-    [ChainIDs.MAINNET]: {addr: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
-                         capped_addr: '0xbb5578c08bC08c15AcE5cd09c6683CcCcB2A9148',
-                         can_delegate: true},
+    // [ChainIDs.MAINNET]: {addr: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
+    //                      capped_addr: '0xbb5578c08bC08c15AcE5cd09c6683CcCcB2A9148',
+    //                      can_delegate: true},
+    [ChainIDs.MAINNET]: {},
     [ChainIDs.ROPSTEN]: {},
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {},
