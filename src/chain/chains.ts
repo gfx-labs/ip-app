@@ -40,8 +40,8 @@ export const Chains: { [index: number]: ChainInfo } = {
     scan_url: 'https://etherscan.io/tx/',
     scan_site: 'Etherscan',
     delegate_token: 'UNI',
-    analytics: 'https://analytics-api.apiary.software',
-    rpc: 'https://mainnet-rpc.apiary.software',
+    analytics: 'https://analytics-api.apiary.software', //apiary
+    rpc: 'https://mainnet-rpc.apiary.software', //apiary
   },
   // {
   //   id: ChainIDs.ROPSTEN,
