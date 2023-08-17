@@ -32,7 +32,7 @@ export const DelegateModal = () => {
   const toggle = () => setFocus(!focus)
 
   const { delegateToken } = useAppGovernanceContext()
-  const { vaultAddress, votingVaultAddress, hasVotingVault } =
+  const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } =
     useVaultDataContext()
   const { currentSigner, currentAccount } = useWeb3Context()
 
@@ -41,16 +41,19 @@ export const DelegateModal = () => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      const delegateAddress =
+      let delegateAddress =
         delegateToken.capped_address && hasVotingVault
           ? votingVaultAddress
           : vaultAddress
+      if (delegateToken.ticker === 'MKR') {
+        delegateAddress = MKRVotingVaultAddr
+      }
 
       await delegateVaultVotingPower(
         delegateAddress!,
-        delegateToken.address,
+        delegateToken,
         address,
-        currentSigner!
+        currentSigner!,
       ).then(async (res) => {
         updateTransactionState(res)
         setLoadmsg(locale('TransactionPending'))

@@ -18,13 +18,13 @@ import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
   getVotingVaultAddress,
-  hasVotingVaultAddress,
   getBptVaultAddress,
-  hasBptVaultAddress,
+  getMKRVotingVaultAddr,
 } from '../../../contracts/VotingVault/getSubVault'
 import { CollateralTokens } from '../../../types/token'
 import { Chains } from '../../../chain/chains'
 import { utils } from 'ethers'
+import { ZERO_ADDRESS } from '../../../constants'
 
 export type VaultDataContextType = {
   hasVault: boolean
@@ -47,6 +47,9 @@ export type VaultDataContextType = {
   bptVaultAddress: string | undefined
   hasBptVault: boolean
   setHasBptVault: Dispatch<SetStateAction<boolean>>
+  MKRVotingVaultAddr: string | undefined
+  hasMKRVotingVault: boolean
+  setHasMKRVotingVault: Dispatch<SetStateAction<boolean>>
 }
 
 export const VaultDataContext = React.createContext({} as VaultDataContextType)
@@ -75,8 +78,10 @@ export const VaultDataProvider = ({
     string | undefined>(undefined)
   const [bptVaultAddress, setBptVaultAddress] = useState<
     string | undefined>(undefined)
+  const [MKRVotingVaultAddr, setMKRVotingVaultAddr] = useState<string | undefined>()
   const [hasVotingVault, setHasVotingVault] = useState(false)
   const [hasBptVault, setHasBptVault] = useState(false)
+  const [hasMKRVotingVault, setHasMKRVotingVault] = useState(false)
 
   const update = async () => {
     const px: Array<Promise<any>> = []
@@ -199,14 +204,19 @@ export const VaultDataProvider = ({
           const addr = Chains[chainId].votingVaultController_addr
           setVaultID(id)
 
-          getVotingVaultAddress(addr!, id, provider!).then((address) => {
-            setVotingVaultAddress(address)
-            setHasVotingVault(hasVotingVaultAddress(address))
+          getVotingVaultAddress(addr!, id, provider!).then((addr) => {
+            setVotingVaultAddress(addr)
+            setHasVotingVault(addr !== ZERO_ADDRESS)
           })
 
           getBptVaultAddress(addr!, id, provider!).then((addr) => {
             setBptVaultAddress(addr)
-            setHasBptVault(hasBptVaultAddress(addr))
+            setHasBptVault(addr !== ZERO_ADDRESS)
+          })
+
+          getMKRVotingVaultAddr(id, provider).then((addr) => {
+            setMKRVotingVaultAddr(addr)
+            setHasMKRVotingVault(addr !== ZERO_ADDRESS)
           })
         } else {
           setVaultID(null)
@@ -249,6 +259,9 @@ export const VaultDataProvider = ({
         setHasBptVault,
         votingVaultAddress,
         bptVaultAddress,
+        MKRVotingVaultAddr,
+        hasMKRVotingVault,
+        setHasMKRVotingVault,
       }}
     >
       {children}

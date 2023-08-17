@@ -30,7 +30,7 @@ export const DepositCollateralConfirmationModal = () => {
   const { provider, currentAccount, currentSigner } = useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const { vaultAddress, vaultID, hasVotingVault, hasBptVault } = useVaultDataContext()
+  const { vaultAddress, vaultID, hasVotingVault, hasBptVault, hasMKRVotingVault } = useVaultDataContext()
   const [hasAllowance, setHasAllowance] = useState(false)
 
   const amount = collateralDepositAmountMax ? collateralToken.wallet_amount : collateralDepositAmount
@@ -51,7 +51,8 @@ export const DepositCollateralConfirmationModal = () => {
       // IF TOKEN IS CAPPED
       if (collateralToken.capped_token && collateralToken.capped_address) {
         if ((!hasVotingVault && !collateralToken.bpt) || 
-        (!hasBptVault && collateralToken.bpt)) {
+        (!hasBptVault && collateralToken.bpt) ||
+        (!hasMKRVotingVault && collateralToken.ticker == 'MKR')) {
           setLoading(false)
           setType(ModalType.EnableCappedToken)
           return

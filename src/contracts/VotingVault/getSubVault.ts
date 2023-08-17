@@ -1,6 +1,6 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { VotingVaultController__factory } from '../../chain/contracts/factories/lending/VotingVaultController__factory'
-import { ZERO_ADDRESS } from '../../constants'
+import { MKRVotingVaultController__factory } from '../../chain/contracts/factories/lending/MKRVotingVaultController__factory'
 
 export const getVotingVaultAddress = async (
   vaultController_addr: string,
@@ -28,8 +28,14 @@ export const getBptVaultAddress = async (
   return bptVaultAddress
 }
 
-export const hasBptVaultAddress = (address: string) =>
-  address !== ZERO_ADDRESS
-
-export const hasVotingVaultAddress = (address: string) =>
-  address !== ZERO_ADDRESS
+export const getMKRVotingVaultAddr = async (
+  id: string,
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider
+) => {
+  const VVCContract = MKRVotingVaultController__factory.connect(
+    '0x491397f7eb6f5d9B82B15cEcaBFf835bA31f217F',
+    signerOrProvider
+  )
+  const addr = await VVCContract.votingVaultAddress(Number(id))
+  return addr
+}
