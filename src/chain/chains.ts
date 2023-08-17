@@ -20,9 +20,8 @@ export const Chains: {[index: number]: ChainInfo} = {
     scan_url: 'https://etherscan.io/tx/',
     scan_site: 'Etherscan',
     delegate_token: 'UNI',
-    analytics: 'https://analytics-api.apiary.software',//'https://analytics-api.gfx.xyz',
-    rpc: 'https://mainnet-rpc.apiary.software'//'https://mainnet.rpc.gfx.xyz'
-  },
+    analytics: 'https://analytics-api.apiary.software',
+    rpc: 'https://mainnet-rpc.apiary.software',
   // {
   //   id: ChainIDs.ROPSTEN,
   //   name: 'Switch to Mainnet',
@@ -50,8 +49,8 @@ export const Chains: {[index: number]: ChainInfo} = {
     scan_url: 'https://optimistic.etherscan.io/tx/',
     scan_site: 'Optimism Etherscan',
     delegate_token: 'OP',
-    analytics: 'https://ip-stats-api-op.staging.gfx.town',
-    rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226'
+    analytics: 'https://ip-stats-api-op.staging.gfx.town', //need to change to prod
+    rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226',
   },
   // {
   //   id: ChainIDs.POLYGON,
