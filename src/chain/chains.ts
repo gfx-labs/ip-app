@@ -22,6 +22,7 @@ export const Chains: {[index: number]: ChainInfo} = {
     delegate_token: 'UNI',
     analytics: 'https://analytics-api.apiary.software',
     rpc: 'https://mainnet-rpc.apiary.software',
+  },
   // {
   //   id: ChainIDs.ROPSTEN,
   //   name: 'Switch to Mainnet',
