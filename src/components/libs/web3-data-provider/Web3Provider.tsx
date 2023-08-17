@@ -71,7 +71,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
         doSwitchNetwork(network)
       } else {  // no wallet connected
         setChainId(network)
-        setProvider(new JsonRpcProvider(Chains[chainId].rpc))
+        setProvider(new JsonRpcProvider(Chains[network].rpc))
       }
     }
   }
