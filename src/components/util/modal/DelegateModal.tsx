@@ -1,6 +1,6 @@
 import { Box, Typography, TextField } from '@mui/material'
 import { useState, FormEvent } from 'react'
-import { ContractReceipt } from 'ethers'
+import { ContractReceipt, ContractTransaction } from 'ethers'
 
 import { formatColor, neutral } from '../../../theme'
 import {
@@ -32,25 +32,28 @@ export const DelegateModal = () => {
   const toggle = () => setFocus(!focus)
 
   const { delegateToken } = useAppGovernanceContext()
-  const { vaultAddress, votingVaultAddress, hasVotingVault } =
+  const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } =
     useVaultDataContext()
   const { currentSigner, currentAccount } = useWeb3Context()
 
-  const handleDelegateRequest = async (e: FormEvent) => {
-    e.preventDefault()
+  const handleDelegateRequest = async () => {
+    //e.preventDefault()
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      const delegateAddress =
+      let delegateAddress =
         delegateToken.capped_address && hasVotingVault
           ? votingVaultAddress
           : vaultAddress
+      if (delegateToken.ticker === 'MKR') {
+        delegateAddress = MKRVotingVaultAddr
+      }
 
       await delegateVaultVotingPower(
         delegateAddress!,
-        delegateToken.address,
+        delegateToken,
         address,
-        currentSigner!
+        currentSigner!,
       ).then(async (res) => {
         updateTransactionState(res)
         setLoadmsg(locale('TransactionPending'))
@@ -63,13 +66,14 @@ export const DelegateModal = () => {
         })
       })
     } catch (e) {
+      //console.log(e)
       setLoading(false)
       setShaking(true)
       setTimeout(() => setShaking(false), 400)
-      console.log(e)
+      //console.log(e)
 
-      const err = e as ContractReceipt
-
+      const err = e as ContractTransaction
+      console.log(err)
       updateTransactionState(err)
     }
   }

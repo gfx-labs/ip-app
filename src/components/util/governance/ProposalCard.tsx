@@ -45,6 +45,42 @@ const isAddress = (value: any): string | false => {
   }
 }
 
+const getTitle = (body: string) => {
+  const splitBody = body.split('\n')
+  let title = splitBody.find((n) => n[0] === '#')
+  if (title !== undefined) {
+    title = title.substring(1)
+  } else {
+    title = splitBody[0].replace(/[#]/g, '')
+  }
+  let sub = title.substring(0, 25)
+  if (!containsWhitespace(sub)) {
+    title = sub + "\n" + title.substring(26)
+    if (title.length > 50) {
+      title = title.substring(0, 50)+"..."
+    }
+  }
+  
+  return title
+}
+
+function containsWhitespace(str: string) {
+  return /\s/.test(str)
+}
+
+const linkIfAddress = (content: string) => {
+  if (isAddress(content.trim())) {
+    const commonName = COMMON_CONTRACT_NAMES[content.trim()] ?? content
+    return (
+      <Link href={`https://etherscan.io/address/${content.trim()}`} target="_blank">
+        {containsWhitespace(content) ? ' ' : ''}
+        {commonName}
+      </Link>
+    )
+  }
+  return <span>{content}</span>
+}
+
 export const ProposalCard = (props: ProposalCardProps) => {
   const { dataBlock, provider: providerContext, currentAccount, chainId } = useWeb3Context()
   const { votingPower } = props
@@ -57,42 +93,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const param = useParams()
   const ref = useRef<HTMLDivElement>(null)
   const [isExpanded, setIsExpanded] = useState(false)
-
-  const getTitle = (body: string) => {
-    const splitBody = body.split('\n')
-    let title = splitBody.find((n) => n[0] === '#')
-    if (title !== undefined) {
-      title = title.substring(1)
-    } else {
-      title = splitBody[0].replace(/[#]/g, '')
-    }
-    let sub = title.substring(0, 25)
-    if (!containsWhitespace(sub)) {
-      title = sub + "\n" + title.substring(26)
-      if (title.length > 50) {
-        title = title.substring(0, 50)+"..."
-      }
-    }
-    
-    return title
-  }
-
-  function containsWhitespace(str: string) {
-    return /\s/.test(str)
-  }
-
-  const linkIfAddress = (content: string) => {
-    if (isAddress(content.trim())) {
-      const commonName = COMMON_CONTRACT_NAMES[content.trim()] ?? content
-      return (
-        <Link href={`https://etherscan.io/address/${content.trim()}`} target="_blank">
-          {containsWhitespace(content) ? ' ' : ''}
-          {commonName}
-        </Link>
-      )
-    }
-    return <span>{content}</span>
-  }
 
   const [proposal, setProposal] = useState<ProposalInfo>()
   const [status, setStatus] = useState(0)
@@ -142,21 +142,32 @@ export const ProposalCard = (props: ProposalCardProps) => {
   }, [votes, proposal])
 
   useEffect(() => {
-    const bdiff = endBlock - dataBlock
-    const secs = bdiff * 13.5
-    setIsActive(secs > 0)
-
-    if (bdiff < 0) {
-      provider?.getBlock(endBlock).then((res) => {
-        const endDate = new Date(res.timestamp * 1000)
-        setTimeLeft(endDate.toLocaleDateString())
-      })
-      return
+    let block
+    if (chainId !== ChainIDs.MAINNET) {
+      provider.getBlockNumber()
+      block = provider._fastBlockNumber
+    } else {
+      block = dataBlock
     }
-    if (proposalType && provider) {
-      proposalTimeRemaining(startBlock, endBlock, dataBlock, status, provider).then((res) => setTimeLeft(res))
-    }
+    if (block) {
+      const bdiff = endBlock - block
+      const secs = bdiff * 13.5
+      setIsActive(secs > 0)
 
+      if (bdiff < 0) {  // been executed already/in the past
+        provider.getBlock(endBlock).then((res) => {
+          const endDate = new Date(res.timestamp * 1000)
+          setTimeLeft(endDate.toLocaleDateString())
+        })
+        return
+      }
+  
+      if (proposalType && provider) {
+        proposalTimeRemaining(startBlock, endBlock, block, status, provider).then((res) => 
+        setTimeLeft(res))
+      }
+    }
+    
     if (status === 1 && provider) {
       getPriorVotes(currentAccount, startBlock, provider).then((res) => {
         if (!res.isZero()) {
