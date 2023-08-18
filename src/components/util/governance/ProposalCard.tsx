@@ -153,6 +153,15 @@ export const ProposalCard = (props: ProposalCardProps) => {
       const bdiff = endBlock - block
       const secs = bdiff * 13.5
       setIsActive(secs > 0)
+
+      if (bdiff < 0) {  // been executed already/in the past
+        provider.getBlock(endBlock).then((res) => {
+          const endDate = new Date(res.timestamp * 1000)
+          setTimeLeft(endDate.toLocaleDateString())
+        })
+        return
+      }
+  
       if (proposalType && provider) {
         proposalTimeRemaining(startBlock, endBlock, block, status, provider).then((res) => 
         setTimeLeft(res))
