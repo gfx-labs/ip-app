@@ -1,6 +1,6 @@
 import { Box, Typography, TextField } from '@mui/material'
 import { useState, FormEvent } from 'react'
-import { ContractReceipt } from 'ethers'
+import { ContractReceipt, ContractTransaction } from 'ethers'
 
 import { formatColor, neutral } from '../../../theme'
 import {
@@ -36,8 +36,8 @@ export const DelegateModal = () => {
     useVaultDataContext()
   const { currentSigner, currentAccount } = useWeb3Context()
 
-  const handleDelegateRequest = async (e: FormEvent) => {
-    e.preventDefault()
+  const handleDelegateRequest = async () => {
+    //e.preventDefault()
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
@@ -66,13 +66,14 @@ export const DelegateModal = () => {
         })
       })
     } catch (e) {
+      //console.log(e)
       setLoading(false)
       setShaking(true)
       setTimeout(() => setShaking(false), 400)
-      console.log(e)
+      //console.log(e)
 
-      const err = e as ContractReceipt
-
+      const err = e as ContractTransaction
+      console.log(err)
       updateTransactionState(err)
     }
   }

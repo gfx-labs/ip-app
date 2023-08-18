@@ -50,7 +50,7 @@ export const DepositCollateralConfirmationModal = () => {
       let attempt: ContractTransaction
       // IF TOKEN IS CAPPED
       if (collateralToken.capped_token && collateralToken.capped_address) {
-        if ((!hasVotingVault && !collateralToken.bpt) || 
+        if ((!hasVotingVault && !collateralToken.bpt && collateralToken.ticker !== 'MKR') || 
         (!hasBptVault && collateralToken.bpt) ||
         (!hasMKRVotingVault && collateralToken.ticker == 'MKR')) {
           setLoading(false)

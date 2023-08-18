@@ -1,6 +1,7 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { VotingVaultController__factory } from '../../chain/contracts/factories/lending/VotingVaultController__factory'
 import { MKRVotingVaultController__factory } from '../../chain/contracts/factories/lending/MKRVotingVaultController__factory'
+import { MKR_VOTING_VAULT_ADDRESS } from '../../constants'
 
 export enum SubVault {
   Voting = 'VOTING',
@@ -32,7 +33,7 @@ export const mintSubVault = async (
       return mintVaultRecipt
     case SubVault.MKR:
       const MKRVVContract = MKRVotingVaultController__factory.connect(
-        vaultController_addr,
+        MKR_VOTING_VAULT_ADDRESS,
         signerOrProvider
       )
       mintVaultTransaction = await MKRVVContract.mintVault(Number(id))
