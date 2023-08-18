@@ -4,8 +4,8 @@ import { JsonRpcProvider, JsonRpcSigner, Web3Provider } from '@ethersproject/pro
 import { DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
 import { ChainIDs, Chains } from '../../../chain/chains'
-import { type WalletClient, useWalletClient, useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
-import { ethers, providers } from 'ethers'
+import { useWalletClient, useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { providers } from 'ethers'
 //import { getProvider, useEthersSigner } from "./ethers";
 
 interface Contract {
@@ -65,30 +65,17 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     }
   }, [rawChain])
 
-  useEffect(() => {
-    if (!active) {
-      setProvider(new JsonRpcProvider(Chains[chainId].rpc))
-    }
-  }, [chainId])
-
   const switchNetwork = async (network: number) => {
     if (chainId !== network) {
       if (doSwitchNetwork) {
         doSwitchNetwork(network)
-      } else {
+      } else {  // no wallet connected
         setChainId(network)
+        setProvider(new JsonRpcProvider(Chains[network].rpc))
       }
     }
   }
 
-  // useEffect(() => {
-  //   if (doSwitchNetwork) {
-  //     if (chainId !== targetChainId) {
-  //       console.log("switching to", targetChainId)
-  //       doSwitchNetwork(targetChainId)
-  //     }
-  //   }
-  // }, [doSwitchNetwork, chainId, targetChainId])
   useEffect(() => {
       if (walletClient && rawChain) {
       const { account, transport } = walletClient
@@ -97,8 +84,6 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
           name: rawChain.name,
           ensAddress: rawChain.contracts?.ensRegistry?.address,
       }
-      // provider.removeAllListeners()
-      // setDataBlock(0)
       const temp = new providers.Web3Provider(transport, network)
       setProvider(temp)
       setCurrentSigner(temp.getSigner(account.address))

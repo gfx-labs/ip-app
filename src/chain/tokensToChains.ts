@@ -22,6 +22,7 @@ export const tickerToName: {[index: string]: string} = {
   ZRX: '0x Protocol',
   YFI: 'yearn.finance',
   B_stETH: 'wstETH-WETH Pool',
+  MKR: 'Maker',
 }
 
 export const tickerToDecimals: {[index: string]: number} = {
@@ -213,6 +214,17 @@ export const tokensToChains: TokensOnChains = {
                          capped_addr: '0x7d3CD037aE7efA9eBed7432c11c9DFa73519303d',
                          bpt: true,
                          icons: ['wstETH', 'WETH']},
+    [ChainIDs.ROPSTEN]: {},
+    [ChainIDs.GOERLI]: {},
+    [ChainIDs.OPTIMISM]: {},
+    [ChainIDs.POLYGON]: {},
+    [ChainIDs.LOCAL]: {},
+  },
+  MKR: {
+    // [ChainIDs.MAINNET]: {addr: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
+    //                      capped_addr: '0xbb5578c08bC08c15AcE5cd09c6683CcCcB2A9148',
+    //                      can_delegate: true},
+    [ChainIDs.MAINNET]: {},
     [ChainIDs.ROPSTEN]: {},
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {},
