@@ -153,7 +153,6 @@ export const VaultDataProvider = ({
             let p3 = getBalanceOf(
               currentAccount,
               token.address,
-              token.decimals,
               provider!
             )
               .then((val) => {

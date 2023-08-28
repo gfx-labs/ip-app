@@ -3,6 +3,7 @@ import { Vault__factory } from '../../chain/contracts'
 import { Token } from '../../types/token'
 import { MKRVotingVault__factory } from '../../chain/contracts/factories/lending/MKRVotingVault__factory'
 import { VaultDataContext } from '../../components/libs/vault-data-provider/VaultDataProvider'
+import { BigNumber } from 'ethers'
 
 export const delegateVaultVotingPower = async (
   vault_address: string,
@@ -26,4 +27,14 @@ export const delegateVaultVotingPower = async (
       token.address
     )
   }
+}
+
+export const undelegateVaultVotingPower = async (
+  vault_address: string,
+  amount: BigNumber | string,
+  delegatee: string,
+  signer: JsonRpcSigner,
+) => {
+  const MKRVVContract = MKRVotingVault__factory.connect(vault_address, signer)
+  const txn = await MKRVVContract.undelegateMKRLike(delegatee, amount)
 }
