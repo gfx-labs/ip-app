@@ -29,7 +29,7 @@ export const getVaultTokenBalanceAndPrice = async (
   try {
     // get vault balance
     if (vault_address !== undefined) {
-      const balanceOf = await getBalanceOf(vault_address, token_address, token.decimals, SOP)
+      const balanceOf = await getBalanceOf(vault_address, token_address, SOP)
 
       //balance = balanceOf.num
       unformattedBalance = balanceOf.str
@@ -44,7 +44,7 @@ export const getVaultTokenBalanceAndPrice = async (
     const decimals = await getDecimals(token_address, SOP)
     livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))
     let vaultBalance = balanceBN.mul(price!)
-    balance = utils.formatUnits(vaultBalance, decimals + token.decimals)
+    balance = utils.formatUnits(vaultBalance, decimals + decimals)
   } catch (e) {
     console.error(e)
   }

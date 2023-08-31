@@ -19,6 +19,7 @@ export enum ModalType {
   DepositCollateralConfirmation = 'DEPOSIT_COLLATERAL_CONFIRMATION',
   WithdrawCollateralConfirmation = 'WITHDRAW_COLLATERAL_CONFIRMATION',
   Delegate = 'DELEGATE',
+  Undelegate = 'UNDELEGATE',
   DelegateIPT = 'DELEGATE_IPT',
   TransactionStatus = 'TRANSACTION_STATUS',
   EnableCappedToken = 'ENABLE_CAPPED_TOKEN',
