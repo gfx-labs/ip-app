@@ -8,5 +8,6 @@ export * from "./DepositCollateralConfirmationModal";
 export * from "./WithdrawCollateralConfirmationModal";
 export * from "./BorrowRepayModal";
 export * from "./DelegateModal";
+export * from "./UndelegateModal";
 export * from "./TransactionStatusModal";
 export * from "./DelegateIPTModal";

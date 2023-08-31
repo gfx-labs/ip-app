@@ -22,6 +22,7 @@ import {
   WithdrawCollateralConfirmationModal,
   DepositCollateralConfirmationModal,
   DelegateModal,
+  UndelegateModal,
   DelegateIPTModal,
   TransactionStatusModal,
 } from './components/util/modal'
@@ -81,6 +82,7 @@ const DashboardContext = (props: { children: any }) => {
                       <>
                         <SwapTokenProvider>{props.children}</SwapTokenProvider>
                         <DelegateModal />
+                        <UndelegateModal />
                         <DelegateIPTModal />
                         <DepositWithdrawCollateralModal />
                         <DepositCollateralConfirmationModal />
