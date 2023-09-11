@@ -1,4 +1,4 @@
-import { Box, Typography, TextField, Button } from '@mui/material'
+import { Box, Typography, TextField } from '@mui/material'
 import { useState, FormEvent } from 'react'
 import { ContractReceipt, ContractTransaction } from 'ethers'
 
@@ -15,57 +15,36 @@ import { ModalInputContainer } from './ModalContent/ModalInputContainer'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { locale } from '../../../locale'
-import { delegateVaultVotingPower } from '../../../contracts/Vault/delegateVaultVotingPower'
+import { undelegateVaultVotingPower } from '../../../contracts/Vault/delegateVaultVotingPower'
 import SVGBox from '../../icons/misc/SVGBox'
-import { DecimalInput } from '../textFields'
 
 export const UndelegateModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
   const isLight = useLight()
 
   const [focus, setFocus] = useState(false)
-  const [amtFocus, setAmtFocus] = useState(false)
   const [loading, setLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
+
+  const [address, setAddress] = useState('')
+
+  const toggle = () => setFocus(!focus)
 
   const { delegateToken } = useAppGovernanceContext()
   const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } =
     useVaultDataContext()
   const { currentSigner, currentAccount } = useWeb3Context()
-  const [address, setAddress] = useState('')
-  const [amount, setAmount] = useState(delegateToken.vault_amount_str ?? '')
-  const [isMax, setIsMax] = useState(false)
-
-  const toggle = () => setFocus(!focus)
-  const amtInputToggle = () => setAmtFocus(!amtFocus)
-
-  const trySetInputAmount = (amount: string) => {
-    setAmount(amount)
-    setIsMax(false)
-  }
-
-  const setMax = () => {
-    setAmount(delegateToken.vault_amount_str!)
-    setIsMax(true)
-  }
 
   const handleUndelegateRequest = async () => {
     //e.preventDefault()
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      let delegateAddress =
-        delegateToken.capped_address && hasVotingVault
-          ? votingVaultAddress
-          : vaultAddress
-      if (delegateToken.ticker === 'MKR') {
-        delegateAddress = MKRVotingVaultAddr
-      }
+      const delegateAddress = MKRVotingVaultAddr
 
-      await delegateVaultVotingPower(
+      await undelegateVaultVotingPower(
         delegateAddress!,
-        delegateToken,
         address,
         currentSigner!,
       ).then(async (res) => {
@@ -137,13 +116,7 @@ export const UndelegateModal = () => {
           Enter the address you would like to undelegate your vote(s) from
         </Typography>
         <Box component="form" onSubmit={handleUndelegateRequest}>
-          <Box sx={{ 
-            display: 'grid', 
-            alignItems: 'center',
-            mb: 2.5,
-            mt: 4,
-            gridTemplateColumns: '1.75fr 1fr',
-            columnGap: 2,}}>
+          <Box my={2}>
             <ModalInputContainer focus={focus}>
               <TextField
                 placeholder="Address"
@@ -171,51 +144,10 @@ export const UndelegateModal = () => {
                 }}
               />
             </ModalInputContainer>
-            <ModalInputContainer focus={amtFocus}>
-              <DecimalInput
-                onFocus={() => setAmtFocus(!amtFocus)}
-                onBlur={amtInputToggle}
-                onChange={trySetInputAmount}
-                placeholder={`0 ${delegateToken.ticker}`}
-                value={amount}
-              />
-
-              <Box sx={{ display: 'flex', paddingBottom: 0.5, alignItems: 'center' }}>
-                <Button
-                  onClick={setMax}
-                  sx={{
-                    minWidth: 'auto',
-                    height: 30,
-                    paddingY: 2,
-                    paddingX: 1,
-                    '&:hover': {
-                      backgroundColor: 'transparent',
-                      '.MuiTypography-root.MuiTypography-body1': {
-                        color: formatColor(neutral.gray1),
-                      },
-                    },
-                  }}
-                >
-                  <Typography
-                    variant="body3"
-                    color={formatColor(neutral.gray3)}
-                    sx={{
-                      '&:hover': {
-                        color: isLight
-                          ? formatColor(neutral.gray1)
-                          : formatColor(neutral.white),
-                      },
-                    }}
-                  >
-                    Max
-                  </Typography>
-                </Button>
-              </Box>
-            </ModalInputContainer>
           </Box>
           <DisableableModalButton
             type="submit"
-            text="Delegate"
+            text="Undelegate"
             loading={loading}
             shaking={shaking}
             load_text={loadmsg}

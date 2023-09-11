@@ -23,15 +23,29 @@ import type {
   PromiseOrValue,
 } from "../common";
 
+export declare namespace MKRVotingVault {
+  export type DelegationStatusStruct = {
+    delegatee: PromiseOrValue<string>;
+    delegated: PromiseOrValue<boolean>;
+  };
+
+  export type DelegationStatusStructOutput = [string, boolean] & {
+    delegatee: string;
+    delegated: boolean;
+  };
+}
+
 export interface MKRVotingVaultInterface extends utils.Interface {
   functions: {
     "_mkrVotingVaultController()": FunctionFragment;
     "_vaultController()": FunctionFragment;
     "controllerTransfer(address,address,uint256)": FunctionFragment;
-    "delegateMKRLikeTo(address,address,uint256)": FunctionFragment;
+    "delegateMKRLikeTo(address,address)": FunctionFragment;
+    "delegationStatus(address)": FunctionFragment;
+    "delegationStatuses(address)": FunctionFragment;
     "id()": FunctionFragment;
     "parentVault()": FunctionFragment;
-    "undelegateMKRLike(address,uint256)": FunctionFragment;
+    "undelegateMKRLike(address)": FunctionFragment;
     "votingVaultControllerTransfer(address,address,uint256)": FunctionFragment;
   };
 
@@ -44,13 +58,17 @@ export interface MKRVotingVaultInterface extends utils.Interface {
       | "controllerTransfer"
       | "controllerTransfer(address,address,uint256)"
       | "delegateMKRLikeTo"
-      | "delegateMKRLikeTo(address,address,uint256)"
+      | "delegateMKRLikeTo(address,address)"
+      | "delegationStatus"
+      | "delegationStatus(address)"
+      | "delegationStatuses"
+      | "delegationStatuses(address)"
       | "id"
       | "id()"
       | "parentVault"
       | "parentVault()"
       | "undelegateMKRLike"
-      | "undelegateMKRLike(address,uint256)"
+      | "undelegateMKRLike(address)"
       | "votingVaultControllerTransfer"
       | "votingVaultControllerTransfer(address,address,uint256)"
   ): FunctionFragment;
@@ -89,19 +107,27 @@ export interface MKRVotingVaultInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "delegateMKRLikeTo",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "delegateMKRLikeTo(address,address,uint256)",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: "delegateMKRLikeTo(address,address)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "delegationStatus",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "delegationStatus(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "delegationStatuses",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "delegationStatuses(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "id", values?: undefined): string;
   encodeFunctionData(functionFragment: "id()", values?: undefined): string;
@@ -115,11 +141,11 @@ export interface MKRVotingVaultInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "undelegateMKRLike",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "undelegateMKRLike(address,uint256)",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    functionFragment: "undelegateMKRLike(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "votingVaultControllerTransfer",
@@ -167,7 +193,23 @@ export interface MKRVotingVaultInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "delegateMKRLikeTo(address,address,uint256)",
+    functionFragment: "delegateMKRLikeTo(address,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "delegationStatus",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "delegationStatus(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "delegationStatuses",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "delegationStatuses(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "id", data: BytesLike): Result;
@@ -185,7 +227,7 @@ export interface MKRVotingVaultInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "undelegateMKRLike(address,uint256)",
+    functionFragment: "undelegateMKRLike(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -252,16 +294,34 @@ export interface MKRVotingVault extends BaseContract {
     delegateMKRLikeTo(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "delegateMKRLikeTo(address,address,uint256)"(
+    "delegateMKRLikeTo(address,address)"(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    delegationStatus(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[MKRVotingVault.DelegationStatusStructOutput]>;
+
+    "delegationStatus(address)"(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[MKRVotingVault.DelegationStatusStructOutput]>;
+
+    delegationStatuses(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, boolean] & { delegatee: string; delegated: boolean }>;
+
+    "delegationStatuses(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, boolean] & { delegatee: string; delegated: boolean }>;
 
     id(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -273,13 +333,11 @@ export interface MKRVotingVault extends BaseContract {
 
     undelegateMKRLike(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    "undelegateMKRLike(address,uint256)"(
+    "undelegateMKRLike(address)"(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -323,16 +381,34 @@ export interface MKRVotingVault extends BaseContract {
   delegateMKRLikeTo(
     delegatee: PromiseOrValue<string>,
     tokenAddress: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "delegateMKRLikeTo(address,address,uint256)"(
+  "delegateMKRLikeTo(address,address)"(
     delegatee: PromiseOrValue<string>,
     tokenAddress: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  delegationStatus(
+    mkrLikeToken: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<MKRVotingVault.DelegationStatusStructOutput>;
+
+  "delegationStatus(address)"(
+    mkrLikeToken: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<MKRVotingVault.DelegationStatusStructOutput>;
+
+  delegationStatuses(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, boolean] & { delegatee: string; delegated: boolean }>;
+
+  "delegationStatuses(address)"(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[string, boolean] & { delegatee: string; delegated: boolean }>;
 
   id(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -344,13 +420,11 @@ export interface MKRVotingVault extends BaseContract {
 
   undelegateMKRLike(
     delegatee: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  "undelegateMKRLike(address,uint256)"(
+  "undelegateMKRLike(address)"(
     delegatee: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -394,16 +468,34 @@ export interface MKRVotingVault extends BaseContract {
     delegateMKRLikeTo(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "delegateMKRLikeTo(address,address,uint256)"(
+    "delegateMKRLikeTo(address,address)"(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    delegationStatus(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<MKRVotingVault.DelegationStatusStructOutput>;
+
+    "delegationStatus(address)"(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<MKRVotingVault.DelegationStatusStructOutput>;
+
+    delegationStatuses(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, boolean] & { delegatee: string; delegated: boolean }>;
+
+    "delegationStatuses(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string, boolean] & { delegatee: string; delegated: boolean }>;
 
     id(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -415,13 +507,11 @@ export interface MKRVotingVault extends BaseContract {
 
     undelegateMKRLike(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "undelegateMKRLike(address,uint256)"(
+    "undelegateMKRLike(address)"(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -470,15 +560,33 @@ export interface MKRVotingVault extends BaseContract {
     delegateMKRLikeTo(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "delegateMKRLikeTo(address,address,uint256)"(
+    "delegateMKRLikeTo(address,address)"(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    delegationStatus(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "delegationStatus(address)"(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    delegationStatuses(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "delegationStatuses(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     id(overrides?: CallOverrides): Promise<BigNumber>;
@@ -491,13 +599,11 @@ export interface MKRVotingVault extends BaseContract {
 
     undelegateMKRLike(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    "undelegateMKRLike(address,uint256)"(
+    "undelegateMKRLike(address)"(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -548,15 +654,33 @@ export interface MKRVotingVault extends BaseContract {
     delegateMKRLikeTo(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "delegateMKRLikeTo(address,address,uint256)"(
+    "delegateMKRLikeTo(address,address)"(
       delegatee: PromiseOrValue<string>,
       tokenAddress: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    delegationStatus(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "delegationStatus(address)"(
+      mkrLikeToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    delegationStatuses(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "delegationStatuses(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     id(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -569,13 +693,11 @@ export interface MKRVotingVault extends BaseContract {
 
     undelegateMKRLike(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    "undelegateMKRLike(address,uint256)"(
+    "undelegateMKRLike(address)"(
       delegatee: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
