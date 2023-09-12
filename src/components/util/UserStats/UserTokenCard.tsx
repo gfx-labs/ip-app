@@ -79,7 +79,7 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   }
 
   useEffect(() => {
-    if (cappedAddress) {
+    if (cappedAddress && provider) {
       getCappedPercentOf(cappedAddress, provider).then((res) => {
         // show minimum 5%
         if (res <= 5) {
