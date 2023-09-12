@@ -192,7 +192,9 @@ export const VaultDataProvider = ({
   }, [tokens, vaultAddress, rolodex, refresh, dataBlock, currentAccount])
 
   useEffect(() => {
-    setTokens(getTokensListOnCurrentChain(chainId))
+    if (Chains[chainId]) {
+      setTokens(getTokensListOnCurrentChain(chainId))
+    }
   }, [chainId])
 
   useEffect(() => {
