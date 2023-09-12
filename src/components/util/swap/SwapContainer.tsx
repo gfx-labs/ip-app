@@ -13,6 +13,7 @@ import {
   useModalContext,
   ModalType,
 } from '../../libs/modal-content-provider/ModalContentProvider'
+import { Chains } from '../../../chain/chains'
 
 export const SwapContainer = () => {
   const isLight = useLight()
@@ -22,8 +23,7 @@ export const SwapContainer = () => {
   const [token1, token2, swapTokenPositions] = useSwapTokenContext()
   const { setIsWalletModalOpen } = useWalletModalContext()
   const { setType, updateUSDC } = useModalContext()
-
-  const { connected } = useWeb3Context()
+  const { connected, chainId } = useWeb3Context()
 
   const [
     token1Amount,
@@ -152,7 +152,7 @@ export const SwapContainer = () => {
               color: formatColor(neutral.white),
               width: '100%',
             }}
-            disabled={Number(token1Amount) <= 0 || !token1.wallet_balance}
+            disabled={Number(token1Amount) <= 0 || !token1.wallet_balance || !Chains[chainId]}
             onClick={() => {
               if (Number(token1Amount) > 0) {
                 setType(ModalType.DepositUSDCConfirmation)
@@ -169,7 +169,7 @@ export const SwapContainer = () => {
               color: formatColor(neutral.white),
               width: '100%',
             }}
-            disabled={!token1.wallet_balance || Number(token1Amount) <= 0}
+            disabled={!token1.wallet_balance || Number(token1Amount) <= 0 || !Chains[chainId]}
             onClick={() => setType(ModalType.WithdrawUSDCConfirmation)}
           >
             Redeem USDi

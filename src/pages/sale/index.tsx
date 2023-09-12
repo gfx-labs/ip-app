@@ -61,7 +61,9 @@ const PurchasePage: React.FC = () => {
   }, [scrollTop])
 
   useEffect(() => {
-    getSaleSummary(Chains[chainId].analytics).then(setSaleSummary)
+    if (Chains[chainId]) {
+      getSaleSummary(Chains[chainId].analytics).then(setSaleSummary)
+    }
   }, [dataBlock])
 
   const SaleSummaryStat = ({
@@ -260,7 +262,7 @@ const PurchaseBox = ({
   }, [isIPTValue])
 
   useEffect(() => {
-    getEndTime(provider).then((x) => {
+    getEndTime(provider!).then((x) => {
       let remaining = x.toNumber() - new Date().valueOf() / 1000
       let isNewDay = false
       let srt = ''
@@ -277,16 +279,16 @@ const PurchaseBox = ({
         setIptForSale(1000000)
         return
       }
-      getBasePrice(provider).then((res) => {
+      getBasePrice(provider!).then((res) => {
         setBasePrice(res)
       })
-      getAmountIPTForSale(provider).then((res) => {
+      getAmountIPTForSale(provider!).then((res) => {
         let sold = BNtoHexNumber(res.soldQuantity.div(1e14).div(1e4))
         setIptSold(sold.toLocaleString())
         let max = BNtoHexNumber(res.maxQuantity.div(1e14).div(1e4))
         setIptForSale(max - sold)
       })
-      getCurrentPrice(provider).then((res) => {
+      getCurrentPrice(provider!).then((res) => {
         setSalePrice(res.toNumber() / 1e6)
       })
     })

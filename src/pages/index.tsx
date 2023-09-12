@@ -314,14 +314,16 @@ const Dashboard = () => {
                     </InverseButton>
                   </Box>
                 ) : (
-                  <Box
-                    maxWidth={{ xs: 'auto', md: 350 }}
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <OpenVaultButton />
-                  </Box>
+                  Chains[chainId] && (
+                    <Box
+                      maxWidth={{ xs: 'auto', md: 350 }}
+                      width="100%"
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <OpenVaultButton />
+                    </Box>
+                  )
                 )}
               </Box>
             </SingleStatCard>

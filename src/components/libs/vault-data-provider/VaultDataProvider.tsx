@@ -213,7 +213,7 @@ export const VaultDataProvider = ({
             setHasBptVault(addr !== ZERO_ADDRESS)
           })
 
-          getMKRVotingVaultAddr(id, provider).then((addr) => {
+          getMKRVotingVaultAddr(id, provider!).then((addr) => {
             setMKRVotingVaultAddr(addr)
             setHasMKRVotingVault(addr !== ZERO_ADDRESS)
           })
