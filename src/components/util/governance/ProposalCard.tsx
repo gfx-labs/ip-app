@@ -10,7 +10,6 @@ import { SpecialComponents } from 'react-markdown/lib/ast-to-react'
 import remarkGfm from 'remark-gfm'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import ProposalDetails from './proposal'
-import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
 import VoteButton from './VoteButton'
 import { getProposalInfo, ProposalInfo, getProposalState } from '../../../contracts/GovernorCharlieDelegate'
 import { useLight } from '../../../hooks/useLight'
@@ -105,7 +104,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [proposalType, setProposalType] = useState<IProposalType | undefined>()
   const [hasPriorVotes, setHasPriorVotes] = useState(false)
   const defaultProvider = new JsonRpcProvider(Chains[ChainIDs.MAINNET].rpc)
-  const [provider, setProvider] = useState((chainId !== ChainIDs.MAINNET) ? defaultProvider : providerContext)
+  const [provider, setProvider] = useState((chainId !== ChainIDs.MAINNET || !providerContext) ? defaultProvider : providerContext)
 
   useEffect(() => {
     if (chainId !== ChainIDs.MAINNET) {

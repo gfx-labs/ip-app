@@ -192,7 +192,9 @@ export const VaultDataProvider = ({
   }, [tokens, vaultAddress, rolodex, refresh, dataBlock, currentAccount])
 
   useEffect(() => {
-    setTokens(getTokensListOnCurrentChain(chainId))
+    if (Chains[chainId]) {
+      setTokens(getTokensListOnCurrentChain(chainId))
+    }
   }, [chainId])
 
   useEffect(() => {
@@ -213,7 +215,7 @@ export const VaultDataProvider = ({
             setHasBptVault(addr !== ZERO_ADDRESS)
           })
 
-          getMKRVotingVaultAddr(id, provider).then((addr) => {
+          getMKRVotingVaultAddr(id, provider!).then((addr) => {
             setMKRVotingVaultAddr(addr)
             setHasMKRVotingVault(addr !== ZERO_ADDRESS)
           })

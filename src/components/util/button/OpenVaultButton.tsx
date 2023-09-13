@@ -15,7 +15,7 @@ export const OpenVaultButton = () => {
   const { connected, currentAccount, currentSigner } = useWeb3Context()
   const isLight = useLight()
   const [ishovered, setIshovered] = useState(false)
-  useState
+  
   const openVault = async () => {
     if (
       !connected ||

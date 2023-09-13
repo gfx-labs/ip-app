@@ -8,26 +8,13 @@ import { useWalletClient, useAccount, useDisconnect, useNetwork, useSwitchNetwor
 import { providers } from 'ethers'
 //import { getProvider, useEthersSigner } from "./ethers";
 
-interface Contract {
-  address: `0x${string}`;
-  blockCreated?: number;
-}
-
-interface Chain {
-  id: number;
-  name: string;
-  contracts?: {
-      ensRegistry?: Contract;
-  };
-}
-
 export type Web3Data = {
   disconnectWallet: () => void
   switchNetwork: (network: number) => void
   currentAccount: string
   currentSigner: JsonRpcSigner | undefined
   connected: boolean
-  provider: JsonRpcProvider | Web3Provider
+  provider: JsonRpcProvider | Web3Provider | undefined
   chainId: number
   dataBlock: number
   gasPrice: string
@@ -44,14 +31,18 @@ const reload = async () => {
 export const Web3Context = React.createContext({} as Web3ContextData)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
-  const { address: account, isConnected: active } = useAccount({ onDisconnect: reload })
+  const { address: account, isConnected: active } = useAccount({ onConnect({ address, connector, isReconnected, }) {
+    if (!isReconnected) {
+      reload()
+    }
+  }, onDisconnect: reload })
   const { chain: rawChain } = useNetwork()
   const { disconnect: disconnectWallet } = useDisconnect()
   const { switchNetwork: doSwitchNetwork } = useSwitchNetwork({ onSuccess: reload })
   const { data: walletClient } = useWalletClient()
   
   const [chainId, setChainId] = useState(rawChain?.id ?? DEFAULT_CHAIN)
-  const [provider, setProvider] = useState<JsonRpcProvider | Web3Provider>(new JsonRpcProvider(Chains[chainId].rpc))
+  const [provider, setProvider] = useState<JsonRpcProvider | Web3Provider>(new JsonRpcProvider(Chains[chainId]?.rpc ?? Chains[DEFAULT_CHAIN].rpc))
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
   const [dataBlock, setDataBlock] = useState(0)
   const [gasPrice, setGasPrice] = useState('0')
@@ -77,12 +68,12 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
   }
 
   useEffect(() => {
-      if (walletClient && rawChain) {
+    if (walletClient && rawChain) {
       const { account, transport } = walletClient
       const network = {
-          chainId: rawChain.id,
-          name: rawChain.name,
-          ensAddress: rawChain.contracts?.ensRegistry?.address,
+        chainId: rawChain.id,
+        name: rawChain.name,
+        ensAddress: rawChain.contracts?.ensRegistry?.address,
       }
       const temp = new providers.Web3Provider(transport, network)
       setProvider(temp)
@@ -90,9 +81,8 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     }
   }, [walletClient, rawChain])
   
-
   useEffect(() => {
-    if (!provider) {
+    if (!provider || !Chains[chainId]) {
       return
     }
     const subscription = provider.on('block', (blockNumber: number) => {
@@ -106,6 +96,15 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
       subscription.removeAllListeners()
     }
   }, [provider])
+
+  // if chain changes based on injection not buttons
+  useEffect(() => {
+    if (window && window.ethereum) {
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload()
+      })
+    }
+  }, [])
 
   return (
     <Web3Context.Provider

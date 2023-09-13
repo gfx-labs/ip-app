@@ -53,6 +53,9 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
   }, [])
 
   useEffect(() => {
+    if (!src) {
+      return
+    }
     axios.get(src).then((resp) => {
       if (resp.status == 200) {
         setOptions(resp.data)

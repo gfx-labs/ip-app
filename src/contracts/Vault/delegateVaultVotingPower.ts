@@ -18,8 +18,7 @@ export const delegateVaultVotingPower = async (
     // return txn
     return MKRVotingVault__factory.connect(vault_address, signer).delegateMKRLikeTo(
       target,
-      token.address,
-      token.vault_amount!
+      token.address
     )
   } else {
     return Vault__factory.connect(vault_address, signer).delegateCompLikeTo(
@@ -31,10 +30,10 @@ export const delegateVaultVotingPower = async (
 
 export const undelegateVaultVotingPower = async (
   vault_address: string,
-  amount: BigNumber | string,
   delegatee: string,
   signer: JsonRpcSigner,
 ) => {
   const MKRVVContract = MKRVotingVault__factory.connect(vault_address, signer)
-  const txn = await MKRVVContract.undelegateMKRLike(delegatee, amount)
+  const txn = await MKRVVContract.undelegateMKRLike(delegatee)
+  return txn
 }

@@ -32,7 +32,7 @@ export const Governance = () => {
         console.error(e)
         setNoProposals(true)
       })
-    if (currentAccount) {
+    if (currentAccount && provider) {
       getUserVotingPower(currentAccount, provider).then((res) => {
         const currentVotes = BNtoDec(res)
         setCurrentVotes(currentVotes)
