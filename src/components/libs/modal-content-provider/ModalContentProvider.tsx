@@ -4,6 +4,7 @@ import { getTokensListOnCurrentChain } from '../../../chain/tokens'
 import { Token } from '../../../types/token'
 import { useStableCoinsContext } from '../stable-coins-provider/StableCoinsProvider'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
+import { DEFAULT_CHAIN } from '../../../constants'
 
 export enum ModalType {
   None = '',
@@ -73,7 +74,7 @@ export const ModalContentProvider = ({
 
   const [type, setType] = useState<ModalType | null>(null)
   const [collateralToken, setCollateralToken] = useState<Token>(
-    getTokensListOnCurrentChain(chainId)['WETH']
+    getTokensListOnCurrentChain(DEFAULT_CHAIN)['WETH']
   )
   const [collateralDepositAmount, setCollateralDepositAmount] = useState('')
   const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState('')
