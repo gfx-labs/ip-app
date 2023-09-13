@@ -102,7 +102,7 @@ export const SelectedChainButton = () => {
   for (let item in ChainIDs) {
     let num = Number(item)
     const chain = Chains[num]
-    if (!isNaN(num) && num !== curChain.id && chain) {
+    if (!isNaN(num) && num !== curChain?.id && chain) {
       const name = isMobile ? chain.symbol : chain.name
       otherChains.push(<StyledDropdownButton key={num} img={chain.logo} text={name} onClick={() => switchNetwork(num)} />)
     }

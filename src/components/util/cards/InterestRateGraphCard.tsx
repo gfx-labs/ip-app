@@ -16,7 +16,7 @@ export const InterestRateGraphCard = (props: {url: string}) => {
           height: 650,
           width: '100%',
         }}
-        src={`${VITE_ANALYTICS_URL(url)}${CHART_INTEREST_RATE_OVERTIME}`}
+        src={url ? `${VITE_ANALYTICS_URL(url)}${CHART_INTEREST_RATE_OVERTIME}` : ''}
       />
     </CardContainer>
   )

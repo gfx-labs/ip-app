@@ -26,10 +26,10 @@ export const AppGovernanceProvider = ({
   children: React.ReactElement
 }) => {
   const { chainId } = useWeb3Context()
-  const chain = chainId || DEFAULT_CHAIN
+  const chain = Chains[chainId] ? chainId : DEFAULT_CHAIN
   const [isApp, setIsApp] = useState<boolean>(true)
   const [delegateToken, setDelegateToken] = useState<Token>(
-    getTokensListOnCurrentChain(chain)[Chains[chainId].delegate_token]
+    getTokensListOnCurrentChain(chain)[Chains[chain].delegate_token]
   )
   const [currentVotes, setCurrentVotes] = useState(0)
   const [delegatedTo, setDelegatedTo] = useState("0x0000000000000000000000000000000000000000")
