@@ -23,6 +23,7 @@ export const tickerToName: {[index: string]: string} = {
   YFI: 'yearn.finance',
   B_stETH: 'wstETH-WETH Pool',
   MKR: 'Maker',
+  RPL: 'Rocket Pool',
 }
 
 export const tickerToDecimals: {[index: string]: number} = {
@@ -225,6 +226,15 @@ export const tokensToChains: TokensOnChains = {
     //                      capped_addr: '0xbb5578c08bC08c15AcE5cd09c6683CcCcB2A9148',
     //                      can_delegate: true},
     [ChainIDs.MAINNET]: {},
+    [ChainIDs.ROPSTEN]: {},
+    [ChainIDs.GOERLI]: {},
+    [ChainIDs.OPTIMISM]: {},
+    [ChainIDs.POLYGON]: {},
+    [ChainIDs.LOCAL]: {},
+  },
+  RPL: {
+    [ChainIDs.MAINNET]: {addr: '0xD33526068D116cE69F19A9ee46F0bd304F21A51f',
+                         capped_addr: '0x73CCB09737eDA66b66158f140834D68150c4c04B'},
     [ChainIDs.ROPSTEN]: {},
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {},
