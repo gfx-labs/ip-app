@@ -56,11 +56,15 @@ export const ChartContainerCard = (props: ChartContainerCardProps) => {
     if (!src) {
       return
     }
-    axios.get(src).then((resp) => {
-      if (resp.status == 200) {
-        setOptions(resp.data)
-      }
-    })
+    axios.get(src)
+      .then((resp) => {
+        if (resp.status == 200) {
+          setOptions(resp.data)
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      })
   }, [src])
 
   useEffect(() => {

@@ -22,7 +22,7 @@ import {
   getMKRVotingVaultAddr,
 } from '../../../contracts/VotingVault/getSubVault'
 import { CollateralTokens } from '../../../types/token'
-import { Chains } from '../../../chain/chains'
+import { ChainIDs, Chains } from '../../../chain/chains'
 import { utils } from 'ethers'
 import { ZERO_ADDRESS } from '../../../constants'
 
@@ -198,27 +198,29 @@ export const VaultDataProvider = ({
   }, [chainId])
 
   useEffect(() => {
-    if (currentAccount && rolodex) {
+    if (currentAccount && rolodex && provider) {
       rolodex?.VC?.vaultIDs(currentAccount).then((vaultIDs) => {
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = vaultIDs.toString()
           const addr = Chains[chainId].votingVaultController_addr
           setVaultID(id)
 
-          getVotingVaultAddress(addr!, id, provider!).then((addr) => {
+          getVotingVaultAddress(addr!, id, provider).then((addr) => {
             setVotingVaultAddress(addr)
             setHasVotingVault(addr !== ZERO_ADDRESS)
           })
 
-          getBptVaultAddress(addr!, id, provider!).then((addr) => {
+          getBptVaultAddress(addr!, id, provider).then((addr) => {
             setBptVaultAddress(addr)
             setHasBptVault(addr !== ZERO_ADDRESS)
           })
 
-          getMKRVotingVaultAddr(id, provider!).then((addr) => {
-            setMKRVotingVaultAddr(addr)
-            setHasMKRVotingVault(addr !== ZERO_ADDRESS)
-          })
+          if (chainId === ChainIDs.MAINNET) {
+            getMKRVotingVaultAddr(id, provider).then((addr) => {
+              setMKRVotingVaultAddr(addr)
+              setHasMKRVotingVault(addr !== ZERO_ADDRESS)
+            })
+          }
         } else {
           setVaultID(null)
         }

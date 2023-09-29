@@ -234,7 +234,7 @@ export const tokensToChains: TokensOnChains = {
   },
   RPL: {
     [ChainIDs.MAINNET]: {addr: '0xD33526068D116cE69F19A9ee46F0bd304F21A51f',
-                         capped_addr: '0x73CCB09737eDA66b66158f140834D68150c4c04B'},
+                         capped_addr: '0x6b68C5708DAffD0393aCC6A8cc92f8C2146346Ae'},
     [ChainIDs.ROPSTEN]: {},
     [ChainIDs.GOERLI]: {},
     [ChainIDs.OPTIMISM]: {},

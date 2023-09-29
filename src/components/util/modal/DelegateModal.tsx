@@ -176,7 +176,7 @@ export const DelegateModal = () => {
                 color: formatColor(neutral.gray3),
               }}
             >
-              Delegation status: {delegate == ZERO_ADDRESS ? 'Not delegated' : 'Delegated to ' + delegate}
+              Delegation status: {delegate && (delegate == ZERO_ADDRESS ? 'Not delegated' : 'Delegated to ' + delegate)}
             </Typography>
           </Box>
         )}
