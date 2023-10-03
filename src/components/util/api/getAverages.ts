@@ -14,7 +14,7 @@ const getAverages = async (url: string) => {
     return response.data as Averages
   } catch (err) {
     const error = err as Error
-    throw new Error(error.message)
+    //throw new Error(error.message)
   }
 }
 
