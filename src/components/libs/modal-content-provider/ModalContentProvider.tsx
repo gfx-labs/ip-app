@@ -53,6 +53,7 @@ export type ModalContextType = {
   collateralWithdrawAmountMax: boolean
   setCollateralDepositAmountMax: (val: boolean) => void
   setCollateralWithdrawAmountMax: (val: boolean) => void
+
   // Control USDC
   USDC: DepositWithdrawUSDC
   updateUSDC: (prop: string, val: any) => void
@@ -61,6 +62,8 @@ export type ModalContextType = {
   transactionState: TransactionState
   updateTransactionState: (val: ContractReceipt | ContractTransaction) => void
   transaction: ContractReceipt | ContractTransaction | null
+  stake: boolean
+  setStake: (val: boolean) => void
 }
 
 export const ModalContentContext = createContext({} as ModalContextType)
@@ -70,8 +73,6 @@ export const ModalContentProvider = ({
 }: {
   children: React.ReactElement
 }) => {
-  const { chainId } = useWeb3Context()
-
   const [type, setType] = useState<ModalType | null>(null)
   const [collateralToken, setCollateralToken] = useState<Token>(
     getTokensListOnCurrentChain(DEFAULT_CHAIN)['WETH']
@@ -82,6 +83,8 @@ export const ModalContentProvider = ({
     useState(false)
   const [collateralWithdrawAmountMax, setCollateralWithdrawAmountMax] =
     useState(false)
+  
+  const [stake, setStake] = useState(true)
 
   const { USDC:usdcContext } = useStableCoinsContext()
   const createDepositWithdrawUSDC = () => {
@@ -155,6 +158,8 @@ export const ModalContentProvider = ({
         transactionState,
         updateTransactionState,
         transaction,
+        stake,
+        setStake,
       }}
     >
       {children}

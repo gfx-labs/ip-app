@@ -26,6 +26,7 @@ export const DepositCollateralConfirmationModal = () => {
     setCollateralDepositAmount,
     collateralDepositAmountMax,
     setCollateralDepositAmountMax,
+    stake,
   } = useModalContext()
   const { provider, currentAccount, currentSigner } = useWeb3Context()
   const [loading, setLoading] = useState(false)
@@ -88,7 +89,7 @@ export const DepositCollateralConfirmationModal = () => {
         }
 
         if (collateralToken.bpt) {
-          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!)
+          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!, stake)
         } else {
           attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
         }

@@ -1,4 +1,4 @@
-import { Box, IconButton, Modal, Paper, SvgIcon } from '@mui/material'
+import { Box, IconButton, Modal, Paper } from '@mui/material'
 import React from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { CloseIcon } from '../../icons/misc/CloseIcon'

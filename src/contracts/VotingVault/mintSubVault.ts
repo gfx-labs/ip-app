@@ -42,4 +42,4 @@ export const mintSubVault = async (
   }
 }
 
-//export default mintSubVault
+export default mintSubVault

@@ -20,6 +20,9 @@ export const SALE_SUMMARY = '/sale/summary'
 export const GOV_PROPOSAL_CREATED_EVENTS = '/gov/proposal_created_events'
 export const GOV_PROPOSAL_VOTE_CAST_EVENTS = '/gov/proposal_vote_cast_events'
 
+export const MKR_WARNING_MSG = 'If you withdraw this token while it is delegated, the entire delegated amount will be undelegated.'
+export const BPT_WARNING_MSG = 'If you withdraw this token while it is staked, the entire staked amount will be unstaked.'
+
 export const COMMON_CONTRACT_NAMES: { [address: string]: string } = {
   [GOVERNOR_ADDRESS]: 'Governance',
   '0x4aaE9823Fb4C70490F1d802fC697F3ffF8D5CbE3': 'Vault Controller',

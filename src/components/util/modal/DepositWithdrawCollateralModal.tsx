@@ -9,6 +9,9 @@ import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
 import { DepositCollateralContent } from './ModalContent/DepositCollateralContent'
 import { WithdrawCollateralContent } from './ModalContent/WithdrawCollateralContent'
+import { BPT_WARNING_MSG, MKR_WARNING_MSG } from '../../../constants'
+import CheckboxButton from '../button/CheckBox'
+import WarningAlert from './WarningAlert'
 
 export const DepositWithdrawCollateralModal = () => {
   const {
@@ -19,6 +22,7 @@ export const DepositWithdrawCollateralModal = () => {
     setCollateralWithdrawAmount,
     setCollateralDepositAmountMax,
     setCollateralWithdrawAmountMax,
+    setStake
   } = useModalContext()
 
   const isDepositType = type === ModalType.DepositCollateral
@@ -51,6 +55,12 @@ export const DepositWithdrawCollateralModal = () => {
         onOptionChange={onSwitch}
         defaultIsOption1={isDepositType}
       />
+      {type == ModalType.WithdrawCollateral && collateralToken.ticker == 'MKR' && (
+        <WarningAlert msg={MKR_WARNING_MSG}/>
+      )}
+      {type == ModalType.WithdrawCollateral && collateralToken.bpt && (
+        <WarningAlert msg={BPT_WARNING_MSG}/>
+      )}
       <Box
         sx={{
           display: 'flex',
@@ -79,7 +89,9 @@ export const DepositWithdrawCollateralModal = () => {
           </Typography>
         </Box>
       </Box>
-
+      {type == ModalType.DepositCollateral && collateralToken.bpt && (
+        <CheckboxButton onChange={setStake}/>
+      )}
       {isDepositType ? (
         <DepositCollateralContent />
       ) : (
