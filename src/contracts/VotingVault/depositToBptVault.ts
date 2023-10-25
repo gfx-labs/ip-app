@@ -7,7 +7,8 @@ const depositToBptVault = async (
   id: string,
   signerOrProvider: JsonRpcSigner | JsonRpcProvider,
   token: Token,
-  amount: string | BigNumber
+  amount: string | BigNumber,
+  stake: boolean,
 ) => {
   try {
     const cappedTokenContract = CappedBptToken__factory.connect(
@@ -32,7 +33,7 @@ const depositToBptVault = async (
     const depositCapped = await cappedTokenContract.deposit(
       formattedAmount,
       Number(id),
-      true
+      stake
       //{ gasLimit: ge }
     )
 

@@ -1,4 +1,4 @@
-import { Box, BoxProps, Button, LinearProgress, Typography } from '@mui/material'
+import { Box, BoxProps, Button, ButtonProps, LinearProgress, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
@@ -36,14 +36,52 @@ interface UserTokenCardProps extends BoxProps {
   cappedAddress: string | undefined
 }
 
+interface DelegateButtonProps extends ButtonProps {
+  text: string
+}
+
+const DelegateButton = (props: DelegateButtonProps) => {
+  const { onClick, sx, text } = props
+  
+  return (
+    <Button
+      variant="text"
+      sx={{
+        width: 'fit-content',
+        color: 'text.delegate',
+        '&:hover': {
+          backgroundColor: 'transparent',
+          color: formatColor(neutral.gray3),
+
+          '& path': {
+            stroke: formatColor(neutral.gray3),
+          },
+        },
+        ...sx,
+      }}
+      onClick={onClick}
+    >
+      <Typography variant="body1">{text}</Typography>
+      <ForwardIcon
+        sx={{
+          marginLeft: 1,
+          width: 12,
+          height: 10,
+        }}
+        stroke="#5E64F4"
+      />{' '}
+    </Button>
+  )
+}
+
+
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const isLight = useLight()
   const rolodex = useRolodexContext()
   const { connected, currentSigner, provider } = useWeb3Context()
   const { setIsWalletModalOpen } = useWalletModalContext()
-  const { tokens } = useVaultDataContext()
   const { setType, setCollateralToken, updateTransactionState } = useModalContext()
-  const { hasVault, vaultAddress } = useVaultDataContext()
+  const { tokens, hasVault, vaultAddress } = useVaultDataContext()
   const { setDelegateToken } = useAppGovernanceContext()
   const [cappedPercent, setCappedPercent] = useState(10)
 
@@ -76,6 +114,11 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const setAndOpenDelegate = () => {
     setDelegateToken((tokens as any)[tokenTicker])
     setType(ModalType.Delegate)
+  }
+
+  const openUndelegate = () => {
+    setDelegateToken((tokens as any)[tokenTicker])
+    setType(ModalType.Undelegate)
   }
 
   useEffect(() => {
@@ -190,35 +233,20 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           </Typography>
         </Box>
 
-        <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="center">
-          {canDelegate && (
-            <Button
-              variant="text"
-              sx={{
-                width: 'fit-content',
-                color: 'text.delegate',
-                '&:hover': {
-                  backgroundColor: 'transparent',
-                  color: formatColor(neutral.gray3),
-
-                  '& path': {
-                    stroke: formatColor(neutral.gray3),
-                  },
-                },
-              }}
-              onClick={setAndOpenDelegate}
-            >
-              <Typography variant="body1">Delegate</Typography>
-              <ForwardIcon
-                sx={{
-                  marginLeft: 1,
-                  width: 12,
-                  height: 10,
-                }}
-                stroke="#5E64F4"
-              />{' '}
-            </Button>
+        <Box display={{ xs: 'none', lg: 'flex' }} flexDirection="column" justifyContent="center">
+          {canDelegate && tokenTicker !== 'MKR' && (
+            <DelegateButton onClick={setAndOpenDelegate} text='Delegate'/>
           )}
+          {tokenTicker == 'MKR' && ([
+            <DelegateButton onClick={setAndOpenDelegate} text='Delegate' sx={{
+              height: 'fit-content',
+              paddingBottom: 0.375,
+            }} />,
+            <DelegateButton onClick={openUndelegate} text='Undelegate' sx={{
+              height: 'fit-content',
+              paddingTop: 0.375,
+            }} />
+          ])}
         </Box>
 
         <Box

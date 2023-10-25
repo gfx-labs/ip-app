@@ -10,10 +10,12 @@ export const delegateVaultVotingPower = async (
   signer: JsonRpcSigner,
 ) => {
   if (token.ticker === 'MKR') {
-    return MKRVotingVault__factory.connect(vault_address, signer).delegateMKRLikeTo(
+    const MKRVVContract = MKRVotingVault__factory.connect(vault_address, signer)
+    const txn = await MKRVVContract.delegateMKRLikeTo(
       target,
       token.address
     )
+    return txn
   } else {
     return Vault__factory.connect(vault_address, signer).delegateCompLikeTo(
       target,
