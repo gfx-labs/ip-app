@@ -14,6 +14,6 @@ COPY . .
 RUN npx yarn install
 RUN npm run build
 
-FROM cr.gfx.cafe/open/swim/swim:v0.0.5
+FROM cr.gfx.cafe/open/swim/swim:v0.0.13
 COPY --from=NODEBUILDER /wd/dist dist
 CMD ["swim", "-port","8080","-fs","dist","-name","ip-site"]
