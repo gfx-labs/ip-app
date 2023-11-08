@@ -123,32 +123,34 @@ export const VaultDataProvider = ({
           if (!(token.token_LTV && token.token_penalty)) {
             px.push(p1)
           }
-          let p2 = getVaultTokenBalanceAndPrice(
-            vaultAddress,
-            token,
-            rolodex!,
-            provider!
-          )
-            .then((res) => {
-              token.price = res.livePrice
-              token.vault_amount_str = res.unformattedBalance
-              token.vault_amount = res.balanceBN
+          if (token.display) {
+            let p2 = getVaultTokenBalanceAndPrice(
+              vaultAddress,
+              token,
+              rolodex!,
+              provider!
+            )
+              .then((res) => {
+                token.price = res.livePrice
+                token.vault_amount_str = res.unformattedBalance
+                token.vault_amount = res.balanceBN
 
-              if (token.vault_amount.isZero()) {
-                token.vault_balance = '0'
-              } else {
-                //const vaultBalance = Number(utils.formatUnits(token.vault_amount._hex, token.decimals)) * token.price
-                // const vaultBalance = 
-                //   BNtoDecSpecific(token.vault_amount, token.decimals) *
-                //   token.price
+                if (token.vault_amount.isZero()) {
+                  token.vault_balance = '0'
+                } else {
+                  //const vaultBalance = Number(utils.formatUnits(token.vault_amount._hex, token.decimals)) * token.price
+                  // const vaultBalance = 
+                  //   BNtoDecSpecific(token.vault_amount, token.decimals) *
+                  //   token.price
 
-                token.vault_balance = res.balance//vaultBalance.toString()
-              }
-            })
-            .catch((e) => {
-              console.error('failed token balance check', e)
-            })
-          px.push(p2)
+                  token.vault_balance = res.balance//vaultBalance.toString()
+                }
+              })
+              .catch((e) => {
+                console.error('failed token balance check', e)
+              })
+            px.push(p2)
+          }
           if (currentAccount && connected) {
             let p3 = getBalanceOf(
               currentAccount,

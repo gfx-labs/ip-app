@@ -2,6 +2,9 @@ import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
 import { CappedBptToken__factory } from '../../chain/contracts/factories/lending/CappedBptToken__factory'
 import { Token } from '../../types/token'
+import { CappedBptToken } from '../../chain/contracts/lending/CappedBptToken'
+import { CappedERC4626 } from '../../chain/contracts/lending/CappedERC4626'
+import { CappedERC4626__factory } from '../../chain/contracts/factories/lending/CappedERC4626__factory'
 
 const depositToBptVault = async (
   id: string,
@@ -10,11 +13,17 @@ const depositToBptVault = async (
   amount: string | BigNumber,
   stake: boolean,
 ) => {
+  let cappedTokenContract: CappedBptToken | CappedERC4626
   try {
-    const cappedTokenContract = CappedBptToken__factory.connect(
-      token.capped_address!,
-      signerOrProvider
-    )
+    if (token.can_wrap) {
+      cappedTokenContract = CappedERC4626__factory.connect(token.capped_address!, signerOrProvider)
+      cappedTokenContract
+    } else {
+      cappedTokenContract = CappedBptToken__factory.connect(
+        token.capped_address!,
+        signerOrProvider
+      )
+    }
 
     let formattedAmount: BigNumber
     if (typeof amount === 'string') {

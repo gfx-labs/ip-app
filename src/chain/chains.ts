@@ -2,11 +2,11 @@ import { ChainInfo } from '../types/chain'
 
 export enum ChainIDs {
   MAINNET = 1,
-  ROPSTEN = 3,
-  GOERLI = 5,
+  // ROPSTEN = 3,
+  // GOERLI = 5,
   OPTIMISM = 10,
-  POLYGON = 137,
-  LOCAL = 31337,
+  // POLYGON = 137,
+  // LOCAL = 31337,
 }
 
 export const Chains: {[index: number]: ChainInfo} = {

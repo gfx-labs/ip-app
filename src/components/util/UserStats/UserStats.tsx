@@ -18,47 +18,49 @@ export const UserStats = () => {
     if (tokens) {
       let el: Array<any> = []
       for (const [key, val] of Object.entries(tokens)) {
-        el.push(
-          <UserTokenCard
-            key={key}
-            index={el.length}
-            tokenName={val.name}
-            tokenTicker={val.ticker}
-            tokenPrice={
-              '$' +
-              val.price?.toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })!
-            }
-            vaultBalance={Number(val.vault_balance).toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            })!}
-            tokenAmount={round(val.vault_amount_str || 0, DISPLAY_DECIMALS).toString()}
-            image={ val.icons? 
-              {
-                src: val.icons[0],
-                alt: val.icons[0]
+        if (val.display) {
+          el.push(
+            <UserTokenCard
+              key={key}
+              index={el.length}
+              tokenName={val.name}
+              tokenTicker={val.ticker}
+              tokenPrice={
+                '$' +
+                val.price?.toLocaleString(undefined, {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })!
               }
-              : {
-                src: val.ticker,
-                alt: val.ticker,
+              vaultBalance={Number(val.vault_balance).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })!}
+              tokenAmount={round(val.vault_amount_str || 0, DISPLAY_DECIMALS).toString()}
+              image={ val.icons? 
+                {
+                  src: val.icons[0],
+                  alt: val.icons[0]
+                }
+                : {
+                  src: val.ticker,
+                  alt: val.ticker,
+                }
               }
-            }
-            image2={ val.icons ? 
-              {
-                src: val.icons[1],
-                alt: val.icons[1]
-              } 
-              : undefined
-            }
-            LTVPercent={val.token_LTV!.toLocaleString()}
-            penaltyPercent={val.token_penalty!.toLocaleString()}
-            canDelegate={val.can_delegate ? true : false}
-            cappedAddress={val.capped_address}
-          />
-        )
+              image2={ val.icons ? 
+                {
+                  src: val.icons[1],
+                  alt: val.icons[1]
+                } 
+                : undefined
+              }
+              LTVPercent={val.token_LTV!.toLocaleString()}
+              penaltyPercent={val.token_penalty!.toLocaleString()}
+              canDelegate={val.can_delegate ? true : false}
+              cappedAddress={val.capped_address}
+            />
+          )
+        }
       }
       setTokenCards(<>{el}</>)
     }

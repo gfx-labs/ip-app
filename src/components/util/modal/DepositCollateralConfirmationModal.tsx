@@ -27,11 +27,12 @@ export const DepositCollateralConfirmationModal = () => {
     collateralDepositAmountMax,
     setCollateralDepositAmountMax,
     stake,
+    wrap,
   } = useModalContext()
   const { provider, currentAccount, currentSigner } = useWeb3Context()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const { vaultAddress, vaultID, hasVotingVault, hasBptVault, hasMKRVotingVault } = useVaultDataContext()
+  const { tokens, vaultAddress, vaultID, hasVotingVault, hasBptVault, hasMKRVotingVault } = useVaultDataContext()
   const [hasAllowance, setHasAllowance] = useState(false)
 
   const amount = collateralDepositAmountMax ? collateralToken.wallet_amount : collateralDepositAmount
@@ -90,11 +91,19 @@ export const DepositCollateralConfirmationModal = () => {
 
         if (collateralToken.bpt) {
           attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!, stake)
+        } else if (collateralToken.can_wrap) {
+          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!, wrap)
         } else {
           attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
         }
       } else {
-        attempt = await depositCollateral(amount!, collateralToken.address, provider?.getSigner(currentAccount)!, vaultAddress!)
+        if (wrap) {
+          const tok = tokens![collateralToken.unwrapped!]
+          attempt = await depositToBptVault(vaultID!, currentSigner!, tok, amount!, wrap)
+        } else {
+          attempt = await depositCollateral(amount!, collateralToken.address, provider?.getSigner(currentAccount)!, vaultAddress!)
+        }
+        
       }
       updateTransactionState(attempt!)
 

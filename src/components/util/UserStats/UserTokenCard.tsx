@@ -238,11 +238,11 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             <DelegateButton onClick={setAndOpenDelegate} text='Delegate'/>
           )}
           {tokenTicker == 'MKR' && ([
-            <DelegateButton onClick={setAndOpenDelegate} text='Delegate' sx={{
+            <DelegateButton key={'delegate'} onClick={setAndOpenDelegate} text='Delegate' sx={{
               height: 'fit-content',
               paddingBottom: 0.375,
             }} />,
-            <DelegateButton onClick={openUndelegate} text='Undelegate' sx={{
+            <DelegateButton key={'undelegate'} onClick={openUndelegate} text='Undelegate' sx={{
               height: 'fit-content',
               paddingTop: 0.375,
             }} />

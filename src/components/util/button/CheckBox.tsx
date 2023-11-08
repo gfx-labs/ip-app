@@ -4,9 +4,9 @@ import { blue, neutral, formatColor } from '../../../theme'
 import CheckBoxIcon from '../../icons/misc/CheckBoxIcon'
 import CheckBoxIconOutline from '../../icons/misc/CheckBoxIconOutline'
 
-const CheckboxButton = (props: { onChange?: (v: boolean) => void }) => {
-  const { onChange } = props
-  const [checked, setChecked] = useState(true);
+const CheckboxButton = (props: { onChange?: (v: boolean) => void, state: boolean, label: string }) => {
+  const { onChange, state, label } = props
+  const [checked, setChecked] = useState(state);
   const changeChecked = () => {
     setChecked(!checked)
     if (onChange) {
@@ -48,7 +48,7 @@ const CheckboxButton = (props: { onChange?: (v: boolean) => void }) => {
         }}
         onClick={changeChecked}
       >
-        <Typography variant="body3" >Stake</Typography>
+        <Typography variant="body3" >{label}</Typography>
       </Button>
     </Box>
   )
