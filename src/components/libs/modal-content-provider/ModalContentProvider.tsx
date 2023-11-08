@@ -3,7 +3,6 @@ import { createContext, useState, useContext } from 'react'
 import { getTokensListOnCurrentChain } from '../../../chain/tokens'
 import { Token } from '../../../types/token'
 import { useStableCoinsContext } from '../stable-coins-provider/StableCoinsProvider'
-import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 import { DEFAULT_CHAIN } from '../../../constants'
 
 export enum ModalType {
@@ -64,6 +63,8 @@ export type ModalContextType = {
   transaction: ContractReceipt | ContractTransaction | null
   stake: boolean
   setStake: (val: boolean) => void
+  wrap: boolean
+  setWrap: (val: boolean) => void
 }
 
 export const ModalContentContext = createContext({} as ModalContextType)
@@ -85,6 +86,7 @@ export const ModalContentProvider = ({
     useState(false)
   
   const [stake, setStake] = useState(true)
+  const [wrap, setWrap] = useState(false)
 
   const { USDC:usdcContext } = useStableCoinsContext()
   const createDepositWithdrawUSDC = () => {
@@ -160,6 +162,8 @@ export const ModalContentProvider = ({
         transaction,
         stake,
         setStake,
+        wrap,
+        setWrap,
       }}
     >
       {children}

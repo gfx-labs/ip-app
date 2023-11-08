@@ -25,7 +25,10 @@ export interface Token {
   capped_address?: string
 
   bpt?: boolean
+  can_wrap?: boolean
   icons?: string[]
+  unwrapped?: string
+  display: boolean
 }
 
 export interface InitializeTokenProps {
@@ -38,7 +41,10 @@ export interface InitializeTokenProps {
   can_delegate?: boolean
   decimals?: number
   bpt?: boolean
+  can_wrap?: boolean
   icons?: string[]
+  unwrapped?: string
+  display?: boolean
 }
 
 // ticker: token object
@@ -47,11 +53,14 @@ export interface CollateralTokens {
 }
 
 export interface TokenInfo {
-  addr?: string,
-  capped_addr?: string,
-  can_delegate?: boolean,
+  addr?: string
+  capped_addr?: string
+  can_delegate?: boolean
   bpt?: boolean
+  can_wrap?: boolean
   icons?: string[]
+  unwrapped?: string
+  display?: boolean
 }
 
 export interface TokensOnChains {
