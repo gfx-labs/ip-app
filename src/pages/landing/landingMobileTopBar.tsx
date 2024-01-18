@@ -136,11 +136,11 @@ export const LandingMobileToolbar = () => {
             </Typography>
           </Link>
 
-          <Link href="#/sale">
+          {/* <Link href="#/sale">
             <Typography variant="body3" color={formatColor(neutral.black)}>
               Sale
             </Typography>
-          </Link>
+          </Link> */}
         </Box>
       </SwipeableDrawer>
     </Toolbar>

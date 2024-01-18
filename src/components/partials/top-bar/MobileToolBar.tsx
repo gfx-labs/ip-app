@@ -116,9 +116,9 @@ export const MobileToolBar = () => {
           />
         </Button>
         {/* <ClaimsButton /> */}
-        {window.location.hash !== '#/sale' && (
+        {/* {window.location.hash !== '#/sale' && (
           <MobileIconButton text="Token Sale" img="star" href="/#/sale" />
-        )}
+        )} */}
         <MobileIconButton text="App" img="rocket" href="/" />
         <MobileIconButton text="Governance" img="people" href="/#/proposal" />
         <br />

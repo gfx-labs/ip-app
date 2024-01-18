@@ -53,7 +53,7 @@ export const LandingDesktopToolbar = () => {
           label="Git"
           newTarget
         />
-        <DesktopLinkTo url="#/sale" label="Token Sale" />
+        {/* <DesktopLinkTo url="#/sale" label="Token Sale" /> */}
       </Box>
 
       <Box ml="auto">

@@ -3,14 +3,12 @@ import { Routes, Route } from 'react-router-dom'
 import './theme/fonts.css'
 
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
-import { providers } from 'ethers'
 import { AppLayout } from './components/partials/app-layout'
 import { Web3ContextProvider } from './components/libs/web3-data-provider/Web3Provider'
 import { WalletModalProvider } from './components/libs/wallet-modal-provider/WalletModalProvider'
 import { ModalContentProvider } from './components/libs/modal-content-provider/ModalContentProvider'
 import { PaletteModeContextProvider } from './components/libs/palette-mode-provider/palette-mode-provider'
 import Dashboard from './pages'
-import PurchasePage from './pages/sale'
 import LandingPage from './pages/landing'
 import NotFound404Page from './pages/404'
 import {
@@ -62,7 +60,6 @@ const WalletContext = (props: { children: any }) => {
       <WagmiConfig config={wagmiConfig}>
         {props.children}
       </WagmiConfig>
-
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </>
   )
@@ -111,7 +108,7 @@ const AppRouter = () => {
   return (
     <WalletContext>
       <Routes>
-        <Route
+        {/* <Route
           path={`/sale`}
           element={
             <Web3ContextProvider>
@@ -129,7 +126,7 @@ const AppRouter = () => {
               </RolodexContentProvider>
             </Web3ContextProvider>
           }
-        />
+        /> */}
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/whitepaper`} element={<WhitepaperPage />} />
         <Route path={`/terms`} element={<TermsPage />} />

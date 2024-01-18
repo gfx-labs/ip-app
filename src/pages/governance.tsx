@@ -13,7 +13,7 @@ import { BNtoDec } from '../easy/bn'
 
 export const Governance = () => {
   const theme = useTheme()
-  const { dataBlock, provider, chainId, currentAccount } = useWeb3Context()
+  const { ethBlock: dataBlock, ethProvider: provider, chainId, currentAccount } = useWeb3Context()
   const { setDelegatedTo, setIptBalance, setCurrentVotes, currentVotes, iptBalance } = useAppGovernanceContext()
 
   const [proposals, setProposals] = useState<Map<number, Proposal>>(new Map<number, Proposal>([]))
@@ -46,7 +46,7 @@ export const Governance = () => {
         })
       })
     }
-  }, [provider, dataBlock, chainId])
+  }, [provider,dataBlock, chainId])
 
   return (
     <Box

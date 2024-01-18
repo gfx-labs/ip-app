@@ -10,8 +10,8 @@ import { Highlights } from './highlights'
 import { Splash } from './splash'
 import { Values } from './values'
 import { Footer } from '../../components/partials/footer'
-import { LandingDesktopToolbar } from './desktopToolbar'
-import { LandingMobileToolbar } from './mobileToolbar'
+import { LandingDesktopToolbar } from './landingDesktopTopBar'
+import { LandingMobileToolbar } from './landingMobileTopBar'
 
 const TopBar: React.FC<{ sx?: any }> = (props?: { sx?: any }) => {
   const theme = useTheme()

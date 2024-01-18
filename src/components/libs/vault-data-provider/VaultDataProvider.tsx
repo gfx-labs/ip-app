@@ -13,7 +13,7 @@ import {
   getVaultTokenMetadata,
 } from './getVaultTokenBalanceAndPrice'
 import { getVaultBorrowingPower } from './getBorrowingPower'
-import { BNtoDec, BNtoDecSpecific } from '../../../easy/bn'
+import { BNtoDec } from '../../../easy/bn'
 import { Logp } from '../../../logger'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import {
@@ -139,7 +139,7 @@ export const VaultDataProvider = ({
                   token.vault_balance = '0'
                 } else {
                   //const vaultBalance = Number(utils.formatUnits(token.vault_amount._hex, token.decimals)) * token.price
-                  // const vaultBalance = 
+                  // const vaultBalance =
                   //   BNtoDecSpecific(token.vault_amount, token.decimals) *
                   //   token.price
 
