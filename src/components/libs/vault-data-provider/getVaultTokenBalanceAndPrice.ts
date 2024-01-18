@@ -46,7 +46,9 @@ export const getVaultTokenBalanceAndPrice = async (
     let vaultBalance = balanceBN.mul(price!)
     balance = utils.formatUnits(vaultBalance, decimals + decimals)
   } catch (e) {
-    console.error(e)
+    if(!(e as any).toString().includes("OLD")) {
+      console.error(e)
+    }
   }
 
   return { balance, livePrice, unformattedBalance, balanceBN }

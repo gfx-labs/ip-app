@@ -36,9 +36,9 @@ export const DesktopToolBar = () => {
       )}
 
       <Box sx={{ gap: 2 }} display="flex" mr={-1} ml="auto">
-        {window.location.hash !== '#/sale' && (
+        {/* {window.location.hash !== '#/sale' && (
           <TokenSaleButton />
-        )}
+        )} */}
         <SelectedChainButton />
         <ConnectWalletButton />
         <DesktopMenu />

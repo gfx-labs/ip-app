@@ -5,7 +5,7 @@ export default [
       { label: 'Whitepaper', href: '#/whitepaper' },
       { label: 'Docs', href: '#/docs' },
       { label: 'Analytics', href: 'https://analytics.gfx.xyz/' },
-      { label: 'Sale', href: '#/sale' },
+      //{ label: 'Sale', href: '#/sale' },
       { label: 'Terms of Use', href: '#/terms' },
     ],
   },

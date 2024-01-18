@@ -297,7 +297,6 @@ const PurchaseBox = ({
   useEffect(() => {
     if (rolodex && amountToCommit) {
       const usdcAmount = isIPTValue ? secondaryValue : amountToCommit
-
       hasUSDCAllowance(
         currentAccount,
         SLOWROLL_ADDRESS,

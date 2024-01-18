@@ -16,7 +16,7 @@ import { useLight } from '../../../hooks/useLight'
 import { useParams } from 'react-router'
 import { useRef } from 'react'
 import { COMMON_CONTRACT_NAMES } from '../../../constants'
-import { formatEther, formatUnits, getAddress } from 'ethers/lib/utils'
+import { getAddress } from 'ethers/lib/utils'
 import { getProposalIsOptimistic } from '../../../contracts/GovernorCharlieDelegate/getProposerWhiteListed'
 import { proposalTimeRemaining } from './proposalTimeRemaining'
 import { CaratUpIcon } from '../../icons/misc/CaratUpIcon'
@@ -59,7 +59,7 @@ const getTitle = (body: string) => {
       title = title.substring(0, 50)+"..."
     }
   }
-  
+
   return title
 }
 
@@ -81,7 +81,7 @@ const linkIfAddress = (content: string) => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, provider: providerContext, currentAccount, chainId } = useWeb3Context()
+  const { dataBlock, ethProvider: provider, currentAccount, chainId } = useWeb3Context()
   const { votingPower } = props
   const { id, body, endBlock, transactionHash, details, startBlock, votes } = props.proposal
   const isLight = useLight()
@@ -103,14 +103,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   const [isActive, setIsActive] = useState(false)
   const [proposalType, setProposalType] = useState<IProposalType | undefined>()
   const [hasPriorVotes, setHasPriorVotes] = useState(false)
-  const defaultProvider = new JsonRpcProvider(Chains[ChainIDs.MAINNET].rpc)
-  const [provider, setProvider] = useState((chainId !== ChainIDs.MAINNET || !providerContext) ? defaultProvider : providerContext)
-
-  useEffect(() => {
-    if (chainId !== ChainIDs.MAINNET) {
-      setProvider(defaultProvider)
-    }
-  }, [providerContext])
 
   useEffect(() => {
     getProposalInfo(id, provider).then((res) => {
@@ -118,10 +110,8 @@ export const ProposalCard = (props: ProposalCardProps) => {
         const pType = isWhitelisted ? 'optimistic' : res.emergency ? 'emergency' : 'standard'
         setProposalType(pType)
       })
-
       setProposal(res)
     })
-
     getProposalState(id, provider).then((res) => {
       setStatus(res)
     })
@@ -140,16 +130,19 @@ export const ProposalCard = (props: ProposalCardProps) => {
     }
   }, [votes, proposal])
 
-  useEffect(() => {
-    let block
+  const [currentBlock, setCurrentBlock] = useState(dataBlock)
+  useEffect(()=>{
     if (chainId !== ChainIDs.MAINNET) {
-      provider.getBlockNumber()
-      block = provider._fastBlockNumber
+      setCurrentBlock(provider._fastBlockNumber)
     } else {
-      block = dataBlock
+      setCurrentBlock(dataBlock)
     }
-    if (block) {
-      const bdiff = endBlock - block
+
+  }, [dataBlock])
+
+  useEffect(() => {
+    if (currentBlock) {
+      const bdiff = endBlock - currentBlock
       const secs = bdiff * 13.5
       setIsActive(secs > 0)
 
@@ -160,13 +153,13 @@ export const ProposalCard = (props: ProposalCardProps) => {
         })
         return
       }
-  
+
       if (proposalType && provider) {
-        proposalTimeRemaining(startBlock, endBlock, block, status, provider).then((res) => 
+        proposalTimeRemaining(startBlock, endBlock, currentBlock, status, provider).then((res) =>
         setTimeLeft(res))
       }
     }
-    
+
     if (status === 1 && provider) {
       getPriorVotes(currentAccount, startBlock, provider).then((res) => {
         if (!res.isZero()) {
@@ -180,7 +173,7 @@ export const ProposalCard = (props: ProposalCardProps) => {
         setHasVoted(receipt.hasVoted)
       })
     }
-  }, [dataBlock, proposalType])
+  }, [currentBlock, proposalType])
 
   useEffect(() => {
     if (param.id === id) {
