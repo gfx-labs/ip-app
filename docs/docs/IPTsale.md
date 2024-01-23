@@ -1,6 +1,6 @@
 # IPT Sale
 
-GFX Labs will start the sale of Interest Protocol Tokens (IPT) on August 15th. The sale will last until the allocated IPT for public distribution has been distributed. This post introduces both IPT and Governor Charlie, along with how the sale of IPT will take place.
+The IPT sale period has concluded, and the sale is no longer active at this time. 
 
 ## IPT and Governor Charlie
 
@@ -17,23 +17,4 @@ The GFX team will only retain a minority interest in the protocol. After the sal
 Below is the initial distribution of IPT total supply:
 ![IPTdistribution](./IPTdistribution.png)
  
- 
-GFX has allocated 35,000,000 IPT (35% of the total token supply) to the token sale. Each IPT will sell for between 0.25 and 0.50 USDC, depending on demand. The exact price calculations are described below.
- 
-The new mechanism offers one million (1%) tokens per period at a starting price of $0.25 and a maximum price of $0.50. The sale has a minimum duration of 35 periods, a total of 32 days, to sell 35 million tokens (35% of the total supply) but will continue until the allocated supply is exhausted.
- 
-Each period, the sale parameters will reset to the base price ($0.25) and tokens offered (1m). The purchaser gets the same price regardless of the number of tokens purchased, but the price updates after each sale based on the number of total tokens purchased.
- 
-For example, at the beginning of a new day, a bidder could pay $250k (USDC) and receive 1m IPT; however, if the bidder instead paid $50k and received 200k IPT, then the next price would be $0.30. The next price is calculated by (tokens purchased / maximum offered)*(ceiling price - floor price) + floor price. Adjusting the price after a purchase encourages bidders to purchase while the remaining daily supply is high.
- 
-While the minimum duration of the sale is 35 days, which assumes maximum constant participation, we’re targeting closer to 2-3 months to complete the sale. By stretching out the sale over an extended period of time, the platform has more time to mature. From the distribution, during the sale, and thereafter the protocol is controlled by IPT holders.
- 
-GFX Labs will retain the right to change the maximum number of tokens offered, the duration of each period, the floor price, and the ceiling price. Since the IPT token will be in circulation outside our sale contract, the secondary market may independently develop. To reduce the arbitrage opportunity for MEV bots, we may increase the minimum price to align closer with the secondary market and favor people over bots.
- 
-Rather than doing a traditional 24 hours per period, we've chosen 22 hours. By selecting 22 hours, the start time will progressively change by two hours to make the sale more accessible across all time zones. 
-
-## Participate
- 
-To participate, visit the [sale page](https://interestprotocol.io/#/sale). Review the User Agreement and [Token Sale Contract](https://etherscan.io/address/0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d#code). Purchasers need to set an allowance for their USDC to the sale contract. All purchases are immediately deliverable. 
- 
-This page is for general information purposes only. It should not be relied upon for accounting, legal, or tax advice.
+*This page is for general information purposes only. It should not be relied upon for accounting, legal, or tax advice.*
