@@ -1,8 +1,9 @@
 # Contract Addresses
 The protocol is deployed on Ethereum Mainnet.
 
-### Token Sale
-*    SlowRoll: 0xFbD3060Fe1Ed10c34E236Cee837d82F019cF1D1d
+### Governance
+*    Interest Protocol Token (IPT): 0xd909c5862cdb164adb949d92622082f0092efc3d
+*    Governor: 0x266d1020a84b9e8b0ed320831838152075f8c4ca     
 
 ### Core
 *    ProxyAdmin: 0x3D9d8c08dC16Aa104b5B24aBDd1aD857e2c0D8C5
@@ -11,11 +12,12 @@ The protocol is deployed on Ethereum Mainnet.
 *    CurveMaster: 0x0029abd74B7B32e6a82Bf9f62CB9Dd4Bf8e39aAf
 *    ThreeLines: 0x482855c43a0869D93C5cA6d9dc9EDdF3DAE031Ea
 *    OracleMaster: 0xf4818813045E954f5Dc55a40c9B60Def0ba3D477
-*    VotingVaultController: 0xae49ddca05fe891c6a5492ed52d739ec1328cbe2
 
-### Governance
-*    Interest Protocol Token (IPT): 0xd909c5862cdb164adb949d92622082f0092efc3d
-*    Governor: 0x266d1020a84b9e8b0ed320831838152075f8c4ca     
+### Cap Token Infastructure
+*   VotingVaultController: 0xae49ddca05fe891c6a5492ed52d739ec1328cbe2
+*   Capped Token Implementation: 0x9F86bf2C380d3C63177e6104320Fd3D1DcAE88DA
+*   CappedERC4626Implementation: "0x09fD32C702117BB1dEaA2dD43e2bc8a63A831c7A"
+
 
 ### wETH Oracle
 *    AnchoredViewRelay: 0x65dA327b1740D00fF7B366a4fd8F33830a2f03A2
@@ -104,7 +106,7 @@ The protocol is deployed on Ethereum Mainnet.
 * cbETH (capped): 0x99bd1f28a5A7feCbE39a53463a916794Be798FC3
 * ZRX (capped): 0xDf623240ec300fD9e2B7780B34dC2F417c0Ab6D2
 
-## Polygon Mainnet
+## Polygon Mainnet (legacy testing deployments)
 *    USDC_UNI_CL: 0xdf0fb4e4f928d2dcb76f438575fdd8682386e13c
 *    USDC_ETH_CL: 0xf9680d99d6c9589e2a93a78a04a279e509205945
 *    USDC_WBTC_CL: 0xDE31F8bFBD8c84b5360CFACCa3539B938dd78ae6
