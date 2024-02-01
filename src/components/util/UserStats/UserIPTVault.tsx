@@ -1,34 +1,18 @@
-import { Box, Typography, useTheme } from '@mui/material'
-import { useState, useEffect } from 'react'
-import { useLight } from '../../../hooks/useLight'
-import { formatColor, formatGradient, gradient, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
+import { Box, Typography } from '@mui/material'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import {
-  ClaimsButton,
   ConnectWalletButton,
   CopyButton,
-  InverseButton,
 } from '../button'
-import { addressShortener, TitleText } from '../text'
-import { SingleStatCard } from '../cards/SingleStatCard'
-import { UserTokenCard } from './UserTokenCard'
-import { BN, round } from '../../../easy/bn'
-import { OpenVaultButton } from '../button/OpenVaultButton'
+import { addressShortener } from '../text'
 import { ToolTip } from '../tooltip/ToolTip'
-import { TitleTextToolTip } from '../text/TitleTextToolTip'
 import { CardContainer } from '../cards/CardContainer'
 import { ClaimsCard } from '../cards/ClaimsCard'
 
 export const UserIPTVault = () => {
   const { connected } = useWeb3Context()
-
-  const { vaultID, vaultAddress } = useVaultDataContext()
+  const { vaultAddress } = useVaultDataContext()
 
   return (
     <Box
@@ -45,7 +29,6 @@ export const UserIPTVault = () => {
       }}
     >
       <ClaimsCard />
-
       <CardContainer>
         <Box
           display="flex"
@@ -74,7 +57,6 @@ export const UserIPTVault = () => {
               )}
             </Typography>
           </Box>
-
           {connected ? (
             vaultAddress ? (
               <CopyButton copy={vaultAddress} />

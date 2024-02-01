@@ -7,49 +7,53 @@ import { BaseModal } from './BaseModal'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { useState } from 'react'
-import { SubVault, mintSubVault } from '../../../contracts/VotingVault/mintSubVault'
+import { SubVault, mintSubVault, mintNftVault } from '../../../contracts/VotingVault/mintSubVault'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import SVGBox from '../../icons/misc/SVGBox'
 import { Chains } from '../../../chain/chains'
+import { isToken } from '../../../chain/tokens'
 
-type ButtonText = 'Enable Token' | 'Vault Minted'
+type ButtonText = 'Mint Vault' | 'Vault Minted'
 
 export const EnableCappedTokenModal = () => {
   const { type, setType, collateralToken } = useModalContext()
-
-  const { vaultID, setHasVotingVault, setHasBptVault, setHasMKRVotingVault } = useVaultDataContext()
+  const { vaultId, setHasVotingVault, setHasBptVault, setHasMKRVotingVault, setHasNftVault } = useVaultDataContext()
   const { chainId, currentSigner } = useWeb3Context()
   const { setRefresh } = useVaultDataContext()
-
   const [loading, setLoading] = useState(false)
-  const [buttonText, setButtonText] = useState<ButtonText>('Enable Token')
+  const [buttonText, setButtonText] = useState<ButtonText>('Mint Vault')
   const [error, setError] = useState<string | undefined>()
   const chain = Chains[chainId]
 
   const mintVotingVault = async () => {
+    let type: SubVault
     try {
-      if (vaultID && currentSigner) {
+      if (isToken(collateralToken)) {
         setLoading(true)
-        let type = collateralToken.bpt ? SubVault.BPT : SubVault.Voting
+        type = collateralToken.bpt ? SubVault.BPT : SubVault.Voting
         if (collateralToken.ticker == 'MKR') {
           type = SubVault.MKR
         }
-        await mintSubVault(chain.votingVaultController_addr!, vaultID, currentSigner!, type)
-
-        setLoading(false)
-        setButtonText('Vault Minted')
-        setRefresh(true)
-        switch (type) {
-          case SubVault.BPT: setHasBptVault(true)
-          break
-          case SubVault.MKR: setHasMKRVotingVault(true)
-          break
-          case SubVault.Voting: setHasVotingVault(true)
-          break
-        }
-        setError(undefined)
-        setType(ModalType.DepositCollateralConfirmation)
+        await mintSubVault(chain.votingVaultController_addr!, vaultId!, currentSigner!, type)
+      } else {
+        setLoading(true)
+        type = SubVault.NFT
+        await mintNftVault(vaultId!, currentSigner!)
       }
+      setLoading(false)
+      setButtonText('Vault Minted')
+      setRefresh(true)
+      switch (type) {
+        case SubVault.BPT: setHasBptVault(true)
+        break
+        case SubVault.MKR: setHasMKRVotingVault(true)
+        break
+        case SubVault.Voting: setHasVotingVault(true)
+        break
+        case SubVault.NFT: setHasNftVault(true)
+      }
+      setError(undefined)
+      setType(ModalType.DepositCollateralConfirmation)
     } catch (err) {
       setLoading(false)
       const error = err as Error
@@ -59,8 +63,8 @@ export const EnableCappedTokenModal = () => {
 
   return (
     <BaseModal
-      open={type === ModalType.EnableCappedToken}
-      setOpen={() => {
+      open={type === ModalType.MintSubVault}
+      onClose={() => {
         setType(null)
       }}
       contentMaxWidth={400}
@@ -81,14 +85,11 @@ export const EnableCappedTokenModal = () => {
           alt="enable capped token icon"
           sx={{ mx: 'auto' }}
         />
-
-        <Typography variant="h7">Enable Capped Token</Typography>
-
+        <Typography variant="h7">Mint Vault</Typography>
         <Typography>
-          Must enable capped tokens to deposit into the protocol. This is
+          Must mint a {} vault to deposit this asset. This is
           required only once.
         </Typography>
-
         <DisableableModalButton
           text={buttonText}
           disabled={false}
@@ -96,7 +97,6 @@ export const EnableCappedTokenModal = () => {
           loading={loading}
           load_text={'Pending Transaction'}
         />
-
         {error && (
           <Typography textAlign="center" color="red">
             {error}

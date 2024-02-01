@@ -12,7 +12,6 @@ import { WithdrawUSDCContent } from './ModalContent/WithdrawUSDCContent'
 
 export const DepositWithdrawUSDCModal = () => {
   const { type, setType } = useModalContext()
-
   const isDepositType = type === ModalType.DepositUSDC
 
   const onSwitch = (val: boolean) =>
@@ -21,7 +20,7 @@ export const DepositWithdrawUSDCModal = () => {
   return (
     <BaseModal
       open={type === ModalType.DepositUSDC || type === ModalType.WithdrawUSDC}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >

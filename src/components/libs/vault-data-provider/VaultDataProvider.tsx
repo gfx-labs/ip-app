@@ -5,7 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from 'react'
-import { getTokensListOnCurrentChain } from '../../../chain/tokens'
+import { Token, UniPosition, getTokensOnChain } from '../../../chain/tokens'
 import { useRolodexContext } from '../rolodex-data-provider/RolodexDataProvider'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 import {
@@ -15,32 +15,33 @@ import {
 import { getVaultBorrowingPower } from './getBorrowingPower'
 import { BNtoDec } from '../../../easy/bn'
 import { Logp } from '../../../logger'
-import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
+import { getBalanceOf, getBalanceOfPosition, getNumWalletPositions, getVaultPositions } from '../../../contracts/ERC20/getBalanceOf'
 import {
   getVotingVaultAddress,
   getBptVaultAddress,
   getMKRVotingVaultAddr,
+  getNftVaultAddr,
 } from '../../../contracts/VotingVault/getSubVault'
-import { CollateralTokens } from '../../../types/token'
 import { ChainIDs, Chains } from '../../../chain/chains'
 import { utils } from 'ethers'
 import { ZERO_ADDRESS } from '../../../constants'
+import { UniPoolAddresses } from '../../../chain/tokensToChains'
 
 export type VaultDataContextType = {
   hasVault: boolean
-  setVaultID: Dispatch<SetStateAction<string | null>>
+  vaultId: string | null
+  setVaultId: Dispatch<SetStateAction<string | null>>
   redraw: boolean
   setRedraw: Dispatch<SetStateAction<boolean>>
   refresh: boolean
   setRefresh: Dispatch<SetStateAction<boolean>>
-  vaultID: string | null
   vaultAddress?: string
   setVaultAddress: Dispatch<SetStateAction<string | undefined>>
   borrowingPower: string
   accountLiability: string
   totalBaseLiability: number
-  tokens: CollateralTokens | undefined
-  setTokens: Dispatch<SetStateAction<CollateralTokens | undefined>>
+  tokens: {[key: string]: Token} | undefined
+  pools: {[key: string]: UniPosition} | undefined
   votingVaultAddress: string | undefined
   hasVotingVault: boolean
   setHasVotingVault: Dispatch<SetStateAction<boolean>>
@@ -50,6 +51,9 @@ export type VaultDataContextType = {
   MKRVotingVaultAddr: string | undefined
   hasMKRVotingVault: boolean
   setHasMKRVotingVault: Dispatch<SetStateAction<boolean>>
+  NftVaultAddr: string | undefined
+  hasNftVault: boolean
+  setHasNftVault: Dispatch<SetStateAction<boolean>>
 }
 
 export const VaultDataContext = React.createContext({} as VaultDataContextType)
@@ -65,30 +69,32 @@ export const VaultDataProvider = ({
   const [redraw, setRedraw] = useState(false)
   const [hasVault, setHasVault] = useState(false)
   const [refresh, setRefresh] = useState(false)
-  const [vaultID, setVaultID] = useState<string | null>(null)
+  const [vaultId, setVaultId] = useState<string | null>(null)
   const [vaultAddress, setVaultAddress] =
     useState<VaultDataContextType['vaultAddress']>(undefined)
   const [accountLiability, setAccountLiability] = useState('0')
   const [borrowingPower, setBorrowingPower] = useState('0')
   const [tokens, setTokens] =
     useState<VaultDataContextType['tokens']>(undefined)
+  const [pools, setPools] = useState<VaultDataContextType['pools']>(undefined)
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
-  //
   const [votingVaultAddress, setVotingVaultAddress] = useState<
     string | undefined>(undefined)
   const [bptVaultAddress, setBptVaultAddress] = useState<
     string | undefined>(undefined)
   const [MKRVotingVaultAddr, setMKRVotingVaultAddr] = useState<string | undefined>()
+  const [NftVaultAddr, setNftVaultAddr] = useState<string | undefined>()
   const [hasVotingVault, setHasVotingVault] = useState(false)
   const [hasBptVault, setHasBptVault] = useState(false)
   const [hasMKRVotingVault, setHasMKRVotingVault] = useState(false)
+  const [hasNftVault, setHasNftVault] = useState(false)
 
   const update = async () => {
     const px: Array<Promise<any>> = []
     if (rolodex && rolodex.VC) {
-      if (vaultID) {
+      if (vaultId) {
         rolodex
-          .VC!.vaultLiability(vaultID!)
+          .VC!.vaultLiability(vaultId!)
           .then((val) => {
             const vl = utils.formatUnits(val, 18)//BNtoDec(val)
             setAccountLiability(vl)
@@ -97,7 +103,7 @@ export const VaultDataProvider = ({
             console.log('could not get account liability', e)
           })
 
-        getVaultBorrowingPower(vaultID, rolodex)
+        getVaultBorrowingPower(vaultId, rolodex)
           .then(setBorrowingPower)
           .catch((e) => {
             console.log('could not get borrowing power ', e)
@@ -110,10 +116,8 @@ export const VaultDataProvider = ({
       })
 
       if (tokens) {
-        for (const [key, token] of Object.entries(tokens)) {
-          const tokenAddress = token.capped_address
-            ? token.capped_address
-            : token.address
+        for (const [_, token] of Object.entries(tokens)) {
+          const tokenAddress = token.capped_address ?? token.address
           let p1 = getVaultTokenMetadata(tokenAddress, rolodex!)
             .then((res) => {
               token.token_penalty = res.penalty
@@ -143,7 +147,7 @@ export const VaultDataProvider = ({
                   //   BNtoDecSpecific(token.vault_amount, token.decimals) *
                   //   token.price
 
-                  token.vault_balance = res.balance//vaultBalance.toString()
+                  token.vault_balance = res.balance
                 }
               })
               .catch((e) => {
@@ -168,8 +172,60 @@ export const VaultDataProvider = ({
           }
         }
       }
-    }
+      if (pools) {
+        // get penalty and ltv
+        let pos1 = Object.values(pools)[0]
+        let penalty
+        let LTV
+        let p1 = getVaultTokenMetadata(pos1.address, rolodex!)
+          .then((res) => {
+            pos1.penalty = res.penalty
+            pos1.LTV = res.ltv
+            penalty = res.penalty
+            LTV = res.ltv
+          }).catch(Logp('failed token metadata check'))
+        if (!(pos1.LTV && pos1.penalty)) {
+          px.push(p1)
+        }
+        for (let [_, pos] of Object.entries(pools)) {
+          if (penalty && LTV) {
+            pos.penalty = penalty
+            pos.LTV = LTV
+          }
+          if (vaultAddress) {
+            let p2 = getBalanceOfPosition(
+              vaultAddress,
+              pos.address,
+              provider!
+            ).then((val) => {
+              pos.vault_balance = val
+            }).catch((e) => {
+              console.error('failed position balance check', e)
+            })
+            px.push(p2)
+            let p3 = getVaultPositions(
+              pos.address,
+              currentAccount,
+              provider!
+            ).then((val) => {
+              pos.vault_positions = val
+            })
+          }
+          if (currentAccount && connected) {
+            let p3 = getNumWalletPositions(
+              currentAccount,
+              provider!
+            ).then((val) => {
+              pos.wallet_balance = val
+            }).catch((e) => {
+              console.log('failed to get position wallet balance', e)
+            })
+            px.push(p3)
+          }
+        }
+      }
     return Promise.all(px)
+    }
   }
 
   useEffect(() => {
@@ -195,7 +251,10 @@ export const VaultDataProvider = ({
 
   useEffect(() => {
     if (Chains[chainId]) {
-      setTokens(getTokensListOnCurrentChain(chainId))
+      setTokens(getTokensOnChain(chainId))
+      if (chainId === ChainIDs.OPTIMISM) {
+        setPools(UniPoolAddresses)
+      }
     }
   }, [chainId])
 
@@ -205,7 +264,7 @@ export const VaultDataProvider = ({
         if (vaultIDs && vaultIDs?.length > 0) {
           const id = vaultIDs.toString()
           const addr = Chains[chainId].votingVaultController_addr
-          setVaultID(id)
+          setVaultId(id)
 
           getVotingVaultAddress(addr!, id, provider).then((addr) => {
             setVotingVaultAddress(addr)
@@ -223,30 +282,37 @@ export const VaultDataProvider = ({
               setHasMKRVotingVault(addr !== ZERO_ADDRESS)
             })
           }
+
+          if (chainId === ChainIDs.OPTIMISM) {
+            getNftVaultAddr(id, provider).then((addr) => {
+              setNftVaultAddr(addr)
+              setHasNftVault(addr !== ZERO_ADDRESS)
+            })
+          }
         } else {
-          setVaultID(null)
+          setVaultId(null)
         }
       })
     }
   }, [currentAccount, rolodex])
 
   useEffect(() => {
-    setHasVault(!!vaultID)
-    if (!!vaultID && rolodex) {
-      rolodex?.VC?.vaultAddress(vaultID)
+    setHasVault(!!vaultId)
+    if (!!vaultId && rolodex) {
+      rolodex?.VC?.vaultAddress(vaultId)
         .then(setVaultAddress)
         .catch((e) => {
           console.error('failed to get vault address', e)
         })
     }
-  }, [vaultID, rolodex])
+  }, [vaultId, rolodex])
 
   return (
     <VaultDataContext.Provider
       value={{
         hasVault,
-        setVaultID,
-        vaultID,
+        vaultId,
+        setVaultId,
         vaultAddress,
         setVaultAddress,
         borrowingPower,
@@ -255,7 +321,7 @@ export const VaultDataProvider = ({
         refresh,
         setRefresh,
         tokens,
-        setTokens,
+        pools,
         accountLiability,
         totalBaseLiability,
         hasVotingVault,
@@ -265,8 +331,11 @@ export const VaultDataProvider = ({
         votingVaultAddress,
         bptVaultAddress,
         MKRVotingVaultAddr,
+        NftVaultAddr,
         hasMKRVotingVault,
         setHasMKRVotingVault,
+        hasNftVault,
+        setHasNftVault,
       }}
     >
       {children}
@@ -276,12 +345,10 @@ export const VaultDataProvider = ({
 
 export const useVaultDataContext = () => {
   const context = useContext(VaultDataContext)
-
   if (context === undefined) {
     throw new Error(
       'useVaultDataContext must be used within a WalletModalProvider'
     )
   }
-
   return context
 }

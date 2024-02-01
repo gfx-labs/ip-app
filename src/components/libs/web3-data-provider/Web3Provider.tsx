@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { JsonRpcProvider, JsonRpcSigner, Web3Provider, WebSocketProvider } from '@ethersproject/providers'
-
 import { DEFAULT_CHAIN } from '../../../constants'
 import getGasPrice from '../../../contracts/misc/getGasPrice'
 import { ChainIDs, Chains } from '../../../chain/chains'
@@ -116,7 +115,7 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     }
   }, [provider])
 
-  // if chain changes based on injection not buttons
+  //if chain changes based on injection not buttons
   useEffect(() => {
     if (window && window.ethereum) {
       window.ethereum.on('chainChanged', () => {

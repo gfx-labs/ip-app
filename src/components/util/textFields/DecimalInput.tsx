@@ -14,6 +14,14 @@ const decimalEnforcer = (nextUserInput: string) => {
   }
   return nextUserInput.slice(0, -1)
 }
+const numberRegExp = /^\d+$/
+const numberEnforcer = (nextChar: string) => {
+  if (numberRegExp.test(nextChar)) {
+    return nextChar
+  } else {
+    return nextChar.slice(0, -1)
+  }
+}
 
 interface DecimalInputProps {
   onChange: (val: string) => void
@@ -78,6 +86,58 @@ export const DecimalInput = (props: DecimalInputProps) => {
             ? formatColor(neutral.gray1)
             : formatColor(neutral.white),
 
+          fontSize: useLargerFont ? { xs: 20, md: 24 } : 16,
+        },
+      }}
+    />
+  )
+}
+
+export const NumeralInput = ({
+  onChange,
+  placeholder,
+  value,
+  onFocus,
+  onBlur,
+  useLargerFont = false,
+  startAdornment = false,
+}: {
+  onChange: (val: string) => void
+  placeholder?: string
+  value: string
+  onFocus?: () => void
+  onBlur?: () => void
+  isMoneyValue?: boolean
+  useLargerFont?: boolean
+  startAdornment?: ReactNode
+}) => {
+  const isLight = useLight()
+
+  return (
+    <TextField
+      onFocus={onFocus}
+      onBlur={onBlur}
+      variant="standard"
+      value={value}
+      placeholder={placeholder || 'Token ID'}
+      onChange={(e) => {
+        onChange(numberEnforcer(e.target.value))
+      }}
+      InputProps={{
+        sx: {
+          '&:before, &:after': {
+            borderBottom: 'none !important',
+          },
+        },
+      }}
+      sx={{
+        width: '100%',
+        paddingBottom: '4px',
+        '.MuiInputBase-input': {
+          fontWeight: useLargerFont ? 600 : 700,
+          color: isLight
+            ? formatColor(neutral.gray1)
+            : formatColor(neutral.white),
           fontSize: useLargerFont ? { xs: 20, md: 24 } : 16,
         },
       }}

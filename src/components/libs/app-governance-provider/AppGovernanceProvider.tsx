@@ -1,6 +1,5 @@
 import { createContext, useState, useContext } from 'react'
-import { getTokensListOnCurrentChain } from '../../../chain/tokens'
-import { Token } from '../../../types/token'
+import { Token, getTokensOnChain } from '../../../chain/tokens'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 import { Chains } from '../../../chain/chains'
 import { DEFAULT_CHAIN } from '../../../constants'
@@ -29,7 +28,7 @@ export const AppGovernanceProvider = ({
   const chain = Chains[chainId] ? chainId : DEFAULT_CHAIN
   const [isApp, setIsApp] = useState<boolean>(true)
   const [delegateToken, setDelegateToken] = useState<Token>(
-    getTokensListOnCurrentChain(chain)[Chains[chain].delegate_token]
+    getTokensOnChain(chain)[Chains[chain].delegate_token]
   )
   const [currentVotes, setCurrentVotes] = useState(0)
   const [delegatedTo, setDelegatedTo] = useState("0x0000000000000000000000000000000000000000")

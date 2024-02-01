@@ -102,7 +102,7 @@ export const DelegateIPTModal = () => {
   return (
     <BaseModal
       open={type === ModalType.DelegateIPT}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
         setScreen(0)
       }}

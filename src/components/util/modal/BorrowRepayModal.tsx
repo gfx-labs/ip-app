@@ -16,13 +16,9 @@ import SVGBox from '../../icons/misc/SVGBox'
 
 export const BorrowRepayModal = () => {
   const { type, setType } = useModalContext()
-
   const currType = type === ModalType.Borrow
-
   const isLight = useLight()
-
-  const { vaultID, borrowingPower, accountLiability } = useVaultDataContext()
-
+  const { vaultId, borrowingPower, accountLiability } = useVaultDataContext()
   const [tokenName, setTokenName] = useState('USDI')
   const [vaultBorrowPower, setVaultBorrowPower] = useState('0')
   const [borrowAmount, setBorrowAmount] = useState('')
@@ -38,7 +34,7 @@ export const BorrowRepayModal = () => {
   return (
     <BaseModal
       open={type === ModalType.Borrow || type === ModalType.Repay}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >
@@ -130,7 +126,7 @@ export const BorrowRepayModal = () => {
         <BorrowContent
           tokenName={tokenName}
           vaultBorrowPower={vaultBorrowPower}
-          vaultID={Number(vaultID)}
+          vaultID={Number(vaultId)}
           borrowAmount={borrowAmount}
           setBorrowAmount={setBorrowAmount}
           accountLiability={parseFloat(accountLiability)}
@@ -139,7 +135,7 @@ export const BorrowRepayModal = () => {
         <RepayContent
           tokenName={tokenName}
           vaultBorrowPower={vaultBorrowPower}
-          vaultID={Number(vaultID)}
+          vaultID={Number(vaultId)}
           repayAmount={borrowAmount}
           setRepayAmount={setBorrowAmount}
           accountLiability={parseFloat(accountLiability)}

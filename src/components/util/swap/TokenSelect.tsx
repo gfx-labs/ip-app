@@ -3,8 +3,8 @@ import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 import { DecimalInput } from '../textFields'
 import { WithDots } from '../loading'
-import { Token } from '../../../types/token'
 import SVGBox from '../../icons/misc/SVGBox'
+import { Token } from '../../../chain/tokens'
 
 interface TokenSelectProps {
   token: Token

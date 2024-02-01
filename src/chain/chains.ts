@@ -1,12 +1,20 @@
-import { ChainInfo } from '../types/chain'
+export interface ChainInfo {
+  id: number
+  name: string
+  symbol: string
+  logo: string
+  usdi_addr?: string
+  votingVaultController_addr?: string
+  scan_url: string
+  scan_site: string
+  delegate_token: string
+  analytics: string
+  rpc: string // backup rpc when not connected
+}
 
 export enum ChainIDs {
   MAINNET = 1,
-  // ROPSTEN = 3,
-  // GOERLI = 5,
   OPTIMISM = 10,
-  // POLYGON = 137,
-  // LOCAL = 31337,
 }
 
 export const Chains: {[index: number]: ChainInfo} = {

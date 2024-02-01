@@ -2,6 +2,7 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
 import { UserTokenCard } from './UserTokenCard'
+import { UserPositionCard } from './UserPositionCard'
 import { CardContainer } from '../cards/CardContainer'
 import { DISPLAY_DECIMALS } from '../../../constants'
 import { round } from '../../../easy/bn'
@@ -10,9 +11,12 @@ export const UserStats = () => {
   const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
     undefined
   )
+  const [posCards, setPosCards] = useState<JSX.Element | undefined>(
+    undefined
+  )
 
   const theme = useTheme()
-  const { tokens, redraw } = useVaultDataContext()
+  const { tokens, pools, redraw } = useVaultDataContext()
 
   useEffect(() => {
     if (tokens) {
@@ -139,6 +143,102 @@ export const UserStats = () => {
           }}
         >
           {token_cards}
+        </Box>
+      </Box>
+      
+    </CardContainer>
+  )
+}
+
+export const UniPools = () => {
+  const [posCards, setPosCards] = useState<JSX.Element | undefined>(
+    undefined
+  )
+
+  const theme = useTheme()
+  const { tokens, pools, redraw } = useVaultDataContext()
+
+  useEffect(() => {
+    if (tokens && pools) {
+      let arr = []
+      for (const [key, val] of Object.entries(pools)) {
+        arr.push(
+          <UserPositionCard
+            key={key}
+            index={arr.length}
+            name={val.name} 
+            vaultBalance={val.vault_balance ?? '0'} 
+            numPositions={val.vault_positions ? val.vault_positions.length.toString() : '0'} 
+            image0={val.token0}
+            image1={val.token1}
+            fee={val.fee}
+            LTVPercent={val.LTV ? val.LTV.toLocaleString() : '0'}
+            penaltyPercent={val.penalty ? val.penalty.toLocaleString(): '0'}     
+          />
+        )
+      }
+      setPosCards(<>{arr}</>)
+    }
+  }, [redraw])
+
+  return (
+    <CardContainer>
+      <Box
+        sx={{
+          paddingTop: 2.5,
+          [theme.breakpoints.down('md')]: {
+            paddingTop: 2,
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: 'grid',
+            px: { xs: 2, lg: 3 },
+            gridTemplateColumns: {
+              xs: '1.5fr 1fr 1fr',
+              lg: '2.5fr 0.5fr 0.5fr 1.6fr 1fr 92px',
+            },
+            mb: 0,
+            columnGap: 2,
+            color: 'text.secondary',
+          }}
+        >
+          <Typography variant="label">Assets</Typography>
+          <Typography
+            display={{ xs: 'none', lg: 'flex' }}
+            variant="label"
+            justifyContent="end"
+          >
+            LTV
+          </Typography>
+          <Typography
+            display={{ xs: 'none', lg: 'flex' }}
+            variant="label"
+            justifyContent="end"
+          >
+            Penalty
+          </Typography>
+          <Typography variant="label" whiteSpace="nowrap" textAlign="end">
+            Vault Balance
+          </Typography>
+          <Box></Box>
+          <Box display={{ xs: 'none', lg: 'block' }}></Box>
+        </Box>
+        <Box
+          sx={{
+            mt: { xs: 2 },
+            display: 'grid',
+            gridTemplateColumns: {
+              sm: '1fr',
+            },
+            columnGap: 3,
+            '&:nth-of-type(odd) .MuiBox-root': {
+              backgroundColor: 'red',
+            },
+          }}
+        >
+          {posCards}
         </Box>
       </Box>
     </CardContainer>

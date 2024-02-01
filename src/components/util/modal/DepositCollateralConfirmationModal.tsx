@@ -15,12 +15,13 @@ import depositToBptVault from '../../../contracts/VotingVault/depositToBptVault'
 import { ERC20Detailed__factory } from '../../../chain/contracts'
 import { hasTokenAllowance } from '../../../contracts/misc/hasAllowance'
 import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
+import { Token } from '../../../chain/tokens'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
     type,
     setType,
-    collateralToken,
+    collateralToken: token,
     collateralDepositAmount,
     updateTransactionState,
     setCollateralDepositAmount,
@@ -30,13 +31,13 @@ export const DepositCollateralConfirmationModal = () => {
     wrap,
   } = useModalContext()
   const { provider, currentAccount, currentSigner } = useWeb3Context()
+  const { tokens, vaultAddress, vaultId, hasVotingVault, hasBptVault, hasMKRVotingVault } = useVaultDataContext()
+  const isLight = useLight()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-  const { tokens, vaultAddress, vaultID, hasVotingVault, hasBptVault, hasMKRVotingVault } = useVaultDataContext()
   const [hasAllowance, setHasAllowance] = useState(false)
-
+  const collateralToken = token as Token
   const amount = collateralDepositAmountMax ? collateralToken.wallet_amount : collateralDepositAmount
-
   const contract = ERC20Detailed__factory.connect(collateralToken.address, currentSigner!)
 
   useEffect(() => {
@@ -50,16 +51,15 @@ export const DepositCollateralConfirmationModal = () => {
   const handleDepositConfirmationRequest = async () => {
     try {
       let attempt: ContractTransaction
-      // IF TOKEN IS CAPPED
+
       if (collateralToken.capped_token && collateralToken.capped_address) {
         if ((!hasVotingVault && !collateralToken.bpt && collateralToken.ticker !== 'MKR') || 
         (!hasBptVault && collateralToken.bpt) ||
         (!hasMKRVotingVault && collateralToken.ticker == 'MKR')) {
           setLoading(false)
-          setType(ModalType.EnableCappedToken)
+          setType(ModalType.MintSubVault)
           return
         }
-        
         setLoading(true)
         setLoadmsg(locale('CheckWallet'))
 
@@ -71,39 +71,31 @@ export const DepositCollateralConfirmationModal = () => {
           collateralToken.decimals,
           currentSigner!
         )
-        //console.log(ha)
         setHasAllowance(ha)
-
         if (!ha) {
           let approveAmount = utils.parseUnits(DEFAULT_APPROVE_AMOUNT, collateralToken.decimals)
-
           const txn = await contract.approve(collateralToken.capped_address!, approveAmount)
           setLoadmsg(locale('TransactionPending'))
-
           await txn?.wait()
-
           setLoading(false)
           setLoadmsg('')
           setHasAllowance(true)
-
           return
         }
-
         if (collateralToken.bpt) {
-          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!, stake)
+          attempt = await depositToBptVault(vaultId!, currentSigner!, collateralToken, amount!, stake)
         } else if (collateralToken.can_wrap) {
-          attempt = await depositToBptVault(vaultID!, currentSigner!, collateralToken, amount!, wrap)
+          attempt = await depositToBptVault(vaultId!, currentSigner!, collateralToken, amount!, wrap)
         } else {
-          attempt = await depositToVotingVault(vaultID!, currentSigner!, collateralToken, amount!)
+          attempt = await depositToVotingVault(vaultId!, currentSigner!, collateralToken, amount!)
         }
       } else {
         if (wrap) {
           const tok = tokens![collateralToken.unwrapped!]
-          attempt = await depositToBptVault(vaultID!, currentSigner!, tok, amount!, wrap)
+          attempt = await depositToBptVault(vaultId!, currentSigner!, tok, amount!, wrap)
         } else {
           attempt = await depositCollateral(amount!, collateralToken.address, provider?.getSigner(currentAccount)!, vaultAddress!)
         }
-        
       }
       updateTransactionState(attempt!)
 
@@ -124,12 +116,10 @@ export const DepositCollateralConfirmationModal = () => {
     setLoading(false)
   }
 
-  const isLight = useLight()
-
   return (
     <BaseModal
       open={type === ModalType.DepositCollateralConfirmation}
-      setOpen={() => {
+      onClose={() => {
         setType(ModalType.DepositCollateral)
       }}
     >
@@ -158,7 +148,6 @@ export const DepositCollateralConfirmationModal = () => {
           </Box>
         </Box>
       </Box>
-
       <DisableableModalButton
         text={
           !collateralToken.capped_token || hasAllowance

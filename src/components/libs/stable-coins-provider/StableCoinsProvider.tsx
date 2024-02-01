@@ -5,9 +5,8 @@ import {
   ReactElement,
   createContext,
 } from 'react'
-import { getStablecoins } from '../../../chain/tokens'
+import { Token, getStablecoins } from '../../../chain/tokens'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
-import { Token } from '../../../types/token'
 import { useRolodexContext } from '../rolodex-data-provider/RolodexDataProvider'
 import { useWeb3Context } from '../web3-data-provider/Web3Provider'
 

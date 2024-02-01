@@ -85,7 +85,7 @@ export const DelegateModal = () => {
   return (
     <BaseModal
       open={type === ModalType.Delegate}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >

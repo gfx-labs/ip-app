@@ -1,10 +1,10 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
 import { CappedBptToken__factory } from '../../chain/contracts/factories/lending/CappedBptToken__factory'
-import { Token } from '../../types/token'
 import { CappedBptToken } from '../../chain/contracts/lending/CappedBptToken'
 import { CappedERC4626 } from '../../chain/contracts/lending/CappedERC4626'
 import { CappedERC4626__factory } from '../../chain/contracts/factories/lending/CappedERC4626__factory'
+import { Token } from '../../chain/tokens'
 
 const depositToBptVault = async (
   id: string,

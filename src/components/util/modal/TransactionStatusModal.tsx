@@ -157,7 +157,7 @@ export const TransactionStatusModal = () => {
   return (
     <BaseModal
       open={type === ModalType.TransactionStatus}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
       contentMaxWidth={400}

@@ -114,7 +114,7 @@ export const VoteCount = (props: VoteCountProps) => {
           <Typography variant="label">See All</Typography>
         </Button>
       </Box>
-      <BaseModal setOpen={setSeeAllOpen} open={seeAllOpen}>
+      <BaseModal onClose={setSeeAllOpen} open={seeAllOpen}>
         <Box pt={5}>
           {voters.map((voter, index) => (
             <Box

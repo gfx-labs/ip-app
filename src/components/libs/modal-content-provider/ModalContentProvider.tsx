@@ -1,7 +1,6 @@
 import { ContractReceipt, ContractTransaction } from 'ethers'
 import { createContext, useState, useContext } from 'react'
-import { getTokensListOnCurrentChain } from '../../../chain/tokens'
-import { Token } from '../../../types/token'
+import { Token, UniPosition, getTokensOnChain } from '../../../chain/tokens'
 import { useStableCoinsContext } from '../stable-coins-provider/StableCoinsProvider'
 import { DEFAULT_CHAIN } from '../../../constants'
 
@@ -18,11 +17,15 @@ export enum ModalType {
   WithdrawCollateral = 'WITHDRAW_COLLATERAL',
   DepositCollateralConfirmation = 'DEPOSIT_COLLATERAL_CONFIRMATION',
   WithdrawCollateralConfirmation = 'WITHDRAW_COLLATERAL_CONFIRMATION',
+  DepositPosition = 'DEPOSIT_POSITION',
+  WithdrawPosition = 'WITHDRAW_POSITION',
+  DepositPositionConfirmation = 'DEPOSIT_POSITION_CONFIRMATION',
+  WithdrawPositionConfirmation = 'WITHDRAW_POSITION_CONFIRMATION',
   Delegate = 'DELEGATE',
   Undelegate = 'UNDELEGATE',
   DelegateIPT = 'DELEGATE_IPT',
   TransactionStatus = 'TRANSACTION_STATUS',
-  EnableCappedToken = 'ENABLE_CAPPED_TOKEN',
+  MintSubVault = 'MINT_SUBVAULT',
   SetAllowance = 'SET_ALLOWANCE',
 }
 
@@ -42,8 +45,8 @@ export type ModalContextType = {
   setType: (val: ModalType | null) => void
 
   // Control Collateral
-  collateralToken: Token
-  setCollateralToken: (val: Token) => void
+  collateralToken: Token | UniPosition
+  setCollateralToken: (val: Token | UniPosition) => void
   collateralDepositAmount: string
   setCollateralDepositAmount: (val: string) => void
   collateralWithdrawAmount: string
@@ -52,6 +55,10 @@ export type ModalContextType = {
   collateralWithdrawAmountMax: boolean
   setCollateralDepositAmountMax: (val: boolean) => void
   setCollateralWithdrawAmountMax: (val: boolean) => void
+  stake: boolean
+  setStake: (val: boolean) => void
+  wrap: boolean
+  setWrap: (val: boolean) => void
 
   // Control USDC
   USDC: DepositWithdrawUSDC
@@ -61,10 +68,6 @@ export type ModalContextType = {
   transactionState: TransactionState
   updateTransactionState: (val: ContractReceipt | ContractTransaction) => void
   transaction: ContractReceipt | ContractTransaction | null
-  stake: boolean
-  setStake: (val: boolean) => void
-  wrap: boolean
-  setWrap: (val: boolean) => void
 }
 
 export const ModalContentContext = createContext({} as ModalContextType)
@@ -75,8 +78,8 @@ export const ModalContentProvider = ({
   children: React.ReactElement
 }) => {
   const [type, setType] = useState<ModalType | null>(null)
-  const [collateralToken, setCollateralToken] = useState<Token>(
-    getTokensListOnCurrentChain(DEFAULT_CHAIN)['WETH']
+  const [collateralToken, setCollateralToken] = useState<Token | UniPosition>(
+    getTokensOnChain(DEFAULT_CHAIN)['WETH']
   )
   const [collateralDepositAmount, setCollateralDepositAmount] = useState('')
   const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState('')
@@ -156,7 +159,6 @@ export const ModalContentProvider = ({
         setCollateralWithdrawAmountMax,
         USDC,
         updateUSDC,
-
         transactionState,
         updateTransactionState,
         transaction,

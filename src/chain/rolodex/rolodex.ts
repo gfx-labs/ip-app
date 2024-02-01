@@ -1,5 +1,4 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { Web3Data } from '../../components/libs/web3-data-provider/Web3Provider'
 import { Chains } from '../chains'
 import {
   IUSDI,
@@ -51,21 +50,10 @@ export const NewRolodex = async (provider: JsonRpcProvider, chainId: number) => 
   let rolo: Rolodex
 
   try {
-    // if (ctx.currentSigner) {
-    //   const signer = ctx.currentSigner//ctx.provider.getSigner(ctx.currentAccount)
-    //   rolo = new Rolodex(signer, chain.usdi_addr!)
-    //   rolo.addressVC = await rolo.USDI?.getVaultController()
-    //   rolo.VC = VaultController__factory.connect(rolo.addressVC!, signer)
-    // } else {
-    //   rolo = new Rolodex(provider, chain.usdi_addr!)
-    //   rolo.addressVC = await rolo.USDI?.getVaultController()
-    //   rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
-    // }
     rolo = new Rolodex(provider, chain.usdi_addr!)
     rolo.addressVC = await rolo.USDI?.getVaultController()
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     
-    // connect
     if (!rolo.addressUSDC) {
       rolo.addressUSDC = await rolo.USDI.reserveAddress()
       rolo.USDC = ERC20Detailed__factory.connect(rolo.addressUSDC!, provider)

@@ -19,6 +19,7 @@ import {
   DepositUSDCConfirmationModal,
   WithdrawCollateralConfirmationModal,
   DepositCollateralConfirmationModal,
+  DepositWithdrawPositionConfirmationModal,
   DelegateModal,
   UndelegateModal,
   DelegateIPTModal,
@@ -84,6 +85,7 @@ const DashboardContext = (props: { children: any }) => {
                         <DepositWithdrawCollateralModal />
                         <DepositCollateralConfirmationModal />
                         <WithdrawCollateralConfirmationModal />
+                        <DepositWithdrawPositionConfirmationModal />
                         <DepositWithdrawUSDCModal />
                         <BorrowRepayModal />
                         <DepositUSDCConfirmationModal />

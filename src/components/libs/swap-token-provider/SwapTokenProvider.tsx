@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { Token } from '../../../types/token'
 import { useStableCoinsContext } from '../stable-coins-provider/StableCoinsProvider'
+import { Token } from '../../../chain/tokens'
 
 type SwapTokenContextType = [Token, Token, () => void]
 

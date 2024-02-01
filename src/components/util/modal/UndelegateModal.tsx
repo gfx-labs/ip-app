@@ -74,7 +74,7 @@ export const UndelegateModal = () => {
   return (
     <BaseModal
       open={type === ModalType.Undelegate}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >

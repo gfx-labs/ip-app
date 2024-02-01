@@ -1,10 +1,10 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
 import { CappedGovToken__factory } from '../../chain/contracts/factories/lending/CappedGovToken__factory'
-import { Token } from '../../types/token'
 import { CappedMkrToken__factory } from '../../chain/contracts/factories/lending/CappedMKRToken__factory'
 import { CappedMkrToken } from '../../chain/contracts/lending/CappedMkrToken'
 import { CappedGovToken } from '../../chain/contracts/lending/CappedGovToken'
+import { Token } from '../../chain/tokens'
 
 const depositToVotingVault = async (
   id: string,

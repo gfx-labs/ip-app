@@ -15,12 +15,13 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { round } from '../../../easy/bn'
 import withdrawCollateral from '../../../contracts/Vault/withdrawCollateral'
 import SVGBox from '../../icons/misc/SVGBox'
+import { Token } from '../../../chain/tokens'
 
 export const WithdrawCollateralConfirmationModal = () => {
   const {
     type,
     setType,
-    collateralToken,
+    collateralToken: token,
     collateralWithdrawAmount,
     setCollateralWithdrawAmount,
     updateTransactionState,
@@ -32,6 +33,7 @@ export const WithdrawCollateralConfirmationModal = () => {
   const [loadmsg, setLoadmsg] = useState('')
   const [loading, setLoading] = useState(false)
   const isLight = useLight()
+  const collateralToken = token as Token
 
   const handleCollateralWithdraw = async () => {
     setLoading(true)
@@ -74,7 +76,7 @@ export const WithdrawCollateralConfirmationModal = () => {
   return (
     <BaseModal
       open={type === ModalType.WithdrawCollateralConfirmation}
-      setOpen={() => {
+      onClose={() => {
         setType(ModalType.WithdrawCollateral)
       }}
     >

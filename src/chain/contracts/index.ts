@@ -142,7 +142,7 @@ export { IVaultController__factory } from "./factories/lending/IVaultController.
 export type { VaultControllerEvents } from "./lending/IVaultController.sol/VaultControllerEvents";
 export { VaultControllerEvents__factory } from "./factories/lending/IVaultController.sol/VaultControllerEvents__factory";
 export type { Vault } from "./lending/Vault";
-export { Vault__factory } from "./factories/lending/Vault__factory";
+export { Vault__factory } from "./factories/lending/vault/Vault__factory";
 export type { VaultController } from "./lending/VaultController";
 export { VaultController__factory } from "./factories/lending/VaultController__factory";
 export type { ChainlinkOracleRelay } from "./oracle/External/ChainlinkOracleRelay";

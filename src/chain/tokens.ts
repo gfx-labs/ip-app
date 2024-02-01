@@ -1,8 +1,122 @@
 import { Rolodex } from '../chain/rolodex/rolodex'
-import initializeToken from '../components/util/tokens/initializeToken'
-import { CollateralTokens, Token, TokenInfo } from '../types/token'
 import { ChainIDs } from './chains'
-import { tickerToName, tickerToDecimals, tokensToChains } from './tokensToChains'
+import { tickerToName, tickerToDecimals, tokensToChains, UniPoolAddresses } from './tokensToChains'
+import { BigNumber } from 'ethers'
+
+export interface Token {
+  name: string
+  address: string
+  ticker: string
+  price: number
+  decimals: number
+
+  wallet_balance?: string
+  wallet_amount?: BigNumber
+  wallet_amount_str?: string
+
+  vault_balance?: string
+  vault_amount?: BigNumber
+  vault_amount_str?: string
+
+  token_LTV?: number
+  token_penalty?: number
+
+  can_delegate?: boolean
+
+  capped_token?: boolean
+  capped_address?: string
+
+  bpt?: boolean
+  can_wrap?: boolean
+  icons?: string[]
+  unwrapped?: string
+  display: boolean
+}
+
+export interface UniPosition {
+  name: string
+  address: string
+  token0: string // ticker
+  token1: string
+  pool: string
+  fee: number
+  
+  wallet_balance?: string // # of positions
+  wallet_positions?: string[] // list of token ids
+
+  vault_balance?: string
+  vault_positions?: string[]
+
+  LTV?: number
+  penalty?: number
+}
+
+export interface TokenInfo {
+  addr?: string
+  capped_addr?: string
+  can_delegate?: boolean
+  bpt?: boolean
+  can_wrap?: boolean
+  icons?: string[]
+  unwrapped?: string
+  display?: boolean
+}
+
+export const isToken = (token: Token | UniPosition): token is Token => {
+  return (token as UniPosition).pool == undefined
+}
+
+const initializeToken = ({
+  name,
+  ticker,
+  address,
+  capped_address,
+  capped_token = false,
+  can_delegate = false,
+  decimals = 18,
+  price = 0,
+  bpt = false,
+  icons,
+  can_wrap = false,
+  unwrapped,
+  display = true,
+}: {
+  name: string
+  ticker: string
+  address: string
+  capped_token?: boolean
+  capped_address?: string
+  price?: number
+  can_delegate?: boolean
+  decimals?: number
+  bpt?: boolean
+  can_wrap?: boolean
+  icons?: string[]
+  unwrapped?: string
+  display?: boolean
+}): Token => ({
+  name,
+  address,
+  ticker,
+  price,
+  decimals,
+  bpt,
+  vault_balance: '0',
+  vault_amount_str: '0',
+  vault_amount: BigNumber.from(0),
+  wallet_balance: '0',
+  wallet_amount: BigNumber.from(0),
+  wallet_amount_str: '0',
+  token_LTV: 0,
+  token_penalty: 0,
+  capped_token,
+  capped_address,
+  can_delegate,
+  icons,
+  can_wrap,
+  unwrapped,
+  display,
+})
 
 export const getStablecoins = (
   rolodex: Rolodex
@@ -49,50 +163,27 @@ const initToken = (ticker: string, token: TokenInfo): Token => {
   return t
 }
 
-export const getTokensListOnCurrentChain = (
+export const getTokensOnChain = (
   chain_id: ChainIDs
-): CollateralTokens => {
-  let out: CollateralTokens = {}
+) => {
+  let out: {[key: string]: Token} = {}
   for (const ticker in tokensToChains) {
     let token = tokensToChains[ticker][chain_id]
     if (token && token.addr) {
       out[ticker] = initToken(ticker, token)
     }
-    // if (token && token.addr) {
-    //   let name = ticker
-    //   if (Object.prototype.hasOwnProperty.call(tickerToName, ticker)) {
-    //     name = tickerToName[ticker]
-    //   }
-    //   out[ticker] = initializeToken({
-    //     name: name,
-    //     ticker: ticker,
-    //     address: token.addr!,
-    //     capped_token: token.capped_addr !== undefined,
-    //     capped_address: token.capped_addr,
-    //     can_delegate: token.can_delegate ?? false,
-    //     bpt: token.bpt ?? false,
-    //     icons: token.icons ?? undefined,
-    //     can_wrap: token.can_wrap ?? false,
-    //     unwrapped: token.can_wrap ? initializeToken(token.unwrapped)
-    //   })
-    //   if (Object.prototype.hasOwnProperty.call(tickerToDecimals, ticker)) {
-    //     out[ticker].decimals = tickerToDecimals[ticker]
-    //   }
-    // }
   }
   return out
 }
 
-export const getTokenFromTicker = (
-  chainId: ChainIDs,
-  ticker: string
-): Token => {
-  const tokens = getTokensListOnCurrentChain(chainId)
-
-  const tok = (tokens as any)[ticker]
-  if (tok != undefined) {
-    return tok
+export const getPools = () => {
+  let out: {[key: string]: UniPosition} = {}
+  for (let name in UniPoolAddresses) {
+    const pool = UniPoolAddresses[name]
+    out[name] = pool 
   }
+}
 
-  throw new TypeError('Could not find Token')
+export const getKey = (pos: UniPosition) => {
+  return pos.token0 + '/' + pos.token1 + pos.fee.toString()
 }

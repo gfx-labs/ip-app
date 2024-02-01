@@ -4,8 +4,7 @@ import { Rolodex } from '../../../chain/rolodex/rolodex'
 import { getBalanceOf } from '../../../contracts/ERC20/getBalanceOf'
 import getDecimals from '../../../contracts/misc/getDecimals'
 import { BN } from '../../../easy/bn'
-import { useFormatBNWithDecimals } from '../../../hooks/useFormatBNWithDecimals'
-import { Token } from '../../../types/token'
+import { Token } from '../../../chain/tokens'
 
 export const getVaultTokenBalanceAndPrice = async (
   vault_address: string | undefined,
@@ -42,7 +41,7 @@ export const getVaultTokenBalanceAndPrice = async (
   try {
     const price = await rolodex?.Oracle?.getLivePrice(token_address)
     const decimals = await getDecimals(token_address, SOP)
-    livePrice = useFormatBNWithDecimals(price!, 18 + (18 - decimals))
+    livePrice = Number(utils.formatUnits(price!._hex, 18 + (18 - decimals)))
     let vaultBalance = balanceBN.mul(price!)
     balance = utils.formatUnits(vaultBalance, decimals + decimals)
   } catch (e) {

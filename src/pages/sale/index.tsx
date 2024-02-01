@@ -24,7 +24,7 @@ import {
 } from '../../contracts/IPTSale/slowRollMethods'
 import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
 import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
-import { JsonRpcSigner, TransactionReceipt } from '@ethersproject/providers'
+import { TransactionReceipt } from '@ethersproject/providers'
 import { BN } from '../../easy/bn'
 import { locale } from '../../locale'
 import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'

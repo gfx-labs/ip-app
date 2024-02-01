@@ -10,7 +10,7 @@ import {
   Overrides,
 } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
-import type { Vault, VaultInterface } from "../../lending/Vault";
+import type { Vault, VaultInterface } from "../../../lending/Vault";
 
 const _abi = [
   {
