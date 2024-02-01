@@ -1,12 +1,14 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { VotingVaultController__factory } from '../../chain/contracts/factories/lending/VotingVaultController__factory'
 import { MKRVotingVaultController__factory } from '../../chain/contracts/factories/lending/MKRVotingVaultController__factory'
-import { MKR_VOTING_VAULT_ADDRESS } from '../../constants'
+import { MKR_VOTING_VAULT_ADDRESS, NFT_VAULT_CONTROLLER_ADDRESS } from '../../constants'
+import { NftVaultController__factory } from '../../chain/contracts/factories/pools/NftVaultController__factory'
 
 export enum SubVault {
   Voting = 'VOTING',
   BPT = 'BPT',
-  MKR = 'MKR'
+  MKR = 'MKR',
+  NFT = 'NFT',
 }
 
 export const mintSubVault = async (
@@ -42,4 +44,12 @@ export const mintSubVault = async (
   }
 }
 
-export default mintSubVault
+export const mintNftVault = async (
+  vault_id: string,
+  signerOrProvider: JsonRpcSigner | JsonRpcProvider
+) => {
+  const contract = NftVaultController__factory.connect(NFT_VAULT_CONTROLLER_ADDRESS, signerOrProvider)
+  const tx = await contract.mintVault(vault_id)
+  const receipt = await tx.wait()
+  return receipt
+}

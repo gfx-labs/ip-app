@@ -11,3 +11,5 @@ export * from "./DelegateModal";
 export * from "./UndelegateModal";
 export * from "./TransactionStatusModal";
 export * from "./DelegateIPTModal";
+export * from "./DepositWithdrawPositionModal";
+export * from "./DepositWithdrawPositionConfirmationModal";

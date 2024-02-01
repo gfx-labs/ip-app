@@ -10,11 +10,11 @@ import {
   Overrides,
 } from "ethers";
 import type { Provider, TransactionRequest } from "@ethersproject/providers";
-import type { PromiseOrValue } from "../../common";
+import type { PromiseOrValue } from "../../../common";
 import type {
   MKRVotingVault,
   MKRVotingVaultInterface,
-} from "../../lending/MKRVotingVault";
+} from "../../../lending/MKRVotingVault";
 
 const _abi = [
   {

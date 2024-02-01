@@ -47,7 +47,7 @@ export const ClaimModal = () => {
   return (
     <BaseModal
       open={type === ModalType.Claim}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >

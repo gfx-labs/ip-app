@@ -55,7 +55,7 @@ export const WithdrawUSDCConfirmationModal = () => {
   return (
     <BaseModal
       open={type === ModalType.WithdrawUSDCConfirmation}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >

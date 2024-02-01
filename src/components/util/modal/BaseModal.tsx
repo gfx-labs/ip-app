@@ -6,21 +6,20 @@ import { CloseIcon } from '../../icons/misc/CloseIcon'
 export interface BaseModalProps {
   open: boolean
   children: React.ReactNode
-  setOpen: (value: boolean) => void
+  onClose: (value: boolean) => void
   withCloseButton?: boolean
   contentMaxWidth?: number
 }
 
 export const BaseModal: React.FC<BaseModalProps> = ({
   open,
-  setOpen,
+  onClose,
   withCloseButton = true,
   contentMaxWidth = 520,
   children,
   ...props
 }: BaseModalProps) => {
-  const handleClose = () => setOpen(false)
-
+  const handleClose = () => onClose(false)
   const isLight = useLight()
 
   return (
@@ -57,7 +56,6 @@ export const BaseModal: React.FC<BaseModalProps> = ({
         }}
       >
         {children}
-
         <Box
           sx={{ position: 'absolute', top: '24px', right: '38px', zIndex: 5 }}
         >

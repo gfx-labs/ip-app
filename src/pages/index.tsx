@@ -3,7 +3,7 @@ import { Box, Typography, useTheme } from '@mui/material'
 import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
 import { ProtocolStatsCard } from '../components/util/cards'
 import { StatsMeter } from '../components/util/statsMeter'
-import { UserStats } from '../components/util/UserStats'
+import { UserStats, UniPools } from '../components/util/UserStats'
 import { useRolodexContext } from '../components/libs/rolodex-data-provider/RolodexDataProvider'
 import { useEffect, useState } from 'react'
 import { useVaultDataContext } from '../components/libs/vault-data-provider/VaultDataProvider'
@@ -28,7 +28,7 @@ import { UserIPTVault } from '../components/util/UserStats/UserIPTVault'
 import SVGBox from '../components/icons/misc/SVGBox'
 import { RedirectTo } from '../components/util/redirect'
 import getAPRs from '../contracts/USDI/getAPRs'
-import { Chains } from '../chain/chains'
+import { ChainIDs, Chains } from '../chain/chains'
 
 const Dashboard = () => {
   const cookies = new Cookies()
@@ -41,7 +41,7 @@ const Dashboard = () => {
   const { currentAccount, dataBlock, chainId } = useWeb3Context()
   const rolodex = useRolodexContext()
   const {
-    setVaultID,
+    setVaultId,
     setVaultAddress,
     accountLiability,
     hasVault,
@@ -59,7 +59,7 @@ const Dashboard = () => {
     if (currentAccount && rolodex) {
       fetchVaultOf(currentAccount, rolodex).then((res) => {
         if (res !== null) {
-          setVaultID(res.vaultID)
+          setVaultId(res.vaultID)
           setVaultAddress(res.vaultAddress)
         }
       })
@@ -333,6 +333,12 @@ const Dashboard = () => {
         <Box>
           <UserIPTVault />
           <UserStats />
+          
+        </Box>
+        <Box marginTop={3}>
+          { chainId === ChainIDs.OPTIMISM && (
+            <UniPools />
+          )}
         </Box>
       </Box>
 

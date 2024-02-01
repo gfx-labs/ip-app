@@ -52,7 +52,7 @@ export const VoteModal: React.FC<VoteModalProps> = (props: VoteModalProps) => {
   }
 
   return (
-    <BaseModal open={open} withCloseButton setOpen={setOpen}>
+    <BaseModal open={open} withCloseButton onClose={setOpen}>
       <Typography variant="h6_semi">
         Vote for Proposal {id} {isOptimistic ? '- Optimistic' : ''}
       </Typography>

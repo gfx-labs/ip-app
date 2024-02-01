@@ -7,23 +7,17 @@ import { Chains } from '../../../chain/chains'
 export const RolodexContentContext = createContext({} as Rolodex | null)
 
 export const RolodexContentProvider = ({ children }: { children: React.ReactElement }) => {
-  const ctx = useWeb3Context()
-  const currentProvider = useRef(ctx.provider)
-  const currentChainId = useRef(ctx.chainId)
+  const {provider, chainId} = useWeb3Context()
   const [rolodex, setRolodex] = useState<Rolodex | null>(null)
 
   useEffect(() => {
     setRolodex(null)
-    currentProvider.current = ctx.provider
-    currentChainId.current = ctx.chainId
-    if (ctx.provider && Chains[ctx.chainId]) {
-      NewRolodex(ctx.provider, ctx.chainId).then((rolodex) => {
-        if (currentProvider.current === ctx.provider && currentChainId.current === ctx.chainId) {
-          setRolodex(rolodex)
-        }
+    if (provider && Chains[chainId]) {
+      NewRolodex(provider, chainId).then((rolodex) => {
+        setRolodex(rolodex)
       }).catch(Logp('failed setting up rolodex'))
     }
-  }, [ctx.provider, ctx.chainId])
+  }, [provider, chainId])
 
   return <RolodexContentContext.Provider value={rolodex}>{children}</RolodexContentContext.Provider>
 }

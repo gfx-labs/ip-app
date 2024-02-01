@@ -1,12 +1,10 @@
 import { Box, useTheme, Button } from '@mui/material'
-import { useEffect } from 'react'
-
+import { useEffect, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useSwapTokenContext } from '../../libs/swap-token-provider/SwapTokenProvider'
 import { TokenSelect } from './TokenSelect'
-import { useTokenAmountInput } from './useTokenAmountInput'
 import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
 import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import {
@@ -17,28 +15,21 @@ import { Chains } from '../../../chain/chains'
 
 export const SwapContainer = () => {
   const isLight = useLight()
-
   const theme = useTheme()
-
   const [token1, token2, swapTokenPositions] = useSwapTokenContext()
   const { setIsWalletModalOpen } = useWalletModalContext()
   const { setType, updateUSDC } = useModalContext()
   const { connected, chainId } = useWeb3Context()
+  const [token1Amount, setToken1Amount] = useState('')
+  const [token2Amount, setToken2Amount] = useState('')
 
-  const [
-    token1Amount,
-    setToken1Amount,
-    token2Amount,
-    setToken2Amount,
-    swapTokenAmount,
-  ] = useTokenAmountInput()
+  const swapTokenAmount = () => {
+    const temp = token1Amount
+    setToken1Amount(token2Amount)
+    setToken2Amount(temp)
+  }
 
   const swapTokens = () => {
-    // if (token1.ticker === 'USDC') {
-    //   updateUSDC('amountToWithdraw', token1Amount)
-    // } else {
-    //   updateUSDC('amountToDeposit', token1Amount)
-    // }
     swapTokenAmount()
     swapTokenPositions()
     updateUSDC('maxDeposit', false)
@@ -71,6 +62,7 @@ export const SwapContainer = () => {
     } else {
       updateUSDC('amountToWithdraw', token1Amount)
     }
+    setToken2Amount(token1Amount)
   }, [token1Amount, token1])
 
   return (
@@ -95,7 +87,6 @@ export const SwapContainer = () => {
           setTokenAmount={token1Input}
           onMaxBalanceClick={token1MaxBalance}
         />
-
         <Button
           sx={{
             padding: 0,
@@ -134,7 +125,6 @@ export const SwapContainer = () => {
             }}
           />
         </Button>
-
         <TokenSelect
           token={token2}
           tokenAmount={token2Amount}
@@ -142,7 +132,6 @@ export const SwapContainer = () => {
           disableSetMax={true}
         />
       </Box>
-
       {connected ? (
         token1.ticker === 'USDC' ? (
           <Button

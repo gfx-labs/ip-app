@@ -25,10 +25,8 @@ export const DepositUSDCConfirmationModal = () => {
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const rolodex = useRolodexContext()
-
   const [hasAllowance, setHasAllowance] = useState(false)
   const [approvalTxn, setApprovalTxn] = useState<ContractTransaction>()
-
   const chain = Chains[chainId]
 
   useEffect(() => {
@@ -47,7 +45,6 @@ export const DepositUSDCConfirmationModal = () => {
           rolodex,
           currentSigner!
         )
-
         updateTransactionState(depositTransaction)
         setLoadmsg(locale('TransactionPending'))
 
@@ -87,7 +84,7 @@ export const DepositUSDCConfirmationModal = () => {
   return (
     <BaseModal
       open={type === ModalType.DepositUSDCConfirmation}
-      setOpen={() => {
+      onClose={() => {
         setType(null)
       }}
     >
@@ -119,9 +116,7 @@ export const DepositUSDCConfirmationModal = () => {
             </Typography>
           </Box>
         </Box>
-
         <ForwardIcon sx={{ width: 15, height: 15 }} strokecolor={formatColor(neutral.gray3)} />
-
         <Box display="flex" alignItems="center">
           <Box>
             <Typography variant="body3" color="text.primary">
@@ -132,17 +127,14 @@ export const DepositUSDCConfirmationModal = () => {
                 })}
             </Typography>
           </Box>
-
           <SVGBox width={36} height={36} svg_name="USDI" alt="USDI" sx={{ ml: 3 }} />
         </Box>
       </Box>
-
       <Box textAlign="center" mb={5}>
         <Typography variant="body3_medium" color={formatColor(neutral.gray3)} fontStyle="italic">
           1 USDC = 1 USDi ($1)
         </Typography>
       </Box>
-
       <DisableableModalButton
         text={hasAllowance ? 'Confirm Deposit' : 'Set Allowance'}
         disabled={false}

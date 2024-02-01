@@ -74,7 +74,6 @@ const DelegateButton = (props: DelegateButtonProps) => {
   )
 }
 
-
 export const UserTokenCard = (props: UserTokenCardProps) => {
   const isLight = useLight()
   const rolodex = useRolodexContext()

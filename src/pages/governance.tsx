@@ -15,9 +15,7 @@ export const Governance = () => {
   const theme = useTheme()
   const { ethBlock: dataBlock, ethProvider: provider, chainId, currentAccount } = useWeb3Context()
   const { setDelegatedTo, setIptBalance, setCurrentVotes, currentVotes, iptBalance } = useAppGovernanceContext()
-
   const [proposals, setProposals] = useState<Map<number, Proposal>>(new Map<number, Proposal>([]))
-
   const [noProposals, setNoProposals] = useState(false)
 
   useEffect(() => {
