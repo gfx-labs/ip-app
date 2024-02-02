@@ -1,0 +1,13 @@
+# Ignore artifacts:
+.vscode
+dist
+docs
+res
+server
+src/chain/contracts
+**/*.json
+**/*.yaml
+**/*.yml
+.yarn
+*.cjs
+*.md

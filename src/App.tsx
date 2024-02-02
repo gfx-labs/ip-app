@@ -13,7 +13,7 @@ import LandingPage from './pages/landing'
 import NotFound404Page from './pages/404'
 import {
   DepositWithdrawUSDCModal,
-  DepositWithdrawCollateralModal,
+  DepositWithdrawModal,
   BorrowRepayModal,
   WithdrawUSDCConfirmationModal,
   DepositUSDCConfirmationModal,
@@ -82,7 +82,7 @@ const DashboardContext = (props: { children: any }) => {
                         <DelegateModal />
                         <UndelegateModal />
                         <DelegateIPTModal />
-                        <DepositWithdrawCollateralModal />
+                        <DepositWithdrawModal />
                         <DepositCollateralConfirmationModal />
                         <WithdrawCollateralConfirmationModal />
                         <DepositWithdrawPositionConfirmationModal />

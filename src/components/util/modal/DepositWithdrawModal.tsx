@@ -1,18 +1,14 @@
-import { Box, Typography } from '@mui/material'
-import { formatColor, neutral } from '../../../theme'
-import SVGBox from '../../icons/misc/SVGBox'
 import {
   ModalType,
   useModalContext,
 } from '../../libs/modal-content-provider/ModalContentProvider'
 import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
-import { Token, isToken } from '../../../chain/tokens'
-import { DepositWithdrawPositionContent } from './DepositWithdrawPositionModal'
+import { isToken } from '../../../chain/tokens'
+import { DepositWithdrawPositionContent } from './DepositWithdrawPositionContent'
 import { DepositWithdrawCollateralContent } from './ModalContent/DepositWithdrawCollateralContent'
 
-export const DepositWithdrawCollateralModal = () => {
+export const DepositWithdrawModal = () => {
   const {
     type,
     setType,
