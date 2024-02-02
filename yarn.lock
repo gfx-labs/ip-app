@@ -5174,6 +5174,7 @@ __metadata:
     ethers: ^5.6.8
     mdast: ^3.0.0
     merkletreejs: ^0.2.31
+    prettier: 3.2.4
     react: ^18.1.0
     react-dom: ^18.1.0
     react-markdown: ^8.0.3
@@ -6851,6 +6852,15 @@ __metadata:
   version: 10.7.3
   resolution: "preact@npm:10.7.3"
   checksum: a0471da77528b9f9478c02bf60ae41754509655a19b65d9fea274a3c94c9583a7b1700e1329ee726ef6dd5307b73cf391d3f7f1b6a9ace43d71a70cd1be92737
+  languageName: node
+  linkType: hard
+
+"prettier@npm:3.2.4":
+  version: 3.2.4
+  resolution: "prettier@npm:3.2.4"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 6ec9385a836e0b9bac549e585101c086d1521c31d7b882d5c8bb7d7646da0693da5f31f4fff6dc080710e5e2d34c85e6fb2f8766876b3645c8be2f33b9c3d1a3
   languageName: node
   linkType: hard
 

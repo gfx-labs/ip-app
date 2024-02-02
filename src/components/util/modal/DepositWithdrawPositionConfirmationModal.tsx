@@ -37,7 +37,7 @@ export const DepositWithdrawPositionConfirmationModal = () => {
 
   const handleDepositConfirmation = async () => {
     try {
-      if (!hasVotingVault || !hasNftVault) {
+      if (!hasNftVault) {
         setLoading(false)
         setType(ModalType.MintSubVault)
         return
