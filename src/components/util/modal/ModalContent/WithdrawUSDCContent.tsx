@@ -9,8 +9,8 @@ import { ModalInputContainer } from './ModalInputContainer'
 import {
   ModalType,
   useModalContext,
-} from '../../../libs/modal-content-provider/ModalContentProvider'
-import { useStableCoinsContext } from '../../../libs/stable-coins-provider/StableCoinsProvider'
+} from '../../../providers/ModalContentProvider'
+import { useStableCoinsContext } from '../../../providers/StableCoinsProvider'
 import { useLight } from '../../../../hooks/useLight'
 import { round } from '../../../../easy/bn'
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChainIDs, Chains } from '../../../chain/chains'
 import { Accordion, AccordionDetails, AccordionSummary, Button, ButtonProps, ClickAwayListener, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { useLight } from '../../../hooks/useLight'
 import SVGBox from '../../icons/misc/SVGBox'
 

@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
-import { Rolodex } from '../../chain/rolodex/rolodex'
+import { Rolodex } from '../../chain/rolodex'
 import { BN } from '../../easy/bn'
 
 export const withdrawUSDC = async (

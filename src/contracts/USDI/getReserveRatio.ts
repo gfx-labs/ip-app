@@ -1,4 +1,4 @@
-import { Rolodex } from '../../chain/rolodex/rolodex'
+import { Rolodex } from '../../chain/rolodex'
 import { BNtoHexNumber } from '../../components/util/helpers/BNtoHex'
 
 export const getReserveRatioPercentage = async (
@@ -7,9 +7,7 @@ export const getReserveRatioPercentage = async (
   try {
     const reserveRatio = await getReserveRatio(rolodex)
     const formattedReserveRatio = BNtoHexNumber(reserveRatio)
-
     const toPercentage = formattedReserveRatio / 1e16
-
     return toPercentage.toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -22,7 +20,6 @@ export const getReserveRatioPercentage = async (
 export const getReserveRatio = async (rolodex: Rolodex) => {
   try {
     const reserveRatio = await rolodex?.USDI.reserveRatio()
-
     return reserveRatio
   } catch (err) {
     throw new Error('Could not retrieve reserve ratio')

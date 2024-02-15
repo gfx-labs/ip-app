@@ -6,17 +6,17 @@ import { formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useRolodexContext } from '../../providers/RolodexDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { locale } from '../../../locale'
 import { withdrawUSDC } from '../../../contracts/USDI/withdrawUSDC'
 import SVGBox from '../../icons/misc/SVGBox'
-import { useStableCoinsContext } from '../../libs/stable-coins-provider/StableCoinsProvider'
+import { useStableCoinsContext } from '../../providers/StableCoinsProvider'
 
 export const WithdrawUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()

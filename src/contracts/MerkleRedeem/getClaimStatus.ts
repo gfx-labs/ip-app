@@ -1,7 +1,7 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
 import { log, trace } from '../../easy/log'
 import { Contract } from 'ethers'
-import { MerkleRedeem__factory } from '../../chain/contracts/factories/IPTsale/MerkleRedeem'
+import { MerkleRedeem__factory } from '../../contract_abis/factories/IPTsale/MerkleRedeem'
 import { MERKLE_REDEEM_ADDRESS } from '../../constants'
 
 const ZERO_ADDRESS =

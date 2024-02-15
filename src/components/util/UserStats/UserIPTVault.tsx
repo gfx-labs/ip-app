@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import {
   ConnectWalletButton,
   CopyButton,

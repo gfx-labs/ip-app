@@ -1,24 +1,24 @@
 import { formatColor, neutral } from '../theme'
 import { Box, Typography, useTheme } from '@mui/material'
-import { useWeb3Context } from '../components/libs/web3-data-provider/Web3Provider'
+import { useWeb3Context } from '../components/providers/Web3Provider'
 import { ProtocolStatsCard } from '../components/util/cards'
 import { StatsMeter } from '../components/util/statsMeter'
 import { UserStats, UniPools } from '../components/util/UserStats'
-import { useRolodexContext } from '../components/libs/rolodex-data-provider/RolodexDataProvider'
+import { useRolodexContext } from '../components/providers/RolodexDataProvider'
 import { useEffect, useState } from 'react'
-import { useVaultDataContext } from '../components/libs/vault-data-provider/VaultDataProvider'
+import { useVaultDataContext } from '../components/providers/VaultDataProvider'
 import Cookies from 'universal-cookie'
 import fetchVaultOf from '../contracts/Vault/fetchVaultOf'
 import { getTotalSupply, getReserveRatioPercentage } from '../contracts/USDI'
 import { BN } from '../easy/bn'
-import { GweiBlockText, TitleText } from '../components/util/text'
+import { TitleText } from '../components/util/text'
 import { SingleStatCard } from '../components/util/cards'
 import { InverseButton } from '../components/util/button'
 import { TitleTextToolTip } from '../components/util/text/TitleTextToolTip'
 import {
   useModalContext,
   ModalType,
-} from '../components/libs/modal-content-provider/ModalContentProvider'
+} from '../components/providers/ModalContentProvider'
 import { OpenVaultButton } from '../components/util/button/OpenVaultButton'
 import { InterestRateGraphCard } from '../components/util/cards/InterestRateGraphCard'
 import { Substat } from '../components/util/text/Substat'
@@ -29,16 +29,39 @@ import SVGBox from '../components/icons/misc/SVGBox'
 import { RedirectTo } from '../components/util/redirect'
 import getAPRs from '../contracts/USDI/getAPRs'
 import { ChainIDs, Chains } from '../chain/chains'
+import { useChainDataContext } from '../components/providers/ChainDataProvider'
+
+const GweiBlockText = (props: { block: number, gasPrice: string }) => {
+  const { gasPrice, block } = props
+
+  return (
+    <Box
+      px={{ xs: 3, md: 10 }}
+      mb={2}
+      display="flex"
+      columnGap={2}
+      justifyContent="flex-end"
+    >
+      <Box>
+        <Typography variant="label">Gwei: </Typography>
+        <Typography variant="label2_medium">{gasPrice}</Typography>
+      </Box>
+      <Box>
+        <Typography variant="label">Block: </Typography>
+        <Typography variant="label2_medium">{block}</Typography>
+      </Box>
+    </Box>
+  )
+}
 
 const Dashboard = () => {
   const cookies = new Cookies()
   const firstVisitExists = cookies.get('first-visit')
   if (!firstVisitExists) return <RedirectTo url="#/landing" />
-
   const isLight = useLight()
   const { setType } = useModalContext()
   const theme = useTheme()
-  const { currentAccount, dataBlock, chainId } = useWeb3Context()
+  const { currentAccount, chainId } = useWeb3Context()
   const rolodex = useRolodexContext()
   const {
     setVaultId,
@@ -47,7 +70,7 @@ const Dashboard = () => {
     hasVault,
     borrowingPower,
   } = useVaultDataContext()
-
+  const { block, gasPrice } = useChainDataContext()
   const [totalSupply, setTotalSupply] = useState<string>('')
   const [totalUSDCDeposited, setTotalUSDCDeposited] = useState<string>('')
   const [reserveRatio, setReserveRatio] = useState('0')
@@ -71,11 +94,9 @@ const Dashboard = () => {
       rolodex.USDC.balanceOf(rolodex.addressUSDI).then((val) => {
         setTotalUSDCDeposited(val.div(BN('1e6')).toLocaleString())
       })
-
       getTotalSupply(rolodex).then(setTotalSupply)
       getReserveRatioPercentage(rolodex).then(setReserveRatio)
     }
-
     if (rolodex) {
       getAPRs(rolodex)
         .then(({ borrow, deposit }) => {
@@ -90,7 +111,7 @@ const Dashboard = () => {
     if (Chains[chainId]) {
       getAverages(Chains[chainId].analytics).then((averages) => setAverages(averages))
     }
-  }, [rolodex, dataBlock, chainId])
+  }, [rolodex, block, chainId])
 
   return (
     <Box
@@ -135,14 +156,12 @@ const Dashboard = () => {
                 height={36}
                 sx={{ mr: 3 }}
               />
-
               <TitleText
                 title="USDi in Circulation"
                 text={Math.round(Number(totalSupply)).toLocaleString()}
               />
             </>
           </SingleStatCard>
-
           <SingleStatCard>
             <>
               <SVGBox
@@ -151,7 +170,6 @@ const Dashboard = () => {
                 height={36}
                 sx={{ mr: 3 }}
               />
-
               <TitleText
                 title="USDC in Reserve"
                 text={Math.round(Number(totalUSDCDeposited)).toLocaleString()}
@@ -166,12 +184,10 @@ const Dashboard = () => {
                 height={36}
                 sx={{ mr: 3 }}
               />
-
               <TitleText title="Reserve Ratio" text={`${reserveRatio}%`} />
             </>
           </SingleStatCard>
         </Box>
-
         <InterestRateGraphCard url={Chains[chainId]?.analytics}/>
         <Box
           display="flex"
@@ -265,7 +281,6 @@ const Dashboard = () => {
                 />
               </SingleStatCard>
             </Box>
-
             <SingleStatCard>
               <Box
                 display="flex"
@@ -290,7 +305,6 @@ const Dashboard = () => {
                       : null
                   }
                 />
-
                 {hasVault ? (
                   <Box
                     display="grid"
@@ -305,7 +319,6 @@ const Dashboard = () => {
                     >
                       <Typography variant="body1">Borrow</Typography>
                     </InverseButton>
-
                     <InverseButton
                       sx={{ width: '100%', height: { xs: 37, md: 48 } }}
                       onClick={() => setType(ModalType.Repay)}
@@ -329,11 +342,9 @@ const Dashboard = () => {
             </SingleStatCard>
           </Box>
         </Box>
-
         <Box>
           <UserIPTVault />
           <UserStats />
-          
         </Box>
         <Box marginTop={3}>
           { chainId === ChainIDs.OPTIMISM && (
@@ -341,9 +352,8 @@ const Dashboard = () => {
           )}
         </Box>
       </Box>
-
       <Box maxWidth="xl" margin="auto">
-        <GweiBlockText />
+        <GweiBlockText block={block} gasPrice={gasPrice}/>
       </Box>
     </Box>
   )

@@ -1,13 +1,8 @@
 import { StrictMode, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './theme/fonts.css'
-
 import { CssBaseline, StyledEngineProvider } from '@mui/material'
 import { AppLayout } from './components/partials/app-layout'
-import { Web3ContextProvider } from './components/libs/web3-data-provider/Web3Provider'
-import { WalletModalProvider } from './components/libs/wallet-modal-provider/WalletModalProvider'
-import { ModalContentProvider } from './components/libs/modal-content-provider/ModalContentProvider'
-import { PaletteModeContextProvider } from './components/libs/palette-mode-provider/palette-mode-provider'
 import Dashboard from './pages'
 import LandingPage from './pages/landing'
 import NotFound404Page from './pages/404'
@@ -24,28 +19,35 @@ import {
   UndelegateModal,
   DelegateIPTModal,
   TransactionStatusModal,
+  MintVaultModal,
 } from './components/util/modal'
 import { ClaimModal } from './components/util/modal/ClaimModal'
-import { RolodexContentProvider } from './components/libs/rolodex-data-provider/RolodexDataProvider'
-import { SwapTokenProvider } from './components/libs/swap-token-provider/SwapTokenProvider'
-import { VaultDataProvider } from './components/libs/vault-data-provider/VaultDataProvider'
-import { StableCoinsProvider } from './components/libs/stable-coins-provider/StableCoinsProvider'
-import { AppGovernanceProvider } from './components/libs/app-governance-provider/AppGovernanceProvider'
 import { WhitepaperPage } from './pages/whitepaper'
 import { TermsPage } from './pages/terms'
 import { TestingPage } from './pages/playground'
-import { MerkleRedeemContextProvider } from './components/libs/merkle-redeem-provider/MerkleRedeemProvider'
 import { Governance } from './pages/governance'
-import { EnableCappedTokenModal } from './components/util/modal/EnableCappedTokenModal'
 import { RedirectTo } from './components/util/redirect'
 import { EthereumClient, w3mConnectors, w3mProvider } from '@web3modal/ethereum'
 import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { mainnet, optimism } from 'wagmi/chains'
-
+import { 
+  AppGovernanceProvider, 
+  MerkleRedeemContextProvider, 
+  ModalContentProvider, 
+  PaletteModeContextProvider, 
+  RolodexContentProvider, 
+  StableCoinsProvider, 
+  SwapTokenProvider, 
+  VaultDataProvider, 
+  WalletModalProvider, 
+  Web3ContextProvider 
+} from './components/providers'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ChainDataContextProvider } from './components/providers/ChainDataProvider'
+const queryClient = new QueryClient()
 const chains = [mainnet, optimism]
 const projectId = '1076f5912040f4580a3c3dd2b2df8a51'
-
 const { publicClient, webSocketPublicClient } = configureChains(chains, [w3mProvider({ projectId })])
 const wagmiConfig = createConfig({
   autoConnect: true,
@@ -68,7 +70,9 @@ const WalletContext = (props: { children: any }) => {
 
 const DashboardContext = (props: { children: any }) => {
   return (
+    <QueryClientProvider client = {queryClient}>
     <Web3ContextProvider>
+      <ChainDataContextProvider>
       <RolodexContentProvider>
         <StableCoinsProvider>
           <VaultDataProvider>
@@ -90,7 +94,7 @@ const DashboardContext = (props: { children: any }) => {
                         <BorrowRepayModal />
                         <DepositUSDCConfirmationModal />
                         <WithdrawUSDCConfirmationModal />
-                        <EnableCappedTokenModal />
+                        <MintVaultModal />
                         <ClaimModal />
                         <TransactionStatusModal />
                       </>
@@ -102,7 +106,9 @@ const DashboardContext = (props: { children: any }) => {
           </VaultDataProvider>
         </StableCoinsProvider>
       </RolodexContentProvider>
+      </ChainDataContextProvider>
     </Web3ContextProvider>
+    </QueryClientProvider>
   )
 }
 
@@ -110,25 +116,6 @@ const AppRouter = () => {
   return (
     <WalletContext>
       <Routes>
-        {/* <Route
-          path={`/sale`}
-          element={
-            <Web3ContextProvider>
-              <RolodexContentProvider>
-                <MerkleRedeemContextProvider>
-                  <ModalContentProvider>
-                    <WalletModalProvider>
-                      <>
-                        <PurchasePage />
-                        <TransactionStatusModal />
-                      </>
-                    </WalletModalProvider>
-                  </ModalContentProvider>
-                </MerkleRedeemContextProvider>
-              </RolodexContentProvider>
-            </Web3ContextProvider>
-          }
-        /> */}
         <Route path={`/landing`} element={<LandingPage />} />
         <Route path={`/whitepaper`} element={<WhitepaperPage />} />
         <Route path={`/terms`} element={<TermsPage />} />
@@ -142,7 +129,6 @@ const AppRouter = () => {
         />
         <Route path={`/testing`} element={<TestingPage />} />
         <Route path={`*`} element={<NotFound404Page />} />
-
         <Route
           path={`/`}
           element={
@@ -153,7 +139,6 @@ const AppRouter = () => {
             </DashboardContext>
           }
         />
-
         <Route
           path={`/proposal`}
           element={
@@ -164,7 +149,6 @@ const AppRouter = () => {
             </DashboardContext>
           }
         />
-
         <Route
           path={`/proposal/:id`}
           element={

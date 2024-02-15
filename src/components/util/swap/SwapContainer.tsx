@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
-import { useSwapTokenContext } from '../../libs/swap-token-provider/SwapTokenProvider'
+import { useSwapTokenContext } from '../../providers/SwapTokenProvider'
 import { TokenSelect } from './TokenSelect'
-import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useWalletModalContext } from '../../providers/WalletModalProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import {
   useModalContext,
   ModalType,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { Chains } from '../../../chain/chains'
 
 export const SwapContainer = () => {

@@ -1,5 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { GovernorCharlieDelegate__factory } from '../../chain/contracts'
+import { GovernorCharlieDelegate__factory } from '../../contract_abis'
 import { GOVERNOR_ADDRESS } from '../../constants'
 
 const connectToGovernorContract = (

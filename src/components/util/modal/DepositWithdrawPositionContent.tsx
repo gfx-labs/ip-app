@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { useState } from 'react'
 import { formatColor, neutral } from '../../../theme'
 import { DISPLAY_DECIMALS } from '../../../constants'
@@ -12,7 +12,7 @@ import { NumeralInput } from '../textFields'
 import { ModalInputContainer } from './ModalContent/ModalInputContainer'
 import { UniPosition } from '../../../chain/tokens'
 import { isValidPosition } from './PositionHelpers'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import red from '@mui/material/colors/red'
 import SVGBox from '../../icons/misc/SVGBox'
 

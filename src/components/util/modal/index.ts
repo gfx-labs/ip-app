@@ -12,3 +12,4 @@ export * from "./UndelegateModal";
 export * from "./TransactionStatusModal";
 export * from "./DelegateIPTModal";
 export * from "./DepositWithdrawPositionConfirmationModal";
+export * from "./MintVaultModal";

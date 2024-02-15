@@ -6,38 +6,34 @@ import { formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
-import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalContent/ModalInputContainer'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { locale } from '../../../locale'
 import { delegateVaultVotingPower } from '../../../contracts/Vault/delegateVaultVotingPower'
 import SVGBox from '../../icons/misc/SVGBox'
-import getDelegate from '../../../contracts/VotingVault/getDelegate'
+import getDelegate from '../../../contracts/Vault/getDelegate'
 import { ZERO_ADDRESS } from '../../../constants'
 
 export const DelegateModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
   const isLight = useLight()
-
   const [focus, setFocus] = useState(false)
   const [loading, setLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-
   const [address, setAddress] = useState('')
   const [delegate, setDelegate] = useState('')
-
-  const toggle = () => setFocus(!focus)
-
   const { delegateToken } = useAppGovernanceContext()
   const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } =
     useVaultDataContext()
   const { currentSigner } = useWeb3Context()
+  const toggle = () => setFocus(!focus)
   let delegateAddress =
     delegateToken.capped_address && hasVotingVault
       ? votingVaultAddress

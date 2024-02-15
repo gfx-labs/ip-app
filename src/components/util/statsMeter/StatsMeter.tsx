@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { formatColor, neutral } from '../../../theme'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
 import { CardContainer } from '../cards/CardContainer'
 import { ToolTip } from '../tooltip/ToolTip'
 

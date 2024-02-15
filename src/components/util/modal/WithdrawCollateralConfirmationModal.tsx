@@ -4,12 +4,12 @@ import { useState } from 'react'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
 import { locale } from '../../../locale'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { round } from '../../../easy/bn'

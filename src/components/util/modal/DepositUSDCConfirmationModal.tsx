@@ -1,12 +1,12 @@
 import { Box, Button, Typography, Link as MuiLink } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import { useEffect, useState } from 'react'
-import { ModalType, useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useRolodexContext } from '../../providers/RolodexDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { BN } from '../../../easy/bn'
 import { ContractTransaction } from 'ethers'
 import { locale } from '../../../locale'
@@ -14,13 +14,15 @@ import { TransactionReceipt } from '@ethersproject/providers'
 import { Chains } from '../../../chain/chains'
 import { depositUSDC } from '../../../contracts/USDI/depositUSDC'
 import SVGBox from '../../icons/misc/SVGBox'
-import { hasUSDCAllowance } from '../../../contracts/misc/hasAllowance'
-import { useStableCoinsContext } from '../../libs/stable-coins-provider/StableCoinsProvider'
+import { hasUSDCAllowance } from '../../../contracts/Token/hasAllowance'
+import { useStableCoinsContext } from '../../providers/StableCoinsProvider'
 import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
+import { useChainDataContext } from '../../providers/ChainDataProvider'
 
 export const DepositUSDCConfirmationModal = () => {
   const { type, setType, USDC, updateTransactionState } = useModalContext()
-  const { currentAccount, dataBlock, currentSigner, chainId } = useWeb3Context()
+  const { currentAccount, currentSigner, chainId } = useWeb3Context()
+  const { block: dataBlock } = useChainDataContext()
   const { USDC: USDC_TOKEN } = useStableCoinsContext()
   const [loading, setLoading] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')

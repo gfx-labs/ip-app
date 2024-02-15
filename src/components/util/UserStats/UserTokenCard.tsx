@@ -1,17 +1,17 @@
 import { Box, BoxProps, Button, ButtonProps, LinearProgress, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
-import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
-import { ModalType, useModalContext } from '../../libs/modal-content-provider/ModalContentProvider'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
-import { useWalletModalContext } from '../../libs/wallet-modal-provider/WalletModalProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
+import { useRolodexContext } from '../../providers/RolodexDataProvider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
+import { useWalletModalContext } from '../../providers/WalletModalProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
 import { useLight } from '../../../hooks/useLight'
 import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
-import getCappedPercentOf from '../../../contracts/VotingVault/getCappedPercentOf'
+import getCappedPercentOf from '../../../contracts/Token/getCappedPercentOf'
 import { useEffect, useState } from 'react'
 import SVGBox from '../../icons/misc/SVGBox'
 
@@ -177,7 +177,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
                 }}/>
             )}
           </Box>
-          
           <Box display="flex" flexDirection="column">
             <Typography variant="body1" color="text.primary" display={{ xs: 'none', lg: 'block' }}>
               {tokenName}
@@ -190,7 +189,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         <Typography display={{ xs: 'none', lg: 'block' }} variant="body1" color="text.primary" textAlign="end">
           {tokenPrice}
         </Typography>
-
         <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
             content={<Typography variant="body3">Maximum Loan-To-Value for this asset</Typography>}
@@ -231,7 +229,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             {tokenAmount} {tokenTicker}
           </Typography>
         </Box>
-
         <Box display={{ xs: 'none', lg: 'flex' }} flexDirection="column" justifyContent="center">
           {canDelegate && tokenTicker !== 'MKR' && (
             <DelegateButton onClick={setAndOpenDelegate} text='Delegate'/>
@@ -247,7 +244,6 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             }} />
           ])}
         </Box>
-
         <Box
           sx={{
             display: { xs: 'none', lg: 'flex' },
