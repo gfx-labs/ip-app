@@ -5,18 +5,14 @@ import {
   TokenSaleButton,
 } from '../../util/button'
 import { useLight } from '../../../hooks/useLight'
-import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
 import { AppGovSwitch } from '../../util/switch'
 import { DesktopMenu } from './DesktopMenu'
 import SVGBox from '../../icons/misc/SVGBox'
+import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
 
 export const DesktopToolBar = () => {
-  //desktop menu config
-
   const isLight = useLight()
-
   const { setIsApp } = useAppGovernanceContext()
-
   return (
     <Toolbar sx={{ padding: 0 }} disableGutters>
       <Link href="#/landing" role="heading" aria-level={1}>

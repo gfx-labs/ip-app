@@ -3,12 +3,10 @@ import { useEffect, useState } from 'react'
 import { Votes } from './Votes'
 import { Status } from './Status'
 import { Spinner } from '../loading'
-
 import ReactMarkdown from 'react-markdown'
 import { NormalComponents } from 'react-markdown/lib/complex-types'
 import { SpecialComponents } from 'react-markdown/lib/ast-to-react'
 import remarkGfm from 'remark-gfm'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
 import ProposalDetails from './proposal'
 import VoteButton from './VoteButton'
 import { getProposalInfo, ProposalInfo, getProposalState } from '../../../contracts/GovernorCharlieDelegate'
@@ -25,8 +23,9 @@ import { getPriorVotes } from '../../../contracts/IPTDelegate/getPriorVotes'
 import { getReceiptOf } from '../../../contracts/GovernorCharlieDelegate/getReceiptOf'
 import SVGBox from '../../icons/misc/SVGBox'
 import { Proposal } from '../api/getProposals'
-import { JsonRpcProvider } from '@ethersproject/providers'
 import { ChainIDs, Chains } from '../../../chain/chains'
+import { useWeb3Context } from '../../providers/Web3Provider'
+import { useChainDataContext } from '../../providers/ChainDataProvider'
 
 export interface ProposalCardProps {
   proposal: Proposal
@@ -81,7 +80,8 @@ const linkIfAddress = (content: string) => {
 }
 
 export const ProposalCard = (props: ProposalCardProps) => {
-  const { dataBlock, ethProvider: provider, currentAccount, chainId } = useWeb3Context()
+  const { ethProvider: provider, currentAccount } = useWeb3Context()
+  const { ethBlock: currentBlock } = useChainDataContext()
   const { votingPower } = props
   const { id, body, endBlock, transactionHash, details, startBlock, votes } = props.proposal
   const isLight = useLight()
@@ -120,7 +120,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
   useEffect(() => {
     if (votes.for.length || votes.against.length) {
       const forVotes = proposalType !== 'optimistic' ? votes.for.reduce((a, b) => a + b.votingPower, 0) : 0
-
       const againstVotes = votes.against.reduce((a, b) => a + b.votingPower, 0)
 
       const totalVotes = forVotes + againstVotes
@@ -129,16 +128,6 @@ export const ProposalCard = (props: ProposalCardProps) => {
       setTotalVotes(totalVotes)
     }
   }, [votes, proposal])
-
-  const [currentBlock, setCurrentBlock] = useState(dataBlock)
-  useEffect(()=>{
-    if (chainId !== ChainIDs.MAINNET) {
-      setCurrentBlock(provider._fastBlockNumber)
-    } else {
-      setCurrentBlock(dataBlock)
-    }
-
-  }, [dataBlock])
 
   useEffect(() => {
     if (currentBlock) {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { INonfungiblePositionManager__factory } from '../../../chain/contracts/factories/_external/uniswap/INonfungiblePositionManager__factory'
+import { INonfungiblePositionManager__factory } from '../../../contract_abis/factories/_external/uniswap/INonfungiblePositionManager__factory'
 import { JsonRpcSigner } from '@ethersproject/providers'
 import { Contract } from 'ethers'
 import { NONFUNGIBLE_POSITION_MANAGER_CONTRACT_ADDRESS } from '../../../constants'

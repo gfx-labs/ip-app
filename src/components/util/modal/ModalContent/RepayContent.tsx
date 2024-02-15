@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react'
 import { Box, Button, Typography } from '@mui/material'
-
 import { formatColor, neutral } from '../../../../theme'
 import { DecimalInput } from '../../textFields'
 import { DisableableModalButton } from '../../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalInputContainer'
-import { useRolodexContext } from '../../../libs/rolodex-data-provider/RolodexDataProvider'
-import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
+import { useRolodexContext } from '../../../providers/RolodexDataProvider'
+import { useWeb3Context } from '../../../providers/Web3Provider'
 import { locale } from '../../../../locale'
-import { useModalContext } from '../../../libs/modal-content-provider/ModalContentProvider'
-import { repayAllUsdi, repayUsdi } from '../../../../contracts/VaultController'
+import { useModalContext } from '../../../providers/ModalContentProvider'
 import { TransactionReceipt } from '@ethersproject/providers'
-import { useStableCoinsContext } from '../../../libs/stable-coins-provider/StableCoinsProvider'
+import { useStableCoinsContext } from '../../../providers/StableCoinsProvider'
 import { useLight } from '../../../../hooks/useLight'
 import { ContractTransaction } from 'ethers'
+import { repayAllUsdi, repayUsdi } from '../../../../contracts/USDI/repayUsdi'
 
 interface RepayContent {
   tokenName: string
@@ -37,7 +36,6 @@ export const RepayContent = (props: RepayContent) => {
   const { currentSigner } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
   const { USDI } = useStableCoinsContext()
-
   const [newHealth, setNewHealth] = useState(
     100 * (accountLiability / Number(vaultBorrowPower))
   )
@@ -84,40 +82,6 @@ export const RepayContent = (props: RepayContent) => {
       setRepayMax(true)
     }
   }
-
-  // const handleRepayAllRequest = async () => {
-  //   const accountLiabilityString = accountLiability.toString()
-  //   if (Number(USDI.wallet_balance) < accountLiability) {
-  //     setRepayAmount(USDI.wallet_balance ?? '0')
-  //   } else {
-  //     setRepayAmount(accountLiabilityString)
-  //   }
-    
-  //   setLoading(true)
-  //   setLoadmsg(locale('CheckWallet'))
-  //   try {
-  //     const repayAllTransaction = await repayUsdi(//repayAllUsdi(
-  //       vaultID,
-  //       repayAmount,
-  //       rolodex!,
-  //       currentSigner!
-  //     )
-
-  //     updateTransactionState(repayAllTransaction)
-
-  //     const repayAllReceipt = await repayAllTransaction.wait()
-
-  //     updateTransactionState(repayAllReceipt)
-  //     setRepayAmount('')
-  //     setLoadmsg('')
-  //     setLoading(false)
-  //   } catch (err) {
-  //     setLoading(false)
-  //     setShaking(true)
-  //     setTimeout(() => setShaking(false), 400)
-  //     updateTransactionState(err as TransactionReceipt)
-  //   }
-  // }
 
   const handleRepayRequest = async (repayAmount: string) => {
     setLoading(true)
@@ -206,9 +170,6 @@ export const RepayContent = (props: RepayContent) => {
       </ModalInputContainer>
       <Box
         marginTop={2}
-        // display="grid"
-        // gridTemplateColumns="2fr 1fr"
-        // columnGap={0.5}
       >
         <DisableableModalButton
           text="Repay"
@@ -218,15 +179,6 @@ export const RepayContent = (props: RepayContent) => {
           load_text={loadmsg}
           shaking={shaking}
         />
-
-        {/* <DisableableModalButton
-          text="Repay All"
-          onClick={handleRepayAllRequest}
-          loading={loading}
-          load_text={loadmsg}
-          shaking={shaking}
-          disabled={accountLiability <= 0} // disable if account liability is lower than 0.01 and rounded up
-        /> */}
       </Box>
     </Box>
   )

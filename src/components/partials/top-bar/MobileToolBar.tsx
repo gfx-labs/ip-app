@@ -12,10 +12,9 @@ import { ConnectWalletButton, SelectedChainButton } from '../../util/button'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
-
-import { PaletteModeContext } from '../../libs/palette-mode-provider/palette-mode-provider'
 import { MobileIconButton } from './MobileIconButton'
 import SVGBox from '../../icons/misc/SVGBox'
+import { PaletteModeContext } from '../../providers/palette-mode-provider'
 
 const iOS =
   typeof navigator !== 'undefined' &&
@@ -51,11 +50,9 @@ export const MobileToolBar = () => {
 
       <Box display="flex">
         <SelectedChainButton />
-
         <Box marginLeft={2} marginRight={1}>
           <ConnectWalletButton />
         </Box>
-
         <Button
           ref={navMenuButtonRef}
           sx={{

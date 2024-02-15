@@ -1,5 +1,5 @@
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
-import { SlowRoll__factory } from '../../chain/contracts/factories/IPTsale/slowroll.sol'
+import { SlowRoll__factory } from '../../contract_abis/factories/IPTsale/slowroll.sol'
 import { SLOWROLL_ADDRESS } from '../../constants'
 
 // connect to slowroll contract

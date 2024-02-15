@@ -1,6 +1,6 @@
 import { JsonRpcSigner } from '@ethersproject/providers'
-import { Vault__factory } from '../../chain/contracts'
-import { MKRVotingVault__factory } from '../../chain/contracts/factories/lending/vault/MKRVotingVault__factory'
+import { Vault__factory } from '../../contract_abis'
+import { MKRVotingVault__factory } from '../../contract_abis/factories/lending/vault/MKRVotingVault__factory'
 import { Token } from '../../chain/tokens'
 
 export const delegateVaultVotingPower = async (

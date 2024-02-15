@@ -5,13 +5,13 @@ import { CircleExclamationIcon } from '../../icons/misc/CircleExclamationIcon'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { Spinner } from '../loading'
 import { BaseModal } from './BaseModal'
 import { Chains } from '../../../chain/chains'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { ContractReceipt, ContractTransaction } from 'ethers'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
 import { useEffect } from 'react'
 import SVGBox from '../../icons/misc/SVGBox'
 

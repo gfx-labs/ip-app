@@ -4,13 +4,13 @@ import { formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { BorrowContent } from './ModalContent/BorrowContent'
 import { RepayContent } from './ModalContent/RepayContent'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
 import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import SVGBox from '../../icons/misc/SVGBox'
 

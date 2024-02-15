@@ -3,7 +3,7 @@ import { ForwardIcon } from '../../icons/misc/ForwardIcon'
 import {
   useModalContext,
   ModalType,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 
 export const DelegateIPTButton = ({ iptBalance }: { iptBalance: number }) => {
   const { setType } = useModalContext()

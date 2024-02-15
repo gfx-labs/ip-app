@@ -1,4 +1,4 @@
-import { Rolodex } from '../chain/rolodex/rolodex'
+import { Rolodex } from './rolodex'
 import { ChainIDs } from './chains'
 import { tickerToName, tickerToDecimals, tokensToChains, UniPoolAddresses } from './tokensToChains'
 import { BigNumber } from 'ethers'

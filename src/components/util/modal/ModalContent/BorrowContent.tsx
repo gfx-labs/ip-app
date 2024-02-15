@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import { Box, Typography } from '@mui/material'
-
 import { formatColor, neutral } from '../../../../theme'
 import { DecimalInput } from '../../textFields'
 import { DisableableModalButton } from '../../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalInputContainer'
 import { ContractReceipt } from 'ethers'
-import { useRolodexContext } from '../../../libs/rolodex-data-provider/RolodexDataProvider'
-import { useWeb3Context } from '../../../libs/web3-data-provider/Web3Provider'
+import { useRolodexContext } from '../../../providers/RolodexDataProvider'
+import { useWeb3Context } from '../../../providers/Web3Provider'
 import { locale } from '../../../../locale'
-import { useModalContext } from '../../../libs/modal-content-provider/ModalContentProvider'
-import { borrowUsdi } from '../../../../contracts/VaultController'
+import { useModalContext } from '../../../providers/ModalContentProvider'
+import { borrowUsdi } from '../../../../contracts/USDI/borrowUsdi'
+
 interface BorrowContent {
   tokenName: string
   vaultBorrowPower: string

@@ -6,14 +6,14 @@ import { formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
-import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalContent/ModalInputContainer'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { locale } from '../../../locale'
 import { undelegateVaultVotingPower } from '../../../contracts/Vault/delegateVaultVotingPower'
 import SVGBox from '../../icons/misc/SVGBox'

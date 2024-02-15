@@ -1,22 +1,21 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import { useLight } from '../../../hooks/useLight'
-import { formatGradient, formatColor, neutral, gradient } from '../../../theme'
-import * as d3 from 'd3'
+import { formatColor, neutral } from '../../../theme'
 import MultilineChart, { Observation } from './UsdiGraphGraph'
-import { useRolodexContext } from '../../libs/rolodex-data-provider/RolodexDataProvider'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BN } from '../../../easy/bn'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
-import { Spinner, WithSpinner } from '../loading'
-import { InterestEventEvent } from '../../../chain/contracts/lending/VaultController'
-import { DonationEvent } from '../../../chain/contracts/USDI'
+import { WithSpinner } from '../loading'
+import { InterestEventEvent } from '../../../contract_abis/lending/VaultController'
+import { DonationEvent } from '../../../contract_abis/USDI'
 import SVGBox from '../../icons/misc/SVGBox'
+import { useRolodexContext } from '../../providers/RolodexDataProvider'
+import { useWeb3Context } from '../../providers/Web3Provider'
+import { useChainDataContext } from '../../providers/ChainDataProvider'
 
 export const UsdiGraphCard = () => {
-  const isLight = useLight()
   const theme = useTheme()
   const rolodex = useRolodexContext()
-  const { dataBlock, provider } = useWeb3Context()
+  const { provider } = useWeb3Context()
+  const { block: dataBlock } = useChainDataContext()
 
   const [data, setData] = useState<Map<number, Observation>>(
     new Map<number, Observation>()
@@ -173,22 +172,22 @@ export const UsdiGraphCard = () => {
     }
   }, [data.size])
 
-  const [lastDeposit, setLastDeposit] = useState(0)
-  useEffect(() => {
-    if (lastRate > 0.5) {
-      setLastDeposit(lastRate * 1 * 0.9)
-      return
-    }
-    if (lastRate > 10) {
-      setLastDeposit(lastRate * 1 * 0.9)
-      return
-    }
-    if (lastRate > 600) {
-      setLastDeposit(lastRate * 1 * 0.9)
-      return
-    }
-    setLastDeposit(lastRate * 1)
-  }, [lastRate])
+  // const [lastDeposit, setLastDeposit] = useState(0)
+  // useEffect(() => {
+  //   if (lastRate > 0.5) {
+  //     setLastDeposit(lastRate * 1 * 0.9)
+  //     return
+  //   }
+  //   if (lastRate > 10) {
+  //     setLastDeposit(lastRate * 1 * 0.9)
+  //     return
+  //   }
+  //   if (lastRate > 600) {
+  //     setLastDeposit(lastRate * 1 * 0.9)
+  //     return
+  //   }
+  //   setLastDeposit(lastRate * 1)
+  // }, [lastRate])
 
   return (
     <Box
@@ -236,7 +235,6 @@ export const UsdiGraphCard = () => {
                 <GraphTypography text={`Interest Paid ($${lastPaid})`} />
               </Box>
             </Box>
-
             <Box sx={{ marginTop: -1 }}>
               <Box
                 display="flex"
@@ -277,7 +275,6 @@ export const UsdiGraphCard = () => {
           margin="auto"
         >
           <SVGBox svg_name="loading_placeholder" sx={{ mb: 3 }} width={100} />
-
           <Typography
             variant="label2_medium"
             color={formatColor(neutral.gray3)}

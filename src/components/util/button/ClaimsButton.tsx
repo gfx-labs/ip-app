@@ -3,7 +3,7 @@ import { blue, formatColor } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 
 export const ClaimsButton = () => {
   const { setType } = useModalContext()

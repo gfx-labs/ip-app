@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { Button, Box, Typography } from '@mui/material'
 import { VoteModal } from './proposal/VoteModal'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import {
   useModalContext,
   ModalType,
-} from '../../libs/modal-content-provider/ModalContentProvider'
-import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+} from '../../providers/ModalContentProvider'
+import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
 import { ZERO_ADDRESS } from '../../../constants'
 
 interface VoteButtonProps {

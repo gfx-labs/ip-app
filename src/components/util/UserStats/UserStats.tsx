@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from '@mui/material'
 import { useState, useEffect } from 'react'
-import { useVaultDataContext } from '../../libs/vault-data-provider/VaultDataProvider'
+import { useVaultDataContext } from '../../providers/VaultDataProvider'
 import { UserTokenCard } from './UserTokenCard'
 import { UserPositionCard } from './UserPositionCard'
 import { CardContainer } from '../cards/CardContainer'

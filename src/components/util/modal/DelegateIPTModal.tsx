@@ -6,19 +6,19 @@ import { blue, formatColor, neutral } from '../../../theme'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalContent/ModalInputContainer'
-import { useWeb3Context } from '../../libs/web3-data-provider/Web3Provider'
+import { useWeb3Context } from '../../providers/Web3Provider'
 import { locale } from '../../../locale'
 import {
   delegateUserVotingPower,
   getUserDelegates,
   getUserVotingPower,
 } from '../../../contracts/IPTDelegate'
-import { useAppGovernanceContext } from '../../libs/app-governance-provider/AppGovernanceProvider'
+import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
 import { getUserIPTBalance } from '../../../contracts/IPTDelegate/getUserIPTbalance'
 import { BN, BNtoDec } from '../../../easy/bn'
 import { ZERO_ADDRESS } from '../../../constants'

@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { Rolodex } from '../../chain/rolodex/rolodex'
+import { Rolodex } from '../../chain/rolodex'
 
 export interface IfetchVaultOf {
   vaultID: string

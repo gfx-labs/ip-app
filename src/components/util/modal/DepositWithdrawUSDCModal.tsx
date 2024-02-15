@@ -4,7 +4,7 @@ import SVGBox from '../../icons/misc/SVGBox'
 import {
   ModalType,
   useModalContext,
-} from '../../libs/modal-content-provider/ModalContentProvider'
+} from '../../providers/ModalContentProvider'
 import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
 import { DepositUSDCContent } from './ModalContent/DepositUSDCContent'

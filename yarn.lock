@@ -1618,6 +1618,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.18.1":
+  version: 5.18.1
+  resolution: "@tanstack/query-core@npm:5.18.1"
+  checksum: dd831e508fa4519a6e88af1f48e24c75f8c603d77dc603745c3f69ab6d650ba85b43041ab19572f20139dde13c56e6f477552228d469371b01ebe4268933a795
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-persist-client-core@npm:4.32.0":
   version: 4.32.0
   resolution: "@tanstack/query-persist-client-core@npm:4.32.0"
@@ -1663,6 +1670,17 @@ __metadata:
     react-native:
       optional: true
   checksum: fe9c9573a6132961d0437ca3b8d9e379553e0ddd1e884d75dd34c98d5e64e4305e45119d95aec4a7d56aae7bf09cb2792fd9e75da731f5c14db5e43b36732d48
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.18.1":
+  version: 5.18.1
+  resolution: "@tanstack/react-query@npm:5.18.1"
+  dependencies:
+    "@tanstack/query-core": 5.18.1
+  peerDependencies:
+    react: ^18.0.0
+  checksum: d24d79b7bf464d0c80c72d6c93d5e51c7c400a0ed895f6bda9e6f53c3c576a08d7302193c70b6d5e2842981354a739ed9b12de9bb4e5fe35e8b41aa9e833f5af
   languageName: node
   linkType: hard
 
@@ -5152,6 +5170,7 @@ __metadata:
     "@ethersproject/providers": ^5.6.8
     "@mui/material": ^5.8.2
     "@mui/system": ^5.8.2
+    "@tanstack/react-query": ^5.18.1
     "@types/babel__core": ^7.1.19
     "@types/d3": ^7.4.0
     "@types/d3-selection": ^3.0.2

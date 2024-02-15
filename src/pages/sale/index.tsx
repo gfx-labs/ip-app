@@ -14,7 +14,7 @@ import { DisableableModalButton } from '../../components/util/button/Disableable
 import { ModalInputContainer } from '../../components/util/modal/ModalContent/ModalInputContainer'
 import Cookies from 'universal-cookie'
 import { PDFModal } from '../../components/util/pdfViewer/PDFModal'
-import { useRolodexContext } from '../../components/libs/rolodex-data-provider/RolodexDataProvider'
+import { useRolodexContext } from '../../components/providers/RolodexDataProvider'
 import {
   getCurrentPrice,
   getAmountIPTForSale,
@@ -22,8 +22,8 @@ import {
   getEndTime,
   getBasePrice,
 } from '../../contracts/IPTSale/slowRollMethods'
-import { useWeb3Context } from '../../components/libs/web3-data-provider/Web3Provider'
-import { useModalContext } from '../../components/libs/modal-content-provider/ModalContentProvider'
+import { useWeb3Context } from '../../components/providers/Web3Provider'
+import { useModalContext } from '../../components/providers/ModalContentProvider'
 import { TransactionReceipt } from '@ethersproject/providers'
 import { BN } from '../../easy/bn'
 import { locale } from '../../locale'
@@ -35,15 +35,16 @@ import getSaleSummary, {
 } from '../../components/util/api/getSaleSummary'
 import { SLOWROLL_ADDRESS } from '../../constants'
 import SVGBox from '../../components/icons/misc/SVGBox'
-import { hasUSDCAllowance } from '../../contracts/misc/hasAllowance'
+import { hasUSDCAllowance } from '../../contracts/Token/hasAllowance'
 import { Chains } from '../../chain/chains'
+import { useChainDataContext } from '../../components/providers/ChainDataProvider'
 
 const PurchasePage: React.FC = () => {
   const [scrollTop, setScrollTop] = useState(0)
   const [saleSummary, setSaleSummary] = useState<SaleSummary>()
   const cookie = new Cookies()
-  const { chainId, dataBlock } = useWeb3Context()
-
+  const { chainId } = useWeb3Context()
+  const { block: dataBlock } = useChainDataContext()
   const [open, setOpen] = useState(cookie.get('IP_ACCEPT_TERMS') != 'YES')
   const handleAgree = () => {
     cookie.set('IP_ACCEPT_TERMS', 'YES')
@@ -132,7 +133,6 @@ const PurchasePage: React.FC = () => {
             }}
             flexItem
           />
-
           <SaleSummaryStat
             stat="USDC Raised"
             statValue={saleSummary?.USDCRaised.toLocaleString(undefined, {
@@ -150,7 +150,6 @@ const PurchasePage: React.FC = () => {
             }}
             flexItem
           />
-
           <SaleSummaryStat
             stat="Avg. Price"
             statValue={saleSummary?.AveragePrice.toLocaleString('en-US', {
@@ -212,11 +211,11 @@ const PurchaseBox = ({
   const {
     currentSigner,
     currentAccount,
-    dataBlock,
     chainId,
     connected,
     provider,
   } = useWeb3Context()
+  const { block: dataBlock } = useChainDataContext()
   const { updateTransactionState } = useModalContext()
   const [iptForSale, setIptForSale] = useState<number | undefined>()
   const [iptSold, setIptSold] = useState<string | undefined>()

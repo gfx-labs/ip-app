@@ -1,7 +1,7 @@
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers"
-import { V3PositionValuator__factory } from "../../../chain/contracts/factories/pools/V3PositionValuator__factory"
-import { INonfungiblePositionManager__factory } from "../../../chain/contracts/factories/_external/uniswap/INonfungiblePositionManager__factory"
-import { Univ3CollateralToken__factory } from "../../../chain/contracts/factories/pools/Univ3CollateralToken__factory"
+import { V3PositionValuator__factory } from "../../../contract_abis/factories/pools/V3PositionValuator__factory"
+import { INonfungiblePositionManager__factory } from "../../../contract_abis/factories/_external/uniswap/INonfungiblePositionManager__factory"
+import { Univ3CollateralToken__factory } from "../../../contract_abis/factories/pools/Univ3CollateralToken__factory"
 import { NONFUNGIBLE_POSITION_MANAGER_CONTRACT_ADDRESS, V3_POSITION_VALUATOR_ADDRESS } from "../../../constants"
 
 export const isValidPosition = async (
