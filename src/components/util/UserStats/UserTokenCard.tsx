@@ -11,9 +11,11 @@ import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
 import { useLight } from '../../../hooks/useLight'
 import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
-import getCappedPercentOf from '../../../contracts/Token/getCappedPercentOf'
 import { useEffect, useState } from 'react'
 import SVGBox from '../../icons/misc/SVGBox'
+import { CappedGovToken__factory } from '../../../contract_abis/factories/lending/CappedGovToken__factory'
+import { CappedRebaseToken__factory } from '../../../contract_abis/factories/lending/CappedRebase__factory'
+import { CappedRebaseToken } from '../../../contract_abis/lending/CappedRebase'
 
 interface UserTokenCardProps extends BoxProps {
   tokenName: string
@@ -25,7 +27,7 @@ interface UserTokenCardProps extends BoxProps {
     src: string
     alt: string
   }
-  image2? : {
+  image2?: {
     src: string
     alt: string
   }
@@ -42,7 +44,7 @@ interface DelegateButtonProps extends ButtonProps {
 
 const DelegateButton = (props: DelegateButtonProps) => {
   const { onClick, sx, text } = props
-  
+
   return (
     <Button
       variant="text"
@@ -84,7 +86,20 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   const { setDelegateToken } = useAppGovernanceContext()
   const [cappedPercent, setCappedPercent] = useState(10)
 
-  const { tokenName, tokenTicker, tokenPrice, vaultBalance, tokenAmount, image, image2, LTVPercent, penaltyPercent, canDelegate = false, index, cappedAddress } = props
+  const {
+    tokenName,
+    tokenTicker,
+    tokenPrice,
+    vaultBalance,
+    tokenAmount,
+    image,
+    image2,
+    LTVPercent,
+    penaltyPercent,
+    canDelegate = false,
+    index,
+    cappedAddress,
+  } = props
 
   const openVault = async () => {
     try {
@@ -120,17 +135,35 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
     setType(ModalType.Undelegate)
   }
 
+  // get capped percent
   useEffect(() => {
     if (cappedAddress && provider) {
-      getCappedPercentOf(cappedAddress, provider).then((res) => {
-        // show minimum 5%
-        if (res <= 5) {
-          res = 5
-        } else if (res >= 100) {
-          res = 100
+      const getCappedPercent = async () => {
+        const contract =
+          tokenTicker === 'AUSDC'
+            ? CappedGovToken__factory.connect(cappedAddress, provider)
+            : CappedRebaseToken__factory.connect(cappedAddress, provider)
+        const cap = await contract.getCap()
+        const totalSupply = await contract.totalSupply()
+        if (tokenTicker === 'AUSDC') {
+          const actual = await (contract as CappedRebaseToken).wrapperToUnderlying(totalSupply)
+          return actual.mul(100).div(cap).toNumber()
         }
-        setCappedPercent(res)
-      })
+        return totalSupply.mul(100).div(cap).toNumber()
+      }
+      getCappedPercent()
+        .then((val) => {
+          if (val <= 5) {
+            val = 5
+          } else if (val >= 100) {
+            val = 100
+          }
+          setCappedPercent(val)
+        })
+        .catch((err) => {
+          console.error('Error getting capped percent\n' + err)
+          throw err
+        })
     }
   }, [provider])
 
@@ -156,25 +189,32 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <Box display="flex" flexDirection={"row"} maxWidth={{ xs: 42, lg: 70}}>
-            <SVGBox width={{ xs: 24, lg: 40 }} height={{ xs: 24, lg: 40 }} svg_name={image.src} alt={image.alt} 
-            sx={{
-              position: 'relative',
-              zIndex: 10,
-              borderRadius: {xs: 12, lg: 20},
-            }}/>
+          <Box display="flex" flexDirection={'row'} maxWidth={{ xs: 42, lg: 70 }}>
+            <SVGBox
+              width={{ xs: 24, lg: 40 }}
+              height={{ xs: 24, lg: 40 }}
+              svg_name={image.src}
+              alt={image.alt}
+              sx={{
+                position: 'relative',
+                zIndex: 10,
+                borderRadius: { xs: 12, lg: 20 },
+              }}
+            />
             {image2 && (
               <SVGBox
-                width={{ xs: 24, lg: 40 }} 
-                height={{ xs: 24, lg: 40 }} 
-                svg_name={image2.src} alt={image2.alt}
+                width={{ xs: 24, lg: 40 }}
+                height={{ xs: 24, lg: 40 }}
+                svg_name={image2.src}
+                alt={image2.alt}
                 sx={{
                   position: 'relative',
                   left: { xs: -6, lg: -10 },
                   border: '0.02em solid',
-                  borderRadius: {xs: 12, lg: 20},
+                  borderRadius: { xs: 12, lg: 20 },
                   borderColor: 'text.secondary',
-                }}/>
+                }}
+              />
             )}
           </Box>
           <Box display="flex" flexDirection="column">
@@ -199,7 +239,11 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
         </Box>
         <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
-            content={<Typography variant="body3">Liquidation penalty paid by vault to the liquidator for liquidating this asset</Typography>}
+            content={
+              <Typography variant="body3">
+                Liquidation penalty paid by vault to the liquidator for liquidating this asset
+              </Typography>
+            }
             text={`${penaltyPercent}%
           `}
             text_variant="body2"
@@ -230,19 +274,27 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
           </Typography>
         </Box>
         <Box display={{ xs: 'none', lg: 'flex' }} flexDirection="column" justifyContent="center">
-          {canDelegate && tokenTicker !== 'MKR' && (
-            <DelegateButton onClick={setAndOpenDelegate} text='Delegate'/>
-          )}
-          {tokenTicker == 'MKR' && ([
-            <DelegateButton key={'delegate'} onClick={setAndOpenDelegate} text='Delegate' sx={{
-              height: 'fit-content',
-              paddingBottom: 0.375,
-            }} />,
-            <DelegateButton key={'undelegate'} onClick={openUndelegate} text='Undelegate' sx={{
-              height: 'fit-content',
-              paddingTop: 0.375,
-            }} />
-          ])}
+          {canDelegate && tokenTicker !== 'MKR' && <DelegateButton onClick={setAndOpenDelegate} text="Delegate" />}
+          {tokenTicker == 'MKR' && [
+            <DelegateButton
+              key={'delegate'}
+              onClick={setAndOpenDelegate}
+              text="Delegate"
+              sx={{
+                height: 'fit-content',
+                paddingBottom: 0.375,
+              }}
+            />,
+            <DelegateButton
+              key={'undelegate'}
+              onClick={openUndelegate}
+              text="Undelegate"
+              sx={{
+                height: 'fit-content',
+                paddingTop: 0.375,
+              }}
+            />,
+          ]}
         </Box>
         <Box
           sx={{

@@ -1,10 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useState,
-  ReactElement,
-  createContext,
-} from 'react'
+import { useContext, useEffect, useState, ReactElement, createContext } from 'react'
 import { Token, getStablecoins } from '../../chain/tokens'
 import { getBalanceOf } from '../../contracts/Token/getBalanceOf'
 import { useRolodexContext } from './RolodexDataProvider'
@@ -18,11 +12,7 @@ export type StableCoinsContextType = {
 
 export const StableCoinsContext = createContext({} as StableCoinsContextType)
 
-export const StableCoinsProvider = ({
-  children,
-}: {
-  children: ReactElement
-}) => {
+export const StableCoinsProvider = ({ children }: { children: ReactElement }) => {
   const { currentAccount, chainId } = useWeb3Context()
   const { block: dataBlock } = useChainDataContext()
   const rolodex = useRolodexContext()
@@ -32,37 +22,28 @@ export const StableCoinsProvider = ({
 
   useEffect(() => {
     if (rolodex && rolodex?.addressUSDC) {
-      getBalanceOf(currentAccount, rolodex.addressUSDC, rolodex.provider).then(
-        (res) => {
-          setUSDC({ ...USDC, wallet_balance: res.str, wallet_amount: res.bn })
-        }
-      )
+      getBalanceOf(currentAccount, rolodex.addressUSDC, USDC.decimals, rolodex.provider).then((res) => {
+        setUSDC({ ...USDC, wallet_balance: res.str, wallet_amount: res.bn })
+      })
     }
   }, [currentAccount, dataBlock, chainId, rolodex])
 
   useEffect(() => {
     if (rolodex && rolodex?.addressUSDI) {
-      getBalanceOf(currentAccount, rolodex.addressUSDI, rolodex.provider).then(
-        (res) =>
-          setUSDI({ ...USDI, wallet_balance: res.str, wallet_amount: res.bn })
+      getBalanceOf(currentAccount, rolodex.addressUSDI, USDI.decimals, rolodex.provider).then((res) =>
+        setUSDI({ ...USDI, wallet_balance: res.str, wallet_amount: res.bn })
       )
     }
   }, [currentAccount, dataBlock, chainId, rolodex])
 
-  return (
-    <StableCoinsContext.Provider value={{ USDC, USDI }}>
-      {children}
-    </StableCoinsContext.Provider>
-  )
+  return <StableCoinsContext.Provider value={{ USDC, USDI }}>{children}</StableCoinsContext.Provider>
 }
 
 export const useStableCoinsContext = () => {
   const context = useContext(StableCoinsContext)
 
   if (context === undefined) {
-    throw new Error(
-      'useStableCoinsContext must be used within a WalletModalProvider'
-    )
+    throw new Error('useStableCoinsContext must be used within a WalletModalProvider')
   }
 
   return context

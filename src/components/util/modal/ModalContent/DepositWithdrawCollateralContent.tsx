@@ -15,6 +15,7 @@ import SVGBox from "../../../icons/misc/SVGBox"
 import CheckboxButton from "../../button/CheckBox"
 import { BaseSwitch } from "../../switch"
 import WarningAlert from "../WarningAlert"
+import { utils } from "ethers"
 
 function roundDown(val: number, dec: number) {
   dec = dec || 0;
@@ -52,6 +53,16 @@ export const DepositWithdrawCollateralContent = (): JSX.Element => {
     const isDepositType = type === ModalType.DepositCollateral
     const collateralToken = token as Token
     const ltv = tokens![collateralToken.ticker].token_LTV || 0
+
+    const greaterThanMax = (input: string) => {
+      const bn = utils.parseUnits(input, collateralToken.decimals)
+      if (!isMoneyValue) {
+        return isDepositType ? bn.gt(collateralToken.wallet_amount!) : bn.gt(collateralToken.vault_amount!)
+      }
+      const amt = Number(input) / collateralToken.price
+      const amtBn = utils.parseUnits(amt.toString(), collateralToken.decimals)
+      return isDepositType ? amtBn.gt(collateralToken.wallet_amount!) : bn.gt(collateralToken.vault_amount!)
+    }
   
     const trySetInputAmount = (amount: string) => {
       setInputAmount(amount)
@@ -133,22 +144,13 @@ export const DepositWithdrawCollateralContent = (): JSX.Element => {
             Number(inputAmount) * collateralToken.price * (ltv / 100)
           setCollateralWithdrawAmount(inputAmount)
         }
-    
         if (newBorrowingPower <= 0) {
           setNewBorrowingPower(0)
         } else {
           setNewBorrowingPower(newBorrowingPower)
         }
-    
-        if (
-          Number(inputAmount) <= 0 || (newBorrowingPower < Number(accountLiability))
-        ) {
-          setDisabled(true)
-        } else {
-          setDisabled(false)
-        }
       }
-      setDisabled(Number(inputAmount) <= 0)
+      setDisabled(Number(inputAmount) <= 0 || (newBorrowingPower < Number(accountLiability) || greaterThanMax(inputAmount)))
     }, [inputAmount])
   
     const swapHandler = () => {

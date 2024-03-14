@@ -1,20 +1,16 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import React, { useContext, useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { Token, UniPosition, getTokensOnChain } from '../../chain/tokens'
 import { useRolodexContext } from './RolodexDataProvider'
 import { useWeb3Context } from './Web3Provider'
-import {
-  getVaultTokenBalanceAndPrice,
-  getVaultTokenMetadata,
-} from '../../contracts/Vault/getVaultTokenBalanceAndPrice'
+import { getVaultTokenBalanceAndPrice, getVaultTokenMetadata } from '../../contracts/Vault/getVaultTokenBalanceAndPrice'
 import { BNtoDec } from '../../easy/bn'
 import { Logp } from '../../logger'
-import { getBalanceOf, getBalanceOfPosition, getNumWalletPositions, getVaultPositions } from '../../contracts/Token/getBalanceOf'
+import {
+  getBalanceOf,
+  getBalanceOfPosition,
+  getNumWalletPositions,
+  getVaultPositions,
+} from '../../contracts/Token/getBalanceOf'
 import {
   getVotingVaultAddress,
   getBptVaultAddress,
@@ -28,16 +24,11 @@ import { UniPoolAddresses } from '../../chain/tokensToChains'
 import { Rolodex } from '../../chain/rolodex'
 import { useChainDataContext } from './ChainDataProvider'
 
-const getVaultBorrowingPower = async (
-  vaultID: string,
-  rolodex: Rolodex
-): Promise<string> => {
+const getVaultBorrowingPower = async (vaultID: string, rolodex: Rolodex): Promise<string> => {
   try {
-    // get user balance
     const BP = await rolodex.VC?.vaultBorrowingPower(vaultID)
     if (BP?._isBigNumber) {
       return utils.formatUnits(BP, 18)
-      //return BNtoDec(BP)
     }
     return '0'
   } catch (err) {
@@ -59,8 +50,8 @@ export type VaultDataContextType = {
   borrowingPower: string
   accountLiability: string
   totalBaseLiability: number
-  tokens: {[key: string]: Token} | undefined
-  pools: {[key: string]: UniPosition} | undefined
+  tokens: { [key: string]: Token }
+  pools: { [key: string]: UniPosition }
   votingVaultAddress: string | undefined
   hasVotingVault: boolean
   setHasVotingVault: Dispatch<SetStateAction<boolean>>
@@ -77,31 +68,22 @@ export type VaultDataContextType = {
 
 export const VaultDataContext = React.createContext({} as VaultDataContextType)
 
-export const VaultDataProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => {
-  const { currentAccount, chainId, provider, connected } =
-    useWeb3Context()
+export const VaultDataProvider = ({ children }: { children: React.ReactElement }) => {
+  const { currentAccount, chainId, provider, connected } = useWeb3Context()
   const { block: dataBlock } = useChainDataContext()
   const rolodex = useRolodexContext()
   const [redraw, setRedraw] = useState(false)
   const [hasVault, setHasVault] = useState(false)
   const [refresh, setRefresh] = useState(false)
   const [vaultId, setVaultId] = useState<string | null>(null)
-  const [vaultAddress, setVaultAddress] =
-    useState<VaultDataContextType['vaultAddress']>(undefined)
+  const [vaultAddress, setVaultAddress] = useState<VaultDataContextType['vaultAddress']>(undefined)
   const [accountLiability, setAccountLiability] = useState('0')
   const [borrowingPower, setBorrowingPower] = useState('0')
-  const [tokens, setTokens] =
-    useState<VaultDataContextType['tokens']>(undefined)
-  const [pools, setPools] = useState<VaultDataContextType['pools']>(undefined)
+  const [tokens, setTokens] = useState<VaultDataContextType['tokens']>(getTokensOnChain(chainId))
+  const [pools, setPools] = useState<VaultDataContextType['pools']>(UniPoolAddresses)
   const [totalBaseLiability, setTotalBaseLiability] = useState(0)
-  const [votingVaultAddress, setVotingVaultAddress] = useState<
-    string | undefined>(undefined)
-  const [bptVaultAddress, setBptVaultAddress] = useState<
-    string | undefined>(undefined)
+  const [votingVaultAddress, setVotingVaultAddress] = useState<string | undefined>(undefined)
+  const [bptVaultAddress, setBptVaultAddress] = useState<string | undefined>(undefined)
   const [MKRVotingVaultAddr, setMKRVotingVaultAddr] = useState<string | undefined>()
   const [NftVaultAddr, setNftVaultAddr] = useState<string | undefined>()
   const [hasVotingVault, setHasVotingVault] = useState(false)
@@ -116,7 +98,7 @@ export const VaultDataProvider = ({
         rolodex
           .VC!.vaultLiability(vaultId!)
           .then((val) => {
-            const vl = utils.formatUnits(val, 18)//BNtoDec(val)
+            const vl = utils.formatUnits(val, 18)
             setAccountLiability(vl)
           })
           .catch((e) => {
@@ -148,12 +130,7 @@ export const VaultDataProvider = ({
             px.push(p1)
           }
           if (token.display) {
-            let p2 = getVaultTokenBalanceAndPrice(
-              vaultAddress,
-              token,
-              rolodex!,
-              provider!
-            )
+            let p2 = getVaultTokenBalanceAndPrice(vaultAddress, token, token.decimals, rolodex!, provider!)
               .then((res) => {
                 token.price = res.livePrice
                 token.vault_amount_str = res.unformattedBalance
@@ -162,11 +139,6 @@ export const VaultDataProvider = ({
                 if (token.vault_amount.isZero()) {
                   token.vault_balance = '0'
                 } else {
-                  //const vaultBalance = Number(utils.formatUnits(token.vault_amount._hex, token.decimals)) * token.price
-                  // const vaultBalance =
-                  //   BNtoDecSpecific(token.vault_amount, token.decimals) *
-                  //   token.price
-
                   token.vault_balance = res.balance
                 }
               })
@@ -176,11 +148,7 @@ export const VaultDataProvider = ({
             px.push(p2)
           }
           if (currentAccount && connected) {
-            let p3 = getBalanceOf(
-              currentAccount,
-              token.address,
-              provider!
-            )
+            let p3 = getBalanceOf(currentAccount, token.address, token.decimals, provider!)
               .then((val) => {
                 token.wallet_amount = val.bn
                 token.wallet_amount_str = val.str
@@ -203,7 +171,8 @@ export const VaultDataProvider = ({
             pos1.LTV = res.ltv
             penalty = res.penalty
             LTV = res.ltv
-          }).catch(Logp('failed token metadata check'))
+          })
+          .catch(Logp('failed token metadata check'))
         if (!(pos1.LTV && pos1.penalty)) {
           px.push(p1)
         }
@@ -213,38 +182,31 @@ export const VaultDataProvider = ({
             pos.LTV = LTV
           }
           if (vaultAddress) {
-            let p2 = getBalanceOfPosition(
-              vaultAddress,
-              pos.address,
-              provider!
-            ).then((val) => {
-              pos.vault_balance = val
-            }).catch((e) => {
-              console.error('failed position balance check', e)
-            })
+            let p2 = getBalanceOfPosition(vaultAddress, pos.address, provider!)
+              .then((val) => {
+                pos.vault_balance = val
+              })
+              .catch((e) => {
+                console.error('failed position balance check', e)
+              })
             px.push(p2)
-            let p3 = getVaultPositions(
-              pos.address,
-              currentAccount,
-              provider!
-            ).then((val) => {
+            let p3 = getVaultPositions(pos.address, currentAccount, provider!).then((val) => {
               pos.vault_positions = val
             })
           }
           if (currentAccount && connected) {
-            let p3 = getNumWalletPositions(
-              currentAccount,
-              provider!
-            ).then((val) => {
-              pos.wallet_balance = val
-            }).catch((e) => {
-              console.log('failed to get position wallet balance', e)
-            })
+            let p3 = getNumWalletPositions(currentAccount, provider!)
+              .then((val) => {
+                pos.wallet_balance = val
+              })
+              .catch((e) => {
+                console.log('failed to get position wallet balance', e)
+              })
             px.push(p3)
           }
         }
       }
-    return Promise.all(px)
+      return Promise.all(px)
     }
   }
 
@@ -254,6 +216,7 @@ export const VaultDataProvider = ({
     }
   }, [redraw])
 
+  // updating every time block # updates (every 5 secs)
   useEffect(() => {
     if (rolodex && tokens) {
       console.log('update called @ block', dataBlock)
@@ -269,6 +232,7 @@ export const VaultDataProvider = ({
     setRefresh(false)
   }, [tokens, vaultAddress, rolodex, refresh, dataBlock, currentAccount])
 
+  // setting token list
   useEffect(() => {
     if (Chains[chainId]) {
       setTokens(getTokensOnChain(chainId))
@@ -366,9 +330,7 @@ export const VaultDataProvider = ({
 export const useVaultDataContext = () => {
   const context = useContext(VaultDataContext)
   if (context === undefined) {
-    throw new Error(
-      'useVaultDataContext must be used within a WalletModalProvider'
-    )
+    throw new Error('useVaultDataContext must be used within a WalletModalProvider')
   }
   return context
 }

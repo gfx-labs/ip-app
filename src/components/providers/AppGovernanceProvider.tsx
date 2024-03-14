@@ -1,8 +1,9 @@
 import { createContext, useState, useContext } from 'react'
-import { Token, getTokensOnChain } from '../../chain/tokens'
+import { Token } from '../../chain/tokens'
 import { useWeb3Context } from './Web3Provider'
 import { Chains } from '../../chain/chains'
 import { DEFAULT_CHAIN } from '../../constants'
+import { useVaultDataContext } from './VaultDataProvider'
 
 interface AppGovernanceContextType {
   isApp: boolean
@@ -19,19 +20,14 @@ interface AppGovernanceContextType {
 
 export const AppGovernanceContext = createContext({} as AppGovernanceContextType)
 
-export const AppGovernanceProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => {
+export const AppGovernanceProvider = ({ children }: { children: React.ReactElement }) => {
   const { chainId } = useWeb3Context()
+  const { tokens } = useVaultDataContext()
   const chain = Chains[chainId] ? chainId : DEFAULT_CHAIN
   const [isApp, setIsApp] = useState<boolean>(true)
-  const [delegateToken, setDelegateToken] = useState<Token>(
-    getTokensOnChain(chain)[Chains[chain].delegate_token]
-  )
+  const [delegateToken, setDelegateToken] = useState<Token>(tokens[Chains[chain].delegate_token])
   const [currentVotes, setCurrentVotes] = useState(0)
-  const [delegatedTo, setDelegatedTo] = useState("0x0000000000000000000000000000000000000000")
+  const [delegatedTo, setDelegatedTo] = useState('0x0000000000000000000000000000000000000000')
   const [iptBalance, setIptBalance] = useState(0)
 
   return (
@@ -57,9 +53,7 @@ export const AppGovernanceProvider = ({
 export const useAppGovernanceContext = () => {
   const context = useContext(AppGovernanceContext)
   if (context === undefined) {
-    throw new Error(
-      'useAppGovernanceContext must be used within a AppGovernanceProvider'
-    )
+    throw new Error('useAppGovernanceContext must be used within a AppGovernanceProvider')
   }
   return context
 }

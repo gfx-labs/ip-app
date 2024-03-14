@@ -1,6 +1,6 @@
 import { Rolodex } from './rolodex'
 import { ChainIDs } from './chains'
-import { tickerToName, tickerToDecimals, tokensToChains, UniPoolAddresses } from './tokensToChains'
+import { tickerToName, tokensToChains, UniPoolAddresses } from './tokensToChains'
 import { BigNumber } from 'ethers'
 
 export interface Token {
@@ -10,24 +10,22 @@ export interface Token {
   price: number
   decimals: number
 
-  wallet_balance?: string
-  wallet_amount?: BigNumber
-  wallet_amount_str?: string
+  wallet_balance: string
+  wallet_amount: BigNumber
+  wallet_amount_str: string
 
-  vault_balance?: string
-  vault_amount?: BigNumber
-  vault_amount_str?: string
+  vault_balance: string
+  vault_amount: BigNumber
+  vault_amount_str: string
 
-  token_LTV?: number
-  token_penalty?: number
+  token_LTV: number
+  token_penalty: number
 
-  can_delegate?: boolean
-
-  capped_token?: boolean
+  can_delegate: boolean
+  capped_token: boolean
   capped_address?: string
-
-  bpt?: boolean
-  can_wrap?: boolean
+  bpt: boolean
+  can_wrap: boolean
   icons?: string[]
   unwrapped?: string
   display: boolean
@@ -60,6 +58,7 @@ export interface TokenInfo {
   icons?: string[]
   unwrapped?: string
   display?: boolean
+  decimals?: number
 }
 
 export const isToken = (token: Token | UniPosition): token is Token => {
@@ -156,10 +155,8 @@ const initToken = (ticker: string, token: TokenInfo): Token => {
     can_wrap: token.can_wrap ?? false,
     unwrapped: token.can_wrap && token.unwrapped ? token.unwrapped : undefined,
     display: token.display ?? true,
+    decimals: token.decimals ?? 18
   })
-  if (Object.prototype.hasOwnProperty.call(tickerToDecimals, ticker)) {
-    t.decimals = tickerToDecimals[ticker]
-  }
   return t
 }
 

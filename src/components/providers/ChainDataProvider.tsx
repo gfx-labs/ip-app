@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { createContext, useContext, useEffect, useState } from "react";
-import { ChainIDs } from "../../chain/chains";
-import { useWeb3Context } from "./Web3Provider";
-import getGasPrice from "../../contracts/Chains/getGasPrice";
+import { useQuery } from '@tanstack/react-query'
+import { createContext, useContext, useEffect, useState } from 'react'
+import { ChainIDs } from '../../chain/chains'
+import { useWeb3Context } from './Web3Provider'
+import getGasPrice from '../../contracts/Chains/getGasPrice'
 
 const ChainDataContext = createContext<{
   block: number
-  ethBlock: number,
+  ethBlock: number
   gasPrice: string
 }>({ block: 0, ethBlock: 0, gasPrice: '' })
 
@@ -15,14 +15,18 @@ export const ChainDataContextProvider = ({ children }: { children: React.ReactEl
   const [ethBlock, setEthBlock] = useState(0)
   const [opBlock, setOpBlock] = useState(0)
   const [gasPrice, setGasPrice] = useState('0')
-  const { data: opData, refetch, isError: opDataError } = useQuery({
+  const {
+    data: opData,
+    refetch,
+    isError: opDataError,
+  } = useQuery({
     refetchInterval: 5000,
     queryKey: ['op block'],
     queryFn: async () => {
       const block = await provider?.getBlockNumber()
       return block
     },
-    enabled: chainId !== ChainIDs.MAINNET
+    enabled: chainId !== ChainIDs.MAINNET,
   })
   const { data: ethData, isError: ethDataError } = useQuery({
     refetchInterval: 5000,
@@ -39,7 +43,7 @@ export const ChainDataContextProvider = ({ children }: { children: React.ReactEl
       const block = await getGasPrice(provider!)
       return block
     },
-    enabled: chainId === ChainIDs.MAINNET
+    enabled: chainId === ChainIDs.MAINNET,
   })
 
   useEffect(() => {
@@ -65,13 +69,19 @@ export const ChainDataContextProvider = ({ children }: { children: React.ReactEl
   })
 
   function block(id: ChainIDs) {
-    switch(id) {
-      case ChainIDs.MAINNET: return ethBlock
-      case ChainIDs.OPTIMISM: return opBlock
+    switch (id) {
+      case ChainIDs.MAINNET:
+        return ethBlock
+      case ChainIDs.OPTIMISM:
+        return opBlock
     }
   }
 
-  return <ChainDataContext.Provider value={{block: block(chainId), ethBlock: ethBlock, gasPrice: gasPrice}}>{children}</ChainDataContext.Provider>
+  return (
+    <ChainDataContext.Provider value={{ block: block(chainId), ethBlock: ethBlock, gasPrice: gasPrice }}>
+      {children}
+    </ChainDataContext.Provider>
+  )
 }
 
 export const useChainDataContext = () => useContext(ChainDataContext)

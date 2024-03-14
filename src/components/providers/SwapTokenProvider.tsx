@@ -4,15 +4,9 @@ import { useStableCoinsContext } from './StableCoinsProvider'
 
 type SwapTokenContextType = [Token, Token, () => void]
 
-export const SwapTokenContext = createContext(
-  [] as unknown as SwapTokenContextType
-)
+export const SwapTokenContext = createContext([] as unknown as SwapTokenContextType)
 
-export const SwapTokenProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => {
+export const SwapTokenProvider = ({ children }: { children: React.ReactElement }) => {
   const { USDI, USDC } = useStableCoinsContext()
   const [token1, setToken1] = useState<Token>(USDC)
   const [token2, setToken2] = useState<Token>(USDI)
@@ -33,20 +27,14 @@ export const SwapTokenProvider = ({
     setToken2({ ...newToken2 })
   }
 
-  return (
-    <SwapTokenContext.Provider value={[token1, token2, swapTokenPositions]}>
-      {children}
-    </SwapTokenContext.Provider>
-  )
+  return <SwapTokenContext.Provider value={[token1, token2, swapTokenPositions]}>{children}</SwapTokenContext.Provider>
 }
 
 export const useSwapTokenContext = () => {
   const context = useContext(SwapTokenContext)
 
   if (context === undefined) {
-    throw new Error(
-      'useSwapTokenContext must be used within a SwapTokenProvider'
-    )
+    throw new Error('useSwapTokenContext must be used within a SwapTokenProvider')
   }
 
   return context

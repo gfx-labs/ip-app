@@ -15,7 +15,7 @@ import { ERC20Detailed__factory } from '../../../contract_abis'
 import { hasTokenAllowance } from '../../../contracts/Token/hasAllowance'
 import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
 import { Token } from '../../../chain/tokens'
-import { depositCollateral } from '../../../contracts/Vault/depositCollateral'
+import { depositCollateral, depositRebase } from '../../../contracts/Vault/depositCollateral'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -42,7 +42,7 @@ export const DepositCollateralConfirmationModal = () => {
 
   useEffect(() => {
     if (collateralToken.capped_address && amount) {
-      hasTokenAllowance(currentAccount, collateralToken.capped_address, amount, collateralToken.address, collateralToken.decimals, currentSigner!).then(
+      hasTokenAllowance(currentAccount, amount, collateralToken, provider!).then(
         setHasAllowance
       )
     }
@@ -51,7 +51,6 @@ export const DepositCollateralConfirmationModal = () => {
   const handleDepositConfirmationRequest = async () => {
     try {
       let attempt: ContractTransaction
-
       if (collateralToken.capped_token && collateralToken.capped_address) {
         if ((!hasVotingVault && !collateralToken.bpt && collateralToken.ticker !== 'MKR') || 
         (!hasBptVault && collateralToken.bpt) ||
@@ -62,14 +61,11 @@ export const DepositCollateralConfirmationModal = () => {
         }
         setLoading(true)
         setLoadmsg(locale('CheckWallet'))
-
         const ha = await hasTokenAllowance(
           currentAccount,
-          collateralToken.capped_address,
           amount!,
-          collateralToken.address,
-          collateralToken.decimals,
-          currentSigner!
+          collateralToken,
+          provider!
         )
         setHasAllowance(ha)
         if (!ha) {
@@ -86,6 +82,8 @@ export const DepositCollateralConfirmationModal = () => {
           attempt = await depositToBptVault(vaultId!, currentSigner!, collateralToken, amount!, stake)
         } else if (collateralToken.can_wrap) {
           attempt = await depositToBptVault(vaultId!, currentSigner!, collateralToken, amount!, wrap)
+        } else if (collateralToken.ticker === 'AUSDC') {
+          attempt = await depositRebase(amount!, collateralToken.capped_address, vaultId!, currentSigner!)
         } else {
           attempt = await depositToVotingVault(vaultId!, currentSigner!, collateralToken, amount!)
         }

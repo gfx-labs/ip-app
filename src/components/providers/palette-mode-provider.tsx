@@ -6,20 +6,12 @@ export type PaletteModeContextType = {
   toggleMode: () => void
 }
 
-export const PaletteModeContext = createContext<PaletteModeContextType>(
-  {} as PaletteModeContextType
-)
+export const PaletteModeContext = createContext<PaletteModeContextType>({} as PaletteModeContextType)
 
-export const PaletteModeContextProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => {
+export const PaletteModeContextProvider = ({ children }: { children: React.ReactElement }) => {
   // default light dark mode on start
   const [mode, setMode] = useState<PaletteMode>((): PaletteMode => {
-    const paletteMode = localStorage.getItem(
-      'paletteMode'
-    ) as PaletteMode | null
+    const paletteMode = localStorage.getItem('paletteMode') as PaletteMode | null
 
     if (paletteMode === null) {
       return 'light'

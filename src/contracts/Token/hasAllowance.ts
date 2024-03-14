@@ -1,7 +1,8 @@
-import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { JsonRpcProvider } from '@ethersproject/providers'
 import { BigNumber, utils } from 'ethers'
 import { Rolodex } from '../../chain/rolodex'
-import { getERC20Allowance, getUSDCAllowanceWithRolodex } from './getAllowance'
+import { Token } from '../../chain/tokens'
+import { ERC20Detailed__factory } from '../../contract_abis/factories/_external/ERC20Detailed__factory'
 
 export const hasUSDCAllowance = async (
   owner: string,
@@ -9,7 +10,7 @@ export const hasUSDCAllowance = async (
   amount: string | BigNumber,
   rolodex: Rolodex
 ) => {
-  const allowance = await getUSDCAllowanceWithRolodex(owner, spender, rolodex)
+  const allowance = await rolodex.USDC?.allowance(owner, spender)
   if (allowance !== undefined) {
     let usdcBN: BigNumber
     if (typeof amount === 'string') {
@@ -25,21 +26,18 @@ export const hasUSDCAllowance = async (
 
 export const hasTokenAllowance = async (
   owner: string,
-  spender: string,
   amount: BigNumber | string,
-  token_address: string,
-  decimals: number,
-  signerOrProvider: JsonRpcProvider | JsonRpcSigner
+  token: Token,
+  provider: JsonRpcProvider
 ) => {
-  const allowance = await getERC20Allowance(
-    owner,
-    spender,
-    token_address,
-    signerOrProvider
+  const contract = ERC20Detailed__factory.connect(
+    token.address,
+    provider
   )
+  const allowance = await contract.allowance(owner, token.capped_address!)
   let formattedAmount: BigNumber
   if (typeof amount === 'string') {
-    formattedAmount = utils.parseUnits(amount, decimals)
+    formattedAmount = utils.parseUnits(amount, token.decimals)
   } else {
     formattedAmount = amount
   }
