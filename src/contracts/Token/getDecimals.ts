@@ -29,14 +29,10 @@ const getDecimals = async (
         minABI,
         signerOrProvider
       )
-
       const decimals = await contract.decimals()
-
       return decimals
     }
-
     const decimals = await contractAddressOrContract.decimals()
-
     return decimals
   } catch (err) {
     throw new Error('Error receiving decimals')

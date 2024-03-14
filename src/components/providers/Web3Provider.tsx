@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { JsonRpcProvider, JsonRpcSigner, Web3Provider, WebSocketProvider } from '@ethersproject/providers'
 import { DEFAULT_CHAIN, ZERO_ADDRESS } from '../../constants'
 import { Chains } from '../../chain/chains'
-import { useWalletClient, useAccount, useDisconnect, useNetwork, useSwitchNetwork } from "wagmi";
+import { useWalletClient, useAccount, useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi'
 import { providers } from 'ethers'
 
 type Web3ContextType = {
@@ -20,25 +20,30 @@ const reload = async () => {
   window.location.reload()
 }
 
-const newProviderFromString = (x:string):JsonRpcProvider => {
-  console.log("initializing new provider", x)
-  return x.startsWith("ws") ? new WebSocketProvider(x) : new JsonRpcProvider(x)
+const newProviderFromString = (x: string): JsonRpcProvider => {
+  console.log('initializing new provider', x)
+  return x.startsWith('ws') ? new WebSocketProvider(x) : new JsonRpcProvider(x)
 }
 
 const Web3Context = React.createContext({} as Web3ContextType)
 
 export const Web3ContextProvider = ({ children }: { children: React.ReactElement }) => {
-  const { address: account, isConnected: active } = useAccount({ onConnect({ isReconnected, }) {
-    if (!isReconnected) {
-      reload()
-    }
-  }, onDisconnect: reload })
+  const { address: account, isConnected: active } = useAccount({
+    onConnect({ isReconnected }) {
+      if (!isReconnected) {
+        reload()
+      }
+    },
+    onDisconnect: reload,
+  })
   const { chain: rawChain } = useNetwork()
   const { disconnect: disconnectWallet } = useDisconnect()
   const { switchNetwork: doSwitchNetwork } = useSwitchNetwork({ onSuccess: reload })
   const { data: walletClient } = useWalletClient()
   const [chainId, setChainId] = useState(rawChain?.id ?? DEFAULT_CHAIN)
-  const [provider, setProvider] = useState<JsonRpcProvider | Web3Provider>(newProviderFromString(Chains[chainId]?.rpc ?? Chains[DEFAULT_CHAIN].rpc))
+  const [provider, setProvider] = useState<JsonRpcProvider | Web3Provider>(
+    newProviderFromString(Chains[chainId]?.rpc ?? Chains[DEFAULT_CHAIN].rpc)
+  )
   const [currentSigner, setCurrentSigner] = useState<JsonRpcSigner>()
   const [ethProvider] = useState(newProviderFromString(Chains[1].rpc))
 
@@ -55,7 +60,8 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
     if (chainId !== network) {
       if (doSwitchNetwork) {
         doSwitchNetwork(network)
-      } else {  // no wallet connected
+      } else {
+        // no wallet connected
         setChainId(network)
         setProvider(newProviderFromString(Chains[network].rpc))
       }
@@ -106,7 +112,9 @@ export const Web3ContextProvider = ({ children }: { children: React.ReactElement
 export const useWeb3Context = () => {
   const web3ProviderData = useContext(Web3Context)
   if (!web3ProviderData || Object.keys(web3ProviderData).length === 0) {
-    throw new Error('useWeb3Context() can only be used inside of <Web3ContextProvider />, ' + 'please declare it at a higher level.')
+    throw new Error(
+      'useWeb3Context() can only be used inside of <Web3ContextProvider />, ' + 'please declare it at a higher level.'
+    )
   }
   return web3ProviderData
 }

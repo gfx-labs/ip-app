@@ -8,7 +8,6 @@ import { ContractReceipt } from 'ethers'
 import { ToolTip } from '../tooltip/ToolTip'
 import { UserTokenMobileDropdown } from './UserTokenMobileDropdown'
 import SVGBox from '../../icons/misc/SVGBox'
-import { getKey } from '../../../chain/tokens'
 
 interface UserPositionCardProps extends BoxProps {
   name: string
@@ -77,7 +76,7 @@ export const UserPositionCard = (props: UserPositionCardProps) => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-          <Box display="flex" flexDirection={"row"} maxWidth={{ xs: 42, lg: 70}}>
+          <Box display="flex" flexDirection={'row'} maxWidth={{ xs: 42, lg: 70 }}>
             <SVGBox
               width={{ xs: 24, lg: 40 }}
               height={{ xs: 24, lg: 40 }}
@@ -87,20 +86,20 @@ export const UserPositionCard = (props: UserPositionCardProps) => {
                 position: 'relative',
                 zIndex: 10,
                 border: '0.02em solid',
-                borderRadius: {xs: 12, lg: 20},
+                borderRadius: { xs: 12, lg: 20 },
                 borderColor: 'text.secondary',
               }}
             />
             <SVGBox
-              width={{ xs: 24, lg: 40 }} 
-              height={{ xs: 24, lg: 40 }} 
+              width={{ xs: 24, lg: 40 }}
+              height={{ xs: 24, lg: 40 }}
               svg_name={image1}
-              alt = {image1}
+              alt={image1}
               sx={{
                 position: 'relative',
                 left: { xs: -6, lg: -10 },
                 border: '0.02em solid',
-                borderRadius: {xs: 12, lg: 20},
+                borderRadius: { xs: 12, lg: 20 },
                 borderColor: 'text.secondary',
               }}
             />
@@ -121,7 +120,11 @@ export const UserPositionCard = (props: UserPositionCardProps) => {
         </Box>
         <Box display={{ xs: 'none', lg: 'flex' }} justifyContent="end">
           <ToolTip
-            content={<Typography variant="body3">Liquidation penalty paid by vault to the liquidator for liquidating this asset</Typography>}
+            content={
+              <Typography variant="body3">
+                Liquidation penalty paid by vault to the liquidator for liquidating this asset
+              </Typography>
+            }
             text={`${penaltyPercent}%
           `}
             text_variant="body2"
@@ -130,16 +133,15 @@ export const UserPositionCard = (props: UserPositionCardProps) => {
         <Box display="flex" flexDirection="column" textAlign="end">
           <Typography variant="body1" color="text.primary">
             {Number(vaultBalance).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              })}
+              style: 'currency',
+              currency: 'USD',
+            })}
           </Typography>
           <Typography variant="label_semi" color="text.secondary">
             {`${numPositions} position(s)`}
           </Typography>
         </Box>
-        <Box display={{ xs: 'none', lg: 'flex' }} flexDirection="column" justifyContent="center">
-        </Box>
+        <Box display={{ xs: 'none', lg: 'flex' }} flexDirection="column" justifyContent="center"></Box>
         <Box
           sx={{
             display: { xs: 'none', lg: 'flex' },

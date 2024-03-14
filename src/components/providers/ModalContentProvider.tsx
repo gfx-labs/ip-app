@@ -1,8 +1,8 @@
 import { ContractReceipt, ContractTransaction } from 'ethers'
 import { createContext, useState, useContext } from 'react'
-import { Token, UniPosition, getTokensOnChain } from '../../chain/tokens'
+import { Token, UniPosition } from '../../chain/tokens'
 import { useStableCoinsContext } from './StableCoinsProvider'
-import { DEFAULT_CHAIN } from '../../constants'
+import { useVaultDataContext } from './VaultDataProvider'
 
 export enum ModalType {
   None = '',
@@ -72,26 +72,19 @@ export type ModalContextType = {
 
 export const ModalContentContext = createContext({} as ModalContextType)
 
-export const ModalContentProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => {
+export const ModalContentProvider = ({ children }: { children: React.ReactElement }) => {
+  const { tokens } = useVaultDataContext()
   const [type, setType] = useState<ModalType | null>(null)
-  const [collateralToken, setCollateralToken] = useState<Token | UniPosition>(
-    getTokensOnChain(DEFAULT_CHAIN)['WETH']
-  )
+  const [collateralToken, setCollateralToken] = useState<Token | UniPosition>(tokens['WETH'])
   const [collateralDepositAmount, setCollateralDepositAmount] = useState('')
   const [collateralWithdrawAmount, setCollateralWithdrawAmount] = useState('')
-  const [collateralDepositAmountMax, setCollateralDepositAmountMax] =
-    useState(false)
-  const [collateralWithdrawAmountMax, setCollateralWithdrawAmountMax] =
-    useState(false)
-  
+  const [collateralDepositAmountMax, setCollateralDepositAmountMax] = useState(false)
+  const [collateralWithdrawAmountMax, setCollateralWithdrawAmountMax] = useState(false)
+
   const [stake, setStake] = useState(true)
   const [wrap, setWrap] = useState(false)
 
-  const { USDC:usdcContext } = useStableCoinsContext()
+  const { USDC: usdcContext } = useStableCoinsContext()
   const createDepositWithdrawUSDC = () => {
     return {
       token: usdcContext,
@@ -102,9 +95,7 @@ export const ModalContentProvider = ({
     }
   }
 
-  const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(
-    createDepositWithdrawUSDC
-  )
+  const [USDC, setUSDC] = useState<DepositWithdrawUSDC>(createDepositWithdrawUSDC)
 
   const updateUSDC = (prop: string, val: any) => {
     setUSDC({
@@ -113,11 +104,9 @@ export const ModalContentProvider = ({
     })
   }
 
-  const [transactionState, setTransactionState] =
-    useState<TransactionState>(null)
+  const [transactionState, setTransactionState] = useState<TransactionState>(null)
 
-  const [transaction, setTransaction] =
-    useState<ModalContextType['transaction']>(null)
+  const [transaction, setTransaction] = useState<ModalContextType['transaction']>(null)
 
   function isContractTransaction(
     transaction: ContractReceipt | ContractTransaction
@@ -125,9 +114,7 @@ export const ModalContentProvider = ({
     return Object.prototype.hasOwnProperty.call(transaction, 'wait')
   }
 
-  const updateTransactionState = (
-    transaction: ContractReceipt | ContractTransaction
-  ) => {
+  const updateTransactionState = (transaction: ContractReceipt | ContractTransaction) => {
     if (isContractTransaction(transaction)) {
       setTransactionState('PENDING')
       setTransaction(transaction)

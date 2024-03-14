@@ -26,10 +26,7 @@ export const tickerToName: {[index: string]: string} = {
   RPL: 'Rocket Pool',
   wOETH: 'Wrapped Origin Ether',
   OETH: 'Origin Ether',
-}
-
-export const tickerToDecimals: {[index: string]: number} = {
-  WBTC: 8
+  AUSDC: 'Aave USDC.e'
 }
 
 // if token has an address on a chain, it means it is enabled on that chain
@@ -37,9 +34,11 @@ export const tickerToDecimals: {[index: string]: number} = {
 // if a token has a capped address it also has to have a normal address
 export const tokensToChains: {[key: string]: Record<ChainIDs, TokenInfo>} = {
   WBTC: {
-    [ChainIDs.MAINNET]: {addr:'0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599'},
+    [ChainIDs.MAINNET]: {addr:'0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+                          decimals: 8},
     [ChainIDs.OPTIMISM]: {addr: '0x68f180fcCe6836688e9084f035309E29Bf0A2095', 
-                          capped_addr: '0x5a83002E6d8dF75c79ADe9c209F21C31B0AB14B2'},
+                          capped_addr: '0x5a83002E6d8dF75c79ADe9c209F21C31B0AB14B2',
+                          decimals: 18},
   },
   WETH: {
     [ChainIDs.MAINNET]: {addr: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'},
@@ -166,7 +165,13 @@ export const tokensToChains: {[key: string]: Record<ChainIDs, TokenInfo>} = {
                          unwrapped: 'wOETH',
                          display: false},
     [ChainIDs.OPTIMISM]: {},
-  }
+  },
+  AUSDC: {
+    [ChainIDs.MAINNET]: {},
+    [ChainIDs.OPTIMISM]: {addr: '0x625E7708f30cA75bfd92586e17077590C60eb4cD',
+                          capped_addr: '0x6F7A2f0d9DBd284E274f28a6Fa30e8760C25F9D2',
+                        decimals: 6},
+  },
 }
 
 export const UniPoolAddresses: {[index: string]: UniPosition} = {

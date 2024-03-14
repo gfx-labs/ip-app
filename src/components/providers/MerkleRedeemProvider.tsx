@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { createContext, useContext, useEffect, useState } from 'react'
 import createClaimOf, { Claim } from '../../contracts/MerkleRedeem/createClaim'
-import getSpecificWeekClaim  from '../../contracts/MerkleRedeem/getSpecificWeekClaim'
+import getSpecificWeekClaim from '../../contracts/MerkleRedeem/getSpecificWeekClaim'
 import getClaimStatusOf from '../../contracts/MerkleRedeem/getClaimStatus'
 import { BN } from '../../easy/bn'
 import { useWeb3Context } from './Web3Provider'
@@ -27,35 +27,43 @@ export const MerkleRedeemContextProvider = ({ children }: { children: React.Reac
   let lastAccount = ZERO_ADDRESS
 
   useEffect(() => {
-    if(lastAccount != currentAccount){
+    if (lastAccount != currentAccount) {
       setLoading(true)
     }
     if (currentSigner && currentAccount && chainId === ChainIDs.MAINNET) {
-      getClaimStatusOf(currentAccount, currentSigner!).then((claimStatus) => {
-        setClaimStatus(claimStatus)
-        const claims = createClaimOf(currentAccount, claimStatus)
-        Promise.all(SPECIFIC_WEEKS.map(async (week) => {
-          return getSpecificWeekClaim(currentAccount, currentSigner, week).then((claimRes) => {
-            if (claimRes) {
-              claims.push(claimRes)
-            }
-          })
-        })).then(()=>{
-          let iptToClaim = BN(0)
-          claims.forEach((x)=>{
+      getClaimStatusOf(currentAccount, currentSigner!)
+        .then((claimStatus) => {
+          setClaimStatus(claimStatus)
+          const claims = createClaimOf(currentAccount, claimStatus)
+          Promise.all(
+            SPECIFIC_WEEKS.map(async (week) => {
+              return getSpecificWeekClaim(currentAccount, currentSigner, week).then((claimRes) => {
+                if (claimRes) {
+                  claims.push(claimRes)
+                }
+              })
+            })
+          ).then(() => {
+            let iptToClaim = BN(0)
+            claims.forEach((x) => {
               iptToClaim = iptToClaim.add(x.balance)
+            })
+            setClaims(claims)
+            setClaimAmount(iptToClaim)
+            setLoading(false)
           })
-          setClaims(claims)
-          setClaimAmount(iptToClaim)
-          setLoading(false)
         })
-      }).catch((e)=>{
-        console.log(`could not find claims for ${currentAccount}`, e)
-      })
+        .catch((e) => {
+          console.log(`could not find claims for ${currentAccount}`, e)
+        })
     }
   }, [chainId, currentAccount, currentSigner])
 
-  return <MerkleRedeemContext.Provider value={{ loading, claimStatus, claims, claimAmount }}>{children}</MerkleRedeemContext.Provider>
+  return (
+    <MerkleRedeemContext.Provider value={{ loading, claimStatus, claims, claimAmount }}>
+      {children}
+    </MerkleRedeemContext.Provider>
+  )
 }
 
 export const useMerkleRedeemContext = () => {

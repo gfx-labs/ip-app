@@ -8,15 +8,9 @@ import { DISPLAY_DECIMALS } from '../../../constants'
 import { round } from '../../../easy/bn'
 
 export const UserStats = () => {
-  const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(
-    undefined
-  )
-  const [posCards, setPosCards] = useState<JSX.Element | undefined>(
-    undefined
-  )
-
+  const [token_cards, setTokenCards] = useState<JSX.Element | undefined>(undefined)
   const theme = useTheme()
-  const { tokens, pools, redraw } = useVaultDataContext()
+  const { tokens, redraw } = useVaultDataContext()
 
   useEffect(() => {
     if (tokens) {
@@ -36,27 +30,31 @@ export const UserStats = () => {
                   maximumFractionDigits: 2,
                 })!
               }
-              vaultBalance={Number(val.vault_balance).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              })!}
-              tokenAmount={round(val.vault_amount_str || 0, DISPLAY_DECIMALS).toString()}
-              image={ val.icons? 
-                {
-                  src: val.icons[0],
-                  alt: val.icons[0]
-                }
-                : {
-                  src: val.ticker,
-                  alt: val.ticker,
-                }
+              vaultBalance={
+                Number(val.vault_balance).toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD',
+                })!
               }
-              image2={ val.icons ? 
-                {
-                  src: val.icons[1],
-                  alt: val.icons[1]
-                } 
-                : undefined
+              tokenAmount={round(val.vault_amount_str || 0, DISPLAY_DECIMALS).toString()}
+              image={
+                val.icons
+                  ? {
+                      src: val.icons[0],
+                      alt: val.icons[0],
+                    }
+                  : {
+                      src: val.ticker,
+                      alt: val.ticker,
+                    }
+              }
+              image2={
+                val.icons
+                  ? {
+                      src: val.icons[1],
+                      alt: val.icons[1],
+                    }
+                  : undefined
               }
               LTVPercent={val.token_LTV!.toLocaleString()}
               penaltyPercent={val.token_penalty!.toLocaleString()}
@@ -94,33 +92,16 @@ export const UserStats = () => {
           }}
         >
           <Typography variant="label">Assets</Typography>
-          <Typography
-            display={{ xs: 'none', lg: 'block' }}
-            textAlign="end"
-            variant="label"
-          >
+          <Typography display={{ xs: 'none', lg: 'block' }} textAlign="end" variant="label">
             Price
           </Typography>
-          <Typography
-            display={{ xs: 'none', lg: 'flex' }}
-            variant="label"
-            justifyContent="end"
-          >
+          <Typography display={{ xs: 'none', lg: 'flex' }} variant="label" justifyContent="end">
             LTV
           </Typography>
-          <Typography
-            display={{ xs: 'none', lg: 'flex' }}
-            variant="label"
-            justifyContent="end"
-          >
+          <Typography display={{ xs: 'none', lg: 'flex' }} variant="label" justifyContent="end">
             Penalty
           </Typography>
-          <Typography
-            variant="label"
-            whiteSpace="nowrap"
-            display={{ xs: 'none', lg: 'flex' }}
-            justifyContent="center"
-          >
+          <Typography variant="label" whiteSpace="nowrap" display={{ xs: 'none', lg: 'flex' }} justifyContent="center">
             Capped Token
           </Typography>
           <Typography variant="label" whiteSpace="nowrap" textAlign="end">
@@ -145,15 +126,12 @@ export const UserStats = () => {
           {token_cards}
         </Box>
       </Box>
-      
     </CardContainer>
   )
 }
 
 export const UniPools = () => {
-  const [posCards, setPosCards] = useState<JSX.Element | undefined>(
-    undefined
-  )
+  const [posCards, setPosCards] = useState<JSX.Element | undefined>(undefined)
 
   const theme = useTheme()
   const { tokens, pools, redraw } = useVaultDataContext()
@@ -166,14 +144,14 @@ export const UniPools = () => {
           <UserPositionCard
             key={key}
             index={arr.length}
-            name={val.name} 
-            vaultBalance={val.vault_balance ?? '0'} 
-            numPositions={val.vault_positions ? val.vault_positions.length.toString() : '0'} 
+            name={val.name}
+            vaultBalance={val.vault_balance ?? '0'}
+            numPositions={val.vault_positions ? val.vault_positions.length.toString() : '0'}
             image0={val.token0}
             image1={val.token1}
             fee={val.fee}
             LTVPercent={val.LTV ? val.LTV.toLocaleString() : '0'}
-            penaltyPercent={val.penalty ? val.penalty.toLocaleString(): '0'}     
+            penaltyPercent={val.penalty ? val.penalty.toLocaleString() : '0'}
           />
         )
       }
@@ -205,18 +183,10 @@ export const UniPools = () => {
           }}
         >
           <Typography variant="label">Assets</Typography>
-          <Typography
-            display={{ xs: 'none', lg: 'flex' }}
-            variant="label"
-            justifyContent="end"
-          >
+          <Typography display={{ xs: 'none', lg: 'flex' }} variant="label" justifyContent="end">
             LTV
           </Typography>
-          <Typography
-            display={{ xs: 'none', lg: 'flex' }}
-            variant="label"
-            justifyContent="end"
-          >
+          <Typography display={{ xs: 'none', lg: 'flex' }} variant="label" justifyContent="end">
             Penalty
           </Typography>
           <Typography variant="label" whiteSpace="nowrap" textAlign="end">

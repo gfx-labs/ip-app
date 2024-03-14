@@ -9,7 +9,8 @@ import { NONFUNGIBLE_POSITION_MANAGER_CONTRACT_ADDRESS } from '../../constants'
 
 export const getBalanceOf = async (
   wallet_address: string,
-  contract_address: string,
+  token_address: string,
+  decimals: number,
   providerOrSigner: JsonRpcProvider | JsonRpcSigner
 ): Promise<{ num: number; str: string; bn: BigNumber }> => {
   if(wallet_address == undefined || wallet_address == "" ) {
@@ -20,11 +21,10 @@ export const getBalanceOf = async (
     }
   }
   const contract = ERC20Detailed__factory.connect(
-    contract_address,
+    token_address,
     providerOrSigner
   )
   const balance = await contract.balanceOf(wallet_address)
-  const decimals = await getDecimals(contract, providerOrSigner)
   const formatted = utils.formatUnits(balance, decimals)
 
   return {

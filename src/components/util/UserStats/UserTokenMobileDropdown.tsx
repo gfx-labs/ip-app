@@ -38,10 +38,9 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
     ...sx,
   }
 
-  const content = (
-    <>
+  return (
+    <Button sx={styles} onClick={onClick}>
       <SVGBox svg_name={img} height={15} width={15} />
-
       <Typography
         variant="body1"
         whiteSpace="nowrap"
@@ -52,12 +51,6 @@ const StyledDropdownButton = (props: StyledDropdownButton) => {
       >
         {text}
       </Typography>
-    </>
-  )
-
-  return (
-    <Button sx={styles} onClick={onClick}>
-      {content}
     </Button>
   )
 }
@@ -69,13 +62,9 @@ interface UserTokenMobileDropdownProps {
   onClickDelegate?: () => void
 }
 
-export const UserTokenMobileDropdown = (
-  props: UserTokenMobileDropdownProps
-) => {
+export const UserTokenMobileDropdown = (props: UserTokenMobileDropdownProps) => {
   const isLight = useLight()
-  const { onClickDeposit, onClickWithdraw, canDelegate, onClickDelegate } =
-    props
-
+  const { onClickDeposit, onClickWithdraw, canDelegate, onClickDelegate } = props
   const [expanded, setExpanded] = useState(false)
 
   return (
@@ -132,23 +121,9 @@ export const UserTokenMobileDropdown = (
             zIndex: 10,
           }}
         >
-          <StyledDropdownButton
-            img="plus_circle"
-            text={`Deposit`}
-            onClick={onClickDeposit}
-          />
-          <StyledDropdownButton
-            img="minus_circle"
-            text={`Withdraw`}
-            onClick={onClickWithdraw}
-          />
-          {canDelegate && (
-            <StyledDropdownButton
-              img="arrow_gray"
-              text={`Delegate`}
-              onClick={onClickDelegate}
-            />
-          )}
+          <StyledDropdownButton img="plus_circle" text={`Deposit`} onClick={onClickDeposit} />
+          <StyledDropdownButton img="minus_circle" text={`Withdraw`} onClick={onClickWithdraw} />
+          {canDelegate && <StyledDropdownButton img="arrow_gray" text={`Delegate`} onClick={onClickDelegate} />}
         </AccordionDetails>
       </Accordion>
     </ClickAwayListener>
