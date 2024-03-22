@@ -21,49 +21,32 @@ interface BorrowContent {
 }
 
 export const BorrowContent = (props: BorrowContent) => {
-  const {
-    tokenName,
-    vaultBorrowPower,
-    borrowAmount,
-    setBorrowAmount,
-    vaultID,
-    accountLiability,
-  } = props
+  const { tokenName, vaultBorrowPower, borrowAmount, setBorrowAmount, vaultID, accountLiability } = props
   const { updateTransactionState } = useModalContext()
   const rolodex = useRolodexContext()
-
   const { currentSigner } = useWeb3Context()
   const [disabled, setDisabled] = useState(true)
   const [focus, setFocus] = useState(false)
-
   const [loading, setLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-
-  const [newHealth, setNewHealth] = useState(
-    100 * (accountLiability / Number(vaultBorrowPower))
-  )
-
+  const [newHealth, setNewHealth] = useState(100 * (accountLiability / Number(vaultBorrowPower)))
   const toggle = () => setFocus(!focus)
+
   useEffect(() => {
     setDisabled(Number(borrowAmount) < 1)
   }, [borrowAmount])
   const onInputChange = (e: string) => {
     const newLib = (accountLiability + Number(e)) / Number(vaultBorrowPower)
     if (newLib >= 1) {
-      setBorrowAmount(
-        (0.95 * (Number(vaultBorrowPower) - accountLiability)).toFixed(2)
-      )
+      setBorrowAmount((0.95 * (Number(vaultBorrowPower) - accountLiability)).toFixed(2))
     } else {
       setBorrowAmount(e)
     }
   }
 
   useEffect(() => {
-    const newHealth =
-      (100 * (accountLiability + Number(borrowAmount))) /
-      Number(vaultBorrowPower)
-
+    const newHealth = (100 * (accountLiability + Number(borrowAmount))) / Number(vaultBorrowPower)
     if (isNaN(newHealth)) {
       setNewHealth(0)
     } else {
@@ -75,19 +58,10 @@ export const BorrowContent = (props: BorrowContent) => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      const borrowTransaction = await borrowUsdi(
-        vaultID,
-        borrowAmount,
-        rolodex!,
-        currentSigner!
-      )
-
+      const borrowTransaction = await borrowUsdi(vaultID, borrowAmount, rolodex!, currentSigner!)
       updateTransactionState(borrowTransaction)
-
       const borrowReceipt = await borrowTransaction.wait()
-
       updateTransactionState(borrowReceipt)
-
       setLoadmsg('')
       setLoading(false)
     } catch (e) {

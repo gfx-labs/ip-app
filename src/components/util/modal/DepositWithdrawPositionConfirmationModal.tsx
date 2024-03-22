@@ -21,7 +21,7 @@ export const DepositWithdrawPositionConfirmationModal = () => {
     setType,
     collateralToken: token,
     updateTransactionState,
-    collateralDepositAmount: depositTokenId,    // this is the token id
+    collateralDepositAmount: depositTokenId, // this is the token id
     collateralWithdrawAmount: withdrawTokenId,
     setCollateralDepositAmount: setDepositTokenId,
     setCollateralWithdrawAmount: setWithdrawTokenId,
@@ -70,12 +70,7 @@ export const DepositWithdrawPositionConfirmationModal = () => {
     setLoadmsg(locale('CheckWallet'))
     try {
       const idx = await getIdxFromId(position.address, currentAccount, withdrawTokenId, currentSigner!)
-      const attempt = await withdrawCollateral(
-        BigNumber.from(idx),
-        position.address,
-        vaultAddress!,
-        currentSigner!,
-      )
+      const attempt = await withdrawCollateral(BigNumber.from(idx), position.address, vaultAddress!, currentSigner!)
       updateTransactionState(attempt)
       setLoadmsg(locale('TransactionPending'))
       const receipt = await attempt.wait()
@@ -91,17 +86,14 @@ export const DepositWithdrawPositionConfirmationModal = () => {
 
   return (
     <BaseModal
-      open={type === ModalType.DepositPositionConfirmation ||
-      type === ModalType.WithdrawPositionConfirmation}
+      open={type === ModalType.DepositPositionConfirmation || type === ModalType.WithdrawPositionConfirmation}
       onClose={() => {
         setIsApproved(false)
-        isDepositType ? 
-        setType(ModalType.DepositPosition) :
-        setType(ModalType.WithdrawPosition)
+        isDepositType ? setType(ModalType.DepositPosition) : setType(ModalType.WithdrawPosition)
       }}
     >
       <Typography variant="body1" color={isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)}>
-        { isDepositType ? 'Confirm deposit' : 'Confirm withdraw' }
+        {isDepositType ? 'Confirm deposit' : 'Confirm withdraw'}
       </Typography>
       <Box
         sx={{
@@ -117,7 +109,7 @@ export const DepositWithdrawPositionConfirmationModal = () => {
         }}
       >
         <Box display="flex" alignItems="center" columnGap={2}>
-        <Box display="flex" flexDirection={"row"} maxWidth={{ xs: 42, lg: 63}}>
+          <Box display="flex" flexDirection={'row'} maxWidth={{ xs: 42, lg: 63 }}>
             <SVGBox
               width={{ xs: 24, lg: 36 }}
               height={{ xs: 24, lg: 36 }}
@@ -127,41 +119,35 @@ export const DepositWithdrawPositionConfirmationModal = () => {
                 position: 'relative',
                 zIndex: 10,
                 border: '0.02em solid',
-                borderRadius: {xs: 12, lg: 18},
+                borderRadius: { xs: 12, lg: 18 },
                 borderColor: 'text.secondary',
               }}
             />
             <SVGBox
-              width={{ xs: 24, lg: 36 }} 
-              height={{ xs: 24, lg: 36 }} 
+              width={{ xs: 24, lg: 36 }}
+              height={{ xs: 24, lg: 36 }}
               svg_name={position.token1}
-              alt = {position.token1}
+              alt={position.token1}
               sx={{
                 position: 'relative',
                 left: { xs: -6, lg: -9 },
                 border: '0.02em solid',
-                borderRadius: {xs: 12, lg: 18},
+                borderRadius: { xs: 12, lg: 18 },
                 borderColor: 'text.secondary',
               }}
             />
           </Box>
           <Box>
             <Typography variant="body3" color="text.primary">
-              {isDepositType? depositTokenId : withdrawTokenId}
+              {isDepositType ? depositTokenId : withdrawTokenId}
             </Typography>
           </Box>
         </Box>
       </Box>
       <DisableableModalButton
-        text={
-          isDepositType ? (
-            isApproved
-            ? 'Confirm deposit'
-            : 'Approve position'
-          ) : 'Withdraw position'
-        }
+        text={isDepositType ? (isApproved ? 'Confirm deposit' : 'Approve position') : 'Withdraw position'}
         disabled={false}
-        onClick={ isDepositType ? handleDepositConfirmation : handleWithdrawConfirmation }
+        onClick={isDepositType ? handleDepositConfirmation : handleWithdrawConfirmation}
         loading={loading}
         load_text={loadmsg}
       />

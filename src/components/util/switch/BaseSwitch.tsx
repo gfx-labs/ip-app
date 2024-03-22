@@ -8,8 +8,7 @@ interface BaseSwitchProps extends SwitchProps {
 }
 
 export const BaseSwitch = (props: BaseSwitchProps) => {
-  const { option1, option2, onOptionChange, defaultIsOption1 = true } = props
-
+  const { option1, option2, onOptionChange, defaultIsOption1 = true, disabled = false } = props
   const [isOption1, setIsOption1] = useState(defaultIsOption1)
 
   const longerLength =
@@ -67,9 +66,10 @@ export const BaseSwitch = (props: BaseSwitchProps) => {
   )
 
   const toggleHandler = () => {
-    setIsOption1(!isOption1)
-
-    onOptionChange(!isOption1)
+    if (!disabled) {
+      setIsOption1(!isOption1)
+      onOptionChange(!isOption1)
+    }
   }
 
   return (

@@ -33,7 +33,12 @@ export const DepositUSDCConfirmationModal = () => {
 
   useEffect(() => {
     if (rolodex && USDC.amountToDeposit) {
-      hasUSDCAllowance(currentAccount, rolodex.addressUSDI, USDC.maxDeposit ? USDC_TOKEN.wallet_amount! : USDC.amountToDeposit, rolodex).then(setHasAllowance)
+      hasUSDCAllowance(
+        currentAccount,
+        rolodex.addressUSDI,
+        USDC.maxDeposit ? USDC_TOKEN.wallet_amount! : USDC.amountToDeposit,
+        rolodex
+      ).then(setHasAllowance)
     }
   }, [rolodex, dataBlock, chainId, USDC.amountToDeposit, loadmsg])
 
@@ -49,12 +54,10 @@ export const DepositUSDCConfirmationModal = () => {
         )
         updateTransactionState(depositTransaction)
         setLoadmsg(locale('TransactionPending'))
-
         const depositReceipt = await depositTransaction.wait()
         updateTransactionState(depositReceipt)
       } catch (e) {
         const error = e as TransactionReceipt
-
         updateTransactionState(error)
       }
       setApprovalTxn(undefined)
@@ -64,17 +67,13 @@ export const DepositUSDCConfirmationModal = () => {
   const handleApprovalRequest = async () => {
     if (rolodex && USDC.amountToDeposit) {
       let depositAmount = BN(DEFAULT_APPROVE_AMOUNT).mul(BN('1e6'))
-
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
         const txn = await rolodex.USDC?.connect(currentSigner!).approve(rolodex.addressUSDI, depositAmount)
-
         setApprovalTxn(txn)
-
         setLoadmsg(locale('TransactionPending'))
         await txn?.wait()
-
         setLoadmsg('')
       } catch (e) {
         console.log(e)

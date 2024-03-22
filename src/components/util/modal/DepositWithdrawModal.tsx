@@ -1,7 +1,4 @@
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
 import { isToken } from '../../../chain/tokens'
@@ -26,7 +23,7 @@ export const DepositWithdrawModal = () => {
     setCollateralWithdrawAmount('')
     setCollateralDepositAmountMax(false)
     setCollateralWithdrawAmountMax(false)
-    if (isCollateralToken) {
+    if (isCollateralToken && token.ticker !== 'AUSDC') {
       setType(val ? ModalType.DepositCollateral : ModalType.WithdrawCollateral)
     } else {
       setType(val ? ModalType.DepositPosition : ModalType.WithdrawPosition)
@@ -49,15 +46,18 @@ export const DepositWithdrawModal = () => {
         setCollateralWithdrawAmountMax(false)
       }}
     >
-      <BaseSwitch
-        option1="Deposit"
-        option2="Withdraw"
-        onOptionChange={onSwitch}
-        defaultIsOption1={isDepositType}
-      />
-      {isCollateralToken ? 
-        <DepositWithdrawCollateralContent />
-      : <DepositWithdrawPositionContent />}
+      {isCollateralToken && token.ticker === 'AUSDC' ? (
+        <BaseSwitch
+          option1="Deposit"
+          option2="Withdraw"
+          onOptionChange={() => {}}
+          defaultIsOption1={isDepositType}
+          disabled={true}
+        />
+      ) : (
+        <BaseSwitch option1="Deposit" option2="Withdraw" onOptionChange={onSwitch} defaultIsOption1={isDepositType} />
+      )}
+      {isCollateralToken ? <DepositWithdrawCollateralContent /> : <DepositWithdrawPositionContent />}
     </BaseModal>
   )
 }

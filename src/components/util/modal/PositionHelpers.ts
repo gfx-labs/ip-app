@@ -1,13 +1,10 @@
-import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers"
-import { V3PositionValuator__factory } from "../../../contract_abis/factories/pools/V3PositionValuator__factory"
-import { INonfungiblePositionManager__factory } from "../../../contract_abis/factories/_external/uniswap/INonfungiblePositionManager__factory"
-import { Univ3CollateralToken__factory } from "../../../contract_abis/factories/pools/Univ3CollateralToken__factory"
-import { NONFUNGIBLE_POSITION_MANAGER_CONTRACT_ADDRESS, V3_POSITION_VALUATOR_ADDRESS } from "../../../constants"
+import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers'
+import { V3PositionValuator__factory } from '../../../contract_abis/factories/pools/V3PositionValuator__factory'
+import { INonfungiblePositionManager__factory } from '../../../contract_abis/factories/_external/uniswap/INonfungiblePositionManager__factory'
+import { Univ3CollateralToken__factory } from '../../../contract_abis/factories/pools/Univ3CollateralToken__factory'
+import { NONFUNGIBLE_POSITION_MANAGER_CONTRACT_ADDRESS, V3_POSITION_VALUATOR_ADDRESS } from '../../../constants'
 
-export const isValidPosition = async (
-  tokenId: string,
-  signerOrProvider: JsonRpcProvider | JsonRpcSigner
-) => {
+export const isValidPosition = async (tokenId: string, signerOrProvider: JsonRpcProvider | JsonRpcSigner) => {
   try {
     const contract = V3PositionValuator__factory.connect(V3_POSITION_VALUATOR_ADDRESS, signerOrProvider)
     const result = await contract.getValue(Number(tokenId))
@@ -21,11 +18,7 @@ export const isValidPosition = async (
   }
 }
 
-export const approvePosition = async (
-  wrapped_addr: string,
-  tokenId: string,
-  signer: JsonRpcSigner
-) => {
+export const approvePosition = async (wrapped_addr: string, tokenId: string, signer: JsonRpcSigner) => {
   const contract = INonfungiblePositionManager__factory.connect(NONFUNGIBLE_POSITION_MANAGER_CONTRACT_ADDRESS, signer)
   const tx = await contract.approve(wrapped_addr, tokenId)
   return tx

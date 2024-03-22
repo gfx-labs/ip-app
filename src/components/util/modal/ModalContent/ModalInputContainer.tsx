@@ -1,5 +1,4 @@
 import { Box, BoxProps } from '@mui/material'
-import React, { Children } from 'react'
 import { useLight } from '../../../../hooks/useLight'
 import { formatColor, blue, neutral } from '../../../../theme'
 
@@ -9,7 +8,6 @@ interface ModalInputContainerProps extends BoxProps {
 
 export const ModalInputContainer = (props: ModalInputContainerProps) => {
   const { children, focus } = props
-
   const isLight = useLight()
 
   return (
@@ -28,13 +26,11 @@ export const ModalInputContainer = (props: ModalInputContainerProps) => {
         border: focus
           ? `1px solid ${formatColor(blue.blue1)}`
           : isLight
-          ? `1px solid ${formatColor(blue.blue11)}`
-          : `1px solid ${formatColor(neutral.gray4)}`,
+            ? `1px solid ${formatColor(blue.blue11)}`
+            : `1px solid ${formatColor(neutral.gray4)}`,
         outline: focus ? `1px solid ${formatColor(blue.blue1)}` : 'none',
         '&:hover': {
-          backgroundColor: isLight
-            ? formatColor(neutral.gray6)
-            : formatColor(neutral.gray4),
+          backgroundColor: isLight ? formatColor(neutral.gray6) : formatColor(neutral.gray4),
         },
       }}
     >

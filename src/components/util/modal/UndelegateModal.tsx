@@ -1,12 +1,8 @@
 import { Box, Typography, TextField } from '@mui/material'
-import { useState, FormEvent } from 'react'
-import { ContractReceipt, ContractTransaction } from 'ethers'
-
+import { useState } from 'react'
+import { ContractTransaction } from 'ethers'
 import { formatColor, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
@@ -20,34 +16,23 @@ import SVGBox from '../../icons/misc/SVGBox'
 
 export const UndelegateModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
+  const { delegateToken } = useAppGovernanceContext()
+  const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } = useVaultDataContext()
+  const { currentSigner, currentAccount } = useWeb3Context()
   const isLight = useLight()
-
   const [focus, setFocus] = useState(false)
   const [loading, setLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
-
   const [address, setAddress] = useState('')
-
   const toggle = () => setFocus(!focus)
 
-  const { delegateToken } = useAppGovernanceContext()
-  const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } =
-    useVaultDataContext()
-  const { currentSigner, currentAccount } = useWeb3Context()
-
   const handleUndelegateRequest = async () => {
-    //e.preventDefault()
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
       const delegateAddress = MKRVotingVaultAddr
-
-      await undelegateVaultVotingPower(
-        delegateAddress!,
-        address,
-        currentSigner!,
-      ).then(async (res) => {
+      await undelegateVaultVotingPower(delegateAddress!, address, currentSigner!).then(async (res) => {
         updateTransactionState(res)
         setLoadmsg(locale('TransactionPending'))
         setLoading(true)
@@ -59,12 +44,9 @@ export const UndelegateModal = () => {
         })
       })
     } catch (e) {
-      //console.log(e)
       setLoading(false)
       setShaking(true)
       setTimeout(() => setShaking(false), 400)
-      //console.log(e)
-
       const err = e as ContractTransaction
       console.log(err)
       updateTransactionState(err)
@@ -95,24 +77,14 @@ export const UndelegateModal = () => {
             columnGap: 2,
           }}
         >
-          <SVGBox
-            svg_name={delegateToken.ticker}
-            width={40}
-            height={40}
-            alt={delegateToken.name}
-          />
+          <SVGBox svg_name={delegateToken.ticker} width={40} height={40} alt={delegateToken.name} />
           <Box>
             <Typography variant="subtitle1" color="text.primary">
               ${delegateToken.ticker}
             </Typography>
           </Box>
         </Box>
-        <Typography
-          variant="body2"
-          color={
-            isLight ? formatColor(neutral.black) : formatColor(neutral.white)
-          }
-        >
+        <Typography variant="body2" color={isLight ? formatColor(neutral.black) : formatColor(neutral.white)}>
           Enter the address you would like to undelegate your vote(s) from
         </Typography>
         <Box component="form" onSubmit={handleUndelegateRequest}>
@@ -137,9 +109,7 @@ export const UndelegateModal = () => {
                   paddingBottom: '4px',
                   '.MuiInputBase-input': {
                     fontWeight: 600,
-                    color: isLight
-                      ? formatColor(neutral.gray1)
-                      : formatColor(neutral.white),
+                    color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white),
                   },
                 }}
               />

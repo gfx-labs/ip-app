@@ -1,12 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import { useState } from 'react'
 import { ContractReceipt } from 'ethers'
-
 import { formatColor, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
@@ -25,7 +21,6 @@ export const WithdrawUSDCConfirmationModal = () => {
   const [loadmsg, setLoadmsg] = useState('')
   const { currentSigner } = useWeb3Context()
   const isLight = useLight()
-
   const { USDI } = useStableCoinsContext()
 
   const handleWithdrawUSDC = async () => {
@@ -33,13 +28,11 @@ export const WithdrawUSDCConfirmationModal = () => {
       setLoading(true)
       try {
         setLoadmsg(locale('CheckWallet'))
-
         const withdrawTxn = await withdrawUSDC(
           USDC.maxWithdraw ? USDI.wallet_amount! : USDC.amountToWithdraw,
           rolodex,
           currentSigner
         )
-
         setLoadmsg(locale('TransactionPending'))
         updateTransactionState(withdrawTxn)
         const receipt = await withdrawTxn?.wait()
@@ -59,12 +52,7 @@ export const WithdrawUSDCConfirmationModal = () => {
         setType(null)
       }}
     >
-      <Typography
-        variant="body3"
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      >
+      <Typography variant="body3" color={isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)}>
         Confirm Withdraw
       </Typography>
       <Box
@@ -77,9 +65,7 @@ export const WithdrawUSDCConfirmationModal = () => {
           py: 2,
           borderRadius: '10px',
           columnGap: 4,
-          backgroundColor: isLight
-            ? formatColor(neutral.gray5)
-            : formatColor(neutral.gray7),
+          backgroundColor: isLight ? formatColor(neutral.gray5) : formatColor(neutral.gray7),
         }}
       >
         <Box display="flex" alignItems="center">
@@ -92,29 +78,11 @@ export const WithdrawUSDCConfirmationModal = () => {
                 })}
             </Typography>
           </Box>
-
-          <SVGBox
-            width={36}
-            height={36}
-            svg_name="USDI"
-            alt="USDI"
-            sx={{ ml: 3 }}
-          />
+          <SVGBox width={36} height={36} svg_name="USDI" alt="USDI" sx={{ ml: 3 }} />
         </Box>
-
-        <ForwardIcon
-          sx={{ width: 15, height: 15 }}
-          strokecolor={formatColor(neutral.gray3)}
-        />
-
+        <ForwardIcon sx={{ width: 15, height: 15 }} strokecolor={formatColor(neutral.gray3)} />
         <Box display="flex" alignItems="center">
-          <SVGBox
-            width={36}
-            height={36}
-            sx={{ mr: 3 }}
-            svg_name="USDC"
-            alt="USDC"
-          />
+          <SVGBox width={36} height={36} sx={{ mr: 3 }} svg_name="USDC" alt="USDC" />
 
           <Box>
             <Typography variant="body3" color="text.secondary">
@@ -127,23 +95,12 @@ export const WithdrawUSDCConfirmationModal = () => {
           </Box>
         </Box>
       </Box>
-
       <Box textAlign="center">
-        <Typography
-          variant="body3_medium"
-          color={formatColor(neutral.gray3)}
-          fontStyle="italic"
-        >
+        <Typography variant="body3_medium" color={formatColor(neutral.gray3)} fontStyle="italic">
           1 {USDC.token.ticker} = 1 USDi ($1){' '}
         </Typography>
       </Box>
-
-      <Box
-        my={5}
-        color={
-          isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)
-        }
-      ></Box>
+      <Box my={5} color={isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)}></Box>
       <DisableableModalButton
         text="Confirm Withdraw"
         disabled={false}

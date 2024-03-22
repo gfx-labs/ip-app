@@ -1,100 +1,73 @@
 import { Box, Typography, Button, TextField } from '@mui/material'
 import { useState } from 'react'
 import { ContractReceipt } from 'ethers'
-
-import { blue, formatColor, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { formatColor, neutral } from '../../../theme'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { DisableableModalButton } from '../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalContent/ModalInputContainer'
 import { useWeb3Context } from '../../providers/Web3Provider'
 import { locale } from '../../../locale'
-import {
-  delegateUserVotingPower,
-  getUserDelegates,
-  getUserVotingPower,
-} from '../../../contracts/IPTDelegate'
+import { delegateUserVotingPower, getUserDelegates, getUserVotingPower } from '../../../contracts/IPTDelegate'
 import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
 import { getUserIPTBalance } from '../../../contracts/IPTDelegate/getUserIPTbalance'
-import { BN, BNtoDec } from '../../../easy/bn'
+import { BNtoDec } from '../../../easy/bn'
 import { ZERO_ADDRESS } from '../../../constants'
 
 export const DelegateIPTModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
-  const {
-    delegatedTo,
-    setDelegatedTo,
-    iptBalance,
-    setCurrentVotes,
-    setIptBalance,
-  } = useAppGovernanceContext()
+  const { delegatedTo, setDelegatedTo, iptBalance, setCurrentVotes, setIptBalance } = useAppGovernanceContext()
+  const { currentSigner, currentAccount } = useWeb3Context()
   const isLight = useLight()
-
   const [focus, setFocus] = useState(false)
   const [loading, setLoading] = useState(false)
   const [shaking, setShaking] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const [screen, setScreen] = useState(0)
-
   const [address, setAddress] = useState('')
-
   const toggle = () => setFocus(!focus)
-
-  const { currentSigner, currentAccount } = useWeb3Context()
 
   const handleDelegateRequest = async (delegateToSomeoneElse: boolean) => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
-
     const delegatee = delegateToSomeoneElse ? address : currentAccount
 
     try {
-      await delegateUserVotingPower(delegatee, currentSigner!).then(
-        async (res) => {
+      await delegateUserVotingPower(delegatee, currentSigner!).then(async (res) => {
+        updateTransactionState(res)
+        setLoadmsg(locale('TransactionPending'))
+        setLoading(true)
+        return res!.wait().then((res) => {
+          setLoadmsg('')
+          setLoading(false)
           updateTransactionState(res)
-          setLoadmsg(locale('TransactionPending'))
-          setLoading(true)
-          return res!.wait().then((res) => {
-            setLoadmsg('')
-            setLoading(false)
+          if (currentAccount && currentSigner) {
+            getUserVotingPower(currentAccount, currentSigner!).then((res) => {
+              const currentVotes = BNtoDec(res)
+              setCurrentVotes(currentVotes)
 
-            updateTransactionState(res)
-
-            if (currentAccount && currentSigner) {
-              getUserVotingPower(currentAccount, currentSigner!).then((res) => {
-                const currentVotes = BNtoDec(res)
-                setCurrentVotes(currentVotes)
-
-                if (currentVotes <= 0) {
-                  getUserIPTBalance(currentAccount, currentSigner!).then(
-                    (response) => {
-                      const iptBalance = BNtoDec(response)
-                      setIptBalance(iptBalance)
-                      if(iptBalance > 0){
-                        getUserDelegates(currentAccount, currentSigner).then((delegatee)=>{
-                          setDelegatedTo(delegatee)
-                        })
-                      }
-                    }
-                  )
-                }
-              })
-            }
-          })
-        }
-      )
+              if (currentVotes <= 0) {
+                getUserIPTBalance(currentAccount, currentSigner!).then((response) => {
+                  const iptBalance = BNtoDec(response)
+                  setIptBalance(iptBalance)
+                  if (iptBalance > 0) {
+                    getUserDelegates(currentAccount, currentSigner).then((delegatee) => {
+                      setDelegatedTo(delegatee)
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })
+      })
     } catch (e) {
       setLoading(false)
       setShaking(true)
       setTimeout(() => setShaking(false), 400)
       console.log(e)
-
       const err = e as ContractReceipt
-
       updateTransactionState(err)
     }
   }
@@ -127,7 +100,7 @@ export const DelegateIPTModal = () => {
             {screen === 0 ? 'Delegate your IPT' : 'Add Delegate'}
           </Typography>
         </Box>
-        {(iptBalance > 0) && (
+        {iptBalance > 0 && (
           <Typography variant="label" display="block" color="text.primary">
             You have{' '}
             {iptBalance.toLocaleString(undefined, {
@@ -135,35 +108,32 @@ export const DelegateIPTModal = () => {
               maximumFractionDigits: 2,
             })}{' '}
             IPT.
-            {(delegatedTo != ZERO_ADDRESS) ? (<> You are currently delegating to {delegatedTo}</>) : (<>"You should delegate your IPT votes to yourself or a friend."</>)}
+            {delegatedTo != ZERO_ADDRESS ? (
+              <> You are currently delegating to {delegatedTo}</>
+            ) : (
+              <>"You should delegate your IPT votes to yourself or a friend."</>
+            )}
           </Typography>
         )}
         {screen !== 0 && (
           <Typography
             variant="body2"
             display="block"
-            color={
-              isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)
-            }
+            color={isLight ? formatColor(neutral.gray3) : formatColor(neutral.gray3)}
           >
             You can either vote yourself or delegate your votes to someone else.
           </Typography>
         )}
         {screen === 0 ? (
           <Box mt={2}>
-            <DisableableModalButton
-              text="Self Delegate"
-              onClick={() => handleDelegateRequest(false)}
-            />
+            <DisableableModalButton text="Self Delegate" onClick={() => handleDelegateRequest(false)} />
 
             <Button
               variant="text"
               sx={{
                 mt: 1,
                 fontSize: 14,
-                color: isLight
-                  ? formatColor(neutral.black)
-                  : formatColor(neutral.white),
+                color: isLight ? formatColor(neutral.black) : formatColor(neutral.white),
               }}
               onClick={() => setScreen(1)}
             >
@@ -185,18 +155,16 @@ export const DelegateIPTModal = () => {
                     sx: {
                       '&:before, &:after': {
                         borderBottom: 'none !important',
-                  },
-                  },
+                      },
+                    },
                   }}
                   sx={{
                     width: '100%',
                     paddingBottom: '4px',
                     '.MuiInputBase-input': {
                       fontWeight: 700,
-                      color: isLight
-                        ? formatColor(neutral.gray1)
-                        : formatColor(neutral.white),
-                  },
+                      color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white),
+                    },
                   }}
                 />
               </ModalInputContainer>

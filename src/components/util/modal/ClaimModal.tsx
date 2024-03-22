@@ -16,9 +16,8 @@ import { Dots } from '../loading'
 export const ClaimModal = () => {
   const { type, setType, updateTransactionState } = useModalContext()
   const { currentAccount, currentSigner } = useWeb3Context()
-  const { claimAmount, claims, loading} = useMerkleRedeemContext()
+  const { claimAmount, claims, loading } = useMerkleRedeemContext()
   const isLight = useLight()
-
   const [formattedAmount, setFormattedAmount] = useState(0)
 
   useEffect(() => {
@@ -29,15 +28,11 @@ export const ClaimModal = () => {
   const handleClaimRequest = async () => {
     try {
       const claimTransaction = await claimWeeks(currentAccount, claims, currentSigner!)
-
       updateTransactionState(claimTransaction)
-
       const claimRecipt = await claimTransaction.wait()
-
       updateTransactionState(claimRecipt)
     } catch (e) {
       const error = e as TransactionReceipt
-
       updateTransactionState(error)
     }
   }
@@ -59,21 +54,25 @@ export const ClaimModal = () => {
         }}
       >
         <SVGBox svg_name={isLight ? 'ipt_blue' : 'ipt_white'} width={80} height={80} alt="IPT" />
-
         <Box>
           <Typography variant="body2" color={formatColor(neutral.gray3)}>
             Unclaimed Rewards
           </Typography>
           <Typography variant="h5" color="text.primary" mb={1}>
-            {loading ? <><Dots/></>: (formattedAmount.toLocaleString(undefined, {
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 2,
-            }))}{' '}
+            {loading ? (
+              <>
+                <Dots />
+              </>
+            ) : (
+              formattedAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+              })
+            )}{' '}
             IPT
           </Typography>
         </Box>
       </Box>
-
       <Box>
         <Button
           variant="contained"
