@@ -24,21 +24,12 @@ interface RepayContent {
 }
 
 export const RepayContent = (props: RepayContent) => {
-  const {
-    tokenName,
-    vaultBorrowPower,
-    setRepayAmount,
-    repayAmount,
-    accountLiability,
-    vaultID,
-  } = props
+  const { tokenName, vaultBorrowPower, setRepayAmount, repayAmount, accountLiability, vaultID } = props
   const rolodex = useRolodexContext()
   const { currentSigner } = useWeb3Context()
   const { updateTransactionState } = useModalContext()
   const { USDI } = useStableCoinsContext()
-  const [newHealth, setNewHealth] = useState(
-    100 * (accountLiability / Number(vaultBorrowPower))
-  )
+  const [newHealth, setNewHealth] = useState(100 * (accountLiability / Number(vaultBorrowPower)))
   const [repayMax, setRepayMax] = useState(false)
   const [loadmsg, setLoadmsg] = useState('')
   const [disabled, setDisabled] = useState(true)
@@ -49,8 +40,7 @@ export const RepayContent = (props: RepayContent) => {
   const isLight = useLight()
 
   useEffect(() => {
-    setDisabled(Number(repayAmount) <= 0 || accountLiability === 0 || 
-    (Number(repayAmount) > Number(USDI.wallet_balance)))
+    setDisabled(Number(repayAmount) <= 0 || accountLiability === 0 || Number(repayAmount) > Number(USDI.wallet_balance))
   }, [repayAmount])
 
   const onInputChange = (e: string) => {
@@ -63,9 +53,7 @@ export const RepayContent = (props: RepayContent) => {
   }
 
   useEffect(() => {
-    const newHealth =
-      (100 * (accountLiability - Number(repayAmount))) /
-      Number(vaultBorrowPower)
+    const newHealth = (100 * (accountLiability - Number(repayAmount))) / Number(vaultBorrowPower)
 
     if (isNaN(newHealth)) {
       setNewHealth(0)
@@ -89,22 +77,12 @@ export const RepayContent = (props: RepayContent) => {
     try {
       let repayTransaction: ContractTransaction
       if (repayMax) {
-        repayTransaction = await repayAllUsdi(
-          vaultID,
-          rolodex!,
-          currentSigner!
-        )
+        repayTransaction = await repayAllUsdi(vaultID, rolodex!, currentSigner!)
       } else {
-        repayTransaction = await repayUsdi(
-          vaultID,
-          repayAmount,
-          rolodex!,
-          currentSigner!
-        )
+        repayTransaction = await repayUsdi(vaultID, repayAmount, rolodex!, currentSigner!)
       }
       updateTransactionState(repayTransaction)
       const repayReceipt = await repayTransaction.wait()
-
       updateTransactionState(repayReceipt)
       setRepayAmount('')
       setLoadmsg('')
@@ -157,9 +135,7 @@ export const RepayContent = (props: RepayContent) => {
               color={formatColor(neutral.gray3)}
               sx={{
                 '&:hover': {
-                  color: isLight
-                    ? formatColor(neutral.gray1)
-                    : formatColor(neutral.white),
+                  color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white),
                 },
               }}
             >
@@ -168,9 +144,7 @@ export const RepayContent = (props: RepayContent) => {
           </Button>
         </Box>
       </ModalInputContainer>
-      <Box
-        marginTop={2}
-      >
+      <Box marginTop={2}>
         <DisableableModalButton
           text="Repay"
           onClick={() => handleRepayRequest(repayAmount)}

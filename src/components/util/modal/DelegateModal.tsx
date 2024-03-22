@@ -1,12 +1,8 @@
 import { Box, Typography, TextField } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { ContractTransaction } from 'ethers'
-
 import { formatColor, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
 import { useAppGovernanceContext } from '../../providers/AppGovernanceProvider'
@@ -30,14 +26,10 @@ export const DelegateModal = () => {
   const [address, setAddress] = useState('')
   const [delegate, setDelegate] = useState('')
   const { delegateToken } = useAppGovernanceContext()
-  const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } =
-    useVaultDataContext()
+  const { vaultAddress, votingVaultAddress, hasVotingVault, MKRVotingVaultAddr } = useVaultDataContext()
   const { currentSigner } = useWeb3Context()
   const toggle = () => setFocus(!focus)
-  let delegateAddress =
-    delegateToken.capped_address && hasVotingVault
-      ? votingVaultAddress
-      : vaultAddress
+  let delegateAddress = delegateToken.capped_address && hasVotingVault ? votingVaultAddress : vaultAddress
 
   useEffect(() => {
     if (currentSigner) {
@@ -49,16 +41,10 @@ export const DelegateModal = () => {
     setLoading(true)
     setLoadmsg(locale('CheckWallet'))
     try {
-      
       if (delegateToken.ticker === 'MKR') {
         delegateAddress = MKRVotingVaultAddr
       }
-      const txn = await delegateVaultVotingPower(
-        delegateAddress!,
-        delegateToken,
-        address,
-        currentSigner!,
-      )
+      const txn = await delegateVaultVotingPower(delegateAddress!, delegateToken, address, currentSigner!)
       updateTransactionState(txn)
       setLoadmsg(locale('TransactionPending'))
       setLoading(true)
@@ -102,24 +88,14 @@ export const DelegateModal = () => {
             columnGap: 2,
           }}
         >
-          <SVGBox
-            svg_name={delegateToken.ticker}
-            width={40}
-            height={40}
-            alt={delegateToken.name}
-          />
+          <SVGBox svg_name={delegateToken.ticker} width={40} height={40} alt={delegateToken.name} />
           <Box>
             <Typography variant="subtitle1" color="text.primary">
               ${delegateToken.ticker}
             </Typography>
           </Box>
         </Box>
-        <Typography
-          variant="body2"
-          color={
-            isLight ? formatColor(neutral.black) : formatColor(neutral.white)
-          }
-        >
+        <Typography variant="body2" color={isLight ? formatColor(neutral.black) : formatColor(neutral.white)}>
           Enter the address you would like to delegate your vote(s) to
         </Typography>
         <Box component="form" onSubmit={handleDelegateRequest}>
@@ -144,9 +120,7 @@ export const DelegateModal = () => {
                   paddingBottom: '4px',
                   '.MuiInputBase-input': {
                     fontWeight: 600,
-                    color: isLight
-                      ? formatColor(neutral.gray1)
-                      : formatColor(neutral.white),
+                    color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white),
                   },
                 }}
               />
@@ -160,11 +134,11 @@ export const DelegateModal = () => {
             load_text={loadmsg}
             onClick={handleDelegateRequest}
           />
-          
         </Box>
-        { currentSigner && delegateToken.ticker !== 'MKR' && (
+        {currentSigner && delegateToken.ticker !== 'MKR' && (
           <Box mt={2}>
-            <Typography variant="label_semi"
+            <Typography
+              variant="label_semi"
               sx={{
                 color: formatColor(neutral.gray3),
               }}

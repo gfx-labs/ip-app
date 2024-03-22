@@ -1,10 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { formatColor, neutral } from '../../../theme'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
 import { useLight } from '../../../hooks/useLight'
@@ -38,12 +35,7 @@ export const BorrowRepayModal = () => {
         setType(null)
       }}
     >
-      <BaseSwitch
-        option1="Borrow"
-        option2="Repay"
-        onOptionChange={onSwitch}
-        defaultIsOption1={currType}
-      />
+      <BaseSwitch option1="Borrow" option2="Repay" onOptionChange={onSwitch} defaultIsOption1={currType} />
       <Box
         sx={{
           display: 'flex',
@@ -67,11 +59,7 @@ export const BorrowRepayModal = () => {
             <Box>
               <ForwardIcon
                 sx={{ width: 16, height: 16, mx: 2 }}
-                strokecolor={
-                  isLight
-                    ? formatColor(neutral.black)
-                    : formatColor(neutral.white)
-                }
+                strokecolor={isLight ? formatColor(neutral.black) : formatColor(neutral.white)}
               />
             </Box>
           ) : (
@@ -81,11 +69,7 @@ export const BorrowRepayModal = () => {
           <Box>
             <ForwardIcon
               sx={{ width: 16, height: 16, mx: 2 }}
-              strokecolor={
-                isLight
-                  ? formatColor(neutral.black)
-                  : formatColor(neutral.white)
-              }
+              strokecolor={isLight ? formatColor(neutral.black) : formatColor(neutral.white)}
             />
           </Box>
         ) : (
@@ -94,10 +78,7 @@ export const BorrowRepayModal = () => {
         {borrowAmount ? (
           currType ? (
             <Box>
-              <Typography
-                variant="label_semi"
-                color={formatColor(neutral.gray3)}
-              >
+              <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
                 New:
               </Typography>
               <Typography variant="subtitle1" color="text.primary">
@@ -106,10 +87,7 @@ export const BorrowRepayModal = () => {
             </Box>
           ) : (
             <Box>
-              <Typography
-                variant="label_semi"
-                color={formatColor(neutral.gray3)}
-              >
+              <Typography variant="label_semi" color={formatColor(neutral.gray3)}>
                 New:
               </Typography>
               <Typography variant="subtitle1" color="text.primary">
@@ -121,7 +99,6 @@ export const BorrowRepayModal = () => {
           <></>
         )}
       </Box>
-
       {currType ? (
         <BorrowContent
           tokenName={tokenName}

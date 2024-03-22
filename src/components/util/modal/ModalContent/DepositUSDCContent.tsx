@@ -4,10 +4,7 @@ import { formatColor, neutral } from '../../../../theme'
 import { DecimalInput } from '../../textFields'
 import { DisableableModalButton } from '../../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalInputContainer'
-import {
-  ModalType,
-  useModalContext,
-} from '../../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../../providers/ModalContentProvider'
 import { useStableCoinsContext } from '../../../providers/StableCoinsProvider'
 import { useLight } from '../../../../hooks/useLight'
 import { round } from '../../../../easy/bn'
@@ -19,8 +16,7 @@ export const DepositUSDCContent = () => {
   const [focus, setFocus] = useState(false)
   const [isMoneyValue, setIsMoneyValue] = useState(false)
   const toggle = () => setFocus(!focus)
-  const setMax = () =>
-    updateUSDC('amountToDeposit', USDCToken.wallet_amount!.toString())
+  const setMax = () => updateUSDC('amountToDeposit', USDCToken.wallet_amount!.toString())
   const numAmountToDeposit = Number(USDC.amountToDeposit)
   const isLight = useLight()
   useEffect(() => {
@@ -67,9 +63,7 @@ export const DepositUSDCContent = () => {
               color={formatColor(neutral.gray3)}
               sx={{
                 '&:hover': {
-                  color: isLight
-                    ? formatColor(neutral.gray1)
-                    : formatColor(neutral.white),
+                  color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white),
                 },
               }}
             >
@@ -96,13 +90,7 @@ export const DepositUSDCContent = () => {
         }}
       >
         <Typography variant="caption">Borrowing Power</Typography>
-        <Box
-          component="img"
-          src="images/up_arrow_blue.png"
-          width={10}
-          height={12}
-          marginX={1}
-        />
+        <Box component="img" src="images/up_arrow_blue.png" width={10} height={12} marginX={1} />
         <Typography variant="caption">$0</Typography>
       </Box>
     </Box>

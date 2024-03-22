@@ -1,10 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import { formatColor, neutral } from '../../../theme'
 import SVGBox from '../../icons/misc/SVGBox'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseSwitch } from '../switch'
 import { BaseModal } from './BaseModal'
 import { DepositUSDCContent } from './ModalContent/DepositUSDCContent'
@@ -13,9 +10,7 @@ import { WithdrawUSDCContent } from './ModalContent/WithdrawUSDCContent'
 export const DepositWithdrawUSDCModal = () => {
   const { type, setType } = useModalContext()
   const isDepositType = type === ModalType.DepositUSDC
-
-  const onSwitch = (val: boolean) =>
-    setType(val ? ModalType.DepositUSDC : ModalType.WithdrawUSDC)
+  const onSwitch = (val: boolean) => setType(val ? ModalType.DepositUSDC : ModalType.WithdrawUSDC)
 
   return (
     <BaseModal
@@ -24,12 +19,7 @@ export const DepositWithdrawUSDCModal = () => {
         setType(null)
       }}
     >
-      <BaseSwitch
-        option1="Deposit"
-        option2="Withdraw"
-        onOptionChange={onSwitch}
-        defaultIsOption1={isDepositType}
-      />
+      <BaseSwitch option1="Deposit" option2="Withdraw" onOptionChange={onSwitch} defaultIsOption1={isDepositType} />
       <Box
         sx={{
           display: 'flex',
@@ -49,7 +39,6 @@ export const DepositWithdrawUSDCModal = () => {
           </Typography>
         </Box>
       </Box>
-
       {isDepositType ? <DepositUSDCContent /> : <WithdrawUSDCContent />}
     </BaseModal>
   )

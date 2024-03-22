@@ -2,10 +2,7 @@ import { Box, Typography, Link as MuiLink, Button } from '@mui/material'
 import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 import { CircleExclamationIcon } from '../../icons/misc/CircleExclamationIcon'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { Spinner } from '../loading'
 import { BaseModal } from './BaseModal'
 import { Chains } from '../../../chain/chains'
@@ -18,7 +15,6 @@ import SVGBox from '../../icons/misc/SVGBox'
 export const TransactionStatusModal = () => {
   const { type, setType, transactionState, transaction } = useModalContext()
   const { chainId } = useWeb3Context()
-
   const { setRefresh } = useVaultDataContext()
 
   useEffect(() => {
@@ -29,7 +25,6 @@ export const TransactionStatusModal = () => {
 
   const renderTransitionState = () => {
     const isLight = useLight()
-
     const chain = Chains[chainId]
 
     switch (transactionState) {
@@ -44,16 +39,8 @@ export const TransactionStatusModal = () => {
               <Spinner />
             </Box>
 
-            <MuiLink
-              target="_blank"
-              href={`${chain.scan_url}${
-                (transaction as ContractTransaction).hash
-              }`}
-            >
-              <Button
-                variant="contained"
-                sx={{ color: formatColor(neutral.white) }}
-              >
+            <MuiLink target="_blank" href={`${chain.scan_url}${(transaction as ContractTransaction).hash}`}>
+              <Button variant="contained" sx={{ color: formatColor(neutral.white) }}>
                 View on {chain.scan_site}
               </Button>
             </MuiLink>
@@ -67,20 +54,9 @@ export const TransactionStatusModal = () => {
               Successful Transaction
             </Typography>
 
-            <SVGBox
-              svg_name="ip_green"
-              width={30}
-              height={30}
-              alt="ip_green"
-              sx={{ my: 3, mx: 'auto' }}
-            />
+            <SVGBox svg_name="ip_green" width={30} height={30} alt="ip_green" sx={{ my: 3, mx: 'auto' }} />
 
-            <MuiLink
-              target="_blank"
-              href={`${chain.scan_url}${
-                (transaction as ContractReceipt).transactionHash
-              }`}
-            >
+            <MuiLink target="_blank" href={`${chain.scan_url}${(transaction as ContractReceipt).transactionHash}`}>
               <Button
                 variant="contained"
                 sx={{
@@ -104,23 +80,11 @@ export const TransactionStatusModal = () => {
             <Box my={3}>
               <CircleExclamationIcon
                 sx={{ width: 50 }}
-                strokecolor={
-                  isLight
-                    ? formatColor(neutral.gray1)
-                    : formatColor(neutral.white)
-                }
+                strokecolor={isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)}
               />
             </Box>
-            <MuiLink
-              target="_blank"
-              href={`${chain.scan_url}${
-                (transaction as ContractReceipt).transactionHash
-              }`}
-            >
-              <Button
-                variant="contained"
-                sx={{ color: formatColor(neutral.white) }}
-              >
+            <MuiLink target="_blank" href={`${chain.scan_url}${(transaction as ContractReceipt).transactionHash}`}>
+              <Button variant="contained" sx={{ color: formatColor(neutral.white) }}>
                 View on {chain.scan_site}
               </Button>
             </MuiLink>
@@ -133,20 +97,10 @@ export const TransactionStatusModal = () => {
             Error
           </Typography>
           <Box my={3}>
-            <CircleExclamationIcon
-              strokecolor={
-                isLight
-                  ? formatColor(neutral.gray1)
-                  : formatColor(neutral.white)
-              }
-            />
+            <CircleExclamationIcon strokecolor={isLight ? formatColor(neutral.gray1) : formatColor(neutral.white)} />
           </Box>
 
-          <Button
-            variant="contained"
-            sx={{ color: formatColor(neutral.white) }}
-            onClick={() => setType(null)}
-          >
+          <Button variant="contained" sx={{ color: formatColor(neutral.white) }} onClick={() => setType(null)}>
             Please try again later
           </Button>
         </Box>

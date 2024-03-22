@@ -56,9 +56,7 @@ export const BaseModal: React.FC<BaseModalProps> = ({
         }}
       >
         {children}
-        <Box
-          sx={{ position: 'absolute', top: '24px', right: '38px', zIndex: 5 }}
-        >
+        <Box sx={{ position: 'absolute', top: '24px', right: '38px', zIndex: 5 }}>
           <IconButton
             sx={{
               borderRadius: '50%',

@@ -303,18 +303,20 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             justifySelf: 'flex-end',
           }}
         >
-          <Button
-            onClick={() => handleDWClick(ModalType.DepositCollateral)}
-            sx={{
-              borderRadius: 2,
-              border: '1.5px solid #A3A9BA',
-              width: { xs: 32, lg: 40 },
-              height: { xs: 32, lg: 40 },
-              minWidth: { xs: 20, lg: 40 },
-            }}
-          >
-            <SVGBox width={16} height={16} svg_name="plus" />
-          </Button>
+          {tokenTicker !== 'AUSDC' && (
+            <Button
+              onClick={() => handleDWClick(ModalType.DepositCollateral)}
+              sx={{
+                borderRadius: 2,
+                border: '1.5px solid #A3A9BA',
+                width: { xs: 32, lg: 40 },
+                height: { xs: 32, lg: 40 },
+                minWidth: { xs: 20, lg: 40 },
+              }}
+            >
+              <SVGBox width={16} height={16} svg_name="plus" />
+            </Button>
+          )}
           <Button
             onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
             sx={{

@@ -32,7 +32,7 @@ export const getVaultTokenBalanceAndPrice = async (
       balanceBN = balanceOf.bn
     }
   } catch (e) {
-    console.error(e)
+    console.error(`${token.ticker}\n` + e)
   }
 
   try {
@@ -41,10 +41,7 @@ export const getVaultTokenBalanceAndPrice = async (
     let vaultBalance = balanceBN.mul(price!)
     balance = utils.formatUnits(vaultBalance, decimals + 18 + (18 - decimals))
   } catch (e) {
-    //console.error(`${token.ticker}\n` + e)
-    if(!(e as any).toString().includes("OLD")) {
-      console.error(e)
-    }
+    console.error(`${token.ticker}\n` + e)
   }
 
   return { livePrice, balance, unformattedBalance, balanceBN }

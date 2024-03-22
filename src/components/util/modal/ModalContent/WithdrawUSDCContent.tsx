@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Box, Typography, Button } from '@mui/material'
-
 import { formatColor, neutral } from '../../../../theme'
 import { DecimalInput } from '../../textFields'
 import { DisableableModalButton } from '../../button/DisableableModalButton'
 import { ModalInputContainer } from './ModalInputContainer'
-
-import {
-  ModalType,
-  useModalContext,
-} from '../../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../../providers/ModalContentProvider'
 import { useStableCoinsContext } from '../../../providers/StableCoinsProvider'
 import { useLight } from '../../../../hooks/useLight'
 import { round } from '../../../../easy/bn'
@@ -29,9 +24,7 @@ export const WithdrawUSDCContent = () => {
 
   const [focus, setFocus] = useState(false)
   const toggle = () => setFocus(!focus)
-
   const [disabled, setDisabled] = useState(true)
-
   const numAmountFrom = Number(USDC.amountToWithdraw)
 
   useEffect(() => {
@@ -40,16 +33,10 @@ export const WithdrawUSDCContent = () => {
 
   return (
     <Box>
-      <Typography
-        variant="body2"
-        color={formatColor(neutral.gray10)}
-        textAlign="right"
-      >
+      <Typography variant="body2" color={formatColor(neutral.gray10)} textAlign="right">
         {' '}
-        Vault Balance: {round(USDCToken.vault_amount || 0, 2)}{' '}
-        {USDCToken.ticker}
+        Vault Balance: {round(USDCToken.vault_amount || 0, 2)} {USDCToken.ticker}
       </Typography>
-
       <ModalInputContainer focus={focus}>
         <DecimalInput
           onBlur={toggle}
@@ -63,7 +50,6 @@ export const WithdrawUSDCContent = () => {
             onClick={setMax}
             sx={{
               minWidth: 'auto',
-
               height: 30,
               paddingY: 2,
               paddingX: 1,
@@ -80,9 +66,7 @@ export const WithdrawUSDCContent = () => {
               color={formatColor(neutral.gray3)}
               sx={{
                 '&:hover': {
-                  color: isLight
-                    ? formatColor(neutral.gray1)
-                    : formatColor(neutral.white),
+                  color: isLight ? formatColor(neutral.gray1) : formatColor(neutral.white),
                 },
               }}
             >
@@ -91,7 +75,6 @@ export const WithdrawUSDCContent = () => {
           </Button>
         </Box>
       </ModalInputContainer>
-
       <Box marginTop={2}>
         <DisableableModalButton
           text="Withdraw"
@@ -99,7 +82,6 @@ export const WithdrawUSDCContent = () => {
           disabled={disabled}
         />
       </Box>
-
       <Box
         sx={{
           display: 'flex',

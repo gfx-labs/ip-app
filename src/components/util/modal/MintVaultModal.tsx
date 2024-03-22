@@ -1,8 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import {
-  ModalType,
-  useModalContext,
-} from '../../providers/ModalContentProvider'
+import { ModalType, useModalContext } from '../../providers/ModalContentProvider'
 import { BaseModal } from './BaseModal'
 import { useWeb3Context } from '../../providers/Web3Provider'
 import { useVaultDataContext } from '../../providers/VaultDataProvider'
@@ -44,13 +41,17 @@ export const MintVaultModal = () => {
       setButtonText('Vault Minted')
       setRefresh(true)
       switch (type) {
-        case SubVault.BPT: setHasBptVault(true)
-        break
-        case SubVault.MKR: setHasMKRVotingVault(true)
-        break
-        case SubVault.Voting: setHasVotingVault(true)
-        break
-        case SubVault.NFT: setHasNftVault(true)
+        case SubVault.BPT:
+          setHasBptVault(true)
+          break
+        case SubVault.MKR:
+          setHasMKRVotingVault(true)
+          break
+        case SubVault.Voting:
+          setHasVotingVault(true)
+          break
+        case SubVault.NFT:
+          setHasNftVault(true)
       }
       setError(undefined)
       setType(ModalType.DepositCollateralConfirmation)
@@ -86,10 +87,7 @@ export const MintVaultModal = () => {
           sx={{ mx: 'auto' }}
         />
         <Typography variant="h7">Mint Vault</Typography>
-        <Typography>
-          Must mint a {} vault to deposit this asset. This is
-          required only once.
-        </Typography>
+        <Typography>Must mint a {} vault to deposit this asset. This is required only once.</Typography>
         <DisableableModalButton
           text={buttonText}
           disabled={false}
