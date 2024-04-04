@@ -37,6 +37,8 @@ export const DepositWithdrawCollateralContent = (): JSX.Element => {
     setCollateralWithdrawAmount,
     setCollateralDepositAmountMax,
     setCollateralWithdrawAmountMax,
+    collateralDepositAmountMax,
+    collateralWithdrawAmountMax,
     stake,
     setStake,
     setWrap,
@@ -55,6 +57,8 @@ export const DepositWithdrawCollateralContent = (): JSX.Element => {
   const ltv = tokens![collateralToken.ticker].token_LTV || 0
 
   const greaterThanMax = (input: string) => {
+    if ((isDepositType && collateralDepositAmountMax) || (!isDepositType && collateralWithdrawAmountMax))
+      return false
     const bn = utils.parseUnits(input, collateralToken.decimals)
     if (!isMoneyValue) {
       return isDepositType ? bn.gt(collateralToken.wallet_amount!) : bn.gt(collateralToken.vault_amount!)

@@ -27,7 +27,7 @@ export const getVaultTokenBalanceAndPrice = async (
   try {
     // get vault balance
     if (vault_address !== undefined) {
-      const balanceOf = await getBalanceOf(vault_address, token_address, decimals, signerOrProvider)
+      const balanceOf = await getBalanceOf(vault_address, token_address, signerOrProvider)
       unformattedBalance = balanceOf.str
       balanceBN = balanceOf.bn
     }

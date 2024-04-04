@@ -148,7 +148,7 @@ export const VaultDataProvider = ({ children }: { children: React.ReactElement }
             px.push(p2)
           }
           if (currentAccount && connected) {
-            let p3 = getBalanceOf(currentAccount, token.address, token.decimals, provider!)
+            let p3 = getBalanceOf(currentAccount, token.address, provider!)
               .then((val) => {
                 token.wallet_amount = val.bn
                 token.wallet_amount_str = val.str
