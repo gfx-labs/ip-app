@@ -1,7 +1,6 @@
 import { AppBar, useMediaQuery, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
-
 import { formatColor, neutral } from '../../theme'
 import { Cards } from './cards'
 import { Community } from './community'
@@ -49,37 +48,34 @@ const LandingPage: React.FC = () => {
   }, [scrollTop])
 
   return (
-    <>
-      <Box
+    <Box
+      sx={{
+        marginX: 'auto',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <TopBar
         sx={{
-          marginX: 'auto',
-          position: 'relative',
-          overflow: 'hidden',
+          transition: 'top 0.6s',
+          top:
+            scrollTop < 30 ||
+            scrollTop >
+              document.documentElement.scrollHeight - window.innerHeight - 30
+              ? '0'
+              : -160,
+          backgroundColor:
+            scrollTop < 50 ? 'transparent' : formatColor(neutral.white),
         }}
-      >
-        <TopBar
-          sx={{
-            transition: 'top 0.6s',
-            top:
-              scrollTop < 30 ||
-              scrollTop >
-                document.documentElement.scrollHeight - window.innerHeight - 30
-                ? '0'
-                : -160,
-            backgroundColor:
-              scrollTop < 50 ? 'transparent' : formatColor(neutral.white),
-          }}
-        />
-
-        <Splash />
-        <Cards />
-        <Fractional />
-        <Highlights />
-        <Values />
-        <Community />
-        <Footer />
-      </Box>
-    </>
+      />
+      <Splash />
+      <Cards />
+      <Fractional />
+      <Highlights />
+      <Values />
+      <Community />
+      <Footer />
+    </Box>
   )
 }
 

@@ -169,8 +169,7 @@ export const tokensToChains: {[key: string]: Record<ChainIDs, TokenInfo>} = {
   AUSDC: {
     [ChainIDs.MAINNET]: {},
     [ChainIDs.OPTIMISM]: {addr: '0x625E7708f30cA75bfd92586e17077590C60eb4cD',
-                          capped_addr: '0x6F7A2f0d9DBd284E274f28a6Fa30e8760C25F9D2',
-                        decimals: 6},
+                          decimals: 6},
   },
 }
 

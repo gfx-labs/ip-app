@@ -6,7 +6,7 @@ export const RedirectTo = ({ url }: { url: string }) => {
         width: '100%',
       }}
     >
-      <meta http-equiv="refresh" content={`0; url=${url}`} />
+      <meta httpEquiv="refresh" content={`0; url=${url}`} />
       <a
         style={{
           marginLeft: 'auto',

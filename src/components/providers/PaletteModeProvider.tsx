@@ -12,7 +12,6 @@ export const PaletteModeContextProvider = ({ children }: { children: React.React
   // default light dark mode on start
   const [mode, setMode] = useState<PaletteMode>((): PaletteMode => {
     const paletteMode = localStorage.getItem('paletteMode') as PaletteMode | null
-
     if (paletteMode === null) {
       return 'light'
     }

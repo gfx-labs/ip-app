@@ -15,7 +15,7 @@ import { ERC20Detailed__factory } from '../../../contract_abis'
 import { hasTokenAllowance } from '../../../contracts/Token/hasAllowance'
 import { DEFAULT_APPROVE_AMOUNT } from '../../../constants'
 import { Token } from '../../../chain/tokens'
-import { depositCollateral, depositRebase } from '../../../contracts/Vault/depositCollateral'
+import { depositCollateral } from '../../../contracts/Vault/depositCollateral'
 
 export const DepositCollateralConfirmationModal = () => {
   const {
@@ -77,8 +77,6 @@ export const DepositCollateralConfirmationModal = () => {
           attempt = await depositToBptVault(vaultId!, currentSigner!, collateralToken, amount!, stake)
         } else if (collateralToken.can_wrap) {
           attempt = await depositToBptVault(vaultId!, currentSigner!, collateralToken, amount!, wrap)
-        } else if (collateralToken.ticker === 'AUSDC') {
-          attempt = await depositRebase(amount!, collateralToken.capped_address, vaultId!, currentSigner!)
         } else {
           attempt = await depositToVotingVault(vaultId!, currentSigner!, collateralToken, amount!)
         }

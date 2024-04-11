@@ -32,23 +32,3 @@ export const depositCollateral = async (
     throw new Error('Could not deposit')
   }
 }
-
-export const depositRebase = async (
-  amount: string | BigNumber,
-  address: string,
-  vaultId: string,
-  signer: JsonRpcSigner,
-) => {
-  const contract = CappedRebaseToken__factory.connect(address, signer)
-  try {
-    const formattedAmt =
-    typeof amount === 'string'
-      ? utils.parseUnits(amount, await contract.decimals())
-      : amount
-    const transferAttempt = await contract.deposit(formattedAmt, vaultId)
-    return transferAttempt
-  } catch (err) {
-    console.error(err)
-    throw new Error('Could not deposit')
-  }
-}
