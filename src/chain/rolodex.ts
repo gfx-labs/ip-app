@@ -51,7 +51,7 @@ export const NewRolodex = async (provider: JsonRpcProvider, chainId: number) => 
 
   try {
     rolo = new Rolodex(provider, chain.usdi_addr!)
-    rolo.addressVC = await rolo.USDI?.getVaultController()
+    rolo.addressVC = chain.vaultController_addr
     rolo.VC = VaultController__factory.connect(rolo.addressVC, provider)
     
     if (!rolo.addressUSDC) {

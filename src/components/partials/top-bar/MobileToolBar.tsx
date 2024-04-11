@@ -14,7 +14,7 @@ import { useLight } from '../../../hooks/useLight'
 import { formatColor, neutral } from '../../../theme'
 import { MobileIconButton } from './MobileIconButton'
 import SVGBox from '../../icons/misc/SVGBox'
-import { PaletteModeContext } from '../../providers/palette-mode-provider'
+import { PaletteModeContext } from '../../providers/PaletteModeProvider'
 
 const iOS =
   typeof navigator !== 'undefined' &&

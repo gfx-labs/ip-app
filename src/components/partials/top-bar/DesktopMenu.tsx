@@ -12,7 +12,7 @@ import { useContext, useState } from 'react'
 import { useLight } from '../../../hooks/useLight'
 import { EllipsisIcon } from '../../icons/misc/EllipsisIcon'
 import SVGBox from '../../icons/misc/SVGBox'
-import { PaletteModeContext } from '../../providers/palette-mode-provider'
+import { PaletteModeContext } from '../../providers/PaletteModeProvider'
 
 interface StyledDropdownButton extends ButtonProps {
   text: string

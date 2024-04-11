@@ -23,7 +23,7 @@ export const DepositWithdrawModal = () => {
     setCollateralWithdrawAmount('')
     setCollateralDepositAmountMax(false)
     setCollateralWithdrawAmountMax(false)
-    if (isCollateralToken && token.ticker !== 'AUSDC') {
+    if (isCollateralToken) {
       setType(val ? ModalType.DepositCollateral : ModalType.WithdrawCollateral)
     } else {
       setType(val ? ModalType.DepositPosition : ModalType.WithdrawPosition)
@@ -46,17 +46,7 @@ export const DepositWithdrawModal = () => {
         setCollateralWithdrawAmountMax(false)
       }}
     >
-      {isCollateralToken && token.ticker === 'AUSDC' ? (
-        <BaseSwitch
-          option1="Deposit"
-          option2="Withdraw"
-          onOptionChange={() => {}}
-          defaultIsOption1={isDepositType}
-          disabled={true}
-        />
-      ) : (
-        <BaseSwitch option1="Deposit" option2="Withdraw" onOptionChange={onSwitch} defaultIsOption1={isDepositType} />
-      )}
+      <BaseSwitch option1="Deposit" option2="Withdraw" onOptionChange={onSwitch} defaultIsOption1={isDepositType} />
       {isCollateralToken ? <DepositWithdrawCollateralContent /> : <DepositWithdrawPositionContent />}
     </BaseModal>
   )

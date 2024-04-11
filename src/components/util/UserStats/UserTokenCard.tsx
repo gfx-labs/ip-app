@@ -139,16 +139,9 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
   useEffect(() => {
     if (cappedAddress && provider) {
       const getCappedPercent = async () => {
-        const contract =
-          tokenTicker === 'AUSDC'
-            ? CappedGovToken__factory.connect(cappedAddress, provider)
-            : CappedRebaseToken__factory.connect(cappedAddress, provider)
+        const contract = CappedGovToken__factory.connect(cappedAddress, provider)
         const cap = await contract.getCap()
         const totalSupply = await contract.totalSupply()
-        if (tokenTicker === 'AUSDC') {
-          const actual = await (contract as CappedRebaseToken).wrapperToUnderlying(totalSupply)
-          return actual.mul(100).div(cap).toNumber()
-        }
         return totalSupply.mul(100).div(cap).toNumber()
       }
       getCappedPercent()
@@ -303,20 +296,18 @@ export const UserTokenCard = (props: UserTokenCardProps) => {
             justifySelf: 'flex-end',
           }}
         >
-          {tokenTicker !== 'AUSDC' && (
-            <Button
-              onClick={() => handleDWClick(ModalType.DepositCollateral)}
-              sx={{
-                borderRadius: 2,
-                border: '1.5px solid #A3A9BA',
-                width: { xs: 32, lg: 40 },
-                height: { xs: 32, lg: 40 },
-                minWidth: { xs: 20, lg: 40 },
-              }}
-            >
-              <SVGBox width={16} height={16} svg_name="plus" />
-            </Button>
-          )}
+          <Button
+            onClick={() => handleDWClick(ModalType.DepositCollateral)}
+            sx={{
+              borderRadius: 2,
+              border: '1.5px solid #A3A9BA',
+              width: { xs: 32, lg: 40 },
+              height: { xs: 32, lg: 40 },
+              minWidth: { xs: 20, lg: 40 },
+            }}
+          >
+            <SVGBox width={16} height={16} svg_name="plus" />
+          </Button>
           <Button
             onClick={() => handleDWClick(ModalType.WithdrawCollateral)}
             sx={{
