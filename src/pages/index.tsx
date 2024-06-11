@@ -92,7 +92,13 @@ const Dashboard = () => {
   useEffect(() => {
     if (rolodex && rolodex.USDC && rolodex.addressUSDI) {
       rolodex.USDC.balanceOf(rolodex.addressUSDI).then((val) => {
-        setTotalUSDCDeposited(val.div(BN('1e6')).toLocaleString())
+        if ((chainId === ChainIDs.OPTIMISM)) {
+          rolodex.USDCe?.balanceOf(rolodex.addressUSDI).then((opVal) => {
+            setTotalUSDCDeposited((val.add(opVal)).div(BN('1e6')).toLocaleString())
+          })
+        } else {
+          setTotalUSDCDeposited(val.div(BN('1e6')).toLocaleString())
+        }
       })
       getTotalSupply(rolodex).then(setTotalSupply)
       getReserveRatioPercentage(rolodex).then(setReserveRatio)
@@ -188,7 +194,7 @@ const Dashboard = () => {
             </>
           </SingleStatCard>
         </Box>
-        <InterestRateGraphCard url={Chains[chainId]?.analytics}/>
+        <InterestRateGraphCard url={Chains[chainId]?.analytics} />
         <Box
           display="flex"
           flexDirection={{ xs: 'column-reverse', lg: 'column' }}
@@ -347,13 +353,13 @@ const Dashboard = () => {
           <UserStats />
         </Box>
         <Box marginTop={3}>
-          { chainId === ChainIDs.OPTIMISM && (
+          {chainId === ChainIDs.OPTIMISM && (
             <UniPools />
           )}
         </Box>
       </Box>
       <Box maxWidth="xl" margin="auto">
-        <GweiBlockText block={block} gasPrice={gasPrice}/>
+        <GweiBlockText block={block} gasPrice={gasPrice} />
       </Box>
     </Box>
   )

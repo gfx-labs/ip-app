@@ -24,6 +24,7 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
+  PromiseOrValue,
 } from "./common";
 
 export interface USDIInterface extends utils.Interface {
@@ -33,12 +34,15 @@ export interface USDIInterface extends utils.Interface {
     "EIP712_REVISION()": FunctionFragment;
     "MAX_SUPPLY()": FunctionFragment;
     "PERMIT_TYPEHASH()": FunctionFragment;
+    "SecondaryReserveAddress()": FunctionFragment;
     "_VaultController()": FunctionFragment;
     "__ERC20Detailed_init(string,string,uint8)": FunctionFragment;
     "__UFragments_init(string,string)": FunctionFragment;
     "_gonBalances(address)": FunctionFragment;
     "_gonsPerFragment()": FunctionFragment;
+    "_pauser()": FunctionFragment;
     "_reserve()": FunctionFragment;
+    "_secondaryReserve()": FunctionFragment;
     "_totalGons()": FunctionFragment;
     "_totalSupply()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
@@ -48,6 +52,9 @@ export interface USDIInterface extends utils.Interface {
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "deposit(uint256)": FunctionFragment;
+    "depositSecondaryReserve(uint256)": FunctionFragment;
+    "depositTo(uint256,address)": FunctionFragment;
+    "depositToSecondaryReserve(uint256,address)": FunctionFragment;
     "donate(uint256)": FunctionFragment;
     "donateReserve()": FunctionFragment;
     "getVaultController()": FunctionFragment;
@@ -60,14 +67,15 @@ export interface USDIInterface extends utils.Interface {
     "owner()": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
+    "pauser()": FunctionFragment;
     "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)": FunctionFragment;
-    "rebase(uint256,uint256,uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "reserveAddress()": FunctionFragment;
     "reserveRatio()": FunctionFragment;
     "scaledBalanceOf(address)": FunctionFragment;
     "scaledTotalSupply()": FunctionFragment;
     "setMonetaryPolicy(address)": FunctionFragment;
+    "setPauser(address)": FunctionFragment;
     "setVaultController(address)": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalSupply()": FunctionFragment;
@@ -77,69 +85,155 @@ export interface USDIInterface extends utils.Interface {
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "unpause()": FunctionFragment;
+    "updateReserves(address,address)": FunctionFragment;
     "vaultControllerBurn(address,uint256)": FunctionFragment;
     "vaultControllerDonate(uint256)": FunctionFragment;
     "vaultControllerMint(address,uint256)": FunctionFragment;
+    "vaultControllerTransfer(address,uint256)": FunctionFragment;
     "withdraw(uint256)": FunctionFragment;
     "withdrawAll()": FunctionFragment;
+    "withdrawAllTo(address)": FunctionFragment;
+    "withdrawSecondaryReserve(uint256)": FunctionFragment;
+    "withdrawTo(uint256,address)": FunctionFragment;
+    "withdrawToSecondaryReserve(uint256,address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "DOMAIN_SEPARATOR"
+      | "DOMAIN_SEPARATOR()"
       | "EIP712_DOMAIN"
+      | "EIP712_DOMAIN()"
       | "EIP712_REVISION"
+      | "EIP712_REVISION()"
       | "MAX_SUPPLY"
+      | "MAX_SUPPLY()"
       | "PERMIT_TYPEHASH"
+      | "PERMIT_TYPEHASH()"
+      | "SecondaryReserveAddress"
+      | "SecondaryReserveAddress()"
       | "_VaultController"
+      | "_VaultController()"
       | "__ERC20Detailed_init"
+      | "__ERC20Detailed_init(string,string,uint8)"
       | "__UFragments_init"
+      | "__UFragments_init(string,string)"
       | "_gonBalances"
+      | "_gonBalances(address)"
       | "_gonsPerFragment"
+      | "_gonsPerFragment()"
+      | "_pauser"
+      | "_pauser()"
       | "_reserve"
+      | "_reserve()"
+      | "_secondaryReserve"
+      | "_secondaryReserve()"
       | "_totalGons"
+      | "_totalGons()"
       | "_totalSupply"
+      | "_totalSupply()"
       | "allowance"
+      | "allowance(address,address)"
       | "approve"
+      | "approve(address,uint256)"
       | "balanceOf"
+      | "balanceOf(address)"
       | "burn"
+      | "burn(uint256)"
       | "decimals"
+      | "decimals()"
       | "decreaseAllowance"
+      | "decreaseAllowance(address,uint256)"
       | "deposit"
+      | "deposit(uint256)"
+      | "depositSecondaryReserve"
+      | "depositSecondaryReserve(uint256)"
+      | "depositTo"
+      | "depositTo(uint256,address)"
+      | "depositToSecondaryReserve"
+      | "depositToSecondaryReserve(uint256,address)"
       | "donate"
+      | "donate(uint256)"
       | "donateReserve"
+      | "donateReserve()"
       | "getVaultController"
+      | "getVaultController()"
       | "increaseAllowance"
+      | "increaseAllowance(address,uint256)"
       | "initialize"
+      | "initialize(address)"
       | "mint"
+      | "mint(uint256)"
       | "monetaryPolicy"
+      | "monetaryPolicy()"
       | "name"
+      | "name()"
       | "nonces"
+      | "nonces(address)"
       | "owner"
+      | "owner()"
       | "pause"
+      | "pause()"
       | "paused"
+      | "paused()"
+      | "pauser"
+      | "pauser()"
       | "permit"
-      | "rebase"
+      | "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"
       | "renounceOwnership"
+      | "renounceOwnership()"
       | "reserveAddress"
+      | "reserveAddress()"
       | "reserveRatio"
+      | "reserveRatio()"
       | "scaledBalanceOf"
+      | "scaledBalanceOf(address)"
       | "scaledTotalSupply"
+      | "scaledTotalSupply()"
       | "setMonetaryPolicy"
+      | "setMonetaryPolicy(address)"
+      | "setPauser"
+      | "setPauser(address)"
       | "setVaultController"
+      | "setVaultController(address)"
       | "symbol"
+      | "symbol()"
       | "totalSupply"
+      | "totalSupply()"
       | "transfer"
+      | "transfer(address,uint256)"
       | "transferAll"
+      | "transferAll(address)"
       | "transferAllFrom"
+      | "transferAllFrom(address,address)"
       | "transferFrom"
+      | "transferFrom(address,address,uint256)"
       | "transferOwnership"
+      | "transferOwnership(address)"
       | "unpause"
+      | "unpause()"
+      | "updateReserves"
+      | "updateReserves(address,address)"
       | "vaultControllerBurn"
+      | "vaultControllerBurn(address,uint256)"
       | "vaultControllerDonate"
+      | "vaultControllerDonate(uint256)"
       | "vaultControllerMint"
+      | "vaultControllerMint(address,uint256)"
+      | "vaultControllerTransfer"
+      | "vaultControllerTransfer(address,uint256)"
       | "withdraw"
+      | "withdraw(uint256)"
       | "withdrawAll"
+      | "withdrawAll()"
+      | "withdrawAllTo"
+      | "withdrawAllTo(address)"
+      | "withdrawSecondaryReserve"
+      | "withdrawSecondaryReserve(uint256)"
+      | "withdrawTo"
+      | "withdrawTo(uint256,address)"
+      | "withdrawToSecondaryReserve"
+      | "withdrawToSecondaryReserve(uint256,address)"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -147,11 +241,23 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "DOMAIN_SEPARATOR()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "EIP712_DOMAIN",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "EIP712_DOMAIN()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "EIP712_REVISION",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "EIP712_REVISION()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -159,7 +265,23 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "MAX_SUPPLY()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "PERMIT_TYPEHASH",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "PERMIT_TYPEHASH()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SecondaryReserveAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SecondaryReserveAddress()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -167,24 +289,70 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "_VaultController()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "__ERC20Detailed_init",
-    values: [string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "__ERC20Detailed_init(string,string,uint8)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "__UFragments_init",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "__UFragments_init(string,string)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "_gonBalances",
-    values: [string]
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_gonBalances(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "_gonsPerFragment",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "_gonsPerFragment()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "_pauser", values?: undefined): string;
+  encodeFunctionData(functionFragment: "_pauser()", values?: undefined): string;
   encodeFunctionData(functionFragment: "_reserve", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "_reserve()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_secondaryReserve",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_secondaryReserve()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "_totalGons",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "_totalGons()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -192,30 +360,100 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "_totalSupply()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "allowance",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "allowance(address,address)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "approve",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
-  encodeFunctionData(functionFragment: "burn", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "approve(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "balanceOf",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "balanceOf(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "burn",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "burn(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "decimals()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "decreaseAllowance",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "decreaseAllowance(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "deposit",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "deposit(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositSecondaryReserve",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositSecondaryReserve(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositTo",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositTo(uint256,address)",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositToSecondaryReserve",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositToSecondaryReserve(uint256,address)",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "donate",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "donate(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "donateReserve",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "donateReserve()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -223,38 +461,89 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [string, BigNumberish]
+    functionFragment: "getVaultController()",
+    values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "initialize", values: [string]): string;
-  encodeFunctionData(functionFragment: "mint", values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: "increaseAllowance",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "increaseAllowance(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mint(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "monetaryPolicy",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "monetaryPolicy()",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(functionFragment: "nonces", values: [string]): string;
+  encodeFunctionData(functionFragment: "name()", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "nonces",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "nonces(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner()", values?: undefined): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pause()", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
+  encodeFunctionData(functionFragment: "paused()", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pauser", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pauser()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "permit",
     values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BytesLike,
-      BytesLike
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "rebase",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership()",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -262,67 +551,204 @@ export interface USDIInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "reserveAddress()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "reserveRatio",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "reserveRatio()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "scaledBalanceOf",
-    values: [string]
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "scaledBalanceOf(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "scaledTotalSupply",
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "scaledTotalSupply()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "setMonetaryPolicy",
-    values: [string]
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMonetaryPolicy(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPauser",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setPauser(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setVaultController",
-    values: [string]
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setVaultController(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "symbol()", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "transfer",
-    values: [string, BigNumberish]
+    functionFragment: "totalSupply()",
+    values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "transferAll", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transfer(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferAll",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferAll(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "transferAllFrom",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferAllFrom(address,address)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom(address,address,uint256)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
-    values: [string]
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership(address)",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
+  encodeFunctionData(functionFragment: "unpause()", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "updateReserves",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateReserves(address,address)",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "vaultControllerBurn",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "vaultControllerBurn(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "vaultControllerDonate",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "vaultControllerDonate(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "vaultControllerMint",
-    values: [string, BigNumberish]
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "vaultControllerMint(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "vaultControllerTransfer",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "vaultControllerTransfer(address,uint256)",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdraw(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawAll",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawAll()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawAllTo",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawAllTo(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawSecondaryReserve",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawSecondaryReserve(uint256)",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawTo",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawTo(uint256,address)",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawToSecondaryReserve",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "withdrawToSecondaryReserve(uint256,address)",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(
@@ -330,16 +756,44 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "DOMAIN_SEPARATOR()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "EIP712_DOMAIN",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "EIP712_DOMAIN()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "EIP712_REVISION",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "EIP712_REVISION()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "MAX_SUPPLY", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "MAX_SUPPLY()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "PERMIT_TYPEHASH",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "PERMIT_TYPEHASH()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SecondaryReserveAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "SecondaryReserveAddress()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -347,7 +801,15 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "_VaultController()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "__ERC20Detailed_init",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "__ERC20Detailed_init(string,string,uint8)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -355,32 +817,117 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "__UFragments_init(string,string)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "_gonBalances",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_gonBalances(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "_gonsPerFragment",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "_gonsPerFragment()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "_pauser", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "_pauser()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "_reserve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "_reserve()", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "_secondaryReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "_secondaryReserve()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "_totalGons", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "_totalGons()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "_totalSupply",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "_totalSupply()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "allowance(address,address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "approve(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "balanceOf(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "burn(uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decimals()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "decreaseAllowance(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "deposit(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "depositSecondaryReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "depositSecondaryReserve(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "depositTo", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "depositTo(uint256,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "depositToSecondaryReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "depositToSecondaryReserve(uint256,address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "donate", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "donate(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "donateReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "donateReserve()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -388,24 +935,61 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "getVaultController()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "increaseAllowance(address,uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "initialize(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "mint(uint256)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "monetaryPolicy",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "monetaryPolicy()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "nonces", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "nonces(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pause()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "paused()", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pauser", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pauser()", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "permit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rebase", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -413,7 +997,15 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "reserveAddress()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "reserveRatio",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reserveRatio()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -421,7 +1013,15 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "scaledBalanceOf(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "scaledTotalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "scaledTotalSupply()",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -429,17 +1029,43 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setMonetaryPolicy(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setPauser", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setPauser(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setVaultController",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "setVaultController(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol()", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply()",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "transfer(address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferAll(address)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -447,16 +1073,41 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "transferAllFrom(address,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom(address,address,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership(address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "unpause()", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "updateReserves",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateReserves(address,address)",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "vaultControllerBurn",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "vaultControllerBurn(address,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -464,12 +1115,65 @@ export interface USDIInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "vaultControllerDonate(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "vaultControllerMint",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "vaultControllerMint(address,uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "vaultControllerTransfer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "vaultControllerTransfer(address,uint256)",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "withdraw(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "withdrawAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawAll()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawAllTo",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawAllTo(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawSecondaryReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawSecondaryReserve(uint256)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "withdrawTo", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawTo(uint256,address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawToSecondaryReserve",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "withdrawToSecondaryReserve(uint256,address)",
     data: BytesLike
   ): Result;
 
@@ -489,17 +1193,39 @@ export interface USDIInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Approval(address,address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Burn"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Burn(address,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Deposit(address,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Donation"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Donation(address,uint256,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "LogMonetaryPolicyUpdated"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "LogMonetaryPolicyUpdated(address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "LogRebase"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "LogRebase(uint256,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Mint"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Mint(address,uint256)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "OwnershipTransferred(address,address)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Paused(address)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Transfer(address,address,uint256)"
+  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unpaused(address)"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Withdraw(address,uint256)"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -650,629 +1376,1680 @@ export interface USDI extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
+    "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<[string]>;
+
     EIP712_DOMAIN(overrides?: CallOverrides): Promise<[string]>;
+
+    "EIP712_DOMAIN()"(overrides?: CallOverrides): Promise<[string]>;
 
     EIP712_REVISION(overrides?: CallOverrides): Promise<[string]>;
 
+    "EIP712_REVISION()"(overrides?: CallOverrides): Promise<[string]>;
+
     MAX_SUPPLY(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    "MAX_SUPPLY()"(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
+    "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<[string]>;
+
+    SecondaryReserveAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    "SecondaryReserveAddress()"(overrides?: CallOverrides): Promise<[string]>;
+
     _VaultController(overrides?: CallOverrides): Promise<[string]>;
 
+    "_VaultController()"(overrides?: CallOverrides): Promise<[string]>;
+
     __ERC20Detailed_init(
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "__ERC20Detailed_init(string,string,uint8)"(
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     __UFragments_init(
-      name: string,
-      symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    _gonBalances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    "__UFragments_init(string,string)"(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    _gonBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "_gonBalances(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "_gonsPerFragment()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    _pauser(overrides?: CallOverrides): Promise<[string]>;
+
+    "_pauser()"(overrides?: CallOverrides): Promise<[string]>;
+
     _reserve(overrides?: CallOverrides): Promise<[string]>;
+
+    "_reserve()"(overrides?: CallOverrides): Promise<[string]>;
+
+    _secondaryReserve(overrides?: CallOverrides): Promise<[string]>;
+
+    "_secondaryReserve()"(overrides?: CallOverrides): Promise<[string]>;
 
     _totalGons(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "_totalGons()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     _totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "_totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     allowance(
-      owner_: string,
-      spender: string,
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "allowance(address,address)"(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    "approve(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    balanceOf(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "balanceOf(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     burn(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "burn(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<[number]>;
+
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "decreaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     deposit(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "deposit(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    depositSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "depositSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    depositTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "depositTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    depositToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "depositToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     donate(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "donate(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     donateReserve(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "donateReserve()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getVaultController(overrides?: CallOverrides): Promise<[string]>;
 
+    "getVaultController()"(overrides?: CallOverrides): Promise<[string]>;
+
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "increaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     initialize(
-      reserveAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "initialize(address)"(
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mint(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "mint(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     monetaryPolicy(overrides?: CallOverrides): Promise<[string]>;
 
+    "monetaryPolicy()"(overrides?: CallOverrides): Promise<[string]>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(who: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    "name()"(overrides?: CallOverrides): Promise<[string]>;
+
+    nonces(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "nonces(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    "owner()"(overrides?: CallOverrides): Promise<[string]>;
+
     pause(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "pause()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
+    "paused()"(overrides?: CallOverrides): Promise<[boolean]>;
+
+    pauser(overrides?: CallOverrides): Promise<[string]>;
+
+    "pauser()"(overrides?: CallOverrides): Promise<[string]>;
+
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    rebase(
-      epoch: BigNumberish,
-      supplyAdd: BigNumberish,
-      supplyRemove: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "renounceOwnership()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     reserveAddress(overrides?: CallOverrides): Promise<[string]>;
+
+    "reserveAddress()"(overrides?: CallOverrides): Promise<[string]>;
 
     reserveRatio(
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { e18_reserve_ratio: BigNumber }>;
 
+    "reserveRatio()"(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { e18_reserve_ratio: BigNumber }>;
+
     scaledBalanceOf(
-      who: string,
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    "scaledBalanceOf(address)"(
+      who: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "scaledTotalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     setMonetaryPolicy(
-      monetaryPolicy_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "setMonetaryPolicy(address)"(
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setPauser(
+      pauser_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "setPauser(address)"(
+      pauser_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setVaultController(
-      vault_master_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "setVaultController(address)"(
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<[string]>;
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    "totalSupply()"(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "transfer(address,uint256)"(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferAll(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "transferAll(address)"(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferAllFrom(
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "transferAllFrom(address,address)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "transferFrom(address,address,uint256)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "transferOwnership(address)"(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "unpause()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    updateReserves(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "updateReserves(address,address)"(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     vaultControllerBurn(
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "vaultControllerBurn(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     vaultControllerDonate(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "vaultControllerDonate(uint256)"(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     vaultControllerMint(
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "vaultControllerMint(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    vaultControllerTransfer(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "vaultControllerTransfer(address,uint256)"(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdraw(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdrawAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdrawAll()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawAllTo(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdrawAllTo(address)"(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdrawSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdrawTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    withdrawToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    "withdrawToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+  "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
+
   EIP712_DOMAIN(overrides?: CallOverrides): Promise<string>;
+
+  "EIP712_DOMAIN()"(overrides?: CallOverrides): Promise<string>;
 
   EIP712_REVISION(overrides?: CallOverrides): Promise<string>;
 
+  "EIP712_REVISION()"(overrides?: CallOverrides): Promise<string>;
+
   MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "MAX_SUPPLY()"(overrides?: CallOverrides): Promise<BigNumber>;
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+  "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
+  SecondaryReserveAddress(overrides?: CallOverrides): Promise<string>;
+
+  "SecondaryReserveAddress()"(overrides?: CallOverrides): Promise<string>;
+
   _VaultController(overrides?: CallOverrides): Promise<string>;
 
+  "_VaultController()"(overrides?: CallOverrides): Promise<string>;
+
   __ERC20Detailed_init(
-    name_: string,
-    symbol_: string,
-    decimals_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name_: PromiseOrValue<string>,
+    symbol_: PromiseOrValue<string>,
+    decimals_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "__ERC20Detailed_init(string,string,uint8)"(
+    name_: PromiseOrValue<string>,
+    symbol_: PromiseOrValue<string>,
+    decimals_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   __UFragments_init(
-    name: string,
-    symbol: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  _gonBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  "__UFragments_init(string,string)"(
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  _gonBalances(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "_gonBalances(address)"(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   _gonsPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "_gonsPerFragment()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  _pauser(overrides?: CallOverrides): Promise<string>;
+
+  "_pauser()"(overrides?: CallOverrides): Promise<string>;
+
   _reserve(overrides?: CallOverrides): Promise<string>;
+
+  "_reserve()"(overrides?: CallOverrides): Promise<string>;
+
+  _secondaryReserve(overrides?: CallOverrides): Promise<string>;
+
+  "_secondaryReserve()"(overrides?: CallOverrides): Promise<string>;
 
   _totalGons(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "_totalGons()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "_totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   allowance(
-    owner_: string,
-    spender: string,
+    owner_: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "allowance(address,address)"(
+    owner_: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+  "approve(address,uint256)"(
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  balanceOf(
+    who: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "balanceOf(address)"(
+    who: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   burn(
-    usdc_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "burn(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
+  "decimals()"(overrides?: CallOverrides): Promise<number>;
+
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "decreaseAllowance(address,uint256)"(
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   deposit(
-    usdc_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "deposit(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  depositSecondaryReserve(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "depositSecondaryReserve(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  depositTo(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "depositTo(uint256,address)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  depositToSecondaryReserve(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "depositToSecondaryReserve(uint256,address)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   donate(
-    usdc_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "donate(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   donateReserve(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "donateReserve()"(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getVaultController(overrides?: CallOverrides): Promise<string>;
 
+  "getVaultController()"(overrides?: CallOverrides): Promise<string>;
+
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "increaseAllowance(address,uint256)"(
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   initialize(
-    reserveAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    reserveAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "initialize(address)"(
+    reserveAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mint(
-    usdc_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "mint(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   monetaryPolicy(overrides?: CallOverrides): Promise<string>;
 
+  "monetaryPolicy()"(overrides?: CallOverrides): Promise<string>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+  "name()"(overrides?: CallOverrides): Promise<string>;
+
+  nonces(
+    who: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "nonces(address)"(
+    who: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  "owner()"(overrides?: CallOverrides): Promise<string>;
+
   pause(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "pause()"(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
+  "paused()"(overrides?: CallOverrides): Promise<boolean>;
+
+  pauser(overrides?: CallOverrides): Promise<string>;
+
+  "pauser()"(overrides?: CallOverrides): Promise<string>;
+
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  rebase(
-    epoch: BigNumberish,
-    supplyAdd: BigNumberish,
-    supplyRemove: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+  "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   renounceOwnership(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "renounceOwnership()"(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   reserveAddress(overrides?: CallOverrides): Promise<string>;
 
+  "reserveAddress()"(overrides?: CallOverrides): Promise<string>;
+
   reserveRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  scaledBalanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+  "reserveRatio()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+  scaledBalanceOf(
+    who: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
+  "scaledBalanceOf(address)"(
+    who: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "scaledTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   setMonetaryPolicy(
-    monetaryPolicy_: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    monetaryPolicy_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "setMonetaryPolicy(address)"(
+    monetaryPolicy_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setPauser(
+    pauser_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "setPauser(address)"(
+    pauser_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setVaultController(
-    vault_master_address: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    vault_master_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "setVaultController(address)"(
+    vault_master_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
+  "symbol()"(overrides?: CallOverrides): Promise<string>;
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+  "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "transfer(address,uint256)"(
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferAll(
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "transferAll(address)"(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferAllFrom(
-    from: string,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "transferAllFrom(address,address)"(
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "transferFrom(address,address,uint256)"(
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "transferOwnership(address)"(
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   unpause(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "unpause()"(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  updateReserves(
+    primaryReserveAddr: PromiseOrValue<string>,
+    SecondaryReserveAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "updateReserves(address,address)"(
+    primaryReserveAddr: PromiseOrValue<string>,
+    SecondaryReserveAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   vaultControllerBurn(
-    target: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    target: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "vaultControllerBurn(address,uint256)"(
+    target: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   vaultControllerDonate(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "vaultControllerDonate(uint256)"(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   vaultControllerMint(
-    target: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    target: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "vaultControllerMint(address,uint256)"(
+    target: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  vaultControllerTransfer(
+    target: PromiseOrValue<string>,
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "vaultControllerTransfer(address,uint256)"(
+    target: PromiseOrValue<string>,
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    usdc_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdraw(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdrawAll(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdrawAll()"(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawAllTo(
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdrawAllTo(address)"(
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawSecondaryReserve(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdrawSecondaryReserve(uint256)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawTo(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdrawTo(uint256,address)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  withdrawToSecondaryReserve(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  "withdrawToSecondaryReserve(uint256,address)"(
+    usdc_amount: PromiseOrValue<BigNumberish>,
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+    "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<string>;
+
     EIP712_DOMAIN(overrides?: CallOverrides): Promise<string>;
+
+    "EIP712_DOMAIN()"(overrides?: CallOverrides): Promise<string>;
 
     EIP712_REVISION(overrides?: CallOverrides): Promise<string>;
 
+    "EIP712_REVISION()"(overrides?: CallOverrides): Promise<string>;
+
     MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "MAX_SUPPLY()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
+    "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<string>;
+
+    SecondaryReserveAddress(overrides?: CallOverrides): Promise<string>;
+
+    "SecondaryReserveAddress()"(overrides?: CallOverrides): Promise<string>;
+
     _VaultController(overrides?: CallOverrides): Promise<string>;
 
+    "_VaultController()"(overrides?: CallOverrides): Promise<string>;
+
     __ERC20Detailed_init(
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "__ERC20Detailed_init(string,string,uint8)"(
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     __UFragments_init(
-      name: string,
-      symbol: string,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    _gonBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "__UFragments_init(string,string)"(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    _gonBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "_gonBalances(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_gonsPerFragment()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _pauser(overrides?: CallOverrides): Promise<string>;
+
+    "_pauser()"(overrides?: CallOverrides): Promise<string>;
+
     _reserve(overrides?: CallOverrides): Promise<string>;
+
+    "_reserve()"(overrides?: CallOverrides): Promise<string>;
+
+    _secondaryReserve(overrides?: CallOverrides): Promise<string>;
+
+    "_secondaryReserve()"(overrides?: CallOverrides): Promise<string>;
 
     _totalGons(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_totalGons()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
-      owner_: string,
-      spender: string,
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "allowance(address,address)"(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "approve(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    burn(usdc_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    balanceOf(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "balanceOf(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    burn(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "burn(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<number>;
+
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "decreaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     deposit(
-      usdc_amount: BigNumberish,
+      usdc_amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    donate(usdc_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    "deposit(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    depositSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "depositSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    depositTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "depositTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    depositToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "depositToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    donate(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "donate(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     donateReserve(overrides?: CallOverrides): Promise<void>;
 
+    "donateReserve()"(overrides?: CallOverrides): Promise<void>;
+
     getVaultController(overrides?: CallOverrides): Promise<string>;
 
+    "getVaultController()"(overrides?: CallOverrides): Promise<string>;
+
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    initialize(reserveAddr: string, overrides?: CallOverrides): Promise<void>;
+    "increaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    mint(usdc_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    monetaryPolicy(overrides?: CallOverrides): Promise<string>;
-
-    name(overrides?: CallOverrides): Promise<string>;
-
-    nonces(who: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    pause(overrides?: CallOverrides): Promise<void>;
-
-    paused(overrides?: CallOverrides): Promise<boolean>;
-
-    permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+    initialize(
+      reserveAddr: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    rebase(
-      epoch: BigNumberish,
-      supplyAdd: BigNumberish,
-      supplyRemove: BigNumberish,
+    "initialize(address)"(
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    mint(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "mint(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    monetaryPolicy(overrides?: CallOverrides): Promise<string>;
+
+    "monetaryPolicy()"(overrides?: CallOverrides): Promise<string>;
+
+    name(overrides?: CallOverrides): Promise<string>;
+
+    "name()"(overrides?: CallOverrides): Promise<string>;
+
+    nonces(
+      who: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "nonces(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
+
+    "owner()"(overrides?: CallOverrides): Promise<string>;
+
+    pause(overrides?: CallOverrides): Promise<void>;
+
+    "pause()"(overrides?: CallOverrides): Promise<void>;
+
+    paused(overrides?: CallOverrides): Promise<boolean>;
+
+    "paused()"(overrides?: CallOverrides): Promise<boolean>;
+
+    pauser(overrides?: CallOverrides): Promise<string>;
+
+    "pauser()"(overrides?: CallOverrides): Promise<string>;
+
+    permit(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    "renounceOwnership()"(overrides?: CallOverrides): Promise<void>;
 
     reserveAddress(overrides?: CallOverrides): Promise<string>;
 
+    "reserveAddress()"(overrides?: CallOverrides): Promise<string>;
+
     reserveRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    scaledBalanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "reserveRatio()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    scaledBalanceOf(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "scaledBalanceOf(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "scaledTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     setMonetaryPolicy(
-      monetaryPolicy_: string,
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setMonetaryPolicy(address)"(
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setPauser(
+      pauser_: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setPauser(address)"(
+      pauser_: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     setVaultController(
-      vault_master_address: string,
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "setVaultController(address)"(
+      vault_master_address: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<string>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     transfer(
-      to: string,
-      value: BigNumberish,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    transferAll(to: string, overrides?: CallOverrides): Promise<boolean>;
+    "transfer(address,uint256)"(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    transferAll(
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "transferAll(address)"(
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     transferAllFrom(
-      from: string,
-      to: string,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "transferAllFrom(address,address)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
+    "transferFrom(address,address,uint256)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferOwnership(
-      newOwner: string,
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "transferOwnership(address)"(
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
+    "unpause()"(overrides?: CallOverrides): Promise<void>;
+
+    updateReserves(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "updateReserves(address,address)"(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     vaultControllerBurn(
-      target: string,
-      amount: BigNumberish,
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "vaultControllerBurn(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     vaultControllerDonate(
-      amount: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "vaultControllerDonate(uint256)"(
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     vaultControllerMint(
-      target: string,
-      amount: BigNumberish,
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "vaultControllerMint(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    vaultControllerTransfer(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "vaultControllerTransfer(address,uint256)"(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdraw(
-      usdc_amount: BigNumberish,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "withdraw(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
+
+    "withdrawAll()"(overrides?: CallOverrides): Promise<void>;
+
+    withdrawAllTo(
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "withdrawAllTo(address)"(
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "withdrawSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "withdrawTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    withdrawToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    "withdrawToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {
     "Approval(address,address,uint256)"(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null
     ): ApprovalEventFilter;
     Approval(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null
     ): ApprovalEventFilter;
 
@@ -1280,18 +3057,21 @@ export interface USDI extends BaseContract {
     Burn(from?: null, _value?: null): BurnEventFilter;
 
     "Deposit(address,uint256)"(
-      _from?: string | null,
+      _from?: PromiseOrValue<string> | null,
       _value?: null
     ): DepositEventFilter;
-    Deposit(_from?: string | null, _value?: null): DepositEventFilter;
+    Deposit(
+      _from?: PromiseOrValue<string> | null,
+      _value?: null
+    ): DepositEventFilter;
 
     "Donation(address,uint256,uint256)"(
-      _from?: string | null,
+      _from?: PromiseOrValue<string> | null,
       _value?: null,
       _totalSupply?: null
     ): DonationEventFilter;
     Donation(
-      _from?: string | null,
+      _from?: PromiseOrValue<string> | null,
       _value?: null,
       _totalSupply?: null
     ): DonationEventFilter;
@@ -1304,11 +3084,11 @@ export interface USDI extends BaseContract {
     ): LogMonetaryPolicyUpdatedEventFilter;
 
     "LogRebase(uint256,uint256)"(
-      epoch?: BigNumberish | null,
+      epoch?: PromiseOrValue<BigNumberish> | null,
       totalSupply?: null
     ): LogRebaseEventFilter;
     LogRebase(
-      epoch?: BigNumberish | null,
+      epoch?: PromiseOrValue<BigNumberish> | null,
       totalSupply?: null
     ): LogRebaseEventFilter;
 
@@ -1316,25 +3096,25 @@ export interface USDI extends BaseContract {
     Mint(to?: null, _value?: null): MintEventFilter;
 
     "OwnershipTransferred(address,address)"(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousOwner?: string | null,
-      newOwner?: string | null
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
     "Transfer(address,address,uint256)"(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       value?: null
     ): TransferEventFilter;
     Transfer(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       value?: null
     ): TransferEventFilter;
 
@@ -1342,449 +3122,1162 @@ export interface USDI extends BaseContract {
     Unpaused(account?: null): UnpausedEventFilter;
 
     "Withdraw(address,uint256)"(
-      _from?: string | null,
+      _from?: PromiseOrValue<string> | null,
       _value?: null
     ): WithdrawEventFilter;
-    Withdraw(_from?: string | null, _value?: null): WithdrawEventFilter;
+    Withdraw(
+      _from?: PromiseOrValue<string> | null,
+      _value?: null
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "DOMAIN_SEPARATOR()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     EIP712_DOMAIN(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "EIP712_DOMAIN()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     EIP712_REVISION(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "EIP712_REVISION()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "MAX_SUPPLY()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "PERMIT_TYPEHASH()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    SecondaryReserveAddress(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "SecondaryReserveAddress()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     _VaultController(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_VaultController()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     __ERC20Detailed_init(
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "__ERC20Detailed_init(string,string,uint8)"(
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     __UFragments_init(
-      name: string,
-      symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    _gonBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "__UFragments_init(string,string)"(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    _gonBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "_gonBalances(address)"(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_gonsPerFragment()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _pauser(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_pauser()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     _reserve(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_reserve()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    _secondaryReserve(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "_secondaryReserve()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     _totalGons(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_totalGons()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     _totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "_totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
-      owner_: string,
-      spender: string,
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "allowance(address,address)"(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "approve(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    balanceOf(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "balanceOf(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     burn(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "burn(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "decreaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     deposit(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "deposit(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    depositSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "depositSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    depositTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "depositTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    depositToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "depositToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     donate(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "donate(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     donateReserve(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "donateReserve()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getVaultController(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "getVaultController()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "increaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     initialize(
-      reserveAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "initialize(address)"(
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mint(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "mint(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     monetaryPolicy(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "monetaryPolicy()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "name()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    nonces(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "nonces(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     pause(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "pause()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "paused()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pauser(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "pauser()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    rebase(
-      epoch: BigNumberish,
-      supplyAdd: BigNumberish,
-      supplyRemove: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "renounceOwnership()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     reserveAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "reserveAddress()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     reserveRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    scaledBalanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    "reserveRatio()"(overrides?: CallOverrides): Promise<BigNumber>;
+
+    scaledBalanceOf(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    "scaledBalanceOf(address)"(
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "scaledTotalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     setMonetaryPolicy(
-      monetaryPolicy_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "setMonetaryPolicy(address)"(
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setPauser(
+      pauser_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "setPauser(address)"(
+      pauser_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setVaultController(
-      vault_master_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "setVaultController(address)"(
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    "totalSupply()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "transfer(address,uint256)"(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferAll(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "transferAll(address)"(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferAllFrom(
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "transferAllFrom(address,address)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "transferFrom(address,address,uint256)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "transferOwnership(address)"(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     unpause(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "unpause()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    updateReserves(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "updateReserves(address,address)"(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     vaultControllerBurn(
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "vaultControllerBurn(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     vaultControllerDonate(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "vaultControllerDonate(uint256)"(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     vaultControllerMint(
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "vaultControllerMint(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    vaultControllerTransfer(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "vaultControllerTransfer(address,uint256)"(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdraw(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "withdraw(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdrawAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "withdrawAll()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawAllTo(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "withdrawAllTo(address)"(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "withdrawSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "withdrawTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    withdrawToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    "withdrawToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "DOMAIN_SEPARATOR()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     EIP712_DOMAIN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "EIP712_DOMAIN()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     EIP712_REVISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "EIP712_REVISION()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     MAX_SUPPLY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "MAX_SUPPLY()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "PERMIT_TYPEHASH()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    SecondaryReserveAddress(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "SecondaryReserveAddress()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     _VaultController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "_VaultController()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     __ERC20Detailed_init(
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "__ERC20Detailed_init(string,string,uint8)"(
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     __UFragments_init(
-      name: string,
-      symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "__UFragments_init(string,string)"(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     _gonBalances(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "_gonBalances(address)"(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     _gonsPerFragment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "_gonsPerFragment()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    _pauser(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "_pauser()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     _reserve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "_reserve()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    _secondaryReserve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "_secondaryReserve()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     _totalGons(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "_totalGons()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     _totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "_totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     allowance(
-      owner_: string,
-      spender: string,
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "allowance(address,address)"(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "approve(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
-      who: string,
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "balanceOf(address)"(
+      who: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     burn(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "burn(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "decimals()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "decreaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "deposit(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    depositSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "depositSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    depositTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "depositTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    depositToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "depositToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     donate(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "donate(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     donateReserve(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "donateReserve()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getVaultController(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    "getVaultController()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "increaseAllowance(address,uint256)"(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      reserveAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "initialize(address)"(
+      reserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mint(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "mint(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     monetaryPolicy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "monetaryPolicy()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "name()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     nonces(
-      who: string,
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "nonces(address)"(
+      who: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "owner()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     pause(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "pause()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "paused()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pauser(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    "pauser()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    rebase(
-      epoch: BigNumberish,
-      supplyAdd: BigNumberish,
-      supplyRemove: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)"(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "renounceOwnership()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     reserveAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "reserveAddress()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     reserveRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "reserveRatio()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     scaledBalanceOf(
-      who: string,
+      who: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "scaledBalanceOf(address)"(
+      who: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     scaledTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "scaledTotalSupply()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     setMonetaryPolicy(
-      monetaryPolicy_: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "setMonetaryPolicy(address)"(
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setPauser(
+      pauser_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "setPauser(address)"(
+      pauser_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setVaultController(
-      vault_master_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "setVaultController(address)"(
+      vault_master_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "symbol()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    "totalSupply()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "transfer(address,uint256)"(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferAll(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "transferAll(address)"(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferAllFrom(
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "transferAllFrom(address,address)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "transferFrom(address,address,uint256)"(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "transferOwnership(address)"(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     unpause(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "unpause()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateReserves(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "updateReserves(address,address)"(
+      primaryReserveAddr: PromiseOrValue<string>,
+      SecondaryReserveAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     vaultControllerBurn(
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "vaultControllerBurn(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     vaultControllerDonate(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "vaultControllerDonate(uint256)"(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     vaultControllerMint(
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "vaultControllerMint(address,uint256)"(
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    vaultControllerTransfer(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "vaultControllerTransfer(address,uint256)"(
+      target: PromiseOrValue<string>,
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      usdc_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdraw(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdrawAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawAll()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawAllTo(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawAllTo(address)"(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawSecondaryReserve(uint256)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawTo(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawTo(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    withdrawToSecondaryReserve(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    "withdrawToSecondaryReserve(uint256,address)"(
+      usdc_amount: PromiseOrValue<BigNumberish>,
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
