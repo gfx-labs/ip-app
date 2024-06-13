@@ -18,7 +18,7 @@ export enum ChainIDs {
   OPTIMISM = 10,
 }
 
-export const Chains: {[index: number]: ChainInfo} = {
+export const Chains: { [index: number]: ChainInfo } = {
   1: {
     id: ChainIDs.MAINNET,
     name: 'Ethereum',
@@ -44,7 +44,7 @@ export const Chains: {[index: number]: ChainInfo} = {
     scan_url: 'https://optimistic.etherscan.io/tx/',
     scan_site: 'Optimism Etherscan',
     delegate_token: 'OP',
-    analytics: 'https://ip-stats-api-op.staging.gfx.town', //need to change to prod
+    analytics: 'https://analytics-api-op.gfx.xyz', //need to change to prod
     rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226',
   },
 }
