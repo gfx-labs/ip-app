@@ -55,8 +55,9 @@ import week1012 from './week1012'
 import week1013 from './week1013'
 import week1014 from './week1014'
 import week1015 from './week1015'
+import week1016 from './week1016'
 
-export const SPECIFIC_WEEKS = [155, 305, 1000, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015]
+export const SPECIFIC_WEEKS = [155, 305, 1000, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016]
 
 const weeks = {
   7: week7,
@@ -115,6 +116,7 @@ const weeks = {
   1013: week1013,
   1014: week1014,
   1015: week1015,
+  1016: week1016,
 }
 
 export default weeks
