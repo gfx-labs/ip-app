@@ -45,7 +45,7 @@ export const Chains: { [index: number]: ChainInfo } = {
     scan_site: 'Optimism Etherscan',
     delegate_token: 'OP',
     analytics: 'https://analytics-api-op.gfx.xyz', //need to change to prod
-    rpc: 'https://optimism-mainnet.chainnodes.org/938056af-4d36-482a-b8f0-0a1b47a97226',
+    rpc: 'https://mainnet.optimism.io',
   },
 }
 
