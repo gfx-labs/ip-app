@@ -17,10 +17,9 @@ export const ChainDataContextProvider = ({ children }: { children: React.ReactEl
   const [gasPrice, setGasPrice] = useState('0')
   const {
     data: opData,
-    refetch,
-    isError: opDataError,
+    refetch
   } = useQuery({
-    refetchInterval: 5000,
+    refetchInterval: 15000,
     queryKey: ['op block'],
     queryFn: async () => {
       const block = await provider?.getBlockNumber()
@@ -28,8 +27,11 @@ export const ChainDataContextProvider = ({ children }: { children: React.ReactEl
     },
     enabled: chainId !== ChainIDs.MAINNET,
   })
-  const { data: ethData, isError: ethDataError } = useQuery({
-    refetchInterval: 5000,
+  const { data: ethData } = useQuery({
+    refetchInterval: () => {
+      if (chainId === ChainIDs.MAINNET) return 15 * 1000
+      return 60 * 1000 
+    },
     queryKey: ['eth block'],
     queryFn: async () => {
       const ans = await ethProvider?.getBlockNumber()
@@ -37,7 +39,7 @@ export const ChainDataContextProvider = ({ children }: { children: React.ReactEl
     },
   })
   const { data: gas, isError: gasError } = useQuery({
-    refetchInterval: 5000,
+    refetchInterval: 15000,
     queryKey: ['gas'],
     queryFn: async () => {
       const block = await getGasPrice(provider!)
